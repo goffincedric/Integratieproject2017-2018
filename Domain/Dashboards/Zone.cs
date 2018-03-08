@@ -8,6 +8,12 @@ namespace Domain.Dashboards
 {
   public class Zone
   {
-    public 
+    public string Name { get; set; }
+    public bool IsFull { get; set; }
+    public readonly int MAX_ELEMENTS;
+    public int Width { get; set; }
+    public int Height { get; set; }
+    public int Position { get; set; }
+
   }
 }

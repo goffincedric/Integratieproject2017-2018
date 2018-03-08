@@ -8,5 +8,6 @@ namespace Domain.Dashboards
 {
   public class Ranking : Element
   {
+    
   }
 }

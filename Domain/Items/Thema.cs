@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Dashboards
+namespace Domain.Items
 {
-  public class Graph : Element
+  public class Thema : Item
   {
-    public GraphType GraphType { get; set; }
-
   }
 }

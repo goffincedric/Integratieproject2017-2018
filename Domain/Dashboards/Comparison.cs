@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,9 @@ namespace Domain.Dashboards
 {
   public class Comparison
   {
-    private readonly int MAX_COMPARISONS = 10;
+    public readonly int MAX_COMPARISONS = 10;
+    public UserType Type { get; set; }
+    public List<Item> ComparisonItems;
 
   }
 }
