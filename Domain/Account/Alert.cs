@@ -22,25 +22,6 @@ namespace PB.BL.Domain.Account
 
     [Required]
     [ForeignKey("Username")]
-    public T Profile { get; set; }
-
-    public Alert(int alertId, string text, bool isFlaggedImportant, bool isRead, DateTime timeStamp)
-    {
-      AlertId = alertId;
-      Text = text;
-      IsFlaggedImportant = isFlaggedImportant;
-      IsRead = isRead;
-      TimeStamp = timeStamp;
-    }
-
-    public Alert(int alertId, string text, string description = null, bool isFlaggedImportant, bool isRead, DateTime timeStamp)
-    {
-      AlertId = alertId;
-      Text = text;
-      Description = description;
-      IsFlaggedImportant = isFlaggedImportant;
-      IsRead = isRead;
-      TimeStamp = timeStamp;
-    }
+    public Profile Profile { get; set; }
   }
 }
