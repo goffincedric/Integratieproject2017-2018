@@ -1,4 +1,4 @@
-﻿using Domain.Items;
+﻿using PB.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,5 @@ namespace PB.BL.Domain.Dashboards
     public readonly int MAX_COMPARISONS = 10;
     public UserType Type { get; set; }
     public List<Item> ComparisonItems;
-
   }
 }

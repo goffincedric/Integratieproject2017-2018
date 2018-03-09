@@ -11,12 +11,8 @@ namespace PB.BL
   {
     IEnumerable<Profile> GetProfiles();
     Profile GetProfile(string username);
-    Profile AddProfile(string username, string password, Role role = Role.USER);
+    Profile AddProfile(string username, string password, string email, Role role = Role.USER);
     void ChangeProfile(Profile profile);
-    /// <summary>
-    /// ///
-    /// </summary>
-    /// <param name="username"></param>
     void RemoveProfile(string username);
   }
 }

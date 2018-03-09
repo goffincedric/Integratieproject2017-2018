@@ -8,6 +8,7 @@ namespace PB.BL.Domain.Items
 {
   public class Theme : Item
   {
+    public string ThemeName { get; set; }
     public string Description { get; set; }
   }
 }
