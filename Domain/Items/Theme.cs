@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Items
+namespace PB.BL.Domain.Items
 {
-  public class Thema : Item
+  public class Theme : Item
   {
-    public String Description { get; set; }
+    public string Description { get; set; }
   }
 }

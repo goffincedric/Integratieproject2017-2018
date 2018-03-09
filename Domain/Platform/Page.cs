@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Platform
+namespace PB.BL.Domain.Platform
 {
   public class Page
   {
-    public String Title { get; set; }
-    public String FaciconURL { get; set; }
+    public string Title { get; set; }
+    public string FaciconURL { get; set; }
     public List<Tag> Tags { get; set; }
   }
 }

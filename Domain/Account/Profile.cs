@@ -1,12 +1,12 @@
-﻿using Domain.Dashboards;
-using Domain.Items;
+﻿using PB.BL.Domain.Dashboards;
+using PB.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Account
+namespace PB.BL.Domain.Account
 {
   public class Profile
   {

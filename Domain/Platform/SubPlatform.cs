@@ -1,18 +1,18 @@
-﻿using Domain.Account;
+﻿using PB.BL.Domain.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Platform
+namespace PB.BL.Domain.Platform
 {
   public class SubPlatform
   {
-    public String Name { get; set; }
-    public String URL { get; set; }
-    public String SourceAPI { get; set; }
-    public String SiteIconURL { get; set; }
+    public string Name { get; set; }
+    public string URL { get; set; }
+    public string SourceAPI { get; set; }
+    public string SiteIconURL { get; set; }
     public DateTime DateOnline { get; set; }
     public Style Style { get; set; }
     public List<SubplatformSetting> Settings { get; set; }

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Platform
+namespace PB.BL.Domain.Platform
 {
   public class Style
   {
-    public String Font { get; set; }
-    public String ThemeHEXColor1 { get; set; }
-    public String ThemeHEXColor2 { get; set; }
+    public string Font { get; set; }
+    public string ThemeHEXColor1 { get; set; }
+    public string ThemeHEXColor2 { get; set; }
 
   }
 }

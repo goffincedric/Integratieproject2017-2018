@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Items
+namespace PB.BL.Domain.Items
 {
   public class Person : Item
   {
-    public String FirstName { get; set; }
-    public String LastName { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
     public DateTime BirthDay { get; set; }
-    public String SocialMediaLink { get; set; }
-    public String IconURL { get; set; }
+    public string SocialMediaLink { get; set; }
+    public string IconURL { get; set; }
     public Function Function { get; set; }
     public Organisation Organisation { get; set; }
   }

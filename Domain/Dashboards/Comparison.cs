@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Dashboards
+namespace PB.BL.Domain.Dashboards
 {
   public class Comparison
   {

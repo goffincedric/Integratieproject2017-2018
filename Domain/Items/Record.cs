@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Items
+namespace PB.BL.Domain.Items
 {
   public class Record
   {
@@ -17,11 +17,11 @@ namespace Domain.Items
     public List<string> Mentions { get; set; }
     public bool Retweet { get; set; }
     public DateTime BirthDay { get; set; }
-    public List<String> words { get; set; }
+    public List<string> words { get; set; }
     public int polarity { get; set; }
     public int objectivity { get; set; }
-    public List<String> Hashtags { get; set; }
-    public List<String> URLs { get; set; }
+    public List<string> Hashtags { get; set; }
+    public List<string> URLs { get; set; }
     public DateTime ListUpdatet { get; set; }
   }
 }

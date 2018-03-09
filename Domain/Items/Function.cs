@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Items
+namespace PB.BL.Domain.Items
 {
   public class Function
   {
-    public String Name { get; set; }
-    public String Description { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
     public DateTime Since { get; set; }
   }
 }

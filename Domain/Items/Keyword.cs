@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Items
+namespace PB.BL.Domain.Items
 {
   public class Keyword
   {
-    public String Name { get; set; }
+    public string Name { get; set; }
     public List<Item> Items { get; set; }
   }
 }

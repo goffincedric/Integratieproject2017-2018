@@ -63,7 +63,7 @@
     <Compile Include="Items\Organisation.cs" />
     <Compile Include="Items\Person.cs" />
     <Compile Include="Items\Record.cs" />
-    <Compile Include="Items\Thema.cs" />
+    <Compile Include="Items\Theme.cs" />
     <Compile Include="Platform\Page.cs" />
     <Compile Include="Platform\Style.cs" />
     <Compile Include="Platform\SubPlatform.cs" />
