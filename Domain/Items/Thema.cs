@@ -8,5 +8,6 @@ namespace Domain.Items
 {
   public class Thema : Item
   {
+    public String Description { get; set; }
   }
 }

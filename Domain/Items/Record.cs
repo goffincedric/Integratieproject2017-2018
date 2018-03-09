@@ -16,6 +16,12 @@ namespace Domain.Items
     public string Geo { get; set; }
     public List<string> Mentions { get; set; }
     public bool Retweet { get; set; }
-
+    public DateTime BirthDay { get; set; }
+    public List<String> words { get; set; }
+    public int polarity { get; set; }
+    public int objectivity { get; set; }
+    public List<String> Hashtags { get; set; }
+    public List<String> URLs { get; set; }
+    public DateTime ListUpdatet { get; set; }
   }
 }

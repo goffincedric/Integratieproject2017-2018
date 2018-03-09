@@ -60,14 +60,17 @@
     <Compile Include="Items\Function.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\Keyword.cs" />
-    <Compile Include="Items\Organisatie.cs" />
+    <Compile Include="Items\Organisation.cs" />
     <Compile Include="Items\Person.cs" />
     <Compile Include="Items\Record.cs" />
     <Compile Include="Items\Thema.cs" />
+    <Compile Include="Platform\Page.cs" />
+    <Compile Include="Platform\Style.cs" />
+    <Compile Include="Platform\SubPlatform.cs" />
+    <Compile Include="Platform\SubplatformSetting.cs" />
+    <Compile Include="Platform\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Platform\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
