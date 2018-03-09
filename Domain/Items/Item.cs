@@ -16,9 +16,5 @@ namespace PB.BL.Domain.Items
     public bool IsHot { get; set; }
     public List<SubPlatform> SubPlatforms { get; set; }
     public List<Keyword> Keywords { get; set; }
-
-    [Required]
-    [ForeignKey("ComparisonId")]
-    public
   }
 }
