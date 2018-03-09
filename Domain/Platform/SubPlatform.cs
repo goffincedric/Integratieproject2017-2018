@@ -11,7 +11,9 @@ namespace PB.BL.Domain.Platform
   {
     public string Name { get; set; }
     public string URL { get; set; }
-    public string SourceAPI { get; set; }
+        // string s1 = client.DownloadString("http://google.com"); 
+        // Dit kijkt na of je site correct is en gooit 404 als die geen deftige pagina kan ophalen
+        public string SourceAPI { get; set; }
     public string SiteIconURL { get; set; }
     public DateTime DateOnline { get; set; }
     public Style Style { get; set; }
