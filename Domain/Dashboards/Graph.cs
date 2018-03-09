@@ -9,6 +9,5 @@ namespace PB.BL.Domain.Dashboards
   public class Graph : Element
   {
     public GraphType GraphType { get; set; }
-
   }
 }

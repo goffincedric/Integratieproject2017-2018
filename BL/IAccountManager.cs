@@ -9,10 +9,10 @@ namespace PB.BL
 {
   public interface IAccountManager
   {
-    IEnumerable<Profile> GetProfiles();
-    Profile GetProfile(string username);
-    Profile AddProfile(string username, string password, Role role = Role.USER);
-    void ChangeProfile(Profile profile);
+    IEnumerable<T> GetProfiles();
+    T GetProfile(string username);
+    T AddProfile(string username, string password, string email, Role role = Role.USER);
+    void ChangeProfile(T profile);
     void RemoveProfile(string username);
   }
 }

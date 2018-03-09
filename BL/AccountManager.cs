@@ -1,4 +1,5 @@
 ﻿using PB.BL.Domain.Account;
+using PB.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +10,37 @@ namespace PB.BL
 {
   public class AccountManager : IAccountManager
   {
-    public Profile AddProfile(string username, string password, Role role = Role.USER)
+
+
+    public T AddProfile(string username, string password, string email, Role role = Role.USER)
+    {
+      T profile = new T()
+      {
+        Username = username,
+        Password = password,
+        Email = email,
+        Role = role
+      };
+      return this.AddProfile(profile)
+    }
+
+    public T AddProfile(T profile)
+    {
+      //return repo.CreateProfile(profile);
+      return profile;
+    }
+
+    public void ChangeProfile(T profile)
     {
       throw new NotImplementedException();
     }
 
-    public void ChangeProfile(Profile profile)
+    public T GetProfile(string username)
     {
       throw new NotImplementedException();
     }
 
-    public Profile GetProfile(string username)
-    {
-      throw new NotImplementedException();
-    }
-
-    public IEnumerable<Profile> GetProfiles()
+    public IEnumerable<T> GetProfiles()
     {
       throw new NotImplementedException();
     }
@@ -34,6 +50,12 @@ namespace PB.BL
       throw new NotImplementedException();
     }
 
+    public List<Alert> generateAlerts(T profile)
+    {
+      List<Alert> newAlerts = new List<Alert>();
+      List<Item> currentAlerts = profile.Subscriptions;
 
+      return null;
+    }
   }
 }

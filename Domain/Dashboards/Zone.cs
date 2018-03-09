@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,8 @@ namespace PB.BL.Domain.Dashboards
 {
   public class Zone
   {
+    [Key]
+    public int ZoneId { get; set; }
     public string Name { get; set; }
     public bool IsFull { get; set; }
     public readonly int MAX_ELEMENTS;
