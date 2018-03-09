@@ -9,7 +9,7 @@ namespace PB.BL.Domain.Platform
   public class Page
   {
     public string Title { get; set; }
-    public string FaciconURL { get; set; }
+    public string FaviconURL { get; set; }
     public List<Tag> Tags { get; set; }
   }
 }
