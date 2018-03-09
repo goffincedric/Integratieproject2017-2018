@@ -17,6 +17,6 @@ namespace PB.BL.Domain.Account
 
     [Required]
     [ForeignKey("Username")]
-    public T Profile { get; set; }
+    public Profile Profile { get; set; }
   }
 }

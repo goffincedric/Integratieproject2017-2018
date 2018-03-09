@@ -25,6 +25,6 @@ namespace PB.BL.Domain.Platform
     public Style Style { get; set; }
     public List<SubplatformSetting> Settings { get; set; }
     public List<Page> Pages { get; set; }
-    public List<T> Admins { get; set; }
+    public List<Profile> Admins { get; set; }
   }
 }
