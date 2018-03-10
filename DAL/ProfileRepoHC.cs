@@ -19,8 +19,6 @@ namespace PB.DAL
         Username = "test",
         Password = "password123",
       };
-
-
     }
 
     public Profile CreateProfile(Profile profile)
