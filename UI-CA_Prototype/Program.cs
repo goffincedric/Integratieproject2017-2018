@@ -11,8 +11,32 @@ namespace UI_CA_Prototype
 {
   class Program
   {
+    private static readonly ItemManager itemMgr = new ItemManager();
+    private static readonly AccountManager accountMgr = new AccountManager();
+
+    private static bool stop = false;
+
     static void Main(string[] args)
     {
+      while (!stop)
+      {
+        Console.WriteLine("=======================================");
+        Console.WriteLine("=== Prototype - Politieke barometer ===");
+        Console.WriteLine("=======================================");
+        Console.WriteLine("1) Seed (!! best eerst uitvoeren alvorens acties te testen !!)");
+        Console.WriteLine("2) Generate alerts");
+        Console.WriteLine("0) Afsluiten");
+        try
+        {
+          DetectMenuAction();
+        }
+        catch (Exception e)
+        {
+          Console.WriteLine();
+          Console.WriteLine(e.Message);
+          Console.WriteLine();
+        }
+      }
       //Schrijft 2 test-records weg naar desktop
       //Write();
 
@@ -20,17 +44,44 @@ namespace UI_CA_Prototype
       Seed(true);
     }
 
+    private static void DetectMenuAction()
+    {
+      bool inValidAction = false;
+      do
+      {
+        Console.Write("Keuze: ");
+        int keuze = int.Parse(Console.ReadLine());
+
+        switch (keuze)
+        {
+          case 1:
+            Seed(true);
+            break;
+          case 2:
+            accountMgr.generateAlerts();
+            break;
+          case 0:
+            stop = true;
+            return;
+          default:
+            Console.WriteLine("Geen geldige keuze!");
+            inValidAction = true;
+            break;
+        }
+      } while (inValidAction);
+    }
+
     private static void Seed(bool testSeedOutput)
     {
-      ItemManager itemMgr = new ItemManager();
       itemMgr.Seed();
+      accountMgr.Seed();
+      accountMgr.SubscribeProfiles(itemMgr.GetItems());
 
       if (testSeedOutput)
       {
         //Seed test
-        Record record = itemMgr.GetRecord(908683232232841218);
         Console.WriteLine("Record met id 908683232232841218 (eerste record): ");
-        Console.WriteLine(record.ToString());
+        Console.WriteLine(itemMgr.GetRecord(908683232232841218).ToString());
 
         Console.WriteLine("\nAlle Items:");
         itemMgr.GetItems().ToList().ForEach(i =>
@@ -38,14 +89,10 @@ namespace UI_CA_Prototype
           if (i is Person)
           {
             Person p = (Person)i;
-            Console.WriteLine("(" + p.ItemId + ") " + p.FirstName + " " + p.LastName);
+            Console.WriteLine("(" + p.ItemId + ") " + p.FirstName + " " + p.LastName + " - " + p.Records.Count + " records");
           }
         });
       }
-
-
-
-      Console.ReadLine();
     }
 
 

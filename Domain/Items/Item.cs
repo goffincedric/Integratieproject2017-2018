@@ -15,6 +15,7 @@ namespace PB.BL.Domain.Items
     public int ItemId { get; set; }
     public bool IsHot { get; set; }
     public List<SubPlatform> SubPlatforms { get; set; }
+    public List<Record> Records;
     public List<Keyword> Keywords { get; set; }
   }
 }

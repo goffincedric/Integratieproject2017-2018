@@ -21,6 +21,6 @@ namespace PB.BL.Domain.Account
     public List<UserSetting> Settings { get; set; }
     public Dictionary<SubPlatform, Dashboard> Dashboards { get; set; }
     public List<Alert> Alerts { get; set; }
-    public List<Item> Subscriptions { get; set; }
+    public Dictionary<Item, bool> Subscriptions { get; set; }
   }
 }
