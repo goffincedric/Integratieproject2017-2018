@@ -11,11 +11,12 @@ namespace PB.BL.Domain.Items
   {
     public string Source { get; set; }
     [Key]
-    public int Id { get; set; }
+    public long Id { get; set; }
     public string User_Id { get; set; }
     public List<string> Mentions { get; set; }
     //public string PoliticianFirstName { get; set; }
     //public string PoliticianLastName { get; set; }
+    public DateTime Date;
     public string Geo { get; set; }
     public List<string> Politician { get; set; }
     public bool Retweet { get; set; }
@@ -28,19 +29,11 @@ namespace PB.BL.Domain.Items
     public List<string> URLs { get; set; }
     public DateTime ListUpdatet { get; set; }
 
-    public Record(string source, int id, string user_Id, List<string> mentions, string geo, List<string> politician, bool retweet, List<string> words, List<double> sentiment, List<string> hashtags, List<string> uRLs)
+
+
+    public override string ToString()
     {
-      Source = source;
-      Id = id;
-      User_Id = user_Id;
-      Mentions = mentions;
-      Geo = geo;
-      Politician = politician;
-      Retweet = retweet;
-      Words = words;
-      Sentiment = sentiment;
-      Hashtags = hashtags;
-      URLs = uRLs;
+      return "User_Id: " + User_Id + "\nTweetId: " + Id + "\nNaam: " + Politician[0] + " " + Politician[1];
     }
   }
 }
