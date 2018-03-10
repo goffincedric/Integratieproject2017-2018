@@ -24,6 +24,7 @@ namespace PB.BL
         IconURL = iconURL,
         Keywords = new List<Keyword>(),
         SubPlatforms = new List<SubPlatform>(),
+        Records = new List<Record>(),
         People = new List<Person>()
       };
 
@@ -42,6 +43,7 @@ namespace PB.BL
         Function = function,
         Keywords = new List<Keyword>(),
         SubPlatforms = new List<SubPlatform>(),
+        Records = new List<Record>(),
         Organisation = organisation
       };
 
@@ -55,7 +57,8 @@ namespace PB.BL
         ThemeName = themeName,
         Description = description,
         Keywords = new List<Keyword>(),
-        SubPlatforms = new List<SubPlatform>()
+        SubPlatforms = new List<SubPlatform>(),
+        Records = new List<Record>()
       };
 
       return (Theme)AddItem(theme);
@@ -156,6 +159,7 @@ namespace PB.BL
     public void Seed()
     {
       RecordRepo.Seed();
+
       RecordsToItems();
     }
 
@@ -169,18 +173,25 @@ namespace PB.BL
       IEnumerable<Record> records = RecordRepo.ReadRecords();
       List<Person> people = new List<Person>();
 
+      Item item;
       records.ToList().ForEach(r =>
       {
-        if (people.FirstOrDefault(p => p.FirstName.Equals(r.Politician[0]) && p.LastName.Equals(r.Politician[1])) == null)
+        item = people.FirstOrDefault(p => p.FirstName.Equals(r.Politician[0]) && p.LastName.Equals(r.Politician[1]));
+        if (item == null)
         {
           people.Add(new Person()
           {
             ItemId = people.Count,
             FirstName = r.Politician[0],
             LastName = r.Politician[1],
-            Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w })
+            Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w }),
+            SubPlatforms = new List<SubPlatform>(),
+            Records = new List<Record>() { r }
           });
-        };
+        } else
+        {
+          item.Records.Add(r);
+        }
       });
 
       people.ForEach(p => ItemRepo.CreateItem(p));

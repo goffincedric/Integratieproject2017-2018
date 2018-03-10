@@ -9,17 +9,7 @@ namespace PB.DAL
 {
   public class ProfileRepoHC : IProfileRepoHC
   {
-    private List<Profile> repoProfiles;
-
-    public void Seed()
-    {
-      repoProfiles = new List<Profile>();
-      Profile p1 = new Profile()
-      {
-        Username = "test",
-        Password = "password123",
-      };
-    }
+    private List<Profile> repoProfiles = new List<Profile>();
 
     public Profile CreateProfile(Profile profile)
     {
