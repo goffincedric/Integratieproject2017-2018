@@ -31,7 +31,19 @@ namespace UI_CA_Prototype
         Record record = itemMgr.GetRecord(908683232232841218);
         Console.WriteLine("Record met id 908683232232841218 (eerste record): ");
         Console.WriteLine(record.ToString());
+
+        Console.WriteLine("\nAlle Items:");
+        itemMgr.GetItems().ToList().ForEach(i =>
+        {
+          if (i is Person)
+          {
+            Person p = (Person)i;
+            Console.WriteLine("(" + p.ItemId + ") " + p.FirstName + " " + p.LastName);
+          }
+        });
       }
+
+
 
       Console.ReadLine();
     }

@@ -9,12 +9,7 @@ namespace PB.DAL
 {
   public class ItemRepoHC : IItemRepoHC
   {
-    private List<Item> repoItems;
-
-    public void Seed()
-    {
-      repoItems = new List<Item>();
-    }
+    private List<Item> repoItems = new List<Item>();
 
     public Item CreateItem(Item item)
     {

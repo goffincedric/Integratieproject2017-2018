@@ -156,11 +156,37 @@ namespace PB.BL
     public void Seed()
     {
       RecordRepo.Seed();
+      RecordsToItems();
     }
 
     public void Write(List<Record> records)
     {
       RecordRepo.WriteRecords(records);
     }
+
+    private void RecordsToItems()
+    {
+      IEnumerable<Record> records = RecordRepo.ReadRecords();
+      List<Person> people = new List<Person>();
+
+      records.ToList().ForEach(r =>
+      {
+        if (people.FirstOrDefault(p => p.FirstName.Equals(r.Politician[0]) && p.LastName.Equals(r.Politician[1])) == null)
+        {
+          people.Add(new Person()
+          {
+            ItemId = people.Count,
+            FirstName = r.Politician[0],
+            LastName = r.Politician[1],
+            Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w })
+          });
+        };
+      });
+
+      people.ForEach(p => ItemRepo.CreateItem(p));
+    }
+
+
+
   }
 }
