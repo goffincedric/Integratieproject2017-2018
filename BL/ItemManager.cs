@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace PB.BL
 {
-//heey
   public class ItemManager : IItemManager
   {
     public Organisation AddOrganisation(string name, string SocialMediaLink = null, string IconURL = null)

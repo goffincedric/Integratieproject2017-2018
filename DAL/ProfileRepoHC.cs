@@ -17,7 +17,7 @@ namespace PB.DAL
       Profile p1 = new Profile()
       {
         Username = "test",
-        Password = "123",
+        Password = "password123",
       };
 
 
