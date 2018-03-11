@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace PB.BL.Domain.Items
 {
+  [Table("tblItem")]
   public class Item
   {
     [Key]

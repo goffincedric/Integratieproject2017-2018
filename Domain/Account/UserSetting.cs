@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace PB.BL.Domain.Account
 {
+  [Table("tblUserSetting")]
   public class UserSetting
   {
     [Key]
