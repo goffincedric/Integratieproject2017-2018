@@ -12,17 +12,12 @@ namespace PB.BL.Domain.Account
   {
     public string Street { get; set; }
     public string HouseNumber { get; set; }
+    public int? PostalCode { get; set; }
     public string City { get; set; }
     public Province Province { get; set; }
-    public int? PostalCode { get; set; }
 
     [Required]
     [ForeignKey("Username")]
     public Profile Profile { get; set; }
-
-    public Address(Province province)
-    {
-      this.Province = province;
-    }    
   }
 }
