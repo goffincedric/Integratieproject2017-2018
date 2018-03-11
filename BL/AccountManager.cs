@@ -115,6 +115,8 @@ namespace PB.BL
       profiles.ForEach(p => ProfileRepo.CreateProfile(p));
     }
 
+    // Hardcoded subscriptions --> Voeg toe via menu
+    /*
     public void SubscribeProfiles(IEnumerable<Item> items)
     {
       List<Profile> profiles = GetProfiles().ToList();
@@ -123,6 +125,7 @@ namespace PB.BL
       profiles[1].Subscriptions.Add(items.ToList()[2], false);
       profiles[1].Subscriptions.Add(items.ToList()[5], true);
     }
+    */
 
     public Dictionary<Profile, Alert> generateAlerts()
     {

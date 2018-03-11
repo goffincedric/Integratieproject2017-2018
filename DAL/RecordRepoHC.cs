@@ -40,16 +40,6 @@ namespace PB.DAL
       //MemoryRepo, alle objecten worden automatisch geüpdatet in het geheugen
     }
 
-    public void WriteRecords(List<Record> records)
-    {
-      JsonSerializer serializer = new JsonSerializer();
-      using (StreamWriter sw = new StreamWriter(Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory) + @"\structure.json"))
-      using (JsonWriter writer = new JsonTextWriter(sw))
-      {
-        serializer.Serialize(writer, records);
-      }
-    }
-
     public void Seed()
     {
       recordsRepo = JsonConvert.DeserializeObject<List<Record>>(File.ReadAllText(@"TestData\textgaindump.json"));

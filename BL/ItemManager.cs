@@ -163,11 +163,6 @@ namespace PB.BL
       RecordsToItems();
     }
 
-    public void Write(List<Record> records)
-    {
-      RecordRepo.WriteRecords(records);
-    }
-
     private void RecordsToItems()
     {
       IEnumerable<Record> records = RecordRepo.ReadRecords();
@@ -196,8 +191,5 @@ namespace PB.BL
 
       people.ForEach(p => ItemRepo.CreateItem(p));
     }
-
-
-
   }
 }
