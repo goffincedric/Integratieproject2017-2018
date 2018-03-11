@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EF\IntegratieDbConfiguration.cs" />
+    <Compile Include="EF\IntegratieDbContext.cs" />
+    <Compile Include="EF\IntegratieDbInitializer.cs" />
     <Compile Include="IItemRepoHC.cs" />
     <Compile Include="IProfileRepoHC.cs" />
     <Compile Include="IRecordRepoHC.cs" />
