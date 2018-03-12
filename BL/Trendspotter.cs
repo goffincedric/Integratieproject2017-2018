@@ -9,6 +9,7 @@ namespace PB.BL
   public class Trendspotter
   {
 
+
     //generateAlerts moeten net andersom, De user moet een methode kunnen oproepen die alerts genereert (want is customizable per user) 
     //bv. user1.generateAlerts()
     //dus frequentie bij houden en for each op users en daarop oproepen

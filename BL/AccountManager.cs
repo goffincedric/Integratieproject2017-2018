@@ -116,6 +116,8 @@ namespace PB.BL
     }
 
     // Hardcoded subscriptions --> Voeg toe via menu
+
+    // Fout
     /*
     public void SubscribeProfiles(IEnumerable<Item> items)
     {
