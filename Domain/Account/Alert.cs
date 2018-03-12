@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace PB.BL.Domain.Account
 {
+  [Table("tblAlert")]
   public class Alert
   {
     [Key]
