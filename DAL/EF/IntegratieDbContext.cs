@@ -13,4 +13,5 @@ namespace PB.DAL.EF
       System.Data.Entity.Database.SetInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
     }
   }
-}
+YUUUU
+    

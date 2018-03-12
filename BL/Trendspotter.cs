@@ -32,5 +32,7 @@ klasse aanmaken kunnen we mss meegeven Trendspotter spotter = new Spotter(startD
 om te bepalen tussen welke data de trends berekent moeten worden*/
 
 
+
+
   }
 }
