@@ -17,7 +17,7 @@ namespace PB.DAL.EF
   [DbConfigurationType(typeof(IntegratieDbConfiguration))]
   public class IntegratieDbContext : System.Data.Entity.DbContext
   {
-    internal IntegratieDbContext() : base("name=IntegratieDB_EFCodeFirst")
+    internal IntegratieDbContext() : base("IntegratieDB_EFCodeFirst")
     {
       System.Data.Entity.Database.SetInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
     }
@@ -26,13 +26,13 @@ namespace PB.DAL.EF
     public DbSet<UserData> UserData { get; set; }
     public DbSet<UserSetting> UserSettings { get; set; }
 
-    public DbSet<Comparison> Comparisons { get; set; }
-    public DbSet<Dashboard> Dashboards { get; set; }
-    public DbSet<Element> Elements { get; set; }
-    public DbSet<Graph> Graphs { get; set; }
-    public DbSet<Map> Maps { get; set; }
-    public DbSet<Ranking> Rankings { get; set; }
-    public DbSet<Zone> Zones { get; set; }
+    //public DbSet<Comparison> Comparisons { get; set; }
+    //public DbSet<Dashboard> Dashboards { get; set; }
+    //public DbSet<Element> Elements { get; set; }
+    //public DbSet<Graph> Graphs { get; set; }
+    //public DbSet<Map> Maps { get; set; }
+    //public DbSet<Ranking> Rankings { get; set; }
+    //public DbSet<Zone> Zones { get; set; }
 
     public DbSet<Function> Functions { get; set; }
     public DbSet<Item> Items { get; set; }
@@ -42,16 +42,18 @@ namespace PB.DAL.EF
     public DbSet<Record> Records { get; set; }
     public DbSet<Theme> Themes { get; set; }
 
-    public DbSet<Page> Pages { get; set; }
-    public DbSet<Style> Styles { get; set; }
-    public DbSet<SubPlatform> SubPlatforms { get; set; }
-    public DbSet<SubplatformSetting> SubplatformSettings { get; set; }
-    public DbSet<Tag> Tags { get; set; }
+    //public DbSet<Page> Pages { get; set; }
+    //public DbSet<Style> Styles { get; set; }
+    //public DbSet<SubPlatform> SubPlatforms { get; set; }
+    //public DbSet<SubplatformSetting> SubplatformSettings { get; set; }
+    //public DbSet<Tag> Tags { get; set; }
 
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
-
+      modelBuilder.Properties<DateTime>()
+        .Configure(c => c.HasColumnType("datetime2"));
+      //modelBuilder.Entity<Record>().Property(r => r.Date).HasColumnType("datetime2");
     }
   }
 }

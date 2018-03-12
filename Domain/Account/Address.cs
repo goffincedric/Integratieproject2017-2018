@@ -16,6 +16,9 @@ namespace PB.BL.Domain.Account
     public Province Province { get; set; }
     public int? PostalCode { get; set; }
 
+    [Key]
+    public string Username { get; set; }
+
     [Required]
     [ForeignKey("Username")]
     public Profile Profile { get; set; }

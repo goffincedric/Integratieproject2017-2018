@@ -11,7 +11,7 @@ namespace PB.BL
 {
   public class AccountManager : IAccountManager
   {
-    IProfileRepoHC ProfileRepo = new ProfileRepoHC();
+    IProfileRepo ProfileRepo = new ProfileRepo();
 
     #region Profile
     public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
