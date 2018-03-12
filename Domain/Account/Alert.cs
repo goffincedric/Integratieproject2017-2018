@@ -20,6 +20,8 @@ namespace PB.BL.Domain.Account
     [Required]
     public DateTime TimeStamp { get; set; }
 
+    public string Username { get; set; }
+
     [Required]
     [ForeignKey("Username")]
     public Profile Profile { get; set; }

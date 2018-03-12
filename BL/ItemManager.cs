@@ -11,8 +11,8 @@ namespace PB.BL
 {
   public class ItemManager : IItemManager
   {
-    private ItemRepoHC ItemRepo = new ItemRepoHC();
-    public RecordRepoHC RecordRepo = new RecordRepoHC();
+    private ItemRepo ItemRepo = new ItemRepo();
+    public RecordRepo RecordRepo = new RecordRepo();
 
     #region Items
     public Organisation AddOrganisation(string name, string socialMediaLink = null, string iconURL = null)
@@ -160,7 +160,7 @@ namespace PB.BL
     {
       RecordRepo.Seed();
 
-      RecordsToItems();
+      //RecordsToItems();
     }
 
     private void RecordsToItems()
@@ -177,8 +177,8 @@ namespace PB.BL
           people.Add(new Person()
           {
             ItemId = people.Count,
-            FirstName = r.Politician[0],
-            LastName = r.Politician[1],
+            FirstName = r.Politician.ToList()[0],
+            LastName = r.Politician.ToList()[1],
             Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w }),
             SubPlatforms = new List<SubPlatform>(),
             Records = new List<Record>() { r }

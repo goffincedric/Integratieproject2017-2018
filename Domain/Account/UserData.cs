@@ -8,13 +8,18 @@ using System.Threading.Tasks;
 
 namespace PB.BL.Domain.Account
 {
+  [Table("tblUserData")]
   public class UserData
   {
+
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Telephone { get; set; }
     public Address Address { get; set; }
     public Gender Gender { get; set; }
+
+    [Key]
+    public string Username { get; set; }
 
     [Required]
     [ForeignKey("Username")]
