@@ -13,11 +13,8 @@ namespace PB.DAL.EF
     {
       this.SetDefaultConnectionFactory(new System.Data.Entity.Infrastructure.SqlConnectionFactory());
       this.SetProviderServices("System.Data.SqlClient", System.Data.Entity.SqlServer.SqlProviderServices.Instance);
-      this.SetDatabaseInitializer<IntegratieDbContext>(new IntegratieDbInitializer()); 
-     
+      this.SetDatabaseInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
     }
 
-
-   
   }
 }

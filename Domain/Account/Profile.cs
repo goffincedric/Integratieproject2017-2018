@@ -19,7 +19,7 @@ namespace PB.BL.Domain.Account
     [Required]
     public string Password { get; set; }
     [Required]
-    [RegularExpression(@"^([\w -\.] +)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w -]+\.)+))([a - zA - Z]{2,4}|[0-9]{1,3})(\]?)$")]
+    [RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")]
     public string Email { get; set; }
     public Role Role { get; set; }
     public UserData UserData { get; set; }
@@ -27,6 +27,13 @@ namespace PB.BL.Domain.Account
     public Dictionary<SubPlatform, Dashboard> Dashboards { get; set; }
     public List<Alert> Alerts { get; set; }
     public Dictionary<Item, bool> Subscriptions { get; set; }
+
+
+    public int subplatformId { get; set; }
+
+    [Required]
+    [ForeignKey("subplatformId")]
+    public List<SubPlatform> adminPlatforms { get; set; }
 
     public override string ToString()
     {

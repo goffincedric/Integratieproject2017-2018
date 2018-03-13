@@ -16,7 +16,7 @@ namespace PB.BL.Domain.Items
     [Key]
     public long Id { get; set; }
     public string User_Id { get; set; }
-    public virtual List<string> Mentions { get; set; }
+    public List<string> Mentions { get; set; }
     //public string PoliticianFirstName { get; set; }
     //public string PoliticianLastName { get; set; }
     public DateTime Date;
@@ -31,8 +31,6 @@ namespace PB.BL.Domain.Items
     public List<string> Hashtags { get; set; }
     public List<string> URLs { get; set; }
     public DateTime ListUpdatet { get; set; }
-
-
 
     public override string ToString()
     {
