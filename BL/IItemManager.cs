@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Items;
 
 namespace PB.BL
 {
@@ -23,7 +24,7 @@ namespace PB.BL
 
     IEnumerable<Record> GetRecords();
     Record GetRecord(long id);
-    Record AddRecord(string source, long id, string user_Id, List<string> mentions, DateTime date, string geo, List<string> politician, bool retweet, List<string> words, List<double> sentiment, List<string> hashtags, List<string> uRLs);
+    Record AddRecord(string source, long id, string user_Id, List<Mention> mentions, DateTime date, string geo, Politician politician, bool retweet, List<Words> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs);
     void ChangeRecord(Record record);
     void RemoveRecord(long id);
   }
