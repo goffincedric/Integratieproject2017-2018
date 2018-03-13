@@ -51,6 +51,8 @@ namespace PB.DAL
       
       JsonConvert.DeserializeObject<List<Record>>(File.ReadAllText(@"TestData\textgaindump.json")).ForEach(r => ctx.Records.Add(r));
       ctx.SaveChanges();
+
+  
     }
   }
 }
