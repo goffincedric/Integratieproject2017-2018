@@ -98,7 +98,7 @@ namespace UI_CA_Prototype
            // accountMgr.generateAlerts(); 
             break;
           case 6:
-            extensionMethods.ShowRecords(itemMgr.GetRecords());
+           // extensionMethods.ShowRecords(itemMgr.GetRecords());
             break;
           case 7:
             extensionMethods.ShowItems(itemMgr.GetItems());

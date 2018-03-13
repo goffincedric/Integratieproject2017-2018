@@ -18,7 +18,7 @@ namespace Domain.Items
     //public string PoliticianLastName { get; set; }
     public DateTime Date;
     public string Geo { get; set; }
-    public List<Politician> Politician { get; set; }
+    public Politician Politician { get; set; }
     public bool Retweet { get; set; }
     //public DateTime BirthDay { get; set; }
     public List<Words> Words { get; set; }
@@ -31,7 +31,7 @@ namespace Domain.Items
 
     public override string ToString()
     {
-      return "User_Id: " + User_Id + "\nTweetId: " + Id + "\nNaam: " + Politician[0] + " " + Politician[1];
+      return "User_Id: " + User_Id + "\nTweetId: " + Id;
     }
   }
 }

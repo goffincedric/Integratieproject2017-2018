@@ -38,10 +38,10 @@ namespace UI_CA_Prototype
     }
 
     //Show all records sorted by Name, then by Date descending
-    public void ShowRecords(IEnumerable<Record> records)
-    {
-      records.OrderBy(r => r.Politician[0]).ThenByDescending(r => r.Date).ToList().ForEach(r => Console.WriteLine(r.Date.ToString() + " - " + r.Politician[0] + " " + r.Politician[1] + " (" + r.Id + ")"));
-    }
+    //public void ShowRecords(IEnumerable<Record> records)
+    //{
+    //  records.OrderBy(r => r.Politician[0]).ThenByDescending(r => r.Date).ToList().ForEach(r => Console.WriteLine(r.Date.ToString() + " - " + r.Politician[0] + " " + r.Politician[1] + " (" + r.Id + ")"));
+    //}
 
     //Lets the user select an available item
     public Item SelectItem(IEnumerable<Item> items)

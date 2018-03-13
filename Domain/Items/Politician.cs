@@ -13,18 +13,15 @@ namespace Domain.Items
   {
     [Key] public int Number { get; set; }
 
-    [Required]
-    public String Name { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 
-    public Politician(string name)
+    public Politician(string firstName, string lastName)
     {
-      Name = name;
-
+      FirstName = firstName;
+      LastName = lastName;
     }
 
-    public override string ToString()
-    {
-      return Name;
-    }
+    
   }
 }

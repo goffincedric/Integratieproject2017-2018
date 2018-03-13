@@ -118,7 +118,7 @@ namespace PB.BL
       return RecordRepo.ReadRecord(id);
     }
 
-    public Record AddRecord(string source, long id, string user_Id, List<Mention> mentions, DateTime date, string geo, List<Politician> politician,
+    public Record AddRecord(string source, long id, string user_Id, List<Mention> mentions, DateTime date, string geo, Politician politician,
       bool retweet, List<Words> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs)
     {
       Record record = new Record()
