@@ -1,5 +1,7 @@
 ﻿using PB.BL.Domain.Account;
+using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
 using PB.DAL;
 using System;
 using System.Collections.Generic;
@@ -63,7 +65,11 @@ namespace PB.BL
           Password = "schlack1",
           Role = Role.USER,
           Subscriptions = new Dictionary<Item, bool>(),
-          Alerts = new List<Alert>()
+          Alerts = new List<Alert>(),
+          Settings = new List<UserSetting>(),
+          Dashboards = new Dictionary<SubPlatform, Dashboard>(),
+          UserData = new UserData(),
+          adminPlatforms = new List<SubPlatform>()
         },
         new Profile()
         {
@@ -72,7 +78,11 @@ namespace PB.BL
           Password = "schlack2",
           Role = Role.USER,
           Subscriptions = new Dictionary<Item, bool>(),
-          Alerts = new List<Alert>()
+          Alerts = new List<Alert>(),
+          Settings = new List<UserSetting>(),
+          Dashboards = new Dictionary<SubPlatform, Dashboard>(),
+          UserData = new UserData(),
+          adminPlatforms = new List<SubPlatform>()
         },
         new Profile()
         {
@@ -81,7 +91,11 @@ namespace PB.BL
           Password = "schlack3",
           Role = Role.USER,
           Subscriptions = new Dictionary<Item, bool>(),
-          Alerts = new List<Alert>()
+          Alerts = new List<Alert>(),
+          Settings = new List<UserSetting>(),
+          Dashboards = new Dictionary<SubPlatform, Dashboard>(),
+          UserData = new UserData(),
+          adminPlatforms = new List<SubPlatform>()
         },
         new Profile()
         {
@@ -90,7 +104,11 @@ namespace PB.BL
           Password = "schlack4",
           Role = Role.USER,
           Subscriptions = new Dictionary<Item, bool>(),
-          Alerts = new List<Alert>()
+          Alerts = new List<Alert>(),
+          Settings = new List<UserSetting>(),
+          Dashboards = new Dictionary<SubPlatform, Dashboard>(),
+          UserData = new UserData(),
+          adminPlatforms = new List<SubPlatform>()
         },
         new Profile()
         {
@@ -99,7 +117,11 @@ namespace PB.BL
           Password = "schlack5",
           Role = Role.USER,
           Subscriptions = new Dictionary<Item, bool>(),
-          Alerts = new List<Alert>()
+          Alerts = new List<Alert>(),
+          Settings = new List<UserSetting>(),
+          Dashboards = new Dictionary<SubPlatform, Dashboard>(),
+          UserData = new UserData(),
+          adminPlatforms = new List<SubPlatform>()
         },
         new Profile()
         {
@@ -108,7 +130,11 @@ namespace PB.BL
           Password = "schlack6",
           Role = Role.USER,
           Subscriptions = new Dictionary<Item, bool>(),
-          Alerts = new List<Alert>()
+          Alerts = new List<Alert>(),
+          Settings = new List<UserSetting>(),
+          Dashboards = new Dictionary<SubPlatform, Dashboard>(),
+          UserData = new UserData(),
+          adminPlatforms = new List<SubPlatform>()
         }
       };
 

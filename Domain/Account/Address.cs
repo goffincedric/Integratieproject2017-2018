@@ -13,9 +13,9 @@ namespace PB.BL.Domain.Account
   {
     public string Street { get; set; }
     public string HouseNumber { get; set; }
+    public int? PostalCode { get; set; }
     public string City { get; set; }
     public Province Province { get; set; }
-    public int? PostalCode { get; set; }
 
     [Key]
     public string Username { get; set; }
@@ -23,10 +23,5 @@ namespace PB.BL.Domain.Account
     [Required]
     [ForeignKey("Username")]
     public Profile Profile { get; set; }
-
-    public Address(Province province)
-    {
-      this.Province = province;
-    }    
   }
 }
