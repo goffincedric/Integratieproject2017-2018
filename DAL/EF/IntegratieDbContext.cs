@@ -54,7 +54,7 @@ namespace PB.DAL.EF
       modelBuilder.Entity<Item>().HasMany(t => t.Keywords).WithMany(t => t.Items)
                     .Map(m =>
                     {
-                      m.ToTable("tblKeywordId");
+                      m.ToTable("tblKeywordItem");
 
                     }
                       );

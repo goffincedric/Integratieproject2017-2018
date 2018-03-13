@@ -26,7 +26,7 @@ namespace PB.DAL.EF
       //    "imade",
       //    "iran"
       //  },
-      //  Date = DateTime.Parse("2017-09-11 04:53:38"),
+      //  Date = DateTime.Now,
       //  Politician = new List<string>() {
       //    "Imade",
       //    "Annouri"
@@ -46,45 +46,45 @@ namespace PB.DAL.EF
       //  Mentions = new List<string>()
       //};
 
-      Record record2 = new Record()
-      {
-        Hashtags = new List<string>()
-        {
-          "Firsts,"
-        },
-        Words = new List<string>()
-        {
-          "annouri",
-          "imade",
-          "reeks",
-          "time"
-        },
-        Date = new DateTime(2017, 09, 07, 12, 52, 35),
-        Politician = new List<string>()
-        {
-          "Imade",
-          "Annouri"
-        },
-        Geo = "N/A",
-        Id = 905926801804980200,
-        User_Id = "N/A",
-        Sentiment = new List<double>()
-        {
-          0.7,
-          1
-        },
-        Retweet = false,
-        Source = "twitter",
-        URLs = new List<string>()
-        {
-          "https://twitter.com/TIME/status/905785286092877824",
-          "http://pltwps.it/_xV6mWwE"
-        },
-        Mentions = new List<string>()
-      };
+      //Record record2 = new Record()
+      //{
+      //  Hashtags = new List<string>()
+      //  {
+      //    "Firsts,"
+      //  },
+      //  Words = new List<string>()
+      //  {
+      //    "annouri",
+      //    "imade",
+      //    "reeks",
+      //    "time"
+      //  },
+      //  Date = DateTime.Now,
+      //  Politician = new List<string>()
+      //  {
+      //    "Imade",
+      //    "Annouri"
+      //  },
+      //  Geo = "N/A",
+      //  Id = 905926801804980200,
+      //  User_Id = "N/A",
+      //  Sentiment = new List<double>()
+      //  {
+      //    0.7,
+      //    1
+      //  },
+      //  Retweet = false,
+      //  Source = "twitter",
+      //  URLs = new List<string>()
+      //  {
+      //    "https://twitter.com/TIME/status/905785286092877824",
+      //    "http://pltwps.it/_xV6mWwE"
+      //  },
+      //  Mentions = new List<string>()
+      //};
 
       //context.Records.Add(record1);
-      context.Records.Add(record2);
+      //context.Records.Add(record2);
       context.SaveChanges();
     }
   }
