@@ -42,6 +42,7 @@ namespace UI_CA_Prototype
         Console.WriteLine("7) Toon alle items");
         Console.WriteLine("8) Toon subscribed items van geselecteerd profiel");
         Console.WriteLine("0) Afsluiten");
+        Console.WriteLine("19) TEST SEARCH");
         try
         {
           DetectMenuAction();
@@ -54,6 +55,14 @@ namespace UI_CA_Prototype
         }
         Console.WriteLine("\n");
       }
+    }
+
+    private static void testSearch()
+    {
+     List<Profile> test =  accountMgr.searchUsers();
+
+      test.ForEach(t => Console.WriteLine(t.Username)); 
+
     }
 
     private static void DetectMenuAction()
@@ -82,7 +91,7 @@ namespace UI_CA_Prototype
             accountMgr.ChangeProfile(selectedProfile);
             break;
           case 5:
-            accountMgr.generateAlerts(); 
+           // accountMgr.generateAlerts(); 
             break;
           case 6:
             extensionMethods.ShowRecords(itemMgr.GetRecords());
@@ -92,6 +101,9 @@ namespace UI_CA_Prototype
             break;
           case 8:
             extensionMethods.ShowSubcsribedItems(selectedProfile);
+            break;
+          case 19:
+            testSearch();
             break;
           case 0:
             stop = true;
