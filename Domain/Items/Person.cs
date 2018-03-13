@@ -18,6 +18,9 @@ namespace PB.BL.Domain.Items
     public Function Function { get; set; }
     public Organisation Organisation { get; set; }
 
+
+ 
+
     public override string ToString()
     {
       return FirstName + " " + LastName + " (Id: " + (ItemId) + ") - Aantal records: " + Records.Count;

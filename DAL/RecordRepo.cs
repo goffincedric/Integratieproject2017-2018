@@ -55,8 +55,7 @@ namespace PB.DAL
 
       List<Mention> mentions;
       List<Words> words;
-      List<Politician> politicians;
-      List<Hashtag> hashtags;
+    List<Hashtag> hashtags;
       List<Url> urls;
 
       foreach (var el in list)
@@ -77,11 +76,7 @@ namespace PB.DAL
           words.Add(new Words(w));
         }
 
-        politicians = new List<Politician>();
-        foreach (var p in el.Politician)
-        {
-          politicians.Add(new Politician(p));
-        }
+       
 
         hashtags = new List<Hashtag>();
         foreach (var h in el.Hashtags)
@@ -97,19 +92,19 @@ namespace PB.DAL
 
         Record record = new Record()
         {
-          Id = el.Id,
-          User_Id = el.User_Id,
-          Mentions = mentions,
-          Source = el.Source,
-          Date = el.Date,
-          Geo = el.Geo,
-          Politician = politicians,
-          Retweet = el.Retweet,
-          Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
-          Hashtags = hashtags,
-          URLs = urls,
+          Id          = el.Id,
+          User_Id     = el.User_Id,
+          Mentions    = mentions,
+          Source      = el.Source,
+          Date        = el.Date,
+          Geo         = el.Geo,
+          Politician  = new Politician(el.Politician[0], el.Politician[1]),
+          Retweet     = el.Retweet,
+          Sentiment   = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
+          Hashtags    = hashtags,
+          URLs        = urls,
           ListUpdatet = DateTime.Now,
-          Words = words
+          Words       = words
 
         };
         ctx.Records.Add(record);
