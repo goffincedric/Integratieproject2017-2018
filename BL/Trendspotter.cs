@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PB.BL.Domain.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,18 @@ maar als we dan een trendspotter
 klasse aanmaken kunnen we mss meegeven Trendspotter spotter = new Spotter(startDate, EndDate) 
 om te bepalen tussen welke data de trends berekent moeten worden*/
 
+      
+
+    public  IEnumerable<T> spotTrends()
+    {
+      return null; 
+
+    }
+
+    public void generateAlert(Profile profile, string Trend)
+    {
+
+    }
 
 
 

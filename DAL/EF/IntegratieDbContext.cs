@@ -51,6 +51,16 @@ namespace PB.DAL.EF
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
+      modelBuilder.Entity<Item>().HasMany(t => t.Keywords).WithMany(t => t.Items)
+                    .Map(m =>
+                    {
+                      m.ToTable("tblKeywordItem");
+
+                    }
+                      );
+      modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+      modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+      modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
       modelBuilder.Properties<DateTime>()
         .Configure(c => c.HasColumnType("datetime2"));
       //modelBuilder.Entity<Record>().Property(r => r.Date).HasColumnType("datetime2");

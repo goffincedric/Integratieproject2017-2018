@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace PB.BL.Domain.Account
 {
+  [Table("tblAdresses")]
   public class Address
   {
     public string Street { get; set; }

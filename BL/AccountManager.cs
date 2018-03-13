@@ -155,48 +155,69 @@ namespace PB.BL
     }
     */
 
-    public Dictionary<Profile, Alert> generateAlerts()
+    public List<Profile> searchUsers()
     {
-      Dictionary<Profile, Alert> newAlerts = new Dictionary<Profile, Alert>();
       List<Profile> profiles = GetProfiles().ToList();
-      
-      profiles.ForEach(profile =>
+      HashSet<Profile> profilesWithSubs = new HashSet<Profile>();
+      profiles.ForEach(p =>
       {
-        foreach(KeyValuePair<Item, bool> subscription in profile.Subscriptions)
+        foreach(KeyValuePair<Item,bool> subscription in p.Subscriptions)
         {
           if (subscription.Value)
           {
-            List<Record> sortedByDate = new List<Record>();
-            List<Record> huidige = new List<Record>();
-            List<Record> vorige = new List<Record>();
-
-            sortedByDate = subscription.Key.Records.OrderByDescending(r => r.Date).ToList();
+            profilesWithSubs.Add(p);
             
-            //Toont alle records van een subscribed item
-            //sortedByDate.ForEach(r => Console.WriteLine(r.Date.ToString() + " - " + r.Politician[0] + " " + r.Politician[1] + " (" + r.Id + ")"));
-
-            DateTime huidigeDate = sortedByDate[0].Date.Date;
-            DateTime vorigeDate = sortedByDate.First(r => huidigeDate.Date.CompareTo(r.Date) > 0).Date.Date;
-
-            huidige = sortedByDate.FindAll(r => r.Date.CompareTo(huidigeDate) >= 0);
-            vorige = sortedByDate.FindAll(r => r.Date.CompareTo(vorigeDate) >= 0 && r.Date.CompareTo(huidigeDate) < 0);
-
-            //Toont de laatste en voorlaatste dag + de hoeveelheid records van een subscribed item waarvan er een record gevonden
-            //Console.WriteLine(Aantal records: huidige.Count);
-            //Console.WriteLine(Aantal records: vorige.Count);
-
-
-            /* TODO:
-             * Kijken of item persoon / Thema / Organisatie is
-             *    ==> andere trend-detectiemethodes + alertteksten, ...
-             * 
-             **/
           }
         }
+
       });
+      return null; 
 
-
-      return newAlerts;
     }
+
+    //public Dictionary<Profile, Alert> generateAlerts()
+    //{
+
+    //  Dictionary<Profile, Alert> newAlerts = new Dictionary<Profile, Alert>();
+    //  List<Profile> profiles = GetProfiles().ToList();
+      
+    //  profiles.ForEach(profile =>
+    //  {
+    //    foreach(KeyValuePair<Item, bool> subscription in profile.Subscriptions)
+    //    {
+    //      if (subscription.Value)
+    //      {
+    //        List<Record> sortedByDate = new List<Record>();
+    //        List<Record> huidige = new List<Record>();
+    //        List<Record> vorige = new List<Record>();
+
+    //        sortedByDate = subscription.Key.Records.OrderByDescending(r => r.Date).ToList();
+            
+    //        //Toont alle records van een subscribed item
+    //        //sortedByDate.ForEach(r => Console.WriteLine(r.Date.ToString() + " - " + r.Politician[0] + " " + r.Politician[1] + " (" + r.Id + ")"));
+
+    //        DateTime huidigeDate = sortedByDate[0].Date.Date;
+    //        DateTime vorigeDate = sortedByDate.First(r => huidigeDate.Date.CompareTo(r.Date) > 0).Date.Date;
+
+    //        huidige = sortedByDate.FindAll(r => r.Date.CompareTo(huidigeDate) >= 0);
+    //        vorige = sortedByDate.FindAll(r => r.Date.CompareTo(vorigeDate) >= 0 && r.Date.CompareTo(huidigeDate) < 0);
+
+    //        //Toont de laatste en voorlaatste dag + de hoeveelheid records van een subscribed item waarvan er een record gevonden
+    //        //Console.WriteLine(Aantal records: huidige.Count);
+    //        //Console.WriteLine(Aantal records: vorige.Count);
+
+
+    //        /* TODO:
+    //         * Kijken of item persoon / Thema / Organisatie is
+    //         *    ==> andere trend-detectiemethodes + alertteksten, ...
+    //         * 
+    //         **/
+    //      }
+    //    }
+    //  });
+
+
+    //  return newAlerts;
+    //}
   }
 }

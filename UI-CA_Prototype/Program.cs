@@ -1,8 +1,10 @@
-﻿using PB.BL;
+﻿using Newtonsoft.Json;
+using PB.BL;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +44,7 @@ namespace UI_CA_Prototype
         Console.WriteLine("7) Toon alle items");
         Console.WriteLine("8) Toon subscribed items van geselecteerd profiel");
         Console.WriteLine("0) Afsluiten");
+        Console.WriteLine("19) TEST SEARCH");
         try
         {
           DetectMenuAction();
@@ -54,6 +57,15 @@ namespace UI_CA_Prototype
         }
         Console.WriteLine("\n");
       }
+    }
+
+    private static void testSearch()
+    {
+      //List<Profile> test =  accountMgr.searchUsers();
+
+      // test.ForEach(t => Console.WriteLine(t.Username)); 
+      JsonConvert.DeserializeObject<List<Record>>(File.ReadAllText(@"TestData\textgaindump.json")).ForEach(r => Console.WriteLine(r.ToString()));
+
     }
 
     private static void DetectMenuAction()
@@ -82,7 +94,7 @@ namespace UI_CA_Prototype
             accountMgr.ChangeProfile(selectedProfile);
             break;
           case 5:
-            accountMgr.generateAlerts(); 
+           // accountMgr.generateAlerts(); 
             break;
           case 6:
             extensionMethods.ShowRecords(itemMgr.GetRecords());
@@ -92,6 +104,9 @@ namespace UI_CA_Prototype
             break;
           case 8:
             extensionMethods.ShowSubcsribedItems(selectedProfile);
+            break;
+          case 19:
+            testSearch();
             break;
           case 0:
             stop = true;
