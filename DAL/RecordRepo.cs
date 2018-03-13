@@ -45,7 +45,9 @@ namespace PB.DAL
 
     public void UpdateRecord(Record record)
     {
-      //MemoryRepo, alle objecten worden automatisch geüpdatet in het geheugen
+      ctx.Records.Attach(record);
+      ctx.Entry(record).State = System.Data.Entity.EntityState.Modified;
+      ctx.SaveChanges();
     }
 
     public void Seed()
@@ -112,8 +114,6 @@ namespace PB.DAL
       }
 
       ctx.SaveChanges();
-
-
     }
   }
 }

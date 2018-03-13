@@ -41,7 +41,9 @@ namespace PB.DAL
 
     public void UpdateItem(Item item)
     {
-      //MemoryRepo, alle objecten worden automatisch geüpdatet in het geheugen
+      ctx.Items.Attach(item);
+      ctx.Entry(item).State = System.Data.Entity.EntityState.Modified;
+      ctx.SaveChanges();
     }
   }
 }
