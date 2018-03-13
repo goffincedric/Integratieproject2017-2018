@@ -1,8 +1,10 @@
-﻿using PB.BL;
+﻿using Newtonsoft.Json;
+using PB.BL;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,9 +61,10 @@ namespace UI_CA_Prototype
 
     private static void testSearch()
     {
-     List<Profile> test =  accountMgr.searchUsers();
+      //List<Profile> test =  accountMgr.searchUsers();
 
-      test.ForEach(t => Console.WriteLine(t.Username)); 
+      // test.ForEach(t => Console.WriteLine(t.Username)); 
+      JsonConvert.DeserializeObject<List<Record>>(File.ReadAllText(@"TestData\textgaindump.json")).ForEach(r => Console.WriteLine(r.ToString()));
 
     }
 
