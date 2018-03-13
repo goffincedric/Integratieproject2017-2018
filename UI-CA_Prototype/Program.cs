@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Items;
 
 namespace UI_CA_Prototype
 {
