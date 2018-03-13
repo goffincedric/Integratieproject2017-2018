@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Items;
 
 namespace PB.BL
 {
@@ -117,7 +118,8 @@ namespace PB.BL
       return RecordRepo.ReadRecord(id);
     }
 
-    public Record AddRecord(string source, long id, string user_Id, List<string> mentions, DateTime date, string geo, List<string> politician, bool retweet, List<string> words, List<double> sentiment, List<string> hashtags, List<string> uRLs)
+    public Record AddRecord(string source, long id, string user_Id, List<Mention> mentions, DateTime date, string geo, List<Politician> politician,
+      bool retweet, List<Words> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs)
     {
       Record record = new Record()
       {
@@ -167,29 +169,37 @@ namespace PB.BL
     {
       IEnumerable<Record> records = RecordRepo.ReadRecords();
       List<Person> people = new List<Person>();
-
+      IEnumerable<Item> persons = ItemRepo.ReadItems(); 
       Item item;
-      records.ToList().ForEach(r =>
-      {
-        item = people.FirstOrDefault(p => p.FirstName.Equals(r.Politician[0]) && p.LastName.Equals(r.Politician[1]));
-        if (item == null)
-        {
-          people.Add(new Person()
-          {
-            ItemId = people.Count,
-            FirstName = r.Politician.ToList()[0],
-            LastName = r.Politician.ToList()[1],
-            Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w }),
-            SubPlatforms = new List<SubPlatform>(),
-            Records = new List<Record>() { r }
-          });
-        } else
-        {
-          item.Records.Add(r);
-        }
-      });
 
-      people.ForEach(p => ItemRepo.CreateItem(p));
+      var enumerable = persons.ToList();
+      foreach (var i in records)
+      {
+        }
+        
+      }
+     //records.ToList().ForEach(r =>
+     // {
+     //   item  = people.FirstOrDefault(p => p.FirstName.Equals(r.Politician) && p.LastName.Equals(r.Politician));
+     //   if (item == null)
+     //   {
+     //     people.Add(new Person()
+     //     {
+     //       ItemId = people.Count,
+     //       FirstName = r.Politician.ToList()[0],
+     //       LastName = r.Politician.ToList()[1],
+     //       Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w }),
+     //       SubPlatforms = new List<SubPlatform>(),
+     //       Records = new List<Record>() { r }
+     //     });
+     //   }
+     //   else
+     //   {
+     //     item.Records.Add(r);
+     //   }
+     // });
+
+      //people.ForEach(p => ItemRepo.CreateItem(p));
     }
   }
-}
+

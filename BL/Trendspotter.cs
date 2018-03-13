@@ -35,11 +35,7 @@ om te bepalen tussen welke data de trends berekent moeten worden*/
 
       
 
-    public  IEnumerable<T> spotTrends()
-    {
-      return null; 
-
-    }
+ 
 
     public void generateAlert(Profile profile, string Trend)
     {

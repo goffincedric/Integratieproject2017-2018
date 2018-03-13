@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Infrastructure.Annotations;
+using Domain.Items;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
