@@ -17,10 +17,7 @@ namespace PB.DAL
     {
         private IntegratieDbContext ctx;
 
-        public RecordRepo()
-        {
-            ctx = new IntegratieDbContext();
-        }
+        public RecordRepo() => ctx = new IntegratieDbContext();
 
         public Record CreateRecord(Record record)
         {
@@ -29,21 +26,20 @@ namespace PB.DAL
           return record;
         }
 
+        public void DeleteRecord(long id) => ctx.Records.Remove(ReadRecord(id));
         public void DeleteRecord(long id)
         {
           ctx.Records.Remove(ReadRecord(id));
           ctx.SaveChanges();
         }
 
+        public Record ReadRecord(long id) => ctx.Records.FirstOrDefault(r => r.Id == id);
         public Record ReadRecord(long Tweet_Id)
         {
           return ctx.Records.FirstOrDefault(r => r.Tweet_Id == Tweet_Id);
         }
 
-        public IEnumerable<Record> ReadRecords()
-        {
-            return ctx.Records.AsEnumerable();
-        }
+        public IEnumerable<Record> ReadRecords() => ctx.Records.AsEnumerable();
 
         public void UpdateRecord(Record record)
         {
@@ -52,9 +48,12 @@ namespace PB.DAL
             ctx.SaveChanges();
         }
 
-        public int GetNumberofMentions(Record record)
+        public int GetNumberofMentions(Record record) => record.Mentions.Count;
+
+        public IEnumerable<Record> GetAllRecordsBefore(Record record, DateTime end)
         {
-            return record.Mentions.Count;
+            // Returnt een lijst van Records met vermelding van dezelfde politieker. Er kan een einddatum worden meegegeven. 
+            return ctx.Records.Where(x => x.Date < end).Concat(ctx.Records.Where(x => x.Politician.Number.Equals(record.Politician.Number)));
         }
 
         public IEnumerable<Record> GetAllRecordsBefore(Record record){
