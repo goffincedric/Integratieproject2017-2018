@@ -59,16 +59,21 @@ namespace PB.BL
 
         NewCount.Add(TestRecord.RecordPerson, count);
       }
+
+      // Eventueel korter? 
+      foreach (Record rec in NewRecords)
+      {
+        int count;
+        count = NewRecords.Count(r => r.RecordPerson.LastName == rec.RecordPerson.LastName) + 1;
+        NewCount.Add(rec.RecordPerson, count);
+
+      }
+      NewRecords = null;
+
       Console.WriteLine(NewCount.Count());
       Console.WriteLine(OldCount.Count());
-    }
 
-    public void generateAlert(Profile profile, string Trend)
-    {
 
     }
-
-
-
   }
 }
