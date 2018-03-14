@@ -11,31 +11,6 @@ namespace PB.BL
   public class Trendspotter
   {
 
-    public void VoorspelAantal(IEnumerable<Record> records, DateTime start, DateTime end)
-    {
-      DateTime lastDate = records.ToList().OrderByDescending(r => r.Date).ToList()[0].Date;
-
-      List<Record> OldRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-14).Date && r.Date.Date < lastDate.Date).ToList();
-      List<Record> NewRecords = records.Where(r => r.Date.Date.Equals(lastDate.Date)).ToList();
-
-      while (OldRecords.Count > 0)
-      {
-        Record TestRecord;
-        TestRecord = OldRecords.First();
-
-        double average;
-
-        OldRecords.RemoveAt(0);
-
-        //dumb but working average (needs better workout)
-        average = (OldRecords.Count(r => r.RecordPerson.LastName == TestRecord.RecordPerson.LastName) + 1) / 13;
-
-        OldRecords.RemoveAll(r => r.RecordPerson.LastName == TestRecord.RecordPerson.LastName);
-
-        OldCount.Add(TestRecord.RecordPerson, average);
-      }
-
-    }
     //generateAlerts moeten net andersom, De user moet een methode kunnen oproepen die alerts genereert (want is customizable per user) 
     //bv. user1.generateAlerts()
     //dus frequentie bij houden en for each op users en daarop oproepen
