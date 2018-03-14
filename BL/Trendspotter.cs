@@ -46,7 +46,8 @@ om te bepalen tussen welke data de trends berekent moeten worden*/
             List<Record> NewRecords = new List<Record>();
 
             NewRecords = records.Where(r => r.ListUpdatet.Date.Equals(DateTime.Now.Date)).ToList();
-            OldRecords = records.Where(r => r.ListUpdatet.Date.Equals(DateTime.Now.Date)).ToList();
+            // Records ouder dan huidige dag
+            OldRecords = records.Where(r => r.ListUpdatet < DateTime.Now).ToList();
 
             foreach (Record r in NewRecords)
             {
