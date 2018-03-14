@@ -108,7 +108,7 @@ namespace PB.DAL
           Source = el.Source,
           Date = el.Date,
           Geo = el.Geo,
-          RecordPerson = new RecordPerson(el.Politician[0], el.Politician[1]),
+          RecordPerson = new RecordPerson() { FirstName = el.Politician[0], LastName = el.Politician[1] },
           Retweet = el.Retweet,
           Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
           Hashtags = hashtags,
