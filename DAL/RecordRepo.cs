@@ -8,12 +8,12 @@ using Domain.Items;
 using Domain.JSONConversion;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using PB.BL.Domain.Items;
 using PB.DAL.EF;
 
 namespace PB.DAL
 {
-
+  public class RecordRepo : IRecordRepo
+  {
     private IntegratieDbContext ctx;
 
     public RecordRepo()
@@ -38,7 +38,7 @@ namespace PB.DAL
     {
       return ctx.Records.FirstOrDefault(r => r.Tweet_Id == Tweet_Id);
     }
-  
+
     public IEnumerable<Record> ReadRecords()
     {
       return ctx.Records.AsEnumerable();
@@ -56,18 +56,18 @@ namespace PB.DAL
       return record.Mentions.Count;
     }
 
-        public IEnumerable<Record> GetAllRecordsBefore(Record record, DateTime end) =>
-            // Returnt een lijst van Records met vermelding van dezelfde politieker. Er kan een einddatum worden meegegeven. 
-            ctx.Records.Where(x => x.Date < end).Concat(ctx.Records.Where(x => x.Politician.Number.Equals(record.Politician.Number)));
+    public IEnumerable<Record> GetAllRecordsBefore(Record record, DateTime end) =>
+        // Returnt een lijst van Records met vermelding van dezelfde politieker. Er kan een einddatum worden meegegeven. 
+        ctx.Records.Where(x => x.Date < end).Concat(ctx.Records.Where(x => x.RecordPerson.Number.Equals(record.RecordPerson.Number)));
 
-        public void Seed()
+    public void Seed()
     {
 
       var list = JsonConvert.DeserializeObject<List<JCLASS>>(File.ReadAllText(@"TestData\textgaindump.json"));
 
       List<Mention> mentions;
       List<Words> words;
-    List<Hashtag> hashtags;
+      List<Hashtag> hashtags;
       List<Url> urls;
 
       foreach (var el in list)
@@ -107,7 +107,7 @@ namespace PB.DAL
           Source = el.Source,
           Date = el.Date,
           Geo = el.Geo,
-          Politician = new RecordPerson(el.Politician[0], el.Politician[1]),
+          RecordPerson = new RecordPerson(el.Politician[0], el.Politician[1]),
           Retweet = el.Retweet,
           Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
           Hashtags = hashtags,

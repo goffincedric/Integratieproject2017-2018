@@ -17,7 +17,7 @@ namespace Domain.Items
     //public string PoliticianLastName { get; set; }
     public DateTime Date { get; set; }
     public string Geo { get; set; }
-    public RecordPerson Politician { get; set; }
+    public RecordPerson RecordPerson { get; set; }
     public bool Retweet { get; set; }
     //public DateTime BirthDay { get; set; }
     public List<Words> Words { get; set; }

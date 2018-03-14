@@ -119,19 +119,19 @@ namespace PB.BL
       return RecordRepo.ReadRecord(id);
     }
 
-    public Record AddRecord(string source, long id, string user_Id, List<Mention> mentions, DateTime date, string geo, Politician politician,
+    public Record AddRecord(string source, long tweet_Id, string user_Id, List<Mention> mentions, DateTime date, string geo, RecordPerson recordPerson,
       bool retweet, List<Words> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs)
     {
       Record record = new Record()
       {
 
         Source = source,
-        Id = id,
+        Tweet_Id = tweet_Id,
         User_Id = user_Id,
         Mentions = mentions,
         Date = date,
         Geo = geo,
-        Politician = politician,
+        RecordPerson = recordPerson,
         Retweet = retweet,
         Words = words,
         Sentiment = sentiment,
@@ -170,45 +170,45 @@ namespace PB.BL
     {
       IEnumerable<Record> records = RecordRepo.ReadRecords();
       List<Person> people = new List<Person>();
-      IEnumerable<Item> persons = ItemRepo.ReadItems(); 
+      IEnumerable<Item> persons = ItemRepo.ReadItems();
       Item item;
 
       var enumerable = persons.ToList();
       foreach (var i in records)
       {
-        }
-        
       }
 
-       
-     //records.ToList().ForEach(r =>
-     // {
-     //   item  = people.FirstOrDefault(p => p.FirstName.Equals(r.Politician) && p.LastName.Equals(r.Politician));
-     //   if (item == null)
-     //   {
-     //     people.Add(new Person()
-     //     {
-     //       ItemId = people.Count,
-     //       FirstName = r.Politician.ToList()[0],
-     //       LastName = r.Politician.ToList()[1],
-     //       Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w }),
-     //       SubPlatforms = new List<SubPlatform>(),
-     //       Records = new List<Record>() { r }
-     //     });
-     //   }
-     //   else
-     //   {
-     //     item.Records.Add(r);
-     //   }
-     // });
+    }
 
-      //people.ForEach(p => ItemRepo.CreateItem(p));
+
+    //records.ToList().ForEach(r =>
+    // {
+    //   item  = people.FirstOrDefault(p => p.FirstName.Equals(r.Politician) && p.LastName.Equals(r.Politician));
+    //   if (item == null)
+    //   {
+    //     people.Add(new Person()
+    //     {
+    //       ItemId = people.Count,
+    //       FirstName = r.Politician.ToList()[0],
+    //       LastName = r.Politician.ToList()[1],
+    //       Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w }),
+    //       SubPlatforms = new List<SubPlatform>(),
+    //       Records = new List<Record>() { r }
+    //     });
+    //   }
+    //   else
+    //   {
+    //     item.Records.Add(r);
+    //   }
+    // });
+
+    //people.ForEach(p => ItemRepo.CreateItem(p));
 
     public void VoorspelTrend(Record record, DateTime start, DateTime end)
-        {
-            RecordRepo.GetAllRecordsBefore(record, end);
-            Trendspotter.VoorspelAantal(record, start, end);
-        }
+    {
+      RecordRepo.GetAllRecordsBefore(record, end);
+      //Trendspotter.VoorspelAantal(record, start, end);
     }
   }
+}
 
