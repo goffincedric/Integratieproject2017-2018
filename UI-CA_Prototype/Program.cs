@@ -18,7 +18,7 @@ namespace UI_CA_Prototype
     private static readonly AccountManager accountMgr = new AccountManager();
 
     private static readonly ExtensionMethods extensionMethods = new ExtensionMethods();
-    
+
     private static bool stop = false;
     private static Profile selectedProfile;
 
@@ -95,12 +95,10 @@ namespace UI_CA_Prototype
             accountMgr.ChangeProfile(selectedProfile);
             break;
           case 5:
-            Console.WriteLine("Out of order");
-           //accountMgr.generateAlerts(); 
+            itemMgr.CheckTrend();
             break;
           case 6:
-
-           extensionMethods.ShowRecords(itemMgr.GetRecords());
+            extensionMethods.ShowRecords(itemMgr.GetRecords());
             break;
           case 7:
             extensionMethods.ShowItems(itemMgr.GetItems());
