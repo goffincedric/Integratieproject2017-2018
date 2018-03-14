@@ -43,6 +43,7 @@ namespace PB.DAL
     {
       return ctx.Records.AsEnumerable();
     }
+
     public void UpdateRecord(Record record)
     {
       ctx.Records.Attach(record);

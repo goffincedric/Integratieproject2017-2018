@@ -169,7 +169,6 @@ namespace PB.BL
         {
             trendspotter.CheckTrend(RecordRepo.ReadRecords());
         }
-
     private void RecordsToItems()
     {
       List<Record> records = RecordRepo.ReadRecords().ToList();

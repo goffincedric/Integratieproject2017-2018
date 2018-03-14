@@ -1,6 +1,5 @@
 ﻿using Domain.Items;
 using PB.BL.Domain.Account;
-using PB.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +13,27 @@ namespace PB.BL
 
     public void VoorspelAantal(IEnumerable<Record> records, DateTime start, DateTime end)
     {
+      DateTime lastDate = records.ToList().OrderByDescending(r => r.Date).ToList()[0].Date;
+
+      List<Record> OldRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-14).Date && r.Date.Date < lastDate.Date).ToList();
+      List<Record> NewRecords = records.Where(r => r.Date.Date.Equals(lastDate.Date)).ToList();
+
+      while (OldRecords.Count > 0)
+      {
+        Record TestRecord;
+        TestRecord = OldRecords.First();
+
+        double average;
+
+        OldRecords.RemoveAt(0);
+
+        //dumb but working average (needs better workout)
+        average = (OldRecords.Count(r => r.RecordPerson.LastName == TestRecord.RecordPerson.LastName) + 1) / 13;
+
+        OldRecords.RemoveAll(r => r.RecordPerson.LastName == TestRecord.RecordPerson.LastName);
+
+        OldCount.Add(TestRecord.RecordPerson, average);
+      }
 
     }
     //generateAlerts moeten net andersom, De user moet een methode kunnen oproepen die alerts genereert (want is customizable per user) 
@@ -123,6 +143,7 @@ namespace PB.BL
         IsRead = false,
         TimeStamp = DateTime.Now
       };
+
 
     }
   }
