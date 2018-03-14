@@ -14,6 +14,7 @@ namespace PB.BL
   {
     private ItemRepo ItemRepo = new ItemRepo();
     public RecordRepo RecordRepo = new RecordRepo();
+    public Trendspotter trendspotter = new Trendspotter();
 
     #region Items
     public Organisation AddOrganisation(string name, string socialMediaLink = null, string iconURL = null)
@@ -118,7 +119,7 @@ namespace PB.BL
       return RecordRepo.ReadRecord(id);
     }
 
-    public Record AddRecord(string source, long Tweet_Id, string user_Id, List<Mention> mentions, DateTime date, string geo, RecordPerson recordPerson,
+    public Record AddRecord(string source, long Tweet_Id, string user_Id, List<Mention> mentions, DateTime date, string geo, RecordPerson politician,
       bool retweet, List<Words> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs)
     {
       Record record = new Record()
@@ -129,7 +130,7 @@ namespace PB.BL
         Mentions = mentions,
         Date = date,
         Geo = geo,
-        RecordPerson = recordPerson,
+        RecordPerson = politician,
         Retweet = retweet,
         Words = words,
         Sentiment = sentiment,
@@ -164,6 +165,11 @@ namespace PB.BL
       RecordsToItems();
     }
 
+    public void CheckTrend()
+        {
+            trendspotter.CheckTrend(DateTime.Today, RecordRepo.ReadRecords());
+        }
+
     private void RecordsToItems()
     {
       List<Record> records = RecordRepo.ReadRecords().ToList();
@@ -197,3 +203,4 @@ namespace PB.BL
 
   }
 }
+
