@@ -8,17 +8,16 @@ namespace Domain.Items
   [Table("tblRecord")]
   public class Record
   {
-
     public string Source { get; set; }
     [Key]
-    public long Id { get; set; }
+    public long Tweet_Id { get; set; }
     public string User_Id { get; set; }
     public List<Mention> Mentions { get; set; }
     //public string PoliticianFirstName { get; set; }
     //public string PoliticianLastName { get; set; }
-    public DateTime Date;
+    public DateTime Date { get; set; }
     public string Geo { get; set; }
-    public Politician Politician { get; set; }
+    public RecordPerson Politician { get; set; }
     public bool Retweet { get; set; }
     //public DateTime BirthDay { get; set; }
     public List<Words> Words { get; set; }
@@ -31,7 +30,7 @@ namespace Domain.Items
 
     public override string ToString()
     {
-      return "User_Id: " + User_Id + "\nTweetId: " + Id;
+      return "User_Id: " + User_Id + "\nTweetId: " + Tweet_Id;
     }
   }
 }

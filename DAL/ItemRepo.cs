@@ -20,6 +20,7 @@ namespace PB.DAL
     public Item CreateItem(Item item)
     {
       ctx.Items.Add(item);
+      ctx.SaveChanges();
       return item;
     }
 
@@ -27,6 +28,7 @@ namespace PB.DAL
     {
       Item item = ReadItem(itemId);
       if (item != null) ctx.Items.Remove(item);
+      ctx.SaveChanges();
     }
 
     public Item ReadItem(int itemId)
