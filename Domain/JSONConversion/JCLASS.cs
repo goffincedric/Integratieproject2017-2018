@@ -12,7 +12,7 @@ namespace Domain.JSONConversion
 
     public List<String> Words { get; set; }
 
-    public DateTime Date;
+    public DateTime Date { get; set; }
 
     public List<String> Politician { get; set; }
 

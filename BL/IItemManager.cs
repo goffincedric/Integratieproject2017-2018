@@ -24,7 +24,7 @@ namespace PB.BL
 
     IEnumerable<Record> GetRecords();
     Record GetRecord(long id);
-    Record AddRecord(string source, long id, string user_Id, List<Mention> mentions, DateTime date, string geo, Politician politician, bool retweet, List<Words> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs);
+    Record AddRecord(string source, long id, string user_Id, List<Mention> mentions, DateTime date, string geo, RecordPerson politician, bool retweet, List<Words> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs);
     void ChangeRecord(Record record);
     void RemoveRecord(long id);
   }

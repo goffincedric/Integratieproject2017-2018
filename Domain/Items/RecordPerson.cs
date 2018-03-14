@@ -9,19 +9,17 @@ using System.Threading.Tasks;
 namespace Domain.Items
 {
   [Table("tblPoliticianRecord")]
-  public class Politician
+  public class RecordPerson
   {
     [Key] public int Number { get; set; }
 
     public string FirstName { get; set; }
     public string LastName { get; set; }
 
-    public Politician(string firstName, string lastName)
+    public RecordPerson(string firstName, string lastName)
     {
       FirstName = firstName;
       LastName = lastName;
     }
-
-    
   }
 }
