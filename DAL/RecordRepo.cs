@@ -13,55 +13,55 @@ using PB.DAL.EF;
 
 namespace PB.DAL
 {
-    public class RecordRepo : IRecordRepo
+  public class RecordRepo : IRecordRepo
+  {
+    private IntegratieDbContext ctx;
+
+    public RecordRepo()
     {
-        private IntegratieDbContext ctx;
+      ctx = new IntegratieDbContext();
+    }
 
-        public RecordRepo()
-        {
-            ctx = new IntegratieDbContext();
-        }
+    public Record CreateRecord(Record record)
+    {
+      ctx.Records.Add(record);
+      ctx.SaveChanges();
+      return record;
+    }
 
-        public Record CreateRecord(Record record)
-        {
-          ctx.Records.Add(record);
-          ctx.SaveChanges();
-          return record;
-        }
+    public void DeleteRecord(long id)
+    {
+      ctx.Records.Remove(ReadRecord(id));
+      ctx.SaveChanges();
+    }
 
-        public void DeleteRecord(long id)
-        {
-          ctx.Records.Remove(ReadRecord(id));
-          ctx.SaveChanges();
-        }
+    public Record ReadRecord(long Tweet_Id)
+    {
+      return ctx.Records.FirstOrDefault(r => r.Tweet_Id == Tweet_Id);
+    }
 
-        public Record ReadRecord(long Tweet_Id)
-        {
-          return ctx.Records.FirstOrDefault(r => r.Tweet_Id == Tweet_Id);
-        }
+    public IEnumerable<Record> ReadRecords()
+    {
+      return ctx.Records.AsEnumerable();
+    }
 
-        public IEnumerable<Record> ReadRecords()
-        {
-            return ctx.Records.AsEnumerable();
-        }
+    public void UpdateRecord(Record record)
+    {
+      ctx.Records.Attach(record);
+      ctx.Entry(record).State = System.Data.Entity.EntityState.Modified;
+      ctx.SaveChanges();
+    }
 
-        public void UpdateRecord(Record record)
-        {
-            ctx.Records.Attach(record);
-            ctx.Entry(record).State = System.Data.Entity.EntityState.Modified;
-            ctx.SaveChanges();
-        }
+    public int GetNumberofMentions(Record record)
+    {
+      return record.Mentions.Count;
+    }
 
-        public int GetNumberofMentions(Record record)
-        {
-            return record.Mentions.Count;
-        }
-
-        public IEnumerable<Record> GetAllRecordsBefore(Record record){
-            DateTime dt = record.Date;
-        }
-
-
+    public IEnumerable<Record> GetAllRecordsBefore(Record record)
+    {
+      DateTime dt = record.Date;
+      return null;
+    }
 
     public void Seed()
     {
@@ -91,7 +91,7 @@ namespace PB.DAL
 
           words.Add(new Words(w));
         }
-        
+
         hashtags = new List<Hashtag>();
         foreach (var h in el.Hashtags)
         {
@@ -106,19 +106,19 @@ namespace PB.DAL
 
         Record record = new Record()
         {
-          Tweet_Id    = el.Id,
-          User_Id     = el.User_Id,
-          Mentions    = mentions,
-          Source      = el.Source,
-          Date        = el.Date,
-          Geo         = el.Geo,
-          Politician  = new RecordPerson(el.Politician[0], el.Politician[1]),
-          Retweet     = el.Retweet,
-          Sentiment   = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
-          Hashtags    = hashtags,
-          URLs        = urls,
+          Tweet_Id = el.Id,
+          User_Id = el.User_Id,
+          Mentions = mentions,
+          Source = el.Source,
+          Date = el.Date,
+          Geo = el.Geo,
+          Politician = new RecordPerson(el.Politician[0], el.Politician[1]),
+          Retweet = el.Retweet,
+          Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
+          Hashtags = hashtags,
+          URLs = urls,
           ListUpdatet = DateTime.Now,
-          Words       = words
+          Words = words
         };
 
         if (recordsToAdd.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
