@@ -70,6 +70,8 @@ namespace PB.DAL
       List<Hashtag> hashtags;
       List<Url> urls;
 
+      List<Record> recordsToAdd = new List<Record>();
+
       foreach (var el in list)
       {
 
@@ -115,10 +117,13 @@ namespace PB.DAL
           ListUpdatet = DateTime.Now,
           Words = words
         };
-        ctx.Records.Add(record);
-
+        if (recordsToAdd.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
+          recordsToAdd[recordsToAdd.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
+        else
+          recordsToAdd.Add(record);
       }
 
+      ctx.Records.AddRange(recordsToAdd);
       ctx.SaveChanges();
     }
   }
