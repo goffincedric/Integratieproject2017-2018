@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Items
 {
-  [Table("tblPoliticianRecord")]
+  [Table("tblPolitician")]
   public class Politician
   {
     [Key] public int Number { get; set; }

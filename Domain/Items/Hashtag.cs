@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Domain.Items
 {
 
-  [Table("tblHashtagRecord")]
+  [Table("tblHashtag")]
   public class Hashtag
   {
     [Key] public int Number { get; set; }
