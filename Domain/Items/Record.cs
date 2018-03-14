@@ -13,16 +13,11 @@ namespace Domain.Items
     public long Tweet_Id { get; set; }
     public string User_Id { get; set; }
     public List<Mention> Mentions { get; set; }
-    //public string PoliticianFirstName { get; set; }
-    //public string PoliticianLastName { get; set; }
     public DateTime Date { get; set; }
     public string Geo { get; set; }
-    public RecordPerson Politician { get; set; }
+    public RecordPerson RecordPerson { get; set; }
     public bool Retweet { get; set; }
-    //public DateTime BirthDay { get; set; }
     public List<Words> Words { get; set; }
-    //public double Polarity { get; set; }
-    //public double Objectivity { get; set; }
     public Sentiment Sentiment { get; set; }
     public List<Hashtag> Hashtags { get; set; }
     public List<Url> URLs { get; set; }

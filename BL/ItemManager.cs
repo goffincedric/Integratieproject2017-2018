@@ -119,7 +119,7 @@ namespace PB.BL
       return RecordRepo.ReadRecord(id);
     }
 
-    public Record AddRecord(string source, long Tweet_Id, string user_Id, List<Mention> mentions, DateTime date, string geo, RecordPerson politician,
+    public Record AddRecord(string source, long Tweet_Id, string user_Id, List<Mention> mentions, DateTime date, string geo, RecordPerson recordPerson,
       bool retweet, List<Words> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs)
     {
       Record record = new Record()
@@ -130,7 +130,7 @@ namespace PB.BL
         Mentions = mentions,
         Date = date,
         Geo = geo,
-        Politician = politician,
+        RecordPerson = recordPerson,
         Retweet = retweet,
         Words = words,
         Sentiment = sentiment,
@@ -179,14 +179,14 @@ namespace PB.BL
 
       records.ToList().ForEach(r =>
       {
-        item = people.FirstOrDefault(p => p.FirstName.Equals(r.Politician.FirstName) && p.LastName.Equals(r.Politician.LastName));
+        item = people.FirstOrDefault(p => p.FirstName.Equals(r.RecordPerson.FirstName) && p.LastName.Equals(r.RecordPerson.LastName));
         if (item == null)
         {
           people.Add(new Person()
           {
             ItemId = people.Count,
-            FirstName = r.Politician.FirstName,
-            LastName = r.Politician.LastName,
+            FirstName = r.RecordPerson.FirstName,
+            LastName = r.RecordPerson.LastName,
             Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w.Word }),
             SubPlatforms = new List<SubPlatform>(),
             Records = new List<Record>() { r }
@@ -203,4 +203,3 @@ namespace PB.BL
 
   }
 }
-
