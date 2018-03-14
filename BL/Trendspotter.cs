@@ -1,6 +1,5 @@
 ﻿using Domain.Items;
 using PB.BL.Domain.Account;
-using PB.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,6 +68,7 @@ namespace PB.BL
 
       }
       NewRecords = null;
+
 
       Console.WriteLine(NewCount.Count());
       Console.WriteLine(OldCount.Count());
