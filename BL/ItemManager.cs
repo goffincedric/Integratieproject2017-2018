@@ -14,6 +14,7 @@ namespace PB.BL
   {
     private ItemRepo ItemRepo = new ItemRepo();
     public RecordRepo RecordRepo = new RecordRepo();
+    public Trendspotter trendspotter = new Trendspotter();
 
     #region Items
     public Organisation AddOrganisation(string name, string socialMediaLink = null, string iconURL = null)
@@ -163,6 +164,11 @@ namespace PB.BL
 
       RecordsToItems();
     }
+
+    public void CheckTrend()
+        {
+            trendspotter.CheckTrend(DateTime.Today, RecordRepo.ReadRecords());
+        }
 
     private void RecordsToItems()
     {
