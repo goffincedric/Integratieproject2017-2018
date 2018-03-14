@@ -40,7 +40,7 @@ namespace UI_CA_Prototype
     //Show all records sorted by Name, then by Date descending
     public void ShowRecords(IEnumerable<Record> records)
     {
-      records.OrderBy(r => r.Politician.FirstName).ThenByDescending(r => r.Date).ToList().ForEach(r => Console.WriteLine(r.Date.ToString() + " - " + r.Politician.FirstName + " " + r.Politician.LastName + " (" + r.Tweet_Id + ")"));
+      records.OrderBy(r => r.RecordPerson.FirstName).ThenByDescending(r => r.Date).ToList().ForEach(r => Console.WriteLine(r.Date.ToString() + " - " + r.RecordPerson.FirstName + " " + r.RecordPerson.LastName + " (" + r.Tweet_Id + ")"));
     }
 
     //Lets the user select an available item
@@ -93,7 +93,7 @@ namespace UI_CA_Prototype
           new Words("iran")
         },
         Date = DateTime.Parse("2017-09-11 04:53:38"),
-        Politician = new RecordPerson("Imade", "Annouri"),
+        RecordPerson = new RecordPerson("Imade", "Annouri"),
         Geo = "N/A",
         Tweet_Id = 907104827896987600,
         User_Id = "N/A",
@@ -121,7 +121,7 @@ namespace UI_CA_Prototype
           new Words("time")
         },
         Date = DateTime.Parse("2017-09-07 22:52:35"),
-        Politician = new RecordPerson("Imade", "Annouri"),
+        RecordPerson = new RecordPerson("Imade", "Annouri"),
         Geo = "N/A",
         Tweet_Id = 905926801804980200,
         User_Id = "N/A",
