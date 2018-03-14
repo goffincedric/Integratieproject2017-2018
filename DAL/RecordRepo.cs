@@ -35,7 +35,6 @@ namespace PB.DAL
           ctx.SaveChanges();
         }
 
-<<<<<<< HEAD
         public Record ReadRecord(long Tweet_Id)
         {
           return ctx.Records.FirstOrDefault(r => r.Tweet_Id == Tweet_Id);
@@ -62,18 +61,6 @@ namespace PB.DAL
             DateTime dt = record.Date;
             return null;
         }
-=======
-    public IEnumerable<Record> ReadRecords()
-    {
-      return ctx.Records.AsEnumerable();
-    }
-    public void UpdateRecord(Record record)
-    {
-      ctx.Records.Attach(record);
-      ctx.Entry(record).State = System.Data.Entity.EntityState.Modified;
-      ctx.SaveChanges();
-    }
->>>>>>> b6c174ef258150646d596be61bd3069333d3431c
 
 
 
