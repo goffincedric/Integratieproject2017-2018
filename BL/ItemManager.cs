@@ -14,7 +14,6 @@ namespace PB.BL
   {
     private ItemRepo ItemRepo = new ItemRepo();
     public RecordRepo RecordRepo = new RecordRepo();
-    public Trendspotter Trendspotter = new Trendspotter();
 
     #region Items
     public Organisation AddOrganisation(string name, string socialMediaLink = null, string iconURL = null)
@@ -119,14 +118,13 @@ namespace PB.BL
       return RecordRepo.ReadRecord(id);
     }
 
-    public Record AddRecord(string source, long tweet_Id, string user_Id, List<Mention> mentions, DateTime date, string geo, RecordPerson recordPerson,
+    public Record AddRecord(string source, long Tweet_Id, string user_Id, List<Mention> mentions, DateTime date, string geo, RecordPerson recordPerson,
       bool retweet, List<Words> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs)
     {
       Record record = new Record()
       {
-
         Source = source,
-        Tweet_Id = tweet_Id,
+        Tweet_Id = Tweet_Id,
         User_Id = user_Id,
         Mentions = mentions,
         Date = date,
@@ -163,52 +161,39 @@ namespace PB.BL
     {
       RecordRepo.Seed();
 
-      //RecordsToItems();
+      RecordsToItems();
     }
 
     private void RecordsToItems()
     {
-      IEnumerable<Record> records = RecordRepo.ReadRecords();
+      List<Record> records = RecordRepo.ReadRecords().ToList();
       List<Person> people = new List<Person>();
-      IEnumerable<Item> persons = ItemRepo.ReadItems();
+      List<Item> persons = ItemRepo.ReadItems().ToList();
       Item item;
 
-      var enumerable = persons.ToList();
-      foreach (var i in records)
+      records.ToList().ForEach(r =>
       {
-      }
+        item = people.FirstOrDefault(p => p.FirstName.Equals(r.RecordPerson.FirstName) && p.LastName.Equals(r.RecordPerson.LastName));
+        if (item == null)
+        {
+          people.Add(new Person()
+          {
+            ItemId = people.Count,
+            FirstName = r.RecordPerson.FirstName,
+            LastName = r.RecordPerson.LastName,
+            Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w.Word }),
+            SubPlatforms = new List<SubPlatform>(),
+            Records = new List<Record>() { r }
+          });
+        }
+        else
+        {
+          item.Records.Add(r);
+        }
+      });
 
+      people.ForEach(p => ItemRepo.CreateItem(p));
     }
 
-
-    //records.ToList().ForEach(r =>
-    // {
-    //   item  = people.FirstOrDefault(p => p.FirstName.Equals(r.Politician) && p.LastName.Equals(r.Politician));
-    //   if (item == null)
-    //   {
-    //     people.Add(new Person()
-    //     {
-    //       ItemId = people.Count,
-    //       FirstName = r.Politician.ToList()[0],
-    //       LastName = r.Politician.ToList()[1],
-    //       Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w }),
-    //       SubPlatforms = new List<SubPlatform>(),
-    //       Records = new List<Record>() { r }
-    //     });
-    //   }
-    //   else
-    //   {
-    //     item.Records.Add(r);
-    //   }
-    // });
-
-    //people.ForEach(p => ItemRepo.CreateItem(p));
-
-    public void VoorspelTrend(Record record, DateTime start, DateTime end)
-    {
-      RecordRepo.GetAllRecordsBefore(record, end);
-      //Trendspotter.VoorspelAantal(record, start, end);
-    }
   }
 }
-
