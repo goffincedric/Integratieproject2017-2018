@@ -116,7 +116,11 @@ namespace UI_CA_Prototype
             stop = true;
             return;
           case 10:
+<<<<<<< HEAD
             itemMgr.CheckTrend();
+=======
+                        itemMgr.CheckTrend();
+>>>>>>> b6c174ef258150646d596be61bd3069333d3431c
             break;
           default:
             Console.WriteLine("Geen geldige keuze!");
