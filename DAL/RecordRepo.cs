@@ -59,6 +59,7 @@ namespace PB.DAL
 
         public IEnumerable<Record> GetAllRecordsBefore(Record record){
             DateTime dt = record.Date;
+            return null;
         }
 
 

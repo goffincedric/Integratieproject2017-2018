@@ -1,4 +1,6 @@
-﻿using PB.BL.Domain.Account;
+﻿using Domain.Items;
+using PB.BL.Domain.Account;
+using PB.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,6 @@ namespace PB.BL
 {
   public class Trendspotter
   {
-
-
     //generateAlerts moeten net andersom, De user moet een methode kunnen oproepen die alerts genereert (want is customizable per user) 
     //bv. user1.generateAlerts()
     //dus frequentie bij houden en for each op users en daarop oproepen
@@ -35,7 +35,24 @@ om te bepalen tussen welke data de trends berekent moeten worden*/
 
       
 
- 
+    public void CheckTrend(DateTime date, IEnumerable<Record> records)
+        {
+            List<Record> OldRecords = new List<Record>();
+            List<Record> NewRecords = new List<Record>();
+
+            NewRecords = records.Where(r => r.ListUpdatet.Date.Equals(DateTime.Now.Date)).ToList();
+            OldRecords = records.Where(r => r.ListUpdatet.Date.Equals(DateTime.Now.Date)).ToList();
+
+            foreach (Record r in NewRecords)
+            {
+                Console.WriteLine(r.ToString());
+            }
+
+            Dictionary<RecordPerson, double> OldCount = new Dictionary<RecordPerson, double>();
+            Dictionary<RecordPerson, int> NewCount = new Dictionary<RecordPerson, int>();
+
+            
+        }
 
     public void generateAlert(Profile profile, string Trend)
     {
