@@ -45,7 +45,6 @@ namespace UI_CA_Prototype
         Console.WriteLine("7) Toon alle items");
         Console.WriteLine("8) Toon subscribed items van geselecteerd profiel");
         Console.WriteLine("0) Afsluiten");
-        Console.WriteLine("10) Test alert");
         Console.WriteLine("19) TEST SEARCH");
         try
         {
@@ -115,9 +114,6 @@ namespace UI_CA_Prototype
           case 0:
             stop = true;
             return;
-          case 10:
-            itemMgr.CheckTrend();
-            break;
           default:
             Console.WriteLine("Geen geldige keuze!");
             inValidAction = true;
