@@ -65,7 +65,7 @@
     <Compile Include="Items\Mention.cs" />
     <Compile Include="Items\Organisation.cs" />
     <Compile Include="Items\Person.cs" />
-    <Compile Include="Items\Politician.cs" />
+    <Compile Include="Items\RecordPerson.cs" />
     <Compile Include="Items\Record.cs" />
     <Compile Include="Items\Sentiment.cs" />
     <Compile Include="Items\Theme.cs" />

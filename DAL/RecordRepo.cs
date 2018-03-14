@@ -8,7 +8,6 @@ using Domain.Items;
 using Domain.JSONConversion;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using PB.BL.Domain.Items;
 using PB.DAL.EF;
 
 namespace PB.DAL
@@ -25,17 +24,19 @@ namespace PB.DAL
     public Record CreateRecord(Record record)
     {
       ctx.Records.Add(record);
+      ctx.SaveChanges();
       return record;
     }
 
     public void DeleteRecord(long id)
     {
       ctx.Records.Remove(ReadRecord(id));
+      ctx.SaveChanges();
     }
 
-    public Record ReadRecord(long id)
+    public Record ReadRecord(long Tweet_Id)
     {
-      return ctx.Records.FirstOrDefault(r => r.Id == id);
+      return ctx.Records.FirstOrDefault(r => r.Tweet_Id == Tweet_Id);
     }
 
     public IEnumerable<Record> ReadRecords()
@@ -45,8 +46,19 @@ namespace PB.DAL
 
     public void UpdateRecord(Record record)
     {
-      //MemoryRepo, alle objecten worden automatisch geüpdatet in het geheugen
+      ctx.Records.Attach(record);
+      ctx.Entry(record).State = System.Data.Entity.EntityState.Modified;
+      ctx.SaveChanges();
     }
+
+    public int GetNumberofMentions(Record record)
+    {
+      return record.Mentions.Count;
+    }
+
+    public IEnumerable<Record> GetAllRecordsBefore(Record record, DateTime end) =>
+        // Returnt een lijst van Records met vermelding van dezelfde politieker. Er kan een einddatum worden meegegeven. 
+        ctx.Records.Where(x => x.Date < end).Concat(ctx.Records.Where(x => x.RecordPerson.Number.Equals(record.RecordPerson.Number)));
 
     public void Seed()
     {
@@ -55,8 +67,10 @@ namespace PB.DAL
 
       List<Mention> mentions;
       List<Words> words;
-    List<Hashtag> hashtags;
+      List<Hashtag> hashtags;
       List<Url> urls;
+
+      List<Record> recordsToAdd = new List<Record>();
 
       foreach (var el in list)
       {
@@ -75,9 +89,6 @@ namespace PB.DAL
 
           words.Add(new Words(w));
         }
-
-       
-
         hashtags = new List<Hashtag>();
         foreach (var h in el.Hashtags)
         {
@@ -92,28 +103,28 @@ namespace PB.DAL
 
         Record record = new Record()
         {
-          Id          = el.Id,
-          User_Id     = el.User_Id,
-          Mentions    = mentions,
-          Source      = el.Source,
-          Date        = el.Date,
-          Geo         = el.Geo,
-          Politician  = new Politician(el.Politician[0], el.Politician[1]),
-          Retweet     = el.Retweet,
-          Sentiment   = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
-          Hashtags    = hashtags,
-          URLs        = urls,
+          Tweet_Id = el.Id,
+          User_Id = el.User_Id,
+          Mentions = mentions,
+          Source = el.Source,
+          Date = el.Date,
+          Geo = el.Geo,
+          RecordPerson = new RecordPerson(el.Politician[0], el.Politician[1]),
+          Retweet = el.Retweet,
+          Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
+          Hashtags = hashtags,
+          URLs = urls,
           ListUpdatet = DateTime.Now,
-          Words       = words
-
+          Words = words
         };
-        ctx.Records.Add(record);
-
+        if (recordsToAdd.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
+          recordsToAdd[recordsToAdd.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
+        else
+          recordsToAdd.Add(record);
       }
 
+      ctx.Records.AddRange(recordsToAdd);
       ctx.SaveChanges();
-
-
     }
   }
 }

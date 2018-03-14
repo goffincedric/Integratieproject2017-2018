@@ -95,10 +95,12 @@ namespace UI_CA_Prototype
             accountMgr.ChangeProfile(selectedProfile);
             break;
           case 5:
-           // accountMgr.generateAlerts(); 
+            Console.WriteLine("Out of order");
+           //accountMgr.generateAlerts(); 
             break;
           case 6:
-           // extensionMethods.ShowRecords(itemMgr.GetRecords());
+
+           extensionMethods.ShowRecords(itemMgr.GetRecords());
             break;
           case 7:
             extensionMethods.ShowItems(itemMgr.GetItems());

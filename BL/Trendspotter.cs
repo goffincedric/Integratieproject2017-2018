@@ -1,4 +1,5 @@
-﻿using PB.BL.Domain.Account;
+﻿using Domain.Items;
+using PB.BL.Domain.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,11 @@ namespace PB.BL
 {
   public class Trendspotter
   {
-
+    
+        public void VoorspelAantal(IEnumerable<Record> records, DateTime start, DateTime end)
+        {
+            
+        }
 
     //generateAlerts moeten net andersom, De user moet een methode kunnen oproepen die alerts genereert (want is customizable per user) 
     //bv. user1.generateAlerts()
@@ -40,7 +45,7 @@ om te bepalen tussen welke data de trends berekent moeten worden*/
     public void generateAlert(Profile profile, string Trend)
     {
 
-    }
+        }
 
 
 

@@ -10,13 +10,13 @@ namespace Domain.Items
   
   public class Sentiment
   {
-    public double Objectiviteit { get; set; }
-    public double Probabiliteit { get; set; }
+    public double Objectivity { get; set; }
+    public double Prohability { get; set; }
 
     public Sentiment(double objectiviteit, double probabiliteit)
     {
-      Objectiviteit = objectiviteit;
-      Probabiliteit = probabiliteit;
+      Objectivity = objectiviteit;
+      Prohability = probabiliteit;
     }
 
     public Sentiment()

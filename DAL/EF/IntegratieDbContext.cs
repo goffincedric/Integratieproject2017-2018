@@ -59,11 +59,22 @@ namespace PB.DAL.EF
 
                     }
                       );
+      modelBuilder.Entity<Profile>().HasMany(p => p.adminPlatforms).WithMany(p => p.Admins)
+                    .Map(m =>
+                    {
+                      m.ToTable("tblSubplatformAdmins");
+
+                    }
+                      );
       modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
       modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
       modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
       modelBuilder.Properties<DateTime>()
         .Configure(c => c.HasColumnType("datetime2"));
+
+      modelBuilder.Entity<Record>().Property(r => r.Tweet_Id)
+             .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
       //modelBuilder.Entity<Record>().Property(r => r.Date).HasColumnType("datetime2");
     }
   }

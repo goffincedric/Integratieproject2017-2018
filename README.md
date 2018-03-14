@@ -1,6 +1,0 @@
-# Integratieproject
-
-
-
-CEDRIC LIKES TO EAT PUSSY!!!
-THOMAS LIKES TO GO IN BEHIND!!!

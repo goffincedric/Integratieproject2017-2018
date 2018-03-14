@@ -53,12 +53,6 @@
     <Compile Include="EF\IntegratieDbConfiguration.cs" />
     <Compile Include="EF\IntegratieDbContext.cs" />
     <Compile Include="EF\IntegratieDbInitializer.cs" />
-    <Compile Include="MemoryRepos\IItemRepoHC.cs" />
-    <Compile Include="MemoryRepos\IProfileRepoHC.cs" />
-    <Compile Include="MemoryRepos\IRecordRepoHC.cs" />
-    <Compile Include="MemoryRepos\ItemRepoHC.cs" />
-    <Compile Include="MemoryRepos\ProfileRepoHC.cs" />
-    <Compile Include="MemoryRepos\RecordRepoHC.cs" />
     <Compile Include="IItemRepo.cs" />
     <Compile Include="IProfileRepo.cs" />
     <Compile Include="IRecordRepo.cs" />

@@ -20,6 +20,7 @@ namespace PB.DAL
     public Item CreateItem(Item item)
     {
       ctx.Items.Add(item);
+      ctx.SaveChanges();
       return item;
     }
 
@@ -27,6 +28,7 @@ namespace PB.DAL
     {
       Item item = ReadItem(itemId);
       if (item != null) ctx.Items.Remove(item);
+      ctx.SaveChanges();
     }
 
     public Item ReadItem(int itemId)
@@ -41,7 +43,9 @@ namespace PB.DAL
 
     public void UpdateItem(Item item)
     {
-      //MemoryRepo, alle objecten worden automatisch geüpdatet in het geheugen
+      ctx.Items.Attach(item);
+      ctx.Entry(item).State = System.Data.Entity.EntityState.Modified;
+      ctx.SaveChanges();
     }
   }
 }
