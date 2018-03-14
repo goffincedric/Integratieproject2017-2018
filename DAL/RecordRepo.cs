@@ -13,42 +13,55 @@ using PB.DAL.EF;
 
 namespace PB.DAL
 {
-  public class RecordRepo : IRecordRepo
-  {
-    private IntegratieDbContext ctx;
-
-    public RecordRepo()
+    public class RecordRepo : IRecordRepo
     {
-      ctx = new IntegratieDbContext();
-    }
+        private IntegratieDbContext ctx;
 
-    public Record CreateRecord(Record record)
-    {
-      ctx.Records.Add(record);
-      return record;
-    }
+        public RecordRepo()
+        {
+            ctx = new IntegratieDbContext();
+        }
 
-    public void DeleteRecord(long id)
-    {
-      ctx.Records.Remove(ReadRecord(id));
-    }
+        public Record CreateRecord(Record record)
+        {
+            ctx.Records.Add(record);
+            return record;
+        }
 
-    public Record ReadRecord(long id)
-    {
-      return ctx.Records.FirstOrDefault(r => r.Id == id);
-    }
+        public void DeleteRecord(long id)
+        {
+            ctx.Records.Remove(ReadRecord(id));
+        }
 
-    public IEnumerable<Record> ReadRecords()
-    {
-      return ctx.Records.AsEnumerable();
-    }
+        public Record ReadRecord(long id)
+        {
+            return ctx.Records.FirstOrDefault(r => r.Id == id);
+        }
 
-    public void UpdateRecord(Record record)
-    {
-      ctx.Records.Attach(record);
-      ctx.Entry(record).State = System.Data.Entity.EntityState.Modified;
-      ctx.SaveChanges();
-    }
+        public IEnumerable<Record> ReadRecords()
+        {
+            return ctx.Records.AsEnumerable();
+        }
+
+        public void UpdateRecord(Record record)
+        {
+            ctx.Records.Attach(record);
+            ctx.Entry(record).State = System.Data.Entity.EntityState.Modified;
+            ctx.SaveChanges();
+        }
+
+        public int GetNumberofMentions(Record record)
+        {
+            return record.Mentions.Count;
+        }
+
+        public IEnumerable<Record> GetAllRecordsBefore(Record record){
+            DateTime dt = record.Date;
+           
+            
+        }
+
+
 
     public void Seed()
     {
