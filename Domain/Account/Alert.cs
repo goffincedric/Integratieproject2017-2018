@@ -26,19 +26,7 @@ namespace PB.BL.Domain.Account
     [Required]
     [ForeignKey("Username")]
     public Profile Profile { get; set; }
-
-    public Alert(int alertId, String text, String description, String username, bool important =false, bool read=false)
-        {
-            this.AlertId = alertId;
-            this.Text = text;
-            this.Description = description;
-            this.TimeStamp = DateTime.Now;
-            this.Username = username;
-            this.IsFlaggedImportant = important;
-            this.IsRead = read;
-
-        }
-
+    
     }
 
 }
