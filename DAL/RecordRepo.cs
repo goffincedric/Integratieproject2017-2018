@@ -13,8 +13,7 @@ using PB.DAL.EF;
 
 namespace PB.DAL
 {
-  public class RecordRepo : IRecordRepo
-  {
+
     private IntegratieDbContext ctx;
 
     public RecordRepo()
@@ -39,7 +38,7 @@ namespace PB.DAL
     {
       return ctx.Records.FirstOrDefault(r => r.Tweet_Id == Tweet_Id);
     }
-
+  
     public IEnumerable<Record> ReadRecords()
     {
       return ctx.Records.AsEnumerable();
@@ -57,26 +56,23 @@ namespace PB.DAL
       return record.Mentions.Count;
     }
 
-    public IEnumerable<Record> GetAllRecordsBefore(Record record)
-    {
-      DateTime dt = record.Date;
-      return null;
-    }
+        public IEnumerable<Record> GetAllRecordsBefore(Record record, DateTime end) =>
+            // Returnt een lijst van Records met vermelding van dezelfde politieker. Er kan een einddatum worden meegegeven. 
+            ctx.Records.Where(x => x.Date < end).Concat(ctx.Records.Where(x => x.Politician.Number.Equals(record.Politician.Number)));
 
-    public void Seed()
+        public void Seed()
     {
+
       var list = JsonConvert.DeserializeObject<List<JCLASS>>(File.ReadAllText(@"TestData\textgaindump.json"));
 
       List<Mention> mentions;
       List<Words> words;
-      List<Hashtag> hashtags;
+    List<Hashtag> hashtags;
       List<Url> urls;
-
-      List<long> ids = new List<long>();
-      List<Record> recordsToAdd = new List<Record>();
 
       foreach (var el in list)
       {
+
         mentions = new List<Mention>();
 
         foreach (var m in el.Mentions)
@@ -91,7 +87,6 @@ namespace PB.DAL
 
           words.Add(new Words(w));
         }
-
         hashtags = new List<Hashtag>();
         foreach (var h in el.Hashtags)
         {
@@ -120,14 +115,10 @@ namespace PB.DAL
           ListUpdatet = DateTime.Now,
           Words = words
         };
+        ctx.Records.Add(record);
 
-        if (recordsToAdd.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
-          recordsToAdd[recordsToAdd.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
-        else
-          recordsToAdd.Add(record);
       }
 
-      ctx.Records.AddRange(recordsToAdd);
       ctx.SaveChanges();
     }
   }
