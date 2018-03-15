@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Domain.Items
 {
 
-  [Table("tblUrlRecord")]
+  [Table("tblUrl")]
   public class Url
   {
 

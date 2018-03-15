@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Items
 {
-  [Table("tblMentionRecord")]
+  [Table("tblMention")]
   public class Mention
   {
     [Key] public int Number { get; set; }
 
-    [Required]
+
+   
     public string Name { get; set; }
+
+ 
+    public List<Record> records { get; set; }
 
 
     public Mention(string name)

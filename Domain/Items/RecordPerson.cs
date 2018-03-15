@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Items
 {
+
   [Table("tblPoliticianRecord")]
   public class RecordPerson
+
   {
     [Key]
     public int Number { get; set; }
