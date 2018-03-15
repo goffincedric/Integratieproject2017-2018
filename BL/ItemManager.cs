@@ -64,53 +64,7 @@ namespace PB.BL
       }
     }
 
-    //public void initNonExistingRepoItem(bool createWithUnitOfWork = false)
-    //{
-    //  if (ItemRepo == null)
-    //  {
-    //    if (createWithUnitOfWork)
-    //    {
-    //      if (uowManager == null)
-    //      {
-    //        uowManager = new UnitOfWorkManager();
-    //        Console.WriteLine("UOW MADE IN ITEM MANAGER for ITEM REPO");
-    //      }
-
-
-    //      ItemRepo = new ItemRepo(uowManager.UnitOfWork);
-    //    }
-    //    else
-    //    {
-
-    //      ItemRepo = new ItemRepo();
-    //      Console.WriteLine("OLD WAY REPO ITEMS");
-    //    }
-    //  }
-    //}
-
-    //public void initNonExistingRepoRecord(bool createWithUnitOfWork = false)
-    //{
-    //  if (RecordRepo == null)
-    //  {
-    //    if (createWithUnitOfWork)
-    //    {
-    //      if (uowManager == null)
-    //      {
-    //        uowManager = new UnitOfWorkManager();
-    //        Console.WriteLine("UOW MADE IN ITEM MANAGER for record repo");
-    //      }
-
-    //      RecordRepo = new RecordRepo(uowManager.UnitOfWork);
-
-    //    }
-    //    else
-    //    {
-    //      RecordRepo = new RecordRepo();
-    //      Console.WriteLine("OLD WAY REPO RECORDS");
-
-    //    }
-    //  }
-    //}
+   
 
     #region Items
     public Organisation AddOrganisation(string name, string socialMediaLink = null, string iconURL = null)
@@ -129,7 +83,10 @@ namespace PB.BL
         People = new List<Person>()
       };
 
-      return (Organisation)AddItem(organisation);
+      organisation = (Organisation) AddItem(organisation);
+      uowManager.Save();
+      
+      return organisation;
     }
 
     public Person AddPerson(string firstName, string lastName, DateTime birthDay, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null)
@@ -149,15 +106,16 @@ namespace PB.BL
         Records = new List<Record>(),
         Organisation = organisation
       };
-
-      return (Person)AddItem(person);
+      person = (Person) AddItem(person); 
+      uowManager.Save();
+      return person;
     }
 
     public Theme AddTheme(string themeName, string description)
     {
       //initNonExistingRepoItem();
       initNonExistingRepo();
-      Item theme = new Theme()
+      Theme theme = new Theme()
       {
         ThemeName = themeName,
         Description = description,
@@ -166,7 +124,9 @@ namespace PB.BL
         Records = new List<Record>()
       };
 
-      return (Theme)AddItem(theme);
+      theme = (Theme) AddItem(theme);
+      uowManager.Save();
+      return theme;
     }
 
     private Item AddItem(Item item)
@@ -181,6 +141,7 @@ namespace PB.BL
      initNonExistingRepo();
        //initNonExistingRepoItem();
       ItemRepo.UpdateItem(item);
+      uowManager.Save();
     }
 
     public Item GetItem(int itemId)
@@ -224,6 +185,7 @@ namespace PB.BL
       initNonExistingRepo();
       //initNonExistingRepoItem();
       ItemRepo.DeleteItem(itemId);
+      uowManager.Save();
     }
     #endregion
 
@@ -263,8 +225,9 @@ namespace PB.BL
         Hashtags = hashtags,
         URLs = uRLs
       };
-
-      return AddRecord(record);
+      record = AddRecord(record);
+      uowManager.Save();
+      return record;
     }
 
     private Record AddRecord(Record record)
@@ -279,6 +242,7 @@ namespace PB.BL
       initNonExistingRepo();
       //initNonExistingRepoRecord();
       RecordRepo.UpdateRecord(record);
+      uowManager.Save();
     }
 
     public void RemoveRecord(long id)
@@ -286,6 +250,7 @@ namespace PB.BL
       initNonExistingRepo();
       //initNonExistingRepoRecord();
       RecordRepo.DeleteRecord(id);
+      uowManager.Save();
     }
     #endregion
 
@@ -295,15 +260,25 @@ namespace PB.BL
       initNonExistingRepo();
       //initNonExistingRepoRecord();
       RecordRepo.Seed();
-
+      uowManager.Save();
       RecordsToItems();
+      uowManager.Save();
+    }
+
+    public void Seed2()
+    {
+      initNonExistingRepo();
+      RecordRepo.Seed2();
+      uowManager.Save();
+      RecordsToItems();
+      uowManager.Save();
     }
 
     public void CheckTrend()
     {
      initNonExistingRepo();
      // initNonExistingRepoRecord();
-      trendspotter.CheckTrend(RecordRepo.ReadRecords());
+      trendspotter.CheckTrend(GetRecords());
     }
     private void RecordsToItems()
     {
@@ -312,9 +287,9 @@ namespace PB.BL
       initNonExistingRepo();
       //initNonExistingRepoRecord();
       //initNonExistingRepoItem();
-      List<Record> records = RecordRepo.ReadRecords().ToList();
+      List<Record> records = GetRecords().ToList();
       List<Person> people = new List<Person>();
-      List<Item> persons = ItemRepo.ReadItems().ToList();
+      List<Item> persons = GetItems().ToList();
       Item item;
 
       records.ToList().ForEach(r =>
@@ -338,7 +313,8 @@ namespace PB.BL
         }
       });
 
-      people.ForEach(p => ItemRepo.CreateItem(p));
+      people.ForEach(p => AddItem(p));
+      uowManager.Save();
     }
 
   }

@@ -17,5 +17,6 @@ namespace PB.DAL
     void DeleteRecord(long id);
 
     void Seed();
+    void Seed2();
   }
 }
