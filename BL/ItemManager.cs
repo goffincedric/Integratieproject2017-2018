@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Items;
+using PB.BL.Domain.Account;
 
 namespace PB.BL
 {
@@ -274,12 +275,46 @@ namespace PB.BL
       uowManager.Save();
     }
 
+    public List<Alert> GenerateProfileAlerts(Profile profile)
+    {
+      //Alle items uit profile subscriptions halen
+      List<Item> subscribedItems = profile.Subscriptions.Where(kv => kv.Value).Select(pair => pair.Key).ToList();
+
+      //Items opdelen in Subklasses [Person, Organisation, Theme]
+      List<Person> people = subscribedItems.Where(i => i is Person).ToList().Select(i => (Person)i).ToList();
+      List<Organisation> organisations = new List<Organisation>(); // Alerts op organisaties;
+      List<Theme> themes = new List<Theme>(); // Alerts op thema's
+
+      //Records uit people halen
+      List<Record> peopleRecords = new List<Record>();
+      people.ForEach(p => p.Records.ForEach(r => peopleRecords.Add(r)));
+
+      //Print all subscribed items
+      Console.WriteLine("========= SUBSCRIBED =========");
+      subscribedItems.ForEach(i => Console.WriteLine(i));
+
+      //Check trends voor people
+      List<Alert> alerts = trendspotter.CheckTrendAverageRecords(peopleRecords);
+      Console.WriteLine("============ ALERTS ===========");
+      //Link profile to alerts
+      alerts.ForEach(a =>
+      {
+        Console.WriteLine(a);
+        a.Profile = profile;
+        a.Username = profile.Username;
+      });
+
+      //Return alerts
+      return alerts;
+    }
+
     public void CheckTrend()
     {
       initNonExistingRepo();
-      // initNonExistingRepoRecord();
-      trendspotter.CheckTrend(GetRecords());
+      //initNonExistingRepoRecord();
+      trendspotter.CheckTrendAverageRecords(GetRecords());
     }
+
     private void RecordsToItems(List<Record> records)
     {
       initNonExistingRepo();
@@ -300,9 +335,9 @@ namespace PB.BL
             ItemId = persons.Count,
             FirstName = r.RecordPerson.FirstName,
             LastName = r.RecordPerson.LastName,
-            Keywords = r.Words.ConvertAll(w => new Keyword() {Name = w.Word}),
+            Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w.Word }),
             SubPlatforms = new List<SubPlatform>(),
-            Records = new List<Record>() {r}
+            Records = new List<Record>() { r }
           };
           persons.Add(person);
           people.Add(person);

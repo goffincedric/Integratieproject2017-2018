@@ -19,7 +19,6 @@ namespace PB.BL
     public AccountManager()
     {
 
-
     }
 
     public AccountManager(UnitOfWorkManager uowMgr)
@@ -116,7 +115,7 @@ namespace PB.BL
           Username = "verhoeventhomas",
           Password = "schlack1",
           Role = Role.USER,
-          Subscriptions = new Dictionary<Item, bool>(),
+          Subscriptions = new Dictionary<Item, bool>() { },
           Alerts = new List<Alert>(),
           Settings = new List<UserSetting>(),
           Dashboards = new Dictionary<SubPlatform, Dashboard>(),
