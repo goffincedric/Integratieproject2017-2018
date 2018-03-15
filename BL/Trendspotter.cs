@@ -107,10 +107,10 @@ namespace PB.BL
       oldGemiddelde.Values.ToList().ForEach(v => Console.WriteLine(oldGemiddelde.Keys.ToList()[oldGemiddelde.Values.ToList().IndexOf(v)] + " = " + (newGemiddelde.Values.ToList()[oldGemiddelde.Values.ToList().IndexOf(v)] - v)));
 
       //WAT RETURNEN?
-      Console.WriteLine("\noldRECORDPERSONSSSSSSSSSSSSSSSSSSSSSSS");
+      Console.WriteLine("\n===== OLDRECORDPERSONS =====");
       oldGemiddelde.Keys.ToList().ForEach(v => Console.WriteLine(v));
 
-      Console.WriteLine("\nnewRECORDPERSONSSSSSSSSSSSSSSSSSSSSSSS");
+      Console.WriteLine("\n===== NEWRECORDPERSONS =====");
       newGemiddelde.Keys.ToList().ForEach(v => Console.WriteLine(v));
 
       //Alerts maken

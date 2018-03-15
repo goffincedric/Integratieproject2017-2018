@@ -184,11 +184,7 @@ namespace PB.BL
       ItemRepo.DeleteItem(itemId);
       uowManager.Save();
     }
-
-
-
-
-
+    
 
     public IEnumerable<Person> GetPersons()
     {

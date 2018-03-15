@@ -42,7 +42,7 @@ namespace UI_CA_Prototype
         Console.WriteLine("4) Verwijder subscription");
         Console.WriteLine("5) Show Gemiddelde tweets/Dag per persoon voorbij 14 dagen");
         Console.WriteLine("6) Voeg 2de deel record data toe");
-        Console.WriteLine("7) Show Alerts from selected profile");
+        Console.WriteLine("7) Voeg alerts to aan selected profile");
         Console.WriteLine("---------------- Info -----------------");
         Console.WriteLine("8) Toon alle records");
         Console.WriteLine("9) Toon alle items");
