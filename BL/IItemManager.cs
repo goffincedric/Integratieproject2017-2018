@@ -27,5 +27,6 @@ namespace PB.BL
     Record AddRecord(string source, long id, string user_Id, List<Mention> mentions, DateTime date, string geo, RecordPerson recordPerson, bool retweet, List<Words> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs);
     void ChangeRecord(Record record);
     void RemoveRecord(long id);
+
   }
 }

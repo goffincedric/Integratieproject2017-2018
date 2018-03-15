@@ -18,6 +18,11 @@ namespace PB.DAL
       ctx = new IntegratieDbContext();
     }
 
+    public ProfileRepo(UnitOfWork uow)
+    {
+      ctx = uow.Context;
+      Console.WriteLine("UOW MADE PROFILEREPO");
+    }
     public Profile CreateProfile(Profile profile)
     {
       ctx.Profiles.Add(profile);
