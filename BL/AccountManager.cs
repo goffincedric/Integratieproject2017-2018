@@ -13,7 +13,7 @@ namespace PB.BL
 {
   public class AccountManager : IAccountManager
   {
-    private IProfileRepo ProfileRepo; 
+    private IProfileRepo ProfileRepo;
     private UnitOfWorkManager uowManager;
 
     public AccountManager()
@@ -27,23 +27,30 @@ namespace PB.BL
       uowManager = uowMgr;
       ProfileRepo = new ProfileRepo(uowMgr.UnitOfWork);
     }
-    
-    public void initNonExistingRepo(bool createWithUnitOfWork = true)
+
+    public void initNonExistingRepo(bool createWithUnitOfWork = false)
     {
       if (ProfileRepo == null)
       {
-        if (uowManager == null)
+        if (createWithUnitOfWork)
         {
-          uowManager = new UnitOfWorkManager();
-          Console.WriteLine("UOW MADE in accountmanager for Profile REPO");
-        }
+          if (uowManager == null)
+          {
+            uowManager = new UnitOfWorkManager();
+            Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
+          }
+          else
+          {
+            Console.WriteLine("uo bestaat al");
+          }
 
-        ProfileRepo = new ProfileRepo(uowManager.UnitOfWork);
-      }
-      else
-      {
-        ProfileRepo = new ProfileRepo();
-        Console.WriteLine("OLD WAY REPO ACCOUNTMANAGER");
+          ProfileRepo = new ProfileRepo(uowManager.UnitOfWork);
+        }
+        else
+        {
+          ProfileRepo = new ProfileRepo();
+          Console.WriteLine("OLD WAY REPO ITEMMGR");
+        }
       }
     }
 
