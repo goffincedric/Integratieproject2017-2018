@@ -63,13 +63,14 @@ namespace PB.DAL
     }
 
     public IEnumerable<Record> GetAllRecordsBefore(Record record, DateTime end) =>
-        // Returnt een lijst van Records met vermelding van dezelfde politieker. Er kan een einddatum worden meegegeven. 
-        ctx.Records.Where(x => x.Date < end).Concat(ctx.Records.Where(x => x.RecordPerson.Number.Equals(record.RecordPerson.Number)));
+      // Returnt een lijst van Records met vermelding van dezelfde politieker. Er kan een einddatum worden meegegeven. 
+      ctx.Records.Where(x => x.Date < end)
+        .Concat(ctx.Records.Where(x => x.RecordPerson.Number.Equals(record.RecordPerson.Number)));
 
-    public void Seed()
+    public List<Record> Seed(bool even)
     {
-
-      var list = JsonConvert.DeserializeObject<List<JCLASS>>(File.ReadAllText(@"TestData\textgaindump.json"));
+      Random random = new Random();
+      var list = JsonConvert.DeserializeObject<List<JCLASS>>(File.ReadAllText(@"TestData\textgaindump.json")).ToList().Where(r => (even) ? r.Id % 2 == 0 : r.Id % 2 != 0);
 
       List<Mention> mentions;
       List<Words> words;
@@ -77,159 +78,66 @@ namespace PB.DAL
       List<Url> urls;
 
       List<Record> recordsToAdd = new List<Record>();
-      int teller = 2;
+      //int teller = (even) ? 2 : 1;
 
       foreach (var el in list)
       {
-        teller++;
-        if (teller % 2 == 0)
+        mentions = new List<Mention>();
+        foreach (var m in el.Mentions)
         {
-         
-        
+          mentions.Add(new Mention(m));
+        }
 
-          mentions = new List<Mention>();
-          foreach (var m in el.Mentions)
-          {
-            mentions.Add(new Mention(m));
-          }
+        words = new List<Words>();
+        foreach (var w in el.Words)
+        {
+          words.Add(new Words(w));
+        }
 
-          words = new List<Words>();
-          foreach (var w in el.Words)
-          {
-            words.Add(new Words(w));
-          }
+        hashtags = new List<Hashtag>();
+        foreach (var h in el.Hashtags)
+        {
+          hashtags.Add(new Hashtag(h));
+        }
 
-          hashtags = new List<Hashtag>();
-          foreach (var h in el.Hashtags)
-          {
-            hashtags.Add(new Hashtag(h));
-          }
+        urls = new List<Url>();
+        foreach (var u in el.URLs)
+        {
+          urls.Add(new Url(u));
+        }
 
-          urls = new List<Url>();
-          foreach (var u in el.URLs)
-          {
-            urls.Add(new Url(u));
-          }
+        Record record = new Record()
+        {
+          Tweet_Id = el.Id,
+          User_Id = el.User_Id,
+          Mentions = mentions,
+          Source = el.Source,
+          Date = el.Date,
+          Geo = el.Geo,
+          RecordPerson = new RecordPerson() { FirstName = el.Politician[0], LastName = el.Politician[1] },
+          Retweet = el.Retweet,
+          Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
+          Hashtags = hashtags,
+          URLs = urls,
+          ListUpdatet = DateTime.Now,
+          Words = words
+        };
 
-          Record record = new Record()
-          {
-            Tweet_Id = el.Id,
-            User_Id = el.User_Id,
-            Mentions = mentions,
-            Source = el.Source,
-            Date = el.Date,
-            Geo = el.Geo,
-            RecordPerson = new RecordPerson() { FirstName = el.Politician[0], LastName = el.Politician[1] },
-            Retweet = el.Retweet,
-            Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
-            Hashtags = hashtags,
-            URLs = urls,
-            ListUpdatet = DateTime.Now,
-            Words = words
-          };
-
-          if (recordsToAdd.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
-          {
-            recordsToAdd[recordsToAdd.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
-          }
-
-          else
-          {
-
-            recordsToAdd.Add(record);
-          }
+        if (recordsToAdd.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
+        {
+          recordsToAdd[recordsToAdd.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
+        }
+        else
+        {
+          recordsToAdd.Add(record);
         }
       }
 
       ctx.Records.AddRange(recordsToAdd);
       ctx.SaveChanges();
+
+      return recordsToAdd;
     }
-
-    public void Seed2()
-    {
-
-      var list = JsonConvert.DeserializeObject<List<JCLASS>>(File.ReadAllText(@"TestData\textgaindump.json"));
-
-      List<Mention> mentions;
-      List<Words> words;
-      List<Hashtag> hashtags;
-      List<Url> urls;
-
-      List<Record> recordsToAdd = new List<Record>();
-      int teller = 2;
-
-      foreach (var el in list)
-      {
-        teller++;
-        if (teller % 2 != 0)
-        {
-         
-
-
-          mentions = new List<Mention>();
-          foreach (var m in el.Mentions)
-          {
-            mentions.Add(new Mention(m));
-          }
-
-          words = new List<Words>();
-          foreach (var w in el.Words)
-          {
-            words.Add(new Words(w));
-          }
-
-          hashtags = new List<Hashtag>();
-          foreach (var h in el.Hashtags)
-          {
-            hashtags.Add(new Hashtag(h));
-          }
-
-          urls = new List<Url>();
-          foreach (var u in el.URLs)
-          {
-            urls.Add(new Url(u));
-          }
-
-          Record record = new Record()
-          {
-            Tweet_Id = el.Id,
-            User_Id = el.User_Id,
-            Mentions = mentions,
-            Source = el.Source,
-            Date = el.Date,
-            Geo = el.Geo,
-            RecordPerson = new RecordPerson() { FirstName = el.Politician[0], LastName = el.Politician[1] },
-            Retweet = el.Retweet,
-            Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
-            Hashtags = hashtags,
-            URLs = urls,
-            ListUpdatet = DateTime.Now,
-            Words = words
-          };
-
-          if (recordsToAdd.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
-          {
-            recordsToAdd[recordsToAdd.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
-          }
-
-          else
-          {
-
-            recordsToAdd.Add(record);
-          }
-        }
-      }
-
-      ctx.Records.AddRange(recordsToAdd);
-      ctx.SaveChanges();
-    }
-
-
-
   }
-
-
-
-
 }
 

@@ -14,5 +14,10 @@ namespace PB.DAL
     Item ReadItem(int itemId);
     void UpdateItem(Item item);
     void DeleteItem(int itemId);
+
+
+    IEnumerable<Person> ReadPersons();
+    Person CreatePerson(Person person);
+    Person ReadPerson(int itemId);
   }
 }

@@ -42,7 +42,7 @@ namespace UI_CA_Prototype
         Console.WriteLine("4) Verwijder subscription");
         Console.WriteLine("5) Show Gemiddelde tweets/Dag per persoon voorbij 14 dagen");
         Console.WriteLine("6) Voeg 2de deel record data toe");
-        Console.WriteLine("\n---------------- Info -----------------");
+        Console.WriteLine("---------------- Info -----------------");
         Console.WriteLine("7) Toon alle records");
         Console.WriteLine("8) Toon alle items");
         Console.WriteLine("9) Toon subscribed items van geselecteerd profiel");
@@ -68,7 +68,6 @@ namespace UI_CA_Prototype
 
       // test.ForEach(t => Console.WriteLine(t.Username)); 
       JsonConvert.DeserializeObject<List<Record>>(File.ReadAllText(@"TestData\textgaindump.json")).ForEach(r => Console.WriteLine(r.ToString()));
-
     }
 
     private static void DetectMenuAction()
@@ -100,9 +99,8 @@ namespace UI_CA_Prototype
             itemMgr.CheckTrend();
             break;
           case 6: 
-            itemMgr.Seed2();
+            itemMgr.Seed(false);
             break;
-           
           case 7:
             extensionMethods.ShowRecords(itemMgr.GetRecords());
             break;

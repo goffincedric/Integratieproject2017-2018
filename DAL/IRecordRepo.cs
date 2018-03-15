@@ -16,7 +16,6 @@ namespace PB.DAL
     void UpdateRecord(Record record);
     void DeleteRecord(long id);
 
-    void Seed();
-    void Seed2();
+    List<Record> Seed(bool even);
   }
 }
