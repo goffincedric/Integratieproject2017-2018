@@ -16,6 +16,6 @@ namespace PB.BL
     void ChangeProfile(Profile profile);
     void RemoveProfile(string username);
 
-    void LinkAlertsToProfile(List<Alert> alerts, Profile profile); 
+    void LinkAlertsToProfile(List<Alert> alerts); 
   }
 }
