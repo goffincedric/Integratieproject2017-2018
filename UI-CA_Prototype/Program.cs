@@ -14,8 +14,9 @@ namespace UI_CA_Prototype
 {
   class Program
   {
-    private static readonly ItemManager itemMgr = new ItemManager();
-    private static readonly AccountManager accountMgr = new AccountManager();
+    private static readonly  UnitOfWorkManager uow = new UnitOfWorkManager();
+    private static readonly ItemManager itemMgr = new ItemManager(uow);
+    private static readonly AccountManager accountMgr = new AccountManager(uow);
 
     private static readonly ExtensionMethods extensionMethods = new ExtensionMethods();
 
@@ -45,7 +46,7 @@ namespace UI_CA_Prototype
         Console.WriteLine("7) Toon alle items");
         Console.WriteLine("8) Toon subscribed items van geselecteerd profiel");
         Console.WriteLine("0) Afsluiten");
-        Console.WriteLine("19) TEST SEARCH");
+        
         try
         {
           DetectMenuAction();
@@ -125,6 +126,7 @@ namespace UI_CA_Prototype
       //Injects seed data
       itemMgr.Seed();
       accountMgr.Seed();
+      uow.Save();
       //accountMgr.SubscribeProfiles(itemMgr.GetItems());
     }
   }

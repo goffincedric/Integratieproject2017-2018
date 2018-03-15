@@ -16,11 +16,62 @@ using PB.BL.Domain.Platform;
 namespace PB.DAL.EF
 {
   [DbConfigurationType(typeof(IntegratieDbConfiguration))]
-  public class IntegratieDbContext : System.Data.Entity.DbContext
+  internal class IntegratieDbContext : System.Data.Entity.DbContext
   {
-    internal IntegratieDbContext() : base("IntegratieDB_EFCodeFirst")
+    private readonly bool delaySave; 
+
+    public IntegratieDbContext(bool unitOfworkPresent = false) : base("IntegratieDB_EFCodeFirst")
     {
       System.Data.Entity.Database.SetInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
+      delaySave = unitOfworkPresent; 
+    }
+
+   
+
+
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    {
+      base.OnModelCreating(modelBuilder);
+      modelBuilder.Entity<Item>().HasMany(t => t.Keywords).WithMany(t => t.Items)
+                    .Map(m =>
+                    {
+                      m.ToTable("tblKeywordItem");
+
+                    }
+                      );
+      modelBuilder.Entity<Profile>().HasMany(p => p.adminPlatforms).WithMany(p => p.Admins)
+                    .Map(m =>
+                    {
+                      m.ToTable("tblSubplatformAdmins");
+
+                    }
+                      );
+      modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+      modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+      modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+      modelBuilder.Properties<DateTime>()
+        .Configure(c => c.HasColumnType("datetime2"));
+
+      modelBuilder.Entity<Record>().Property(r => r.Tweet_Id)
+             .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+      //modelBuilder.Entity<Record>().Property(r => r.Date).HasColumnType("datetime2");
+    }
+
+    public override int SaveChanges()
+    {
+      if (delaySave) return -1;
+      return base.SaveChanges();
+    }
+
+    internal int CommitChanges()
+    {
+      if (delaySave)
+      {
+        return base.SaveChanges(); 
+
+      }
+      throw new InvalidOperationException("Geen UnitOfWork presented, gebruik SaveChanges in de plaats");
     }
 
     public DbSet<Profile> Profiles { get; set; }
@@ -48,35 +99,6 @@ namespace PB.DAL.EF
     //public DbSet<SubPlatform> SubPlatforms { get; set; }
     //public DbSet<SubplatformSetting> SubplatformSettings { get; set; }
     //public DbSet<Tag> Tags { get; set; }
-
-
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    {
-      modelBuilder.Entity<Item>().HasMany(t => t.Keywords).WithMany(t => t.Items)
-                    .Map(m =>
-                    {
-                      m.ToTable("tblKeywordItem");
-
-                    }
-                      );
-      modelBuilder.Entity<Profile>().HasMany(p => p.adminPlatforms).WithMany(p => p.Admins)
-                    .Map(m =>
-                    {
-                      m.ToTable("tblSubplatformAdmins");
-
-                    }
-                      );
-      modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-      modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-      modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
-      modelBuilder.Properties<DateTime>()
-        .Configure(c => c.HasColumnType("datetime2"));
-
-      modelBuilder.Entity<Record>().Property(r => r.Tweet_Id)
-             .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
-      //modelBuilder.Entity<Record>().Property(r => r.Date).HasColumnType("datetime2");
-    }
   }
 }
     
