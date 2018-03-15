@@ -129,7 +129,7 @@ namespace UI_CA_Prototype
       //Injects seed data
       itemMgr.Seed();
       accountMgr.Seed();
-      uow.Save();
+     
       //accountMgr.SubscribeProfiles(itemMgr.GetItems());
     }
   }

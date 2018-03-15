@@ -65,7 +65,9 @@ namespace PB.BL
         Email = email,
         Role = role
       };
-      return AddProfile(profile);
+      profile = AddProfile(profile);
+      uowManager.Save();
+      return profile;
     }
 
     private Profile AddProfile(Profile profile)
@@ -78,6 +80,7 @@ namespace PB.BL
     {
       initNonExistingRepo();
       ProfileRepo.UpdateProfile(profile);
+      uowManager.Save();
     }
 
     public Profile GetProfile(string username)
@@ -96,10 +99,11 @@ namespace PB.BL
     {
       initNonExistingRepo();
       ProfileRepo.DeleteProfile(username);
+      uowManager.Save();
     }
     #endregion
 
-    
+
 
     public void Seed()
     {
@@ -186,11 +190,11 @@ namespace PB.BL
         }
       };
 
-      profiles.ForEach(p => ProfileRepo.CreateProfile(p));
+      profiles.ForEach(p => AddProfile(p));
     }
 
 
-   
+
 
 
   }
