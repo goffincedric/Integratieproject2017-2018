@@ -191,10 +191,14 @@ namespace PB.BL
       };
 
       profiles.ForEach(p => AddProfile(p));
+      uowManager.Save();
     }
 
 
-
+    public void LinkAlertsToProfile(List<Alert> alerts, Profile profile)
+    {
+     profile.Alerts.AddRange(alerts);
+    }
 
 
   }
