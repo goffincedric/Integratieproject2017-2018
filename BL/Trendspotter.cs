@@ -35,7 +35,7 @@ namespace PB.BL
 
 
 
-    public void CheckTrend(IEnumerable<Record> records)
+    public List<Alert> CheckTrendAverageRecords(IEnumerable<Record> records)
     {
       /*
        *!!
@@ -69,7 +69,6 @@ namespace PB.BL
         }
       });
 
-
       //Alle oldrecords van 1 persoon in een Dictionary met RecordPersoon als Key en de List van records als value
       Dictionary<RecordPerson, List<Record>> groupedOld = groupRecordsPerPerson(recordPeople, oldRecords);
 
@@ -92,8 +91,8 @@ namespace PB.BL
 
           groupedDateOld.Add(rp, valueDict);
 
-          oldGemiddelde.Add(rp, getAverage(valueDict, period - 1));
-          Console.WriteLine(rp.ToString() + " - " + getAverage(valueDict, period - 1)); // period -1 omdat periode uitgezonder vandaag
+          oldGemiddelde.Add(rp, GetAverage(valueDict, period - 1));
+          Console.WriteLine(rp.ToString() + " - " + GetAverage(valueDict, period - 1)); // period -1 omdat periode uitgezonder vandaag
         }
       });
 
@@ -119,17 +118,54 @@ namespace PB.BL
 
           groupedDatenew.Add(rp, valueDict);
 
-          newGemiddelde.Add(rp, getAverage(valueDict, period - 1));
-          Console.WriteLine(rp.ToString() + " - " + getAverage(valueDict, period - 1)); // period -1 omdat periode uitgezonder vandaag
+          newGemiddelde.Add(rp, GetAverage(valueDict, period - 1));
+          Console.WriteLine(rp.ToString() + " - " + GetAverage(valueDict, period - 1)); // period -1 omdat periode is uitgezonderd vandaag
         }
       });
-
 
       Console.WriteLine("===========VERSCHIL===========");
       oldGemiddelde.Values.ToList().ForEach(v => Console.WriteLine(oldGemiddelde.Keys.ToList()[oldGemiddelde.Values.ToList().IndexOf(v)] + " = " + (newGemiddelde.Values.ToList()[oldGemiddelde.Values.ToList().IndexOf(v)] - v)));
 
       //WAT RETURNEN?
+      Console.WriteLine("\noldRECORDPERSONSSSSSSSSSSSSSSSSSSSSSSS");
+      oldGemiddelde.Keys.ToList().ForEach(v => Console.WriteLine(v));
 
+      Console.WriteLine("\nnewRECORDPERSONSSSSSSSSSSSSSSSSSSSSSSS");
+      newGemiddelde.Keys.ToList().ForEach(v => Console.WriteLine(v));
+
+      //Alerts maken
+      List<Alert> alerts = new List<Alert>();
+      oldGemiddelde.Keys.ToList().ForEach(k =>
+      {
+        double verschil = 0;
+        verschil = newGemiddelde.Values.ToList()[oldGemiddelde.Keys.ToList().IndexOf(k)] - oldGemiddelde.Values.ToList()[oldGemiddelde.Keys.ToList().IndexOf(k)];
+
+        if (verschil == 0) return;
+
+        if (verschil <= -0.02)
+        {
+          alerts.Add(new Alert()
+          {
+            Description = "Daling populariteit " + k.FirstName + " " + k.LastName,
+            Text = k.FirstName + " " + k.LastName + " is minder populair vergeleken met de laatste 2 weken", //Random tekstjes laten kiezen?
+            IsRead = false,
+            TimeStamp = DateTime.Now
+          });
+        }
+        else if (verschil >= 0.02)
+        {
+          alerts.Add(new Alert()
+          {
+            Description = "Stijging populariteit " + k.FirstName + " " + k.LastName,
+            Text = k.FirstName + " " + k.LastName + " heeft meer populariteit gekregen vergeleken met de laatste 2 weken", //Random tekstjes laten kiezen?
+            IsRead = false,
+            TimeStamp = DateTime.Now
+          });
+        }
+      });
+      
+      //Return alerts
+      return alerts;
     }
 
     public Dictionary<RecordPerson, List<Record>> groupRecordsPerPerson(List<RecordPerson> recordPeople, List<Record> periodRecords)
@@ -148,7 +184,7 @@ namespace PB.BL
       return groupedOld;
     }
 
-    private double getAverage(Dictionary<DateTime, List<Record>> recordsPerDate, double period)
+    private double GetAverage(Dictionary<DateTime, List<Record>> recordsPerDate, double period)
     {
       if (recordsPerDate.Values.Count == 0) return 0;
 

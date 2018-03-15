@@ -42,10 +42,11 @@ namespace UI_CA_Prototype
         Console.WriteLine("4) Verwijder subscription");
         Console.WriteLine("5) Show Gemiddelde tweets/Dag per persoon voorbij 14 dagen");
         Console.WriteLine("6) Voeg 2de deel record data toe");
+        Console.WriteLine("7) Show Alerts from selected profile");
         Console.WriteLine("---------------- Info -----------------");
-        Console.WriteLine("7) Toon alle records");
-        Console.WriteLine("8) Toon alle items");
-        Console.WriteLine("9) Toon subscribed items van geselecteerd profiel");
+        Console.WriteLine("8) Toon alle records");
+        Console.WriteLine("9) Toon alle items");
+        Console.WriteLine("10) Toon subscribed items van geselecteerd profiel");
         Console.WriteLine("0) Afsluiten");
         
         try
@@ -102,12 +103,15 @@ namespace UI_CA_Prototype
             itemMgr.Seed(false);
             break;
           case 7:
-            extensionMethods.ShowRecords(itemMgr.GetRecords());
+            itemMgr.GenerateProfileAlerts(selectedProfile);
             break;
           case 8:
-            extensionMethods.ShowItems(itemMgr.GetItems());
+            extensionMethods.ShowRecords(itemMgr.GetRecords());
             break;
           case 9:
+            extensionMethods.ShowItems(itemMgr.GetItems());
+            break;
+          case 10:
             extensionMethods.ShowSubcsribedItems(selectedProfile);
             break;
         
@@ -127,7 +131,6 @@ namespace UI_CA_Prototype
       //Injects seed data
       itemMgr.Seed();
       accountMgr.Seed();
-     
       //accountMgr.SubscribeProfiles(itemMgr.GetItems());
     }
   }
