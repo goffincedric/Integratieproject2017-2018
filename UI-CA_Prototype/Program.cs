@@ -18,7 +18,7 @@ namespace UI_CA_Prototype
     private static readonly AccountManager accountMgr = new AccountManager();
 
     private static readonly ExtensionMethods extensionMethods = new ExtensionMethods();
-    
+
     private static bool stop = false;
     private static Profile selectedProfile;
 
@@ -39,7 +39,7 @@ namespace UI_CA_Prototype
         Console.WriteLine("2) Selecteer account");
         Console.WriteLine("3) Voeg subscription toe");
         Console.WriteLine("4) Verwijder subscription");
-        Console.WriteLine("5) Genereer alerts voor geselecteerd account");
+        Console.WriteLine("5) Show Gemiddelde tweets/Dag per persoon voorbij 14dagen");
         Console.WriteLine("\n---------------- Info -----------------");
         Console.WriteLine("6) Toon alle records");
         Console.WriteLine("7) Toon alle items");
@@ -95,12 +95,10 @@ namespace UI_CA_Prototype
             accountMgr.ChangeProfile(selectedProfile);
             break;
           case 5:
-            Console.WriteLine("Out of order");
-           //accountMgr.generateAlerts(); 
+            itemMgr.CheckTrend();
             break;
           case 6:
-
-           extensionMethods.ShowRecords(itemMgr.GetRecords());
+            extensionMethods.ShowRecords(itemMgr.GetRecords());
             break;
           case 7:
             extensionMethods.ShowItems(itemMgr.GetItems());
