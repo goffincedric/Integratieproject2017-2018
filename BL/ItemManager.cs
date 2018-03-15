@@ -295,8 +295,18 @@ namespace PB.BL
       initNonExistingRepo();
       //initNonExistingRepoRecord();
       RecordRepo.Seed();
-
+      uowManager.Save();
       RecordsToItems();
+      uowManager.Save();
+    }
+
+    public void Seed2()
+    {
+      initNonExistingRepo();
+      RecordRepo.Seed2();
+      uowManager.Save();
+      RecordsToItems();
+      uowManager.Save();
     }
 
     public void CheckTrend()
@@ -312,7 +322,7 @@ namespace PB.BL
       initNonExistingRepo();
       //initNonExistingRepoRecord();
       //initNonExistingRepoItem();
-      List<Record> records = RecordRepo.ReadRecords().ToList();
+      List<Record> records = GetRecords().ToList();
       List<Person> people = new List<Person>();
       List<Item> persons = ItemRepo.ReadItems().ToList();
       Item item;

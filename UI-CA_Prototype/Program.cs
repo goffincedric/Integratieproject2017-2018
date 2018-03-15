@@ -40,11 +40,12 @@ namespace UI_CA_Prototype
         Console.WriteLine("2) Selecteer account");
         Console.WriteLine("3) Voeg subscription toe");
         Console.WriteLine("4) Verwijder subscription");
-        Console.WriteLine("5) Show Gemiddelde tweets/Dag per persoon voorbij 14dagen");
+        Console.WriteLine("5) Show Gemiddelde tweets/Dag per persoon voorbij 14 dagen");
+        Console.WriteLine("6) Voeg 2de deel record data toe");
         Console.WriteLine("\n---------------- Info -----------------");
-        Console.WriteLine("6) Toon alle records");
-        Console.WriteLine("7) Toon alle items");
-        Console.WriteLine("8) Toon subscribed items van geselecteerd profiel");
+        Console.WriteLine("7) Toon alle records");
+        Console.WriteLine("8) Toon alle items");
+        Console.WriteLine("9) Toon subscribed items van geselecteerd profiel");
         Console.WriteLine("0) Afsluiten");
         
         try
@@ -98,18 +99,20 @@ namespace UI_CA_Prototype
           case 5:
             itemMgr.CheckTrend();
             break;
-          case 6:
+          case 6: 
+            itemMgr.Seed2();
+            break;
+           
+          case 7:
             extensionMethods.ShowRecords(itemMgr.GetRecords());
             break;
-          case 7:
+          case 8:
             extensionMethods.ShowItems(itemMgr.GetItems());
             break;
-          case 8:
+          case 9:
             extensionMethods.ShowSubcsribedItems(selectedProfile);
             break;
-          case 19:
-            testSearch();
-            break;
+        
           case 0:
             stop = true;
             return;
