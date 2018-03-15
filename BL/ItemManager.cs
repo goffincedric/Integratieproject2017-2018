@@ -15,7 +15,7 @@ namespace PB.BL
   {
     private IItemRepo ItemRepo;
     private IRecordRepo RecordRepo;
-  
+
     private UnitOfWorkManager uowManager;
 
     private Trendspotter trendspotter = new Trendspotter();
@@ -30,11 +30,7 @@ namespace PB.BL
       uowManager = uofMgr;
       ItemRepo = new ItemRepo(uofMgr.UnitOfWork);
       RecordRepo = new RecordRepo(uofMgr.UnitOfWork);
-      
-
     }
-
-
 
     public void initNonExistingRepo(bool createWithUnitOfWork = false)
     {
@@ -64,14 +60,14 @@ namespace PB.BL
       }
     }
 
-   
+
 
     #region Items
     public Organisation AddOrganisation(string name, string socialMediaLink = null, string iconURL = null)
     {
       initNonExistingRepo();
-     // initNonExistingRepoItem();
-     
+      // initNonExistingRepoItem();
+
       Organisation organisation = new Organisation()
       {
         Name = name,
@@ -83,16 +79,16 @@ namespace PB.BL
         People = new List<Person>()
       };
 
-      organisation = (Organisation) AddItem(organisation);
+      organisation = (Organisation)AddItem(organisation);
       uowManager.Save();
-      
+
       return organisation;
     }
 
     public Person AddPerson(string firstName, string lastName, DateTime birthDay, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null)
     {
       //initNonExistingRepoItem();
-     initNonExistingRepo();
+      initNonExistingRepo();
       Person person = new Person()
       {
         FirstName = firstName,
@@ -106,7 +102,7 @@ namespace PB.BL
         Records = new List<Record>(),
         Organisation = organisation
       };
-      person = (Person) AddItem(person); 
+      person = (Person)AddItem(person);
       uowManager.Save();
       return person;
     }
@@ -124,7 +120,7 @@ namespace PB.BL
         Records = new List<Record>()
       };
 
-      theme = (Theme) AddItem(theme);
+      theme = (Theme)AddItem(theme);
       uowManager.Save();
       return theme;
     }
@@ -132,14 +128,14 @@ namespace PB.BL
     private Item AddItem(Item item)
     {
       initNonExistingRepo();
-     // initNonExistingRepoItem();
+      // initNonExistingRepoItem();
       return ItemRepo.CreateItem(item);
     }
 
     public void ChangeItem(Item item)
     {
-     initNonExistingRepo();
-       //initNonExistingRepoItem();
+      initNonExistingRepo();
+      //initNonExistingRepoItem();
       ItemRepo.UpdateItem(item);
       uowManager.Save();
     }
@@ -147,36 +143,36 @@ namespace PB.BL
     public Item GetItem(int itemId)
     {
 
-     // initNonExistingRepoItem();
+      // initNonExistingRepoItem();
       initNonExistingRepo();
       return ItemRepo.ReadItem(itemId);
     }
 
     public IEnumerable<Item> GetItems()
     {
-     // initNonExistingRepoItem();
-     initNonExistingRepo();
+      // initNonExistingRepoItem();
+      initNonExistingRepo();
       return ItemRepo.ReadItems();
     }
 
     public Organisation GetOrganistation(int itemId)
     {
-     // initNonExistingRepoItem();
-     initNonExistingRepo();
+      // initNonExistingRepoItem();
+      initNonExistingRepo();
       return (Organisation)ItemRepo.ReadItem(itemId);
     }
 
     public Person GetPerson(int itemId)
     {
       initNonExistingRepo();
-       //initNonExistingRepoItem();
+      //initNonExistingRepoItem();
       return (Person)ItemRepo.ReadItem(itemId);
     }
 
     public Theme GetTheme(int itemId)
     {
       initNonExistingRepo();
-     // initNonExistingRepoItem();
+      // initNonExistingRepoItem();
       return (Theme)ItemRepo.ReadItem(itemId);
     }
 
@@ -187,14 +183,27 @@ namespace PB.BL
       ItemRepo.DeleteItem(itemId);
       uowManager.Save();
     }
+
+
+
+
+
+
+    public IEnumerable<Person> GetPersons()
+    {
+      // initNonExistingRepoItem();
+      initNonExistingRepo();
+      return ItemRepo.ReadPersons();
+    }
+
     #endregion
 
 
     #region Records
     public IEnumerable<Record> GetRecords()
     {
-     initNonExistingRepo();
-     // initNonExistingRepo();
+      initNonExistingRepo();
+      // initNonExistingRepo();
       return RecordRepo.ReadRecords();
     }
 
@@ -255,57 +264,48 @@ namespace PB.BL
     #endregion
 
 
-    public void Seed()
+    public void Seed(bool even = true)
     {
       initNonExistingRepo();
       //initNonExistingRepoRecord();
-      RecordRepo.Seed();
+      List<Record> toegevoegde = RecordRepo.Seed(even);
       uowManager.Save();
-      RecordsToItems();
-      uowManager.Save();
-    }
-
-    public void Seed2()
-    {
-      initNonExistingRepo();
-      RecordRepo.Seed2();
-      uowManager.Save();
-      RecordsToItems();
+      RecordsToItems(toegevoegde);
       uowManager.Save();
     }
 
     public void CheckTrend()
     {
-     initNonExistingRepo();
-     // initNonExistingRepoRecord();
+      initNonExistingRepo();
+      // initNonExistingRepoRecord();
       trendspotter.CheckTrend(GetRecords());
     }
-    private void RecordsToItems()
+    private void RecordsToItems(List<Record> records)
     {
-
-
       initNonExistingRepo();
       //initNonExistingRepoRecord();
       //initNonExistingRepoItem();
-      List<Record> records = GetRecords().ToList();
+      //List<Record> records = GetRecords().ToList();
+      List<Person> persons = GetPersons().ToList();
       List<Person> people = new List<Person>();
-      List<Item> persons = GetItems().ToList();
       Item item;
 
       records.ToList().ForEach(r =>
       {
-        item = people.FirstOrDefault(p => p.FirstName.Equals(r.RecordPerson.FirstName) && p.LastName.Equals(r.RecordPerson.LastName));
+        item = persons.FirstOrDefault(p => p.FirstName.Equals(r.RecordPerson.FirstName) && p.LastName.Equals(r.RecordPerson.LastName));
         if (item == null)
         {
-          people.Add(new Person()
+          Person person = new Person()
           {
-            ItemId = people.Count,
+            ItemId = persons.Count,
             FirstName = r.RecordPerson.FirstName,
             LastName = r.RecordPerson.LastName,
-            Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w.Word }),
+            Keywords = r.Words.ConvertAll(w => new Keyword() {Name = w.Word}),
             SubPlatforms = new List<SubPlatform>(),
-            Records = new List<Record>() { r }
-          });
+            Records = new List<Record>() {r}
+          };
+          persons.Add(person);
+          people.Add(person);
         }
         else
         {
@@ -313,7 +313,7 @@ namespace PB.BL
         }
       });
 
-      people.ForEach(p => AddItem(p));
+      people.ForEach(p => ItemRepo.CreatePerson(p));
       uowManager.Save();
     }
 
