@@ -15,5 +15,7 @@ namespace PB.DAL
     Record ReadRecord(long id);
     void UpdateRecord(Record record);
     void DeleteRecord(long id);
+
+    void Seed();
   }
 }

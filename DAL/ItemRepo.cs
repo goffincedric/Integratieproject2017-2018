@@ -17,6 +17,12 @@ namespace PB.DAL
       ctx = new IntegratieDbContext();
     }
 
+    public ItemRepo(UnitOfWork uow)
+    {
+      ctx = uow.Context;
+      Console.WriteLine("UOW MADE ITEMREPO");
+    }
+
     public Item CreateItem(Item item)
     {
       ctx.Items.Add(item);

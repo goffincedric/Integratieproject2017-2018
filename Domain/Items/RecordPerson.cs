@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Domain.Items
 {
 
-  [Table("tblPoliticianRecord")]
+  [Table("tblPersonRecord")]
   public class RecordPerson
 
   {

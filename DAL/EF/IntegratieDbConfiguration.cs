@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PB.DAL.EF
 {
-  public class IntegratieDbConfiguration:System.Data.Entity.DbConfiguration
+  internal class IntegratieDbConfiguration:System.Data.Entity.DbConfiguration
   {
     public IntegratieDbConfiguration()
     {
