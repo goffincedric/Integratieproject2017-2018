@@ -13,11 +13,50 @@ namespace PB.BL
 {
   public class AccountManager : IAccountManager
   {
-    IProfileRepo ProfileRepo = new ProfileRepo();
+    private IProfileRepo ProfileRepo;
+    private UnitOfWorkManager uowManager;
+
+    public AccountManager()
+    {
+
+    }
+
+    public AccountManager(UnitOfWorkManager uowMgr)
+    {
+      uowManager = uowMgr;
+      ProfileRepo = new ProfileRepo(uowMgr.UnitOfWork);
+    }
+
+    public void initNonExistingRepo(bool createWithUnitOfWork = false)
+    {
+      if (ProfileRepo == null)
+      {
+        if (createWithUnitOfWork)
+        {
+          if (uowManager == null)
+          {
+            uowManager = new UnitOfWorkManager();
+            Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
+          }
+          else
+          {
+            Console.WriteLine("uo bestaat al");
+          }
+
+          ProfileRepo = new ProfileRepo(uowManager.UnitOfWork);
+        }
+        else
+        {
+          ProfileRepo = new ProfileRepo();
+          Console.WriteLine("OLD WAY REPO ITEMMGR");
+        }
+      }
+    }
 
     #region Profile
     public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
     {
+      initNonExistingRepo();
       Profile profile = new Profile()
       {
         Username = username,
@@ -25,37 +64,49 @@ namespace PB.BL
         Email = email,
         Role = role
       };
-      return AddProfile(profile);
+      profile = AddProfile(profile);
+      uowManager.Save();
+      return profile;
     }
 
     private Profile AddProfile(Profile profile)
     {
+      initNonExistingRepo();
       return ProfileRepo.CreateProfile(profile);
     }
 
     public void ChangeProfile(Profile profile)
     {
+      initNonExistingRepo();
       ProfileRepo.UpdateProfile(profile);
+      uowManager.Save();
     }
 
     public Profile GetProfile(string username)
     {
+      initNonExistingRepo();
       return ProfileRepo.ReadProfile(username);
     }
 
     public IEnumerable<Profile> GetProfiles()
     {
+      initNonExistingRepo();
       return ProfileRepo.ReadProfiles();
     }
 
     public void RemoveProfile(string username)
     {
+      initNonExistingRepo();
       ProfileRepo.DeleteProfile(username);
+      uowManager.Save();
     }
     #endregion
 
+
+
     public void Seed()
     {
+      initNonExistingRepo();
       List<Profile> profiles = new List<Profile>()
       {
         new Profile()
@@ -64,7 +115,7 @@ namespace PB.BL
           Username = "verhoeventhomas",
           Password = "schlack1",
           Role = Role.USER,
-          Subscriptions = new Dictionary<Item, bool>(),
+          Subscriptions = new Dictionary<Item, bool>() { },
           Alerts = new List<Alert>(),
           Settings = new List<UserSetting>(),
           Dashboards = new Dictionary<SubPlatform, Dashboard>(),
@@ -138,86 +189,21 @@ namespace PB.BL
         }
       };
 
-      profiles.ForEach(p => ProfileRepo.CreateProfile(p));
+      profiles.ForEach(p => AddProfile(p));
+      uowManager.Save();
     }
 
-    // Hardcoded subscriptions --> Voeg toe via menu
 
-    // Fout
-    /*
-    public void SubscribeProfiles(IEnumerable<Item> items)
+    public void LinkAlertsToProfile(List<Alert> alerts)
     {
-      List<Profile> profiles = GetProfiles().ToList();
-      profiles[0].Subscriptions.Add(items.ToList()[0], true);
-      profiles[0].Subscriptions.Add(items.ToList()[1], true);
-      profiles[1].Subscriptions.Add(items.ToList()[2], false);
-      profiles[1].Subscriptions.Add(items.ToList()[5], true);
-    }
-    */
-
-    public List<Profile> searchUsers()
-    {
-      List<Profile> profiles = GetProfiles().ToList();
-      HashSet<Profile> profilesWithSubs = new HashSet<Profile>();
-      profiles.ForEach(p =>
-      {
-        foreach(KeyValuePair<Item,bool> subscription in p.Subscriptions)
-        {
-          if (subscription.Value)
-          {
-            profilesWithSubs.Add(p);
-            
-          }
-        }
-
+      alerts.ForEach(a => {
+        a.Profile.Alerts.Add(a);
+        ProfileRepo.UpdateProfile(a.Profile);
       });
-      return null; 
 
+      uowManager.Save();
     }
 
-    //public Dictionary<Profile, Alert> generateAlerts()
-    //{
 
-    //  Dictionary<Profile, Alert> newAlerts = new Dictionary<Profile, Alert>();
-    //  List<Profile> profiles = GetProfiles().ToList();
-      
-    //  profiles.ForEach(profile =>
-    //  {
-    //    foreach(KeyValuePair<Item, bool> subscription in profile.Subscriptions)
-    //    {
-    //      if (subscription.Value)
-    //      {
-    //        List<Record> sortedByDate = new List<Record>();
-    //        List<Record> huidige = new List<Record>();
-    //        List<Record> vorige = new List<Record>();
-
-    //        sortedByDate = subscription.Key.Records.OrderByDescending(r => r.Date).ToList();
-            
-    //        //Toont alle records van een subscribed item
-    //        //sortedByDate.ForEach(r => Console.WriteLine(r.Date.ToString() + " - " + r.Politician[0] + " " + r.Politician[1] + " (" + r.Id + ")"));
-
-    //        DateTime huidigeDate = sortedByDate[0].Date.Date;
-    //        DateTime vorigeDate = sortedByDate.First(r => huidigeDate.Date.CompareTo(r.Date) > 0).Date.Date;
-
-    //        huidige = sortedByDate.FindAll(r => r.Date.CompareTo(huidigeDate) >= 0);
-    //        vorige = sortedByDate.FindAll(r => r.Date.CompareTo(vorigeDate) >= 0 && r.Date.CompareTo(huidigeDate) < 0);
-
-    //        //Toont de laatste en voorlaatste dag + de hoeveelheid records van een subscribed item waarvan er een record gevonden
-    //        //Console.WriteLine(Aantal records: huidige.Count);
-    //        //Console.WriteLine(Aantal records: vorige.Count);
-
-
-    //        /* TODO:
-    //         * Kijken of item persoon / Thema / Organisatie is
-    //         *    ==> andere trend-detectiemethodes + alertteksten, ...
-    //         * 
-    //         **/
-    //      }
-    //    }
-    //  });
-
-
-    //  return newAlerts;
-    //}
   }
 }

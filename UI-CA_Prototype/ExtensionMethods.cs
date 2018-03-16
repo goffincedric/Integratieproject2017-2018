@@ -93,7 +93,7 @@ namespace UI_CA_Prototype
           new Words("iran")
         },
         Date = DateTime.Parse("2017-09-11 04:53:38"),
-        RecordPerson = new RecordPerson("Imade", "Annouri"),
+        RecordPerson = new RecordPerson() { FirstName = "Imade", LastName = "Annouri" },
         Geo = "N/A",
         Tweet_Id = 907104827896987600,
         User_Id = "N/A",
@@ -121,7 +121,7 @@ namespace UI_CA_Prototype
           new Words("time")
         },
         Date = DateTime.Parse("2017-09-07 22:52:35"),
-        RecordPerson = new RecordPerson("Imade", "Annouri"),
+        RecordPerson = new RecordPerson() { FirstName = "Imade", LastName = "Annouri" },
         Geo = "N/A",
         Tweet_Id = 905926801804980200,
         User_Id = "N/A",

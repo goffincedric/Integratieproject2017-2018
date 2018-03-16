@@ -14,11 +14,12 @@ namespace UI_CA_Prototype
 {
   class Program
   {
-    private static readonly ItemManager itemMgr = new ItemManager();
-    private static readonly AccountManager accountMgr = new AccountManager();
+    private static readonly  UnitOfWorkManager uow = new UnitOfWorkManager();
+    private static readonly ItemManager itemMgr = new ItemManager(uow);
+    private static readonly AccountManager accountMgr = new AccountManager(uow);
 
     private static readonly ExtensionMethods extensionMethods = new ExtensionMethods();
-    
+
     private static bool stop = false;
     private static Profile selectedProfile;
 
@@ -39,13 +40,15 @@ namespace UI_CA_Prototype
         Console.WriteLine("2) Selecteer account");
         Console.WriteLine("3) Voeg subscription toe");
         Console.WriteLine("4) Verwijder subscription");
-        Console.WriteLine("5) Genereer alerts voor geselecteerd account");
-        Console.WriteLine("\n---------------- Info -----------------");
-        Console.WriteLine("6) Toon alle records");
-        Console.WriteLine("7) Toon alle items");
-        Console.WriteLine("8) Toon subscribed items van geselecteerd profiel");
+        Console.WriteLine("5) Show Gemiddelde tweets/Dag per persoon voorbij 14 dagen");
+        Console.WriteLine("6) Voeg 2de deel record data toe");
+        Console.WriteLine("7) Voeg alerts to aan selected profile");
+        Console.WriteLine("---------------- Info -----------------");
+        Console.WriteLine("8) Toon alle records");
+        Console.WriteLine("9) Toon alle items");
+        Console.WriteLine("10) Toon subscribed items van geselecteerd profiel");
         Console.WriteLine("0) Afsluiten");
-        Console.WriteLine("19) TEST SEARCH");
+        
         try
         {
           DetectMenuAction();
@@ -66,7 +69,6 @@ namespace UI_CA_Prototype
 
       // test.ForEach(t => Console.WriteLine(t.Username)); 
       JsonConvert.DeserializeObject<List<Record>>(File.ReadAllText(@"TestData\textgaindump.json")).ForEach(r => Console.WriteLine(r.ToString()));
-
     }
 
     private static void DetectMenuAction()
@@ -95,22 +97,24 @@ namespace UI_CA_Prototype
             accountMgr.ChangeProfile(selectedProfile);
             break;
           case 5:
-            Console.WriteLine("Out of order");
-           //accountMgr.generateAlerts(); 
+            itemMgr.CheckTrend();
             break;
-          case 6:
-
-           extensionMethods.ShowRecords(itemMgr.GetRecords());
+          case 6: 
+            itemMgr.Seed(false);
             break;
           case 7:
-            extensionMethods.ShowItems(itemMgr.GetItems());
+            itemMgr.GenerateProfileAlerts(selectedProfile);
             break;
           case 8:
+            extensionMethods.ShowRecords(itemMgr.GetRecords());
+            break;
+          case 9:
+            extensionMethods.ShowItems(itemMgr.GetItems());
+            break;
+          case 10:
             extensionMethods.ShowSubcsribedItems(selectedProfile);
             break;
-          case 19:
-            testSearch();
-            break;
+        
           case 0:
             stop = true;
             return;

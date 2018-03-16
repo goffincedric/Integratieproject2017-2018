@@ -11,16 +11,16 @@ namespace Domain.Items
   public class Sentiment
   {
     public double Objectivity { get; set; }
-    public double Prohability { get; set; }
-
-    public Sentiment(double objectiviteit, double probabiliteit)
-    {
-      Objectivity = objectiviteit;
-      Prohability = probabiliteit;
-    }
+    public double Polarity { get; set; }
 
     public Sentiment()
     {
+    }
+
+    public Sentiment(double objectiviteit, double polarity)
+    {
+      Objectivity = objectiviteit;
+      Polarity = polarity;
     }
   }
 }

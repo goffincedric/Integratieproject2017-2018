@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,9 +18,15 @@ namespace PB.DAL
       ctx = new IntegratieDbContext();
     }
 
+    public ItemRepo(UnitOfWork uow)
+    {
+      ctx = uow.Context;
+      Console.WriteLine("UOW MADE ITEMREPO");
+    }
+
     public Item CreateItem(Item item)
     {
-      ctx.Items.Add(item);
+      item = ctx.Items.Add(item);
       ctx.SaveChanges();
       return item;
     }
@@ -29,6 +36,23 @@ namespace PB.DAL
       Item item = ReadItem(itemId);
       if (item != null) ctx.Items.Remove(item);
       ctx.SaveChanges();
+    }
+
+    public IEnumerable<Person> ReadPersons()
+    {
+      return ctx.Persons.AsEnumerable();
+    }
+
+    public Person CreatePerson(Person person)
+    {
+      person = ctx.Persons.Add(person);
+      ctx.SaveChanges();
+      return person;
+    }
+
+    public Person ReadPerson(int itemId)
+    {
+      return ctx.Persons.FirstOrDefault(p => p.ItemId == itemId);
     }
 
     public Item ReadItem(int itemId)

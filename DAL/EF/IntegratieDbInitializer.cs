@@ -8,7 +8,7 @@ using PB.BL.Domain.Items;
 
 namespace PB.DAL.EF
 {
-  public class IntegratieDbInitializer : DropCreateDatabaseAlways<IntegratieDbContext>
+  internal class IntegratieDbInitializer : DropCreateDatabaseAlways<IntegratieDbContext>
   {
     public IntegratieDbInitializer()
     {
@@ -16,6 +16,8 @@ namespace PB.DAL.EF
 
     protected override void Seed(IntegratieDbContext context)
     {
+
+      base.Seed(context);
       //Record record1 = new Record()
       //{
       //  Hashtags = new List<string>(),

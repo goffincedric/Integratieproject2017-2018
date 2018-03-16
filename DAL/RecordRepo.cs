@@ -21,6 +21,12 @@ namespace PB.DAL
       ctx = new IntegratieDbContext();
     }
 
+    public RecordRepo(UnitOfWork uow)
+    {
+      ctx = uow.Context;
+      Console.WriteLine("UOW MADE RECORD REPO");
+    }
+
     public Record CreateRecord(Record record)
     {
       ctx.Records.Add(record);
@@ -57,13 +63,14 @@ namespace PB.DAL
     }
 
     public IEnumerable<Record> GetAllRecordsBefore(Record record, DateTime end) =>
-        // Returnt een lijst van Records met vermelding van dezelfde politieker. Er kan een einddatum worden meegegeven. 
-        ctx.Records.Where(x => x.Date < end).Concat(ctx.Records.Where(x => x.RecordPerson.Number.Equals(record.RecordPerson.Number)));
+      // Returnt een lijst van Records met vermelding van dezelfde politieker. Er kan een einddatum worden meegegeven. 
+      ctx.Records.Where(x => x.Date < end)
+        .Concat(ctx.Records.Where(x => x.RecordPerson.Number.Equals(record.RecordPerson.Number)));
 
-    public void Seed()
+    public List<Record> Seed(bool even)
     {
-
-      var list = JsonConvert.DeserializeObject<List<JCLASS>>(File.ReadAllText(@"TestData\textgaindump.json"));
+      Random random = new Random();
+      var list = JsonConvert.DeserializeObject<List<JCLASS>>(File.ReadAllText(@"TestData\textgaindump.json")).ToList().Where(r => (even) ? r.Id % 2 == 0 : r.Id % 2 != 0);
 
       List<Mention> mentions;
       List<Words> words;
@@ -71,24 +78,22 @@ namespace PB.DAL
       List<Url> urls;
 
       List<Record> recordsToAdd = new List<Record>();
+      //int teller = (even) ? 2 : 1;
 
       foreach (var el in list)
       {
-
         mentions = new List<Mention>();
-
         foreach (var m in el.Mentions)
         {
           mentions.Add(new Mention(m));
         }
 
         words = new List<Words>();
-
         foreach (var w in el.Words)
         {
-
           words.Add(new Words(w));
         }
+
         hashtags = new List<Hashtag>();
         foreach (var h in el.Hashtags)
         {
@@ -109,7 +114,7 @@ namespace PB.DAL
           Source = el.Source,
           Date = el.Date,
           Geo = el.Geo,
-          RecordPerson = new RecordPerson(el.Politician[0], el.Politician[1]),
+          RecordPerson = new RecordPerson() { FirstName = el.Politician[0], LastName = el.Politician[1] },
           Retweet = el.Retweet,
           Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
           Hashtags = hashtags,
@@ -117,14 +122,22 @@ namespace PB.DAL
           ListUpdatet = DateTime.Now,
           Words = words
         };
+
         if (recordsToAdd.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
+        {
           recordsToAdd[recordsToAdd.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
+        }
         else
+        {
           recordsToAdd.Add(record);
+        }
       }
 
       ctx.Records.AddRange(recordsToAdd);
       ctx.SaveChanges();
+
+      return recordsToAdd;
     }
   }
 }
+

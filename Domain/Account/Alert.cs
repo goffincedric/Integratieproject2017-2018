@@ -26,5 +26,10 @@ namespace PB.BL.Domain.Account
     [Required]
     [ForeignKey("Username")]
     public Profile Profile { get; set; }
+
+    public override string ToString()
+    {
+      return Description + "; " + Text + ";";
+    }
   }
 }
