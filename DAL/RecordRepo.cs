@@ -98,7 +98,6 @@ namespace PB.DAL
       List<Url> urls;
 
       List<Record> recordsToAdd = new List<Record>();
-      //int teller = (even) ? 2 : 1;
 
       foreach (var el in list)
       {
@@ -207,7 +206,7 @@ namespace PB.DAL
         //  recordsToAdd.Add(record);
         //}
       }
-
+      
       //ctx.Records.AddRange(recordsToAdd);
       //ctx.SaveChanges();
 

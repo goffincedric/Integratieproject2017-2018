@@ -12,13 +12,11 @@ namespace Domain.Items
   [Table("tblMention")]
   public class Mention
   {
-    [Key] public int Number { get; set; }
-
-
-   
+    [Key]
+    public int Number { get; set; }   
     public string Name { get; set; }
 
- 
+    
     public List<Record> records { get; set; }
 
     public Mention()

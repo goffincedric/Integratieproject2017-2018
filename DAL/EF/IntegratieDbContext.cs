@@ -47,7 +47,7 @@ namespace PB.DAL.EF
                     }
                       );
 
-      modelBuilder.Entity<Record>().HasMany(r => r.Mentions).WithMany(r => r.records)
+      modelBuilder.Entity<Record>().HasMany(r => r.Mentions).WithMany(m => m.records)
         .Map(m => { m.ToTable("tblRecordMention"); });
 
 
@@ -59,7 +59,8 @@ namespace PB.DAL.EF
 
       modelBuilder.Entity<Record>().HasMany(r => r.URLs).WithMany(r => r.records)
         .Map(m => { m.ToTable("tblRecordUrl"); });
-
+        
+        
       modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
       modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
       modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
