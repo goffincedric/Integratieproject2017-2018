@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Account;
 
 namespace PB.BL.Domain.Account
 {
