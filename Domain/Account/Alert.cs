@@ -27,6 +27,24 @@ namespace PB.BL.Domain.Account
     [ForeignKey("Username")]
     public Profile Profile { get; set; }
 
+    public override bool Equals(object obj)
+    {
+      if (!(obj is Alert)) return false;
+      Alert alert = (Alert)obj;
+
+      if (!alert.Text.ToLower().Equals(this.Text.ToLower())) return false;
+      if (!alert.Description.ToLower().Equals(this.Description.ToLower())) return false;
+      if (!alert.Username.ToLower().Equals(this.Username.ToLower())) return false;
+      
+      if (!alert.TimeStamp.Date.Equals(this.TimeStamp.Date)) return false;
+      return true;
+    }
+
+    public override int GetHashCode()
+    {
+      return base.GetHashCode();
+    }
+
     public override string ToString()
     {
       return Description + "; " + Text + ";";

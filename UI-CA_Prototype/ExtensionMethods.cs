@@ -16,20 +16,22 @@ namespace UI_CA_Prototype
     //Lets the user select an available profile
     public Profile SelectProfile(IEnumerable<Profile> profiles)
     {
-      ShowProfiles(profiles);
-
       int keuze = 0;
-      Console.Write("Keuze: ");
-      int.TryParse(Console.ReadLine(), out keuze);
+      do
+      {
+        ShowProfiles(profiles);
+        Console.Write("Keuze: ");
+        int.TryParse(Console.ReadLine(), out keuze);
+      } while (keuze < 1 || keuze > profiles.ToList().Count);
 
-      return profiles.ElementAt(keuze-1);
+      return profiles.ElementAt(keuze - 1);
     }
-    
+
     //Shows a list of all available profiles
     public void ShowProfiles(IEnumerable<Profile> profiles)
     {
       int counter = 1;
-      Console.WriteLine("Selecteer een account: ");
+      Console.WriteLine("\nSelecteer een account: ");
       profiles.ToList().ForEach(p =>
       {
         Console.WriteLine(counter + ") " + p);
@@ -46,20 +48,23 @@ namespace UI_CA_Prototype
     //Lets the user select an available item
     public Item SelectItem(IEnumerable<Item> items)
     {
-      ShowItems(items);
-
       int keuze = 0;
-      Console.Write("Keuze: ");
-      int.TryParse(Console.ReadLine(), out keuze);
 
-      return items.ElementAt(keuze-1);
+      do
+      {
+        ShowItems(items);
+        Console.Write("Keuze: ");
+        int.TryParse(Console.ReadLine(), out keuze);
+      } while (keuze < 1 || keuze > items.ToList().Count);
+
+      return items.ElementAt(keuze - 1);
     }
 
     //Shows all items
     public void ShowItems(IEnumerable<Item> items)
     {
       int counter = 1;
-      Console.WriteLine("\n\nAlle Items:");
+      Console.WriteLine("\nAlle Items:");
       items.ToList().ForEach(i =>
       {
         if (i is Person)

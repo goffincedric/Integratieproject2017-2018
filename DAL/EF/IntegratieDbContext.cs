@@ -46,6 +46,8 @@ namespace PB.DAL.EF
 
                     }
                       );
+
+      modelBuilder.Entity<Record>().HasMany(r => r.Mentions).WithMany(m => m.records);
       modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
       modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
       modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();

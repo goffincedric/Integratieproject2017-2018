@@ -101,6 +101,7 @@ namespace UI_CA_Prototype
             break;
           case 6: 
             itemMgr.Seed(false);
+            itemMgr.GenerateProfileAlerts(selectedProfile);
             break;
           case 7:
             itemMgr.GenerateProfileAlerts(selectedProfile);

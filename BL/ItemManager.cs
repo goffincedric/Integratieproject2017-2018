@@ -26,11 +26,11 @@ namespace PB.BL
 
     }
 
-    public ItemManager(UnitOfWorkManager uofMgr)
+    public ItemManager(UnitOfWorkManager uowMgr)
     {
-      uowManager = uofMgr;
-      ItemRepo = new ItemRepo(uofMgr.UnitOfWork);
-      RecordRepo = new RecordRepo(uofMgr.UnitOfWork);
+      uowManager = uowMgr;
+      ItemRepo = new ItemRepo(uowMgr.UnitOfWork);
+      RecordRepo = new RecordRepo(uowMgr.UnitOfWork);
     }
 
     public void initNonExistingRepo(bool createWithUnitOfWork = false)
@@ -299,6 +299,13 @@ namespace PB.BL
         a.Profile = profile;
         a.Username = profile.Username;
       });
+
+      alerts.ForEach(a =>
+      {
+        if (!profile.Alerts.Contains(a)) profile.Alerts.Add(a);
+      });
+      
+      uowManager.Save();
 
       //Return alerts
       return alerts;
