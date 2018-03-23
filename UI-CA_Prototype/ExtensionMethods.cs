@@ -90,12 +90,12 @@ namespace UI_CA_Prototype
       records.Add(new Record()
       {
         Hashtags = new List<Hashtag>(),
-        Words = new List<Words>() {
-          new Words("annouri"),
-          new Words("kasper goethals"),
-          new Words("arabië"),
-          new Words("imade"),
-          new Words("iran")
+        Words = new List<Word>() {
+          new Word("annouri"),
+          new Word("kasper goethals"),
+          new Word("arabië"),
+          new Word("imade"),
+          new Word("iran")
         },
         Date = DateTime.Parse("2017-09-11 04:53:38"),
         RecordPerson = new RecordPerson() { FirstName = "Imade", LastName = "Annouri" },
@@ -118,12 +118,12 @@ namespace UI_CA_Prototype
         {
           new Hashtag("Firsts,")
         },
-        Words = new List<Words>()
+        Words = new List<Word>()
         {
-          new Words("annouri"),
-          new Words("imade"),
-          new Words("reeks"),
-          new Words("time")
+          new Word("annouri"),
+          new Word("imade"),
+          new Word("reeks"),
+          new Word("time")
         },
         Date = DateTime.Parse("2017-09-07 22:52:35"),
         RecordPerson = new RecordPerson() { FirstName = "Imade", LastName = "Annouri" },

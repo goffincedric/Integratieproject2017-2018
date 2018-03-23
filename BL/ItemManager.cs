@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Account;
 using Domain.Items;
 using PB.BL.Domain.Account;
 
@@ -212,7 +213,7 @@ namespace PB.BL
     }
 
     public Record AddRecord(string source, long Tweet_Id, string user_Id, List<Mention> mentions, DateTime date, string geo, RecordPerson recordPerson,
-      bool retweet, List<Words> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs)
+      bool retweet, List<Word> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs)
     {
       //initNonExistingRepoRecord();
       initNonExistingRepo();
@@ -338,7 +339,7 @@ namespace PB.BL
             ItemId = persons.Count,
             FirstName = r.RecordPerson.FirstName,
             LastName = r.RecordPerson.LastName,
-            Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w.Word }),
+            Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w.Text }),
             SubPlatforms = new List<SubPlatform>(),
             Records = new List<Record>() { r }
           };

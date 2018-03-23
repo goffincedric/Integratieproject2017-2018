@@ -19,7 +19,10 @@ namespace Domain.Items
     
     public List<Record> records { get; set; }
 
+    public Mention()
+    {
 
+    }
     public Mention(string name)
     {
       Name = name;

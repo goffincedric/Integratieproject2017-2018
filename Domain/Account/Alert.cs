@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PB.BL.Domain.Account;
 
-namespace PB.BL.Domain.Account
+namespace Domain.Account
 {
   [Table("tblAlert")]
   public class Alert
