@@ -46,6 +46,20 @@ namespace PB.DAL.EF
 
                     }
                       );
+
+      modelBuilder.Entity<Record>().HasMany(r => r.Mentions).WithMany(r => r.records)
+        .Map(m => { m.ToTable("tblRecordMention"); });
+
+
+      modelBuilder.Entity<Record>().HasMany(r => r.Words).WithMany(r => r.records)
+        .Map(m => { m.ToTable("tblRecordWord"); });
+
+      modelBuilder.Entity<Record>().HasMany(r => r.Hashtags).WithMany(r => r.records)
+        .Map(m => { m.ToTable("tblRecordHashtag"); });
+
+      modelBuilder.Entity<Record>().HasMany(r => r.URLs).WithMany(r => r.records)
+        .Map(m => { m.ToTable("tblRecordUrl"); });
+
       modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
       modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
       modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
@@ -93,6 +107,10 @@ namespace PB.DAL.EF
     public DbSet<Person> Persons { get; set; }
     public DbSet<Record> Records { get; set; }
     public DbSet<Theme> Themes { get; set; }
+    public DbSet<Mention> Mentions { get; set; }
+    public DbSet<Url> Urls { get; set;  }
+    public DbSet<Word> Words { get; set; }
+    public DbSet<Hashtag> Hashtags { get; set;  }
 
     //public DbSet<Page> Pages { get; set; }
     //public DbSet<Style> Styles { get; set; }

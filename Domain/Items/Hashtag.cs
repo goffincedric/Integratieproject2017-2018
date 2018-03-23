@@ -15,6 +15,13 @@ namespace Domain.Items
     [Key] public int Number { get; set; }
     public String tag { get; set; }
 
+    public List<Record> records { get; set; }
+
+    public Hashtag()
+    {
+
+    }
+
     public Hashtag(string tag)
     {
       this.tag = tag;

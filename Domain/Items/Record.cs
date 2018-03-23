@@ -17,7 +17,7 @@ namespace Domain.Items
     public string Geo { get; set; }
     public RecordPerson RecordPerson { get; set; }
     public bool Retweet { get; set; }
-    public List<Words> Words { get; set; }
+    public List<Word> Words { get; set; }
     public Sentiment Sentiment { get; set; }
     public List<Hashtag> Hashtags { get; set; }
     public List<Url> URLs { get; set; }

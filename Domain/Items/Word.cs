@@ -9,14 +9,21 @@ using System.Threading.Tasks;
 namespace Domain.Items
 {
   [Table("tblWords")]
-  public class Words
+  public class Word
   {
     [Key] public int Number { get; set; }
-    public String Word { get; set; }
+    public String Text { get; set; }
 
-    public Words(string word)
+    public List<Record> records { get; set; }
+
+    public Word()
     {
-      Word = word;
+
+    }
+
+    public Word(string text)
+    {
+      Text = text;
     }
   }
 }
