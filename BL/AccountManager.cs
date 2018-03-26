@@ -12,103 +12,103 @@ using Domain.Account;
 
 namespace PB.BL
 {
-  public class AccountManager : IAccountManager
-  {
-    private IProfileRepo ProfileRepo;
-    private UnitOfWorkManager uowManager;
-
-    public AccountManager()
+    public class AccountManager : IAccountManager
     {
+        private IProfileRepo ProfileRepo;
+        private UnitOfWorkManager uowManager;
 
-    }
-
-    public AccountManager(UnitOfWorkManager uowMgr)
-    {
-      uowManager = uowMgr;
-      ProfileRepo = new ProfileRepo(uowMgr.UnitOfWork);
-    }
-
-    public void initNonExistingRepo(bool createWithUnitOfWork = false)
-    {
-      if (ProfileRepo == null)
-      {
-        if (createWithUnitOfWork)
+        public AccountManager()
         {
-          if (uowManager == null)
-          {
-            uowManager = new UnitOfWorkManager();
-            Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
-          }
-          else
-          {
-            Console.WriteLine("uo bestaat al");
-          }
 
-          ProfileRepo = new ProfileRepo(uowManager.UnitOfWork);
         }
-        else
+
+        public AccountManager(UnitOfWorkManager uowMgr)
         {
-          ProfileRepo = new ProfileRepo();
-          Console.WriteLine("OLD WAY REPO ITEMMGR");
+            uowManager = uowMgr;
+            ProfileRepo = new ProfileRepo(uowMgr.UnitOfWork);
         }
-      }
-    }
 
-    #region Profile
-    public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
-    {
-      initNonExistingRepo();
-      Profile profile = new Profile()
-      {
-        Username = username,
-        Password = password,
-        Email = email,
-        Role = role
-      };
-      profile = AddProfile(profile);
-      uowManager.Save();
-      return profile;
-    }
+        public void initNonExistingRepo(bool createWithUnitOfWork = false)
+        {
+            if (ProfileRepo == null)
+            {
+                if (createWithUnitOfWork)
+                {
+                    if (uowManager == null)
+                    {
+                        uowManager = new UnitOfWorkManager();
+                        Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
+                    }
+                    else
+                    {
+                        Console.WriteLine("uo bestaat al");
+                    }
 
-    private Profile AddProfile(Profile profile)
-    {
-      initNonExistingRepo();
-      return ProfileRepo.CreateProfile(profile);
-    }
+                    ProfileRepo = new ProfileRepo(uowManager.UnitOfWork);
+                }
+                else
+                {
+                    ProfileRepo = new ProfileRepo();
+                    Console.WriteLine("OLD WAY REPO ITEMMGR");
+                }
+            }
+        }
 
-    public void ChangeProfile(Profile profile)
-    {
-      initNonExistingRepo();
-      ProfileRepo.UpdateProfile(profile);
-      uowManager.Save();
-    }
+        #region Profile
+        public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
+        {
+            initNonExistingRepo();
+            Profile profile = new Profile()
+            {
+                Username = username,
+                Password = password,
+                Email = email,
+                Role = role
+            };
+            profile = AddProfile(profile);
+            uowManager.Save();
+            return profile;
+        }
 
-    public Profile GetProfile(string username)
-    {
-      initNonExistingRepo();
-      return ProfileRepo.ReadProfile(username);
-    }
+        private Profile AddProfile(Profile profile)
+        {
+            initNonExistingRepo();
+            return ProfileRepo.CreateProfile(profile);
+        }
 
-    public IEnumerable<Profile> GetProfiles()
-    {
-      initNonExistingRepo();
-      return ProfileRepo.ReadProfiles();
-    }
+        public void ChangeProfile(Profile profile)
+        {
+            initNonExistingRepo();
+            ProfileRepo.UpdateProfile(profile);
+            uowManager.Save();
+        }
 
-    public void RemoveProfile(string username)
-    {
-      initNonExistingRepo();
-      ProfileRepo.DeleteProfile(username);
-      uowManager.Save();
-    }
-    #endregion
+        public Profile GetProfile(string username)
+        {
+            initNonExistingRepo();
+            return ProfileRepo.ReadProfile(username);
+        }
+
+        public IEnumerable<Profile> GetProfiles()
+        {
+            initNonExistingRepo();
+            return ProfileRepo.ReadProfiles();
+        }
+
+        public void RemoveProfile(string username)
+        {
+            initNonExistingRepo();
+            ProfileRepo.DeleteProfile(username);
+            uowManager.Save();
+        }
+        #endregion
 
 
 
-    public void Seed()
-    {
-      initNonExistingRepo();
-      List<Profile> profiles = new List<Profile>()
+        public void Seed()
+        {
+            initNonExistingRepo();
+            List<Profile> profiles = new List<Profile>()
       {
         new Profile()
         {
@@ -190,21 +190,22 @@ namespace PB.BL
         }
       };
 
-      profiles.ForEach(p => AddProfile(p));
-      uowManager.Save();
+            profiles.ForEach(p => AddProfile(p));
+            uowManager.Save();
+        }
+
+
+        public void LinkAlertsToProfile(List<Alert> alerts)
+        {
+            alerts.ForEach(a =>
+            {
+                a.Profile.Alerts.Add(a);
+                ProfileRepo.UpdateProfile(a.Profile);
+            });
+
+            uowManager.Save();
+        }
+
+
     }
-
-
-    public void LinkAlertsToProfile(List<Alert> alerts)
-    {
-      alerts.ForEach(a => {
-        a.Profile.Alerts.Add(a);
-        ProfileRepo.UpdateProfile(a.Profile);
-      });
-
-      uowManager.Save();
-    }
-
-
-  }
 }
