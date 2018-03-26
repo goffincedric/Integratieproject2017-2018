@@ -216,6 +216,22 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Email.cshtml" />
+    <Content Include="Views\Home\Compose.cshtml" />
+    <Content Include="Views\Home\Calender.cshtml" />
+    <Content Include="Views\Home\Chat.cshtml" />
+    <Content Include="Views\Home\Charts.cshtml" />
+    <Content Include="Views\Home\Forms.cshtml" />
+    <Content Include="Views\Home\UI.cshtml" />
+    <Content Include="Views\Home\BasicTable.cshtml" />
+    <Content Include="Views\Home\DataTable.cshtml" />
+    <Content Include="Views\Home\GoogleMaps.cshtml" />
+    <Content Include="Views\Home\VectorMaps.cshtml" />
+    <Content Include="Views\Home\Blank.cshtml" />
+    <Content Include="Views\Home\Test404.cshtml" />
+    <Content Include="Views\Home\Test500.cshtml" />
+    <Content Include="Views\Home\Signup.cshtml" />
+    <Content Include="Views\Home\Signin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
