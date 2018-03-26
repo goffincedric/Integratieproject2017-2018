@@ -147,41 +147,50 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\acf3dcb7ff752b5296ca23ba2c7c2606.svg" />
+    <Content Include="Content\assets\1524739aae86f69026689ec798e10ebc.svg" />
+    <Content Include="Content\assets\dbc7556d44aaa93cc89743f163cc09c4.svg" />
+    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.svg" />
+    <Content Include="Content\assets\static\fonts\icons\themify\themify.svg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
-    <Content Include="Content\bootstrap-reboot.css" />
-    <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\cba68f986e60df8c74f4a53c3e39595c.svg" />
+    <Content Include="Content\Images\404.png" />
+    <Content Include="Content\Images\500.png" />
+    <Content Include="Content\Images\bg.jpg" />
+    <Content Include="Content\Images\datatables\sort_asc.png" />
+    <Content Include="Content\Images\datatables\sort_asc_disabled.png" />
+    <Content Include="Content\Images\datatables\sort_both.png" />
+    <Content Include="Content\Images\datatables\sort_desc.png" />
+    <Content Include="Content\Images\datatables\sort_desc_disabled.png" />
+    <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\logo.svg" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Scripts\esm\popper-utils.js" />
-    <Content Include="Scripts\esm\popper-utils.min.js" />
-    <Content Include="Scripts\esm\popper.js" />
-    <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Scripts\esm\popper.js.map" />
-    <Content Include="Scripts\esm\popper-utils.min.js.map" />
-    <Content Include="Scripts\esm\popper-utils.js.map" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bundle.js" />
+    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.eot" />
+    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.ttf" />
+    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.woff" />
+    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.woff2" />
+    <Content Include="Content\assets\static\fonts\icons\fontawesome\FontAwesome.otf" />
+    <Content Include="Content\assets\static\fonts\icons\themify\themify.eot" />
+    <Content Include="Content\assets\static\fonts\icons\themify\themify.ttf" />
+    <Content Include="Content\assets\static\fonts\icons\themify\themify.woff" />
+    <Content Include="Content\2c454669bdf3aebf32a1bd8ac1e0d2d6.eot" />
+    <Content Include="Content\674f50d287a8c48dc19ba404d20fe713.eot" />
+    <Content Include="Content\a1ecc3b826d01251edddf29c3e4e1e97.woff" />
+    <Content Include="Content\af7ae505a9eed503f8b8e6982036873e.woff2" />
+    <Content Include="Content\b06871f281fee6b241d60582ae9369b9.ttf" />
+    <Content Include="Content\e23a7dcaefbde4e74e263247aa42ecd7.ttf" />
+    <Content Include="Content\fee66e712a8a08eef5805a46892932ad.woff" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -192,20 +201,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\popper-utils.js" />
-    <Content Include="Scripts\popper-utils.min.js" />
-    <Content Include="Scripts\popper.js" />
-    <Content Include="Scripts\popper.min.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
-    <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\umd\popper-utils.js" />
-    <Content Include="Scripts\umd\popper-utils.min.js" />
-    <Content Include="Scripts\umd\popper.js" />
-    <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\vendor.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -217,20 +213,23 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
-    <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Scripts\umd\popper.js.map" />
-    <Content Include="Scripts\umd\popper-utils.min.js.map" />
-    <Content Include="Scripts\umd\popper-utils.js.map" />
-    <Content Include="Scripts\README.md" />
-    <Content Include="Scripts\popper.min.js.map" />
-    <Content Include="Scripts\popper.js.map" />
-    <Content Include="Scripts\popper-utils.min.js.map" />
-    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Home\Email.cshtml" />
+    <Content Include="Views\Home\Compose.cshtml" />
+    <Content Include="Views\Home\Calender.cshtml" />
+    <Content Include="Views\Home\Chat.cshtml" />
+    <Content Include="Views\Home\Charts.cshtml" />
+    <Content Include="Views\Home\Forms.cshtml" />
+    <Content Include="Views\Home\UI.cshtml" />
+    <Content Include="Views\Home\BasicTable.cshtml" />
+    <Content Include="Views\Home\DataTable.cshtml" />
+    <Content Include="Views\Home\GoogleMaps.cshtml" />
+    <Content Include="Views\Home\VectorMaps.cshtml" />
+    <Content Include="Views\Home\Blank.cshtml" />
+    <Content Include="Views\Home\Test404.cshtml" />
+    <Content Include="Views\Home\Test500.cshtml" />
+    <Content Include="Views\Home\Signup.cshtml" />
+    <Content Include="Views\Home\Signin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -238,6 +237,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj">
@@ -251,9 +252,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
