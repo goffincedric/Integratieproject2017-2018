@@ -70,7 +70,7 @@
     <Compile Include="Items\Sentiment.cs" />
     <Compile Include="Items\Theme.cs" />
     <Compile Include="Items\Url.cs" />
-    <Compile Include="Items\Words.cs" />
+    <Compile Include="Items\Word.cs" />
     <Compile Include="JSONConversion\JCLASS.cs" />
     <Compile Include="Platform\Page.cs" />
     <Compile Include="Platform\Style.cs" />

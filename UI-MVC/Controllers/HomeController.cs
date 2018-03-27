@@ -13,17 +13,92 @@ namespace UI_MVC.Controllers
       return View();
     }
 
-    public ActionResult About()
+    public ActionResult Email()
     {
-      ViewBag.Message = "Your application description page.";
+      return View(); 
+    }
 
+    public ActionResult Compose()
+    {
+      return View(); 
+    }
+
+    public ActionResult BasicTable()
+    {
       return View();
     }
 
-    public ActionResult Contact()
-    {
-      ViewBag.Message = "Your contact page.";
 
+    public ActionResult Blank()
+    {
+      return View();
+    }
+
+
+    public ActionResult Calender()
+    {
+      return View();
+    }
+
+
+    public ActionResult Charts()
+    {
+      return View();
+    }
+
+
+    public ActionResult DataTable()
+    {
+      return View();
+    }
+
+
+    public ActionResult Forms()
+    {
+      return View();
+    }
+
+
+    public ActionResult GoogleMaps()
+    {
+      return View();
+    }
+
+    public ActionResult Signin()
+    {
+      return View();
+    }
+
+    public ActionResult Signup()
+    {
+      return View();
+    }
+
+
+    public ActionResult Test404()
+    {
+      return View();
+    }
+
+
+    public ActionResult Test500()
+    {
+      return View();
+    }
+
+    public ActionResult UI()
+    {
+      return View();
+    }
+
+
+    public ActionResult VectorMaps()
+    {
+      return View();
+    }
+
+    public ActionResult Chat()
+    {
       return View();
     }
   }

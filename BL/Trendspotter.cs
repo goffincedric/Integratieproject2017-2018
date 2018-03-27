@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Account;
 
 namespace PB.BL
 {
@@ -53,7 +54,7 @@ namespace PB.BL
       Dictionary<RecordPerson, List<Record>> groupedOld = groupRecordsPerPerson(recordPeople, oldRecords);
 
       Console.WriteLine("=============OLD=============");
-      //De List van records opdelen in Dictionary van List<Record> per dag
+      //De List van records opdelen in Dictionary van List<Record> per DateTime van de Record
       Dictionary<RecordPerson, Dictionary<DateTime, List<Record>>> groupedDateOld = new Dictionary<RecordPerson, Dictionary<DateTime, List<Record>>>();
       Dictionary<RecordPerson, double> oldGemiddelde = new Dictionary<RecordPerson, double>();
 
@@ -75,7 +76,6 @@ namespace PB.BL
           Console.WriteLine(rp.ToString() + " - " + GetAverage(valueDict, period - 1)); // period -1 omdat periode uitgezonder vandaag
         }
       });
-
 
 
       Console.WriteLine("=============NEW=============");
