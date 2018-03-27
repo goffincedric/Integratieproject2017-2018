@@ -16,10 +16,9 @@
   }
 
 .logopic {
-  height: 35px;
+  height: auto;
   width: 35px;
   margin: 15px;
-
 }
 
 .spinner {

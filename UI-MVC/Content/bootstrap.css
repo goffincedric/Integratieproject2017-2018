@@ -10299,7 +10299,7 @@ hr {
   -webkit-transition: all .2s ease;
   -o-transition: all .2s ease;
   transition: all .2s ease;
-  width: 280px;
+  width: 250px;
   z-index: 1000
 }
 
@@ -10664,7 +10664,7 @@ hr {
   -webkit-transition: all .2s ease;
   -o-transition: all .2s ease;
   transition: all .2s ease;
-  width: calc(100% - 280px);
+  width: calc(100% - 240px);
   z-index: 800
 }
 
@@ -10893,7 +10893,7 @@ hr {
 
 .page-container {
   min-height: 100vh;
-  padding-left: 280px;
+  padding-left: 240px;
   -webkit-transition: all .2s ease;
   -o-transition: all .2s ease;
   transition: all .2s ease
@@ -11316,7 +11316,7 @@ footer {
 }
 
 #chat-sidebar {
-  width: 250px;
+  width: 240px;
   height: calc(100vh - 125px);
   overflow: auto
 }
