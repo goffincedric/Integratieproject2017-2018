@@ -90,11 +90,6 @@ namespace UI_MVC.Controllers
       return View();
     }
 
-    //public ActionResult Signin()
-    //{
-    //  return View();
-    //}
-
     public ActionResult Signup()
     {
       return View();
@@ -313,13 +308,13 @@ namespace UI_MVC.Controllers
       try
       {
         FormsAuthentication.SignOut();
-
+        
         HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
         Session.Clear();
 
         System.Web.HttpContext.Current.Session.RemoveAll();
         return RedirectToAction("Index"); 
-      }catch(Exception ex)
+      }catch
       {
         throw;
       }
