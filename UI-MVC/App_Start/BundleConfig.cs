@@ -17,7 +17,7 @@ namespace UI_MVC
                   "~/Scripts/bootstrap.min.js"));
 
       bundles.Add(new StyleBundle("~/Content/bootstrapcss").Include(
-                  "~/Content/bootstrap.css"));
+                  "~/Content/bootstrap.css", "~/Content/bootstrap.min.css"));
 
       bundles.Add(new ScriptBundle("~/bundles/adminator").Include("~/Scripts/vendor.js", "~/Scripts/bundle.js")); 
     }
