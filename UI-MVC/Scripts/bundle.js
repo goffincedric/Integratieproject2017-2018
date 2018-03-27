@@ -757,7 +757,7 @@ webpackJsonp([0], {
           "WBR": 1.3,
           "VBR": 1,
           "VOV": 2,
-          "WLG": 0.01,
+          "WLG": 0,
           "VLI": 0.2,
           "WHT": 1.7,
           "WNA": 0.5,
