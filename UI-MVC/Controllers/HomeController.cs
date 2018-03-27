@@ -31,8 +31,6 @@ namespace UI_MVC.Controllers
 
                 return Content(test1);
             }
-
-
         }
 
         public ActionResult Index()
