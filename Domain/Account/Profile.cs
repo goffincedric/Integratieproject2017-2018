@@ -19,22 +19,24 @@ namespace PB.BL.Domain.Account
     public string Username { get; set; }
     [Required]
     public string Password { get; set; }
-    [Required]
+  
+    public string Hash { get; set; }
+
+    public byte[] Salt { get; set; }
+
     [RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")]
     public string Email { get; set; }
-    public Role Role { get; set; }
+    public bool IsRemember { get; set; } = false;
+    public string ProfileIcon { get; set; }
+    public Role Role { get; set; } = Role.USER; 
     public UserData UserData { get; set; }
     public List<UserSetting> Settings { get; set; }
     public Dictionary<SubPlatform, Dashboard> Dashboards { get; set; }
     public List<Alert> Alerts { get; set; }
-    public Dictionary<Item, bool> Subscriptions { get; set; }
-
-
-    public int subplatformId { get; set; }
-
-    [Required]
-    [ForeignKey("subplatformId")]
+    public List<Item> Subscriptions { get; set; }
+    
     public List<SubPlatform> adminPlatforms { get; set; }
+
 
     public override string ToString()
     {

@@ -77,12 +77,37 @@ namespace UI_CA_Prototype
     }
 
     //Shows all subscribed items from profile
-    public void ShowSubcsribedItems(Profile profile)
+    public void ShowSubScribedItems(Profile profile)
     {
       Console.WriteLine("Subscribed items:");
-      profile.Subscriptions.Where(pair => pair.Value).ToList().ForEach(pair => Console.WriteLine(pair.Key));
+      profile.Subscriptions.ForEach(subs => Console.WriteLine(subs));
     }
 
+
+    public Profile CreateAccount()
+    {
+      string AccountName = "";
+      string email = ""; 
+      string password = ""; 
+      Console.WriteLine("Accountname: ");
+      AccountName = Console.ReadLine();
+      Console.WriteLine("Email: ");
+      email = Console.ReadLine();
+      Console.WriteLine("Password: ");
+      password = Console.ReadLine();
+
+      Profile newProfile = new Profile()
+      {
+        Username = AccountName,
+        Email = email,
+        Password = password
+      };
+
+      return newProfile; 
+      
+
+    }
+    
     //Method to test write functionality of JsonConvert (read written json file on desktop for record-object structure)
     public void WriteTestRecords()
     {

@@ -47,6 +47,7 @@ namespace UI_CA_Prototype
         Console.WriteLine("8) Toon alle records");
         Console.WriteLine("9) Toon alle items");
         Console.WriteLine("10) Toon subscribed items van geselecteerd profiel");
+        Console.WriteLine("11) Maak nieuw account"); 
         Console.WriteLine("0) Afsluiten");
         
         try
@@ -89,11 +90,11 @@ namespace UI_CA_Prototype
             selectedProfile = extensionMethods.SelectProfile(accountMgr.GetProfiles()); ;
             break;
           case 3:
-            selectedProfile.Subscriptions.Add(extensionMethods.SelectItem(itemMgr.GetItems()), true);
+            selectedProfile.Subscriptions.Add(extensionMethods.SelectItem(itemMgr.GetItems()));
             accountMgr.ChangeProfile(selectedProfile);
             break;
           case 4:
-            selectedProfile.Subscriptions.Remove(extensionMethods.SelectItem(selectedProfile.Subscriptions.Keys));
+            selectedProfile.Subscriptions.Remove(extensionMethods.SelectItem(selectedProfile.Subscriptions));
             accountMgr.ChangeProfile(selectedProfile);
             break;
           case 5:
@@ -113,7 +114,10 @@ namespace UI_CA_Prototype
             extensionMethods.ShowItems(itemMgr.GetItems());
             break;
           case 10:
-            extensionMethods.ShowSubcsribedItems(selectedProfile);
+            extensionMethods.ShowSubScribedItems(selectedProfile);
+            break;
+          case 11:
+            newAccount();
             break;
         
           case 0:
@@ -127,6 +131,12 @@ namespace UI_CA_Prototype
       } while (inValidAction);
     }
 
+
+    private static void newAccount()
+    {
+      Profile profile = extensionMethods.CreateAccount();
+      accountMgr.AddProfile(profile);
+    }
     private static void Seed()
     {
       //Injects seed data
