@@ -1354,20 +1354,3 @@ a.fc-more:hover{
 .fc-unthemed .fc-list-empty{
     background-color:#eee
 }
-.bgc-grey-100{
-    background-color: transparent !important;
-}
-body {
-    background: linear-gradient(to bottom right, #434343, #000);
-    color: white;
-}
-.sidebar {
-    background: linear-gradient(to top left, rgba(0,0,0,0.125), rgba(0,0,0,0.25));
-}
-.header {
-    background: linear-gradient(to top left, rgba(0,0,0,0.125), rgba(0,0,0,0.25));
-}
-.bgc-white {
-    background-color: transparent !important;
-    background: linear-gradient(to top left, rgba(0,0,0,0.125), rgba(0,0,0,0.25));
-}
