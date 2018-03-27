@@ -60,6 +60,10 @@ namespace PB.DAL.EF
             modelBuilder.Entity<Record>().HasMany(r => r.URLs).WithMany(r => r.records)
                 .Map(m => { m.ToTable("tblRecordUrl"); });
 
+            modelBuilder.Entity<Record>().HasRequired(r => r.RecordPerson)
+                .WithMany(rp => rp.Records)
+                .HasForeignKey(r => r.RecordPersonId);
+
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
@@ -126,6 +130,7 @@ namespace PB.DAL.EF
         public DbSet<Url> Urls { get; set; }
         public DbSet<Word> Words { get; set; }
         public DbSet<Hashtag> Hashtags { get; set; }
+        public DbSet<RecordPerson> RecordPeople { get; set; }
 
         public DbSet<Page> Pages { get; set; }
         public DbSet<Style> Styles { get; set; }

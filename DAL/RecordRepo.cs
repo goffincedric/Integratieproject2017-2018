@@ -70,6 +70,11 @@ namespace PB.DAL
             return ctx.Urls.FirstOrDefault(u => u.Link.ToLower().Equals(link.ToLower()));
         }
 
+        public RecordPerson ReadRecordPerson(string firstName, string lastName)
+        {
+            return ctx.RecordPeople.FirstOrDefault(rp => rp.FirstName.Equals(firstName) && rp.LastName.Equals(lastName));
+        }
+
         public void UpdateRecord(Record record)
         {
             ctx.Records.Attach(record);
@@ -85,7 +90,7 @@ namespace PB.DAL
         public IEnumerable<Record> GetAllRecordsBefore(Record record, DateTime end) =>
           // Returnt een lijst van Records met vermelding van dezelfde politieker. Er kan een einddatum worden meegegeven. 
           ctx.Records.Where(x => x.Date < end)
-            .Concat(ctx.Records.Where(x => x.RecordPerson.Number.Equals(record.RecordPerson.Number)));
+            .Concat(ctx.Records.Where(x => x.RecordPerson.Id.Equals(record.RecordPerson.Id)));
 
         public List<Record> Seed(bool even)
         {
@@ -96,12 +101,12 @@ namespace PB.DAL
             List<Word> words;
             List<Hashtag> hashtags;
             List<Url> urls;
+            List<RecordPerson> recordPeople = new List<RecordPerson>();
 
             List<Record> recordsToAdd = new List<Record>();
 
             foreach (var el in list)
             {
-
                 Record record = new Record()
                 {
                     Tweet_Id = el.Id,
@@ -109,12 +114,25 @@ namespace PB.DAL
                     Source = el.Source,
                     Date = el.Date,
                     Geo = el.Geo,
-                    RecordPerson = new RecordPerson() { FirstName = el.Politician[0], LastName = el.Politician[1] },
                     Retweet = el.Retweet,
                     Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
-                    ListUpdatet = DateTime.Now,
-
+                    ListUpdatet = DateTime.Now
                 };
+
+                RecordPerson recordPerson = ReadRecordPerson(el.Politician[0], el.Politician[1]);
+                if (recordPerson != null)
+                {
+                    record.RecordPerson = recordPerson;
+                }
+                else
+                {
+                    recordPerson = new RecordPerson()
+                    {
+                        FirstName = el.Politician[0],
+                        LastName = el.Politician[1]
+                    };
+                    record.RecordPerson = recordPerson;
+                }
 
                 mentions = new List<Mention>();
                 foreach (var m in el.Mentions)
