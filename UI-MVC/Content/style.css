@@ -16,8 +16,8 @@
   }
 
 .logopic {
-  height: auto;
-  width: 35px;
+  height: 35px;
+  width: auto;
   margin: 15px;
 }
 
@@ -1352,4 +1352,8 @@ a.fc-more:hover{
 }
 .fc-unthemed .fc-list-empty{
     background-color:#eee
+}
+.centerXY{
+    height: 50px;
+    width: auto;
 }
