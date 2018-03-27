@@ -128,8 +128,6 @@ namespace UI_MVC.Controllers
       return View();
     }
 
-<<<<<<< HEAD
-=======
     private static byte[] Get_SALT(int maximumSaltLength)
     {
       var salt = new byte[maximumSaltLength];
@@ -185,17 +183,17 @@ namespace UI_MVC.Controllers
         return string.Empty;
       }
     }
->>>>>>> Thomas--Dev
+
 
     [HttpPost]
     public ActionResult Register(Profile newProfile)
     {
       if (ModelState.IsValid)
       {
-<<<<<<< HEAD
+
         Profile profile = mgr.AddProfile(newProfile.Username, newProfile.Email, newProfile.Password);
         return RedirectToAction("Index"); 
-=======
+
 
         byte[] SALT = Get_SALT(15);
         newProfile.Salt = SALT;
@@ -205,12 +203,9 @@ namespace UI_MVC.Controllers
         return RedirectToAction("Signin"); 
        
         
->>>>>>> Thomas--Dev
       }
       return RedirectToAction("Signup"); 
     }
-<<<<<<< HEAD
-=======
 
     [HttpGet]
     public ActionResult Signin()
@@ -342,6 +337,5 @@ namespace UI_MVC.Controllers
       FormsAuthentication.SetAuthCookie(userName, isPersistent); 
     }
 
->>>>>>> Thomas--Dev
   }
 }
