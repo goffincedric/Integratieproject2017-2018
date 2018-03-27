@@ -23,7 +23,7 @@ namespace PB.BL.Domain.Items
 
     public override string ToString()
     {
-      return FirstName + " " + LastName + " (Id: " + (ItemId) + ") - Aantal records: " + Records.Count;
+      return LastName + " " + LastName + " (Id: " + (ItemId) + ") - Aantal records: " + Records.Count;
     }
   }
 }

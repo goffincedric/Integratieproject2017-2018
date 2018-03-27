@@ -110,6 +110,7 @@ namespace UI_MVC.Controllers
       return View();
     }
 
+
     [HttpPost]
     public ActionResult Register(Profile newProfile)
     {
@@ -117,11 +118,8 @@ namespace UI_MVC.Controllers
       {
         Profile profile = mgr.AddProfile(newProfile.Username, newProfile.Email, newProfile.Password);
         return RedirectToAction("Index"); 
-       
-        
       }
       return View(); 
     }
-   
   }
 }
