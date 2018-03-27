@@ -16,7 +16,6 @@
   }
 
 .logopic {
-<<<<<<< HEAD
     height: 50px;
     width: 35px;
     margin-top: 5px;
@@ -37,8 +36,7 @@
     background-color: #333;
     border-radius: 100%;
     -webkit-animation: sk-scaleout 1s infinite ease-in-out;
-    animation: sk-scaleout 1s infinite ease-in-out
-=======
+    animation: sk-scaleout 1s infinite ease-in-out;
   height: 50px;
   width: 35px;
   margin: 15px;
@@ -55,7 +53,7 @@
   border-radius: 100%;
   -webkit-animation: sk-scaleout 1s infinite ease-in-out;
   animation: sk-scaleout 1s infinite ease-in-out
->>>>>>> Thomas--Dev
+
 }
 
 .jqstooltip {
