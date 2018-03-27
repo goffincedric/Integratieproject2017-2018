@@ -47,6 +47,7 @@ namespace UI_CA_Prototype
         Console.WriteLine("8) Toon alle records");
         Console.WriteLine("9) Toon alle items");
         Console.WriteLine("10) Toon subscribed items van geselecteerd profiel");
+        Console.WriteLine("11) Maak nieuw account"); 
         Console.WriteLine("0) Afsluiten");
         
         try
@@ -115,6 +116,9 @@ namespace UI_CA_Prototype
           case 10:
             extensionMethods.ShowSubcsribedItems(selectedProfile);
             break;
+          case 11:
+            newAccount();
+            break;
         
           case 0:
             stop = true;
@@ -127,6 +131,12 @@ namespace UI_CA_Prototype
       } while (inValidAction);
     }
 
+
+    private static void newAccount()
+    {
+      Profile profile = extensionMethods.CreateAccount();
+      accountMgr.AddProfile(profile);
+    }
     private static void Seed()
     {
       //Injects seed data

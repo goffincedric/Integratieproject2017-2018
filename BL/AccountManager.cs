@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Account;
+using System.Security.Cryptography;
 
 namespace PB.BL
 {
@@ -55,25 +56,31 @@ namespace PB.BL
     }
 
     #region Profile
+
+   
     public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
     {
       initNonExistingRepo();
       Profile profile = new Profile()
       {
         Username = username,
-        Password = password,
         Email = email,
-        Role = role
+        Role = role,
+        Password = password
+       
       };
+   
       profile = AddProfile(profile);
       uowManager.Save();
       return profile;
     }
 
-    private Profile AddProfile(Profile profile)
+    public Profile AddProfile(Profile profile)
     {
       initNonExistingRepo();
-      return ProfileRepo.CreateProfile(profile);
+      Profile  newProfile = ProfileRepo.CreateProfile(profile);
+      uowManager.Save();
+      return profile;
     }
 
     public void ChangeProfile(Profile profile)
