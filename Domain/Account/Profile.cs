@@ -43,7 +43,6 @@ namespace PB.BL.Domain.Account
    [ForeignKey("subplatformId")]
    public List<SubPlatform> adminPlatforms { get; set; }
 
-    public List<SubPlatform> adminPlatforms { get; set; }
 
 
     public override string ToString()

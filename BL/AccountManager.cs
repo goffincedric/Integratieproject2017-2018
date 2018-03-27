@@ -55,9 +55,7 @@ namespace PB.BL
             }
         }
 
-      }
-    }
-
+   
     #region Profile
 
    
@@ -114,54 +112,8 @@ namespace PB.BL
     #endregion
 
 
-        #region Profile
-        public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
-        {
-            initNonExistingRepo();
-            Profile profile = new Profile()
-            {
-                Username = username,
-                Password = password,
-                Email = email,
-                Role = role
-            };
-            profile = AddProfile(profile);
-            uowManager.Save();
-            return profile;
-        }
+        
 
-        private Profile AddProfile(Profile profile)
-        {
-            initNonExistingRepo();
-            return ProfileRepo.CreateProfile(profile);
-        }
-
-        public void ChangeProfile(Profile profile)
-        {
-            initNonExistingRepo();
-            ProfileRepo.UpdateProfile(profile);
-            uowManager.Save();
-        }
-
-        public Profile GetProfile(string username)
-        {
-            initNonExistingRepo();
-            return ProfileRepo.ReadProfile(username);
-        }
-
-        public IEnumerable<Profile> GetProfiles()
-        {
-            initNonExistingRepo();
-            return ProfileRepo.ReadProfiles();
-        }
-
-        public void RemoveProfile(string username)
-        {
-            initNonExistingRepo();
-            ProfileRepo.DeleteProfile(username);
-            uowManager.Save();
-        }
-        #endregion
         
         public void Seed()
         {
