@@ -315,7 +315,6 @@ namespace UI_MVC.Controllers
                 throw;
             }
         }
-
         private void EnsureLoggedOut()
         {
             if (Request.IsAuthenticated)
