@@ -54,8 +54,7 @@ namespace PB.BL
                 }
             }
         }
-      }
-    }
+   
 
     #region Profile
 
