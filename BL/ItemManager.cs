@@ -95,7 +95,6 @@ namespace PB.BL
       {
         FirstName = firstName,
         LastName = lastName,
-        BirthDay = birthDay,
         SocialMediaLink = socialMediaLink,
         IconURL = iconURL,
         Function = function,
@@ -275,7 +274,7 @@ namespace PB.BL
     public List<Alert> GenerateProfileAlerts(Profile profile)
     {
       //Alle items uit profile subscriptions halen
-      List<Item> subscribedItems = profile.Subscriptions.Where(kv => kv.Value).Select(pair => pair.Key).ToList();
+      List<Item> subscribedItems = profile.Subscriptions;
 
       //Items opdelen in Subklasses [Person, Organisation, Theme]
       List<Person> people = subscribedItems.Where(i => i is Person).ToList().Select(i => (Person)i).ToList();

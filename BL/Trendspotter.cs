@@ -12,10 +12,6 @@ namespace PB.BL
   public class Trendspotter
   {
 
-  
-
-
-
     public List<Alert> CheckTrendAverageRecords(IEnumerable<Record> records)
     {
       /*

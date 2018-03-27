@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\Address.cs" />
     <Compile Include="Account\Alert.cs" />
     <Compile Include="Account\Gender.cs" />
     <Compile Include="Account\Profile.cs" />
