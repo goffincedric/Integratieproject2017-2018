@@ -12,6 +12,7 @@ using PB.BL.Domain.Account;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
+using System.Data.Entity.Validation;
 
 namespace PB.DAL.EF
 {
@@ -32,43 +33,42 @@ namespace PB.DAL.EF
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Item>().HasMany(t => t.Keywords).WithMany(t => t.Items)
-                          .Map(m =>
-                          {
-                              m.ToTable("tblKeywordItem");
 
-                          }
-                            );
+            modelBuilder.Entity<Profile>().HasRequired(p => p.UserData).WithRequiredDependent(ud => ud.Profile);
+
+            modelBuilder.Entity<Profile>().HasMany(p => p.Subscriptions).WithMany(i => i.SubscribedProfiles)
+                .Map(m => { m.ToTable("tblSubscriptions"); });
+
             modelBuilder.Entity<Profile>().HasMany(p => p.adminPlatforms).WithMany(p => p.Admins)
-                          .Map(m =>
-                          {
-                              m.ToTable("tblSubplatformAdmins");
+                .Map(m => { m.ToTable("tblSubplatformAdmins"); });
 
-                          }
-                            );
+            modelBuilder.Entity<Item>().HasMany(t => t.Comparisons).WithMany(t => t.Items)
+                .Map(m => { m.ToTable("tblComparisonItem"); });
+
+            modelBuilder.Entity<Item>().HasMany(t => t.Keywords).WithMany(t => t.Items)
+                .Map(m => { m.ToTable("tblKeywordItem"); });
 
             modelBuilder.Entity<Record>().HasMany(r => r.Mentions).WithMany(m => m.records)
-              .Map(m => { m.ToTable("tblRecordMention"); });
-
+                .Map(m => { m.ToTable("tblRecordMention"); });
 
             modelBuilder.Entity<Record>().HasMany(r => r.Words).WithMany(r => r.records)
-              .Map(m => { m.ToTable("tblRecordWord"); });
+                .Map(m => { m.ToTable("tblRecordWord"); });
 
             modelBuilder.Entity<Record>().HasMany(r => r.Hashtags).WithMany(r => r.records)
-              .Map(m => { m.ToTable("tblRecordHashtag"); });
+                .Map(m => { m.ToTable("tblRecordHashtag"); });
 
             modelBuilder.Entity<Record>().HasMany(r => r.URLs).WithMany(r => r.records)
-              .Map(m => { m.ToTable("tblRecordUrl"); });
+                .Map(m => { m.ToTable("tblRecordUrl"); });
 
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Properties<DateTime>()
-              .Configure(c => c.HasColumnType("datetime2"));
+                .Configure(c => c.HasColumnType("datetime2"));
 
             modelBuilder.Entity<Record>().Property(r => r.Tweet_Id)
-                   .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             //modelBuilder.Entity<Record>().Property(r => r.Date).HasColumnType("datetime2");
         }
@@ -83,8 +83,22 @@ namespace PB.DAL.EF
         {
             if (delaySave)
             {
-                return base.SaveChanges();
-
+                try
+                {
+                    return base.SaveChanges();
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Console.WriteLine("Property: {0} Error: {1}",
+                                                    validationError.PropertyName,
+                                                    validationError.ErrorMessage);
+                        }
+                    }
+                }
             }
             throw new InvalidOperationException("Geen UnitOfWork presented, gebruik SaveChanges in de plaats");
         }
