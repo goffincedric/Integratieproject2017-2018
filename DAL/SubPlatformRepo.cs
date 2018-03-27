@@ -4,35 +4,35 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PB.BL.Domain.Account;
+using PB.BL.Domain.Platform;
 using PB.DAL.EF;
 
 namespace PB.DAL
 {
-    public class ProfileRepo : IProfileRepo
+    public class SubPlatformRepo : ISubPlatformRepo
     {
         private IntegratieDbContext ctx;
 
-        public ProfileRepo()
+        public SubPlatformRepo()
         {
             ctx = new IntegratieDbContext();
         }
 
-        public ProfileRepo(UnitOfWork uow)
+        public SubPlatformRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-            Console.WriteLine("UOW MADE PROFILEREPO");
+            //Console.WriteLine("UOW MADE SUBPLATFORMREPO");
         }
 
-        public Profile CreateProfile(Profile profile)
+        public SubPlatform CreateSubPlatform(SubPlatform subPlatform)
         {
-            ctx.Profiles.Add(profile);
+            ctx.SubPlatforms.Add(subPlatform);
 
             try
             {
                 ctx.SaveChanges();
             }
-            catch (DbEntityValidationException e)
+            catch(DbEntityValidationException e)
             {
                 foreach (var eve in e.EntityValidationErrors)
                 {
@@ -45,33 +45,33 @@ namespace PB.DAL
                     }
                 }
             }
-            return profile;
+            return subPlatform;
         }
 
-        public void DeleteProfile(string username)
+        public void DeleteSubPlatform(int subPlatformId)
         {
-            Profile profile = ReadProfile(username);
-            if (profile != null)
+            SubPlatform subplatform = ReadSubPlatform(subPlatformId);
+            if (subplatform != null)
             {
-                ctx.Profiles.Remove(profile);
+                ctx.SubPlatforms.Remove(subplatform);
                 ctx.SaveChanges();
             }
         }
 
-        public Profile ReadProfile(string username)
+        public IEnumerable<SubPlatform> ReadSubPlatform()
         {
-            return ctx.Profiles.FirstOrDefault(p => p.Username == username);
+            return ctx.SubPlatforms.AsEnumerable();
         }
 
-        public IEnumerable<Profile> ReadProfiles()
+        public SubPlatform ReadSubPlatform(int subPlatformId)
         {
-            return ctx.Profiles.AsEnumerable();
+            return ctx.SubPlatforms.FirstOrDefault(s => s.SubplatformId == subPlatformId);
         }
 
-        public void UpdateProfile(Profile profile)
+        public void UpdateSubPlatform(SubPlatform subPlatform)
         {
-            ctx.Profiles.Attach(profile);
-            ctx.Entry(profile).State = System.Data.Entity.EntityState.Modified;
+            ctx.SubPlatforms.Attach(subPlatform);
+            ctx.Entry(subPlatform).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
         }
     }

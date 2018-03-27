@@ -77,10 +77,10 @@ namespace UI_CA_Prototype
     }
 
     //Shows all subscribed items from profile
-    public void ShowSubcsribedItems(Profile profile)
+    public void ShowSubScribedItems(Profile profile)
     {
       Console.WriteLine("Subscribed items:");
-      profile.Subscriptions.Where(pair => pair.Value).ToList().ForEach(pair => Console.WriteLine(pair.Key));
+      profile.Subscriptions.ForEach(subs => Console.WriteLine(subs));
     }
 
 

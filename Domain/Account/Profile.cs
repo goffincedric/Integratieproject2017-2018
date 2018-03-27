@@ -33,7 +33,8 @@ namespace PB.BL.Domain.Account
     public List<UserSetting> Settings { get; set; }
     public Dictionary<SubPlatform, Dashboard> Dashboards { get; set; }
     public List<Alert> Alerts { get; set; }
-    public Dictionary<Item, bool> Subscriptions { get; set; }
+    public List<Item> Subscriptions { get; set; }
+
 
 
     public int subplatformId { get; set; }
@@ -41,6 +42,9 @@ namespace PB.BL.Domain.Account
    //[Required]
    [ForeignKey("subplatformId")]
    public List<SubPlatform> adminPlatforms { get; set; }
+
+    public List<SubPlatform> adminPlatforms { get; set; }
+
 
     public override string ToString()
     {

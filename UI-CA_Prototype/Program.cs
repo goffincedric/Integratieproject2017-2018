@@ -90,11 +90,11 @@ namespace UI_CA_Prototype
             selectedProfile = extensionMethods.SelectProfile(accountMgr.GetProfiles()); ;
             break;
           case 3:
-            selectedProfile.Subscriptions.Add(extensionMethods.SelectItem(itemMgr.GetItems()), true);
+            selectedProfile.Subscriptions.Add(extensionMethods.SelectItem(itemMgr.GetItems()));
             accountMgr.ChangeProfile(selectedProfile);
             break;
           case 4:
-            selectedProfile.Subscriptions.Remove(extensionMethods.SelectItem(selectedProfile.Subscriptions.Keys));
+            selectedProfile.Subscriptions.Remove(extensionMethods.SelectItem(selectedProfile.Subscriptions));
             accountMgr.ChangeProfile(selectedProfile);
             break;
           case 5:
@@ -114,7 +114,7 @@ namespace UI_CA_Prototype
             extensionMethods.ShowItems(itemMgr.GetItems());
             break;
           case 10:
-            extensionMethods.ShowSubcsribedItems(selectedProfile);
+            extensionMethods.ShowSubScribedItems(selectedProfile);
             break;
           case 11:
             newAccount();
