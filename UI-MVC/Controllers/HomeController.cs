@@ -1,13 +1,21 @@
-﻿using System;
+﻿using PB.BL;
+using PB.BL.Domain.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace UI_MVC.Controllers
 {
-  public class HomeController : Controller
-  {
+  public class HomeController : Controller {
+    private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
+  
+    private static readonly AccountManager mgr = new AccountManager(uow); 
+   
+
+  
     public ActionResult Index()
     {
       return View();
@@ -102,5 +110,16 @@ namespace UI_MVC.Controllers
       return View();
     }
 
+
+    [HttpPost]
+    public ActionResult Register(Profile newProfile)
+    {
+      if (ModelState.IsValid)
+      {
+        Profile profile = mgr.AddProfile(newProfile.Username, newProfile.Email, newProfile.Password);
+        return RedirectToAction("Index"); 
+      }
+      return View(); 
+    }
   }
 }
