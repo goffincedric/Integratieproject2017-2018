@@ -83,6 +83,31 @@ namespace UI_CA_Prototype
       profile.Subscriptions.Where(pair => pair.Value).ToList().ForEach(pair => Console.WriteLine(pair.Key));
     }
 
+
+    public Profile CreateAccount()
+    {
+      string AccountName = "";
+      string email = ""; 
+      string password = ""; 
+      Console.WriteLine("Accountname: ");
+      AccountName = Console.ReadLine();
+      Console.WriteLine("Email: ");
+      email = Console.ReadLine();
+      Console.WriteLine("Password: ");
+      password = Console.ReadLine();
+
+      Profile newProfile = new Profile()
+      {
+        Username = AccountName,
+        Email = email,
+        Password = password
+      };
+
+      return newProfile; 
+      
+
+    }
+    
     //Method to test write functionality of JsonConvert (read written json file on desktop for record-object structure)
     public void WriteTestRecords()
     {

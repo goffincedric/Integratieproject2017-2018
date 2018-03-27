@@ -165,6 +165,7 @@
     <Content Include="Content\Images\datatables\sort_desc_disabled.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo.svg" />
+    <Content Include="Content\Images\logo_new.png" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
