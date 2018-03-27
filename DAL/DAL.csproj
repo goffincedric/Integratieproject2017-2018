@@ -56,10 +56,12 @@
     <Compile Include="IItemRepo.cs" />
     <Compile Include="IProfileRepo.cs" />
     <Compile Include="IRecordRepo.cs" />
+    <Compile Include="ISubPlatformRepo.cs" />
     <Compile Include="ItemRepo.cs" />
     <Compile Include="ProfileRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecordRepo.cs" />
+    <Compile Include="SubPlatformRepo.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
