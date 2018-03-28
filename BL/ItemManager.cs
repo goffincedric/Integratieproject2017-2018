@@ -318,6 +318,7 @@ namespace PB.BL
       trendspotter.CheckTrendAverageRecords(GetRecords());
     }
 
+
     private void RecordsToItems(List<Record> records)
     {
       initNonExistingRepo();
@@ -328,9 +329,9 @@ namespace PB.BL
       List<Person> people = new List<Person>();
       Item item;
 
-      records.ToList().ForEach(r =>
+      records.ToList().ForEach((Action<Record>)(r =>
       {
-        item = persons.FirstOrDefault(p => p.FirstName.Equals(r.RecordPerson.FirstName) && p.LastName.Equals(r.RecordPerson.LastName));
+        item = persons.FirstOrDefault((Func<Person, bool>)(p => (bool)(p.LastName.Equals(r.RecordPerson.FirstName) && p.LastName.Equals(r.RecordPerson.LastName))));
         if (item == null)
         {
           Person person = new Person()
@@ -349,7 +350,7 @@ namespace PB.BL
         {
           item.Records.Add(r);
         }
-      });
+      }));
 
       people.ForEach(p => ItemRepo.CreatePerson(p));
       uowManager.Save();
