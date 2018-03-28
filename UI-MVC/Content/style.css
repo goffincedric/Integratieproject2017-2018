@@ -17,26 +17,6 @@
 
 .logopic {
   height: 35px;
-    width: 35px;
-    margin-top: 5px;
-    margin-left: 15px;
-    align-self: center;
-}
-
-.active {
-    font-weight: bold;
-}
-
- .spinner {
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    top: calc(50% - 20px);
-    left: calc(50% - 20px);
-    background-color: #333;
-    border-radius: 100%;
-    -webkit-animation: sk-scaleout 1s infinite ease-in-out;
-    animation: sk-scaleout 1s infinite ease-in-out;
   width: 35px;
   margin: 15px;
 
@@ -52,7 +32,6 @@
   border-radius: 100%;
   -webkit-animation: sk-scaleout 1s infinite ease-in-out;
   animation: sk-scaleout 1s infinite ease-in-out
-
 }
 
 .jqstooltip {

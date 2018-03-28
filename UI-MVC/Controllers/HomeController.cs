@@ -179,16 +179,11 @@ namespace UI_MVC.Controllers
       }
     }
 
-
     [HttpPost]
     public ActionResult Register(Profile newProfile)
     {
       if (ModelState.IsValid)
       {
-
-        Profile profile = mgr.AddProfile(newProfile.Username, newProfile.Email, newProfile.Password);
-        return RedirectToAction("Index"); 
-
 
         byte[] SALT = Get_SALT(15);
         newProfile.Salt = SALT;

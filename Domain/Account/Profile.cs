@@ -34,7 +34,9 @@ namespace PB.BL.Domain.Account
     public Dictionary<SubPlatform, Dashboard> Dashboards { get; set; }
     public List<Alert> Alerts { get; set; }
     public List<Item> Subscriptions { get; set; }
-   public List<SubPlatform> adminPlatforms { get; set; }
+    
+    public List<SubPlatform> adminPlatforms { get; set; }
+
 
     public override string ToString()
     {

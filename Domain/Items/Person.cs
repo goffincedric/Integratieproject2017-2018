@@ -19,7 +19,7 @@ namespace PB.BL.Domain.Items
 
     public override string ToString()
     {
-      return LastName + " " + LastName + " (Id: " + (ItemId) + ") - Aantal records: " + Records.Count;
+      return FirstName + " " + LastName + " (Id: " + (ItemId) + ") - Aantal records: " + Records.Count;
     }
   }
 }
