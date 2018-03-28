@@ -131,6 +131,7 @@ namespace UI_CA_Prototype
         }
 
 
+<<<<<<< HEAD
         private static void newAccount()
         {
             Profile profile = extensionMethods.CreateAccount();
@@ -143,5 +144,18 @@ namespace UI_CA_Prototype
             accountMgr.Seed();
             //accountMgr.SubscribeProfiles(itemMgr.GetItems());
         }
+=======
+    private static void newAccount()
+    {
+      Profile profile = extensionMethods.CreateAccount();
+      accountMgr.AddProfile(profile);
+    }
+    private static void Seed()
+    {
+      //Injects seed data
+      itemMgr.Seed();
+      //accountMgr.Seed();
+      //accountMgr.SubscribeProfiles(itemMgr.GetItems());
+>>>>>>> parent of 3239529... Revert "Merge branch 'master' into Lins"
     }
 }
