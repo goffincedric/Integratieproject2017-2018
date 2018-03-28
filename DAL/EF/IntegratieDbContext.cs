@@ -21,7 +21,13 @@ namespace PB.DAL.EF
     {
         private readonly bool delaySave;
 
-        public IntegratieDbContext(bool unitOfworkPresent = false) : base("IntegratieDB_EFCodeFirst")
+    public IntegratieDbContext() : base("IntegratieDB_EFCodeFirst")
+    {
+      System.Data.Entity.Database.SetInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
+     
+    }
+
+    public IntegratieDbContext(bool unitOfworkPresent = false) : base("IntegratieDB_EFCodeFirst")
         {
             System.Data.Entity.Database.SetInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
             delaySave = unitOfworkPresent;

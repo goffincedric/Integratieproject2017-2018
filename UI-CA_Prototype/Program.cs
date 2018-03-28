@@ -141,7 +141,7 @@ namespace UI_CA_Prototype
     {
       //Injects seed data
       itemMgr.Seed();
-      accountMgr.Seed();
+      //accountMgr.Seed();
       //accountMgr.SubscribeProfiles(itemMgr.GetItems());
     }
   }
