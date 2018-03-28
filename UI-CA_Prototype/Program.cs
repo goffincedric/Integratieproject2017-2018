@@ -28,6 +28,7 @@ namespace UI_CA_Prototype
       //Injects seed data
       Seed();
 
+<<<<<<< HEAD
       //Menu
       while (!stop)
       {
@@ -53,6 +54,20 @@ namespace UI_CA_Prototype
         try
         {
           DetectMenuAction();
+=======
+                try
+                {
+                    DetectMenuAction();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine();
+                }
+                Console.WriteLine("\n");
+            }
+>>>>>>> master
         }
         catch (Exception e)
         {
