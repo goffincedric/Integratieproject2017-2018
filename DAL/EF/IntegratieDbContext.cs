@@ -42,6 +42,9 @@ namespace PB.DAL.EF
 
             modelBuilder.Entity<Profile>().HasRequired(p => p.UserData).WithRequiredDependent(ud => ud.Profile);
 
+            modelBuilder.Entity<Record>().HasMany(r => r.Items).WithMany(i => i.Records)
+                .Map(m => { m.ToTable("tblItemRecords"); });
+
             modelBuilder.Entity<Profile>().HasMany(p => p.Subscriptions).WithMany(i => i.SubscribedProfiles)
                 .Map(m => { m.ToTable("tblSubscriptions"); });
 
@@ -60,7 +63,7 @@ namespace PB.DAL.EF
             modelBuilder.Entity<Record>().HasMany(r => r.Words).WithMany(r => r.records)
                 .Map(m => { m.ToTable("tblRecordWord"); });
 
-            modelBuilder.Entity<Record>().HasMany(r => r.Hashtags).WithMany(r => r.records)
+            modelBuilder.Entity<Record>().HasMany(r => r.Hashtags).WithMany(r => r.Records)
                 .Map(m => { m.ToTable("tblRecordHashtag"); });
 
             modelBuilder.Entity<Record>().HasMany(r => r.URLs).WithMany(r => r.records)
