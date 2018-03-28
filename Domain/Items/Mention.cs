@@ -13,7 +13,7 @@ namespace Domain.Items
   public class Mention
   {
     [Key]
-    public int Number { get; set; }   
+    public int Id { get; set; }   
     public string Name { get; set; }
 
     
