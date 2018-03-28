@@ -15,7 +15,7 @@ $(document).ready(function () {
     }, function () {
         $(".dropdown-menu").css("background-color", "");
     });
-    })
+    }),
 $(document).ready(function () {
     $("#future-mode").hover(function () {
         $(".dropdown-menu").css("background", "linear-gradient(to top left, rgba(0,0,0,0.125), rgba(0,0,0,0.25))");

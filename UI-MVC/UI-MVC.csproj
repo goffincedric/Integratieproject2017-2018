@@ -191,7 +191,7 @@
     <Content Include="Content\e23a7dcaefbde4e74e263247aa42ecd7.ttf" />
     <Content Include="Content\fee66e712a8a08eef5805a46892932ad.woff" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\ChangeTheme.js" />
+    <Content Include="Scripts\changetheme.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
