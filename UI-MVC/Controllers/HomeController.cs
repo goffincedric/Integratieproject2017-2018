@@ -27,14 +27,36 @@ namespace UI_MVC.Controllers
             }
             else
             {
-                string test1 = Session["UserName"].ToString();
+                string username = Session["UserName"].ToString();
 
-                return Content(test1);
+                return Content(username);
             }
-
-
         }
 
+        public ActionResult ChangeLogoutin()
+        {
+            if (Session["UserName"] == null)
+            {
+                return Content("Login/Signup");
+            }
+            else
+            {
+                return Content("Logout");
+            }
+        }
+
+        public ActionResult LinkLogoutin()
+        {
+            if (Session["UserName"] == null)
+            {
+                return Content("/home/signin");
+            }
+            else
+            {
+                EnsureLoggedOut();
+                return Content("\"\"");
+            }
+        }
         public ActionResult Index()
         {
             return View();
@@ -290,11 +312,9 @@ namespace UI_MVC.Controllers
             }
             catch
             {
-
                 throw;
             }
         }
-
         private void EnsureLoggedOut()
         {
             if (Request.IsAuthenticated)

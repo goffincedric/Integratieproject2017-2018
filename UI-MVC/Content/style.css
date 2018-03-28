@@ -17,9 +17,8 @@
 
 .logopic {
   height: 35px;
-  width: 35px;
+  width: auto;
   margin: 15px;
-
 }
 
 .spinner {
@@ -1353,4 +1352,8 @@ a.fc-more:hover{
 }
 .fc-unthemed .fc-list-empty{
     background-color:#eee
+}
+.centerXY{
+    height: 50px;
+    width: auto;
 }
