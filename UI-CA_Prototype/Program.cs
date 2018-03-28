@@ -50,17 +50,17 @@ namespace UI_CA_Prototype
                 Console.WriteLine("11) Maak nieuw account");
                 Console.WriteLine("0) Afsluiten");
 
-                //try
-                //{
-                DetectMenuAction();
-                //}
-                //catch (Exception e)
-                //{
-                //    Console.WriteLine();
-                //    Console.WriteLine(e.Message);
-                //    Console.WriteLine();
-                //}
-                //Console.WriteLine("\n");
+                try
+                {
+                    DetectMenuAction();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine();
+                }
+                Console.WriteLine("\n");
             }
         }
 
