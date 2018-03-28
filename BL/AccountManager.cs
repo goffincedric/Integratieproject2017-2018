@@ -209,9 +209,6 @@ namespace PB.BL
             uowManager.Save();
         }
 
-        public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }
