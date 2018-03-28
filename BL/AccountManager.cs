@@ -57,7 +57,26 @@ namespace PB.BL
 
 
         #region Profile
+        public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
+        {
+            initNonExistingRepo();
+            Profile profile = new Profile()
+            {
+                Username = username,
+                Email = email,
+                Role = role,
+                Password = password
+            };
+            profile.UserData = new UserData() { Profile = profile, Username = username };
 
+            byte[] SALT = Get_SALT(15);
+            profile.Salt = SALT;
+            profile.Hash = Get_HASH_SHA512(profile.Password, profile.Username, SALT);
+
+            profile = AddProfile(profile);
+            uowManager.Save();
+            return profile;
+        }
 
         public Profile AddProfile(string username, string password, string hash, byte[] Salt, string email, Role role = Role.USER)
         {
@@ -78,7 +97,7 @@ namespace PB.BL
             return profile;
         }
 
-        public Profile AddProfile(Profile profile)
+        private Profile AddProfile(Profile profile)
         {
             initNonExistingRepo();
             Profile newProfile = ProfileRepo.CreateProfile(profile);
@@ -113,6 +132,7 @@ namespace PB.BL
         }
         #endregion
 
+        #region Seed
         //public void Seed()
         //{
         //    initNonExistingRepo();
@@ -192,11 +212,11 @@ namespace PB.BL
         //        }
         //    };
         //    profiles.ForEach(p => p.UserData = new UserData() { Profile = p, Username = p.Username });
-            
+
         //    profiles.ForEach(p =>  AddProfile(p));
         //    uowManager.Save();
         //}
-
+        #endregion
 
         public void LinkAlertsToProfile(List<Alert> alerts)
         {
@@ -209,6 +229,76 @@ namespace PB.BL
             uowManager.Save();
         }
 
-      
+        #region passwordEncryption
+        private byte[] Get_SALT(int maximumSaltLength)
+        {
+            var salt = new byte[maximumSaltLength];
+
+            //Require NameSpace: using System.Security.Cryptography;
+            using (var random = new RNGCryptoServiceProvider())
+            {
+                random.GetNonZeroBytes(salt);
+            }
+
+            return salt;
+        }
+
+        public string Get_HASH_SHA512(string password, string username, byte[] salt)
+        {
+            try
+            {
+                //required NameSpace: using System.Text;
+                //Plain Text in Byte
+                byte[] plainTextBytes = Encoding.UTF8.GetBytes(password + username);
+
+                //Plain Text + SALT Key in Byte
+                byte[] plainTextWithSaltBytes = new byte[plainTextBytes.Length + salt.Length];
+
+                for (int i = 0; i < plainTextBytes.Length; i++)
+                {
+                    plainTextWithSaltBytes[i] = plainTextBytes[i];
+                }
+
+                for (int i = 0; i < salt.Length; i++)
+                {
+                    plainTextWithSaltBytes[plainTextBytes.Length + i] = salt[i];
+                }
+
+                HashAlgorithm hash = new SHA512Managed();
+                byte[] hashBytes = hash.ComputeHash(plainTextWithSaltBytes);
+                byte[] hashWithSaltBytes = new byte[hashBytes.Length + salt.Length];
+
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    hashWithSaltBytes[i] = hashBytes[i];
+                }
+
+                for (int i = 0; i < salt.Length; i++)
+                {
+                    hashWithSaltBytes[hashBytes.Length + i] = salt[i];
+                }
+
+                return Convert.ToBase64String(hashWithSaltBytes);
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        public bool CompareHashValue(string password, string username, string OldHASHValue, byte[] SALT)
+        {
+            try
+            {
+                string expectedHashString = Get_HASH_SHA512(password, username, SALT);
+
+                return (OldHASHValue == expectedHashString);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        #endregion
     }
 }

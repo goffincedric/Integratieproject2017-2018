@@ -60,12 +60,16 @@ namespace PB.DAL
 
         public Profile ReadProfile(string username)
         {
-            return ctx.Profiles.FirstOrDefault(p => p.Username == username);
+            return ctx.Profiles
+                .Include("Subscriptions")
+                .FirstOrDefault(p => p.Username == username);
         }
 
         public IEnumerable<Profile> ReadProfiles()
         {
-            return ctx.Profiles.AsEnumerable();
+            return ctx.Profiles
+                .Include("Subscriptions")
+                .AsEnumerable();
         }
 
         public void UpdateProfile(Profile profile)
