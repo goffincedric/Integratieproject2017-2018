@@ -210,7 +210,7 @@ namespace PB.DAL
                 record.URLs = urls;
 
 
-                if (recordsToAdd.Find(r => r.Tweet_Id == record.Tweet_Id) != null)
+                if (recordsToAdd.Find(r => r.Tweet_Id == record.Tweet_Id) == null)
                 {
                     recordsToAdd.Add(record);
                     ctx.Records.Add(record);
