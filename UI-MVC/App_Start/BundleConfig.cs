@@ -14,10 +14,10 @@ namespace UI_MVC
                   "~/Scripts/jquery-3.3.1.js"));
 
       bundles.Add(new ScriptBundle("~/bundles/bootstrapjs").Include(
-                  "~/Scripts/bootstrap.min.js"));
+                  "~/Scripts/bootstrap.js"));
 
       bundles.Add(new StyleBundle("~/Content/bootstrapcss").Include(
-                  "~/Content/bootstrap.css", "~/Content/bootstrap.min.css"));
+                  "~/Content/bootstrap.css"));
 
       bundles.Add(new ScriptBundle("~/bundles/adminator").Include("~/Scripts/vendor.js", "~/Scripts/bundle.js")); 
     }

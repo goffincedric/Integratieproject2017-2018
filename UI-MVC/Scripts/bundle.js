@@ -757,7 +757,7 @@ webpackJsonp([0], {
           "WBR": 1.3,
           "VBR": 1,
           "VOV": 2,
-          "WLG": 0.01,
+          "WLG": 0,
           "VLI": 0.2,
           "WHT": 1.7,
           "WNA": 0.5,
@@ -773,6 +773,7 @@ webpackJsonp([0], {
         var t = function () {
           r("#world-map-marker").length > 0 && (r("#vmap").remove(), r("#world-map-marker").append('\n        <div\n          id="vmap"\n          style="\n            height: 490px;\n            position: relative;\n            overflow: hidden;\n            background-color: transparent;\n          "\n        >\n        </div>\n      '), r("#vmap").vectorMap({
               map: "be_mill",
+              zoomButtons: false,
               series: {
                   regions: [{
                       values: provinceData,

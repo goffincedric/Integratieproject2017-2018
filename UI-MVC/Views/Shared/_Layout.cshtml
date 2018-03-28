@@ -3,10 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  @Styles.Render("~/Content/bootstrapcss")
-  @Styles.Render("~/Content/style.css")
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="icon" href="@Url.Content("~/Content/Images/logo_new.png")">
+    <title>Barometer</title>
+    @Styles.Render("~/Content/bootstrapcss")
+    @Styles.Render("~/Content/style.css")
 
 </head>
 
@@ -48,11 +50,10 @@
           <li class="nav-item dropdown">
             <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
             <ul class="dropdown-menu">
-              <li class="nav-item dropdown"><a href="javascript:void(0);"><span>FAQ</span></a></li>
-              <li class="nav-item dropdown"><a href="javascript:void(0);"><span>Contact</span></a></li>
+                <li class="nav-item dropdown"><a href="javascript:void(0);"><span>Contact</span></a></li>
+                <li class="nav-item dropdown"><a href="javascript:void(0);"><span>FAQ</span></a></li>
             </ul>
           </li>
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Calender","Home")"><span class="icon-holder"><i class="c-deep-orange-500 ti-share"></i> </span><span class="title">Log out</span></a></li>
         </ul>
       </div>
     </div>
@@ -172,7 +173,7 @@
                 <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Profile</span></a></li>
                 <li><a href="@Url.Action("Email","Home")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-email mR-10"></i> <span>Messages</span></a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-power-off mR-10"></i> <span>Logout</span></a></li>
+                <li><a href="@Html.Action("LinkLogoutin","Home")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-power-off mR-10"></i> <span>@Html.Action("ChangeLogoutin", "Home")</span></a></li>
               </ul>
             </li>
           </ul>

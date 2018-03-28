@@ -54,63 +54,65 @@ namespace PB.BL
                 }
             }
         }
-   
 
-    #region Profile
 
-   
-    public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
-    {
-      initNonExistingRepo();
-      Profile profile = new Profile()
-      {
-        Username = username,
-        Email = email,
-        Role = role,
-        Password = password
-       
-      };
-   
-      profile = AddProfile(profile);
-      uowManager.Save();
-      return profile;
-    }
+        #region Profile
 
-    public Profile AddProfile(Profile profile)
-    {
-      initNonExistingRepo();
-      Profile  newProfile = ProfileRepo.CreateProfile(profile);
-      uowManager.Save();
-      return profile;
-    }
 
-    public void ChangeProfile(Profile profile)
-    {
-      initNonExistingRepo();
-      ProfileRepo.UpdateProfile(profile);
-      uowManager.Save();
-    }
+        public Profile AddProfile(string username, string password, string hash, byte[] Salt, string email, Role role = Role.USER)
+        {
+            initNonExistingRepo();
+            Profile profile = new Profile()
+            {
+                Username = username,
+                Email = email,
+                Role = role,
+                Password = password,
+                Hash = hash,
+                Salt = Salt
+            };
+            profile.UserData = new UserData() { Profile = profile, Username = username };
 
-    public Profile GetProfile(string username)
-    {
-      initNonExistingRepo();
-      return ProfileRepo.ReadProfile(username);
-    }
+            profile = AddProfile(profile);
+            uowManager.Save();
+            return profile;
+        }
 
-    public IEnumerable<Profile> GetProfiles()
-    {
-      initNonExistingRepo();
-      return ProfileRepo.ReadProfiles();
-    }
+        public Profile AddProfile(Profile profile)
+        {
+            initNonExistingRepo();
+            Profile newProfile = ProfileRepo.CreateProfile(profile);
+            uowManager.Save();
+            return profile;
+        }
 
-    public void RemoveProfile(string username)
-    {
-      initNonExistingRepo();
-      ProfileRepo.DeleteProfile(username);
-      uowManager.Save();
-    }
-    #endregion
-        
+        public void ChangeProfile(Profile profile)
+        {
+            initNonExistingRepo();
+            ProfileRepo.UpdateProfile(profile);
+            uowManager.Save();
+        }
+
+        public Profile GetProfile(string username)
+        {
+            initNonExistingRepo();
+            return ProfileRepo.ReadProfile(username);
+        }
+
+        public IEnumerable<Profile> GetProfiles()
+        {
+            initNonExistingRepo();
+            return ProfileRepo.ReadProfiles();
+        }
+
+        public void RemoveProfile(string username)
+        {
+            initNonExistingRepo();
+            ProfileRepo.DeleteProfile(username);
+            uowManager.Save();
+        }
+        #endregion
+
         public void Seed()
         {
             initNonExistingRepo();
@@ -207,6 +209,6 @@ namespace PB.BL
             uowManager.Save();
         }
 
-
+      
     }
 }
