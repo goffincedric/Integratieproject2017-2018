@@ -12,19 +12,19 @@ namespace Domain.Items
   [Table("tblHashtag")]
   public class Hashtag
   {
-    [Key] public int Id { get; set; }
-    public String HashTag { get; set; }
+    [Key] public int Number { get; set; }
+    public String tag { get; set; }
 
-    public List<Record> Records { get; set; }
+    public List<Record> records { get; set; }
 
     public Hashtag()
     {
 
     }
 
-    public Hashtag(string hashTag)
+    public Hashtag(string tag)
     {
-      this.HashTag = hashTag;
+      this.tag = tag;
     }
   }
 }

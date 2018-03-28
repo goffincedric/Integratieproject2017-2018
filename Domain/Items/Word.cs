@@ -11,7 +11,7 @@ namespace Domain.Items
   [Table("tblWords")]
   public class Word
   {
-    [Key] public int Id { get; set; }
+    [Key] public int Number { get; set; }
     public String Text { get; set; }
 
     public List<Record> records { get; set; }

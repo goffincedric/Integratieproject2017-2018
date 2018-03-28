@@ -57,7 +57,7 @@ namespace PB.DAL
 
         public Hashtag ReadHashtag(string tag)
         {
-            return ctx.Hashtags.FirstOrDefault(h => h.HashTag.ToLower().Equals(tag.ToLower()));
+            return ctx.Hashtags.FirstOrDefault(h => h.tag.ToLower().Equals(tag.ToLower()));
         }
 
         public Word ReadWord(string word)

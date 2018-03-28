@@ -13,7 +13,7 @@ namespace PB.BL
   {
     IEnumerable<Profile> GetProfiles();
     Profile GetProfile(string username);
-    Profile AddProfile(string username, string password, string hash, byte[] Salt, string email, Role role = Role.USER);
+    Profile AddProfile(string username, string password, string email, Role role = Role.USER);
     void ChangeProfile(Profile profile);
     void RemoveProfile(string username);
 

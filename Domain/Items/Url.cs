@@ -15,7 +15,7 @@ namespace Domain.Items
   {
 
 
-    [Key] public int Id { get; set; }
+    [Key] public int Number { get; set; }
 
     public string Link { get; set; }
 
