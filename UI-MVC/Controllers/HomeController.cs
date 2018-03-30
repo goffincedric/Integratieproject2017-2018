@@ -18,6 +18,7 @@ namespace UI_MVC.Controllers
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
 
         private static readonly AccountManager mgr = new AccountManager(uow);
+        private static readonly ISubPlatformManager subPlatformMgr = new SubPlatformManager(uow);
 
         public ActionResult GetActiveUser()
         {
@@ -296,6 +297,17 @@ namespace UI_MVC.Controllers
         {
             FormsAuthentication.SignOut();
             FormsAuthentication.SetAuthCookie(userName, isPersistent);
+        }
+
+
+
+
+        [HttpPost]
+        public ActionResult AddAdmin(int subplatformId, string username)
+        {
+            subPlatformMgr.AddAdmin(subplatformId, mgr.GetProfile(username));
+            return RedirectToAction("Index"); //--> naar huidige beheerpagina laten redirecten
+
         }
 
     }

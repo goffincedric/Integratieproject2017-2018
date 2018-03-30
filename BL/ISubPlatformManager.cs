@@ -11,12 +11,13 @@ namespace PB.BL
     public interface ISubPlatformManager
     {
         IEnumerable<SubPlatform> GetSubPlatforms();
-        SubPlatform AddProfile(SubPlatform profile);
-        SubPlatform GetProfile(int subplatformId);
-        void ChangeProfile(SubPlatform profile);
-        void RemoveProfile(int subplatformId);
+        SubPlatform AddSubPlatform(string name, string url, string sourceAPI = null, string siteIconUrl = null);
+        SubPlatform GetSubPlatform(int subplatformId);
+        void ChangeSubPlatform(SubPlatform profile);
+        void RemoveSubPlatform(int subplatformId);
 
-        void AddAdmin(Profile admin);
-        void RemoveAdmin(Profile admin);
+        Page AddPage()
+        void AddAdmin(int subplatformId, Profile admin);
+        void RemoveAdmin(int subplatformId, Profile admin);
     }
 }

@@ -9,7 +9,7 @@ namespace PB.DAL
 {
     public interface ISubPlatformRepo
     {
-        IEnumerable<SubPlatform> ReadSubPlatform();
+        IEnumerable<SubPlatform> ReadSubPlatforms();
         SubPlatform CreateSubPlatform(SubPlatform subPlatform);
         SubPlatform ReadSubPlatform(int subPlatformId);
         void UpdateSubPlatform(SubPlatform subPlatform);

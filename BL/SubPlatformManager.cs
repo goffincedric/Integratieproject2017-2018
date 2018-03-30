@@ -1,11 +1,11 @@
-﻿using System;
+﻿using PB.BL.Domain.Account;
+using PB.BL.Domain.Platform;
+using PB.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PB.BL.Domain.Account;
-using PB.BL.Domain.Platform;
-using PB.DAL;
 
 namespace PB.BL
 {
@@ -52,56 +52,78 @@ namespace PB.BL
         }
 
         #region Subplatform
-        public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
-        {
-            //initNonExistingRepo();
-            //SubPlatform subPlatform = new SubPlatform()
-            //{
-            //    Username = username,
-            //    Password = password,
-            //    Email = email,
-            //    Role = role
-            //};
-            //profile = AddProfile(profile);
-            //uowManager.Save();
-            //return profile;
-            return null;
-        }
-
-        public void AddAdmin(Profile admin)
-        {
-            throw new NotImplementedException();
-        }
-
-        public SubPlatform AddProfile(SubPlatform profile)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeProfile(SubPlatform profile)
-        {
-            throw new NotImplementedException();
-        }
-
-        public SubPlatform GetProfile(int subplatformId)
-        {
-            throw new NotImplementedException();
-        }
 
         public IEnumerable<SubPlatform> GetSubPlatforms()
         {
-            throw new NotImplementedException();
+            initNonExistingRepo();
+            return SubPlatformRepo.ReadSubPlatforms();
         }
 
-        public void RemoveAdmin(Profile admin)
+        public SubPlatform AddSubPlatform(string name, string url, string sourceAPI = null, string siteIconUrl = null)
         {
-            throw new NotImplementedException();
+            initNonExistingRepo();
+            SubPlatform subplatform = new SubPlatform()
+            {
+                Name = name,
+                URL = url,
+                SourceAPI = sourceAPI,
+                SiteIconURL = siteIconUrl,
+                DateOnline = DateTime.Now,
+                Style = new Style(),
+                Admins = new List<Profile>(),
+                Pages = new List<Page>()
+            };
+
+            subplatform = AddSubPlatform(subplatform);
+            uowManager.Save();
+            return subplatform;
         }
 
-        public void RemoveProfile(int subplatformId)
+        private SubPlatform AddSubPlatform(SubPlatform subPlatform)
         {
-            throw new NotImplementedException();
+            return SubPlatformRepo.CreateSubPlatform(subPlatform);
         }
+
+        public SubPlatform GetSubPlatform(int subplatformId)
+        {
+            initNonExistingRepo();
+            return SubPlatformRepo.ReadSubPlatform(subplatformId);
+        }
+
+        public void ChangeSubPlatform(SubPlatform profile)
+        {
+            initNonExistingRepo();
+            SubPlatformRepo.UpdateSubPlatform(profile);
+            uowManager.Save();
+        }
+
+        public void RemoveSubPlatform(int subplatformId)
+        {
+            initNonExistingRepo();
+            SubPlatformRepo.DeleteSubPlatform(subplatformId);
+            uowManager.Save();
+        }
+
+        public void AddAdmin(int subplatformId, Profile admin)
+        {
+            initNonExistingRepo();
+            SubPlatform subplatform = SubPlatformRepo.ReadSubPlatform(subplatformId);
+            if (subplatform == null) throw new Exception("Subplatform with id (" + subplatformId + ") doesnt exist"); //Subplatform bestaat niet
+
+            subplatform.Admins.Add(admin);
+            admin.adminPlatforms.Add(subplatform);
+        }
+
+        public void RemoveAdmin(int subplatformId, Profile admin)
+        {
+            initNonExistingRepo();
+            SubPlatform subplatform = SubPlatformRepo.ReadSubPlatform(subplatformId);
+
+            if (subplatform == null) throw new Exception("Subplatform with id (" + subplatformId + ") doesnt exist"); //Subplatform bestaat niet
+            if (!subplatform.Admins.Remove(admin)) throw new Exception("Couldn't remove admin, maybe the admin doesn't exist?");
+        }
+
+
         #endregion
     }
 }

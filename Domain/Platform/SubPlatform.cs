@@ -27,11 +27,6 @@ namespace PB.BL.Domain.Platform
     public Style Style { get; set; }
     public List<SubplatformSetting> Settings { get; set; }
     public List<Page> Pages { get; set; }
-
-    public string Username { get; set; }
-
-    [Required]
-    [ForeignKey("Username")]
     public List<Profile> Admins { get; set; }
   }
 }

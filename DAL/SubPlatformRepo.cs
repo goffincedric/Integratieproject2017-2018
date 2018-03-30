@@ -58,7 +58,7 @@ namespace PB.DAL
             }
         }
 
-        public IEnumerable<SubPlatform> ReadSubPlatform()
+        public IEnumerable<SubPlatform> ReadSubPlatforms()
         {
             return ctx.SubPlatforms.AsEnumerable();
         }
