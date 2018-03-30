@@ -9,7 +9,7 @@ using System.Web.Security;
 using System.Security.Principal;
 using System.Security.Cryptography;
 using System.Text;
-using System.IO;
+
 
 namespace UI_MVC.Controllers
 {
@@ -33,7 +33,6 @@ namespace UI_MVC.Controllers
       }
     }
 
-<<<<<<< HEAD
     public ActionResult ChangeLogoutin()
     {
       if (Session["UserName"] == null)
@@ -80,164 +79,52 @@ namespace UI_MVC.Controllers
 
 
     public ActionResult Blank()
-=======
-    public FileContentResult GetUserIcon()
-    {
-      if (Session["UserName"] == null)
-      {
-        string fileName = HttpContext.Server.MapPath(@"~/Content/Images/user_icon.png");
-        byte[] imageData = null;
-        FileInfo fileInfo = new FileInfo(fileName);
-        long imageFileLength = fileInfo.Length;
-        FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-        BinaryReader br = new BinaryReader(fs);
-        imageData = br.ReadBytes((int)imageFileLength);
-        return File(imageData, "image/png");
-      }
-      else
-      {
-        string fileName = HttpContext.Server.MapPath(@"~/Content/Images/1.jpg");
-        byte[] imageData = null;
-        FileInfo fileInfo = new FileInfo(fileName);
-        long imageFileLength = fileInfo.Length;
-        FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-        BinaryReader br = new BinaryReader(fs);
-        imageData = br.ReadBytes((int)imageFileLength);
-        return File(imageData, "image/jpg");
-      
-      }
-    }
-
-
-    public ActionResult ChangeLogoutin()
-    {
-      if (Session["UserName"] == null)
-      {
-        return Content("Login/Signup");
-      }
-      else
-      {
-        return Content("Logout");
-      }
-    }
-
-    public ActionResult LinkLogoutin()
-    {
-      if (Session["UserName"] == null)
-      {
-        return Content("/home/signin");
-      }
-      else
-      {
-        EnsureLoggedOut();
-        return Content("\"\"");
-      }
-    }
-    public ActionResult Index()
-    {
-
-      return View();
-    }
-
-    public ActionResult Email()
     {
       return View();
     }
 
-    public ActionResult Compose()
->>>>>>> master
-    {
-      return View();
-    }
 
-    public ActionResult BasicTable()
-    {
-      return View();
-    }
-
-<<<<<<< HEAD
     public ActionResult Calender()
     {
       return View();
     }
-=======
->>>>>>> master
 
-    public ActionResult Blank()
-    {
-      return View();
-    }
 
-<<<<<<< HEAD
     public ActionResult Charts()
     {
       return View();
     }
-=======
->>>>>>> master
 
-    public ActionResult Calender()
-    {
-      return View();
-    }
 
-<<<<<<< HEAD
     public ActionResult DataTable()
     {
       return View();
     }
-=======
->>>>>>> master
 
-    public ActionResult Charts()
-    {
-      return View();
-    }
 
-<<<<<<< HEAD
     public ActionResult Forms()
     {
       return View();
     }
-=======
->>>>>>> master
 
-    public ActionResult DataTable()
-    {
-      return View();
-    }
 
-<<<<<<< HEAD
     public ActionResult GoogleMaps()
     {
       return View();
     }
 
     public ActionResult Signup()
-=======
-
-    public ActionResult Forms()
->>>>>>> master
     {
       return View();
     }
 
 
-<<<<<<< HEAD
     public ActionResult Test404()
-=======
-    public ActionResult GoogleMaps()
->>>>>>> master
     {
       return View();
     }
 
-    public ActionResult Signup()
-    {
-      return View();
-    }
 
-<<<<<<< HEAD
     public ActionResult Test500()
     {
       return View();
@@ -315,36 +202,6 @@ namespace UI_MVC.Controllers
       }
     }
 
-=======
-
-    public ActionResult Test404()
-    {
-      return View();
-    }
-
-
-    public ActionResult Test500()
-    {
-      return View();
-    }
-
-    public ActionResult UI()
-    {
-      return View();
-    }
-
-
-    public ActionResult VectorMaps()
-    {
-      return View();
-    }
-
-    public ActionResult Chat()
-    {
-      return View();
-    }
-
->>>>>>> master
     [HttpPost]
     public ActionResult Register(Profile newProfile)
     {
@@ -355,7 +212,6 @@ namespace UI_MVC.Controllers
       }
       else
       {
-<<<<<<< HEAD
         if (ModelState.IsValid)
         {
 
@@ -372,21 +228,8 @@ namespace UI_MVC.Controllers
         return RedirectToAction("Signup");
       }
     }
-=======
 
-        if (ModelState.IsValid)
-        {
-          mgr.AddProfile(newProfile.Username, newProfile.Password, newProfile.Email);
 
-          return RedirectToAction("Signin");
-        }
-        return RedirectToAction("Signup");
->>>>>>> master
-
-        //if (ModelState.IsValid)
-        //{
-
-<<<<<<< HEAD
     [HttpGet]
     public ActionResult Signin()
     {
@@ -418,45 +261,8 @@ namespace UI_MVC.Controllers
         return false;
       }
     }
-=======
-        //    byte[] SALT = Get_SALT(15);
-        //    newProfile.Salt = SALT;
-        //    newProfile.Hash = Get_HASH_SHA512(newProfile.Password, newProfile.Username, SALT);
-        //    newProfile.UserData = new UserData() { Profile = newProfile, Username = newProfile.Username };
-
-        //    mgr.AddProfile(newProfile);
-        //    return RedirectToAction("Signin");
 
 
-        //}
-        //return RedirectToAction("Signup");
-      }
-    }
-
-
-    [HttpGet]
-    public ActionResult Signin()
-    {
-      var userinfo = new Profile();
->>>>>>> master
-
-      try
-      {
-        EnsureLoggedOut();
-        return View(userinfo);
-      }
-      catch
-      {
-        throw;
-      }
-
-
-    }
-
-<<<<<<< HEAD
-=======
-
->>>>>>> master
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Signin(Profile entity)
@@ -486,11 +292,7 @@ namespace UI_MVC.Controllers
             SALT = userInfo.Salt;
           }
 
-<<<<<<< HEAD
           bool isLogin = CompareHashValue(entity.Password, entity.Username, OldHASHValue, SALT);
-=======
-          bool isLogin = mgr.CompareHashValue(entity.Password, entity.Username, OldHASHValue, SALT);
->>>>>>> master
 
           if (isLogin)
           {
@@ -500,19 +302,11 @@ namespace UI_MVC.Controllers
 
             //Set A Unique ID in session
             Session["UserName"] = userInfo.Username;
-<<<<<<< HEAD
             TempData["UserName"] = userInfo.Username;
 
             // If we got this far, something failed, redisplay form
             // return RedirectToAction("Index", "Dashboard");
 
-=======
-
-
-            // If we got this far, something failed, redisplay form
-            // return RedirectToAction("Index", "Dashboard");
-            ViewBag.ImageUrl = "~/Content/Images/1.jpg";
->>>>>>> master
             return RedirectToAction("Index");
           }
           else
@@ -561,24 +355,8 @@ namespace UI_MVC.Controllers
 
     private void SignInRemember(string userName, bool isPersistent = false)
     {
-<<<<<<< HEAD
       FormsAuthentication.SignOut();
       FormsAuthentication.SetAuthCookie(userName, isPersistent);
-=======
-
-      //Auth Cookie niet gesaved
-
-
-
-      // FormsAuthentication.SignOut();
-      //FormsAuthentication.SetAuthCookie(userName, isPersistent);
-      //Profile profile = new Profile();
-      //profile = mgr.GetProfile(userName);
-      //profile.IsRemember = isPersistent;
-      //mgr.ChangeProfile(profile);
-
-
->>>>>>> master
     }
 
   }
