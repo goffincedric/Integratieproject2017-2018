@@ -31,11 +31,11 @@ namespace PB.BL.Domain.Account
     public Role Role { get; set; } = Role.USER; 
     public UserData UserData { get; set; }
     public List<UserSetting> Settings { get; set; }
-    public Dictionary<SubPlatform, Dashboard> Dashboards { get; set; }
+    public Dictionary<Subplatform, Dashboard> Dashboards { get; set; }
     public List<Alert> Alerts { get; set; }
     public List<Item> Subscriptions { get; set; }
     
-    public List<SubPlatform> adminPlatforms { get; set; }
+    public List<Subplatform> adminPlatforms { get; set; }
 
 
     public override string ToString()

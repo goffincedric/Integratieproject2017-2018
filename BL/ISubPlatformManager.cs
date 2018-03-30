@@ -8,15 +8,17 @@ using System.Threading.Tasks;
 
 namespace PB.BL
 {
-    public interface ISubPlatformManager
+    public interface ISubplatformManager
     {
-        IEnumerable<SubPlatform> GetSubPlatforms();
-        SubPlatform AddProfile(SubPlatform profile);
-        SubPlatform GetProfile(int subplatformId);
-        void ChangeProfile(SubPlatform profile);
-        void RemoveProfile(int subplatformId);
+        IEnumerable<Subplatform> GetSubPlatforms();
+        Subplatform AddSubplatform(string name, string url, string sourceAPI = null, string siteIconUrl = null);
+        Subplatform GetSubplatform(int subplatformId);
+        void ChangeSubplatform(Subplatform profile);
+        void RemoveSubplatform(int subplatformId);
 
-        void AddAdmin(Profile admin);
-        void RemoveAdmin(Profile admin);
+        void AddAdmin(int subplatformId, Profile admin);
+        void RemoveAdmin(int subplatformId, Profile admin);
+
+        Page AddPage(int subplatformId, string title, string faviconURL);
     }
 }

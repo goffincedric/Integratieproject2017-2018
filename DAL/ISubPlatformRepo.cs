@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace PB.DAL
 {
-    public interface ISubPlatformRepo
+    public interface ISubplatformRepo
     {
-        IEnumerable<SubPlatform> ReadSubPlatform();
-        SubPlatform CreateSubPlatform(SubPlatform subPlatform);
-        SubPlatform ReadSubPlatform(int subPlatformId);
-        void UpdateSubPlatform(SubPlatform subPlatform);
+        IEnumerable<Subplatform> ReadSubPlatforms();
+        Subplatform CreateSubPlatform(Subplatform subPlatform);
+        Subplatform ReadSubPlatform(int subPlatformId);
+        void UpdateSubPlatform(Subplatform subPlatform);
         void DeleteSubPlatform(int subPlatformId);
     }
 }

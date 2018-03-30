@@ -9,22 +9,22 @@ using PB.DAL.EF;
 
 namespace PB.DAL
 {
-    public class SubPlatformRepo : ISubPlatformRepo
+    public class SubplatformRepo : ISubplatformRepo
     {
         private IntegratieDbContext ctx;
 
-        public SubPlatformRepo()
+        public SubplatformRepo()
         {
             ctx = new IntegratieDbContext();
         }
 
-        public SubPlatformRepo(UnitOfWork uow)
+        public SubplatformRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
             //Console.WriteLine("UOW MADE SUBPLATFORMREPO");
         }
 
-        public SubPlatform CreateSubPlatform(SubPlatform subPlatform)
+        public Subplatform CreateSubPlatform(Subplatform subPlatform)
         {
             ctx.SubPlatforms.Add(subPlatform);
 
@@ -50,7 +50,7 @@ namespace PB.DAL
 
         public void DeleteSubPlatform(int subPlatformId)
         {
-            SubPlatform subplatform = ReadSubPlatform(subPlatformId);
+            Subplatform subplatform = ReadSubPlatform(subPlatformId);
             if (subplatform != null)
             {
                 ctx.SubPlatforms.Remove(subplatform);
@@ -58,17 +58,17 @@ namespace PB.DAL
             }
         }
 
-        public IEnumerable<SubPlatform> ReadSubPlatform()
+        public IEnumerable<Subplatform> ReadSubPlatforms()
         {
             return ctx.SubPlatforms.AsEnumerable();
         }
 
-        public SubPlatform ReadSubPlatform(int subPlatformId)
+        public Subplatform ReadSubPlatform(int subPlatformId)
         {
             return ctx.SubPlatforms.FirstOrDefault(s => s.SubplatformId == subPlatformId);
         }
 
-        public void UpdateSubPlatform(SubPlatform subPlatform)
+        public void UpdateSubPlatform(Subplatform subPlatform)
         {
             ctx.SubPlatforms.Attach(subPlatform);
             ctx.Entry(subPlatform).State = System.Data.Entity.EntityState.Modified;
