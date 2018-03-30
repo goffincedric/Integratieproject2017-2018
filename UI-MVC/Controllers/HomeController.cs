@@ -71,7 +71,7 @@ namespace UI_MVC.Controllers
       }
       else
       {
-        return Content("<img class=\"w - 2r bdrs - 50p\" src=/Content/Images/1.jpg>");
+        return Content("<img class=\"w-2r bdrs-50p\" src=/Content/Images/1.jpg>");
       }
     }
 
