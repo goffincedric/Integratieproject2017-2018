@@ -47,7 +47,14 @@ namespace PB.DAL
 
         public IEnumerable<Record> ReadRecords()
         {
-            return ctx.Records.AsEnumerable();
+            return ctx.Records
+                .Include("Mentions")
+                .Include("RecordPerson")
+                .Include("Words")
+                .Include("Hashtags")
+                .Include("URLs")
+                .Include("Items")
+                .AsEnumerable();
         }
 
         public Mention ReadMention(string name)
@@ -94,16 +101,19 @@ namespace PB.DAL
 
         public List<Record> Seed(bool even)
         {
+
             Random random = new Random();
             var list = JsonConvert.DeserializeObject<List<JCLASS>>(File.ReadAllText(@"TestData\textgaindump.json")).ToList().Where(r => (even) ? r.Id % 2 == 0 : r.Id % 2 != 0);
 
-            List<Mention> mentions;
-            List<Word> words;
-            List<Hashtag> hashtags;
-            List<Url> urls;
+            List<Mention> allMentions = ctx.Mentions.ToList();
+            List<Word> allWords = ctx.Words.ToList();
+            List<Hashtag> allHashtags = ctx.Hashtags.ToList();
+            List<Url> allUrls = ctx.Urls.ToList();
             List<RecordPerson> recordPeople = new List<RecordPerson>();
 
-            List<Record> recordsToAdd = new List<Record>();
+
+            List<Record> oldRecords = ReadRecords().ToList();
+            List<Record> newRecords = new List<Record>();
 
             foreach (var el in list)
             {
@@ -116,10 +126,15 @@ namespace PB.DAL
                     Geo = el.Geo,
                     Retweet = el.Retweet,
                     Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
-                    ListUpdatet = DateTime.Now
+                    ListUpdatet = DateTime.Now,
+                    Mentions = new List<Mention>(),
+                    Words = new List<Word>(),
+                    Hashtags = new List<Hashtag>(),
+                    URLs = new List<Url>()
                 };
 
-                RecordPerson recordPerson = ReadRecordPerson(el.Politician[0], el.Politician[1]);
+
+                RecordPerson recordPerson = recordPeople.FirstOrDefault(rp => rp.FirstName.Equals(el.Politician[0]) && rp.LastName.Equals(el.Politician[1]));
                 if (recordPerson != null)
                 {
                     record.RecordPerson = recordPerson;
@@ -131,109 +146,94 @@ namespace PB.DAL
                         FirstName = el.Politician[0],
                         LastName = el.Politician[1]
                     };
+                    recordPeople.Add(recordPerson);
                     record.RecordPerson = recordPerson;
                 }
 
-                mentions = new List<Mention>();
+
                 foreach (var m in el.Mentions)
                 {
-                    Mention mentionCheck = ReadMention(m);
+                    Mention mentionCheck = allMentions.Find(me => me.Name.Equals(m));
                     if (mentionCheck != null)
                     {
-                        mentions.Add(mentionCheck);
-
+                        record.Mentions.Add(mentionCheck);
                     }
                     else
                     {
                         Mention mention = new Mention(m);
-                        mentions.Add(mention);
-
+                        record.Mentions.Add(mention);
+                        allMentions.Add(mention);
                     }
-
                 }
 
-                record.Mentions = mentions;
 
-
-                words = new List<Word>();
                 foreach (var w in el.Words)
                 {
-                    Word wordCheck = ReadWord(w);
+                    Word wordCheck = allWords.Find(wo => wo.Text.Equals(w));
                     if (wordCheck != null)
                     {
-                        words.Add(wordCheck);
+                        record.Words.Add(wordCheck);
 
                     }
                     else
                     {
                         Word word = new Word(w);
-                        words.Add(word);
-
+                        record.Words.Add(word);
+                        allWords.Add(word);
                     }
-
                 }
 
-                record.Words = words;
 
-                hashtags = new List<Hashtag>();
                 foreach (var h in el.Hashtags)
                 {
-                    Hashtag hashtagCheck = ReadHashtag(h);
+                    Hashtag hashtagCheck = allHashtags.Find(ha => ha.HashTag.Equals(h));
                     if (hashtagCheck != null)
                     {
-                        hashtags.Add(hashtagCheck);
+                        record.Hashtags.Add(hashtagCheck);
                     }
                     else
                     {
                         Hashtag tag = new Hashtag(h);
-                        hashtags.Add(tag);
+                        record.Hashtags.Add(tag);
+                        allHashtags.Add(tag);
                     }
                 }
 
-                record.Hashtags = hashtags;
 
-                urls = new List<Url>();
                 foreach (var u in el.URLs)
                 {
-                    Url urlCheck = ReadUrl(u);
+                    Url urlCheck = allUrls.Find(url => url.Link.Equals(u));
                     if (urlCheck != null)
                     {
-                        urls.Add(urlCheck);
+                        record.URLs.Add(urlCheck);
                     }
                     else
                     {
                         Url url = new Url(u);
-                        urls.Add(url);
+                        record.URLs.Add(url);
+                        allUrls.Add(url);
                     }
                 }
 
-                record.URLs = urls;
 
-
-                if (recordsToAdd.Find(r => r.Tweet_Id == record.Tweet_Id) == null)
+                if (oldRecords.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) == null)
                 {
-                    recordsToAdd.Add(record);
-                    ctx.Records.Add(record);
-                    ctx.SaveChanges();
-                    ctx.CommitChanges();
+                    if (newRecords.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
+                    {
+                        newRecords[newRecords.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
+                    }
+                    else
+                    {
+                        newRecords.Add(record);
+                    }
                 }
-
-
-
-                //if (recordsToAdd.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
-                //{
-                //  recordsToAdd[recordsToAdd.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
-                //}
-                //else
-                //{
-                //  recordsToAdd.Add(record);
-                //}
             }
 
-            //ctx.Records.AddRange(recordsToAdd);
-            //ctx.SaveChanges();
+            ctx.Records.AddRange(newRecords);
+            ctx.SaveChanges();
+            ctx.CommitChanges();
 
-            return recordsToAdd;
+            return newRecords;
         }
     }
 }
