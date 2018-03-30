@@ -9,7 +9,7 @@ using System.Web.Security;
 using System.Security.Principal;
 using System.Security.Cryptography;
 using System.Text;
-
+using System.IO;
 
 namespace UI_MVC.Controllers
 {
@@ -18,7 +18,6 @@ namespace UI_MVC.Controllers
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
 
         private static readonly AccountManager mgr = new AccountManager(uow);
-        private static readonly ISubplatformManager subPlatformMgr = new SubplatformManager(uow);
 
         public ActionResult GetActiveUser()
         {
@@ -33,6 +32,34 @@ namespace UI_MVC.Controllers
                 return Content(username);
             }
         }
+
+        public FileContentResult GetUserIcon()
+        {
+            if (Session["UserName"] == null)
+            {
+                string fileName = HttpContext.Server.MapPath(@"~/Content/Images/user_icon.png");
+                byte[] imageData = null;
+                FileInfo fileInfo = new FileInfo(fileName);
+                long imageFileLength = fileInfo.Length;
+                FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                BinaryReader br = new BinaryReader(fs);
+                imageData = br.ReadBytes((int)imageFileLength);
+                return File(imageData, "image/png");
+            }
+            else
+            {
+                string fileName = HttpContext.Server.MapPath(@"~/Content/Images/1.jpg");
+                byte[] imageData = null;
+                FileInfo fileInfo = new FileInfo(fileName);
+                long imageFileLength = fileInfo.Length;
+                FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                BinaryReader br = new BinaryReader(fs);
+                imageData = br.ReadBytes((int)imageFileLength);
+                return File(imageData, "image/jpg");
+
+            }
+        }
+
 
         public ActionResult ChangeLogoutin()
         {
@@ -60,6 +87,7 @@ namespace UI_MVC.Controllers
         }
         public ActionResult Index()
         {
+
             return View();
         }
 
@@ -161,7 +189,7 @@ namespace UI_MVC.Controllers
                 if (ModelState.IsValid)
                 {
                     mgr.AddProfile(newProfile.Username, newProfile.Password, newProfile.Email);
-                    
+
                     return RedirectToAction("Signin");
                 }
                 return RedirectToAction("Signup");
@@ -242,11 +270,11 @@ namespace UI_MVC.Controllers
 
                         //Set A Unique ID in session
                         Session["UserName"] = userInfo.Username;
-                        TempData["UserName"] = userInfo.Username;
+
 
                         // If we got this far, something failed, redisplay form
                         // return RedirectToAction("Index", "Dashboard");
-
+                        ViewBag.ImageUrl = "~/Content/Images/1.jpg";
                         return RedirectToAction("Index");
                     }
                     else
@@ -290,23 +318,24 @@ namespace UI_MVC.Controllers
             {
                 throw;
             }
-
         }
+
+
 
         private void SignInRemember(string userName, bool isPersistent = false)
         {
-            FormsAuthentication.SignOut();
-            FormsAuthentication.SetAuthCookie(userName, isPersistent);
-        }
+
+            //Auth Cookie niet gesaved
 
 
 
+            // FormsAuthentication.SignOut();
+            //FormsAuthentication.SetAuthCookie(userName, isPersistent);
+            //Profile profile = new Profile();
+            //profile = mgr.GetProfile(userName);
+            //profile.IsRemember = isPersistent;
+            //mgr.ChangeProfile(profile);
 
-        [HttpPost]
-        public ActionResult AddAdmin(int subplatformId, string username)
-        {
-            subPlatformMgr.AddAdmin(subplatformId, mgr.GetProfile(username));
-            return RedirectToAction("Index"); //--> naar huidige beheerpagina laten redirecten
 
         }
 
