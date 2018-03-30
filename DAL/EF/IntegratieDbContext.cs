@@ -143,7 +143,7 @@ namespace PB.DAL.EF
 
         public DbSet<Page> Pages { get; set; }
         public DbSet<Style> Styles { get; set; }
-        public DbSet<Subplatform> SubPlatforms { get; set; }
+        public DbSet<Subplatform> Subplatforms { get; set; }
         public DbSet<SubplatformSetting> SubplatformSettings { get; set; }
         public DbSet<Tag> Tags { get; set; }
     }

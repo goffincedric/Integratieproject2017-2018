@@ -255,7 +255,7 @@ namespace PB.BL
         public List<Alert> GenerateProfileAlerts(Profile profile)
         {
             //Alle items uit profile subscriptions halen
-            if (profile == null) throw new Exception("U heeft nog geen profiel geselecteerd!");
+            if (profile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
             List<Item> subscribedItems = profile.Subscriptions;
 
             //Items opdelen in Subklasses [Person, Organisation, Theme]

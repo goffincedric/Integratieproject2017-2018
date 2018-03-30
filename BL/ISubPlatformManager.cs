@@ -10,7 +10,7 @@ namespace PB.BL
 {
     public interface ISubplatformManager
     {
-        IEnumerable<Subplatform> GetSubPlatforms();
+        IEnumerable<Subplatform> GetSubplatforms();
         Subplatform AddSubplatform(string name, string url, string sourceAPI = null, string siteIconUrl = null);
         Subplatform GetSubplatform(int subplatformId);
         void ChangeSubplatform(Subplatform profile);

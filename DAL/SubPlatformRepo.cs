@@ -24,9 +24,9 @@ namespace PB.DAL
             //Console.WriteLine("UOW MADE SUBPLATFORMREPO");
         }
 
-        public Subplatform CreateSubPlatform(Subplatform subPlatform)
+        public Subplatform CreateSubplatform(Subplatform subplatform)
         {
-            ctx.SubPlatforms.Add(subPlatform);
+            ctx.Subplatforms.Add(subplatform);
 
             try
             {
@@ -45,33 +45,33 @@ namespace PB.DAL
                     }
                 }
             }
-            return subPlatform;
+            return subplatform;
         }
 
-        public void DeleteSubPlatform(int subPlatformId)
+        public void DeleteSubplatform(int subplatformId)
         {
-            Subplatform subplatform = ReadSubPlatform(subPlatformId);
+            Subplatform subplatform = ReadSubplatform(subplatformId);
             if (subplatform != null)
             {
-                ctx.SubPlatforms.Remove(subplatform);
+                ctx.Subplatforms.Remove(subplatform);
                 ctx.SaveChanges();
             }
         }
 
-        public IEnumerable<Subplatform> ReadSubPlatforms()
+        public IEnumerable<Subplatform> ReadSubplatforms()
         {
-            return ctx.SubPlatforms.AsEnumerable();
+            return ctx.Subplatforms.AsEnumerable();
         }
 
-        public Subplatform ReadSubPlatform(int subPlatformId)
+        public Subplatform ReadSubplatform(int subplatformId)
         {
-            return ctx.SubPlatforms.FirstOrDefault(s => s.SubplatformId == subPlatformId);
+            return ctx.Subplatforms.FirstOrDefault(s => s.SubplatformId == subplatformId);
         }
 
-        public void UpdateSubPlatform(Subplatform subPlatform)
+        public void UpdateSubplatform(Subplatform subplatform)
         {
-            ctx.SubPlatforms.Attach(subPlatform);
-            ctx.Entry(subPlatform).State = System.Data.Entity.EntityState.Modified;
+            ctx.Subplatforms.Attach(subplatform);
+            ctx.Entry(subplatform).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
         }
     }
