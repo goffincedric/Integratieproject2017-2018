@@ -130,32 +130,18 @@ namespace UI_CA_Prototype
             } while (inValidAction);
         }
 
-
-<<<<<<< HEAD
         private static void newAccount()
         {
             Profile profile = extensionMethods.CreateAccount();
             accountMgr.AddProfile(profile);
         }
+
         private static void Seed()
         {
             //Injects seed data
             itemMgr.Seed();
-            accountMgr.Seed();
+            //accountMgr.Seed();
             //accountMgr.SubscribeProfiles(itemMgr.GetItems());
         }
-=======
-    private static void newAccount()
-    {
-      Profile profile = extensionMethods.CreateAccount();
-      accountMgr.AddProfile(profile);
-    }
-    private static void Seed()
-    {
-      //Injects seed data
-      itemMgr.Seed();
-      //accountMgr.Seed();
-      //accountMgr.SubscribeProfiles(itemMgr.GetItems());
->>>>>>> parent of 3239529... Revert "Merge branch 'master' into Lins"
     }
 }
