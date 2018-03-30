@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI-CA_Prototype", "UI-CA_Prototype\UI-CA_Prototype.csproj", "{EDE8BE13-FEC9-4394-BEB6-F8BE56EE13C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI-MVC", "..\..\..\..\source\repos\IntegratieProject\IntegratieProject\UI-MVC.csproj", "{29D2F463-9D00-4FFD-AC1A-1579746F2B04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI-MVC", "UI-MVC\UI-MVC.csproj", "{29D2F463-9D00-4FFD-AC1A-1579746F2B04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
