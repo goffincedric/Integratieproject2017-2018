@@ -33,33 +33,47 @@ namespace UI_MVC.Controllers
       }
     }
 
-    public FileContentResult GetUserIcon()
+
+
+    //public FileContentResult GetUserIcon()
+    //{
+    //  if (Session["UserName"] == null)
+    //  {
+    //    string fileName = HttpContext.Server.MapPath(@"~/Content/Images/user_icon.png");
+    //    byte[] imageData = null;
+    //    FileInfo fileInfo = new FileInfo(fileName);
+    //    long imageFileLength = fileInfo.Length;
+    //    FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+    //    BinaryReader br = new BinaryReader(fs);
+    //    imageData = br.ReadBytes((int)imageFileLength);
+    //    return File(imageData, "image/png");
+    //  }
+    //  else
+    //  {
+    //    string fileName = HttpContext.Server.MapPath(@"~/Content/Images/1.jpg");
+    //    byte[] imageData = null;
+    //    FileInfo fileInfo = new FileInfo(fileName);
+    //    long imageFileLength = fileInfo.Length;
+    //    FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+    //    BinaryReader br = new BinaryReader(fs);
+    //    imageData = br.ReadBytes((int)imageFileLength);
+    //    return File(imageData, "image/jpg");
+
+    //  }
+    //}
+
+
+    public ActionResult ChangeProfilePic()
     {
       if (Session["UserName"] == null)
       {
-        string fileName = HttpContext.Server.MapPath(@"~/Content/Images/user_icon.png");
-        byte[] imageData = null;
-        FileInfo fileInfo = new FileInfo(fileName);
-        long imageFileLength = fileInfo.Length;
-        FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-        BinaryReader br = new BinaryReader(fs);
-        imageData = br.ReadBytes((int)imageFileLength);
-        return File(imageData, "image/png");
+        return Content("<i class=\"ti-user\"></i>");
       }
       else
       {
-        string fileName = HttpContext.Server.MapPath(@"~/Content/Images/1.jpg");
-        byte[] imageData = null;
-        FileInfo fileInfo = new FileInfo(fileName);
-        long imageFileLength = fileInfo.Length;
-        FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-        BinaryReader br = new BinaryReader(fs);
-        imageData = br.ReadBytes((int)imageFileLength);
-        return File(imageData, "image/jpg");
-      
+        return Content("<img class=\"w - 2r bdrs - 50p\" src=/Content/Images/1.jpg>");
       }
     }
-
 
     public ActionResult ChangeLogoutin()
     {
