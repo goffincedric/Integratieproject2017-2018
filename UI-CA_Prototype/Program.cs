@@ -27,7 +27,6 @@ namespace UI_CA_Prototype
         {
             //Injects seed data
             Seed();
-
             //Menu
             while (!stop)
             {
@@ -102,7 +101,7 @@ namespace UI_CA_Prototype
                         break;
                     case 6:
                         itemMgr.Seed(false);
-                        Console.WriteLine("Nieuwe seed data toegevoegd");
+                        itemMgr.GenerateProfileAlerts(selectedProfile);
                         break;
                     case 7:
                         itemMgr.GenerateProfileAlerts(selectedProfile);
@@ -119,6 +118,7 @@ namespace UI_CA_Prototype
                     case 11:
                         newAccount();
                         break;
+
                     case 0:
                         stop = true;
                         return;
@@ -130,12 +130,12 @@ namespace UI_CA_Prototype
             } while (inValidAction);
         }
 
-
         private static void newAccount()
         {
             Profile profile = extensionMethods.CreateAccount();
-            accountMgr.AddProfile(profile.Username, profile.Password, profile.Email);
+            accountMgr.AddProfile(profile);
         }
+
         private static void Seed()
         {
             //Injects seed data
