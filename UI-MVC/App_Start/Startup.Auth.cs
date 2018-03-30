@@ -45,24 +45,24 @@ namespace UI_MVC
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-            // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+      app.UseMicrosoftAccountAuthentication(
+          clientId: "",
+          clientSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+      app.UseTwitterAuthentication(
+         consumerKey: "",
+         consumerSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
-        }
+      app.UseFacebookAuthentication(
+         appId: "183328969125699",
+         appSecret: "0881cf1acd6be898821bf631318b4b83");
+
+      app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+      {
+        ClientId = "",
+        ClientSecret = ""
+      });
+    }
     }
 }
