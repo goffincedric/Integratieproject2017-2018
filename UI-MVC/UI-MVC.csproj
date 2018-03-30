@@ -377,11 +377,6 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-<<<<<<< HEAD
-          <DevelopmentServerPort>64639</DevelopmentServerPort>
-=======
-          <DevelopmentServerPort>50934</DevelopmentServerPort>
->>>>>>> Lins
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:44338/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
