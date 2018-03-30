@@ -21,9 +21,12 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44338</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <IISExpressAnonymousAuthentication>
+    </IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>
+    </IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>
+    </IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -155,6 +158,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\cba68f986e60df8c74f4a53c3e39595c.svg" />
+    <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
     <Content Include="Content\Images\bg.jpg" />
@@ -166,6 +170,7 @@
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo.svg" />
     <Content Include="Content\Images\logo_new.png" />
+    <Content Include="Content\Images\user_icon.png" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
