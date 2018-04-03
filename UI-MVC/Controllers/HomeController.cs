@@ -59,20 +59,7 @@ namespace UI_MVC.Controllers
             }
         }
 
-
-
-        public ActionResult ChangeLogoutin()
-        {
-            if (Session["UserName"] == null)
-            {
-                return Content("Login/Signup");
-            }
-            else
-            {
-                return Content("Logout");
-            }
-        }
-
+        
         public ActionResult LinkLogoutin()
         {
             if (Session["UserName"] == null)
