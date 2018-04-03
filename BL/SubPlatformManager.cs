@@ -1,33 +1,33 @@
-﻿using System;
+﻿using PB.BL.Domain.Account;
+using PB.BL.Domain.Platform;
+using PB.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PB.BL.Domain.Account;
-using PB.BL.Domain.Platform;
-using PB.DAL;
 
 namespace PB.BL
 {
-    public class SubPlatformManager : ISubPlatformManager
+    public class SubplatformManager : ISubplatformManager
     {
-        private ISubPlatformRepo SubPlatformRepo;
+        private ISubplatformRepo SubplatformRepo;
         private UnitOfWorkManager uowManager;
 
-        public SubPlatformManager()
+        public SubplatformManager()
         {
 
         }
 
-        public SubPlatformManager(UnitOfWorkManager uowMgr)
+        public SubplatformManager(UnitOfWorkManager uowMgr)
         {
             uowManager = uowMgr;
-            SubPlatformRepo = new SubPlatformRepo(uowMgr.UnitOfWork);
+            SubplatformRepo = new SubplatformRepo(uowMgr.UnitOfWork);
         }
 
         public void initNonExistingRepo(bool createWithUnitOfWork = false)
         {
-            if (SubPlatformRepo == null)
+            if (SubplatformRepo == null)
             {
                 if (createWithUnitOfWork)
                 {
@@ -41,66 +41,115 @@ namespace PB.BL
                         Console.WriteLine("uo bestaat al");
                     }
 
-                    SubPlatformRepo = new SubPlatformRepo(uowManager.UnitOfWork);
+                    SubplatformRepo = new SubplatformRepo(uowManager.UnitOfWork);
                 }
                 else
                 {
-                    SubPlatformRepo = new SubPlatformRepo();
+                    SubplatformRepo = new SubplatformRepo();
                     Console.WriteLine("OLD WAY REPO SUBPLATFORMMGR");
                 }
             }
         }
 
         #region Subplatform
-        public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
+
+        public IEnumerable<Subplatform> GetSubplatforms()
         {
-            //initNonExistingRepo();
-            //SubPlatform subPlatform = new SubPlatform()
-            //{
-            //    Username = username,
-            //    Password = password,
-            //    Email = email,
-            //    Role = role
-            //};
-            //profile = AddProfile(profile);
-            //uowManager.Save();
-            //return profile;
-            return null;
+            initNonExistingRepo();
+            return SubplatformRepo.ReadSubplatforms();
         }
 
-        public void AddAdmin(Profile admin)
+        public Subplatform AddSubplatform(string name, string url, string sourceAPI = null, string siteIconUrl = null)
         {
-            throw new NotImplementedException();
+            initNonExistingRepo();
+            Subplatform subplatform = new Subplatform()
+            {
+                Name = name,
+                URL = url,
+                SourceAPI = sourceAPI,
+                SiteIconURL = siteIconUrl,
+                DateOnline = DateTime.Now,
+                Style = new Style(),
+                Admins = new List<Profile>(),
+                Pages = new List<Page>()
+            };
+
+            subplatform = AddSubplatform(subplatform);
+            uowManager.Save();
+            return subplatform;
         }
 
-        public SubPlatform AddProfile(SubPlatform profile)
+        private Subplatform AddSubplatform(Subplatform subplatform)
         {
-            throw new NotImplementedException();
+            return SubplatformRepo.CreateSubplatform(subplatform);
         }
 
-        public void ChangeProfile(SubPlatform profile)
+        public Subplatform GetSubplatform(int subplatformId)
         {
-            throw new NotImplementedException();
+            initNonExistingRepo();
+            return SubplatformRepo.ReadSubplatform(subplatformId);
         }
 
-        public SubPlatform GetProfile(int subplatformId)
+        public void ChangeSubplatform(Subplatform profile)
         {
-            throw new NotImplementedException();
+            initNonExistingRepo();
+            SubplatformRepo.UpdateSubplatform(profile);
+            uowManager.Save();
         }
 
-        public IEnumerable<SubPlatform> GetSubPlatforms()
+        public void RemoveSubplatform(int subplatformId)
         {
-            throw new NotImplementedException();
+            initNonExistingRepo();
+            SubplatformRepo.DeleteSubplatform(subplatformId);
+            uowManager.Save();
         }
 
-        public void RemoveAdmin(Profile admin)
+        public void AddAdmin(int subplatformId, Profile admin)
         {
-            throw new NotImplementedException();
+            initNonExistingRepo();
+            Subplatform subplatform = SubplatformRepo.ReadSubplatform(subplatformId);
+            if (subplatform == null) throw new Exception("Subplatform with id (" + subplatformId + ") doesnt exist"); //Subplatform bestaat niet
+
+            subplatform.Admins.Add(admin);
+            admin.adminPlatforms.Add(subplatform);
+
+            SubplatformRepo.UpdateSubplatform(subplatform);
+            uowManager.Save();
         }
 
-        public void RemoveProfile(int subplatformId)
+        public void RemoveAdmin(int subplatformId, Profile admin)
         {
-            throw new NotImplementedException();
+            initNonExistingRepo();
+            Subplatform subplatform = SubplatformRepo.ReadSubplatform(subplatformId);
+
+            if (subplatform == null) throw new Exception("Subplatform with id (" + subplatformId + ") doesnt exist"); //Subplatform bestaat niet
+            if (!subplatform.Admins.Remove(admin)) throw new Exception("Couldn't remove admin, maybe the admin doesn't exist?");
+            if (!admin.adminPlatforms.Remove(subplatform)) throw new Exception("Couldn't remove admin, maybe the admin doesn't exist?");
+
+            uowManager.Save();
+        }
+        #endregion
+
+        #region Pages
+        public Page AddPage(int subplatformId, string title, string faviconURL)
+        {
+            Page page = new Page()
+            {
+                Title = title,
+                FaviconURL = faviconURL,
+                Tags = new List<Tag>()
+            };
+            return AddPage(subplatformId, page);
+        }
+
+        private Page AddPage(int subplatformId, Page page)
+        {
+            Subplatform subplatform = SubplatformRepo.ReadSubplatform(subplatformId);
+            subplatform.Pages.Add(page);
+
+            SubplatformRepo.UpdateSubplatform(subplatform);
+            uowManager.Save();
+            return page;
         }
         #endregion
     }

@@ -73,7 +73,7 @@
     <Compile Include="JSONConversion\JCLASS.cs" />
     <Compile Include="Platform\Page.cs" />
     <Compile Include="Platform\Style.cs" />
-    <Compile Include="Platform\SubPlatform.cs" />
+    <Compile Include="Platform\Subplatform.cs" />
     <Compile Include="Platform\SubplatformSetting.cs" />
     <Compile Include="Platform\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

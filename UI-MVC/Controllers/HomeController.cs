@@ -1,4 +1,4 @@
-﻿using PB.BL;
+using PB.BL;
 using PB.BL.Domain.Account;
 using System;
 using System.Collections.Generic;
@@ -9,27 +9,26 @@ using System.Web.Security;
 using System.Security.Principal;
 using System.Security.Cryptography;
 using System.Text;
-
+using System.IO;
 
 namespace UI_MVC.Controllers
 {
   public class HomeController : Controller
   {
     private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
+    private static readonly AccountManager accountMgr = new AccountManager(uow);
 
-    private static readonly AccountManager mgr = new AccountManager(uow);
 
-    public ActionResult GetActiveUser()
+
+    public ActionResult ChangeProfilePic()
     {
       if (Session["UserName"] == null)
       {
-        return Content("Niet ingelogd");
+        return Content("<i class=\"ti-user\"></i>");
       }
       else
       {
-        string username = Session["UserName"].ToString();
-
-        return Content(username);
+        return Content("<img class=\"w-2r bdrs-50p\" src=/Content/Images/1.jpg>");
       }
     }
 
@@ -45,6 +44,22 @@ namespace UI_MVC.Controllers
       }
     }
 
+
+    public ActionResult GetActiveUser()
+    {
+      if (Session["UserName"] == null)
+      {
+        return Content("Niet ingelogd");
+      }
+      else
+      {
+        string username = Session["UserName"].ToString();
+
+        return Content(username);
+      }
+    }
+
+
     public ActionResult LinkLogoutin()
     {
       if (Session["UserName"] == null)
@@ -59,6 +74,7 @@ namespace UI_MVC.Controllers
     }
     public ActionResult Index()
     {
+
       return View();
     }
 
@@ -146,86 +162,26 @@ namespace UI_MVC.Controllers
       return View();
     }
 
-    private static byte[] Get_SALT(int maximumSaltLength)
-    {
-      var salt = new byte[maximumSaltLength];
-
-      //Require NameSpace: using System.Security.Cryptography;
-      using (var random = new RNGCryptoServiceProvider())
-      {
-        random.GetNonZeroBytes(salt);
-      }
-
-      return salt;
-    }
-
-    public static string Get_HASH_SHA512(string password, string username, byte[] salt)
-    {
-      try
-      {
-        //required NameSpace: using System.Text;
-        //Plain Text in Byte
-        byte[] plainTextBytes = Encoding.UTF8.GetBytes(password + username);
-
-        //Plain Text + SALT Key in Byte
-        byte[] plainTextWithSaltBytes = new byte[plainTextBytes.Length + salt.Length];
-
-        for (int i = 0; i < plainTextBytes.Length; i++)
-        {
-          plainTextWithSaltBytes[i] = plainTextBytes[i];
-        }
-
-        for (int i = 0; i < salt.Length; i++)
-        {
-          plainTextWithSaltBytes[plainTextBytes.Length + i] = salt[i];
-        }
-
-        HashAlgorithm hash = new SHA512Managed();
-        byte[] hashBytes = hash.ComputeHash(plainTextWithSaltBytes);
-        byte[] hashWithSaltBytes = new byte[hashBytes.Length + salt.Length];
-
-        for (int i = 0; i < hashBytes.Length; i++)
-        {
-          hashWithSaltBytes[i] = hashBytes[i];
-        }
-
-        for (int i = 0; i < salt.Length; i++)
-        {
-          hashWithSaltBytes[hashBytes.Length + i] = salt[i];
-        }
-
-        return Convert.ToBase64String(hashWithSaltBytes);
-      }
-      catch
-      {
-        return string.Empty;
-      }
-    }
-
     [HttpPost]
     public ActionResult Register(Profile newProfile)
     {
-      if (mgr.GetProfile(newProfile.Username) != null)
+      if (accountMgr.GetProfile(newProfile.Username) != null)
       {
         return RedirectToAction("Signup");
         //if username already exists
       }
       else
       {
+
         if (ModelState.IsValid)
         {
+          accountMgr.AddProfile(newProfile.Username, newProfile.Password, newProfile.Email);
 
-          byte[] SALT = Get_SALT(15);
-          newProfile.Salt = SALT;
-          newProfile.Hash = Get_HASH_SHA512(newProfile.Password, newProfile.Username, SALT);
-          newProfile.UserData = new UserData() { Profile = newProfile, Username = newProfile.Username };
-
-          mgr.AddProfile(newProfile);
           return RedirectToAction("Signin");
-
-
         }
         return RedirectToAction("Signup");
+
+
       }
     }
 
@@ -246,20 +202,6 @@ namespace UI_MVC.Controllers
       }
 
 
-    }
-
-    public static bool CompareHashValue(string password, string username, string OldHASHValue, byte[] SALT)
-    {
-      try
-      {
-        string expectedHashString = Get_HASH_SHA512(password, username, SALT);
-
-        return (OldHASHValue == expectedHashString);
-      }
-      catch
-      {
-        return false;
-      }
     }
 
 
@@ -283,7 +225,7 @@ namespace UI_MVC.Controllers
         {
 
           //Retrive Stored HASH Value From Database According To Username (one unique field)
-          var userInfo = mgr.GetProfile(entity.Username);
+          var userInfo = accountMgr.GetProfile(entity.Username);
 
           //Assign HASH Value
           if (userInfo != null)
@@ -292,7 +234,7 @@ namespace UI_MVC.Controllers
             SALT = userInfo.Salt;
           }
 
-          bool isLogin = CompareHashValue(entity.Password, entity.Username, OldHASHValue, SALT);
+          bool isLogin = accountMgr.CompareHashValue(entity.Password, entity.Username, OldHASHValue, SALT);
 
           if (isLogin)
           {
@@ -302,11 +244,11 @@ namespace UI_MVC.Controllers
 
             //Set A Unique ID in session
             Session["UserName"] = userInfo.Username;
-            TempData["UserName"] = userInfo.Username;
+
 
             // If we got this far, something failed, redisplay form
             // return RedirectToAction("Index", "Dashboard");
-
+            ViewBag.ImageUrl = "~/Content/Images/1.jpg";
             return RedirectToAction("Index");
           }
           else
@@ -350,13 +292,25 @@ namespace UI_MVC.Controllers
       {
         throw;
       }
-
     }
+
+
 
     private void SignInRemember(string userName, bool isPersistent = false)
     {
-      FormsAuthentication.SignOut();
-      FormsAuthentication.SetAuthCookie(userName, isPersistent);
+
+      //Auth Cookie niet gesaved
+
+
+
+      // FormsAuthentication.SignOut();
+      //FormsAuthentication.SetAuthCookie(userName, isPersistent);
+      //Profile profile = new Profile();
+      //profile = mgr.GetProfile(userName);
+      //profile.IsRemember = isPersistent;
+      //mgr.ChangeProfile(profile);
+
+
     }
 
   }
