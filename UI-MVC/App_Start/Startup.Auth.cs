@@ -5,7 +5,8 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using IntegratieProject.Models;
+using UI_MVC;
+using UI_MVC.Models;
 
 namespace UI_MVC
 {

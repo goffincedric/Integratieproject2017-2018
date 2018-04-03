@@ -10,7 +10,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using IntegratieProject.Models;
+using UI_MVC;
+using UI_MVC.Models;
 
 namespace UI_MVC
 {
