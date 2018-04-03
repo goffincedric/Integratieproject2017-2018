@@ -26,7 +26,7 @@ namespace PB.DAL
 
     public Item CreateItem(Item item)
     {
-      ctx.Items.AddOrUpdate(item);
+      item = ctx.Items.Add(item);
       ctx.SaveChanges();
       return item;
     }
@@ -45,7 +45,7 @@ namespace PB.DAL
 
     public Person CreatePerson(Person person)
     {
-      ctx.Persons.AddOrUpdate(person);
+      person = ctx.Persons.Add(person);
       ctx.SaveChanges();
       return person;
     }
@@ -66,11 +66,7 @@ namespace PB.DAL
 
     public IEnumerable<Item> ReadItems()
     {
-      return ctx.Items
-                //.Include("Records")
-                //.Include("Keywords")
-                //.Include("SubscribedProfiles")
-                .AsEnumerable();
+      return ctx.Items.AsEnumerable();
     }
 
     public void UpdateItem(Item item)

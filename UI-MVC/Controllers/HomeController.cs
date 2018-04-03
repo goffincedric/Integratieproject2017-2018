@@ -1,4 +1,4 @@
-﻿using PB.BL;
+using PB.BL;
 using PB.BL.Domain.Account;
 using System;
 using System.Collections.Generic;
@@ -13,14 +13,14 @@ using System.IO;
 
 namespace UI_MVC.Controllers
 {
-    public class HomeController : Controller
-    {
-        private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
-        private static readonly AccountManager accountMgr = new AccountManager(uow);
+  public class HomeController : Controller
+  {
+    private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
+    private static readonly AccountManager accountMgr = new AccountManager(uow);
 
 
 
-        public ActionResult ChangeProfilePic()
+    public ActionResult ChangeProfilePic()
     {
       if (Session["UserName"] == null)
       {
@@ -45,273 +45,273 @@ namespace UI_MVC.Controllers
     }
 
 
-        public ActionResult GetActiveUser()
+    public ActionResult GetActiveUser()
+    {
+      if (Session["UserName"] == null)
+      {
+        return Content("Niet ingelogd");
+      }
+      else
+      {
+        string username = Session["UserName"].ToString();
+
+        return Content(username);
+      }
+    }
+
+
+    public ActionResult LinkLogoutin()
+    {
+      if (Session["UserName"] == null)
+      {
+        return Content("/home/signin");
+      }
+      else
+      {
+        EnsureLoggedOut();
+        return Content("\"\"");
+      }
+    }
+    public ActionResult Index()
+    {
+
+      return View();
+    }
+
+    public ActionResult Email()
+    {
+      return View();
+    }
+
+    public ActionResult Compose()
+    {
+      return View();
+    }
+
+    public ActionResult BasicTable()
+    {
+      return View();
+    }
+
+
+    public ActionResult Blank()
+    {
+      return View();
+    }
+
+
+    public ActionResult Calender()
+    {
+      return View();
+    }
+
+
+    public ActionResult Charts()
+    {
+      return View();
+    }
+
+
+    public ActionResult DataTable()
+    {
+      return View();
+    }
+
+
+    public ActionResult Forms()
+    {
+      return View();
+    }
+
+
+    public ActionResult GoogleMaps()
+    {
+      return View();
+    }
+
+    public ActionResult Signup()
+    {
+      return View();
+    }
+
+
+    public ActionResult Test404()
+    {
+      return View();
+    }
+
+
+    public ActionResult Test500()
+    {
+      return View();
+    }
+
+    public ActionResult UI()
+    {
+      return View();
+    }
+
+
+    public ActionResult VectorMaps()
+    {
+      return View();
+    }
+
+    public ActionResult Chat()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult Register(Profile newProfile)
+    {
+      if (accountMgr.GetProfile(newProfile.Username) != null)
+      {
+        return RedirectToAction("Signup");
+        //if username already exists
+      }
+      else
+      {
+
+        if (ModelState.IsValid)
         {
-            if (Session["UserName"] == null)
-            {
-                return Content("Niet ingelogd");
-            }
-            else
-            {
-                string username = Session["UserName"].ToString();
+          accountMgr.AddProfile(newProfile.Username, newProfile.Password, newProfile.Email);
 
-                return Content(username);
-            }
+          return RedirectToAction("Signin");
         }
-
-        
-        public ActionResult LinkLogoutin()
-        {
-            if (Session["UserName"] == null)
-            {
-                return Content("/home/signin");
-            }
-            else
-            {
-                EnsureLoggedOut();
-                return Content("\"\"");
-            }
-        }
-        public ActionResult Index()
-        {
-
-            return View();
-        }
-
-        public ActionResult Email()
-        {
-            return View();
-        }
-
-        public ActionResult Compose()
-        {
-            return View();
-        }
-
-        public ActionResult BasicTable()
-        {
-            return View();
-        }
+        return RedirectToAction("Signup");
 
 
-        public ActionResult Blank()
-        {
-            return View();
-        }
+      }
+    }
 
 
-        public ActionResult Calender()
-        {
-            return View();
-        }
+    [HttpGet]
+    public ActionResult Signin()
+    {
+      var userinfo = new Profile();
 
+      try
+      {
+        EnsureLoggedOut();
+        return View(userinfo);
+      }
+      catch
+      {
+        throw;
+      }
 
-        public ActionResult Charts()
-        {
-            return View();
-        }
-
-
-        public ActionResult DataTable()
-        {
-            return View();
-        }
-
-
-        public ActionResult Forms()
-        {
-            return View();
-        }
-
-
-        public ActionResult GoogleMaps()
-        {
-            return View();
-        }
-
-        public ActionResult Signup()
-        {
-            return View();
-        }
-
-
-        public ActionResult Test404()
-        {
-            return View();
-        }
-
-
-        public ActionResult Test500()
-        {
-            return View();
-        }
-
-        public ActionResult UI()
-        {
-            return View();
-        }
-
-
-        public ActionResult VectorMaps()
-        {
-            return View();
-        }
-
-        public ActionResult Chat()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Register(Profile newProfile)
-        {
-            if (accountMgr.GetProfile(newProfile.Username) != null)
-            {
-                return RedirectToAction("Signup");
-                //if username already exists
-            }
-            else
-            {
-
-                if (ModelState.IsValid)
-                {
-                    accountMgr.AddProfile(newProfile.Username, newProfile.Password, newProfile.Email);
-
-                    return RedirectToAction("Signin");
-                }
-                return RedirectToAction("Signup");
-
-              
-            }
-        }
-
-
-        [HttpGet]
-        public ActionResult Signin()
-        {
-            var userinfo = new Profile();
-
-            try
-            {
-                EnsureLoggedOut();
-                return View(userinfo);
-            }
-            catch
-            {
-                throw;
-            }
-
-
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Signin(Profile entity)
-        {
-            string OldHASHValue = string.Empty;
-            byte[] SALT = new byte[15];
-            try
-            {
-
-                // Ensure we have a valid viewModel to work with
-
-
-                if (!ModelState.IsValid)
-                {
-                    return View(entity);
-                }
-                else
-                {
-
-                    //Retrive Stored HASH Value From Database According To Username (one unique field)
-                    var userInfo = accountMgr.GetProfile(entity.Username);
-
-                    //Assign HASH Value
-                    if (userInfo != null)
-                    {
-                        OldHASHValue = userInfo.Hash;
-                        SALT = userInfo.Salt;
-                    }
-
-                    bool isLogin = accountMgr.CompareHashValue(entity.Password, entity.Username, OldHASHValue, SALT);
-
-                    if (isLogin)
-                    {
-                        //Login Success
-                        //For Set Authentication in Cookie (Remeber ME Option)
-                        SignInRemember(entity.Username, entity.IsRemember);
-
-                        //Set A Unique ID in session
-                        Session["UserName"] = userInfo.Username;
-
-
-                        // If we got this far, something failed, redisplay form
-                        // return RedirectToAction("Index", "Dashboard");
-                        ViewBag.ImageUrl = "~/Content/Images/1.jpg";
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        //Login Fail
-                        //TempData["ErrorMSG"] = "Access Denied! Wrong Credential";
-
-                        return View(entity);
-                    }
-
-                }
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        private void EnsureLoggedOut()
-        {
-            if (Request.IsAuthenticated)
-            {
-                Logout();
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Logout()
-        {
-            try
-            {
-                FormsAuthentication.SignOut();
-
-                HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
-                Session.Clear();
-
-                System.Web.HttpContext.Current.Session.RemoveAll();
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-
-
-        private void SignInRemember(string userName, bool isPersistent = false)
-        {
-
-            //Auth Cookie niet gesaved
-
-
-
-            // FormsAuthentication.SignOut();
-            //FormsAuthentication.SetAuthCookie(userName, isPersistent);
-            //Profile profile = new Profile();
-            //profile = mgr.GetProfile(userName);
-            //profile.IsRemember = isPersistent;
-            //mgr.ChangeProfile(profile);
-
-
-        }
 
     }
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Signin(Profile entity)
+    {
+      string OldHASHValue = string.Empty;
+      byte[] SALT = new byte[15];
+      try
+      {
+
+        // Ensure we have a valid viewModel to work with
+
+
+        if (!ModelState.IsValid)
+        {
+          return View(entity);
+        }
+        else
+        {
+
+          //Retrive Stored HASH Value From Database According To Username (one unique field)
+          var userInfo = accountMgr.GetProfile(entity.Username);
+
+          //Assign HASH Value
+          if (userInfo != null)
+          {
+            OldHASHValue = userInfo.Hash;
+            SALT = userInfo.Salt;
+          }
+
+          bool isLogin = accountMgr.CompareHashValue(entity.Password, entity.Username, OldHASHValue, SALT);
+
+          if (isLogin)
+          {
+            //Login Success
+            //For Set Authentication in Cookie (Remeber ME Option)
+            SignInRemember(entity.Username, entity.IsRemember);
+
+            //Set A Unique ID in session
+            Session["UserName"] = userInfo.Username;
+
+
+            // If we got this far, something failed, redisplay form
+            // return RedirectToAction("Index", "Dashboard");
+            ViewBag.ImageUrl = "~/Content/Images/1.jpg";
+            return RedirectToAction("Index");
+          }
+          else
+          {
+            //Login Fail
+            //TempData["ErrorMSG"] = "Access Denied! Wrong Credential";
+
+            return View(entity);
+          }
+
+        }
+      }
+      catch
+      {
+        throw;
+      }
+    }
+    private void EnsureLoggedOut()
+    {
+      if (Request.IsAuthenticated)
+      {
+        Logout();
+      }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Logout()
+    {
+      try
+      {
+        FormsAuthentication.SignOut();
+
+        HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
+        Session.Clear();
+
+        System.Web.HttpContext.Current.Session.RemoveAll();
+        return RedirectToAction("Index");
+      }
+      catch
+      {
+        throw;
+      }
+    }
+
+
+
+    private void SignInRemember(string userName, bool isPersistent = false)
+    {
+
+      //Auth Cookie niet gesaved
+
+
+
+      // FormsAuthentication.SignOut();
+      //FormsAuthentication.SetAuthCookie(userName, isPersistent);
+      //Profile profile = new Profile();
+      //profile = mgr.GetProfile(userName);
+      //profile.IsRemember = isPersistent;
+      //mgr.ChangeProfile(profile);
+
+
+    }
+
+  }
 }

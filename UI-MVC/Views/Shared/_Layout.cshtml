@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <link rel="icon" href="@Url.Content("~/Content/Images/logo_new.png")">
-  <title>Barometer</title>
-  @Styles.Render("~/Content/bootstrapcss")
-  @Styles.Render("~/Content/style.css")
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="icon" href="@Url.Content("~/Content/Images/logo_new.png")">
+    <title>Barometer</title>
+    @Styles.Render("~/Content/bootstrapcss")
+    @Styles.Render("~/Content/style.css")
 
 </head>
 
@@ -50,8 +50,8 @@
           <li class="nav-item dropdown">
             <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
             <ul class="dropdown-menu">
-              <li class="nav-item dropdown"><a href="javascript:void(0);"><span>Contact</span></a></li>
-              <li class="nav-item dropdown"><a href="javascript:void(0);"><span>FAQ</span></a></li>
+                <li class="nav-item dropdown"><a href="javascript:void(0);"><span>Contact</span></a></li>
+                <li class="nav-item dropdown"><a href="javascript:void(0);"><span>FAQ</span></a></li>
             </ul>
           </li>
         </ul>
@@ -66,40 +66,37 @@
             <li class="search-input"><input class="form-control" type="text" placeholder="Search..."></li>
           </ul>
           <ul class="nav-right">
-            <li class="notifications dropdown">
-              <span class="counter bgc-red">3</span> <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
-              <ul class="dropdown-menu">
-                <li class="pX-20 pY-15 bdB"><i class="ti-bell pR-10"></i> <span class="fsz-sm fw-600 c-grey-900">Notifications</span></li>
-                <li>
-                  <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm">
-                    <li>
-                      <a href="" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                        <div class="peer mR-15"><img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/1.jpg" alt=""></div>
-                        <div class="peer peer-greed">
-                          <span><span class="fw-500">John Doe</span> <span class="c-grey-600">liked your <span class="text-dark">post</span></span></span>
-                          <p class="m-0"><small class="fsz-xs">5 mins ago</small></p>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                        <div class="peer mR-15"><img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/2.jpg" alt=""></div>
-                        <div class="peer peer-greed">
-                          <span><span class="fw-500">Moo Doe</span> <span class="c-grey-600">liked your <span class="text-dark">cover image</span></span></span>
-                          <p class="m-0"><small class="fsz-xs">7 mins ago</small></p>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                        <div class="peer mR-15"><img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/3.jpg" alt=""></div>
-                        <div class="peer peer-greed">
-                          <span><span class="fw-500">Lee Doe</span> <span class="c-grey-600">commented on your <span class="text-dark">video</span></span></span>
-                          <p class="m-0"><small class="fsz-xs">10 mins ago</small></p>
-                        </div>
-                      </a>
-                    </li>
+              <li class="notifications dropdown">
+                  <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-paint-bucket"></i></a>
+                  <ul class="dropdown-menu">
+                      <li class="pX-20 pY-15 bdB"><i class="ti-paint-bucket pR-10"></i> <span class="fsz-sm fw-600 c-grey-900">Themes</span></li>
+                      <li>
+                          <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm">
+                              <li id="light-mode">
+                                  <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                                      <div class="peer peer-greed">
+                                          <span><span class="fw-500">Light Mode</span></span>
+                                      </div>
+                                  </a>
+                              </li>
+                              <li id="dark-mode">
+                                  <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                                      <div class="peer peer-greed">
+                                          <span><span class="fw-500">Dark Mode</span></span>
+                                      </div>
+                                  </a>
+                              </li>
+                              <li id="future-mode">
+                                  <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                                      <div class="peer peer-greed">
+                                          <span><span class="fw-500">Future Mode</span></span>
+                                      </div>
+                                  </a>
+                              </li>
+                          </ul>
+                      </li>
                   </ul>
+
                 </li>
                 <li class="pX-20 pY-15 ta-c bdT"><span><a href="" class="c-grey-600 cH-blue fsz-sm td-n">View All Notifications <i class="ti-angle-right fsz-xs mL-10"></i></a></span></li>
               </ul>
@@ -132,13 +129,14 @@
 
 
 
-      <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span></footer>
+      <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © 2017 Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>. All rights reserved.</span></footer>
     </div>
   </div>
 
   @Scripts.Render("~/bundles/bootstrapjs")
   @Scripts.Render("~/bundles/jquery")
   @Scripts.Render("~/bundles/adminator")
+    @Scripts.Render("~/bundles/changetheme")
   <script>
     window.addEventListener('load', () => {
       const loader = document.getElementById('loader');
