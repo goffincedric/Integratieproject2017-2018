@@ -16,10 +16,11 @@ namespace UI_MVC.Controllers
     public class HomeController : Controller
     {
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
+        private static readonly AccountManager accountMgr = new AccountManager(uow);
 
 
 
-    public ActionResult ChangeProfilePic()
+        public ActionResult ChangeProfilePic()
     {
       if (Session["UserName"] == null)
       {
@@ -43,7 +44,6 @@ namespace UI_MVC.Controllers
       }
     }
 
-        private static readonly AccountManager mgr = new AccountManager(uow);
 
         public ActionResult GetActiveUser()
         {
@@ -165,7 +165,7 @@ namespace UI_MVC.Controllers
         [HttpPost]
         public ActionResult Register(Profile newProfile)
         {
-            if (mgr.GetProfile(newProfile.Username) != null)
+            if (accountMgr.GetProfile(newProfile.Username) != null)
             {
                 return RedirectToAction("Signup");
                 //if username already exists
@@ -175,7 +175,7 @@ namespace UI_MVC.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    mgr.AddProfile(newProfile.Username, newProfile.Password, newProfile.Email);
+                    accountMgr.AddProfile(newProfile.Username, newProfile.Password, newProfile.Email);
 
                     return RedirectToAction("Signin");
                 }
@@ -225,7 +225,7 @@ namespace UI_MVC.Controllers
                 {
 
                     //Retrive Stored HASH Value From Database According To Username (one unique field)
-                    var userInfo = mgr.GetProfile(entity.Username);
+                    var userInfo = accountMgr.GetProfile(entity.Username);
 
                     //Assign HASH Value
                     if (userInfo != null)
@@ -234,7 +234,7 @@ namespace UI_MVC.Controllers
                         SALT = userInfo.Salt;
                     }
 
-                    bool isLogin = mgr.CompareHashValue(entity.Password, entity.Username, OldHASHValue, SALT);
+                    bool isLogin = accountMgr.CompareHashValue(entity.Password, entity.Username, OldHASHValue, SALT);
 
                     if (isLogin)
                     {
