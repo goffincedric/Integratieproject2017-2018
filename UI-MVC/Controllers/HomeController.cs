@@ -17,6 +17,32 @@ namespace UI_MVC.Controllers
     {
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
 
+
+
+    public ActionResult ChangeProfilePic()
+    {
+      if (Session["UserName"] == null)
+      {
+        return Content("<i class=\"ti-user\"></i>");
+      }
+      else
+      {
+        return Content("<img class=\"w-2r bdrs-50p\" src=/Content/Images/1.jpg>");
+      }
+    }
+
+    public ActionResult ChangeLogoutin()
+    {
+      if (Session["UserName"] == null)
+      {
+        return Content("Login/Signup");
+      }
+      else
+      {
+        return Content("Logout");
+      }
+    }
+
         private static readonly AccountManager mgr = new AccountManager(uow);
 
         public ActionResult GetActiveUser()
@@ -33,32 +59,6 @@ namespace UI_MVC.Controllers
             }
         }
 
-        public FileContentResult GetUserIcon()
-        {
-            if (Session["UserName"] == null)
-            {
-                string fileName = HttpContext.Server.MapPath(@"~/Content/Images/user_icon.png");
-                byte[] imageData = null;
-                FileInfo fileInfo = new FileInfo(fileName);
-                long imageFileLength = fileInfo.Length;
-                FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-                BinaryReader br = new BinaryReader(fs);
-                imageData = br.ReadBytes((int)imageFileLength);
-                return File(imageData, "image/png");
-            }
-            else
-            {
-                string fileName = HttpContext.Server.MapPath(@"~/Content/Images/1.jpg");
-                byte[] imageData = null;
-                FileInfo fileInfo = new FileInfo(fileName);
-                long imageFileLength = fileInfo.Length;
-                FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-                BinaryReader br = new BinaryReader(fs);
-                imageData = br.ReadBytes((int)imageFileLength);
-                return File(imageData, "image/jpg");
-
-            }
-        }
 
 
         public ActionResult ChangeLogoutin()
@@ -194,20 +194,7 @@ namespace UI_MVC.Controllers
                 }
                 return RedirectToAction("Signup");
 
-                //if (ModelState.IsValid)
-                //{
-
-                //    byte[] SALT = Get_SALT(15);
-                //    newProfile.Salt = SALT;
-                //    newProfile.Hash = Get_HASH_SHA512(newProfile.Password, newProfile.Username, SALT);
-                //    newProfile.UserData = new UserData() { Profile = newProfile, Username = newProfile.Username };
-
-                //    mgr.AddProfile(newProfile);
-                //    return RedirectToAction("Signin");
-
-
-                //}
-                //return RedirectToAction("Signup");
+              
             }
         }
 
