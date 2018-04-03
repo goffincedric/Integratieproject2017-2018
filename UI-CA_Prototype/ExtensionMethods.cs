@@ -80,6 +80,7 @@ namespace UI_CA_Prototype
         //Shows all subscribed items from profile
         public void ShowSubScribedItems(Profile profile)
         {
+            if (profile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
             Console.WriteLine("Subscribed items:");
             profile.Subscriptions.ForEach(subs => Console.WriteLine(subs));
         }

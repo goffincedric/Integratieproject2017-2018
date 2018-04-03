@@ -57,7 +57,11 @@ namespace PB.DAL
 
     public Item ReadItem(int itemId)
     {
-      return ctx.Items.FirstOrDefault(p => p.ItemId == itemId);
+      return ctx.Items
+                //.Include("Records")
+                //.Include("Keywords")
+                //.Include("SubscribedProfiles")
+                .FirstOrDefault(p => p.ItemId == itemId);
     }
 
     public IEnumerable<Item> ReadItems()

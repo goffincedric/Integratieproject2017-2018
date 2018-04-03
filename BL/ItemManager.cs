@@ -76,7 +76,7 @@ namespace PB.BL
                 SocialMediaLink = socialMediaLink,
                 IconURL = iconURL,
                 Keywords = new List<Keyword>(),
-                SubPlatforms = new List<SubPlatform>(),
+                SubPlatforms = new List<Subplatform>(),
                 Records = new List<Record>(),
                 People = new List<Person>()
             };
@@ -89,7 +89,6 @@ namespace PB.BL
 
         public Person AddPerson(string firstName, string lastName, DateTime birthDay, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null)
         {
-            //initNonExistingRepoItem();
             initNonExistingRepo();
             Person person = new Person()
             {
@@ -99,7 +98,7 @@ namespace PB.BL
                 IconURL = iconURL,
                 Function = function,
                 Keywords = new List<Keyword>(),
-                SubPlatforms = new List<SubPlatform>(),
+                SubPlatforms = new List<Subplatform>(),
                 Records = new List<Record>(),
                 Organisation = organisation
             };
@@ -110,14 +109,13 @@ namespace PB.BL
 
         public Theme AddTheme(string themeName, string description)
         {
-            //initNonExistingRepoItem();
             initNonExistingRepo();
             Theme theme = new Theme()
             {
                 ThemeName = themeName,
                 Description = description,
                 Keywords = new List<Keyword>(),
-                SubPlatforms = new List<SubPlatform>(),
+                SubPlatforms = new List<Subplatform>(),
                 Records = new List<Record>()
             };
 
@@ -129,36 +127,30 @@ namespace PB.BL
         private Item AddItem(Item item)
         {
             initNonExistingRepo();
-            // initNonExistingRepoItem();
             return ItemRepo.CreateItem(item);
         }
 
         public void ChangeItem(Item item)
         {
             initNonExistingRepo();
-            //initNonExistingRepoItem();
             ItemRepo.UpdateItem(item);
             uowManager.Save();
         }
 
         public Item GetItem(int itemId)
         {
-
-            // initNonExistingRepoItem();
             initNonExistingRepo();
             return ItemRepo.ReadItem(itemId);
         }
 
         public IEnumerable<Item> GetItems()
         {
-            // initNonExistingRepoItem();
             initNonExistingRepo();
             return ItemRepo.ReadItems();
         }
 
         public Organisation GetOrganistation(int itemId)
         {
-            // initNonExistingRepoItem();
             initNonExistingRepo();
             return (Organisation)ItemRepo.ReadItem(itemId);
         }
@@ -166,21 +158,18 @@ namespace PB.BL
         public Person GetPerson(int itemId)
         {
             initNonExistingRepo();
-            //initNonExistingRepoItem();
             return (Person)ItemRepo.ReadItem(itemId);
         }
 
         public Theme GetTheme(int itemId)
         {
             initNonExistingRepo();
-            // initNonExistingRepoItem();
             return (Theme)ItemRepo.ReadItem(itemId);
         }
 
         public void RemoveItem(int itemId)
         {
             initNonExistingRepo();
-            //initNonExistingRepoItem();
             ItemRepo.DeleteItem(itemId);
             uowManager.Save();
         }
@@ -188,7 +177,6 @@ namespace PB.BL
 
         public IEnumerable<Person> GetPersons()
         {
-            // initNonExistingRepoItem();
             initNonExistingRepo();
             return ItemRepo.ReadPersons();
         }
@@ -200,21 +188,18 @@ namespace PB.BL
         public IEnumerable<Record> GetRecords()
         {
             initNonExistingRepo();
-            // initNonExistingRepo();
             return RecordRepo.ReadRecords();
         }
 
         public Record GetRecord(long id)
         {
             initNonExistingRepo();
-            //initNonExistingRepoRecord();
             return RecordRepo.ReadRecord(id);
         }
 
         public Record AddRecord(string source, long Tweet_Id, string user_Id, List<Mention> mentions, DateTime date, string geo, RecordPerson recordPerson,
           bool retweet, List<Word> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs)
         {
-            //initNonExistingRepoRecord();
             initNonExistingRepo();
             Record record = new Record()
             {
@@ -239,14 +224,12 @@ namespace PB.BL
         private Record AddRecord(Record record)
         {
             initNonExistingRepo();
-            //initNonExistingRepoRecord();
             return RecordRepo.CreateRecord(record);
         }
 
         public void ChangeRecord(Record record)
         {
             initNonExistingRepo();
-            //initNonExistingRepoRecord();
             RecordRepo.UpdateRecord(record);
             uowManager.Save();
         }
@@ -254,7 +237,6 @@ namespace PB.BL
         public void RemoveRecord(long id)
         {
             initNonExistingRepo();
-            //initNonExistingRepoRecord();
             RecordRepo.DeleteRecord(id);
             uowManager.Save();
         }
@@ -264,7 +246,6 @@ namespace PB.BL
         public void Seed(bool even = true)
         {
             initNonExistingRepo();
-            //initNonExistingRepoRecord();
             List<Record> toegevoegde = RecordRepo.Seed(even);
             uowManager.Save();
             RecordsToItems(toegevoegde);
@@ -274,7 +255,7 @@ namespace PB.BL
         public List<Alert> GenerateProfileAlerts(Profile profile)
         {
             //Alle items uit profile subscriptions halen
-            if (profile == null) throw new Exception("U heeft nog geen profiel geselecteerd!");
+            if (profile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
             List<Item> subscribedItems = profile.Subscriptions;
 
             //Items opdelen in Subklasses [Person, Organisation, Theme]
@@ -340,7 +321,7 @@ namespace PB.BL
                         FirstName = r.RecordPerson.FirstName,
                         LastName = r.RecordPerson.LastName,
                         Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w.Text }),
-                        SubPlatforms = new List<SubPlatform>(),
+                        SubPlatforms = new List<Subplatform>(),
                         Records = new List<Record>() { r }
                     };
                     persons.Add(person);
