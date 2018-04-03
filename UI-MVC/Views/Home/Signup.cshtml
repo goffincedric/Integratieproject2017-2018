@@ -1,9 +1,7 @@
-﻿@model PB.BL.Domain.Account.Profile
-
+﻿﻿@model PB.BL.Domain.Account.Profile
 @{
   Layout = null;
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +9,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   <title>Sign Up</title>
   <style>
+
     #loader {
       transition: all .3s ease-in-out;
       opacity: 1;
@@ -41,7 +40,6 @@
   </style>
   @Styles.Render("~/Content/style.css")
   @Styles.Render("~/Content/bootstrapcss")
-
 </head>
 <body class="app">
   <div id="loader">
@@ -63,7 +61,6 @@
     </div>
     <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style="min-width:320px">
       <h4 class="fw-300 c-grey-900 mB-40">Register</h4>
-
       @using (Html.BeginForm("Register", "Home", FormMethod.Post))
       {
         @Html.AntiForgeryToken()

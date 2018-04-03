@@ -1,11 +1,10 @@
-﻿
-@model PB.BL.Domain.Account.Profile
+﻿@model PB.BL.Domain.Account.Profile
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <link rel="icon" href="@Url.Content("~/Content/Images/logo_new.png")">
+  
   <title>Barometer</title>
   @Styles.Render("~/Content/bootstrapcss")
   @Styles.Render("~/Content/style.css")
@@ -66,6 +65,40 @@
             <li class="search-input"><input class="form-control" type="text" placeholder="Search..."></li>
           </ul>
           <ul class="nav-right">
+
+            <li class="notifications dropdown">
+              <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-paint-bucket"></i></a>
+              <ul class="dropdown-menu">
+                <li class="pX-20 pY-15 bdB"><i class="ti-paint-bucket pR-10"></i> <span class="fsz-sm fw-600 c-grey-900">Themes</span></li>
+                <li>
+                  <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm">
+                    <li id="light-mode">
+                      <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                        <div class="peer peer-greed">
+                          <span><span class="fw-500">Light Mode</span></span>
+                        </div>
+                      </a>
+                    </li>
+                    <li id="dark-mode">
+                      <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                        <div class="peer peer-greed">
+                          <span><span class="fw-500">Dark Mode</span></span>
+                        </div>
+                      </a>
+                    </li>
+                    <li id="future-mode">
+                      <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                        <div class="peer peer-greed">
+                          <span><span class="fw-500">Future Mode</span></span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+
+            </li>
+
             <li class="notifications dropdown">
               <span class="counter bgc-red">3</span> <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
               <ul class="dropdown-menu">
@@ -108,8 +141,8 @@
             <li class="dropdown">
               <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
                 <div class="peer mR-10">
-                
-                    @Html.Action("ChangeProfilePic", "Home")
+
+                  @Html.Action("ChangeProfilePic", "Home")
 
 
                 </div>
@@ -139,6 +172,7 @@
   @Scripts.Render("~/bundles/bootstrapjs")
   @Scripts.Render("~/bundles/jquery")
   @Scripts.Render("~/bundles/adminator")
+  @Scripts.Render("~/bundles/changetheme")
   <script>
     window.addEventListener('load', () => {
       const loader = document.getElementById('loader');
@@ -149,4 +183,3 @@
   </script>
 </body>
 </html>
-
