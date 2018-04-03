@@ -90,10 +90,12 @@ namespace UI_CA_Prototype
                         selectedProfile = extensionMethods.SelectProfile(accountMgr.GetProfiles()); ;
                         break;
                     case 3:
+                        if (selectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
                         selectedProfile.Subscriptions.Add(extensionMethods.SelectItem(itemMgr.GetItems()));
                         accountMgr.ChangeProfile(selectedProfile);
                         break;
                     case 4:
+                        if (selectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
                         selectedProfile.Subscriptions.Remove(extensionMethods.SelectItem(selectedProfile.Subscriptions));
                         accountMgr.ChangeProfile(selectedProfile);
                         break;
