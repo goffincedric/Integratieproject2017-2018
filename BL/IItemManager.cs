@@ -5,31 +5,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Items;
+using Domain.JSONConversion;
 
 namespace PB.BL
 {
-  public interface IItemManager
-  {
-    IEnumerable<Item> GetItems();
-    Item GetItem(int itemId);
-    Person GetPerson(int itemId);
-    Organisation GetOrganistation(int itemId);
-    Theme GetTheme(int itemId);
-    Person AddPerson(string FirstName, string LastName, DateTime BirthDay, string SocialMediaLink, string IconURL, Organisation organisation, Function function);
-    Organisation AddOrganisation(string name, string SocialMediaLink = null, string IconURL = null);
-    Theme AddTheme(string themeName, string description);
-    void ChangeItem(Item item);
-    void RemoveItem(int itemId);
+    public interface IItemManager
+    {
+        IEnumerable<Item> GetItems();
+        Item GetItem(int itemId);
+        Person GetPerson(int itemId);
+        Organisation GetOrganistation(int itemId);
+        Theme GetTheme(int itemId);
+        Person AddPerson(string name, DateTime birthDay, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null);
+        Organisation AddOrganisation(string name, string SocialMediaLink = null, string IconURL = null);
+        Theme AddTheme(string themeName, string description);
+        void ChangeItem(Item item);
+        void RemoveItem(int itemId);
 
 
-    IEnumerable<Person> GetPersons();
+        IEnumerable<Person> GetPersons();
 
 
-    IEnumerable<Record> GetRecords();
-    Record GetRecord(long id);
-    Record AddRecord(string source, long id, string user_Id, List<Mention> mentions, DateTime date, string geo, RecordPerson recordPerson, bool retweet, List<Word> words, Sentiment sentiment, List<Hashtag> hashtags, List<Url> uRLs);
-    void ChangeRecord(Record record);
-    void RemoveRecord(long id);
+        IEnumerable<Record> GetRecords();
+        Record GetRecord(long id);
+        Record AddRecord(long tweet_Id, RecordProfile recordProfile, List<Word> words, Sentiment sentiment, string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Item> themes, List<Item> persons, DateTime date, double longitude, double latitude, bool retweet);
+        void ChangeRecord(Record record);
+        void RemoveRecord(long id);
 
-  }
+        List<Record> JClassToRecord(List<JClass> data);
+    }
 }

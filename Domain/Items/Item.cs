@@ -17,6 +17,7 @@ namespace PB.BL.Domain.Items
     {
         [Key]
         public int ItemId { get; set; }
+        public string Name { get; set; }
         public bool IsHot { get; set; }
 
         public int SubplatformId { get; set; }
@@ -24,7 +25,6 @@ namespace PB.BL.Domain.Items
         public List<Subplatform> SubPlatforms { get; set; }
         public List<Record> Records { get; set; }
         public List<Keyword> Keywords { get; set; }
-        
         public List<Comparison> Comparisons { get; set; }
         public List<Profile> SubscribedProfiles { get; set; }
     }

@@ -43,7 +43,13 @@ namespace UI_CA_Prototype
         //Show all records sorted by Name, then by Date descending
         public void ShowRecords(IEnumerable<Record> records)
         {
-            records.OrderBy(r => r.RecordPerson.FirstName).ThenByDescending(r => r.Date).ToList().ForEach(r => Console.WriteLine(r.Date.ToString() + " - " + r.RecordPerson.FirstName + " " + r.RecordPerson.LastName + " (" + r.Tweet_Id + ")"));
+            records.OrderBy(r => r.Tweet_Id).ThenByDescending(r => r.Date).ToList().ForEach(r =>
+            {
+                string text = r.Date.ToString() + " - Persons: ";
+                r.Persons.ForEach(p => text += p.Name + ", ");
+                text = text.Substring(0, text.Length - 3) + " (" + r.Tweet_Id + ")";
+                Console.WriteLine(text);
+            });
         }
 
         //Lets the user select an available item
@@ -125,10 +131,13 @@ namespace UI_CA_Prototype
           new Word("iran")
         },
                 Date = DateTime.Parse("2017-09-11 04:53:38"),
-                RecordPerson = new RecordPerson() { FirstName = "Imade", LastName = "Annouri" },
-                Geo = "N/A",
+                Persons = new List<Item>() {
+                    new Person() { Name = "Imade Annouri" },
+                    new Person() { Name = "Annick De Ridder"},
+                },
+                Longitude = 4.399708,
+                Latitude = 51.22111,
                 Tweet_Id = 907104827896987600,
-                User_Id = "N/A",
                 Sentiment = new Sentiment(0, 0),
                 Retweet = true,
                 Source = "twitter",
@@ -153,10 +162,12 @@ namespace UI_CA_Prototype
           new Word("time")
         },
                 Date = DateTime.Parse("2017-09-07 22:52:35"),
-                RecordPerson = new RecordPerson() { FirstName = "Imade", LastName = "Annouri" },
-                Geo = "N/A",
+                Persons = new List<Item>() {
+                    new Person() { Name = "Bart De Wever" }
+                },
+                Longitude = 6.46744,
+                Latitude = 52.81776,
                 Tweet_Id = 905926801804980200,
-                User_Id = "N/A",
                 Sentiment = new Sentiment(0.7, 1),
                 Retweet = false,
                 Source = "twitter",

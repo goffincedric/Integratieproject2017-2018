@@ -35,7 +35,7 @@ namespace PB.BL.Domain.Account
     public List<Alert> Alerts { get; set; }
     public List<Item> Subscriptions { get; set; }
     
-    public List<Subplatform> adminPlatforms { get; set; }
+    public List<Subplatform> AdminPlatforms { get; set; }
 
 
     public override string ToString()
