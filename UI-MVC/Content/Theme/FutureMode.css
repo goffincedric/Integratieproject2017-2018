@@ -1,0 +1,32 @@
+﻿body {
+}
+.header .header-container .nav-left .themes,
+.header .header-container .nav-right .themes {
+    position: relative
+}
+
+    .header .header-container .nav-left .themes .counter,
+    .header .header-container .nav-right .themes .counter {
+        background-color: #ff3c7e;
+        border-radius: 50px;
+        color: #fff;
+        font-size: 10px;
+        line-height: 1;
+        padding: 3px 5.5px;
+        position: absolute;
+        right: 6px;
+        top: 12px
+    }
+
+    .header .header-container .nav-left .themes .dropdown-menu,
+    .header .header-container .nav-right .themes .dropdown-menu {
+        min-width: 350px;
+        padding: 0
+    }
+
+@media screen and (max-width:767px) {
+    .header .header-container .nav-left .themes .dropdown-menu,
+    .header .header-container .nav-right .themes .dropdown-menu {
+        max-width: 300px
+    }
+}

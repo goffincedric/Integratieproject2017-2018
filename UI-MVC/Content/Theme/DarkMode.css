@@ -1,0 +1,74 @@
+﻿main.bgc-grey-100 {
+    background-color: transparent !important;
+}
+
+body {
+    background-color: #555;
+    color: white !important;
+}
+
+.header {
+    background-color: #333;
+}
+
+    .header .header-container .nav-left > li > a {
+        color: white !important;
+    }
+
+    .header .header-container .nav-right > li > a {
+        color: white !important;
+    }
+
+.sidebar {
+    background-color: #333;
+}
+
+.sidebar-menu li a {
+    color: white !important;
+}
+
+.logo-text {
+    color: white !important;
+}
+
+.sidebar-logo {
+    background-color: #222;
+    color: white !important;
+}
+
+.bgc-white {
+    background-color: #333 !important;
+}
+
+.c-grey-600 {
+    color: white !important;
+}
+
+.dropdown-menu {
+    color: white !important;
+    background-color: #222 !important;
+}
+
+.sidebar-menu > li.dropdown ul.dropdown-menu {
+    background-color: transparent !important;
+}
+
+.header-container .nav-right .themes .dropdown-menu{
+    min-width: 150px;
+}
+
+.c-grey-700{
+    color: white !important;
+}
+
+.c-grey-900 {
+    color: white !important;
+}
+
+.bgcH-grey-100:hover{
+    background-color: #333 !important;
+}
+
+.fsz-sm{
+    color: white !important;
+}

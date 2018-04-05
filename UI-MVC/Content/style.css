@@ -1647,3 +1647,20 @@ a.fc-more {
   height: 50px;
   width: auto;
 }
+
+.header .header-container .nav-right .dropdown-menu{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.sidebar-menu li.dropdown .arrow{
+    transition: .5s;
+}
+
+.main-content{
+    padding: 70px 20px 20px;
+}
+
+#light-mode, #dark-mode, #future-mode{
+    cursor: pointer;
+}

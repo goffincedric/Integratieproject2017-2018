@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44372</IISExpressSSLPort>
+    <IISExpressSSLPort>44338</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -222,7 +222,13 @@
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo.svg" />
     <Content Include="Content\Images\logo_new.png" />
+    <Content Include="Content\PreviewTheme\PDarkMode.css" />
+    <Content Include="Content\PreviewTheme\PFutureMode.css" />
+    <Content Include="Content\PreviewTheme\PLightMode.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\Theme\DarkMode.css" />
+    <Content Include="Content\Theme\FutureMode.css" />
+    <Content Include="Content\Theme\LightMode.css" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
