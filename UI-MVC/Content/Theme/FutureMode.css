@@ -1,32 +1,79 @@
-﻿body {
-}
-.header .header-container .nav-left .themes,
-.header .header-container .nav-right .themes {
-    position: relative
+﻿main.bgc-grey-100 {
+    background-color: transparent !important;
 }
 
-    .header .header-container .nav-left .themes .counter,
-    .header .header-container .nav-right .themes .counter {
-        background-color: #ff3c7e;
-        border-radius: 50px;
-        color: #fff;
-        font-size: 10px;
-        line-height: 1;
-        padding: 3px 5.5px;
-        position: absolute;
-        right: 6px;
-        top: 12px
+body {
+    background: linear-gradient(to bottom right, #222222 10%, #666666 100%);
+    color: white !important;
+}
+
+.header {
+    background-color: transparent;
+    background: linear-gradient(to top left, rgba(0,0,0,0.125), rgba(0,0,0,0.25));
+}
+
+    .header .header-container .nav-left > li > a {
+        color: white !important;
     }
 
-    .header .header-container .nav-left .themes .dropdown-menu,
-    .header .header-container .nav-right .themes .dropdown-menu {
-        min-width: 350px;
-        padding: 0
+    .header .header-container .nav-right > li > a {
+        color: white !important;
     }
 
-@media screen and (max-width:767px) {
-    .header .header-container .nav-left .themes .dropdown-menu,
-    .header .header-container .nav-right .themes .dropdown-menu {
-        max-width: 300px
-    }
+.sidebar {
+    background-color: transparent;
+    background: linear-gradient(to top left, rgba(0,0,0,0.125), rgba(0,0,0,0.25));
+}
+
+.sidebar-menu li a {
+    color: white !important;
+}
+
+.logo-text {
+    color: white !important;
+}
+
+.sidebar-logo {
+    background-color: transparent;
+    background: linear-gradient(to top left, rgba(0,0,0,0.25), rgba(0,0,0,0.33));
+    color: white !important;
+}
+
+.bgc-white {
+    background-color: transparent !important;
+    background: linear-gradient(to top left, rgba(0,0,0,0.125), rgba(0,0,0,0.25));
+}
+
+.c-grey-600 {
+    color: white !important;
+}
+
+.dropdown-menu {
+    color: white !important;
+    background-color: transparent !important;
+    background: linear-gradient(to top left, rgba(0,0,0,0.25), rgba(0,0,0,0.33));
+}
+
+.sidebar-menu > li.dropdown ul.dropdown-menu {
+    background-color: transparent !important;
+}
+
+.header-container .nav-right .themes .dropdown-menu {
+    min-width: 150px;
+}
+
+.c-grey-700 {
+    color: white !important;
+}
+
+.c-grey-900 {
+    color: white !important;
+}
+
+.bgcH-grey-100:hover {
+    background-color: #333 !important;
+}
+
+.fsz-sm {
+    color: white !important;
 }
