@@ -10766,6 +10766,19 @@ hr {
   }
 }
 
+    .header .header-container .nav-left .themes .dropdown-menu,
+    .header .header-container .nav-right .themes .dropdown-menu {
+        padding: 0
+    }
+
+@media screen and (max-width:767px) {
+    .header .header-container .nav-left .themes .dropdown-menu,
+    .header .header-container .nav-right .themes .dropdown-menu {
+        max-width: 300px
+    }
+}
+
+
 .header .header-container .dropdown-menu {
   display: block;
   margin: 0;
