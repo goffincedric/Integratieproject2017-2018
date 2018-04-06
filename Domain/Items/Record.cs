@@ -18,8 +18,8 @@ namespace Domain.Items
         public List<Hashtag> Hashtags { get; set; }
         public List<Mention> Mentions { get; set; }
         public List<Url> URLs { get; set; }
-        public List<Item> Themes { get; set; }
-        public List<Item> Persons { get; set; }
+        public List<Theme> Themes { get; set; }
+        public List<Person> Persons { get; set; }
         public DateTime Date { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
@@ -28,9 +28,9 @@ namespace Domain.Items
 
         public override string ToString()
         {
-            string text = "\nTweetId: " + Tweet_Id + " Date: " + Date + " Persons: ";
-            Persons.ForEach(p => text += " " + p.ToString() + ", ");
-            return text.Substring(0, text.Length - 3);
+            string text = Date.ToString() + " - Persons: ";
+            Persons.ForEach(p => text += p.Name + ", ");
+            return text.Substring(0, text.Length - 2) + " (" + Tweet_Id + ")";
         }
     }
 }

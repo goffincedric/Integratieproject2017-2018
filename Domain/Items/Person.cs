@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Items;
 
 namespace PB.BL.Domain.Items
 {
@@ -14,6 +15,7 @@ namespace PB.BL.Domain.Items
         public string IconURL { get; set; }
         public Function Function { get; set; }
         public Organisation Organisation { get; set; }
+        public List<Record> Records { get; set; }
 
         public override string ToString()
         {

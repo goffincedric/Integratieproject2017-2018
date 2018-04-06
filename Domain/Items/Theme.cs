@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Items;
 
 namespace PB.BL.Domain.Items
 {
@@ -11,6 +12,7 @@ namespace PB.BL.Domain.Items
     public class Theme : Item
     {
         public string Description { get; set; }
+        public List<Record> Records { get; set; }
 
         public override string ToString()
         {

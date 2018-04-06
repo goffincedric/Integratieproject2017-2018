@@ -23,7 +23,6 @@ namespace PB.BL.Domain.Items
         public int SubplatformId { get; set; }
 
         public List<Subplatform> SubPlatforms { get; set; }
-        public List<Record> Records { get; set; }
         public List<Keyword> Keywords { get; set; }
         public List<Comparison> Comparisons { get; set; }
         public List<Profile> SubscribedProfiles { get; set; }

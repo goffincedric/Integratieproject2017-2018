@@ -104,25 +104,15 @@ namespace PB.DAL.EF
                 .WithMany(r => r.Records)
                 .Map(m => { m.ToTable("tblRecordUrl"); });
 
-            modelBuilder.Entity<Item>()
+            modelBuilder.Entity<Person>()
                 .HasMany(i => i.Records)
                 .WithMany(r => r.Persons)
                 .Map(m => { m.ToTable("tblPersonRecords"); });
 
-            modelBuilder.Entity<Item>()
+            modelBuilder.Entity<Theme>()
                 .HasMany(i => i.Records)
                 .WithMany(r => r.Themes)
                 .Map(m => { m.ToTable("tblThemeRecords"); });
-
-            //modelBuilder.Entity<Record>()
-            //    .HasMany(r => r.Persons)
-            //    .WithMany(p => p.Records)
-            //    .Map(m => { m.ToTable("tblPersonRecords"); });
-
-            //modelBuilder.Entity<Record>()
-            //    .HasMany(r => r.Themes)
-            //    .WithMany(t => t.Records)
-            //    .Map(m => { m.ToTable("tblThemeRecords"); });
         }
 
         public override int SaveChanges()

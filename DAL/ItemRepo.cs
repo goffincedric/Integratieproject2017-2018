@@ -45,13 +45,6 @@ namespace PB.DAL
             ctx.SaveChanges();
         }
 
-        public IEnumerable<Person> ReadPersons()
-        {
-            return ctx.Persons
-                .Include("Records")
-                .AsEnumerable();
-        }
-
         public Person CreatePerson(Person person)
         {
             person = ctx.Persons.Add(person);
@@ -66,18 +59,21 @@ namespace PB.DAL
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
+        public IEnumerable<Person> ReadPersons()
+        {
+            return ctx.Persons
+                .Include("Records")
+                .AsEnumerable();
+        }
+
         public Item ReadItem(int itemId)
         {
-            return ctx.Items
-                .Include("Records")
-                .FirstOrDefault(p => p.ItemId == itemId);
+            return ctx.Items.FirstOrDefault(p => p.ItemId == itemId);
         }
 
         public IEnumerable<Item> ReadItems()
         {
-            return ctx.Items
-                .Include("Records")
-                .AsEnumerable();
+            return ctx.Items.AsEnumerable();
         }
 
         public void UpdateItem(Item item)

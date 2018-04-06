@@ -69,7 +69,6 @@ namespace PB.BL
         public Organisation AddOrganisation(string name, string socialMediaLink = null, string iconURL = null)
         {
             initNonExistingRepo();
-            // initNonExistingRepoItem();
 
             Organisation organisation = new Organisation()
             {
@@ -196,7 +195,7 @@ namespace PB.BL
             return RecordRepo.ReadRecord(id);
         }
 
-        public Record AddRecord(long tweet_Id, RecordProfile recordProfile, List<Word> words, Sentiment sentiment, string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Item> themes, List<Item> persons, DateTime date, double longitude, double latitude, bool retweet)
+        public Record AddRecord(long tweet_Id, RecordProfile recordProfile, List<Word> words, Sentiment sentiment, string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Theme> themes, List<Person> persons, DateTime date, double longitude, double latitude, bool retweet)
         {
             initNonExistingRepo();
             Record record = new Record()
@@ -249,7 +248,6 @@ namespace PB.BL
         {
             initNonExistingRepo();
             List<Record> toegevoegde = JClassToRecord(RecordRepo.Seed(evenRecords));
-            //RecordsToItems(toegevoegde);
         }
 
         public List<Record> JClassToRecord(List<JClass> data)
@@ -259,128 +257,126 @@ namespace PB.BL
             List<Word> allWords = RecordRepo.ReadWords().ToList();
             List<Hashtag> allHashtags = RecordRepo.ReadHashTags().ToList();
             List<Url> allUrls = RecordRepo.ReadUrls().ToList();
-            
 
             List<Record> oldRecords = RecordRepo.ReadRecords().ToList();
             List<Record> newRecords = new List<Record>();
             List<Person> oldPersons = ItemRepo.ReadPersons().ToList();
-            List<Item> newPersons = new List<Item>();
+            List<Person> newPersons = new List<Person>();
 
             foreach (var el in data)
             {
-                Record record = new Record()
+                if (oldRecords.FirstOrDefault(r => r.Tweet_Id == el.Id) == null)
                 {
-                    Tweet_Id = el.Id,
-                    RecordProfile = el.Profile,
-                    Words = new List<Word>(),
-                    Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
-                    Source = el.Source,
-                    Hashtags = new List<Hashtag>(),
-                    Mentions = new List<Mention>(),
-                    URLs = new List<Url>(),
-                    Themes = new List<Item>(),
-                    Persons = new List<Item>(),
-                    Date = el.Date,
-                    Retweet = el.Retweet,
-                    ListUpdatet = DateTime.Now
-                };
-                if (el.Geo != null)
-                {
-                    record.Longitude = el.Geo[0];
-                    record.Latitude = el.Geo[1];
-                }
-
-
-                foreach (var person in el.Persons)
-                {
-                    Person personCheck = oldPersons.FirstOrDefault(p => p.Name.ToLower().Equals(person.ToLower()));
-                    if (personCheck == null)
+                    Record record = new Record()
                     {
-                        personCheck = new Person()
+                        Tweet_Id = el.Id,
+                        RecordProfile = el.Profile,
+                        Words = new List<Word>(),
+                        Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
+                        Source = el.Source,
+                        Hashtags = new List<Hashtag>(),
+                        Mentions = new List<Mention>(),
+                        URLs = new List<Url>(),
+                        Themes = new List<Theme>(),
+                        Persons = new List<Person>(),
+                        Date = el.Date,
+                        Retweet = el.Retweet,
+                        ListUpdatet = DateTime.Now
+                    };
+
+                    if (el.Geo != null)
+                    {
+                        record.Longitude = el.Geo[0];
+                        record.Latitude = el.Geo[1];
+                    }
+
+                    foreach (var person in el.Persons)
+                    {
+                        Person personCheck = oldPersons.FirstOrDefault(p => p.Name.ToLower().Equals(person.ToLower()));
+                        if (personCheck == null)
                         {
-                            Name = person,
-                            IsHot = false,
-                            Records = new List<Record>(),
-                            Comparisons = new List<Comparison>(),
-                            Keywords = new List<Keyword>(),
-                            SubPlatforms = new List<Subplatform>(),
-                            SubscribedProfiles = new List<Profile>()
-                        };
-                        oldPersons.Add(personCheck);
-                        newPersons.Add(personCheck);
+                            personCheck = new Person()
+                            {
+                                Name = person,
+                                IsHot = false,
+                                Records = new List<Record>(),
+                                Comparisons = new List<Comparison>(),
+                                Keywords = new List<Keyword>(),
+                                SubPlatforms = new List<Subplatform>(),
+                                SubscribedProfiles = new List<Profile>()
+                            };
+                            oldPersons.Add(personCheck);
+                            newPersons.Add(personCheck);
+                        }
+                        record.Persons.Add(personCheck);
+                        personCheck.Records.Add(record);
                     }
-                    record.Persons.Add(personCheck);
-                    personCheck.Records.Add(record);
-                }
 
 
-                foreach (var m in el.Mentions)
-                {
-                    Mention mentionCheck = allMentions.Find(me => me.Name.Equals(m));
-                    if (mentionCheck != null)
+                    foreach (var m in el.Mentions)
                     {
-                        record.Mentions.Add(mentionCheck);
+                        Mention mentionCheck = allMentions.Find(me => me.Name.Equals(m));
+                        if (mentionCheck != null)
+                        {
+                            record.Mentions.Add(mentionCheck);
+                        }
+                        else
+                        {
+                            Mention mention = new Mention(m);
+                            record.Mentions.Add(mention);
+                            allMentions.Add(mention);
+                        }
                     }
-                    else
+
+
+                    foreach (var w in el.Words)
                     {
-                        Mention mention = new Mention(m);
-                        record.Mentions.Add(mention);
-                        allMentions.Add(mention);
+                        Word wordCheck = allWords.Find(wo => wo.Text.Equals(w));
+                        if (wordCheck != null)
+                        {
+                            record.Words.Add(wordCheck);
+
+                        }
+                        else
+                        {
+                            Word word = new Word(w);
+                            record.Words.Add(word);
+                            allWords.Add(word);
+                        }
                     }
-                }
 
 
-                foreach (var w in el.Words)
-                {
-                    Word wordCheck = allWords.Find(wo => wo.Text.Equals(w));
-                    if (wordCheck != null)
+                    foreach (var h in el.Hashtags)
                     {
-                        record.Words.Add(wordCheck);
-
+                        Hashtag hashtagCheck = allHashtags.Find(ha => ha.HashTag.Equals(h));
+                        if (hashtagCheck != null)
+                        {
+                            record.Hashtags.Add(hashtagCheck);
+                        }
+                        else
+                        {
+                            Hashtag tag = new Hashtag(h);
+                            record.Hashtags.Add(tag);
+                            allHashtags.Add(tag);
+                        }
                     }
-                    else
+
+
+                    foreach (var u in el.URLs)
                     {
-                        Word word = new Word(w);
-                        record.Words.Add(word);
-                        allWords.Add(word);
+                        Url urlCheck = allUrls.Find(url => url.Link.Equals(u));
+                        if (urlCheck != null)
+                        {
+                            record.URLs.Add(urlCheck);
+                        }
+                        else
+                        {
+                            Url url = new Url(u);
+                            record.URLs.Add(url);
+                            allUrls.Add(url);
+                        }
                     }
-                }
 
-
-                foreach (var h in el.Hashtags)
-                {
-                    Hashtag hashtagCheck = allHashtags.Find(ha => ha.HashTag.Equals(h));
-                    if (hashtagCheck != null)
-                    {
-                        record.Hashtags.Add(hashtagCheck);
-                    }
-                    else
-                    {
-                        Hashtag tag = new Hashtag(h);
-                        record.Hashtags.Add(tag);
-                        allHashtags.Add(tag);
-                    }
-                }
-
-
-                foreach (var u in el.URLs)
-                {
-                    Url urlCheck = allUrls.Find(url => url.Link.Equals(u));
-                    if (urlCheck != null)
-                    {
-                        record.URLs.Add(urlCheck);
-                    }
-                    else
-                    {
-                        Url url = new Url(u);
-                        record.URLs.Add(url);
-                        allUrls.Add(url);
-                    }
-                }
-
-
-                if (oldRecords.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) == null)
-                {
                     if (newRecords.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
                     {
                         newRecords[newRecords.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
@@ -392,7 +388,6 @@ namespace PB.BL
                 }
             }
 
-            ItemRepo.CreateItems(newPersons);
             RecordRepo.CreateRecords(newRecords);
             UowManager.Save();
 

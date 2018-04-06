@@ -47,21 +47,21 @@ namespace UI_CA_Prototype
                 Console.WriteLine("8) Voeg alerts to aan selected profile");
                 Console.WriteLine("---------------- Info -----------------");
                 Console.WriteLine("9) Toon alle records");
-                Console.WriteLine("10) Toon alle items");
+                Console.WriteLine("10) Toon alle persons");
                 Console.WriteLine("11) Toon subscribed items van geselecteerd profiel");
                 Console.WriteLine("12) Maak nieuw account");
                 Console.WriteLine("0) Afsluiten");
 
-                //try
-                //{
+                try
+                {
                     DetectMenuAction();
-                //}
-                //catch (Exception e)
-                //{
-                //    Console.WriteLine();
-                //    Console.WriteLine(e.Message);
-                //    Console.WriteLine();
-                //}
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine();
+                }
                 Console.WriteLine("\n");
             }
         }
@@ -114,6 +114,18 @@ namespace UI_CA_Prototype
                             API_URL = "http://kdg.textgain.com/query"
                         };
                         itemMgr.JClassToRecord(restClient.RequestRecords("Annick De Ridder"));
+                        //itemMgr.JClassToRecord(restClient.RequestRecords("Caroline Bastiaens"));
+                        //itemMgr.JClassToRecord(restClient.RequestRecords("Jan Bertels"));
+                        //itemMgr.JClassToRecord(restClient.RequestRecords("Vera Celis"));
+                        //itemMgr.JClassToRecord(restClient.RequestRecords("Dirk De Kort"));
+                        //itemMgr.JClassToRecord(restClient.RequestRecords("Imade Annouri"));
+                        //itemMgr.JClassToRecord(restClient.RequestRecords("Caroline Gennez"));
+                        //itemMgr.JClassToRecord(restClient.RequestRecords("Kathleen Helsen"));
+                        //itemMgr.JClassToRecord(restClient.RequestRecords("Marc Hendrickx"));
+                        //itemMgr.JClassToRecord(restClient.RequestRecords("Jan Hofkens"));
+                        //itemMgr.JClassToRecord(restClient.RequestRecords("Yasmine Kherbache"));
+                        //itemMgr.JClassToRecord(restClient.RequestRecords("Kathleen Krekels"));
+                        //itemMgr.JClassToRecord(restClient.RequestRecords("Ingrid Pira"));
                         break;
                     case 8:
                         itemMgr.GenerateProfileAlerts(selectedProfile);
@@ -122,7 +134,7 @@ namespace UI_CA_Prototype
                         extensionMethods.ShowRecords(itemMgr.GetRecords());
                         break;
                     case 10:
-                        extensionMethods.ShowItems(itemMgr.GetItems());
+                        extensionMethods.ShowPersons(itemMgr.GetPersons());
                         break;
                     case 11:
                         extensionMethods.ShowSubScribedItems(selectedProfile);

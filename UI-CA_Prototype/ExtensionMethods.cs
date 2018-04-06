@@ -45,41 +45,34 @@ namespace UI_CA_Prototype
         {
             records.OrderBy(r => r.Tweet_Id).ThenByDescending(r => r.Date).ToList().ForEach(r =>
             {
-                string text = r.Date.ToString() + " - Persons: ";
-                r.Persons.ForEach(p => text += p.Name + ", ");
-                text = text.Substring(0, text.Length - 3) + " (" + r.Tweet_Id + ")";
-                Console.WriteLine(text);
+                Console.WriteLine(r);
             });
         }
 
         //Lets the user select an available item
-        public Item SelectItem(IEnumerable<Item> items)
+        public Item SelectItem(IEnumerable<Item> persons)
         {
             int keuze = 0;
 
             do
             {
-                ShowItems(items);
+                ShowPersons(persons);
                 Console.Write("Keuze: ");
                 int.TryParse(Console.ReadLine(), out keuze);
-            } while (keuze < 1 || keuze > items.ToList().Count);
+            } while (keuze < 1 || keuze > persons.ToList().Count);
 
-            return items.ElementAt(keuze - 1);
+            return persons.ElementAt(keuze - 1);
         }
 
         //Shows all items
-        public void ShowItems(IEnumerable<Item> items)
+        public void ShowPersons(IEnumerable<Item> persons)
         {
             int counter = 1;
-            Console.WriteLine("\nAlle Items:");
-            items.ToList().ForEach(i =>
+            Console.WriteLine("\nAlle Persons:");
+            persons.ToList().ForEach(p =>
             {
-                if (i is Person)
-                {
-                    Person p = (Person)i;
-                    Console.WriteLine(counter + ") " + p);
-                    counter++;
-                }
+                Console.WriteLine(counter + ") " + p);
+                counter++;
             });
         }
 
@@ -124,14 +117,14 @@ namespace UI_CA_Prototype
             {
                 Hashtags = new List<Hashtag>(),
                 Words = new List<Word>() {
-          new Word("annouri"),
-          new Word("kasper goethals"),
-          new Word("arabië"),
-          new Word("imade"),
-          new Word("iran")
-        },
+                    new Word("annouri"),
+                    new Word("kasper goethals"),
+                    new Word("arabië"),
+                    new Word("imade"),
+                    new Word("iran")
+                },
                 Date = DateTime.Parse("2017-09-11 04:53:38"),
-                Persons = new List<Item>() {
+                Persons = new List<Person>() {
                     new Person() { Name = "Imade Annouri" },
                     new Person() { Name = "Annick De Ridder"},
                 },
@@ -142,8 +135,8 @@ namespace UI_CA_Prototype
                 Retweet = true,
                 Source = "twitter",
                 URLs = new List<Url>(){
-          new Url("http://pltwps.it/_JY894kJ")
-        },
+                    new Url("http://pltwps.it/_JY894kJ")
+                },
                 Mentions = new List<Mention>()
             }
             );
@@ -151,18 +144,18 @@ namespace UI_CA_Prototype
             records.Add(new Record()
             {
                 Hashtags = new List<Hashtag>()
-        {
-          new Hashtag("Firsts,")
-        },
+                {
+                    new Hashtag("Firsts,")
+                },
                 Words = new List<Word>()
-        {
-          new Word("annouri"),
-          new Word("imade"),
-          new Word("reeks"),
-          new Word("time")
-        },
+                {
+                    new Word("annouri"),
+                    new Word("imade"),
+                    new Word("reeks"),
+                    new Word("time")
+                },
                 Date = DateTime.Parse("2017-09-07 22:52:35"),
-                Persons = new List<Item>() {
+                Persons = new List<Person>() {
                     new Person() { Name = "Bart De Wever" }
                 },
                 Longitude = 6.46744,
@@ -172,10 +165,10 @@ namespace UI_CA_Prototype
                 Retweet = false,
                 Source = "twitter",
                 URLs = new List<Url>()
-        {
-          new Url("https://twitter.com/TIME/status/905785286092877824"),
-          new Url("http://pltwps.it/_xV6mWwE")
-        },
+                {
+                    new Url("https://twitter.com/TIME/status/905785286092877824"),
+                    new Url("http://pltwps.it/_xV6mWwE")
+                },
                 Mentions = new List<Mention>()
             }
             );
