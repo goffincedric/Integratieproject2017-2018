@@ -176,7 +176,7 @@ namespace UI_MVC.Controllers
 
       try
       {
-        EnsureLoggedOut();
+        Logout();
         return View(userinfo);
       }
       catch
