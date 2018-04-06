@@ -60,12 +60,16 @@ namespace PB.DAL
 
         public IEnumerable<Subplatform> ReadSubplatforms()
         {
-            return ctx.Subplatforms.AsEnumerable();
+            return ctx.Subplatforms
+                .Include("Settings")
+                .AsEnumerable();
         }
 
         public Subplatform ReadSubplatform(int subplatformId)
         {
-            return ctx.Subplatforms.FirstOrDefault(s => s.SubplatformId == subplatformId);
+            return ctx.Subplatforms
+                .Include("Settings")
+                .FirstOrDefault(s => s.SubplatformId == subplatformId);
         }
 
         public void UpdateSubplatform(Subplatform subplatform)

@@ -4,13 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Items;
 
 namespace PB.BL.Domain.Items
 {
-  [Table("tblTheme")]
-  public class Theme : Item
-  {
-    public string ThemeName { get; set; }
-    public string Description { get; set; }
-  }
+    [Table("tblTheme")]
+    public class Theme : Item
+    {
+        public string Description { get; set; }
+        public List<Record> Records { get; set; }
+
+        public override string ToString()
+        {
+            return Name + " (Id: " + (ItemId) + ") - Aantal records: " + Records.Count;
+        }
+    }
 }
