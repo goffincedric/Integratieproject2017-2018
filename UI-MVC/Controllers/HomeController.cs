@@ -68,7 +68,8 @@ namespace UI_MVC.Controllers
       }
       else
       {
-        EnsureLoggedOut();
+       
+        Logout(); 
         return Content("\"\"");
       }
     }
@@ -155,7 +156,7 @@ namespace UI_MVC.Controllers
       else
       {
 
-        if (ModelState.IsValid)
+        if (ModelState.IsValid && newProfile.ConfirmPassword.Equals(newProfile.Password))
         {
           accountMgr.AddProfile(newProfile.Username, newProfile.Password, newProfile.Email);
 
@@ -201,7 +202,8 @@ namespace UI_MVC.Controllers
 
         if (!ModelState.IsValid)
         {
-          return View(entity);
+          return RedirectToAction("Forms"); 
+          //return View(entity);
         }
         else
         {
@@ -230,7 +232,7 @@ namespace UI_MVC.Controllers
 
             // If we got this far, something failed, redisplay form
             // return RedirectToAction("Index", "Dashboard");
-            ViewBag.ImageUrl = "~/Content/Images/1.jpg";
+           
             return RedirectToAction("Index");
           }
           else
@@ -248,13 +250,7 @@ namespace UI_MVC.Controllers
         throw;
       }
     }
-    private void EnsureLoggedOut()
-    {
-      if (Request.IsAuthenticated)
-      {
-        Logout();
-      }
-    }
+   
 
     [HttpPost]
     [ValidateAntiForgeryToken]

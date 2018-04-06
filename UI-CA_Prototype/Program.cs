@@ -136,7 +136,7 @@ namespace UI_CA_Prototype
     private static void newAccount()
     {
       Profile profile = extensionMethods.CreateAccount();
-      accountMgr.AddProfile(profile.Username, profile.Password, profile.Email);
+      accountMgr.AddProfile(profile.Username, profile.Password,profile.Email);
     }
     private static void Seed()
     {

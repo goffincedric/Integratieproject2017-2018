@@ -19,15 +19,9 @@ namespace PB.BL.Domain.Account
     public string Username { get; set; }
     [Required]
     public string Password { get; set; }
-
-    //[NotMapped]
-    //[Compare("Password")]
-    //public string ConfirmPassword { get; set; }
-
+    public string ConfirmPassword { get; set; }
     public string Hash { get; set; }
-
     public byte[] Salt { get; set; }
-
     [RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")]
     public string Email { get; set; }
     public bool IsRemember { get; set; } = false;
@@ -38,7 +32,6 @@ namespace PB.BL.Domain.Account
     public Dictionary<Subplatform, Dashboard> Dashboards { get; set; }
     public List<Alert> Alerts { get; set; }
     public List<Item> Subscriptions { get; set; }
-
     public List<Subplatform> adminPlatforms { get; set; }
 
 
