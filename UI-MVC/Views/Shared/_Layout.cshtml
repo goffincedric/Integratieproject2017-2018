@@ -1,4 +1,4 @@
-﻿@model PB.BL.Domain.Account.Profile
+﻿
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,13 +44,14 @@
         </div>
         <ul class="sidebar-menu scrollable pos-r">
           <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Index","Home")"><span class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span class="title">Homepage</span></a></li>
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Email","Home")"><span class="icon-holder"><i class="c-brown-500 ti-book"></i> </span><span class="title">Dashboard</span></a></li>
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Compose","Home")"><span class="icon-holder"><i class="c-blue-500 ti-face-smile"></i> </span><span class="title">My account</span></a></li>
+          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard","Home")"><span class="icon-holder"><i class="c-brown-500 ti-book"></i> </span><span class="title">Dashboard</span></a></li>
+          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Account","Account")"><span class="icon-holder"><i class="c-blue-500 ti-face-smile"></i> </span><span class="title">My account</span></a></li>
           <li class="nav-item dropdown">
             <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
             <ul class="dropdown-menu">
               <li class="nav-item dropdown"><a href="javascript:void(0);"><span>Contact</span></a></li>
               <li class="nav-item dropdown"><a href="javascript:void(0);"><span>FAQ</span></a></li>
+              <li class="nav-item dropdown"><a href="@Url.Action("ItemTables","Item")"><span>Show datatables</span></a></li>
             </ul>
           </li>
         </ul>

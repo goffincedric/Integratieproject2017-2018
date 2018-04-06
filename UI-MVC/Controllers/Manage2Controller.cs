@@ -12,16 +12,16 @@ using UI_MVC.Models;
 namespace UI_MVC.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class Manage2Controller : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public ManageController()
+        public Manage2Controller()
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public Manage2Controller(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -307,7 +307,7 @@ namespace UI_MVC.Controllers
         public ActionResult LinkLogin(string provider)
         {
             // Request a redirect to the external login provider to link a login for the current user
-            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
+            return new Account2Controller.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
         }
 
         //

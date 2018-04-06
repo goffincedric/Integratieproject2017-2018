@@ -189,9 +189,11 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\Account2Controller.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\Manage2Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -293,18 +295,18 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Account2\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account2\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account2\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account2\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account2\ForgotPassword.cshtml" />
+    <Content Include="Views\Account2\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account2\Login.cshtml" />
+    <Content Include="Views\Account2\Register.cshtml" />
+    <Content Include="Views\Account2\ResetPassword.cshtml" />
+    <Content Include="Views\Account2\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account2\SendCode.cshtml" />
+    <Content Include="Views\Account2\VerifyCode.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
@@ -315,20 +317,14 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\BasicTable.cshtml" />
     <Content Include="Views\Home\Blank.cshtml" />
-    <Content Include="Views\Home\Calender.cshtml" />
     <Content Include="Views\Home\Charts.cshtml" />
-    <Content Include="Views\Home\Chat.cshtml" />
-    <Content Include="Views\Home\Compose.cshtml" />
     <Content Include="Views\Home\DataTable.cshtml" />
-    <Content Include="Views\Home\Email.cshtml" />
     <Content Include="Views\Home\Forms.cshtml" />
-    <Content Include="Views\Home\GoogleMaps.cshtml" />
     <Content Include="Views\Home\Signin.cshtml" />
     <Content Include="Views\Home\Signup.cshtml" />
     <Content Include="Views\Home\Test404.cshtml" />
     <Content Include="Views\Home\Test500.cshtml" />
     <Content Include="Views\Home\UI.cshtml" />
-    <Content Include="Views\Home\VectorMaps.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -338,6 +334,9 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Account\Account.cshtml" />
+    <Content Include="Views\Item\ItemTables.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

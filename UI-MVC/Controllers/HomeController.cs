@@ -78,14 +78,11 @@ namespace UI_MVC.Controllers
       return View();
     }
 
-    public ActionResult Email()
-    {
-      return View();
-    }
+   
 
-    public ActionResult Compose()
+    public ActionResult Dashboard()
     {
-      return View();
+      return View(); 
     }
 
     public ActionResult BasicTable()
@@ -99,11 +96,7 @@ namespace UI_MVC.Controllers
       return View();
     }
 
-
-    public ActionResult Calender()
-    {
-      return View();
-    }
+  
 
 
     public ActionResult Charts()
@@ -124,11 +117,7 @@ namespace UI_MVC.Controllers
     }
 
 
-    public ActionResult GoogleMaps()
-    {
-      return View();
-    }
-
+ 
     public ActionResult Signup()
     {
       return View();
@@ -152,15 +141,8 @@ namespace UI_MVC.Controllers
     }
 
 
-    public ActionResult VectorMaps()
-    {
-      return View();
-    }
+  
 
-    public ActionResult Chat()
-    {
-      return View();
-    }
 
     [HttpPost]
     public ActionResult Register(Profile newProfile)
