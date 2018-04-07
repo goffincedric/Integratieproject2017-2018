@@ -11,26 +11,25 @@ namespace Domain.Items
     {
         [Key]
         public long Tweet_Id { get; set; }
-        public RecordProfile RecordProfile { get; set; }
+        public string Source { get; set; }
+        public string User_Id { get; set; }
+        public List<Mention> Mentions { get; set; }
+        public DateTime Date { get; set; }
+        public string Geo { get; set; }
+        public int RecordPersonId { get; set; }
+        public RecordPerson RecordPerson { get; set; }
+        public bool Retweet { get; set; }
         public List<Word> Words { get; set; }
         public Sentiment Sentiment { get; set; }
-        public string Source { get; set; }
         public List<Hashtag> Hashtags { get; set; }
-        public List<Mention> Mentions { get; set; }
         public List<Url> URLs { get; set; }
-        public List<Theme> Themes { get; set; }
-        public List<Person> Persons { get; set; }
-        public DateTime Date { get; set; }
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
-        public bool Retweet { get; set; }
         public DateTime ListUpdatet { get; set; }
+        
+        public List<Item> Items { get; set; }
 
         public override string ToString()
         {
-            string text = Date.ToString() + " - Persons: ";
-            Persons.ForEach(p => text += p.Name + ", ");
-            return text.Substring(0, text.Length - 2) + " (" + Tweet_Id + ")";
+            return "User_Id: " + User_Id + "\nTweetId: " + Tweet_Id;
         }
     }
 }

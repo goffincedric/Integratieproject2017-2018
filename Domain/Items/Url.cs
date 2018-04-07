@@ -10,22 +10,25 @@ using System.Threading.Tasks;
 namespace Domain.Items
 {
 
-    [Table("tblUrl")]
-    public class Url
+  [Table("tblUrl")]
+  public class Url
+  {
+
+
+    [Key] public int Id { get; set; }
+
+    public string Link { get; set; }
+
+    public List<Record> records { get; set; }
+
+    public Url()
     {
-        [Key] public int Id { get; set; }
-        public string Link { get; set; }
 
-        public List<Record> Records { get; set; }
-
-        public Url()
-        {
-
-        }
-
-        public Url(string link)
-        {
-            Link = link;
-        }
     }
+
+    public Url(string link)
+    {
+      Link = link;
+    }
+  }
 }

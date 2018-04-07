@@ -41,13 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Accounts\Alert.cs" />
-    <Compile Include="Accounts\Gender.cs" />
-    <Compile Include="Accounts\Profile.cs" />
-    <Compile Include="Accounts\Province.cs" />
-    <Compile Include="Accounts\Role.cs" />
-    <Compile Include="Accounts\UserData.cs" />
-    <Compile Include="Accounts\UserSetting.cs" />
+    <Compile Include="Account\Alert.cs" />
+    <Compile Include="Account\Gender.cs" />
+    <Compile Include="Account\Profile.cs" />
+    <Compile Include="Account\Province.cs" />
+    <Compile Include="Account\Role.cs" />
+    <Compile Include="Account\UserData.cs" />
+    <Compile Include="Account\UserSetting.cs" />
     <Compile Include="Dashboards\Comparison.cs" />
     <Compile Include="Dashboards\Dashboard.cs" />
     <Compile Include="Dashboards\UserType.cs" />
@@ -64,21 +64,20 @@
     <Compile Include="Items\Mention.cs" />
     <Compile Include="Items\Organisation.cs" />
     <Compile Include="Items\Person.cs" />
+    <Compile Include="Items\RecordPerson.cs" />
     <Compile Include="Items\Record.cs" />
-    <Compile Include="Items\RecordProfile.cs" />
     <Compile Include="Items\Sentiment.cs" />
     <Compile Include="Items\Theme.cs" />
     <Compile Include="Items\Url.cs" />
     <Compile Include="Items\Word.cs" />
-    <Compile Include="JSONConversion\JClass.cs" />
-    <Compile Include="JSONConversion\JClassSeedFormat.cs" />
-    <Compile Include="Platforms\Page.cs" />
-    <Compile Include="Platforms\Style.cs" />
-    <Compile Include="Platforms\Subplatform.cs" />
-    <Compile Include="Platforms\SubplatformSetting.cs" />
-    <Compile Include="Platforms\Tag.cs" />
+    <Compile Include="JSONConversion\JCLASS.cs" />
+    <Compile Include="Platform\Page.cs" />
+    <Compile Include="Platform\Style.cs" />
+    <Compile Include="Platform\Subplatform.cs" />
+    <Compile Include="Platform\SubplatformSetting.cs" />
+    <Compile Include="Platform\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\Setting.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
