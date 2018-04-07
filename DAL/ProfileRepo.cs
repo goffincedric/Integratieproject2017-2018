@@ -77,6 +77,7 @@ namespace PB.DAL
         public void UpdateProfile(Profile profile)
         {
             ctx.Profiles.Attach(profile);
+            
             ctx.Entry(profile).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
         }

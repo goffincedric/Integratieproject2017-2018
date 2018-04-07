@@ -13,6 +13,7 @@ using System.IO;
 
 namespace UI_MVC.Controllers
 {
+  [RequireHttps]
   public class HomeController : Controller
   {
     private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
@@ -32,19 +33,6 @@ namespace UI_MVC.Controllers
       }
     }
 
-    public ActionResult ChangeLogoutin()
-    {
-      if (Session["UserName"] == null)
-      {
-        return Content("Login/Signup");
-      }
-      else
-      {
-        return Content("Logout");
-      }
-    }
-
-
     public ActionResult GetActiveUser()
     {
       if (Session["UserName"] == null)
@@ -59,6 +47,17 @@ namespace UI_MVC.Controllers
       }
     }
 
+    public ActionResult ChangeLogoutin()
+    {
+      if (Session["UserName"] == null)
+      {
+        return Content("Login/Signup");
+      }
+      else
+      {
+        return Content("Logout");
+      }
+    }
 
     public ActionResult LinkLogoutin()
     {
@@ -69,6 +68,7 @@ namespace UI_MVC.Controllers
       else
       {
         EnsureLoggedOut();
+       
         return Content("\"\"");
       }
     }
@@ -78,14 +78,11 @@ namespace UI_MVC.Controllers
       return View();
     }
 
-    public ActionResult Email()
-    {
-      return View();
-    }
+   
 
-    public ActionResult Compose()
+    public ActionResult Dashboard()
     {
-      return View();
+      return View(); 
     }
 
     public ActionResult BasicTable()
@@ -99,11 +96,7 @@ namespace UI_MVC.Controllers
       return View();
     }
 
-
-    public ActionResult Calender()
-    {
-      return View();
-    }
+  
 
 
     public ActionResult Charts()
@@ -124,11 +117,7 @@ namespace UI_MVC.Controllers
     }
 
 
-    public ActionResult GoogleMaps()
-    {
-      return View();
-    }
-
+ 
     public ActionResult Signup()
     {
       return View();
@@ -152,15 +141,13 @@ namespace UI_MVC.Controllers
     }
 
 
-    public ActionResult VectorMaps()
+    private void EnsureLoggedOut()
     {
-      return View();
+      // If the request is (still) marked as authenticated we send the user to the logout action
+      if (Request.IsAuthenticated)
+        Logout();
     }
 
-    public ActionResult Chat()
-    {
-      return View();
-    }
 
     [HttpPost]
     public ActionResult Register(Profile newProfile)
@@ -173,7 +160,7 @@ namespace UI_MVC.Controllers
       else
       {
 
-        if (ModelState.IsValid)
+        if (ModelState.IsValid && newProfile.ConfirmPassword.Equals(newProfile.Password))
         {
           accountMgr.AddProfile(newProfile.Username, newProfile.Password, newProfile.Email);
 
@@ -193,7 +180,7 @@ namespace UI_MVC.Controllers
 
       try
       {
-        EnsureLoggedOut();
+        Logout();
         return View(userinfo);
       }
       catch
@@ -219,6 +206,7 @@ namespace UI_MVC.Controllers
 
         if (!ModelState.IsValid)
         {
+       
           return View(entity);
         }
         else
@@ -248,7 +236,7 @@ namespace UI_MVC.Controllers
 
             // If we got this far, something failed, redisplay form
             // return RedirectToAction("Index", "Dashboard");
-            ViewBag.ImageUrl = "~/Content/Images/1.jpg";
+           
             return RedirectToAction("Index");
           }
           else
@@ -266,13 +254,7 @@ namespace UI_MVC.Controllers
         throw;
       }
     }
-    private void EnsureLoggedOut()
-    {
-      if (Request.IsAuthenticated)
-      {
-        Logout();
-      }
-    }
+   
 
     [HttpPost]
     [ValidateAntiForgeryToken]

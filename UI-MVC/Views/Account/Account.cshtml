@@ -1,0 +1,140 @@
+﻿@model PB.BL.Domain.Account.Profile
+@{
+  ViewBag.Title = "Account";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="main-content bgc-grey-100">
+  <div id="mainContent">
+    <div class="container-fluid">
+
+      <h4 class="c-grey-900 mT-10 mB-30">Profile</h4>
+
+      <div class="bgc-white p-20 bd">
+
+        <div class="mT-30">
+
+          @using (Html.BeginForm())
+          {
+            @Html.AntiForgeryToken()
+            <form>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Gebruikersnaam</label>
+                  @*<input type="text" class="form-control" id="inputGebruikersnaam4" placeholder="Gebruikersnaam">*@
+                  @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @id = "inputGebruikersnaam4", @type = "text", @placeholder = "Gebruikersnaam" } })
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputPassword4">Wachtwoord</label>
+                  @*<input type="password" class="form-control" id="inputPassword4" placeholder="Wachtwoord">*@
+                  @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Wachtwoord" } })
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Achternaam</label>
+                  @*<input type="email" class="form-control" id="inputEmail4" placeholder="Email">*@
+                  @Html.EditorFor(model => model.UserData.LastName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Achternaam" } })
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Voornaam</label>
+                  @Html.EditorFor(model => model.UserData.FirstName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Voornaam" } })
+
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Email</label>
+                  @*<input type="email" class="form-control" id="inputEmail4" placeholder="Email">*@
+                  @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Telefoon</label>
+                  @Html.EditorFor(model => model.UserData.Telephone, new { htmlAttributes = new { @class = "form-control", @type = "tel", @placeholder = "Gsm of telefoon nummer" } })
+
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="Gender">Gender</label>
+                <div class="col-md-4">
+                  <label class="radio-inline" for="Gender-0">
+                    <input type="radio" name="Gender" id="Gender-0" value="1" checked="checked">
+                    Male
+                  </label>
+                  <label class="radio-inline" for="Gender-1">
+                    <input type="radio" name="Gender" id="Gender-1" value="2">
+                    Female
+                  </label>
+                  <label class="radio-inline" for="Gender-2">
+                    <input type="radio" name="Gender" id="Gender-2" value="3">
+                    Other
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputAddress">Straat en huisnummer</label>
+                @Html.EditorFor(model => model.UserData.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat huisnummer" } })
+                @*<input type="text" class="form-control" id="inputAddress" placeholder="Stationsstraat 144"></div>*@
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputCity">City</label>
+                    @*<input type="text" class="form-control" id="inputCity" placeholder="Itegem">*@
+                    @Html.EditorFor(model => model.UserData.City, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Stad of dorp" } })
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputState">Provincie</label>
+                    @*<select id="inputState" class="form-control">
+                        <option selected="selected">Kies...</option>
+                        <option>Antwerpen</option>
+                        <option>Brussel</option>
+                        <option>West-vlaanderen</option>
+                        <option>Oost-Vlaanderen</option>
+                        <option>Luik</option>
+                        <option>Limburg</option>
+                        <option>Vlaams-Brabant</option>
+                        <option>Waals-Brabant</option>
+                        <option>Henegouwen</option>
+                        <option>Namen</option>
+                        <option>Luxemburg</option>
+                        <option>Andere</option>
+                      </select>*@
+                    @Html.EnumDropDownListFor(model => model.UserData.Province, htmlAttributes: new { @class = "form-control" })
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="inputZip">Postcode</label>
+                    @*<input type="text" class="form-control" id="inputZip" placeholder="2222">*@
+                    @Html.EditorFor(model => model.UserData.PostalCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "postcode" } })
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label class="fw-500">Geboortedatum</label>
+                  <div class="timepicker-input input-icon form-group">
+                    <div class="input-group">
+                      <div class="input-group-addon bgc-white bd bdwR-0"><i class="ti-calendar"></i></div>
+                      @*<input type="text" class="form-control bdc-grey-200 start-date" placeholder="Datepicker" data-provide="datepicker">*@
+                      @Html.EditorFor(model => model.UserData.BirthDate, new { htmlAttributes = new { @class = "form-control bdc-grey-200 start-date", @placeholder = "Datepicker", @type = "text" } })
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Opslaan</button>
+            </form>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</main>
+
+<script type="text/javascript" defer>
+  $(function () { // will trigger when the document is ready
+    $('.datepicker').datepicker(); //Initialise any date pickers
+  });
+</script>

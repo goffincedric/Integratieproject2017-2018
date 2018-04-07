@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace PB.BL.Domain.Account
 {
-    [Table("tblUserData")]
-    public class UserData
-    {
+  [Table("tblUserData")]
+  public class UserData
+  {
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Telephone { get; set; }
-        public string StreetNbr { get; set; }
+        public string Street { get; set; }
         public int? PostalCode { get; set; }
         public string City { get; set; }
         public DateTime BirthDate { get; set; }
-        [Required]
         public Province Province { get; set; }
         public Gender Gender { get; set; }
 

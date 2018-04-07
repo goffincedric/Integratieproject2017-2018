@@ -65,7 +65,9 @@ namespace PB.BL
         Username = username,
         Email = email,
         Role = role,
-        Password = password
+        Password = password,
+        
+
       };
       profile.UserData = new UserData() { Profile = profile, Username = username };
 
@@ -88,7 +90,8 @@ namespace PB.BL
         Role = role,
         Password = password,
         Hash = hash,
-        Salt = Salt
+        Salt = Salt,
+    
       };
       profile.UserData = new UserData() { Profile = profile, Username = username };
 
