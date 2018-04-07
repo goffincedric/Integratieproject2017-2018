@@ -13,6 +13,7 @@ using System.IO;
 
 namespace UI_MVC.Controllers
 {
+  [RequireHttps]
   public class HomeController : Controller
   {
     private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
@@ -32,19 +33,6 @@ namespace UI_MVC.Controllers
       }
     }
 
-    public ActionResult ChangeLogoutin()
-    {
-      if (Session["UserName"] == null)
-      {
-        return Content("Login/Signup");
-      }
-      else
-      {
-        return Content("Logout");
-      }
-    }
-
-
     public ActionResult GetActiveUser()
     {
       if (Session["UserName"] == null)
@@ -59,6 +47,17 @@ namespace UI_MVC.Controllers
       }
     }
 
+    public ActionResult ChangeLogoutin()
+    {
+      if (Session["UserName"] == null)
+      {
+        return Content("Login/Signup");
+      }
+      else
+      {
+        return Content("Logout");
+      }
+    }
 
     public ActionResult LinkLogoutin()
     {
@@ -68,8 +67,8 @@ namespace UI_MVC.Controllers
       }
       else
       {
+        EnsureLoggedOut();
        
-        Logout(); 
         return Content("\"\"");
       }
     }
@@ -142,7 +141,12 @@ namespace UI_MVC.Controllers
     }
 
 
-  
+    private void EnsureLoggedOut()
+    {
+      // If the request is (still) marked as authenticated we send the user to the logout action
+      if (Request.IsAuthenticated)
+        Logout();
+    }
 
 
     [HttpPost]
@@ -202,8 +206,8 @@ namespace UI_MVC.Controllers
 
         if (!ModelState.IsValid)
         {
-          return RedirectToAction("Forms"); 
-          //return View(entity);
+       
+          return View(entity);
         }
         else
         {

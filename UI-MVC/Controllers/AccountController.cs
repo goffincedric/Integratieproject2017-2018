@@ -8,6 +8,8 @@ using PB.BL.Domain.Account;
 
 namespace UI_MVC.Controllers
 {
+
+  [RequireHttps]
   public class AccountController : Controller
   {
     private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
