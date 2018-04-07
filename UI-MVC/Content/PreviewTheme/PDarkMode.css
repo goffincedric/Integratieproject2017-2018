@@ -1,0 +1,16 @@
+﻿.header-container .nav-right .themes .dropdown-menu {
+    color: white !important;
+    background-color: #222 !important;
+}
+
+.header-container .nav-right .themes .dropdown-menu {
+    min-width: 160px;
+}
+
+.bgcH-grey-100:hover {
+    background-color: #333 !important;
+}
+
+.themes .fsz-sm {
+    color: white !important;
+}
