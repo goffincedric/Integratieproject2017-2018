@@ -1,10 +1,9 @@
 ﻿.header-container .nav-right .themes .dropdown-menu {
-    color: white !important;
     background-color: white !important;
 }
 
 .header-container .nav-right .themes .dropdown-menu {
-    min-width: 150px;
+    min-width: 160px;
 }
 
 .bgcH-grey-100:hover {
