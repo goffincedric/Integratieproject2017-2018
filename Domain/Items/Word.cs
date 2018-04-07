@@ -14,7 +14,7 @@ namespace Domain.Items
     [Key] public int Id { get; set; }
     public String Text { get; set; }
 
-    public List<Record> records { get; set; }
+    public List<Record> Records { get; set; }
 
     public Word()
     {

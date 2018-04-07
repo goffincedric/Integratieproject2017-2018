@@ -9,28 +9,27 @@ using System.Threading.Tasks;
 
 namespace Domain.Items
 {
-  [Table("tblMention")]
-  public class Mention
-  {
-    [Key]
-    public int Id { get; set; }   
-    public string Name { get; set; }
-
-    
-    public List<Record> records { get; set; }
-
-    public Mention()
+    [Table("tblMention")]
+    public class Mention
     {
+        [Key]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        
+        public List<Record> Records { get; set; }
 
-    }
-    public Mention(string name)
-    {
-      Name = name;
-    }
+        public Mention()
+        {
 
-    public override string ToString()
-    {
-      return Name;
+        }
+        public Mention(string name)
+        {
+            Name = name;
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
-  }
 }
