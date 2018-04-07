@@ -8,7 +8,7 @@ using PB.BL.Domain.Items;
 
 namespace UI_MVC.Controllers
 {
-  [RequireHttps]
+    [RequireHttps]
   public class ItemController : Controller
   {
 

@@ -1,4 +1,5 @@
-﻿using PB.BL.Domain.Account;
+﻿using Domain.Settings;
+using PB.BL.Domain.Account;
 using PB.BL.Domain.Platform;
 using PB.DAL;
 using System;
@@ -66,13 +67,26 @@ namespace PB.BL
             {
                 Name = name,
                 URL = url,
-                SourceAPI = sourceAPI,
-                SiteIconURL = siteIconUrl,
                 DateOnline = DateTime.Now,
                 Style = new Style(),
                 Admins = new List<Profile>(),
-                Pages = new List<Page>()
+                Pages = new List<Page>(),
+                Settings = new List<SubplatformSetting>()
             };
+
+            if (sourceAPI != null) subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SOURCE_API_URL,
+                IsEnabled = true,
+                Value = sourceAPI
+            });
+
+            if (siteIconUrl != null) subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SITE_ICON_URL,
+                IsEnabled = true,
+                Value = siteIconUrl
+            });
 
             subplatform = AddSubplatform(subplatform);
             uowManager.Save();
@@ -111,7 +125,7 @@ namespace PB.BL
             if (subplatform == null) throw new Exception("Subplatform with id (" + subplatformId + ") doesnt exist"); //Subplatform bestaat niet
 
             subplatform.Admins.Add(admin);
-            admin.adminPlatforms.Add(subplatform);
+            admin.AdminPlatforms.Add(subplatform);
 
             SubplatformRepo.UpdateSubplatform(subplatform);
             uowManager.Save();
@@ -124,7 +138,7 @@ namespace PB.BL
 
             if (subplatform == null) throw new Exception("Subplatform with id (" + subplatformId + ") doesnt exist"); //Subplatform bestaat niet
             if (!subplatform.Admins.Remove(admin)) throw new Exception("Couldn't remove admin, maybe the admin doesn't exist?");
-            if (!admin.adminPlatforms.Remove(subplatform)) throw new Exception("Couldn't remove admin, maybe the admin doesn't exist?");
+            if (!admin.AdminPlatforms.Remove(subplatform)) throw new Exception("Couldn't remove admin, maybe the admin doesn't exist?");
 
             uowManager.Save();
         }
