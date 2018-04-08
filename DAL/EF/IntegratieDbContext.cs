@@ -21,13 +21,13 @@ namespace PB.DAL.EF
     {
         private readonly bool delaySave;
 
-    public IntegratieDbContext() : base("IntegratieDB_EFCodeFirst")
-    {
-      System.Data.Entity.Database.SetInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
-     
-    }
+        public IntegratieDbContext() : base("IntegratieDB_EFCodeFirst")
+        {
+            System.Data.Entity.Database.SetInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
 
-    public IntegratieDbContext(bool unitOfworkPresent = false) : base("IntegratieDB_EFCodeFirst")
+        }
+
+        public IntegratieDbContext(bool unitOfworkPresent = false) : base("IntegratieDB_EFCodeFirst")
         {
             System.Data.Entity.Database.SetInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
             delaySave = unitOfworkPresent;
@@ -40,50 +40,79 @@ namespace PB.DAL.EF
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Profile>().HasRequired(p => p.UserData).WithRequiredDependent(ud => ud.Profile);
-
-            modelBuilder.Entity<Record>().HasMany(r => r.Items).WithMany(i => i.Records)
-                .Map(m => { m.ToTable("tblItemRecords"); });
-
-            modelBuilder.Entity<Profile>().HasMany(p => p.Subscriptions).WithMany(i => i.SubscribedProfiles)
-                .Map(m => { m.ToTable("tblSubscriptions"); });
-
-            modelBuilder.Entity<Profile>().HasMany(p => p.adminPlatforms).WithMany(p => p.Admins)
-                .Map(m => { m.ToTable("tblSubplatformAdmins"); });
-
-            modelBuilder.Entity<Item>().HasMany(t => t.Comparisons).WithMany(t => t.Items)
-                .Map(m => { m.ToTable("tblComparisonItem"); });
-
-            modelBuilder.Entity<Item>().HasMany(t => t.Keywords).WithMany(t => t.Items)
-                .Map(m => { m.ToTable("tblKeywordItem"); });
-
-            modelBuilder.Entity<Record>().HasMany(r => r.Mentions).WithMany(m => m.records)
-                .Map(m => { m.ToTable("tblRecordMention"); });
-
-            modelBuilder.Entity<Record>().HasMany(r => r.Words).WithMany(r => r.records)
-                .Map(m => { m.ToTable("tblRecordWord"); });
-
-            modelBuilder.Entity<Record>().HasMany(r => r.Hashtags).WithMany(r => r.Records)
-                .Map(m => { m.ToTable("tblRecordHashtag"); });
-
-            modelBuilder.Entity<Record>().HasMany(r => r.URLs).WithMany(r => r.records)
-                .Map(m => { m.ToTable("tblRecordUrl"); });
-
-            modelBuilder.Entity<Record>().HasRequired(r => r.RecordPerson)
-                .WithMany(rp => rp.Records)
-                .HasForeignKey(r => r.RecordPersonId);
-
-
+            /*
+             * Database Configuration
+             */
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Properties<DateTime>()
                 .Configure(c => c.HasColumnType("datetime2"));
 
+
+            /*
+             * Primary keys, configurations, ...
+             */
             modelBuilder.Entity<Record>().Property(r => r.Tweet_Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
-            //modelBuilder.Entity<Record>().Property(r => r.Date).HasColumnType("datetime2");
+
+            /*
+             * Relations, Foreign Keys, ...
+             */
+            modelBuilder.Entity<Profile>()
+                .HasRequired(p => p.UserData)
+                .WithRequiredDependent(ud => ud.Profile);
+
+            modelBuilder.Entity<Profile>()
+                .HasMany(p => p.Subscriptions)
+                .WithMany(i => i.SubscribedProfiles)
+                .Map(m => { m.ToTable("tblSubscriptions"); });
+
+            modelBuilder.Entity<Profile>()
+                .HasMany(p => p.AdminPlatforms)
+                .WithMany(p => p.Admins)
+                .Map(m => { m.ToTable("tblSubplatformAdmins"); });
+
+            modelBuilder.Entity<Item>()
+                .HasMany(t => t.Comparisons)
+                .WithMany(t => t.Items)
+                .Map(m => { m.ToTable("tblComparisonItem"); });
+
+            modelBuilder.Entity<Item>()
+                .HasMany(t => t.Keywords)
+                .WithMany(t => t.Items)
+                .Map(m => { m.ToTable("tblKeywordItem"); });
+
+            modelBuilder.Entity<Record>()
+                .HasMany(r => r.Mentions)
+                .WithMany(m => m.Records)
+                .Map(m => { m.ToTable("tblRecordMention"); });
+
+            modelBuilder.Entity<Record>()
+                .HasMany(r => r.Words)
+                .WithMany(r => r.Records)
+                .Map(m => { m.ToTable("tblRecordWord"); });
+
+            modelBuilder.Entity<Record>()
+                .HasMany(r => r.Hashtags)
+                .WithMany(r => r.Records)
+                .Map(m => { m.ToTable("tblRecordHashtag"); });
+
+            modelBuilder.Entity<Record>()
+                .HasMany(r => r.URLs)
+                .WithMany(r => r.Records)
+                .Map(m => { m.ToTable("tblRecordUrl"); });
+
+            modelBuilder.Entity<Person>()
+                .HasMany(i => i.Records)
+                .WithMany(r => r.Persons)
+                .Map(m => { m.ToTable("tblPersonRecords"); });
+
+            modelBuilder.Entity<Theme>()
+                .HasMany(i => i.Records)
+                .WithMany(r => r.Themes)
+                .Map(m => { m.ToTable("tblThemeRecords"); });
         }
 
         public override int SaveChanges()
@@ -139,7 +168,6 @@ namespace PB.DAL.EF
         public DbSet<Url> Urls { get; set; }
         public DbSet<Word> Words { get; set; }
         public DbSet<Hashtag> Hashtags { get; set; }
-        public DbSet<RecordPerson> RecordPeople { get; set; }
 
         public DbSet<Page> Pages { get; set; }
         public DbSet<Style> Styles { get; set; }

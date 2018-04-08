@@ -18,8 +18,7 @@
                 <tr>
                   <th>@Html.DisplayNameFor(model => model.ItemId)</th>
                   <th>@Html.DisplayNameFor(model => model.IsHot)</th>
-                  <th>@Html.DisplayNameFor(model => model.FirstName)</th>
-                  <th>@Html.DisplayNameFor(model => model.LastName)</th>
+                  <th>@Html.DisplayNameFor(model => model.Name)</th>
 
                   @*<th>Start date</th>
                   <th>Salary</th>*@
@@ -32,8 +31,7 @@
                 <tr>
                   <td>@Html.DisplayFor(modelItem => item.ItemId)</td>
                   <td>@Html.DisplayFor(modelItem => item.IsHot)</td>
-                  <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
-                  <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                  <td>@Html.DisplayFor(modelItem => item.Name)</td>
                   @*<td>
                     @Html.ActionLink("EditPerson", "Edit", new { id = item.ItemId }) |
                     @Html.ActionLink("DetailsPerson", "DetailsPerson", new { id = item.ItemId }) |
