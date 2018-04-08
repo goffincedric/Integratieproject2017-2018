@@ -32,6 +32,38 @@ namespace UI_CA_Prototype
 
         public List<JClass> RequestRecords(string name, DateTime? since = null, DateTime? until = null, Dictionary<string, string[]> themes = null)
         {
+            APIQuery apiQuery = new APIQuery(name);
+            if (since != null) apiQuery.Since = since;
+            if (until != null) apiQuery.Until = until;
+            if (themes != null) apiQuery.Themes = themes;
+
+            return RequestRecords(
+                JsonConvert.SerializeObject(apiQuery, Formatting.None, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                }));
+        }
+
+        public List<JClass> RequestRecords(List<APIQuery> apiQueries)
+        {
+            List<JClass> requestedRecords = new List<JClass>();
+
+            apiQueries.ForEach(q => 
+                requestedRecords.AddRange(
+                    RequestRecords(
+                        JsonConvert.SerializeObject(q, Formatting.None, new JsonSerializerSettings
+                        {
+                            NullValueHandling = NullValueHandling.Ignore
+                        })
+                    )
+                )
+            );
+                
+            return requestedRecords;
+        }
+
+        private List<JClass> RequestRecords(string body)
+        {
             List<JClass> requestedRecords;
 
             using (HttpClient http = new HttpClient())
@@ -41,18 +73,12 @@ namespace UI_CA_Prototype
                 request.Headers.Add("Accept", "application/json");
                 request.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
 
-                //Content in APIQuery steken & in request body zetten
-                APIQuery queryObject = new APIQuery();
-                queryObject.Name = name;
-                if (since != null) queryObject.Since = since;
-                if (until != null) queryObject.Until = until;
-                if (themes != null) queryObject.Themes = themes;
+                //Content in request body zetten
 
-                string body = JsonConvert.SerializeObject(queryObject);
-
-                //request.Content = new StringContent(body, Encoding.UTF8, "application/json");
+                Console.WriteLine(body);
+                request.Content = new StringContent(body, Encoding.UTF8, "application/json");
                 //request.Content = new StringContent("{\"Name\":\"Annick De Ridder\"}", Encoding.UTF8, "application/json");
-                request.Content = new StringContent("{\"name\":\"Annick De Ridder\",\"since\":\"" + new DateTime(2018, 1, 1, 0, 0, 0).ToString() + "\",\"until\":\"" + DateTime.Now.ToString() +"\",\"themes\":{ \"religie\":[\"christian\", \"muslim\"],\"media\":[\"nieuws\",\"krant\"]}}", Encoding.UTF8, "application/json");
+                //request.Content = new StringContent("{\"name\":\"Annick De Ridder\",\"since\":\"" + new DateTime(2018, 1, 1, 0, 0, 0).ToString() + "\",\"until\":\"" + DateTime.Now.ToString() +"\",\"themes\":{ \"religie\":[\"christian\", \"muslim\"],\"media\":[\"nieuws\",\"krant\"]}}", Encoding.UTF8, "application/json");
 
                 //Request naar API zenden
                 HttpResponseMessage response = http.SendAsync(request).Result;
