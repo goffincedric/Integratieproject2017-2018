@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44342</IISExpressSSLPort>
+    <IISExpressSSLPort>44372</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -355,6 +355,10 @@
     <ProjectReference Include="..\BL\BL.csproj">
       <Project>{0121FC24-E9DD-482E-BB81-489D94710A26}</Project>
       <Name>BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{3042C4D5-5062-4029-B571-F66BF3839AA2}</Project>
+      <Name>DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{97914871-385B-4A43-AA7E-DAFD0715AEB9}</Project>

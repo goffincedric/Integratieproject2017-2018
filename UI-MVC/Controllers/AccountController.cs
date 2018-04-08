@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using PB.BL;
 using PB.BL.Domain.Account;
+using PB.DAL.EF;
 
 namespace UI_MVC.Controllers
 {
@@ -13,7 +14,9 @@ namespace UI_MVC.Controllers
   public class AccountController : Controller
   {
     private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
-    private static readonly AccountManager accountMgr = new AccountManager(uow);
+    //private static readonly IntegratieStore
+    private static IntegratieUserStore store;
+    private static readonly AccountManager accountMgr = new AccountManager(store,uow);
 
   
     public ActionResult Account()

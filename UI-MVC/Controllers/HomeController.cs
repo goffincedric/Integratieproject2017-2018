@@ -10,6 +10,8 @@ using System.Security.Principal;
 using System.Security.Cryptography;
 using System.Text;
 using System.IO;
+using PB.DAL.EF;
+using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
 {
@@ -17,7 +19,8 @@ namespace UI_MVC.Controllers
   public class HomeController : Controller
   {
     private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
-    private static readonly AccountManager accountMgr = new AccountManager(uow);
+    private static IntegratieUserStore store;
+    private static readonly AccountManager accountMgr = new AccountManager(store,uow);
 
 
 
@@ -150,25 +153,38 @@ namespace UI_MVC.Controllers
 
 
     [HttpPost]
-    public ActionResult Register(Profile newProfile)
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
+    public async System.Threading.Tasks.Task<ActionResult> Register(RegisterViewModel newProfile)
     {
-      if (accountMgr.GetProfile(newProfile.Username) != null)
-      {
-        return RedirectToAction("Signup");
-        //if username already exists
-      }
-      else
-      {
+      //if (accountMgr.GetProfile(newProfile.Username) != null)
+      //{
+      //  return RedirectToAction("Signup");
+      //  //if username already exists
+      //}
+      //else
+      //{
 
-        if (ModelState.IsValid && newProfile.ConfirmPassword.Equals(newProfile.Password))
+      //  if (ModelState.IsValid && newProfile.ConfirmPassword.Equals(newProfile.Password))
+      //  {
+      //    accountMgr.AddProfile(newProfile.UserName, newProfile.Password, newProfile.Email);
+
+      //    return RedirectToAction("Signin");
+      //  }
+      //  return RedirectToAction("Signup");
+
+
+      //}
+
+      if (ModelState.IsValid)
+      {
+        var user = new Profile
         {
-          accountMgr.AddProfile(newProfile.Username, newProfile.Password, newProfile.Email);
+          UserName = newProfile.UserName,
+          Email = newProfile.Email
 
-          return RedirectToAction("Signin");
-        }
-        return RedirectToAction("Signup");
-
-
+        };
+        var result = await accountMgr.CreateAsync(user, newProfile.Password);
       }
     }
 

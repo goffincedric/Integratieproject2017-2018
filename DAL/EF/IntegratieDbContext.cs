@@ -13,11 +13,13 @@ using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using System.Data.Entity.Validation;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 
 namespace PB.DAL.EF
 {
     [DbConfigurationType(typeof(IntegratieDbConfiguration))]
-    internal class IntegratieDbContext : System.Data.Entity.DbContext
+    public class IntegratieDbContext: IdentityDbContext<BL.Domain.Account.Profile>
     {
         private readonly bool delaySave;
 
@@ -34,6 +36,10 @@ namespace PB.DAL.EF
         }
 
 
+      public static IntegratieDbContext Create()
+    {
+      return new IntegratieDbContext();
+    }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

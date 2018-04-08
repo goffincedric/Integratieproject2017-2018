@@ -48,25 +48,25 @@ namespace PB.DAL
             return profile;
         }
 
-        public void DeleteProfile(string username)
-        {
-            Profile profile = ReadProfile(username);
-            if (profile != null)
-            {
-                ctx.Profiles.Remove(profile);
-                ctx.SaveChanges();
-            }
-        }
+    public void DeleteProfile(string username)
+    {
+      Profile profile = ReadProfile(username);
+      if (profile != null)
+      {
+        ctx.Profiles.Remove(profile);
+        ctx.SaveChanges();
+      }
+    }
 
-        public Profile ReadProfile(string username)
-        {
-            return ctx.Profiles
-                .Include("Alerts")
-                .Include("Subscriptions")
-                .FirstOrDefault(p => p.Username == username);
-        }
+    public Profile ReadProfile(string username)
+    {
+      return ctx.Profiles
+          .Include("Alerts")
+          .Include("Subscriptions")
+          .FirstOrDefault(p => p.UserName == username);
+    }
 
-        public IEnumerable<Profile> ReadProfiles()
+    public IEnumerable<Profile> ReadProfiles()
         {
             return ctx.Profiles
                 .Include("Alerts")

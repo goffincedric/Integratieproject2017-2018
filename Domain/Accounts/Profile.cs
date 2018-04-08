@@ -9,21 +9,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Account;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using System.Security.Claims;
 
 namespace PB.BL.Domain.Account
 {
     [Table("tblProfile")]
-    public class Profile
+    public class Profile: IdentityUser
     {
-        [Key]
-        public string Username { get; set; }
-        [Required]
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
-        public string Hash { get; set; }
-        public byte[] Salt { get; set; }
-        [RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")]
-        public string Email { get; set; }
+      
+  
+        //[Required]
+        //public string Password { get; set; }
+        //public string ConfirmPassword { get; set; }
+        //public string Hash { get; set; }
+        //public byte[] Salt { get; set; }
+        //[RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")]
+        //public string Email { get; set; }
         public bool IsRemember { get; set; } = false;
         public string ProfileIcon { get; set; }
         public Role Role { get; set; } = Role.USER;
@@ -35,9 +38,16 @@ namespace PB.BL.Domain.Account
         public List<Subplatform> AdminPlatforms { get; set; }
 
 
+    public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<Profile> manager)
+    {
+      var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+
+      return userIdentity;
+    }
+   
         public override string ToString()
         {
-            return Username + " - " + Email;
+            return ScreenName + " - " + Email;
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Items;
+using PB.DAL.EF;
 
 namespace UI_CA_Prototype
 {
@@ -16,7 +17,8 @@ namespace UI_CA_Prototype
     {
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private static readonly ItemManager itemMgr = new ItemManager(uow);
-        private static readonly AccountManager accountMgr = new AccountManager(uow);
+    private static IntegratieUserStore store;
+    private static readonly AccountManager accountMgr = new AccountManager(store,uow);
 
         private static readonly ExtensionMethods extensionMethods = new ExtensionMethods();
 
@@ -140,7 +142,7 @@ namespace UI_CA_Prototype
                         extensionMethods.ShowSubScribedItems(selectedProfile);
                         break;
                     case 12:
-                        newAccount();
+                        //newAccount();
                         break;
                     case 0:
                         stop = true;
@@ -154,11 +156,11 @@ namespace UI_CA_Prototype
         }
 
 
-        private static void newAccount()
-        {
-            Profile profile = extensionMethods.CreateAccount();
-            accountMgr.AddProfile(profile.Username, profile.Password, profile.Email);
-        }
+        //private static void newAccount()
+        //{
+        //    Profile profile = extensionMethods.CreateAccount();
+        //    accountMgr.AddProfile(profile.Username, profile.Password, profile.Email);
+        //}
         private static void Seed()
         {
             //Injects seed data

@@ -10,24 +10,82 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Account;
 using System.Security.Cryptography;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using PB.DAL.EF;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 
 namespace PB.BL
 {
-  public class AccountManager : IAccountManager
+  public class AccountManager: UserManager<PB.BL.Domain.Account.Profile> 
   {
+
+    private IntegratieUserStore store; 
     private IProfileRepo ProfileRepo;
     private UnitOfWorkManager uowManager;
 
-    public AccountManager()
-    {
+    //public AccountManager()
+    //{
 
-    }
+    //}
 
-    public AccountManager(UnitOfWorkManager uowMgr)
+    public AccountManager(IntegratieUserStore store, UnitOfWorkManager uowMgr):base(store)
     {
+      this.store = store;
       uowManager = uowMgr;
       ProfileRepo = new ProfileRepo(uowMgr.UnitOfWork);
+      
     }
+
+
+    public static AccountManager Create(IdentityFactoryOptions<AccountManager> options, IOwinContext context)
+    {
+      var manager = new AccountManager(new IntegratieUserStore(context.Get<IntegratieDbContext>()),new UnitOfWorkManager());
+      manager.UserValidator = new UserValidator<BL.Domain.Account.Profile>(manager)
+      {
+        AllowOnlyAlphanumericUserNames = false,
+        RequireUniqueEmail = true
+      };
+
+      manager.PasswordValidator = new PasswordValidator
+      {
+        RequiredLength = 6,
+        RequireNonLetterOrDigit = false,
+        RequireDigit = true,
+        RequireLowercase = false,
+        RequireUppercase = false
+      };
+
+      manager.UserLockoutEnabledByDefault = true;
+      manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(10);
+      manager.MaxFailedAccessAttemptsBeforeLockout = 10;
+
+      manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<PB.BL.Domain.Account.Profile>
+      {
+        MessageFormat ="Your security code is {0}"
+      });
+
+      manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<PB.BL.Domain.Account.Profile>
+      {
+        Subject ="Security code",
+        BodyFormat = "Your security Code is {0}"
+
+      });
+      //manager.EmailService = new EmailService();
+      //manager.SmsService = new SmsService();
+
+      var dataProtectionProvider = options.DataProtectionProvider; 
+      if(dataProtectionProvider != null)
+      {
+        manager.UserTokenProvider = new DataProtectorTokenProvider<BL.Domain.Account.Profile>(dataProtectionProvider.Create("ASP.NET Identity"));
+
+      }
+
+      return manager;
+
+    }
+
 
     public void initNonExistingRepo(bool createWithUnitOfWork = false)
     {
@@ -57,48 +115,48 @@ namespace PB.BL
 
 
     #region Profile
-    public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
-    {
-      initNonExistingRepo();
-      Profile profile = new Profile()
-      {
-        Username = username,
-        Email = email,
-        Role = role,
-        Password = password,
+    //public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
+    //{
+    //  initNonExistingRepo();
+    //  Profile profile = new Profile()
+    //  {
+    //    Username = username,
+    //    Email = email,
+    //    Role = role,
+    //    Password = password,
         
 
-      };
-      profile.UserData = new UserData() { Profile = profile, Username = username };
+    //  };
+    //  profile.UserData = new UserData() { Profile = profile, Username = username };
 
-      byte[] SALT = Get_SALT(15);
-      profile.Salt = SALT;
-      profile.Hash = Get_HASH_SHA512(profile.Password, profile.Username, SALT);
+    //  byte[] SALT = Get_SALT(15);
+    //  profile.Salt = SALT;
+    //  profile.Hash = Get_HASH_SHA512(profile.Password, profile.Username, SALT);
 
-      profile = AddProfile(profile);
-      uowManager.Save();
-      return profile;
-    }
+    //  profile = AddProfile(profile);
+    //  uowManager.Save();
+    //  return profile;
+    //}
 
-    public Profile AddProfile(string username, string password, string hash, byte[] Salt, string email, Role role = Role.USER)
-    {
-      initNonExistingRepo();
-      Profile profile = new Profile()
-      {
-        Username = username,
-        Email = email,
-        Role = role,
-        Password = password,
-        Hash = hash,
-        Salt = Salt,
+    //public Profile AddProfile(string username, string password, string hash, byte[] Salt, string email, Role role = Role.USER)
+    //{
+    //  initNonExistingRepo();
+    //  Profile profile = new Profile()
+    //  {
+    //    Username = username,
+    //    Email = email,
+    //    Role = role,
+    //    Password = password,
+    //    Hash = hash,
+    //    Salt = Salt,
     
-      };
-      profile.UserData = new UserData() { Profile = profile, Username = username };
+    //  };
+    //  profile.UserData = new UserData() { Profile = profile, Username = username };
 
-      profile = AddProfile(profile);
-      uowManager.Save();
-      return profile;
-    }
+    //  profile = AddProfile(profile);
+    //  uowManager.Save();
+    //  return profile;
+    //}
 
     private Profile AddProfile(Profile profile)
     {
