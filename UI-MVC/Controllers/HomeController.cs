@@ -12,6 +12,13 @@ using System.Text;
 using System.IO;
 using PB.DAL.EF;
 using UI_MVC.Models;
+using Microsoft.AspNet.Identity;
+
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
+
+using Microsoft.Owin.Security;
+using System.Net;
 
 namespace UI_MVC.Controllers
 {
@@ -21,7 +28,7 @@ namespace UI_MVC.Controllers
     private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
     private static IntegratieUserStore store;
     private static readonly AccountManager accountMgr = new AccountManager(store,uow);
-
+    private static readonly IntegratieSignInManager signInManager = new IntegratieSignInManager(accountMgr, new AuthenticationManager());
 
 
     public ActionResult ChangeProfilePic()
@@ -185,6 +192,15 @@ namespace UI_MVC.Controllers
 
         };
         var result = await accountMgr.CreateAsync(user, newProfile.Password);
+
+        if (result.Succeeded)
+        {
+          //string code = await UserManager.Generate
+          
+          await IntegratieSignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+          return RedirectToAction("SignIn", "Home");
+        }
+        return View(newProfile);
       }
     }
 
@@ -208,68 +224,68 @@ namespace UI_MVC.Controllers
     }
 
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Signin(Profile entity)
-    {
-      string OldHASHValue = string.Empty;
-      byte[] SALT = new byte[15];
-      try
-      {
+    //[HttpPost]
+    //[ValidateAntiForgeryToken]
+    //public ActionResult Signin(Profile entity)
+    //{
+    //  string OldHASHValue = string.Empty;
+    //  byte[] SALT = new byte[15];
+    //  try
+    //  {
 
-        // Ensure we have a valid viewModel to work with
+    //    // Ensure we have a valid viewModel to work with
 
 
-        if (!ModelState.IsValid)
-        {
+    //    if (!ModelState.IsValid)
+    //    {
        
-          return View(entity);
-        }
-        else
-        {
+    //      return View(entity);
+    //    }
+    //    else
+    //    {
 
-          //Retrive Stored HASH Value From Database According To Username (one unique field)
-          var userInfo = accountMgr.GetProfile(entity.Username);
+    //      //Retrive Stored HASH Value From Database According To Username (one unique field)
+    //      var userInfo = accountMgr.GetProfile(entity.Username);
 
-          //Assign HASH Value
-          if (userInfo != null)
-          {
-            OldHASHValue = userInfo.Hash;
-            SALT = userInfo.Salt;
-          }
+    //      //Assign HASH Value
+    //      if (userInfo != null)
+    //      {
+    //        OldHASHValue = userInfo.Hash;
+    //        SALT = userInfo.Salt;
+    //      }
 
-          bool isLogin = accountMgr.CompareHashValue(entity.Password, entity.Username, OldHASHValue, SALT);
+    //      bool isLogin = accountMgr.CompareHashValue(entity.Password, entity.Username, OldHASHValue, SALT);
 
-          if (isLogin)
-          {
-            //Login Success
-            //For Set Authentication in Cookie (Remeber ME Option)
-            SignInRemember(entity.Username, entity.IsRemember);
+    //      if (isLogin)
+    //      {
+    //        //Login Success
+    //        //For Set Authentication in Cookie (Remeber ME Option)
+    //        SignInRemember(entity.Username, entity.IsRemember);
 
-            //Set A Unique ID in session
-            Session["UserName"] = userInfo.Username;
+    //        //Set A Unique ID in session
+    //        Session["UserName"] = userInfo.Username;
 
 
-            // If we got this far, something failed, redisplay form
-            // return RedirectToAction("Index", "Dashboard");
+    //        // If we got this far, something failed, redisplay form
+    //        // return RedirectToAction("Index", "Dashboard");
            
-            return RedirectToAction("Index");
-          }
-          else
-          {
-            //Login Fail
-            //TempData["ErrorMSG"] = "Access Denied! Wrong Credential";
+    //        return RedirectToAction("Index");
+    //      }
+    //      else
+    //      {
+    //        //Login Fail
+    //        //TempData["ErrorMSG"] = "Access Denied! Wrong Credential";
 
-            return View(entity);
-          }
+    //        return View(entity);
+    //      }
 
-        }
-      }
-      catch
-      {
-        throw;
-      }
-    }
+    //    }
+    //  }
+    //  catch
+    //  {
+    //    throw;
+    //  }
+    //}
    
 
     [HttpPost]
