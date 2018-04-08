@@ -105,8 +105,6 @@ namespace UI_CA_Prototype
             };
 
             return newProfile;
-
-
         }
 
         //Method to test write functionality of JsonConvert (read written json file on desktop for record-object structure)

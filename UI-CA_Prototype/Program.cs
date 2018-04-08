@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Items;
+using Domain.JSONConversion;
 
 namespace UI_CA_Prototype
 {
@@ -27,7 +28,7 @@ namespace UI_CA_Prototype
         {
             //Injects seed data
             //Seed data structure deprecated
-            //Seed();
+            Seed();
 
             //Menu
             while (!stop)
@@ -66,14 +67,6 @@ namespace UI_CA_Prototype
             }
         }
 
-        private static void testSearch()
-        {
-            //List<Profile> test =  accountMgr.searchUsers();
-
-            // test.ForEach(t => Console.WriteLine(t.Username)); 
-            JsonConvert.DeserializeObject<List<Record>>(File.ReadAllText(@"TestData\textgaindump.json")).ForEach(r => Console.WriteLine(r.ToString()));
-        }
-
         private static void DetectMenuAction()
         {
             bool inValidAction = false;
@@ -109,23 +102,6 @@ namespace UI_CA_Prototype
                         Console.WriteLine("Nieuwe seed data toegevoegd");
                         break;
                     case 7:
-                        APICalls restClient = new APICalls()
-                        {
-                            API_URL = "http://kdg.textgain.com/query"
-                        };
-                        itemMgr.JClassToRecord(restClient.RequestRecords("Annick De Ridder"));
-                        //itemMgr.JClassToRecord(restClient.RequestRecords("Caroline Bastiaens"));
-                        //itemMgr.JClassToRecord(restClient.RequestRecords("Jan Bertels"));
-                        //itemMgr.JClassToRecord(restClient.RequestRecords("Vera Celis"));
-                        //itemMgr.JClassToRecord(restClient.RequestRecords("Dirk De Kort"));
-                        //itemMgr.JClassToRecord(restClient.RequestRecords("Imade Annouri"));
-                        //itemMgr.JClassToRecord(restClient.RequestRecords("Caroline Gennez"));
-                        //itemMgr.JClassToRecord(restClient.RequestRecords("Kathleen Helsen"));
-                        //itemMgr.JClassToRecord(restClient.RequestRecords("Marc Hendrickx"));
-                        //itemMgr.JClassToRecord(restClient.RequestRecords("Jan Hofkens"));
-                        //itemMgr.JClassToRecord(restClient.RequestRecords("Yasmine Kherbache"));
-                        //itemMgr.JClassToRecord(restClient.RequestRecords("Kathleen Krekels"));
-                        //itemMgr.JClassToRecord(restClient.RequestRecords("Ingrid Pira"));
                         break;
                     case 8:
                         itemMgr.GenerateProfileAlerts(selectedProfile);
@@ -161,8 +137,51 @@ namespace UI_CA_Prototype
         }
         private static void Seed()
         {
-            //Injects seed data
-            itemMgr.Seed();
+            //Injects api seed data
+            APICalls restClient = new APICalls()
+            {
+                API_URL = "http://kdg.textgain.com/query"
+            };
+
+            //Individueel api aanspreken
+            List<JClass> requestedRecords = new List<JClass>();
+            requestedRecords.AddRange(restClient.RequestRecords("Annick De Ridder"));
+            requestedRecords.AddRange(restClient.RequestRecords("Caroline Bastiaens"));
+            requestedRecords.AddRange(restClient.RequestRecords("Jan Bertels"));
+            requestedRecords.AddRange(restClient.RequestRecords("Vera Celis"));
+            requestedRecords.AddRange(restClient.RequestRecords("Dirk De Kort"));
+            requestedRecords.AddRange(restClient.RequestRecords("Imade Annouri"));
+            requestedRecords.AddRange(restClient.RequestRecords("Caroline Gennez"));
+            requestedRecords.AddRange(restClient.RequestRecords("Kathleen Helsen"));
+            requestedRecords.AddRange(restClient.RequestRecords("Marc Hendrickx"));
+            requestedRecords.AddRange(restClient.RequestRecords("Jan Hofkens"));
+            requestedRecords.AddRange(restClient.RequestRecords("Yasmine Kherbache"));
+            requestedRecords.AddRange(restClient.RequestRecords("Kathleen Krekels"));
+            requestedRecords.AddRange(restClient.RequestRecords("Ingrid Pira"));
+            itemMgr.JClassToRecord(requestedRecords);
+
+            // Api aanspreken via collectie
+            //List<APIQuery> apiQueries = new List<APIQuery>()
+            //{
+            //    new APIQuery("Annick De Ridder"),
+            //    new APIQuery("Caroline Bastiaens"),
+            //    new APIQuery("Jan Bertels"),
+            //    new APIQuery("Vera Celis"),
+            //    new APIQuery("Dirk De Kort"),
+            //    new APIQuery("Imade Annouri"),
+            //    new APIQuery("Caroline Gennez"),
+            //    new APIQuery("Kathleen Helsen"),
+            //    new APIQuery("Marc Hendrickx"),
+            //    new APIQuery("Jan Hofkens"),
+            //    new APIQuery("Yasmine Kherbache"),
+            //    new APIQuery("Kathleen Krekels"),
+            //    new APIQuery("Ingrid Pira")
+            //};
+            //itemMgr.JClassToRecord(restClient.RequestRecords(apiQueries));
+
+
+            //Old seed method, deprecated json structure
+            //itemMgr.Seed();
             //accountMgr.Seed();
             //accountMgr.SubscribeProfiles(itemMgr.GetItems());
         }
