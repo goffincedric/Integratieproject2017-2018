@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PB.BL.Domain.Account;
 
 namespace PB.DAL.EF
 {
@@ -14,7 +11,9 @@ namespace PB.DAL.EF
 
     public IntegratieUserStore(IntegratieDbContext context) : base(context)
     {
+      System.Console.WriteLine("USERSTORE MADE");
       this.context = context;
+
     }
 
 
@@ -29,6 +28,10 @@ namespace PB.DAL.EF
       return context;
     }
 
+    public List<Profile> ReadAllProfiles()
+    {
+      return context.Users.ToList();
+    }
 
 
   }

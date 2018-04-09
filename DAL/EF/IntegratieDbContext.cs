@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Data.Entity.Infrastructure.Annotations;
 using Domain.Items;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Dashboards;
@@ -18,7 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PB.DAL.EF
 {
-    [DbConfigurationType(typeof(IntegratieDbConfiguration))]
+  [DbConfigurationType(typeof(IntegratieDbConfiguration))]
     public class IntegratieDbContext: IdentityDbContext<BL.Domain.Account.Profile>
     {
         private readonly bool delaySave;

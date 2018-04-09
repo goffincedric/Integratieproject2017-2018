@@ -24,7 +24,7 @@ namespace PB.DAL
         public RecordRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-            Console.WriteLine("UOW MADE RECORD REPO");
+            Console.WriteLine("UOW MADE RECORDREPO");
         }
 
         public Record CreateRecord(Record record)

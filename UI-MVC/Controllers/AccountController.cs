@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -12,23 +13,22 @@ using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
 {
-
   [RequireHttps]
   public class AccountController : Controller
   {
     private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
 
-    private AccountManager accountMgr;
-    private IntegratieSignInManager signInManager;
+    private AccountManager _accountMgr;
+    private IntegratieSignInManager _signInManager;
 
     public AccountController()
     {
-
+     
     }
 
     public AccountController(AccountManager userManager, IntegratieSignInManager signInManager)
     {
-      UserManager = userManager;
+      
       SignInManager = signInManager;
     }
 
@@ -36,11 +36,11 @@ namespace UI_MVC.Controllers
     {
       get
       {
-        return signInManager ?? HttpContext.GetOwinContext().Get<IntegratieSignInManager>();
+        return _signInManager ?? HttpContext.GetOwinContext().Get<IntegratieSignInManager>();
       }
       private set
       {
-        signInManager = value;
+        _signInManager = value;
       }
     }
 
@@ -48,11 +48,11 @@ namespace UI_MVC.Controllers
     {
       get
       {
-        return accountMgr ?? HttpContext.GetOwinContext().GetUserManager<AccountManager>();
+        return _accountMgr ?? HttpContext.GetOwinContext().GetUserManager<AccountManager>();
       }
       private set
       {
-        accountMgr = value;
+        _accountMgr = value;
       }
     }
 
@@ -69,12 +69,6 @@ namespace UI_MVC.Controllers
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Login(LoginViewModel model)
     {
-      //var status = CheckRCaptcha();
-
-      //if (status == false)
-      //{
-      //  return View();
-      //}
 
       if (!ModelState.IsValid)
       {
@@ -103,7 +97,7 @@ namespace UI_MVC.Controllers
     public ActionResult Register()
     {
       RegisterViewModel registerViewModel = new RegisterViewModel();
-     
+
       return View(registerViewModel);
     }
 
@@ -115,28 +109,29 @@ namespace UI_MVC.Controllers
     {
       if (ModelState.IsValid)
       {
-        var user = new Profile { UserName = model.UserName, Email = model.Email, };
-        user.UserData = new UserData() { Profile = user };
-        var result = await UserManager.CreateAsync(user, model.Password);
-        if (result.Succeeded)
-        {
-          ////Add claim to user
-          //await UserManager.AddClaimAsync(user.Id, new Claim(ClaimTypes.DateOfBirth, model.BirthDate.ToShortDateString()));
-          ////Send an email with this link
-          //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-          //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-          //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-          //Assign Role to user    
-          await UserManager.AddToRoleAsync(user.Id, "User");
-          //Login
-          await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+        
+       
+          var user = new Profile { UserName = model.UserName, Email = model.Email, };
+          user.UserData = new UserData() { Profile = user };
+          var result = await this.UserManager.CreateAsync(user, model.Password);
+          if (result.Succeeded)
+          {
+            
+            await UserManager.AddClaimAsync(user.Id, new Claim("UserName", user.UserName));
+            //Assign Role to user    
+            await UserManager.AddToRoleAsync(user.Id, "User");
+            //Login
+            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-          return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
+          }
+          AddErrors(result);
+
+
         }
-        AddErrors(result);
-
-
-      }
+      
+   
+       
       return View(model);
     }
 
@@ -149,39 +144,40 @@ namespace UI_MVC.Controllers
     }
 
 
-    //public ActionResult Account()
-    //{
+    
+    public ActionResult Account()
+    {
 
-    //  Profile profile;
-    //  if (Session["UserName"] != null)
-    //  {
-    //    profile = accountMgr.GetProfile(Session["UserName"].ToString());
+      Profile profile;
+      if (User.Identity.GetUserName() != null)
+      {
+        profile = _accountMgr.GetProfile(User.Identity.GetUserName());
 
-    //  }
-    //  else
-    //  {
-    //    profile = null;
-    //  }
-
-
-    //  return View(profile);
-    //}
-
-    //[HttpPost]
-    //public ActionResult Account(Profile newprofile)
-    //{
-    //  if (ModelState.IsValid)
-    //  {
-    //    accountMgr.ChangeProfile(newprofile);
-    //    Console.WriteLine("werkt");
-    //    return View(newprofile);
-
-    //  }
+      }
+      else
+      {
+        profile = null;
+      }
 
 
-    //  Console.WriteLine("Modelfout");
-    //  return View();
-    //}
+      return View(profile);
+    }
+
+    [HttpPost]
+    public ActionResult Account(Profile newprofile)
+    {
+      if (ModelState.IsValid)
+      {
+        _accountMgr.ChangeProfile(newprofile);
+        Console.WriteLine("werkt");
+        return View(newprofile);
+
+      }
+
+
+      Console.WriteLine("Modelfout");
+      return View();
+    }
 
 
 

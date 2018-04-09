@@ -20,7 +20,7 @@ namespace UI_MVC.Controllers
     {
       uow = new UnitOfWorkManager();
       itemMgr = new ItemManager(uow);
-      itemMgr.Seed();
+     
     }
     public ActionResult ItemTables()
     {
