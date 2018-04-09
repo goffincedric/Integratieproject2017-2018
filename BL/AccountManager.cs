@@ -47,7 +47,8 @@ namespace PB.BL
       
       //UowManager = uowMgr;
       this.store = store;
-      ProfileRepo profileRepo = new ProfileRepo(UowManager.UnitOfWork);
+      initNonExistingRepo(true);
+       //ProfileRepo profileRepo = new ProfileRepo(UowManager.UnitOfWork);
       CreateRolesandUsers();
 
 
@@ -79,19 +80,19 @@ namespace PB.BL
       manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(10);
       manager.MaxFailedAccessAttemptsBeforeLockout = 10;
 
-      manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<PB.BL.Domain.Account.Profile>
-      {
-        MessageFormat = "Your security code is {0}"
-      });
+      //manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<PB.BL.Domain.Account.Profile>
+      //{
+      //  MessageFormat = "Your security code is {0}"
+      //});
 
-      manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<PB.BL.Domain.Account.Profile>
-      {
-        Subject = "Security code",
-        BodyFormat = "Your security Code is {0}"
+      //manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<PB.BL.Domain.Account.Profile>
+      //{
+      //  Subject = "Security code",
+      //  BodyFormat = "Your security Code is {0}"
 
-      });
-      manager.EmailService = new EmailService();
-      manager.SmsService = new SmsService();
+      //});
+      //manager.EmailService = new EmailService();
+      //manager.SmsService = new SmsService();
 
       var dataProtectionProvider = options.DataProtectionProvider;
       if (dataProtectionProvider != null)
@@ -164,7 +165,7 @@ namespace PB.BL
         else
         {
           ProfileRepo = new ProfileRepo();
-          Console.WriteLine("OLD WAY REPO ITEMMGR");
+          Console.WriteLine("OLD WAY REPO ACCOUNTMGR");
         }
       }
     }
@@ -181,7 +182,7 @@ namespace PB.BL
         Email = email,
 
       };
-      profile.UserData = new UserData() { Profile = profile };
+      profile.UserData = new UserData() { Profile = profile, Id="766" };
 
       profile = AddProfile(profile);
       UowManager.Save();

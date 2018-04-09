@@ -13,6 +13,7 @@ using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
 {
+  [Authorize]
   [RequireHttps]
   public class AccountController : Controller
   {
@@ -23,14 +24,14 @@ namespace UI_MVC.Controllers
 
     public AccountController()
     {
-     
+
     }
 
     public AccountController(AccountManager userManager, IntegratieSignInManager signInManager)
     {
 
-      SignInManager = signInManager;
       UserManager = userManager;
+      SignInManager = signInManager;
     }
 
     public IntegratieSignInManager SignInManager
@@ -61,7 +62,6 @@ namespace UI_MVC.Controllers
     [AllowAnonymous]
     public ActionResult Login()
     {
-
       return View();
     }
 
@@ -81,7 +81,7 @@ namespace UI_MVC.Controllers
       {
         case SignInStatus.Success:
 
-          return RedirectToAction("Index");
+          return RedirectToAction("Index", "Home");
         case SignInStatus.LockedOut:
           return View("Lockout");
         //case SignInStatus.RequiresVerification:
@@ -110,29 +110,21 @@ namespace UI_MVC.Controllers
     {
       if (ModelState.IsValid)
       {
-        
-       
-          var user = new Profile { UserName = model.UserName, Email = model.Email, };
-          user.UserData = new UserData() { Profile = user };
-          var result = await this.UserManager.CreateAsync(user, model.Password);
-          if (result.Succeeded)
-          {
-            
-            await UserManager.AddClaimAsync(user.Id, new Claim("UserName", user.UserName));
-            //Assign Role to user    
-            await UserManager.AddToRoleAsync(user.Id, "User");
-            //Login
-            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+        var user = new Profile { UserName = model.Username, Email = model.Email, };
+        user.UserData = new UserData() { Profile = user, Id="666"};
+        var result = await UserManager.CreateAsync(user, model.Password);
+        if (result.Succeeded)
+        {
+          //Assign Role to user    
+          //await UserManager.AddToRoleAsync(user.Id, "User");
 
-            return RedirectToAction("Index", "Home");
-          }
-          AddErrors(result);
+          //Login
+          await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-
+          return RedirectToAction("Index", "Home");
         }
-      
-   
-       
+        AddErrors(result);
+      }
       return View(model);
     }
 
@@ -145,40 +137,40 @@ namespace UI_MVC.Controllers
     }
 
 
-    
-    public ActionResult Account()
-    {
 
-      Profile profile;
-      if (User.Identity.GetUserName() != null)
-      {
-        profile = _accountMgr.GetProfile(User.Identity.GetUserName());
+    //public ActionResult Account()
+    //{
 
-      }
-      else
-      {
-        profile = null;
-      }
+    //  Profile profile;
+    //  if (User.Identity.GetUserName() != null)
+    //  {
+    //    profile = _accountMgr.GetProfile(User.Identity.GetUserName());
 
-
-      return View(profile);
-    }
-
-    [HttpPost]
-    public ActionResult Account(Profile newprofile)
-    {
-      if (ModelState.IsValid)
-      {
-        _accountMgr.ChangeProfile(newprofile);
-        Console.WriteLine("werkt");
-        return View(newprofile);
-
-      }
+    //  }
+    //  else
+    //  {
+    //    profile = null;
+    //  }
 
 
-      Console.WriteLine("Modelfout");
-      return View();
-    }
+    //  return View(profile);
+    //}
+
+    //[HttpPost]
+    //public ActionResult Account(Profile newprofile)
+    //{
+    //  if (ModelState.IsValid)
+    //  {
+    //    _accountMgr.ChangeProfile(newprofile);
+    //    Console.WriteLine("werkt");
+    //    return View(newprofile);
+
+    //  }
+
+
+    //  Console.WriteLine("Modelfout");
+    //  return View();
+    //}
 
 
 

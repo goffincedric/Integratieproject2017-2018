@@ -59,11 +59,11 @@ namespace UI_MVC.Controllers
     {
       if (Session["UserName"] == null)
       {
-        return Content("Login/Signup");
+        return Content("LogIn/Register");
       }
       else
       {
-        return Content("Logout");
+        return Content("LogOut");
       }
     }
 
@@ -71,7 +71,7 @@ namespace UI_MVC.Controllers
     {
       if (Session["UserName"] == null)
       {
-        return Content("/account/login");
+        return Content("/Account/Login");
       }
       else
       {

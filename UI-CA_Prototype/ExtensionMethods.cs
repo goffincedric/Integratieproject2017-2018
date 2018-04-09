@@ -85,7 +85,7 @@ namespace UI_CA_Prototype
         }
 
 
-<<<<<<< HEAD
+
         //public Profile CreateAccount()
         //{
         //    string AccountName = "";
@@ -98,40 +98,16 @@ namespace UI_CA_Prototype
         //    Console.Write("Password: ");
         //    password = Console.ReadLine();
 
-        //    //Profile newProfile = new Profile()
-        //    //{
-        //    //    UserName = AccountName,
-        //    //    Email = email,
-        //    //    Pas = password
-        //    //};
+        //    Profile newProfile = new Profile()
+        //    {
+        //        Username = AccountName,
+        //        Email = email,
+        //        Password = password
+        //    };
 
         //    return newProfile;
-
-
         //}
-=======
-        public Profile CreateAccount()
-        {
-            string AccountName = "";
-            string email = "";
-            string password = "";
-            Console.Write("Accountname: ");
-            AccountName = Console.ReadLine();
-            Console.Write("Email: ");
-            email = Console.ReadLine();
-            Console.Write("Password: ");
-            password = Console.ReadLine();
 
-            Profile newProfile = new Profile()
-            {
-                Username = AccountName,
-                Email = email,
-                Password = password
-            };
-
-            return newProfile;
-        }
->>>>>>> master
 
         //Method to test write functionality of JsonConvert (read written json file on desktop for record-object structure)
         public void WriteTestRecords()

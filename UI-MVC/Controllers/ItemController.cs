@@ -8,7 +8,8 @@ using PB.BL.Domain.Items;
 
 namespace UI_MVC.Controllers
 {
-    [RequireHttps]
+  [RequireHttps]
+  [Authorize(Roles = "User,Admin,SuperAdmin")]
   public class ItemController : Controller
   {
 
@@ -20,11 +21,11 @@ namespace UI_MVC.Controllers
     {
       uow = new UnitOfWorkManager();
       itemMgr = new ItemManager(uow);
-     
+
     }
     public ActionResult ItemTables()
     {
-      IEnumerable<Person> persons = itemMgr.GetPersons(); 
+      IEnumerable<Person> persons = itemMgr.GetPersons();
       return View(persons);
     }
   }

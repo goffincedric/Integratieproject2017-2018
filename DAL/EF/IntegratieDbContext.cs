@@ -153,10 +153,9 @@ namespace PB.DAL.EF
       throw new InvalidOperationException("Geen UnitOfWork presented, gebruik SaveChanges in de plaats");
     }
 
-    // public DbSet<Profile> Profiles { get; set; }
+
     public DbSet<UserData> UserData { get; set; }
     public DbSet<UserSetting> UserSettings { get; set; }
-
     public DbSet<Comparison> Comparisons { get; set; }
     public DbSet<Dashboard> Dashboards { get; set; }
     public DbSet<Element> Elements { get; set; }
