@@ -28,8 +28,9 @@ namespace UI_MVC.Controllers
 
     public AccountController(AccountManager userManager, IntegratieSignInManager signInManager)
     {
-      
+
       SignInManager = signInManager;
+      UserManager = userManager;
     }
 
     public IntegratieSignInManager SignInManager
