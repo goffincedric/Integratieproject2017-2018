@@ -119,7 +119,15 @@ namespace PB.DAL.EF
                 .HasMany(i => i.Records)
                 .WithMany(r => r.Themes)
                 .Map(m => { m.ToTable("tblThemeRecords"); });
-        }
+
+
+      //identity tables
+      modelBuilder.Entity<Profile>().ToTable("tblProfile");
+      modelBuilder.Entity<IdentityUserRole>().ToTable("tblUserRole");
+      modelBuilder.Entity<IdentityUserLogin>().ToTable("tblUserLogin");
+      modelBuilder.Entity<IdentityRole>().ToTable("tblRole");
+      modelBuilder.Entity<IdentityUserClaim>().ToTable("tblUserClaim");
+    }
 
         public override int SaveChanges()
         {
@@ -151,7 +159,7 @@ namespace PB.DAL.EF
             throw new InvalidOperationException("Geen UnitOfWork presented, gebruik SaveChanges in de plaats");
         }
 
-        public DbSet<Profile> Profiles { get; set; }
+       // public DbSet<Profile> Profiles { get; set; }
         public DbSet<UserData> UserData { get; set; }
         public DbSet<UserSetting> UserSettings { get; set; }
 

@@ -22,7 +22,7 @@ namespace PB.BL
   {
 
     private IntegratieUserStore store; 
-    private IProfileRepo ProfileRepo;
+   // private IProfileRepo ProfileRepo;
     private UnitOfWorkManager uowManager;
 
     //public AccountManager()
@@ -30,18 +30,20 @@ namespace PB.BL
 
     //}
 
-    public AccountManager(IntegratieUserStore store, UnitOfWorkManager uowMgr):base(store)
+    public AccountManager(IntegratieUserStore store):base(store)
     {
       this.store = store;
-      uowManager = uowMgr;
-      ProfileRepo = new ProfileRepo(uowMgr.UnitOfWork);
-      
+      //uowManager = uowMgr;
+      //ProfileRepo = new ProfileRepo(uowMgr.UnitOfWork);
+      CreateRolesandUsers();
+
+
     }
 
 
     public static AccountManager Create(IdentityFactoryOptions<AccountManager> options, IOwinContext context)
     {
-      var manager = new AccountManager(new IntegratieUserStore(context.Get<IntegratieDbContext>()),new UnitOfWorkManager());
+      var manager = new AccountManager(new IntegratieUserStore(context.Get<IntegratieDbContext>()));
       manager.UserValidator = new UserValidator<BL.Domain.Account.Profile>(manager)
       {
         AllowOnlyAlphanumericUserNames = false,
@@ -72,8 +74,8 @@ namespace PB.BL
         BodyFormat = "Your security Code is {0}"
 
       });
-      //manager.EmailService = new EmailService();
-      //manager.SmsService = new SmsService();
+      manager.EmailService = new EmailService();
+      manager.SmsService = new SmsService();
 
       var dataProtectionProvider = options.DataProtectionProvider; 
       if(dataProtectionProvider != null)
@@ -86,32 +88,70 @@ namespace PB.BL
 
     }
 
-
-    public void initNonExistingRepo(bool createWithUnitOfWork = false)
+    public List<IdentityRole> GetAllRoles()
     {
-      if (ProfileRepo == null)
-      {
-        if (createWithUnitOfWork)
-        {
-          if (uowManager == null)
-          {
-            uowManager = new UnitOfWorkManager();
-            Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
-          }
-          else
-          {
-            Console.WriteLine("uo bestaat al");
-          }
+      return store.ReadAllRoles();
+    }
 
-          ProfileRepo = new ProfileRepo(uowManager.UnitOfWork);
-        }
-        else
-        {
-          ProfileRepo = new ProfileRepo();
-          Console.WriteLine("OLD WAY REPO ITEMMGR");
-        }
+    private void CreateRolesandUsers()
+    {
+      IntegratieDbContext context = store.ReadContext();
+
+      var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
+      if (!roleManager.RoleExists("SuperAdmin"))
+      {
+        //Create SuperAdmin role
+        var role = new IdentityRole();
+        role.Name = "SuperAdmin";
+        roleManager.Create(role);
+
+      }
+
+      //Create Admin role
+      if (!roleManager.RoleExists("Admin"))
+      {
+        var role = new IdentityRole();
+        role.Name = "Admin";
+        roleManager.Create(role);
+
+      }
+      //Create User role   
+      if (!roleManager.RoleExists("User"))
+      {
+        var role = new IdentityRole();
+        role.Name = "User";
+        roleManager.Create(role);
+
       }
     }
+  
+
+    //public void initNonExistingRepo(bool createWithUnitOfWork = false)
+    //{
+    //  if (ProfileRepo == null)
+    //  {
+    //    if (createWithUnitOfWork)
+    //    {
+    //      if (uowManager == null)
+    //      {
+    //        uowManager = new UnitOfWorkManager();
+    //        Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
+    //      }
+    //      else
+    //      {
+    //        Console.WriteLine("uo bestaat al");
+    //      }
+
+    //      ProfileRepo = new ProfileRepo(uowManager.UnitOfWork);
+    //    }
+    //    else
+    //    {
+    //      ProfileRepo = new ProfileRepo();
+    //      Console.WriteLine("OLD WAY REPO ITEMMGR");
+    //    }
+    //  }
+    //}
 
 
     #region Profile
@@ -158,39 +198,39 @@ namespace PB.BL
     //  return profile;
     //}
 
-    private Profile AddProfile(Profile profile)
-    {
-      initNonExistingRepo();
-      Profile newProfile = ProfileRepo.CreateProfile(profile);
-      uowManager.Save();
-      return profile;
-    }
+    //private Profile AddProfile(Profile profile)
+    //{
+    //  initNonExistingRepo();
+    //  Profile newProfile = ProfileRepo.CreateProfile(profile);
+    //  uowManager.Save();
+    //  return profile;
+    //}
 
-    public void ChangeProfile(Profile profile)
-    {
-      initNonExistingRepo();
-      ProfileRepo.UpdateProfile(profile);
-      uowManager.Save();
-    }
+    //public void ChangeProfile(Profile profile)
+    //{
+    //  initNonExistingRepo();
+    //  ProfileRepo.UpdateProfile(profile);
+    //  uowManager.Save();
+    //}
 
-    public Profile GetProfile(string username)
-    {
-      initNonExistingRepo();
-      return ProfileRepo.ReadProfile(username);
-    }
+    //public Profile GetProfile(string username)
+    //{
+    //  initNonExistingRepo();
+    //  return ProfileRepo.ReadProfile(username);
+    //}
 
-    public IEnumerable<Profile> GetProfiles()
-    {
-      initNonExistingRepo();
-      return ProfileRepo.ReadProfiles();
-    }
+    //public IEnumerable<Profile> GetProfiles()
+    //{
+    //  initNonExistingRepo();
+    //  return ProfileRepo.ReadProfiles();
+    //}
 
-    public void RemoveProfile(string username)
-    {
-      initNonExistingRepo();
-      ProfileRepo.DeleteProfile(username);
-      uowManager.Save();
-    }
+    //public void RemoveProfile(string username)
+    //{
+    //  initNonExistingRepo();
+    //  ProfileRepo.DeleteProfile(username);
+    //  uowManager.Save();
+    //}
     #endregion
 
     #region Seed
@@ -279,16 +319,16 @@ namespace PB.BL
     //}
     #endregion
 
-    public void LinkAlertsToProfile(List<Alert> alerts)
-    {
-      alerts.ForEach(a =>
-      {
-        a.Profile.Alerts.Add(a);
-        ProfileRepo.UpdateProfile(a.Profile);
-      });
+    //public void LinkAlertsToProfile(List<Alert> alerts)
+    //{
+    //  alerts.ForEach(a =>
+    //  {
+    //    a.Profile.Alerts.Add(a);
+    //    ProfileRepo.UpdateProfile(a.Profile);
+    //  });
 
-      uowManager.Save();
-    }
+    //  uowManager.Save();
+    //}
 
     #region passwordEncryption
     private byte[] Get_SALT(int maximumSaltLength)

@@ -12,9 +12,16 @@ namespace UI_MVC.Controllers
   public class ItemController : Controller
   {
 
-    private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
-    private static readonly ItemManager itemMgr = new ItemManager(uow);
+    private UnitOfWorkManager uow;
+    private ItemManager itemMgr;
 
+
+    public ItemController()
+    {
+      uow = new UnitOfWorkManager();
+      itemMgr = new ItemManager(uow);
+      itemMgr.Seed();
+    }
     public ActionResult ItemTables()
     {
       IEnumerable<Person> persons = itemMgr.GetPersons(); 

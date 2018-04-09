@@ -17,8 +17,8 @@ namespace UI_CA_Prototype
     {
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private static readonly ItemManager itemMgr = new ItemManager(uow);
-    private static IntegratieUserStore store;
-    private static readonly AccountManager accountMgr = new AccountManager(store,uow);
+    //private static IntegratieUserStore store;
+    //private static readonly AccountManager accountMgr = new AccountManager(store,uow);
 
         private static readonly ExtensionMethods extensionMethods = new ExtensionMethods();
 
@@ -91,17 +91,17 @@ namespace UI_CA_Prototype
                         extensionMethods.WriteTestRecords();
                         break;
                     case 2:
-                        selectedProfile = extensionMethods.SelectProfile(accountMgr.GetProfiles()); ;
+                        //selectedProfile = extensionMethods.SelectProfile(accountMgr.GetProfiles()); ;
                         break;
                     case 3:
                         if (selectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
                         selectedProfile.Subscriptions.Add(extensionMethods.SelectItem(itemMgr.GetItems()));
-                        accountMgr.ChangeProfile(selectedProfile);
+                       // accountMgr.ChangeProfile(selectedProfile);
                         break;
                     case 4:
                         if (selectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
                         selectedProfile.Subscriptions.Remove(extensionMethods.SelectItem(selectedProfile.Subscriptions));
-                        accountMgr.ChangeProfile(selectedProfile);
+                       // accountMgr.ChangeProfile(selectedProfile);
                         break;
                     case 5:
                         itemMgr.CheckTrend();

@@ -17,6 +17,7 @@ namespace PB.DAL.EF
       this.context = context;
     }
 
+
     public List<IdentityRole> ReadAllRoles()
     {
       return context.Roles.Where(x => !x.Name.Contains("Admin")).ToList();

@@ -15,7 +15,7 @@ using System.Security.Claims;
 
 namespace PB.BL.Domain.Account
 {
-    [Table("tblProfile")]
+    //[Table("tblProfile")]
     public class Profile: IdentityUser
     {
       
@@ -27,9 +27,9 @@ namespace PB.BL.Domain.Account
         //public byte[] Salt { get; set; }
         //[RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")]
         //public string Email { get; set; }
-        public bool IsRemember { get; set; } = false;
+        //public bool IsRemember { get; set; } = false;
         public string ProfileIcon { get; set; }
-        public Role Role { get; set; } = Role.USER;
+        //public Role Role { get; set; } = Role.USER;
         public UserData UserData { get; set; }
         public List<UserSetting> Settings { get; set; }
         public Dictionary<Subplatform, Dashboard> Dashboards { get; set; }
@@ -47,7 +47,7 @@ namespace PB.BL.Domain.Account
    
         public override string ToString()
         {
-            return ScreenName + " - " + Email;
+            return UserName + " - " + Email;
         }
     }
 }
