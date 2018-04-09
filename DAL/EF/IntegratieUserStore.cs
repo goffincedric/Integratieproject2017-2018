@@ -5,7 +5,7 @@ using PB.BL.Domain.Account;
 
 namespace PB.DAL.EF
 {
-  public class IntegratieUserStore : UserStore<BL.Domain.Account.Profile>
+  public class IntegratieUserStore : UserStore<Profile>
   {
     private IntegratieDbContext context;
 
@@ -33,6 +33,10 @@ namespace PB.DAL.EF
       return context.Users.ToList();
     }
 
-
+    public string ReadUserName(string AccountId)
+    {
+      Profile user = context.Users.Where(x => x.Id == AccountId).SingleOrDefault();
+      return user.UserName;
+    }
   }
 }

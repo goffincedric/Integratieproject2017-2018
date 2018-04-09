@@ -18,6 +18,8 @@ using Microsoft.Owin;
 
 namespace PB.BL
 {
+  //This class talks with the SupportCenterUserStore and tells it which
+  //data to store, it also handles some logic and settings
   public class AccountManager : UserManager<PB.BL.Domain.Account.Profile>
   {
 
@@ -25,26 +27,39 @@ namespace PB.BL
     private IProfileRepo ProfileRepo;
     private UnitOfWorkManager UowManager;
 
-   
 
-    public AccountManager(IntegratieUserStore store, UnitOfWorkManager uowMgr) : base(store)
+
+    //public AccountManager(IntegratieUserStore store, UnitOfWorkManager uowMgr) : base(store)
+    //{
+    //Console.WriteLine("Gebruik accountmanager constructor met store and uow");
+    //  UowManager = uowMgr;
+    //  this.store = store;
+    //  ProfileRepo profileRepo = new ProfileRepo(UowManager.UnitOfWork);
+
+    //  CreateRolesandUsers();
+
+
+    //}
+    public AccountManager(IntegratieUserStore store) : base(store)
     {
+
+      Console.WriteLine("Gebruik accountmanager constructor met store");
       
-      UowManager = uowMgr;
+      //UowManager = uowMgr;
       this.store = store;
       ProfileRepo profileRepo = new ProfileRepo(UowManager.UnitOfWork);
-
       CreateRolesandUsers();
 
 
     }
 
 
+
     public static AccountManager Create(IdentityFactoryOptions<AccountManager> options, IOwinContext context)
     {
- 
+      Console.WriteLine("Create accountmanager wordt gedaan");
 
-      var manager = new AccountManager(new IntegratieUserStore(context.Get<IntegratieDbContext>()), new UnitOfWorkManager());
+      var manager = new AccountManager(new IntegratieUserStore(context.Get<IntegratieDbContext>()));
       manager.UserValidator = new UserValidator<BL.Domain.Account.Profile>(manager)
       {
         AllowOnlyAlphanumericUserNames = false,

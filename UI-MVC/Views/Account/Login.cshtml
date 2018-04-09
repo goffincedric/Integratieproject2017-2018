@@ -1,5 +1,8 @@
-﻿@model UI_MVC.Models.LoginViewModel
-
+﻿@using UI_MVC.Models
+@model UI_MVC.Models.LoginViewModel
+@{
+  ViewBag.Title = "Log In";
+}
 
 @{
   Layout = null;
@@ -67,34 +70,37 @@
       @using (Html.BeginForm("Login", "Account", FormMethod.Post))
       {
         @Html.AntiForgeryToken()
-        <form>
-          <div class="form-group">
-            <label class="text-normal text-dark">Username</label>
-            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "John Doe" } })
-            @*<input type="email" class="form-control" placeholder="John Doe">*@
-          </div>
-          <div class="form-group">
-            <label class="text-normal text-dark">Password</label>
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password", @type = "password" } })
-            @*<input type="password" class="form-control" placeholder="Password">*@
-          </div>
-          <div class="form-group">
-            <div class="peers ai-c jc-sb fxw-nw">
-              <div class="peer">
-                <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                  @Html.CheckBoxFor(model => model.RememberMe, new { @class = "peer", @id = "inputCall1", @name = "IsRemember" })
+      <form>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+          <label class="text-normal text-dark">Username</label>
+          @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "John Doe" } })
+          @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+          @*<input type="email" class="form-control" placeholder="John Doe">*@
+        </div>
+        <div class="form-group">
+          <label class="text-normal text-dark">Password</label>
+          @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password", @type = "password" } })
+          @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+          @*<input type="password" class="form-control" placeholder="Password">*@
+        </div>
+        <div class="form-group">
+          <div class="peers ai-c jc-sb fxw-nw">
+            <div class="peer">
+              <div class="checkbox checkbox-circle checkbox-info peers ai-c">
+                @Html.CheckBoxFor(model => model.RememberMe, new { htmlAttributes = new { @class = "peer", @id = "inputCall1", @name = "IsRemember" } })
 
 
-                  <label for="IsRemember" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Remember Me</span></label>
-                </div>
+                <label for="IsRemember" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Remember Me</span></label>
               </div>
-              <div class="peer"><button value="Login" class="btn btn-primary">Login</button></div>
             </div>
+            <div class="peer"><button value="Log In" type="submit" class="btn btn-primary">Login</button></div>
           </div>
-          <div class="peer">
-            <span><a href="@Url.Action("Register", "Account")">Nog geen account? Registreer je hier!</a></span>
-          </div>
-        </form>
+        </div>
+        <div class="peer">
+          <span><a href="@Url.Action("Register", "Account")">Nog geen account? Registreer je hier!</a></span>
+        </div>
+      </form>
 
 
 

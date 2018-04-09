@@ -8,9 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 namespace PB.BL
 {
+  //This class is used for the authentication of the user, it uses
+  //the SupportCenterUserManager which it gets trough its constructor
   public class IntegratieSignInManager: SignInManager<BL.Domain.Account.Profile, string>
   {
-    public IntegratieSignInManager(AccountManager accountManager, IAuthenticationManager authenticationManager) : base(accountManager, authenticationManager)
+    public IntegratieSignInManager(AccountManager userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager)
     {
 
     }

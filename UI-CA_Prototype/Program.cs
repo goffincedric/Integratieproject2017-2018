@@ -9,7 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Items;
+<<<<<<< HEAD
 using PB.DAL.EF;
+=======
+using Domain.JSONConversion;
+>>>>>>> master
 
 namespace UI_CA_Prototype
 {
@@ -26,11 +30,19 @@ namespace UI_CA_Prototype
     private static bool stop = false;
     private static Profile selectedProfile = null;
 
+<<<<<<< HEAD
     static void Main(string[] args)
     {
       //Injects seed data
       //Seed data structure deprecated
       //Seed();
+=======
+        static void Main(string[] args)
+        {
+            //Injects seed data
+            //Seed data structure deprecated
+            Seed();
+>>>>>>> master
 
       //Menu
       while (!stop)
@@ -59,6 +71,7 @@ namespace UI_CA_Prototype
         {
           DetectMenuAction();
         }
+<<<<<<< HEAD
         catch (Exception e)
         {
           Console.WriteLine();
@@ -76,6 +89,70 @@ namespace UI_CA_Prototype
       // test.ForEach(t => Console.WriteLine(t.Username)); 
       JsonConvert.DeserializeObject<List<Record>>(File.ReadAllText(@"TestData\textgaindump.json")).ForEach(r => Console.WriteLine(r.ToString()));
     }
+=======
+
+        private static void DetectMenuAction()
+        {
+            bool inValidAction = false;
+            do
+            {
+                Console.Write("Keuze: ");
+                int keuze = int.Parse(Console.ReadLine());
+                Console.WriteLine("\n");
+
+                switch (keuze)
+                {
+                    case 1:
+                        extensionMethods.WriteTestRecords();
+                        break;
+                    case 2:
+                        selectedProfile = extensionMethods.SelectProfile(accountMgr.GetProfiles()); ;
+                        break;
+                    case 3:
+                        if (selectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
+                        selectedProfile.Subscriptions.Add(extensionMethods.SelectItem(itemMgr.GetItems()));
+                        accountMgr.ChangeProfile(selectedProfile);
+                        break;
+                    case 4:
+                        if (selectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
+                        selectedProfile.Subscriptions.Remove(extensionMethods.SelectItem(selectedProfile.Subscriptions));
+                        accountMgr.ChangeProfile(selectedProfile);
+                        break;
+                    case 5:
+                        itemMgr.CheckTrend();
+                        break;
+                    case 6:
+                        itemMgr.Seed(false);
+                        Console.WriteLine("Nieuwe seed data toegevoegd");
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        itemMgr.GenerateProfileAlerts(selectedProfile);
+                        break;
+                    case 9:
+                        extensionMethods.ShowRecords(itemMgr.GetRecords());
+                        break;
+                    case 10:
+                        extensionMethods.ShowPersons(itemMgr.GetPersons());
+                        break;
+                    case 11:
+                        extensionMethods.ShowSubScribedItems(selectedProfile);
+                        break;
+                    case 12:
+                        newAccount();
+                        break;
+                    case 0:
+                        stop = true;
+                        return;
+                    default:
+                        Console.WriteLine("Geen geldige keuze!");
+                        inValidAction = true;
+                        break;
+                }
+            } while (inValidAction);
+        }
+>>>>>>> master
 
     private static void DetectMenuAction()
     {
@@ -88,6 +165,7 @@ namespace UI_CA_Prototype
 
         switch (keuze)
         {
+<<<<<<< HEAD
           case 1:
             extensionMethods.WriteTestRecords();
             break;
@@ -152,6 +230,55 @@ namespace UI_CA_Prototype
             Console.WriteLine("Geen geldige keuze!");
             inValidAction = true;
             break;
+=======
+            //Injects api seed data
+            APICalls restClient = new APICalls()
+            {
+                API_URL = "http://kdg.textgain.com/query"
+            };
+
+            //Individueel api aanspreken
+            List<JClass> requestedRecords = new List<JClass>();
+            requestedRecords.AddRange(restClient.RequestRecords("Annick De Ridder"));
+            requestedRecords.AddRange(restClient.RequestRecords("Caroline Bastiaens"));
+            requestedRecords.AddRange(restClient.RequestRecords("Jan Bertels"));
+            requestedRecords.AddRange(restClient.RequestRecords("Vera Celis"));
+            requestedRecords.AddRange(restClient.RequestRecords("Dirk De Kort"));
+            requestedRecords.AddRange(restClient.RequestRecords("Imade Annouri"));
+            requestedRecords.AddRange(restClient.RequestRecords("Caroline Gennez"));
+            requestedRecords.AddRange(restClient.RequestRecords("Kathleen Helsen"));
+            requestedRecords.AddRange(restClient.RequestRecords("Marc Hendrickx"));
+            requestedRecords.AddRange(restClient.RequestRecords("Jan Hofkens"));
+            requestedRecords.AddRange(restClient.RequestRecords("Yasmine Kherbache"));
+            requestedRecords.AddRange(restClient.RequestRecords("Kathleen Krekels"));
+            requestedRecords.AddRange(restClient.RequestRecords("Ingrid Pira"));
+            itemMgr.JClassToRecord(requestedRecords);
+
+            // Api aanspreken via collectie
+            //List<APIQuery> apiQueries = new List<APIQuery>()
+            //{
+            //    new APIQuery("Annick De Ridder"),
+            //    new APIQuery("Caroline Bastiaens"),
+            //    new APIQuery("Jan Bertels"),
+            //    new APIQuery("Vera Celis"),
+            //    new APIQuery("Dirk De Kort"),
+            //    new APIQuery("Imade Annouri"),
+            //    new APIQuery("Caroline Gennez"),
+            //    new APIQuery("Kathleen Helsen"),
+            //    new APIQuery("Marc Hendrickx"),
+            //    new APIQuery("Jan Hofkens"),
+            //    new APIQuery("Yasmine Kherbache"),
+            //    new APIQuery("Kathleen Krekels"),
+            //    new APIQuery("Ingrid Pira")
+            //};
+            //itemMgr.JClassToRecord(restClient.RequestRecords(apiQueries));
+
+
+            //Old seed method, deprecated json structure
+            //itemMgr.Seed();
+            //accountMgr.Seed();
+            //accountMgr.SubscribeProfiles(itemMgr.GetItems());
+>>>>>>> master
         }
       } while (inValidAction);
     }

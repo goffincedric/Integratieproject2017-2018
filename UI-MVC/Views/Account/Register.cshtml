@@ -1,5 +1,8 @@
 ﻿﻿@model UI_MVC.Models.RegisterViewModel
 @{
+  ViewBag.Title = "Register";
+}
+@{
   Layout = null;
 }
 <!DOCTYPE html>
@@ -65,6 +68,7 @@
       {
         @Html.AntiForgeryToken()
         <form>
+          @Html.ValidationSummary("", new { @class = "text-danger" })
           <div class="form-group">
             <label class="text-normal text-dark">Username</label>
             @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "John Doe" } })
