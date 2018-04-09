@@ -21,7 +21,7 @@ namespace PB.DAL
         public ItemRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-            Console.WriteLine("UOW MADE ITEMREPO");
+            //Console.WriteLine("UOW MADE ITEMREPO");
         }
 
         public Item CreateItem(Item item)
@@ -56,6 +56,7 @@ namespace PB.DAL
         {
             return ctx.Persons
                 .Include("Records")
+                .Include("SubPlatforms")
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
@@ -63,17 +64,24 @@ namespace PB.DAL
         {
             return ctx.Persons
                 .Include("Records")
+                .Include("SubPlatforms")
                 .AsEnumerable();
         }
 
         public Item ReadItem(int itemId)
         {
-            return ctx.Items.FirstOrDefault(p => p.ItemId == itemId);
+            return ctx.Items
+                .Include("Records")
+                .Include("SubPlatforms")
+                .FirstOrDefault(p => p.ItemId == itemId);
         }
 
         public IEnumerable<Item> ReadItems()
         {
-            return ctx.Items.AsEnumerable();
+            return ctx.Items
+                .Include("Records")
+                .Include("SubPlatforms")
+                .AsEnumerable();
         }
 
         public void UpdateItem(Item item)

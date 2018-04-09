@@ -38,11 +38,11 @@ namespace PB.BL
           if (uowManager == null)
           {
             uowManager = new UnitOfWorkManager();
-            Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
+            //Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
           }
           else
           {
-            Console.WriteLine("uo bestaat al");
+            //Console.WriteLine("uo bestaat al");
           }
 
           ProfileRepo = new ProfileRepo(uowManager.UnitOfWork);
@@ -50,7 +50,7 @@ namespace PB.BL
         else
         {
           ProfileRepo = new ProfileRepo();
-          Console.WriteLine("OLD WAY REPO ITEMMGR");
+          //Console.WriteLine("OLD WAY REPO ITEMMGR");
         }
       }
     }

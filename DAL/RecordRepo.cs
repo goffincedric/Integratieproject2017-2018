@@ -24,7 +24,7 @@ namespace PB.DAL
         public RecordRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-            Console.WriteLine("UOW MADE RECORD REPO");
+            //Console.WriteLine("UOW MADE RECORD REPO");
         }
 
         public Record CreateRecord(Record record)
@@ -35,7 +35,7 @@ namespace PB.DAL
         }
 
 
-        public List<Record> CreateRecords(List<Record> records)
+        public IEnumerable<Record> CreateRecords(IEnumerable<Record> records)
         {
             ctx.Records.AddRange(records);
             ctx.SaveChanges();
@@ -45,6 +45,12 @@ namespace PB.DAL
         public void DeleteRecord(long id)
         {
             ctx.Records.Remove(ReadRecord(id));
+            ctx.SaveChanges();
+        }
+
+        public void DeleteRecords(IEnumerable<Record> records)
+        {
+            ctx.Records.RemoveRange(records);
             ctx.SaveChanges();
         }
 
@@ -126,7 +132,8 @@ namespace PB.DAL
 
         public List<JClass> Seed(bool even)
         {
-            return JsonConvert.DeserializeObject<List<JClass>>(File.ReadAllText(@"TestData\textgaindump.json")).ToList().Where(r => (even) ? r.Id % 2 == 0 : r.Id % 2 != 0).ToList();
+            throw new Exception("Method is deprecated due to new structure json data; See new API Calls method.");
+            //return JsonConvert.DeserializeObject<List<JClass>>(File.ReadAllText(@"TestData\textgaindump.json")).ToList().Where(r => (even) ? r.Id % 2 == 0 : r.Id % 2 != 0).ToList();
 
             //List<Mention> allMentions = ctx.Mentions.ToList();
             //List<Word> allWords = ctx.Words.ToList();

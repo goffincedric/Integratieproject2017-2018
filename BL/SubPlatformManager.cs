@@ -1,5 +1,6 @@
 ﻿using Domain.Settings;
 using PB.BL.Domain.Account;
+using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using PB.DAL;
 using System;
@@ -35,11 +36,11 @@ namespace PB.BL
                     if (uowManager == null)
                     {
                         uowManager = new UnitOfWorkManager();
-                        Console.WriteLine("UOW MADE IN SUBPLATFORM MANAGER");
+                        //Console.WriteLine("UOW MADE IN SUBPLATFORM MANAGER");
                     }
                     else
                     {
-                        Console.WriteLine("uo bestaat al");
+                        //Console.WriteLine("uo bestaat al");
                     }
 
                     SubplatformRepo = new SubplatformRepo(uowManager.UnitOfWork);
@@ -47,7 +48,7 @@ namespace PB.BL
                 else
                 {
                     SubplatformRepo = new SubplatformRepo();
-                    Console.WriteLine("OLD WAY REPO SUBPLATFORMMGR");
+                    //Console.WriteLine("OLD WAY REPO SUBPLATFORMMGR");
                 }
             }
         }
@@ -60,16 +61,18 @@ namespace PB.BL
             return SubplatformRepo.ReadSubplatforms();
         }
 
-        public Subplatform AddSubplatform(string name, string url, string sourceAPI = null, string siteIconUrl = null)
+        public Subplatform AddSubplatform(string name, string shortName, string url, string sourceAPI = null, string siteIconUrl = null)
         {
             initNonExistingRepo();
             Subplatform subplatform = new Subplatform()
             {
                 Name = name,
+                ShortName = shortName,
                 URL = url,
                 DateOnline = DateTime.Now,
                 Style = new Style(),
                 Admins = new List<Profile>(),
+                Items = new List<Item>(),
                 Pages = new List<Page>(),
                 Settings = new List<SubplatformSetting>()
             };

@@ -20,8 +20,6 @@ namespace PB.BL.Domain.Items
         public string Name { get; set; }
         public bool IsHot { get; set; }
 
-        public int SubplatformId { get; set; }
-
         public List<Subplatform> SubPlatforms { get; set; }
         public List<Keyword> Keywords { get; set; }
         public List<Comparison> Comparisons { get; set; }

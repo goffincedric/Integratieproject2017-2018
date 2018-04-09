@@ -21,7 +21,7 @@ namespace PB.DAL
         public ProfileRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-            Console.WriteLine("UOW MADE PROFILEREPO");
+            //Console.WriteLine("UOW MADE PROFILEREPO");
         }
 
         public Profile CreateProfile(Profile profile)

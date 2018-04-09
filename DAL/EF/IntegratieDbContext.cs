@@ -45,7 +45,7 @@ namespace PB.DAL.EF
              */
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            //modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Properties<DateTime>()
                 .Configure(c => c.HasColumnType("datetime2"));
 
@@ -75,14 +75,19 @@ namespace PB.DAL.EF
                 .Map(m => { m.ToTable("tblSubplatformAdmins"); });
 
             modelBuilder.Entity<Item>()
-                .HasMany(t => t.Comparisons)
-                .WithMany(t => t.Items)
+                .HasMany(i => i.Comparisons)
+                .WithMany(c => c.Items)
                 .Map(m => { m.ToTable("tblComparisonItem"); });
 
             modelBuilder.Entity<Item>()
                 .HasMany(t => t.Keywords)
-                .WithMany(t => t.Items)
+                .WithMany(k => k.Items)
                 .Map(m => { m.ToTable("tblKeywordItem"); });
+
+            modelBuilder.Entity<Item>()
+                .HasMany(i => i.SubPlatforms)
+                .WithMany(s => s.Items)
+                .Map(m => { m.ToTable("tblSubplatformItem"); });
 
             modelBuilder.Entity<Record>()
                 .HasMany(r => r.Mentions)

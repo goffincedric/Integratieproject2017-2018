@@ -1,5 +1,6 @@
 ﻿using Domain.Items;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace Domain.JSONConversion
         public List<double> Geo { get; set; }
         public long Id { get; set; }
         public bool Retweet { get; set; }
+
+        public List<Subplatform> Subplatforms { get; set; }
         
         public JClass(RecordProfile profile, List<string> words, List<double> sentiment, string source, List<string> hashtags, List<string> mentions, List<string> uRLs, List<string> themes, List<string> persons, DateTime date, dynamic geo, long id, bool retweet)
         {
@@ -39,6 +42,8 @@ namespace Domain.JSONConversion
             Geo = (geo is bool)?null:geo.ToObject<List<double>>();
             Id = id;
             Retweet = retweet;
+
+            Subplatforms = new List<Subplatform>();
         }
     }
 }

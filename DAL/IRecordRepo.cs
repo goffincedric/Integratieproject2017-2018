@@ -17,10 +17,11 @@ namespace PB.DAL
         IEnumerable<Url> ReadUrls();
 
         Record CreateRecord(Record record);
-        List<Record> CreateRecords(List<Record> records);
+        IEnumerable<Record> CreateRecords(IEnumerable<Record> records);
         Record ReadRecord(long id);
         void UpdateRecord(Record record);
         void DeleteRecord(long id);
+        void DeleteRecords(IEnumerable<Record> records);
 
         List<JClass> Seed(bool even);
     }

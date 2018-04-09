@@ -1,56 +1,65 @@
-﻿using Newtonsoft.Json;
-using PB.BL;
+﻿using PB.BL;
 using PB.BL.Domain.Account;
-using PB.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Items;
 using Domain.JSONConversion;
+using Mono.Options;
+using PB.BL.Domain.Platform;
+using PB.BL.Domain.Items;
 
 namespace UI_CA_Prototype
 {
     class Program
     {
-        private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
-        private static readonly ItemManager itemMgr = new ItemManager(uow);
-        private static readonly AccountManager accountMgr = new AccountManager(uow);
+        private static bool WillSeed = true;
+        private static OptionSet CLIOptions;
 
-        private static readonly ExtensionMethods extensionMethods = new ExtensionMethods();
+        private static readonly UnitOfWorkManager Uow = new UnitOfWorkManager();
+        private static readonly ItemManager ItemMgr = new ItemManager(Uow);
+        private static readonly AccountManager AccountMgr = new AccountManager(Uow);
+        private static readonly SubplatformManager SubplatformMgr = new SubplatformManager(Uow);
 
-        private static bool stop = false;
-        private static Profile selectedProfile;
+        private static readonly ExtensionMethods ExtensionMethods = new ExtensionMethods();
+
+        private static bool Stop = false;
+        private static Profile SelectedProfile;
+        private static Subplatform SelectedSubplatform;
 
         static void Main(string[] args)
         {
+            //Handles CLI options/args and acts accordingly
+            HandleCLIArgs(args);
+
             //Injects seed data
-            //Seed data structure deprecated
-            Seed();
+            if (WillSeed) Seed();
 
             //Menu
-            while (!stop)
+            while (!Stop)
             {
                 Console.WriteLine("=======================================");
                 Console.WriteLine("=== Prototype - Politieke barometer ===");
                 Console.WriteLine("=======================================");
-                Console.WriteLine("Huidige account: " + selectedProfile);
+                Console.WriteLine("Huidig subplatform: " + SelectedSubplatform);
+                Console.WriteLine("Huidig account: " + SelectedProfile);
                 Console.WriteLine("=======================================");
                 Console.WriteLine("1) Schrijf testrecords naar desktop");
                 Console.WriteLine("2) Selecteer account");
-                Console.WriteLine("3) Voeg subscription toe");
-                Console.WriteLine("4) Verwijder subscription");
-                Console.WriteLine("5) Show Gemiddelde tweets/Dag per persoon voorbij 14 dagen");
-                Console.WriteLine("6) Voeg 2de deel record data toe");
-                Console.WriteLine("7) Voeg API data toe");
-                Console.WriteLine("8) Voeg alerts to aan selected profile");
+                Console.WriteLine("3) Selecteer subplatform");
+                Console.WriteLine("4) Voeg subscription toe");
+                Console.WriteLine("5) Verwijder subscription");
+                Console.WriteLine("6) Show Gemiddelde tweets/Dag per persoon voorbij 14 dagen");
+                Console.WriteLine("7) Verwijder oude records uit database");
+                Console.WriteLine("8) Voeg API data toe");
+                Console.WriteLine("9) Voeg alerts to aan selected profile");
                 Console.WriteLine("---------------- Info -----------------");
-                Console.WriteLine("9) Toon alle records");
-                Console.WriteLine("10) Toon alle persons");
-                Console.WriteLine("11) Toon subscribed items van geselecteerd profiel");
-                Console.WriteLine("12) Maak nieuw account");
+                Console.WriteLine("10) Toon alle records");
+                Console.WriteLine("11) Toon alle persons");
+                Console.WriteLine("12) Toon subscribed items van geselecteerd profiel");
+                Console.WriteLine("13) Maak nieuw account");
                 Console.WriteLine("0) Afsluiten");
 
                 try
@@ -67,6 +76,67 @@ namespace UI_CA_Prototype
             }
         }
 
+        private static void HandleCLIArgs(string[] args)
+        {
+            List<Subplatform> subplatformsToClear = new List<Subplatform>();
+            //Available CLI options
+            CLIOptions = new OptionSet {
+                {"n|no-seed", "Will not use seed data to seed the database", ns => WillSeed = (ns == null) },
+                {"c|cleanup-db=", "Clean the database of old records for the given subplatforms", cdb => {
+                        Subplatform subplatform = SubplatformMgr.GetSubplatforms().First(s => s.ShortName.ToLower().Equals(cdb.ToLower()));
+                        subplatformsToClear.Add(subplatform);
+                    }
+                },
+                { "h|help", "Shows this message and exit", h => ShowHelp() },
+            };
+
+            List<string> extra;
+            try
+            {
+                //Parse the command line
+                extra = CLIOptions.Parse(args);
+            }
+            catch (OptionException e)
+            {
+                //Output parsing error message (ex. expects number but gets char)
+                Console.Write(AppDomain.CurrentDomain.FriendlyName + ": ");
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Try '" + AppDomain.CurrentDomain.FriendlyName + " --help' for more information.");
+                Environment.Exit(1);
+            }
+            
+            if (subplatformsToClear.Count != 0)
+            {
+                try
+                {
+                    subplatformsToClear.ForEach(s =>
+                    {
+                        ItemMgr.CleanupOldRecords(s);
+                    });
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.Write("Press any key to exit...");
+                    Console.ReadKey();
+                    Environment.Exit(1);
+                }
+                Console.WriteLine("Done");
+                Environment.Exit(0);
+            }
+        }
+
+        private static void ShowHelp()
+        {
+            //Show app description
+            Console.WriteLine("Usage: " + AppDomain.CurrentDomain.FriendlyName + ".exe [OPTIONS]\n");
+
+            //Output the CLI options
+            Console.WriteLine("Options:");
+            CLIOptions.WriteOptionDescriptions(Console.Out);
+            Environment.Exit(0);
+        }
+
         private static void DetectMenuAction()
         {
             bool inValidAction = false;
@@ -79,47 +149,52 @@ namespace UI_CA_Prototype
                 switch (keuze)
                 {
                     case 1:
-                        extensionMethods.WriteTestRecords();
+                        ExtensionMethods.WriteTestRecords();
                         break;
                     case 2:
-                        selectedProfile = extensionMethods.SelectProfile(accountMgr.GetProfiles()); ;
+                        SelectedProfile = ExtensionMethods.SelectProfile(AccountMgr.GetProfiles());
                         break;
                     case 3:
-                        if (selectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
-                        selectedProfile.Subscriptions.Add(extensionMethods.SelectItem(itemMgr.GetItems()));
-                        accountMgr.ChangeProfile(selectedProfile);
+                        SelectedSubplatform = ExtensionMethods.SelectSubplatform(SubplatformMgr.GetSubplatforms());
                         break;
                     case 4:
-                        if (selectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
-                        selectedProfile.Subscriptions.Remove(extensionMethods.SelectItem(selectedProfile.Subscriptions));
-                        accountMgr.ChangeProfile(selectedProfile);
+                        if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
+                        SelectedProfile.Subscriptions.Add(ExtensionMethods.SelectItem(ItemMgr.GetItems()));
+                        AccountMgr.ChangeProfile(SelectedProfile);
                         break;
                     case 5:
-                        itemMgr.CheckTrend();
+                        if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
+                        SelectedProfile.Subscriptions.Remove(ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
+                        AccountMgr.ChangeProfile(SelectedProfile);
                         break;
                     case 6:
-                        itemMgr.Seed(false);
-                        Console.WriteLine("Nieuwe seed data toegevoegd");
+                        ItemMgr.CheckTrend();
                         break;
                     case 7:
+                        if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
+                        ItemMgr.CleanupOldRecords(SelectedSubplatform);
                         break;
                     case 8:
-                        itemMgr.GenerateProfileAlerts(selectedProfile);
+                        Seed();
                         break;
                     case 9:
-                        extensionMethods.ShowRecords(itemMgr.GetRecords());
+                        ItemMgr.GenerateProfileAlerts(SelectedProfile);
                         break;
                     case 10:
-                        extensionMethods.ShowPersons(itemMgr.GetPersons());
+                        ExtensionMethods.ShowRecords(ItemMgr.GetRecords());
                         break;
                     case 11:
-                        extensionMethods.ShowSubScribedItems(selectedProfile);
+                        ExtensionMethods.ShowPersons(ItemMgr.GetPersons());
                         break;
                     case 12:
-                        newAccount();
+                        ExtensionMethods.ShowSubScribedItems(SelectedProfile);
+                        break;
+                    case 13:
+                        Profile profile = ExtensionMethods.CreateAccount();
+                        AccountMgr.AddProfile(profile.Username, profile.Password, profile.Email);
                         break;
                     case 0:
-                        stop = true;
+                        Stop = true;
                         return;
                     default:
                         Console.WriteLine("Geen geldige keuze!");
@@ -129,14 +204,21 @@ namespace UI_CA_Prototype
             } while (inValidAction);
         }
 
-
-        private static void newAccount()
-        {
-            Profile profile = extensionMethods.CreateAccount();
-            accountMgr.AddProfile(profile.Username, profile.Password, profile.Email);
-        }
         private static void Seed()
         {
+            //Makes PB subplatform
+            Subplatform PBSubplatform = new Subplatform()
+            {
+                Name = "Politieke Barometer",
+                ShortName = "PB",
+                URL = "DUMMYURL",
+                DateOnline = DateTime.Now,
+                Settings = new List<SubplatformSetting>(),
+                Admins = new List<Profile>(),
+                Items = new List<Item>(),
+                Pages = new List<Page>()
+            };
+
             //Injects api seed data
             APICalls restClient = new APICalls()
             {
@@ -158,7 +240,10 @@ namespace UI_CA_Prototype
             requestedRecords.AddRange(restClient.RequestRecords("Yasmine Kherbache"));
             requestedRecords.AddRange(restClient.RequestRecords("Kathleen Krekels"));
             requestedRecords.AddRange(restClient.RequestRecords("Ingrid Pira"));
-            itemMgr.JClassToRecord(requestedRecords);
+
+            //Convert JClass to Record and persist to database
+            requestedRecords.ForEach(r => r.Subplatforms.Add(PBSubplatform));
+            ItemMgr.JClassToRecord(requestedRecords);
 
             // Api aanspreken via collectie
             //List<APIQuery> apiQueries = new List<APIQuery>()
