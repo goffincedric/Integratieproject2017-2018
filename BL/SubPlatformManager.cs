@@ -61,13 +61,12 @@ namespace PB.BL
             return SubplatformRepo.ReadSubplatforms();
         }
 
-        public Subplatform AddSubplatform(string name, string shortName, string url, string sourceAPI = null, string siteIconUrl = null)
+        public Subplatform AddSubplatform(string name, string url, string sourceAPI = null, string siteIconUrl = null)
         {
             initNonExistingRepo();
             Subplatform subplatform = new Subplatform()
             {
                 Name = name,
-                ShortName = shortName,
                 URL = url,
                 DateOnline = DateTime.Now,
                 Style = new Style(),

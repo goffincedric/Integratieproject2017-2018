@@ -18,8 +18,6 @@ namespace PB.BL.Domain.Platform
         [Required]
         public string Name { get; set; }
         [Required]
-        public string ShortName { get; set; }
-        [Required]
         public string URL { get; set; }
         // string s1 = client.DownloadString("http://google.com"); 
         // Dit kijkt na of je site correct is en gooit 404 als die geen deftige pagina kan ophalen
@@ -32,7 +30,7 @@ namespace PB.BL.Domain.Platform
 
         public override string ToString()
         {
-            return Name + " (" + ShortName + ") - " + URL;
+            return Name + " - " + URL;
         }
     }
 }
