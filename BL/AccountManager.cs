@@ -10,24 +10,139 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Account;
 using System.Security.Cryptography;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using PB.DAL.EF;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 
 namespace PB.BL
 {
-  public class AccountManager : IAccountManager
+  //This class talks with the SupportCenterUserStore and tells it which
+  //data to store, it also handles some logic and settings
+  public class AccountManager : UserManager<PB.BL.Domain.Account.Profile>
   {
+
+    private IntegratieUserStore store;
     private IProfileRepo ProfileRepo;
-    private UnitOfWorkManager uowManager;
+    private UnitOfWorkManager UowManager;
 
-    public AccountManager()
+
+
+    //public AccountManager(IntegratieUserStore store, UnitOfWorkManager uowMgr) : base(store)
+    //{
+    //Console.WriteLine("Gebruik accountmanager constructor met store and uow");
+    //  UowManager = uowMgr;
+    //  this.store = store;
+    //  ProfileRepo profileRepo = new ProfileRepo(UowManager.UnitOfWork);
+
+    //  CreateRolesandUsers();
+
+
+    //}
+    public AccountManager(IntegratieUserStore store) : base(store)
     {
+
+      Console.WriteLine("Gebruik accountmanager constructor met store");
+      
+      //UowManager = uowMgr;
+      this.store = store;
+      initNonExistingRepo(true);
+       //ProfileRepo profileRepo = new ProfileRepo(UowManager.UnitOfWork);
+      CreateRolesandUsers();
+
 
     }
 
-    public AccountManager(UnitOfWorkManager uowMgr)
+
+
+    public static AccountManager Create(IdentityFactoryOptions<AccountManager> options, IOwinContext context)
     {
-      uowManager = uowMgr;
-      ProfileRepo = new ProfileRepo(uowMgr.UnitOfWork);
+      Console.WriteLine("Create accountmanager wordt gedaan");
+
+      var manager = new AccountManager(new IntegratieUserStore(context.Get<IntegratieDbContext>()));
+      manager.UserValidator = new UserValidator<BL.Domain.Account.Profile>(manager)
+      {
+        AllowOnlyAlphanumericUserNames = false,
+        RequireUniqueEmail = true
+      };
+
+      manager.PasswordValidator = new PasswordValidator
+      {
+        RequiredLength = 6,
+        RequireNonLetterOrDigit = false,
+        RequireDigit = true,
+        RequireLowercase = false,
+        RequireUppercase = false
+      };
+
+      manager.UserLockoutEnabledByDefault = true;
+      manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(10);
+      manager.MaxFailedAccessAttemptsBeforeLockout = 10;
+
+      //manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<PB.BL.Domain.Account.Profile>
+      //{
+      //  MessageFormat = "Your security code is {0}"
+      //});
+
+      //manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<PB.BL.Domain.Account.Profile>
+      //{
+      //  Subject = "Security code",
+      //  BodyFormat = "Your security Code is {0}"
+
+      //});
+      //manager.EmailService = new EmailService();
+      //manager.SmsService = new SmsService();
+
+      var dataProtectionProvider = options.DataProtectionProvider;
+      if (dataProtectionProvider != null)
+      {
+        manager.UserTokenProvider = new DataProtectorTokenProvider<BL.Domain.Account.Profile>(dataProtectionProvider.Create("ASP.NET Identity"));
+
+      }
+
+      return manager;
+
     }
+
+    public List<IdentityRole> GetAllRoles()
+    {
+      return store.ReadAllRoles();
+    }
+
+    private void CreateRolesandUsers()
+    {
+      IntegratieDbContext context = store.ReadContext();
+
+      var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
+      if (!roleManager.RoleExists("SuperAdmin"))
+      {
+        //Create SuperAdmin role
+        var role = new IdentityRole();
+        role.Name = "SuperAdmin";
+        roleManager.Create(role);
+
+      }
+
+      //Create Admin role
+      if (!roleManager.RoleExists("Admin"))
+      {
+        var role = new IdentityRole();
+        role.Name = "Admin";
+        roleManager.Create(role);
+
+      }
+      //Create User role   
+      if (!roleManager.RoleExists("User"))
+      {
+        var role = new IdentityRole();
+        role.Name = "User";
+        roleManager.Create(role);
+
+      }
+    }
+
 
     public void initNonExistingRepo(bool createWithUnitOfWork = false)
     {
@@ -35,9 +150,9 @@ namespace PB.BL
       {
         if (createWithUnitOfWork)
         {
-          if (uowManager == null)
+          if (UowManager == null)
           {
-            uowManager = new UnitOfWorkManager();
+            UowManager = new UnitOfWorkManager();
             Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
           }
           else
@@ -45,58 +160,32 @@ namespace PB.BL
             Console.WriteLine("uo bestaat al");
           }
 
-          ProfileRepo = new ProfileRepo(uowManager.UnitOfWork);
+          ProfileRepo = new ProfileRepo(UowManager.UnitOfWork);
         }
         else
         {
           ProfileRepo = new ProfileRepo();
-          Console.WriteLine("OLD WAY REPO ITEMMGR");
+          Console.WriteLine("OLD WAY REPO ACCOUNTMGR");
         }
       }
     }
 
 
     #region Profile
-    public Profile AddProfile(string username, string password, string email, Role role = Role.USER)
+  
+    public Profile AddProfile(string username, string email)
     {
       initNonExistingRepo();
       Profile profile = new Profile()
       {
-        Username = username,
+        UserName = username,
         Email = email,
-        Role = role,
-        Password = password,
-        
 
       };
-      profile.UserData = new UserData() { Profile = profile, Username = username };
-
-      byte[] SALT = Get_SALT(15);
-      profile.Salt = SALT;
-      profile.Hash = Get_HASH_SHA512(profile.Password, profile.Username, SALT);
+      profile.UserData = new UserData() { Profile = profile, Id="766" };
 
       profile = AddProfile(profile);
-      uowManager.Save();
-      return profile;
-    }
-
-    public Profile AddProfile(string username, string password, string hash, byte[] Salt, string email, Role role = Role.USER)
-    {
-      initNonExistingRepo();
-      Profile profile = new Profile()
-      {
-        Username = username,
-        Email = email,
-        Role = role,
-        Password = password,
-        Hash = hash,
-        Salt = Salt,
-    
-      };
-      profile.UserData = new UserData() { Profile = profile, Username = username };
-
-      profile = AddProfile(profile);
-      uowManager.Save();
+      UowManager.Save();
       return profile;
     }
 
@@ -104,7 +193,7 @@ namespace PB.BL
     {
       initNonExistingRepo();
       Profile newProfile = ProfileRepo.CreateProfile(profile);
-      uowManager.Save();
+      UowManager.Save();
       return profile;
     }
 
@@ -112,7 +201,7 @@ namespace PB.BL
     {
       initNonExistingRepo();
       ProfileRepo.UpdateProfile(profile);
-      uowManager.Save();
+      UowManager.Save();
     }
 
     public Profile GetProfile(string username)
@@ -131,95 +220,11 @@ namespace PB.BL
     {
       initNonExistingRepo();
       ProfileRepo.DeleteProfile(username);
-      uowManager.Save();
+      UowManager.Save();
     }
     #endregion
 
-    #region Seed
-    //public void Seed()
-    //{
-    //    initNonExistingRepo();
-    //    List<Profile> profiles = new List<Profile>()
-    //    {
-    //        new Profile()
-    //        {
-    //          Email = "thomas.verhoeven@student.kdg.be",
-    //          Username = "verhoeventhomas",
-    //          Password = "schlack1",
-    //          Role = Role.USER,
-    //          Subscriptions = new List<Item>() { },
-    //          Alerts = new List<Alert>(),
-    //          Settings = new List<UserSetting>(),
-    //          Dashboards = new Dictionary<SubPlatform, Dashboard>(),
-    //          adminPlatforms = new List<SubPlatform>()
-    //        },
-    //        new Profile()
-    //        {
-    //          Email = "cedric.goffin@student.kdg.be",
-    //          Username = "goffincedric",
-    //          Password = "schlack2",
-    //          Role = Role.USER,
-    //          Subscriptions = new List<Item>(),
-    //          Alerts = new List<Alert>(),
-    //          Settings = new List<UserSetting>(),
-    //          Dashboards = new Dictionary<SubPlatform, Dashboard>(),
-    //          adminPlatforms = new List<SubPlatform>()
-    //        },
-    //        new Profile()
-    //        {
-    //          Email = "stef.havermans@student.kdg.be",
-    //          Username = "haversmansstef",
-    //          Password = "schlack3",
-    //          Role = Role.USER,
-    //          Subscriptions = new List<Item>(),
-    //          Alerts = new List<Alert>(),
-    //          Settings = new List<UserSetting>(),
-    //          Dashboards = new Dictionary<SubPlatform, Dashboard>(),
-    //          adminPlatforms = new List<SubPlatform>()
-    //        },
-    //        new Profile()
-    //        {
-    //          Email = "lotte.marien@student.kdg.be",
-    //          Username = "marienlotte",
-    //          Password = "schlack4",
-    //          Role = Role.USER,
-    //          Subscriptions = new List<Item>(),
-    //          Alerts = new List<Alert>(),
-    //          Settings = new List<UserSetting>(),
-    //          Dashboards = new Dictionary<SubPlatform, Dashboard>(),
-    //          adminPlatforms = new List<SubPlatform>()
-    //        },
-    //        new Profile()
-    //        {
-    //          Email = "lins.vannijlen@student.kdg.be",
-    //          Username = "vannijlenlins",
-    //          Password = "schlack5",
-    //          Role = Role.USER,
-    //          Subscriptions = new List<Item>(),
-    //          Alerts = new List<Alert>(),
-    //          Settings = new List<UserSetting>(),
-    //          Dashboards = new Dictionary<SubPlatform, Dashboard>(),
-    //          adminPlatforms = new List<SubPlatform>()
-    //        },
-    //        new Profile()
-    //        {
-    //          Email = "celine.verwilligen@student.kdg.be",
-    //          Username = "verwilligenceline",
-    //          Password = "schlack6",
-    //          Role = Role.USER,
-    //          Subscriptions = new List<Item>(),
-    //          Alerts = new List<Alert>(),
-    //          Settings = new List<UserSetting>(),
-    //          Dashboards = new Dictionary<SubPlatform, Dashboard>(),
-    //          adminPlatforms = new List<SubPlatform>()
-    //        }
-    //    };
-    //    profiles.ForEach(p => p.UserData = new UserData() { Profile = p, Username = p.Username });
-
-    //    profiles.ForEach(p =>  AddProfile(p));
-    //    uowManager.Save();
-    //}
-    #endregion
+   
 
     public void LinkAlertsToProfile(List<Alert> alerts)
     {
@@ -229,7 +234,7 @@ namespace PB.BL
         ProfileRepo.UpdateProfile(a.Profile);
       });
 
-      uowManager.Save();
+      UowManager.Save();
     }
 
     #region passwordEncryption

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace PB.DAL.EF
+﻿namespace PB.DAL.EF
 {
   internal class IntegratieDbConfiguration:System.Data.Entity.DbConfiguration
   {

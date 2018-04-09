@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Barometer</title>
-    @Styles.Render("~/Content/bootstrapcss")
-    @Styles.Render("~/Content/style.css")
-    <link id="ThemeLink" href="/Content/Theme/LightMode.css" rel="stylesheet">
-    <link id="PreviewLink" href="" rel="stylesheet">
+  <title>Barometer</title>
+  @Styles.Render("~/Content/bootstrapcss")
+  @Styles.Render("~/Content/style.css")
+  <link id="ThemeLink" href="/Content/Theme/LightMode.css" rel="stylesheet">
+  <link id="PreviewLink" href="" rel="stylesheet">
 
 </head>
 
@@ -24,7 +24,7 @@
         <div class="sidebar-logo">
           <div class="peers ai-c fxw-nw">
             <div class="peer peer-greed">
-              <a class="sidebar-link td-n" href="@Url.Action("Index","Home")">
+              <a class="sidebar-link td-n" href="@Url.Action("Index", "Home")">
 
                 <div class="peers ai-c fxw-nw">
                   <div class="peer">
@@ -45,15 +45,15 @@
           </div>
         </div>
         <ul class="sidebar-menu scrollable pos-r">
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Index","Home")"><span class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span class="title">Homepage</span></a></li>
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard","Home")"><span class="icon-holder"><i class="c-brown-500 ti-book"></i> </span><span class="title">Dashboard</span></a></li>
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Account","Account")"><span class="icon-holder"><i class="c-blue-500 ti-face-smile"></i> </span><span class="title">My account</span></a></li>
+          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Index", "Home")"><span class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span class="title">Homepage</span></a></li>
+          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard", "Home")"><span class="icon-holder"><i class="c-brown-500 ti-book"></i> </span><span class="title">Dashboard</span></a></li>
+          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Account", "Account")"><span class="icon-holder"><i class="c-blue-500 ti-face-smile"></i> </span><span class="title">My account</span></a></li>
           <li class="nav-item dropdown">
             <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
             <ul class="dropdown-menu">
               <li class="nav-item dropdown"><a href="javascript:void(0);"><span>Contact</span></a></li>
               <li class="nav-item dropdown"><a href="javascript:void(0);"><span>FAQ</span></a></li>
-              <li class="nav-item dropdown"><a href="@Url.Action("ItemTables","Item")"><span>Show datatables</span></a></li>
+              <li class="nav-item dropdown"><a href="@Url.Action("ItemTables", "Item")"><span>Show datatables</span></a></li>
             </ul>
           </li>
         </ul>
@@ -148,7 +148,20 @@
 
 
                 </div>
-                <div class="peer"><span style="color: #2196f3" class="fsz-sm">@Html.Action("GetActiveUser", "Home")</span></div>
+                @*@using Microsoft.AspNet.Identity
+               
+                @if (Request.IsAuthenticated)
+                {
+                  using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
+                  {
+                    @Html.AntiForgeryToken()
+                    {
+                      <div class="peer"><span style="color: #2196f3" class="fsz-sm">@Html.ViewBag(User.Identity.GetUserName())</span></div>
+                    }
+                  }
+                }*@
+                
+
               </a>
               <ul class="dropdown-menu fsz-sm">
                 <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-settings mR-10"></i> <span>Setting</span></a></li>

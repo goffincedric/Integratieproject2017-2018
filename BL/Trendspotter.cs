@@ -186,7 +186,8 @@ namespace PB.BL
                 Description = "Something has happened",
                 Text = "A change is coming",
                 Profile = profile,
-                Username = profile.Username,
+                Username = profile.UserName,
+                
                 IsRead = false,
                 TimeStamp = DateTime.Now
             };

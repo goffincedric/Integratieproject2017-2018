@@ -8,16 +8,24 @@ using PB.BL.Domain.Items;
 
 namespace UI_MVC.Controllers
 {
-    [RequireHttps]
+  [RequireHttps]
+  [Authorize(Roles = "User,Admin,SuperAdmin")]
   public class ItemController : Controller
   {
 
-    private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
-    private static readonly ItemManager itemMgr = new ItemManager(uow);
+    private UnitOfWorkManager uow;
+    private ItemManager itemMgr;
 
+
+    public ItemController()
+    {
+      uow = new UnitOfWorkManager();
+      itemMgr = new ItemManager(uow);
+
+    }
     public ActionResult ItemTables()
     {
-      IEnumerable<Person> persons = itemMgr.GetPersons(); 
+      IEnumerable<Person> persons = itemMgr.GetPersons();
       return View(persons);
     }
   }
