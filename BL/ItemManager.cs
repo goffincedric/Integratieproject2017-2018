@@ -45,11 +45,11 @@ namespace PB.BL
                     if (UowManager == null)
                     {
                         UowManager = new UnitOfWorkManager();
-                        Console.WriteLine("UOW MADE IN ITEM MANAGER for Record and Item repo");
+                        //Console.WriteLine("UOW MADE IN ITEM MANAGER for Record and Item repo");
                     }
                     else
                     {
-                        Console.WriteLine("uo bestaat al");
+                        //Console.WriteLine("uo bestaat al");
                     }
 
                     RecordRepo = new RecordRepo(UowManager.UnitOfWork);
@@ -59,7 +59,7 @@ namespace PB.BL
                 {
                     RecordRepo = new RecordRepo();
                     ItemRepo = new ItemRepo();
-                    Console.WriteLine("OLD WAY REPO ITEMMGR");
+                    //Console.WriteLine("OLD WAY REPO ITEMMGR");
                 }
             }
         }
@@ -250,6 +250,22 @@ namespace PB.BL
             List<Record> toegevoegde = JClassToRecord(RecordRepo.Seed(evenRecords));
         }
 
+        public void CleanupOldRecords(Subplatform subplatform)
+        {
+            int days = 14; //#DAGEN, VERANGEN DOOR SUBPLATFORMSETTING
+            initNonExistingRepo();
+            List<Person> persons = ItemRepo.ReadPersons().Where(i => i.SubPlatforms.Contains(subplatform)).ToList();
+            List<Record> oldRecords = new List<Record>();
+
+            persons.ForEach(p =>
+            {
+                oldRecords.AddRange(p.Records.Where(r => r.Date.Date < DateTime.Now.Date.AddDays(-days)));
+            });
+
+            RecordRepo.DeleteRecords(oldRecords);
+            UowManager.Save();
+        }
+
         public List<Record> JClassToRecord(List<JClass> data)
         {
             initNonExistingRepo();
@@ -302,11 +318,18 @@ namespace PB.BL
                                 Records = new List<Record>(),
                                 Comparisons = new List<Comparison>(),
                                 Keywords = new List<Keyword>(),
-                                SubPlatforms = new List<Subplatform>(),
+                                SubPlatforms = el.Subplatforms,
                                 SubscribedProfiles = new List<Profile>()
                             };
                             oldPersons.Add(personCheck);
                             newPersons.Add(personCheck);
+                        }
+                        else
+                        {
+                            el.Subplatforms.ForEach(sp =>
+                            {
+                                if (!personCheck.SubPlatforms.Contains(sp)) personCheck.SubPlatforms.Add(sp);
+                            });
                         }
                         record.Persons.Add(personCheck);
                         personCheck.Records.Add(record);

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Items;
 using Domain.JSONConversion;
+using PB.BL.Domain.Platform;
 
 namespace PB.BL
 {
@@ -33,5 +34,6 @@ namespace PB.BL
         void RemoveRecord(long id);
 
         List<Record> JClassToRecord(List<JClass> data);
+        void CleanupOldRecords(Subplatform subplatform);
     }
 }

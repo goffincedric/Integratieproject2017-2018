@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Items;
+using PB.BL.Domain.Platform;
 
 namespace UI_CA_Prototype
 {
@@ -31,14 +32,42 @@ namespace UI_CA_Prototype
         public void ShowProfiles(IEnumerable<Profile> profiles)
         {
             if (profiles.ToList().Count == 0) throw new Exception("Er zijn nog geen accounts, maak er eerst een aan");
+            Console.WriteLine("\nAccounts: ");
             int counter = 1;
-            Console.WriteLine("\nSelecteer een account: ");
             profiles.ToList().ForEach(p =>
             {
                 Console.WriteLine(counter + ") " + p);
                 counter++;
             });
         }
+
+        //Lets the user select an available subplatform
+        public Subplatform SelectSubplatform(IEnumerable<Subplatform> subplatforms)
+        {
+            int keuze = 0;
+            do
+            {
+                ShowSubplatforms(subplatforms);
+                Console.Write("Keuze: ");
+                int.TryParse(Console.ReadLine(), out keuze);
+            } while (keuze < 1 || keuze > subplatforms.ToList().Count);
+
+            return subplatforms.ElementAt(keuze - 1);
+        }
+
+        //Shows a list of all available profiles
+        public void ShowSubplatforms(IEnumerable<Subplatform> subplatforms)
+        {
+            if (subplatforms.ToList().Count == 0) throw new Exception("Er zijn nog geen subplatforms, maak er eerst een aan");
+            Console.WriteLine("\nSubplatforms: ");
+            int counter = 1;
+            subplatforms.ToList().ForEach(p =>
+            {
+                Console.WriteLine(counter + ") " + p);
+                counter++;
+            });
+        }
+
 
         //Show all records sorted by Name, then by Date descending
         public void ShowRecords(IEnumerable<Record> records)
