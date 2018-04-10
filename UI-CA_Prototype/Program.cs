@@ -6,21 +6,27 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Items;
+using PB.DAL.EF;
 using Domain.JSONConversion;
 using Mono.Options;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Items;
 
+
 namespace UI_CA_Prototype
 {
     class Program
     {
+        private static IntegratieDbContext Context = new IntegratieDbContext();
+        private static readonly IntegratieUserStore Store = new IntegratieUserStore(Context);
+        private static readonly AccountManager AccountMgr = new AccountManager(Store);
+
         private static bool WillSeed = true;
         private static OptionSet CLIOptions;
 
         private static readonly UnitOfWorkManager Uow = new UnitOfWorkManager();
         private static readonly ItemManager ItemMgr = new ItemManager(Uow);
-        private static readonly AccountManager AccountMgr = new AccountManager(Uow);
         private static readonly SubplatformManager SubplatformMgr = new SubplatformManager(Uow);
 
         private static readonly ExtensionMethods ExtensionMethods = new ExtensionMethods();
@@ -49,17 +55,16 @@ namespace UI_CA_Prototype
                 Console.WriteLine("1) Schrijf testrecords naar desktop");
                 Console.WriteLine("2) Selecteer account");
                 Console.WriteLine("3) Selecteer subplatform");
-                Console.WriteLine("4) Maak nieuw account");
-                Console.WriteLine("5) Voeg subscription toe");
-                Console.WriteLine("6) Verwijder subscription");
-                Console.WriteLine("7) Show gemiddelde tweets/dag per persoon voorbij 14 dagen");
-                Console.WriteLine("8) Verwijder oude records uit database");
-                Console.WriteLine("9) Voeg API data toe");
-                Console.WriteLine("10) Voeg alerts to aan selected profile");
+                Console.WriteLine("4) Voeg subscription toe");
+                Console.WriteLine("5) Verwijder subscription");
+                Console.WriteLine("6) Show gemiddelde tweets/dag per persoon voorbij 14 dagen");
+                Console.WriteLine("7) Verwijder oude records uit database");
+                Console.WriteLine("8) Voeg API data toe");
+                Console.WriteLine("9) Voeg alerts to aan selected profile");
                 Console.WriteLine("---------------- Info -----------------");
-                Console.WriteLine("11) Toon alle records");
-                Console.WriteLine("12) Toon alle persons");
-                Console.WriteLine("13) Toon subscribed items van geselecteerd profiel");
+                Console.WriteLine("10) Toon alle records");
+                Console.WriteLine("11) Toon alle persons");
+                Console.WriteLine("12) Toon subscribed items van geselecteerd profiel");
                 Console.WriteLine("-------------- Commands ---------------");
                 Console.WriteLine("99) Toon de CLI help pagina");
                 Console.WriteLine("0) Afsluiten");
@@ -166,39 +171,35 @@ namespace UI_CA_Prototype
                         SelectedSubplatform = ExtensionMethods.SelectSubplatform(SubplatformMgr.GetSubplatforms());
                         break;
                     case 4:
-                        Profile profile = ExtensionMethods.CreateAccount();
-                        AccountMgr.AddProfile(profile.Username, profile.Password, profile.Email);
-                        break;
-                    case 5:
                         if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
                         SelectedProfile.Subscriptions.Add(ExtensionMethods.SelectItem(ItemMgr.GetItems()));
                         AccountMgr.ChangeProfile(SelectedProfile);
                         break;
-                    case 6:
+                    case 5:
                         if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
                         SelectedProfile.Subscriptions.Remove(ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
                         AccountMgr.ChangeProfile(SelectedProfile);
                         break;
-                    case 7:
+                    case 6:
                         ItemMgr.CheckTrend();
                         break;
-                    case 8:
+                    case 7:
                         if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
                         ItemMgr.CleanupOldRecords(SelectedSubplatform);
                         break;
-                    case 9:
+                    case 8:
                         Seed();
                         break;
-                    case 10:
+                    case 9:
                         ItemMgr.GenerateProfileAlerts(SelectedProfile);
                         break;
-                    case 11:
+                    case 10:
                         ExtensionMethods.ShowRecords(ItemMgr.GetRecords());
                         break;
-                    case 12:
+                    case 11:
                         ExtensionMethods.ShowPersons(ItemMgr.GetPersons());
                         break;
-                    case 13:
+                    case 12:
                         ExtensionMethods.ShowSubScribedItems(SelectedProfile);
                         break;
                     case 99:
@@ -284,6 +285,13 @@ namespace UI_CA_Prototype
             //itemMgr.Seed();
             //accountMgr.Seed();
             //accountMgr.SubscribeProfiles(itemMgr.GetItems());
+
+
+            //private static void newAccount()
+            //{
+            //  Profile profile = extensionMethods.CreateAccount();
+            //  accountMgr.AddProfile(profile.UserName, profile.Email);
+            //}
         }
     }
 }

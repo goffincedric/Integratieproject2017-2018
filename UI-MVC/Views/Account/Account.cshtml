@@ -1,10 +1,11 @@
-﻿@model PB.BL.Domain.Account.Profile
+﻿@*@*@*@model PB.BL.Domain.Account.Profile
 @{
-  ViewBag.Title = "Account";
+  ViewBag.Title = "My Account";
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<main class="main-content bgc-grey-100">
+  
+  <main class="main-content bgc-grey-100">
   <div id="mainContent">
     <div class="container-fluid">
 
@@ -22,19 +23,19 @@
                 <div class="form-group col-md-6">
                   <label for="inputEmail4">Gebruikersnaam</label>
                   @*<input type="text" class="form-control" id="inputGebruikersnaam4" placeholder="Gebruikersnaam">*@
-                  @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @id = "inputGebruikersnaam4", @type = "text", @placeholder = "Gebruikersnaam" } })
+                  @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputGebruikersnaam4", @type = "text", @placeholder = "Gebruikersnaam" } })
                 </div>
-                <div class="form-group col-md-6">
+                @*<div class="form-group col-md-6">
                   <label for="inputPassword4">Wachtwoord</label>
                   @*<input type="password" class="form-control" id="inputPassword4" placeholder="Wachtwoord">*@
-                  @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Wachtwoord" } })
-                </div>
+                  @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Wachtwoord" } })*@
+                @*</div>*@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputEmail4">Achternaam</label>
                   @*<input type="email" class="form-control" id="inputEmail4" placeholder="Email">*@
-                  @Html.EditorFor(model => model.UserData.LastName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Achternaam" } })
+                  @*@Html.EditorFor(model => model.UserData.LastName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Achternaam" } })*@
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputEmail4">Voornaam</label>
@@ -50,7 +51,7 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputEmail4">Telefoon</label>
-                  @Html.EditorFor(model => model.UserData.Telephone, new { htmlAttributes = new { @class = "form-control", @type = "tel", @placeholder = "Gsm of telefoon nummer" } })
+                 @Html.EditorFor(model => model.UserData.Telephone, new { htmlAttributes = new { @class = "form-control", @type = "tel", @placeholder = "Gsm of telefoon nummer" } })
 
                 </div>
               </div>
@@ -74,13 +75,13 @@
               </div>
               <div class="form-group">
                 <label for="inputAddress">Straat en huisnummer</label>
-                @Html.EditorFor(model => model.UserData.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat huisnummer" } })
+                @*@Html.EditorFor(model => model.UserData.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat huisnummer" } })*@
                 @*<input type="text" class="form-control" id="inputAddress" placeholder="Stationsstraat 144"></div>*@
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="inputCity">City</label>
                     @*<input type="text" class="form-control" id="inputCity" placeholder="Itegem">*@
-                    @Html.EditorFor(model => model.UserData.City, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Stad of dorp" } })
+                    @*@Html.EditorFor(model => model.UserData.City, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Stad of dorp" } })*@
                   </div>
                   <div class="form-group col-md-4">
                     <label for="inputState">Provincie</label>
@@ -99,12 +100,12 @@
                         <option>Luxemburg</option>
                         <option>Andere</option>
                       </select>*@
-                    @Html.EnumDropDownListFor(model => model.UserData.Province, htmlAttributes: new { @class = "form-control" })
+                    @*@Html.EnumDropDownListFor(model => model.UserData.Province, htmlAttributes: new { @class = "form-control" })*@
                   </div>
                   <div class="form-group col-md-2">
                     <label for="inputZip">Postcode</label>
                     @*<input type="text" class="form-control" id="inputZip" placeholder="2222">*@
-                    @Html.EditorFor(model => model.UserData.PostalCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "postcode" } })
+                    @*@Html.EditorFor(model => model.UserData.PostalCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "postcode" } })*@
                   </div>
                 </div>
               </div>
@@ -115,7 +116,7 @@
                     <div class="input-group">
                       <div class="input-group-addon bgc-white bd bdwR-0"><i class="ti-calendar"></i></div>
                       @*<input type="text" class="form-control bdc-grey-200 start-date" placeholder="Datepicker" data-provide="datepicker">*@
-                      @Html.EditorFor(model => model.UserData.BirthDate, new { htmlAttributes = new { @class = "form-control bdc-grey-200 start-date", @placeholder = "Datepicker", @type = "text" } })
+                      @*@Html.EditorFor(model => model.UserData.BirthDate, new { htmlAttributes = new { @class = "form-control bdc-grey-200 start-date", @placeholder = "Datepicker", @type = "text" } })*@
                     </div>
                   </div>
                 </div>

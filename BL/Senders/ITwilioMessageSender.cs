@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PB.BL.Domain.Account
+namespace PB.BL.Senders
 {
-  public enum Role
+  public interface ITwilioMessageSender
   {
-    USER,
-    SUPERADMIN
+    Task SendMessageAsync(string to, string from, string body);
   }
 }

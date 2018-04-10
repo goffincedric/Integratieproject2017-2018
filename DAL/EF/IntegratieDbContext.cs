@@ -1,29 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Data.Entity.Infrastructure.Annotations;
 using Domain.Items;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using System.Data.Entity.Validation;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 
 namespace PB.DAL.EF
 {
     [DbConfigurationType(typeof(IntegratieDbConfiguration))]
-    internal class IntegratieDbContext : System.Data.Entity.DbContext
+    public class IntegratieDbContext : IdentityDbContext<BL.Domain.Account.Profile>
     {
         private readonly bool delaySave;
 
-        public IntegratieDbContext() : base("IntegratieDB_EFCodeFirst")
+        public IntegratieDbContext() : base("IntegratieDB_EFCodeFirst", throwIfV1Schema: false)
         {
-            System.Data.Entity.Database.SetInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
 
         }
 
@@ -34,6 +30,10 @@ namespace PB.DAL.EF
         }
 
 
+        public static IntegratieDbContext Create()
+        {
+            return new IntegratieDbContext();
+        }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -75,13 +75,13 @@ namespace PB.DAL.EF
                 .Map(m => { m.ToTable("tblSubplatformAdmins"); });
 
             modelBuilder.Entity<Item>()
-                .HasMany(i => i.Comparisons)
-                .WithMany(c => c.Items)
+                .HasMany(t => t.Comparisons)
+                .WithMany(t => t.Items)
                 .Map(m => { m.ToTable("tblComparisonItem"); });
 
             modelBuilder.Entity<Item>()
                 .HasMany(t => t.Keywords)
-                .WithMany(k => k.Items)
+                .WithMany(t => t.Items)
                 .Map(m => { m.ToTable("tblKeywordItem"); });
 
             modelBuilder.Entity<Item>()
@@ -90,9 +90,9 @@ namespace PB.DAL.EF
                 .Map(m => { m.ToTable("tblSubplatformItem"); });
 
             modelBuilder.Entity<Record>()
-                .HasMany(r => r.Mentions)
-                .WithMany(m => m.Records)
-                .Map(m => { m.ToTable("tblRecordMention"); });
+          .HasMany(r => r.Mentions)
+          .WithMany(m => m.Records)
+          .Map(m => { m.ToTable("tblRecordMention"); });
 
             modelBuilder.Entity<Record>()
                 .HasMany(r => r.Words)
@@ -118,6 +118,14 @@ namespace PB.DAL.EF
                 .HasMany(i => i.Records)
                 .WithMany(r => r.Themes)
                 .Map(m => { m.ToTable("tblThemeRecords"); });
+
+
+            //identity tables
+            modelBuilder.Entity<Profile>().ToTable("tblProfile");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("tblUserRole");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("tblUserLogin");
+            modelBuilder.Entity<IdentityRole>().ToTable("tblRole");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("tblUserClaim");
         }
 
         public override int SaveChanges()
@@ -150,10 +158,9 @@ namespace PB.DAL.EF
             throw new InvalidOperationException("Geen UnitOfWork presented, gebruik SaveChanges in de plaats");
         }
 
-        public DbSet<Profile> Profiles { get; set; }
+
         public DbSet<UserData> UserData { get; set; }
         public DbSet<UserSetting> UserSettings { get; set; }
-
         public DbSet<Comparison> Comparisons { get; set; }
         public DbSet<Dashboard> Dashboards { get; set; }
         public DbSet<Element> Elements { get; set; }

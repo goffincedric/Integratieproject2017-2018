@@ -444,7 +444,7 @@ namespace PB.BL
             {
                 Console.WriteLine(a);
                 a.Profile = profile;
-                a.Username = profile.Username;
+                a.Username = profile.UserName;
             });
 
             alerts.ForEach(a =>

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 using PB.BL.Domain.Account;
 using PB.DAL.EF;
 
 namespace PB.DAL
 {
-    public class ProfileRepo : IProfileRepo
+    public class ProfileRepo : UserStore<Profile>, IProfileRepo
     {
         private IntegratieDbContext ctx;
 
@@ -24,9 +24,10 @@ namespace PB.DAL
             //Console.WriteLine("UOW MADE PROFILEREPO");
         }
 
+
         public Profile CreateProfile(Profile profile)
         {
-            ctx.Profiles.Add(profile);
+            ctx.Users.Add(profile);
 
             try
             {
@@ -53,22 +54,21 @@ namespace PB.DAL
             Profile profile = ReadProfile(username);
             if (profile != null)
             {
-                ctx.Profiles.Remove(profile);
+                ctx.Users.Remove(profile);
                 ctx.SaveChanges();
             }
         }
 
         public Profile ReadProfile(string username)
         {
-            return ctx.Profiles
-                .Include("Alerts")
+            return ctx.Users.Include("Alerts")
                 .Include("Subscriptions")
-                .FirstOrDefault(p => p.Username == username);
+                .FirstOrDefault(p => p.UserName == username);
         }
 
         public IEnumerable<Profile> ReadProfiles()
         {
-            return ctx.Profiles
+            return ctx.Users
                 .Include("Alerts")
                 .Include("Subscriptions")
                 .AsEnumerable();
@@ -76,8 +76,8 @@ namespace PB.DAL
 
         public void UpdateProfile(Profile profile)
         {
-            ctx.Profiles.Attach(profile);
-            
+            ctx.Users.Attach(profile);
+
             ctx.Entry(profile).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
         }

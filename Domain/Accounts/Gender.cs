@@ -8,9 +8,12 @@ namespace PB.BL.Domain.Account
 {
   public enum Gender
   {
-    MALE = 'm',
-    FEMALE = 'f',
-    NOT_MENTIONED = 'n'
+    MALE ='m',
+    FEMALE ='f',
+    OTHERS='o'
+
+     
   }
+  
 }
 
