@@ -181,7 +181,29 @@
                 <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Profile</span></a></li>
                 <li><a href="@Url.Action("Email","Home")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-email mR-10"></i> <span>Messages</span></a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="@Html.Action("LinkLogoutin","Home")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-power-off mR-10"></i> <span>@Html.Action("ChangeLogoutin", "Home")</span></a></li>
+                <li>
+
+                  @if (Request.IsAuthenticated)
+                  {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                      @Html.AntiForgeryToken(){
+                        <a href="javascript:document.getElementById('logoutForm').submit()" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                          <i class="ti-power-off mR-10"></i> <span>Logoff</span>
+                        </a>
+                      }
+                    }
+                  }
+                  else
+                  {
+                    <a href="@Url.Action("Login","Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                      <i class="ti-power-off mR-10"></i> <span>Login/Register</span>
+                    </a>
+                  }
+
+
+
+                </li>
               </ul>
             </li>
           </ul>

@@ -31,7 +31,7 @@ namespace UI_CA_Prototype
     static void Main(string[] args)
     {
 
-      Seed();
+     
       //Menu
       while (!stop)
       {
@@ -109,6 +109,7 @@ namespace UI_CA_Prototype
             Console.WriteLine("Nieuwe seed data toegevoegd");
             break;
           case 7:
+            Seed();
             break;
             
           case 8:
