@@ -138,7 +138,6 @@ namespace UI_CA_Prototype
                 Environment.Exit(0);
             }
         }
-
         private static void ShowHelp()
         {
             //Show app description

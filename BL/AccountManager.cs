@@ -1,4 +1,7 @@
 ﻿using PB.BL.Domain.Account;
+using PB.BL.Domain.Dashboards;
+using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
 using PB.DAL;
 using System;
 using System.Collections.Generic;
@@ -17,7 +20,7 @@ namespace PB.BL
 {
     //This class talks with the SupportCenterUserStore and tells it which
     //data to store, it also handles some logic and settings
-    public class AccountManager : UserManager<Profile>
+    public class AccountManager : UserManager<PB.BL.Domain.Account.Profile>
     {
 
         private IntegratieUserStore store;
@@ -37,8 +40,6 @@ namespace PB.BL
 
 
         //}
-
-
         public AccountManager(IntegratieUserStore store) : base(store)
         {
 
@@ -152,11 +153,11 @@ namespace PB.BL
                     if (UowManager == null)
                     {
                         UowManager = new UnitOfWorkManager();
-                        //Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
+                        Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
                     }
                     else
                     {
-                        //Console.WriteLine("uo bestaat al");
+                        Console.WriteLine("uo bestaat al");
                     }
 
                     ProfileRepo = new ProfileRepo(UowManager.UnitOfWork);
@@ -164,7 +165,7 @@ namespace PB.BL
                 else
                 {
                     ProfileRepo = new ProfileRepo();
-                    //Console.WriteLine("OLD WAY REPO ITEMMGR");
+                    Console.WriteLine("OLD WAY REPO ACCOUNTMGR");
                 }
             }
         }
@@ -181,7 +182,7 @@ namespace PB.BL
                 Email = email,
 
             };
-            profile.UserData = new UserData() { Profile = profile, Id = "766" };
+            profile.UserData = new UserData() { Profile = profile };
 
             profile = AddProfile(profile);
             UowManager.Save();
