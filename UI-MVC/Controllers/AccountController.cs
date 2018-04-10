@@ -111,7 +111,7 @@ namespace UI_MVC.Controllers
       if (ModelState.IsValid)
       {
         var user = new Profile { UserName = model.Username, Email = model.Email, };
-        user.UserData = new UserData() { Profile = user, Id="666"};
+        user.UserData = new UserData() { Profile = user};
         var result = await UserManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
@@ -138,39 +138,40 @@ namespace UI_MVC.Controllers
 
 
 
-    //public ActionResult Account()
-    //{
+    public ActionResult Account()
+    {
+      //nog via pk maken
 
-    //  Profile profile;
-    //  if (User.Identity.GetUserName() != null)
-    //  {
-    //    profile = _accountMgr.GetProfile(User.Identity.GetUserName());
+      Profile profile = _accountMgr.GetProfile(User.Identity.GetUserName()); ;
+      //if (User.Identity.GetUserName() != null)
+      //{
+      //  profile = _accountMgr.GetProfile(User.Identity.GetUserName());
 
-    //  }
-    //  else
-    //  {
-    //    profile = null;
-    //  }
-
-
-    //  return View(profile);
-    //}
-
-    //[HttpPost]
-    //public ActionResult Account(Profile newprofile)
-    //{
-    //  if (ModelState.IsValid)
-    //  {
-    //    _accountMgr.ChangeProfile(newprofile);
-    //    Console.WriteLine("werkt");
-    //    return View(newprofile);
-
-    //  }
+      //}
+      //else
+      //{
+      //  profile = null;
+      //}
 
 
-    //  Console.WriteLine("Modelfout");
-    //  return View();
-    //}
+      return View(profile);
+    }
+
+    [HttpPost]
+    public ActionResult Account(Profile newprofile)
+    {
+      if (ModelState.IsValid)
+      {
+        _accountMgr.ChangeProfile(newprofile);
+        Console.WriteLine("werkt");
+        return View(newprofile);
+
+      }
+
+
+      Console.WriteLine("Modelfout");
+      return View();
+    }
 
 
 

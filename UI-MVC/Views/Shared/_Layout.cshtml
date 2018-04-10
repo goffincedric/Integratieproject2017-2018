@@ -1,4 +1,4 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
 <!DOCTYPE html>
 <html>
 <head>
@@ -148,19 +148,32 @@
 
 
                 </div>
-                @*@using Microsoft.AspNet.Identity
-               
+
+
+
                 @if (Request.IsAuthenticated)
                 {
-                  using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
                   {
                     @Html.AntiForgeryToken()
                     {
-                      <div class="peer"><span style="color: #2196f3" class="fsz-sm">@Html.ViewBag(User.Identity.GetUserName())</span></div>
+                      <div class="peer">
+                        <span style="color: #2196f3" class="fsz-sm">
+                          @{ViewBag.Ingelogd = "Hi " + User.Identity.GetUserName().ToUpperInvariant();
+                          }
+                          @ViewBag.Ingelogd
+                        </span>
+                      </div>
                     }
                   }
-                }*@
-                
+                }
+                else
+                {
+                  <div class="peer">
+                    <span style="color: #2196f3" class="fsz-sm">
+                      Niet ingelogd
+                    </span>
+                  </div>
+                }
 
               </a>
               <ul class="dropdown-menu fsz-sm">
