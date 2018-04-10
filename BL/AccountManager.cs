@@ -182,7 +182,7 @@ namespace PB.BL
         Email = email,
 
       };
-      profile.UserData = new UserData() { Profile = profile, Id="766" };
+      profile.UserData = new UserData() { Profile = profile};
 
       profile = AddProfile(profile);
       UowManager.Save();

@@ -30,8 +30,8 @@ namespace UI_CA_Prototype
 
     static void Main(string[] args)
     {
-      
 
+     
       //Menu
       while (!stop)
       {
@@ -70,16 +70,9 @@ namespace UI_CA_Prototype
       }
     }
 
-    private static void testSearch()
-    {
-      //List<Profile> test =  accountMgr.searchUsers();
-
-      // test.ForEach(t => Console.WriteLine(t.Username)); 
-      JsonConvert.DeserializeObject<List<Record>>(File.ReadAllText(@"TestData\textgaindump.json")).ForEach(r => Console.WriteLine(r.ToString()));
-    }
 
 
-       
+
 
     private static void DetectMenuAction()
     {
@@ -101,12 +94,12 @@ namespace UI_CA_Prototype
           case 3:
             if (selectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
             selectedProfile.Subscriptions.Add(extensionMethods.SelectItem(itemMgr.GetItems()));
-             accountMgr.ChangeProfile(selectedProfile);
+            accountMgr.ChangeProfile(selectedProfile);
             break;
           case 4:
             if (selectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
             selectedProfile.Subscriptions.Remove(extensionMethods.SelectItem(selectedProfile.Subscriptions));
-             accountMgr.ChangeProfile(selectedProfile);
+            accountMgr.ChangeProfile(selectedProfile);
             break;
           case 5:
             itemMgr.CheckTrend();
@@ -116,54 +109,9 @@ namespace UI_CA_Prototype
             Console.WriteLine("Nieuwe seed data toegevoegd");
             break;
           case 7:
-            //Injects api seed data
-            APICalls restClient = new APICalls()
-            {
-              API_URL = "http://kdg.textgain.com/query"
-            };
-
-            //Individueel api aanspreken
-            List<JClass> requestedRecords = new List<JClass>();
-            requestedRecords.AddRange(restClient.RequestRecords("Annick De Ridder"));
-            requestedRecords.AddRange(restClient.RequestRecords("Caroline Bastiaens"));
-            requestedRecords.AddRange(restClient.RequestRecords("Jan Bertels"));
-            requestedRecords.AddRange(restClient.RequestRecords("Vera Celis"));
-            requestedRecords.AddRange(restClient.RequestRecords("Dirk De Kort"));
-            requestedRecords.AddRange(restClient.RequestRecords("Imade Annouri"));
-            requestedRecords.AddRange(restClient.RequestRecords("Caroline Gennez"));
-            requestedRecords.AddRange(restClient.RequestRecords("Kathleen Helsen"));
-            requestedRecords.AddRange(restClient.RequestRecords("Marc Hendrickx"));
-            requestedRecords.AddRange(restClient.RequestRecords("Jan Hofkens"));
-            requestedRecords.AddRange(restClient.RequestRecords("Yasmine Kherbache"));
-            requestedRecords.AddRange(restClient.RequestRecords("Kathleen Krekels"));
-            requestedRecords.AddRange(restClient.RequestRecords("Ingrid Pira"));
-            itemMgr.JClassToRecord(requestedRecords);
-
-            // Api aanspreken via collectie
-            //List<APIQuery> apiQueries = new List<APIQuery>()
-            //{
-            //    new APIQuery("Annick De Ridder"),
-            //    new APIQuery("Caroline Bastiaens"),
-            //    new APIQuery("Jan Bertels"),
-            //    new APIQuery("Vera Celis"),
-            //    new APIQuery("Dirk De Kort"),
-            //    new APIQuery("Imade Annouri"),
-            //    new APIQuery("Caroline Gennez"),
-            //    new APIQuery("Kathleen Helsen"),
-            //    new APIQuery("Marc Hendrickx"),
-            //    new APIQuery("Jan Hofkens"),
-            //    new APIQuery("Yasmine Kherbache"),
-            //    new APIQuery("Kathleen Krekels"),
-            //    new APIQuery("Ingrid Pira")
-            //};
-            //itemMgr.JClassToRecord(restClient.RequestRecords(apiQueries));
-
-
-            //Old seed method, deprecated json structure
-            //itemMgr.Seed();
-            //accountMgr.Seed();
-            //accountMgr.SubscribeProfiles(itemMgr.GetItems());
+            Seed();
             break;
+            
           case 8:
             itemMgr.GenerateProfileAlerts(selectedProfile);
             break;
@@ -186,7 +134,7 @@ namespace UI_CA_Prototype
             Console.WriteLine("Geen geldige keuze!");
             inValidAction = true;
             break;
-            
+
         }
       } while (inValidAction);
     }
@@ -199,8 +147,51 @@ namespace UI_CA_Prototype
     //}
     private static void Seed()
     {
-      //Injects seed data
-      itemMgr.Seed();
+      //Injects api seed data
+      APICalls restClient = new APICalls()
+      {
+        API_URL = "http://kdg.textgain.com/query"
+      };
+
+      //Individueel api aanspreken
+      List<JClass> requestedRecords = new List<JClass>();
+      requestedRecords.AddRange(restClient.RequestRecords("Annick De Ridder"));
+      requestedRecords.AddRange(restClient.RequestRecords("Caroline Bastiaens"));
+      requestedRecords.AddRange(restClient.RequestRecords("Jan Bertels"));
+      requestedRecords.AddRange(restClient.RequestRecords("Vera Celis"));
+      requestedRecords.AddRange(restClient.RequestRecords("Dirk De Kort"));
+      requestedRecords.AddRange(restClient.RequestRecords("Imade Annouri"));
+      requestedRecords.AddRange(restClient.RequestRecords("Caroline Gennez"));
+      requestedRecords.AddRange(restClient.RequestRecords("Kathleen Helsen"));
+      requestedRecords.AddRange(restClient.RequestRecords("Marc Hendrickx"));
+      requestedRecords.AddRange(restClient.RequestRecords("Jan Hofkens"));
+      requestedRecords.AddRange(restClient.RequestRecords("Yasmine Kherbache"));
+      requestedRecords.AddRange(restClient.RequestRecords("Kathleen Krekels"));
+      requestedRecords.AddRange(restClient.RequestRecords("Ingrid Pira"));
+      itemMgr.JClassToRecord(requestedRecords);
+
+      // Api aanspreken via collectie
+      //List<APIQuery> apiQueries = new List<APIQuery>()
+      //{
+      //    new APIQuery("Annick De Ridder"),
+      //    new APIQuery("Caroline Bastiaens"),
+      //    new APIQuery("Jan Bertels"),
+      //    new APIQuery("Vera Celis"),
+      //    new APIQuery("Dirk De Kort"),
+      //    new APIQuery("Imade Annouri"),
+      //    new APIQuery("Caroline Gennez"),
+      //    new APIQuery("Kathleen Helsen"),
+      //    new APIQuery("Marc Hendrickx"),
+      //    new APIQuery("Jan Hofkens"),
+      //    new APIQuery("Yasmine Kherbache"),
+      //    new APIQuery("Kathleen Krekels"),
+      //    new APIQuery("Ingrid Pira")
+      //};
+      //itemMgr.JClassToRecord(restClient.RequestRecords(apiQueries));
+
+
+      //Old seed method, deprecated json structure
+      //itemMgr.Seed();
       //accountMgr.Seed();
       //accountMgr.SubscribeProfiles(itemMgr.GetItems());
     }
