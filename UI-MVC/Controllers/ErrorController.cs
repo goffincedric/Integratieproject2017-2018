@@ -10,19 +10,19 @@ namespace UI_MVC.Controllers
     {
     public ViewResult Index()
     {
-      return View("Error");
+      return View();
     }
 
     public ViewResult NotFound()
     {
       Response.StatusCode = 404;
-      return View("NotFound");
+      return View();
     }
 
     public ViewResult BadRequest()
     {
       Response.StatusCode = 500;
-      return View("NotFound");
+      return View();
     }
   }
 }

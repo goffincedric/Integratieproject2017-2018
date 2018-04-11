@@ -141,9 +141,16 @@ namespace UI_MVC.Controllers
     public ActionResult Account()
     {
       //nog via pk maken
-
-      Profile profile = UserManager.GetProfile(User.Identity.GetUserName());
-      return View(profile);
+      if (Request.IsAuthenticated)
+      {
+        Profile profile = UserManager.GetProfile(User.Identity.GetUserName());
+        return View(profile);
+      }
+      else
+      {
+        return RedirectToAction("Index", "Home");
+      }
+     
     }
 
     [HttpPost]
