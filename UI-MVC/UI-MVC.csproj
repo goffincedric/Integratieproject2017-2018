@@ -232,8 +232,6 @@
     <Content Include="Content\Images\datatables\sort_both.png" />
     <Content Include="Content\Images\datatables\sort_desc.png" />
     <Content Include="Content\Images\datatables\sort_desc_disabled.png" />
-    <Content Include="Content\Images\gif\404.gif" />
-    <Content Include="Content\Images\gif\500.gif" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo.svg" />
     <Content Include="Content\Images\logo_new.png" />
