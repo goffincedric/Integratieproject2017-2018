@@ -20,6 +20,7 @@ namespace PB.BL.Domain.Dashboards
         public int Height { get; set; }
         public int Position { get; set; }
 
+        public Dashboard Dashboard { get; set; }
         public List<Element> Elements { get; set; }
     }
 }

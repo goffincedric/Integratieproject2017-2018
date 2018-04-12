@@ -1,5 +1,6 @@
 ﻿using Domain.Settings;
 using PB.BL.Domain.Account;
+using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using PB.DAL;
@@ -73,7 +74,8 @@ namespace PB.BL
                 Admins = new List<Profile>(),
                 Items = new List<Item>(),
                 Pages = new List<Page>(),
-                Settings = new List<SubplatformSetting>()
+                Settings = new List<SubplatformSetting>(),
+                Dashboards = new List<Dashboard>()
             };
 
             if (sourceAPI != null) subplatform.Settings.Add(new SubplatformSetting()
