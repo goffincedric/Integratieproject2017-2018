@@ -61,8 +61,10 @@ namespace PB.DAL
 
         public Profile ReadProfile(string username)
         {
-            return ctx.Users.Include("Alerts")
+            return ctx.Users
+                .Include("Alerts")
                 .Include("Subscriptions")
+                .Include("Settings")
                 .FirstOrDefault(p => p.UserName == username);
         }
 
@@ -71,6 +73,7 @@ namespace PB.DAL
             return ctx.Users
                 .Include("Alerts")
                 .Include("Subscriptions")
+                .Include("Settings")
                 .AsEnumerable();
         }
 
