@@ -5,6 +5,8 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
+@import "bootstrap-social.css";
+
 *,
 :after,
 :before {
@@ -10940,7 +10942,7 @@ hr {
 }
 
 .full-container {
-  left: 280px;
+  left: 250px;
   min-height: calc(100vh - 65px);
   position: absolute;
   right: 0;

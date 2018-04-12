@@ -1,47 +1,50 @@
 ﻿@model UI_MVC.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
-<link href="~/Scripts/bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-3.3.1.js"></script>
+@*<link href="~/Scripts/bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet" />*@
+@*<script src="~/Scripts/jquery-3.3.1.js"></script>*@
+@Styles.Render("~/Content/bootstrapcss")
 <link href="~/Content/Styling/externallogins.css" rel="stylesheet" />
+
 @{
   var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
   if (loginProviders.Count() == 0)
   {
     <div>
-        <p>
-            There are no external authentication services configured.
-        </p>
+      <p>
+        There are no external authentication services configured.
+      </p>
     </div>
   }
   else
   {
-      using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
-      {
-    @Html.AntiForgeryToken()
-    <div id="socialLoginList">
-        <div class="btn-group">
-            @foreach (AuthenticationDescription p in loginProviders)
-            {
+    using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+    {
+      @Html.AntiForgeryToken()
+      <div id="socialLoginList">
+        <div class="btn-toolbar">
+          @foreach (AuthenticationDescription p in loginProviders)
+          {
 
             <button type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i></i> @p.AuthenticationType</button>
 
-            }
+          }
 
 
         </div>
-    </div>
-      }
+      </div>
+    }
   }
 }
 
+@Scripts.Render("~/bundles/jquery")
 <script>
 
-    $(".btn-group button:nth-child(1)").addClass("btn btn-social btn-sm btn-google");
-    $("button:nth-child(2)").addClass("btn btn-social btn-sm btn-facebook");
-    $("button:nth-child(3)").addClass("btn btn-social btn-sm btn-twitter");
-    $("button:nth-child(1) i").addClass("fa fa-google-plus pr-1");
-    $("button:nth-child(2) i").addClass("fa fa-facebook");
-    $("button:nth-child(3) i").addClass("fa fa-twitter pr-1");
+  $(".btn-toolbar button:nth-child(1)").addClass("btn btn-social btn-sm btn-google");
+  $("button:nth-child(2)").addClass("btn btn-social btn-sm btn-facebook");
+  $("button:nth-child(3)").addClass("btn btn-social btn-sm btn-twitter");
+  $("button:nth-child(1) i").addClass("fa fa-google-plus pr-1");
+  $("button:nth-child(2) i").addClass("fa fa-facebook");
+  $("button:nth-child(3) i").addClass("fa fa-twitter pr-1");
 </script>
 
 

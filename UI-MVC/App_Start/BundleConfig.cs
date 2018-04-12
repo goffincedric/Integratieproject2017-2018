@@ -22,6 +22,9 @@ namespace UI_MVC
       bundles.Add(new ScriptBundle("~/bundles/adminator").Include("~/Scripts/vendor.js", "~/Scripts/bundle.js"));
 
       bundles.Add(new ScriptBundle("~/bundles/changetheme").Include("~/Scripts/Changetheme.js"));
+
+      bundles.Add(new ScriptBundle("~/bundles/contact").Include("~/Scripts/contact.js"));
+
     }
   }
 }
