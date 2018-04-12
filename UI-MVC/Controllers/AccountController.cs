@@ -141,9 +141,16 @@ namespace UI_MVC.Controllers
     public ActionResult Account()
     {
       //nog via pk maken
+      if (Request.IsAuthenticated)
+      {
+        Profile profile = UserManager.GetProfile(User.Identity.GetUserName());
+        return View(profile);
+      }
+      else
+      {
+        return RedirectToAction("Index", "Home");
+      }
 
-      Profile profile = UserManager.GetProfile(User.Identity.GetUserName());
-      return View(profile);
     }
 
     [HttpPost]
@@ -177,7 +184,7 @@ namespace UI_MVC.Controllers
       var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
       if (loginInfo == null)
       {
-        return RedirectToAction("Login");
+        return RedirectToAction("Login", "Home");
       }
 
       // Sign in the user with this external login provider if the user already has a login
@@ -185,7 +192,7 @@ namespace UI_MVC.Controllers
       switch (result)
       {
         case SignInStatus.Success:
-          return RedirectToAction("Index","Home");
+          return RedirectToAction("Index", "Home");
         case SignInStatus.LockedOut:
           return View("Lockout");
         //case SignInStatus.RequiresVerification:
@@ -194,12 +201,50 @@ namespace UI_MVC.Controllers
           return View("Failed");
         default:
           // If the user does not have an account, then prompt the user to create an account
-          return View("Default");
+
           //ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
           //ViewBag.RoleList = new SelectList(UserManager.GetAllRoles(), "Name", "Name");
-          //return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+          return RedirectToAction("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+          
+        
+
       }
     }
+
+
+    public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model)
+    {
+
+
+      // Get the information about the user from the external login provider
+      var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+      if (info == null)
+      {
+        return RedirectToAction("Index","Home") ;
+      }
+
+      var name = info.Email.Split('@')[0];
+      var user = new Profile { UserName = name, Email = info.Email };
+      var result = await UserManager.CreateAsync(user);
+
+      if (result.Succeeded)
+      {
+        result = await UserManager.AddLoginAsync(user.Id, info.Login);
+        //Assign Role to user Here      
+        await UserManager.AddToRoleAsync(user.Id, "User");
+
+
+        if (result.Succeeded)
+        {
+          await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+          return RedirectToAction("Index", "Home");
+        }
+      }
+      AddErrors(result);
+      return RedirectToAction("Index", "Home");
+
+    }
+
 
     #region Helpers
     private IAuthenticationManager AuthenticationManager

@@ -6,8 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
   <title>Barometer</title>
-  @Styles.Render("~/Content/bootstrapcss")
   @Styles.Render("~/Content/style.css")
+  @Styles.Render("~/Content/bootstrapcss")
+
+  <style>
+  </style>
   <link id="ThemeLink" href="/Content/Theme/LightMode.css" rel="stylesheet">
   <link id="PreviewLink" href="" rel="stylesheet">
 
@@ -47,7 +50,19 @@
         <ul class="sidebar-menu scrollable pos-r">
           <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Index", "Home")"><span class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span class="title">Homepage</span></a></li>
           <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard", "Home")"><span class="icon-holder"><i class="c-brown-500 ti-book"></i> </span><span class="title">Dashboard</span></a></li>
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Account", "Account")"><span class="icon-holder"><i class="c-blue-500 ti-face-smile"></i> </span><span class="title">My account</span></a></li>
+
+          @if (Request.IsAuthenticated)
+          {
+            <li class="nav-item">
+              <a class="sidebar-link" href="@Url.Action("Account", "Account")">
+                <span class="icon-holder">
+                  <i class="c-blue-500 ti-face-smile"></i>
+                </span><span class="title">My account</span>
+              </a>
+            </li>
+          }
+
+
           <li class="nav-item dropdown">
             <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
             <ul class="dropdown-menu">
@@ -187,9 +202,9 @@
                   {
                     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                     {
-                      @Html.AntiForgeryToken(){
-                        <a href="javascript:document.getElementById('logoutForm').submit()" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                          <i class="ti-power-off mR-10"></i> <span>Logoff</span>
+                      @Html.AntiForgeryToken(){ 
+                        <a href="javascript:document.getElementById('logoutForm').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                          <i class="ti-power-off mR-10"></i><span> Logoff</span>
                         </a>
                       }
                     }
