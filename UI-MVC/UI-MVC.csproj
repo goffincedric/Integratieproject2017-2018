@@ -241,6 +241,7 @@
     <Content Include="Content\Scripts\contact.js" />
     <Content Include="Content\style.css" />
     <Content Include="Content\Styling\contact.css" />
+    <Content Include="Content\Styling\externallogins.css" />
     <Content Include="Content\Styling\util.css" />
     <Content Include="Content\Theme\DarkMode.css" />
     <Content Include="Content\Theme\FutureMode.css" />
