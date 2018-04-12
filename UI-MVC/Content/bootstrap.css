@@ -75690,8 +75690,10 @@ footer {
 
 @font-face {
   font-family: themify;
-  src: url(2c454669bdf3aebf32a1bd8ac1e0d2d6.eot);
-  src: url(2c454669bdf3aebf32a1bd8ac1e0d2d6.eot?#iefix-fvbane) format("embedded-opentype"), url(a1ecc3b826d01251edddf29c3e4e1e97.woff) format("woff"), url(e23a7dcaefbde4e74e263247aa42ecd7.ttf) format("truetype"), url(assets/1524739aae86f69026689ec798e10ebc.svg#themify) format("svg");
+  src: url('Fonts/Themify/2c454669bdf3aebf32a1bd8ac1e0d2d6.eot');
+  src: url('Fonts/Themify/2c454669bdf3aebf32a1bd8ac1e0d2d6.eot?#iefix-fvbane') format("embedded-opentype"), 
+    url('Fonts/Themify/a1ecc3b826d01251edddf29c3e4e1e97.woff') format("woff"), 
+    url('Fonts/Themify/e23a7dcaefbde4e74e263247aa42ecd7.ttf') format("truetype");
   font-weight: 400;
   font-style: normal
 }
@@ -77127,11 +77129,16 @@ footer {
 
 @font-face {
   font-family: FontAwesome;
-  src: url(674f50d287a8c48dc19ba404d20fe713.eot);
-  src: url(674f50d287a8c48dc19ba404d20fe713.eot?#iefix&v=4.7.0) format("embedded-opentype"), url(af7ae505a9eed503f8b8e6982036873e.woff2) format("woff2"), url(fee66e712a8a08eef5805a46892932ad.woff) format("woff"), url(b06871f281fee6b241d60582ae9369b9.ttf) format("truetype"), url(assets/dbc7556d44aaa93cc89743f163cc09c4.svg#fontawesomeregular) format("svg");
+  
+  src: url('Fonts/FontAwesome/674f50d287a8c48dc19ba404d20fe713.eot');
+  src: url('Fonts/FontAwesome/674f50d287a8c48dc19ba404d20fe713.eot?#iefix&v=4.7.0') format("embedded-opentype"),
+    url('Fonts/FontAwesome/af7ae505a9eed503f8b8e6982036873e.woff2') format("woff2"),
+    url('Fonts/FontAwesome/fee66e712a8a08eef5805a46892932ad.woff') format("woff"), 
+    url('Fonts/FontAwesome/b06871f281fee6b241d60582ae9369b9.ttf') format("truetype");
   font-weight: 400;
   font-style: normal
 }
+
 
 .fa {
   display: inline-block;

@@ -15,11 +15,10 @@ using System.Security.Claims;
 
 namespace PB.BL.Domain.Account
 {
-    //[Table("tblProfile")]
     public class Profile : IdentityUser
     {
-
         public string ProfileIcon { get; set; }
+
         public UserData UserData { get; set; }
         public List<UserSetting> Settings { get; set; }
         public List<Dashboard> Dashboards { get; set; }

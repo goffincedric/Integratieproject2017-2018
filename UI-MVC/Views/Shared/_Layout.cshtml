@@ -4,13 +4,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-
   <title>Barometer</title>
-  @Styles.Render("~/Content/style.css")
+  @Styles.Render("~/Content/Styling/style.css")
   @Styles.Render("~/Content/bootstrapcss")
-
-  <style>
-  </style>
   <link id="ThemeLink" href="/Content/Theme/LightMode.css" rel="stylesheet">
   <link id="PreviewLink" href="" rel="stylesheet">
 
@@ -20,7 +16,6 @@
   <div id="loader">
     <div class="spinner"></div>
   </div>
-
   <div>
     <div class="sidebar">
       <div class="sidebar-inner">
@@ -28,11 +23,9 @@
           <div class="peers ai-c fxw-nw">
             <div class="peer peer-greed">
               <a class="sidebar-link td-n" href="@Url.Action("Index", "Home")">
-
                 <div class="peers ai-c fxw-nw">
                   <div class="peer">
                     <div class="logo">
-
                       <img class="logopic" src="~/Content/Images/logo_new.png" alt="" />
                     </div>
                   </div>
@@ -50,7 +43,6 @@
         <ul class="sidebar-menu scrollable pos-r">
           <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Index", "Home")"><span class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span class="title">Homepage</span></a></li>
           <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard", "Home")"><span class="icon-holder"><i class="c-brown-500 ti-book"></i> </span><span class="title">Dashboard</span></a></li>
-
           @if (Request.IsAuthenticated)
           {
             <li class="nav-item">
@@ -61,14 +53,12 @@
               </a>
             </li>
           }
-
-
           <li class="nav-item dropdown">
             <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
             <ul class="dropdown-menu">
               <li class="nav-item dropdown"><a class="sidebar-link" href="@Url.Action("Contact", "Home")"><span>Contact</span></a></li>
               <li class="nav-item dropdown"><a href="@Url.Action("FAQ","Home")"><span>FAQ</span></a></li>
-              <li class="nav-item dropdown"><a href="@Url.Action("ItemTables","Item")"><span>Show ItemTable</span></a></li>
+              <li class="nav-item dropdown"><a href="@Url.Action("ItemTables","Item")"><span>Show items</span></a></li>
             </ul>
           </li>
         </ul>
@@ -113,9 +103,7 @@
                   </ul>
                 </li>
               </ul>
-
             </li>
-
             <li class="notifications dropdown">
               <span class="counter bgc-red">3</span> <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
               <ul class="dropdown-menu">
@@ -158,13 +146,8 @@
             <li class="dropdown">
               <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
                 <div class="peer mR-10">
-
                   @Html.Action("ChangeProfilePic", "Home")
-
-
                 </div>
-
-
 
                 @if (Request.IsAuthenticated)
                 {
@@ -215,9 +198,6 @@
                       <i class="ti-power-off mR-10"></i> <span>Login/Register</span>
                     </a>
                   }
-
-
-
                 </li>
               </ul>
             </li>
@@ -227,24 +207,13 @@
 
       @RenderBody()
 
-
-
-
       <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span></footer>
     </div>
   </div>
 </body>
 </html>
 
-  @Scripts.Render("~/bundles/jquery")
-  @Scripts.Render("~/bundles/bootstrapjs")
-  @Scripts.Render("~/bundles/adminator")
-  @Scripts.Render("~/bundles/changetheme")
-  <script>
-    window.addEventListener('load', () => {
-      const loader = document.getElementById('loader');
-      setTimeout(() => {
-        loader.classList.add('fadeOut');
-      }, 300);
-    });
-  </script>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrapjs")
+@Scripts.Render("~/bundles/adminator")
+@Scripts.Render("~/bundles/changetheme")

@@ -15,6 +15,7 @@ namespace PB.BL.Domain.Platform
     public int PageId { get; set; }
     public string Title { get; set; }
     public string FaviconURL { get; set; }
+
     public List<Tag> Tags { get; set; }
   }
 }
