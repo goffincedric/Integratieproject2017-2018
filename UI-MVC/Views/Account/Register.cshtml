@@ -1,72 +1,63 @@
-﻿﻿@model UI_MVC.Models.RegisterViewModel
+﻿@model UI_MVC.Models.RegisterViewModel
 @{
-  ViewBag.Title = "Register";
+    ViewBag.Title = "Register";
 }
 @{
-  Layout = null;
-}
-<!DOCTYPE html>
+    Layout = null;
+}<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-  <title>Sign Up</title>
-  @Styles.Render("~/Content/Styling/style.css")
-  @Styles.Render("~/Content/bootstrapcss")
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>Sign Up</title>
+    @Styles.Render("~/Content/Styling/style.css")
+    @Styles.Render("~/Content/bootstrapcss")
 </head>
 <body class="app">
-  <div id="loader">
-    <div class="spinner"></div>
-  </div>
-  @*<script>
-    window.addEventListener('load', () => {
-      const loader = document.getElementById('loader');
-      setTimeout(() => {
-        loader.classList.add('fadeOut');
-      }, 300);
-    });
-  </script>*@
-  <div class="peers ai-s fxw-nw h-100vh">
-    <div class="peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv" style="background-image:url(@Url.Content("~/Content/Images/bg.jpg"))">
-      <div class="pos-a centerXY">
-        <div class="bgc-white bdrs-50p pos-r" style="width:120px;height:120px"><a href="@Url.Action("Index", "Home")"><img class="pos-a centerXY" src="@Url.Content("~/Content/Images/logo_new.png")" alt=""></a></div>
-      </div>
+    <div id="loader">
+        <div class="spinner"></div>
     </div>
-    <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style="min-width:320px">
-      <h4 class="fw-300 c-grey-900 mB-40">Register</h4>
-      @using (Html.BeginForm("Register", "Account", FormMethod.Post))
-      {
-        @Html.AntiForgeryToken()
-        <form>
-          @Html.ValidationSummary("", new { @class = "text-danger" })
-          <div class="form-group">
-            <label class="text-normal text-dark">Username</label>
-            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "John Doe" } })
-            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
-          </div>
-          <div class="form-group">
-            <label class="text-normal text-dark">Email Address</label>
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "name@email.com" } })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-          </div>
-          <div class="form-group">
-            <label class="text-normal text-dark">Password</label>
-            @Html.PasswordFor(model => model.Password,  new { @class = "form-control", @placeholder = "Password" })
-            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-          </div>
-          <div class="form-group">
-            <label class="text-normal text-dark">Confirm Password</label>
-            @Html.PasswordFor(model => model.ConfirmPassword,  new { @class = "form-control", @placeholder = "Password" } )
-            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
-          </div>
-          <div class="form-group"><button type="submit" value="Register" class="btn btn-primary">Register</button></div>
-        </form>
+    <div class="peers ai-s fxw-nw h-100vh">
+        <div class="peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv" style="background-image:url(@Url.Content("~/Content/Images/bg.jpg"))">
+            <div class="pos-a centerXY">
+                <div class="bgc-white bdrs-50p pos-r" style="width:120px;height:120px"><a href="@Url.Action("Index", "Home")"><img class="pos-a centerXY" src="@Url.Content("~/Content/Images/logo_new.png")" alt=""></a></div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style="min-width:320px">
+            <h4 class="fw-300 c-grey-900 mB-40">Register</h4>
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <form>
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label class="text-normal text-dark">Username</label>
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "John Doe" } })
+                        @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label class="text-normal text-dark">Email Address</label>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "name@email.com" } })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label class="text-normal text-dark">Password</label>
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label class="text-normal text-dark">Confirm Password</label>
+                        @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", @placeholder = "Password" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group"><button type="submit" value="Register" class="btn btn-primary">Register</button></div>
+                </form>
 
-      }
+            }
+        </div>
     </div>
-  </div>
-  @Scripts.Render("~/bundles/bootstrapjs")
-  @Scripts.Render("~/bundles/jquery")
-  @Scripts.Render("~/bundles/adminator")
+    @Scripts.Render("~/bundles/bootstrapjs")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/adminator")
 </body>
 </html>
