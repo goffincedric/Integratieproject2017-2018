@@ -68,6 +68,7 @@
             <ul class="dropdown-menu">
               <li class="nav-item dropdown"><a class="sidebar-link" href="@Url.Action("Contact", "Home")"><span>Contact</span></a></li>
               <li class="nav-item dropdown"><a href="@Url.Action("FAQ","Home")"><span>FAQ</span></a></li>
+              <li class="nav-item dropdown"><a href="@Url.Action("ItemTables","Item")"><span>Show ItemTable</span></a></li>
             </ul>
           </li>
         </ul>
@@ -201,7 +202,7 @@
                   {
                     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                     {
-                      @Html.AntiForgeryToken(){ 
+                      @Html.AntiForgeryToken(){
                         <a href="javascript:document.getElementById('logoutForm').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                           <i class="ti-power-off mR-10"></i><span> Logout</span>
                         </a>
@@ -232,9 +233,11 @@
       <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span></footer>
     </div>
   </div>
+</body>
+</html>
 
-  @Scripts.Render("~/bundles/bootstrapjs")
   @Scripts.Render("~/bundles/jquery")
+  @Scripts.Render("~/bundles/bootstrapjs")
   @Scripts.Render("~/bundles/adminator")
   @Scripts.Render("~/bundles/changetheme")
   <script>
@@ -245,5 +248,3 @@
       }, 300);
     });
   </script>
-</body>
-</html>
