@@ -26,35 +26,16 @@ namespace PB.BL
             DateTime lastDate = records.ToList().OrderByDescending(r => r.Date).ToList()[0].Date;
 
             List<Record> oldRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date < lastDate.Date.AddDays(-1)).ToList();
-            //DateTime minDate = oldRecords.ToList().OrderByDescending(r => r.Date).ToList()[oldRecords.Count - 1].Date; //Datum van oudste record
             List<Record> newRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date <= lastDate.Date).ToList();
 
-            //Console.WriteLine(records.ToList()[0].Date.Date <= lastDate.Date);
-            //Console.WriteLine(lastDate + " " + lastDate.Date.AddDays(-1));
-            //Console.WriteLine(oldRecords.Count + " " + newRecords.Count);
-
-
-            //Alle NewRecords afdrukken
-            //newRecords.ForEach(r => Console.WriteLine(r));
-
             //Alle recordpersonen die records hebben van de afgelopen 14 dagen toevoegen aan lijst
-            List<Person> RecordPersons = new List<Person>();
-            newRecords.ToList().ForEach(r =>
-            {
-                foreach (Person person in r.Persons)
-                {
-                    if (!RecordPersons.Contains(person))
-                    {
-                        RecordPersons.Add(person);
-                    }
-                }
-            });
+            List<Person> RecordPersons = GetPersons(newRecords);
 
             //Alle oldrecords van 1 persoon in een Dictionary met RecordPersoon als Key en de List van records als value
-            Dictionary<Person, List<Record>> groupedOld = groupRecordsPerPerson(RecordPersons, oldRecords);
+            Dictionary<Person, List<Record>> groupedOld = GroupRecordsPerPerson(RecordPersons, oldRecords);
 
-            Console.WriteLine("=============OLD=============");
             //De List van records opdelen in Dictionary van List<Record> per DateTime van de Record
+            Console.WriteLine("=============OLD=============");
             Dictionary<Person, Dictionary<DateTime, List<Record>>> groupedDateOld = new Dictionary<Person, Dictionary<DateTime, List<Record>>>();
             Dictionary<Person, double> oldGemiddelde = new Dictionary<Person, double>();
 
@@ -79,9 +60,8 @@ namespace PB.BL
 
 
             Console.WriteLine("=============NEW=============");
-            //TODO: GEMMIDDELDE BEREKENEN HUIDIGE DAG (NEWRECORDS)
             //Alle newrecords van 1 persoon in een Dictionary met RecordPersoon als Key en de List van records als value
-            Dictionary<Person, List<Record>> groupedNew = groupRecordsPerPerson(RecordPersons, newRecords);
+            Dictionary<Person, List<Record>> groupedNew = GroupRecordsPerPerson(RecordPersons, newRecords);
 
             //De List van records opdelen in Dictionary van List<Record> per dag
             Dictionary<Person, Dictionary<DateTime, List<Record>>> groupedDatenew = new Dictionary<Person, Dictionary<DateTime, List<Record>>>();
@@ -105,8 +85,7 @@ namespace PB.BL
 
             Console.WriteLine("===========VERSCHIL===========");
             oldGemiddelde.Values.ToList().ForEach(v => Console.WriteLine(oldGemiddelde.Keys.ToList()[oldGemiddelde.Values.ToList().IndexOf(v)] + " = " + (newGemiddelde.Values.ToList()[oldGemiddelde.Values.ToList().IndexOf(v)] - v)));
-
-            //WAT RETURNEN?
+            
             Console.WriteLine("\n===== OLDRECORDPERSONS =====");
             oldGemiddelde.Keys.ToList().ForEach(v => Console.WriteLine(v));
 
@@ -148,7 +127,23 @@ namespace PB.BL
             return alerts;
         }
 
-        public Dictionary<Person, List<Record>> groupRecordsPerPerson(List<Person> persons, List<Record> periodRecords)
+        public List<Person> GetPersons(List<Record> records)
+        {
+            List<Person> RecordPersons = new List<Person>();
+            records.ToList().ForEach(r =>
+            {
+                foreach (Person person in r.Persons)
+                {
+                    if (!RecordPersons.Contains(person))
+                    {
+                        RecordPersons.Add(person);
+                    }
+                }
+            });
+            return RecordPersons;
+        }
+
+        public Dictionary<Person, List<Record>> GroupRecordsPerPerson(List<Person> persons, List<Record> periodRecords)
         {
             Dictionary<Person, List<Record>> groupedOld = new Dictionary<Person, List<Record>>();
 

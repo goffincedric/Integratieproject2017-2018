@@ -21,7 +21,7 @@ namespace PB.BL
 {
     //This class talks with the SupportCenterUserStore and tells it which
     //data to store, it also handles some logic and settings
-    public class AccountManager : UserManager<PB.BL.Domain.Account.Profile>, IAccountManager
+    public class AccountManager : UserManager<Profile>, IAccountManager
     {
 
         private IntegratieUserStore store;
@@ -43,7 +43,6 @@ namespace PB.BL
         //}
         public AccountManager(IntegratieUserStore store) : base(store)
         {
-
             //Console.WriteLine("Gebruik accountmanager constructor met store");
 
             //UowManager = uowMgr;
@@ -51,8 +50,6 @@ namespace PB.BL
             InitNonExistingRepo(true);
             //ProfileRepo profileRepo = new ProfileRepo(UowManager.UnitOfWork);
             CreateRolesandUsers();
-
-
         }
 
 
@@ -99,7 +96,6 @@ namespace PB.BL
             if (dataProtectionProvider != null)
             {
                 manager.UserTokenProvider = new DataProtectorTokenProvider<BL.Domain.Account.Profile>(dataProtectionProvider.Create("ASP.NET Identity"));
-
             }
 
             return manager;
@@ -173,33 +169,33 @@ namespace PB.BL
 
 
         #region Profile
-        public Profile AddProfile(string username, string email)
-        {
-            InitNonExistingRepo();
-            Profile profile = new Profile()
-            {
-                UserName = username,
-                Email = email,
-                Alerts = new List<Alert>(),
-                Dashboards = new List<Dashboard>(),
-                Settings = new List<UserSetting>(),
-                Subscriptions = new List<Item>()
+        //public Profile AddProfile(string username, string email)
+        //{
+        //    InitNonExistingRepo();
+        //    Profile profile = new Profile()
+        //    {
+        //        UserName = username,
+        //        Email = email,
+        //        Alerts = new List<Alert>(),
+        //        Dashboards = new List<Dashboard>(),
+        //        Settings = new List<UserSetting>(),
+        //        Subscriptions = new List<Item>()
 
-            };
-            profile.UserData = new UserData() { Profile = profile };
+        //    };
+        //    profile.UserData = new UserData() { Profile = profile };
 
-            profile = AddProfile(profile);
-            UowManager.Save();
-            return profile;
-        }
+        //    profile = AddProfile(profile);
+        //    UowManager.Save();
+        //    return profile;
+        //}
 
-        private Profile AddProfile(Profile profile)
-        {
-            InitNonExistingRepo();
-            Profile newProfile = ProfileRepo.CreateProfile(profile);
-            UowManager.Save();
-            return profile;
-        }
+        //private Profile AddProfile(Profile profile)
+        //{
+        //    InitNonExistingRepo();
+        //    Profile newProfile = ProfileRepo.CreateProfile(profile);
+        //    UowManager.Save();
+        //    return profile;
+        //}
 
         public void ChangeProfile(Profile profile)
         {
