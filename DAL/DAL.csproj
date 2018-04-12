@@ -56,10 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DashboardRepo.cs" />
     <Compile Include="EF\IntegratieDbConfiguration.cs" />
     <Compile Include="EF\IntegratieDbContext.cs" />
     <Compile Include="EF\IntegratieDbInitializer.cs" />
     <Compile Include="EF\IntegratieUserStore.cs" />
+    <Compile Include="IDashboardRepo.cs" />
     <Compile Include="IItemRepo.cs" />
     <Compile Include="IProfileRepo.cs" />
     <Compile Include="IRecordRepo.cs" />

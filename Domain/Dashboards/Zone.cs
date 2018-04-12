@@ -8,17 +8,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PB.BL.Domain.Dashboards
 {
-  [Table("tblZone")]
-  public class Zone
-  {
-    [Key]
-    public int ZoneId { get; set; }
-    public string Name { get; set; }
-    public bool IsFull { get; set; }
-    public readonly int MAX_ELEMENTS;
-    public int Width { get; set; }
-    public int Height { get; set; }
-    public int Position { get; set; }
+    [Table("tblZone")]
+    public class Zone
+    {
+        [Key]
+        public int ZoneId { get; set; }
+        public string Name { get; set; }
+        public bool IsFull { get; set; }
+        public readonly int MAX_ELEMENTS;
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int Position { get; set; }
 
-  }
+        public List<Element> Elements { get; set; }
+    }
 }
