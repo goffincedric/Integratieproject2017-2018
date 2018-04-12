@@ -1,4 +1,9 @@
 
+#logoutForm {
+  padding: 0 15px;
+  cursor: pointer;
+}
+
 #loader {
   transition: all .3s ease-in-out;
   opacity: 1;
