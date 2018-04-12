@@ -24,7 +24,6 @@ using Domain.Settings;
 namespace UI_MVC.Controllers
 {
   [RequireHttps]
-  [Authorize(Roles = "User,Admin,SuperAdmin")]
   public class HomeController : Controller
   {
     private static IntegratieDbContext Context = new IntegratieDbContext();
