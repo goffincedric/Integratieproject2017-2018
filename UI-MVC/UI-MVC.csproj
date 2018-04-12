@@ -238,7 +238,10 @@
     <Content Include="Content\PreviewTheme\PDarkMode.css" />
     <Content Include="Content\PreviewTheme\PFutureMode.css" />
     <Content Include="Content\PreviewTheme\PLightMode.css" />
+    <Content Include="Content\Scripts\contact.js" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\Styling\contact.css" />
+    <Content Include="Content\Styling\util.css" />
     <Content Include="Content\Theme\DarkMode.css" />
     <Content Include="Content\Theme\FutureMode.css" />
     <Content Include="Content\Theme\LightMode.css" />
@@ -332,6 +335,7 @@
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Account\Account.cshtml" />
     <Content Include="Views\Item\ItemTables.cshtml" />
+    <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\BadRequest.cshtml" />
