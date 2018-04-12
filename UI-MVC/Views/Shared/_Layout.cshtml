@@ -2,22 +2,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-
-    <title>Barometer</title>
-    @Styles.Render("~/Content/bootstrapcss")
-    @Styles.Render("~/Content/style.css")
-
-    <link id="ThemeLink" href="@Html.Action("GetThemeSetting","Home")" rel="stylesheet">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Barometer</title>
+   @Styles.Render("~/Content/bootstrapcss")
+  @Styles.Render("~/Content/Styling/style.css")
+  <link id="ThemeLink" href="@Html.Action("GetThemeSetting","Home")" rel="stylesheet">
 </head>
 
 <body class="app">
   <div id="loader">
     <div class="spinner"></div>
   </div>
-
   <div>
     <div class="sidebar">
       <div class="sidebar-inner">
@@ -25,11 +21,9 @@
           <div class="peers ai-c fxw-nw">
             <div class="peer peer-greed">
               <a class="sidebar-link td-n" href="@Url.Action("Index", "Home")">
-
                 <div class="peers ai-c fxw-nw">
                   <div class="peer">
                     <div class="logo">
-
                       <img class="logopic" src="~/Content/Images/logo_new.png" alt="" />
                     </div>
                   </div>
@@ -47,7 +41,6 @@
         <ul class="sidebar-menu scrollable pos-r">
           <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Index", "Home")"><span class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span class="title">Homepage</span></a></li>
           <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard", "Home")"><span class="icon-holder"><i class="c-brown-500 ti-book"></i> </span><span class="title">Dashboard</span></a></li>
-
           @if (Request.IsAuthenticated)
           {
             <li class="nav-item">
@@ -58,14 +51,12 @@
               </a>
             </li>
           }
-
-
           <li class="nav-item dropdown">
             <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
             <ul class="dropdown-menu">
               <li class="nav-item dropdown"><a class="sidebar-link" href="@Url.Action("Contact", "Home")"><span>Contact</span></a></li>
               <li class="nav-item dropdown"><a href="@Url.Action("FAQ","Home")"><span>FAQ</span></a></li>
-              <li class="nav-item dropdown"><a href="@Url.Action("ItemTables","Item")"><span>Show ItemTable</span></a></li>
+              <li class="nav-item dropdown"><a href="@Url.Action("ItemTables","Item")"><span>Show items</span></a></li>
             </ul>
           </li>
         </ul>
@@ -112,10 +103,8 @@
                       </ul>
                   </li>
               </ul>
-
-          </li>
-              }
-          <li class="notifications dropdown">
+            </li>
+            <li class="notifications dropdown">
               <span class="counter bgc-red">3</span> <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
               <ul class="dropdown-menu">
                   <li class="pX-20 pY-15 bdB"><i class="ti-bell pR-10"></i> <span class="fsz-sm fw-600 c-grey-900">Notifications</span></li>
@@ -156,23 +145,23 @@
 
           <li class="dropdown">
               <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
-                  <div class="peer mR-10">
+                <div class="peer mR-10">
+                  @Html.Action("ChangeProfilePic", "Home")
+                </div>
 
-                      @Html.Action("ChangeProfilePic", "Home")
-
-
-                  </div>
-
-
-
-                  @if (Request.IsAuthenticated)
-        {
-            {
-              @Html.AntiForgeryToken()
-    {
-          <div class="peer">
-              <span style="color: #2196f3" class="fsz-sm">
-                  @{ViewBag.Ingelogd = "Hi " + User.Identity.GetUserName();
+                @if (Request.IsAuthenticated)
+                {
+                  {
+                    @Html.AntiForgeryToken()
+                    {
+                      <div class="peer">
+                        <span style="color: #2196f3" class="fsz-sm">
+                          @{ViewBag.Ingelogd = "Hi " + User.Identity.GetUserName();
+                          }
+                          @ViewBag.Ingelogd
+                        </span>
+                      </div>
+                    }
                   }
                   @ViewBag.Ingelogd
               </span>
@@ -191,33 +180,31 @@ else
 
               </a>
               <ul class="dropdown-menu fsz-sm">
-                  <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-settings mR-10"></i> <span>Setting</span></a></li>
-                  <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Profile</span></a></li>
-                  <li><a href="@Url.Action("Email","Home")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-email mR-10"></i> <span>Messages</span></a></li>
-                  <li role="separator" class="divider"></li>
-                  <li>
 
-                      @if (Request.IsAuthenticated)
-            {
-                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                {
-                  @Html.AntiForgeryToken(){
-          <a href="javascript:document.getElementById('logoutForm').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-              <i class="ti-power-off mR-10"></i><span> Logout</span>
-          </a>
-}
-}
-}
-else
-{
-          <a href="@Url.Action("Login","Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-              <i class="ti-power-off mR-10"></i> <span>Login/Register</span>
-          </a>
-}
+                <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-settings mR-10"></i> <span>Setting</span></a></li>
+                <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Profile</span></a></li>
+                <li><a href="@Url.Action("Email","Home")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-email mR-10"></i> <span>Messages</span></a></li>
+                <li role="separator" class="divider"></li>
+                <li>
 
-
-
-                  </li>
+                  @if (Request.IsAuthenticated)
+                  {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                      @Html.AntiForgeryToken(){
+                        <a href="javascript:document.getElementById('logoutForm').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                          <i class="ti-power-off mR-10"></i><span> Logout</span>
+                        </a>
+                      }
+                    }
+                  }
+                  else
+                  {
+                    <a href="@Url.Action("Login","Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                      <i class="ti-power-off mR-10"></i> <span>Login/Register</span>
+                    </a>
+                  }
+                </li>
               </ul>
           </li>
           </ul>
@@ -226,24 +213,15 @@ else
 
       @RenderBody()
 
-
-
-
       <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span></footer>
     </div>
   </div>
 </body>
 </html>
 
-  @Scripts.Render("~/bundles/jquery")
-  @Scripts.Render("~/bundles/bootstrapjs")
-  @Scripts.Render("~/bundles/adminator")
-  @*@Scripts.Render("~/bundles/changetheme")*@
-  <script>
-    window.addEventListener('load', () => {
-      const loader = document.getElementById('loader');
-      setTimeout(() => {
-        loader.classList.add('fadeOut');
-      }, 300);
-    });
-  </script>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrapjs")
+@Scripts.Render("~/bundles/adminator")
+@Scripts.Render("~/bundles/changetheme")
+

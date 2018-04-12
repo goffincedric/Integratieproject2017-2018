@@ -24,6 +24,7 @@ using Domain.Settings;
 namespace UI_MVC.Controllers
 {
   [RequireHttps]
+  [Authorize(Roles = "User,Admin,SuperAdmin")]
   public class HomeController : Controller
   {
     private static IntegratieDbContext Context = new IntegratieDbContext();
@@ -31,7 +32,7 @@ namespace UI_MVC.Controllers
     private static readonly AccountManager AccountMgr = new AccountManager(Store);
     private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
 
-
+    #region profile
 
     public ActionResult ChangeProfilePic()
     {
@@ -72,61 +73,20 @@ namespace UI_MVC.Controllers
         return Content("\"\"");
       }
     }
+
+    #endregion
+
     public ActionResult Index()
     {
-
       return View();
     }
-
- 
 
     public ActionResult Dashboard()
     {
       return View();
     }
 
-    public ActionResult BasicTable()
-    {
-      return View();
-    }
-
-
     public ActionResult Blank()
-    {
-      return View();
-    }
-
-
-    public ActionResult Charts()
-    {
-      return View();
-    }
-
-
-    public ActionResult DataTable()
-    {
-      return View();
-    }
-
-
-    public ActionResult Forms()
-    {
-      return View();
-    }
-
-
-    public ActionResult Test404()
-    {
-      return View();
-    }
-
-
-    public ActionResult Test500()
-    {
-      return View();
-    }
-
-    public ActionResult UI()
     {
       return View();
     }

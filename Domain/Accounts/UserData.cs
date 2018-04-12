@@ -20,11 +20,10 @@ namespace PB.BL.Domain.Account
     public int? PostalCode { get; set; }
     public string City { get; set; }
     public DateTime BirthDate { get; set; }
+
     public Province Province { get; set; }
     public Gender Gender { get; set; }
 
-    // [Key]
-    //public string Username { get; set; }
     [Required]
     public Profile Profile { get; set; }
   }

@@ -17,9 +17,7 @@ namespace Domain.Account
     public bool IsRead { get; set; }
     [Required]
     public DateTime TimeStamp { get; set; }
-
     public string Username { get; set; }
-
     [Required]
     [ForeignKey("Username")]
     public Profile Profile { get; set; }

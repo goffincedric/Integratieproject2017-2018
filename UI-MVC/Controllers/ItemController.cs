@@ -9,10 +9,9 @@ using PB.BL.Domain.Items;
 namespace UI_MVC.Controllers
 {
   [RequireHttps]
- // [Authorize(Roles = "User,Admin,SuperAdmin")]
+  [Authorize(Roles = "User,Admin,SuperAdmin")]
   public class ItemController : Controller
   {
-
     private UnitOfWorkManager uow;
     private ItemManager itemMgr;
 

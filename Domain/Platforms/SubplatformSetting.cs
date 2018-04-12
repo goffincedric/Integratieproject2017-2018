@@ -9,13 +9,14 @@ using Domain.Settings;
 
 namespace PB.BL.Domain.Platform
 {
-    [Table("tblSubPlatformSetting")]
-    public class SubplatformSetting
-    {
-        [Key] //Key aanpassen naar SettingName + SubplatformId
-        public Setting.Platform SettingName { get; set; }
-        public bool IsEnabled { get; set; }
-        public string Value { get; set; }
+  [Table("tblSubPlatformSetting")]
+  public class SubplatformSetting
+  {
+    //Key aanpassen naar SettingName + SubplatformId
+    [Key]
+    public Setting.Platform SettingName { get; set; }
+    public bool IsEnabled { get; set; }
+    public string Value { get; set; }
 
-    }
+  }
 }

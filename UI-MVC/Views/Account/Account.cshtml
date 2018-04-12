@@ -1,4 +1,4 @@
-﻿@*@*@*@model PB.BL.Domain.Account.Profile
+﻿@model PB.BL.Domain.Account.Profile
 @{
   ViewBag.Title = "My Account";
   Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,18 +8,14 @@
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
     <div class="container-fluid">
-
-      <h4 class="c-grey-900 mT-10 mB-30">Profile</h4>
-
+      <h4 class="c-grey-900 mT-10 mB-30">My profile</h4>
       <div class="bgc-white p-20 bd">
-
         <div class="mT-30">
 
           @using (Html.BeginForm("Account", "Account", FormMethod.Post))
           {
             @Html.AntiForgeryToken()
             <form>
-
               <div class="form-row">
                 <div class="form-group col-md-1">
                   <img class="img-fluid" src=/Content/Images/1.jpg>
@@ -137,10 +133,6 @@
       </div>
     </div>
   </div>
-
-
-
-
 </main>
 
 <script type="text/javascript" defer>

@@ -1,9 +1,6 @@
 ﻿@model UI_MVC.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
-@*<link href="~/Scripts/bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet" />*@
-@*<script src="~/Scripts/jquery-3.3.1.js"></script>*@
-@Styles.Render("~/Content/bootstrapcss")
-<link href="~/Content/Styling/externallogins.css" rel="stylesheet" />
+
 
 @{
   var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
@@ -25,7 +22,7 @@
           @foreach (AuthenticationDescription p in loginProviders)
           {
 
-            <button type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i></i> @p.AuthenticationType</button>
+            <button class="btnLoginProviders" type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i></i> @p.AuthenticationType</button>
 
           }
 
