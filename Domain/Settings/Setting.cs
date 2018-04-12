@@ -11,7 +11,8 @@ namespace Domain.Settings
         public enum Account
         {
             WANTS_EMAIL_NOTIFICATIONS,
-            WANTS_ANDROID_NOTIFICATIONS
+            WANTS_ANDROID_NOTIFICATIONS,
+            THEME
         }
 
         public enum Platform
