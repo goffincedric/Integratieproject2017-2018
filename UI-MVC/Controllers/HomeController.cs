@@ -19,6 +19,7 @@ using Microsoft.Owin;
 
 using Microsoft.Owin.Security;
 using System.Net;
+using Domain.Settings;
 
 namespace UI_MVC.Controllers
 {
@@ -26,6 +27,9 @@ namespace UI_MVC.Controllers
   [Authorize(Roles = "User,Admin,SuperAdmin")]
   public class HomeController : Controller
   {
+    private static IntegratieDbContext Context = new IntegratieDbContext();
+    private static readonly IntegratieUserStore Store = new IntegratieUserStore(Context);
+    private static readonly AccountManager AccountMgr = new AccountManager(Store);
     private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
 
     #region profile
@@ -97,7 +101,39 @@ namespace UI_MVC.Controllers
       return View();
     }
 
+    public ActionResult GetThemeSetting()
+    {
+      if (User.Identity.IsAuthenticated)
+      {
+        string theme = "";
+        Profile profile = AccountMgr.GetProfile(User.Identity.GetUserName());
+        UserSetting userSetting = AccountMgr.GetUserSetting(profile.UserName, Setting.Account.THEME);
 
+        switch (userSetting.Value)
+        {
+          case "light": theme = "LightMode"; break;
+          case "dark": theme = "DarkMode"; break;
+          case "future": theme = "FutureMode"; break;
+        }
+        return Content(string.Format("/Content/Theme/{0}.css", theme));
+      }
+      return Content("/Content/Theme/LightMode.css");
+    }
+    
+    public ActionResult ChangeThemeSetting(string Theme)
+    {
+      if (User.Identity.IsAuthenticated)
+      {
+        Profile profile = AccountMgr.GetProfile(User.Identity.GetUserName());
+        UserSetting userSetting = AccountMgr.GetUserSetting(profile.UserName, Setting.Account.THEME);
 
-  }
+        userSetting.Value = Theme;
+
+        AccountMgr.ChangeUserSetting(profile.UserName, userSetting);
+
+        return View("~/Views/Home/Index.cshtml");
+      }
+      return View("~/Views/Home/Index.cshtml");
+    }
+  }      
 }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Domain.Settings;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -109,10 +111,12 @@ namespace UI_MVC.Controllers
       {
         var user = new Profile { UserName = model.Username, Email = model.Email, };
         user.UserData = new UserData() { Profile = user };
+        user.Settings = new List<UserSetting>();
+        user.Settings.Add(new UserSetting() { Profile = user, IsEnabled = true, SettingName = Setting.Account.THEME, Value = "light"});
         var result = await UserManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
-          //Assign Role to user    
+          //Assign Role to user
           await UserManager.AddToRoleAsync(user.Id, "User");
           //Login
           await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -215,6 +219,8 @@ namespace UI_MVC.Controllers
         var name = info.Email.Split('@')[0];
         var user = new Profile { UserName = name, Email = model.Email };
         user.UserData = new UserData() { Profile = user };
+        user.Settings = new List<UserSetting>();
+        user.Settings.Add(new UserSetting() { Profile = user, IsEnabled = true, SettingName = Setting.Account.THEME, Value = "light" });
         var result = await UserManager.CreateAsync(user);
 
         if (result.Succeeded)
