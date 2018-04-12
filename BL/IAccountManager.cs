@@ -14,7 +14,7 @@ namespace PB.BL
     {
         IEnumerable<Profile> GetProfiles();
         Profile GetProfile(string username);
-        Profile AddProfile(string username, string email);
+        //Profile AddProfile(string username, string email);
         void ChangeProfile(Profile profile);
         void RemoveProfile(string username);
 
