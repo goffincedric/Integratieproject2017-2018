@@ -1,81 +1,54 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+  ViewBag.Title = "Contact";
 }
 
 <head>
-    <script src="~/Scripts/jquery-3.3.1.js"></script>
-    <link href="~/Scripts/animate/animate.css" rel="stylesheet" />
-    <link href="~/Scripts/css-hamburgers/hamburgers.css" rel="stylesheet" />
-    <link href="~/Scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Scripts/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/Scripts/animate/animate.css" rel="stylesheet" />
-    <link href="~/Scripts/css-hamburgers/hamburgers.css" rel="stylesheet" />
-    <script src="~/Scripts/select2/select2.js"></script>
-    <link href="~/Content/Styling/util.css" rel="stylesheet" />
-    <link href="~/Content/Styling/contact.css" rel="stylesheet" />
-    <script src="~/Scripts/bootstrap/js/popper.js"></script>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <script src="~/Scripts/select2/select2.min.js"></script>
-<script src="~/Content/Scripts/contact.js" language="javascript" type="text/javascript"></script>
-    </head>
+  <link href="~/Content/Styling/contact.css" rel="stylesheet" />
+</head>
 
-    <div class="bg-contact2" style="background-image: url('~/Content/Images/bg.jpg');">
+<main class="main-content bgc-grey-100">
+  <div id="mainContent">
+    <div class="full-container">
+      <div class="bg-contact2">
         <div class="container-contact2">
-            <div class="wrap-contact2">
-                <form class="contact2-form validate-form">
-                    <span class="contact2-form-title">
-                        Contact Us
-                    </span>
+          <div class="wrap-contact2">
+            <form class="contact2-form validate-form">
+              <span class="contact2-form-title">
+                Contact Us
+              </span>
 
-                    <div class="wrap-input2 validate-input" data-validate="Name is required">
-                        <input class="input2" type="text" name="name">
-                        <span class="focus-input2" data-placeholder="NAME"></span>
-                    </div>
+              <div class="wrap-input2 validate-input" data-validate="Name is required">
+                <input class="input2" type="text" name="name">
+                <span class="focus-input2" data-placeholder="NAME"></span>
+              </div>
 
-                    <div class="wrap-input2 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                        <input class="input2" type="text" name="email">
-                        <span class="focus-input2" data-placeholder="EMAIL"></span>
-                    </div>
+              <div class="wrap-input2 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                <input class="input2" type="text" name="email">
+                <span class="focus-input2" data-placeholder="EMAIL"></span>
+              </div>
 
-                    <div class="wrap-input2 validate-input" data-validate="You must choose a type">
-                       
-                        <select>
-                            <option value="empty">Type</option>
-                            <option value="interface">Interface</option>
-                            <option value="account">Account</option>
-                            <option value="other">Other</option>
-                        </select>
-</div>
+              <div class="wrap-input2 validate-input" data-validate="Message is required">
+                <textarea class="input2" name="message"></textarea>
+                <span class="focus-input2" data-placeholder="MESSAGE"></span>
+              </div>
 
-                  
-
-                        <div class="wrap-input2 validate-input" data-validate="Message is required">
-                            <textarea class="input2" name="message"></textarea>
-                            <span class="focus-input2" data-placeholder="MESSAGE"></span>
-                        </div>
-
-                        <div class="container-contact2-form-btn">
-                            <div class="wrap-contact2-form-btn">
-                                <div class="contact2-form-bgbtn"></div>
-                                <button class="contact2-form-btn">
-                                    Send Your Message
-                                </button>
-                            </div>
-                        </div>
-</form>
-            </div>
+              <div class="container-contact2-form-btn">
+                <div class="wrap-contact2-form-btn">
+                  <div class="contact2-form-bgbtn"></div>
+                  <button class="contact2-form-btn">
+                    Send Your Message
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'UA-23581568-13');
-</script>
+  </div>
+</main>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/contact")
 
 
 
