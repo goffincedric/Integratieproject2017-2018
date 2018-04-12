@@ -22,7 +22,7 @@ namespace UI_CA_Prototype
         private static readonly IntegratieUserStore Store = new IntegratieUserStore(Context);
         private static readonly AccountManager AccountMgr = new AccountManager(Store);
 
-        private static bool WillSeed = true;
+        private static bool WillSeed = false;
         private static OptionSet CLIOptions;
 
         private static readonly UnitOfWorkManager Uow = new UnitOfWorkManager();
@@ -88,7 +88,7 @@ namespace UI_CA_Prototype
             List<Subplatform> subplatformsToClear = new List<Subplatform>();
             //Available CLI options
             CLIOptions = new OptionSet {
-                {"n|no-seed", "Will not use seed data to seed the database", ns => WillSeed = (ns == null) },
+                {"s|seed", "Will use seed data from TextGainAPI to seed the database", ns => WillSeed = (ns != null) },
                 {"c|cleanup-db=", "Clean the database of old records for the given subplatforms", cdb =>
                     {
                         Subplatform subplatform = SubplatformMgr.GetSubplatforms().First(s => s.Name.Replace(" ", "").ToLower().Equals(cdb.Replace(" ", "").ToLower()));

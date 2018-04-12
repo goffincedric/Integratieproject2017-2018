@@ -43,7 +43,7 @@ namespace PB.BL
         public AccountManager(IntegratieUserStore store) : base(store)
         {
 
-            Console.WriteLine("Gebruik accountmanager constructor met store");
+            //Console.WriteLine("Gebruik accountmanager constructor met store");
 
             //UowManager = uowMgr;
             this.store = store;
@@ -58,7 +58,7 @@ namespace PB.BL
 
         public static AccountManager Create(IdentityFactoryOptions<AccountManager> options, IOwinContext context)
         {
-            Console.WriteLine("Create accountmanager wordt gedaan");
+            //Console.WriteLine("Create accountmanager wordt gedaan");
 
             var manager = new AccountManager(new IntegratieUserStore(context.Get<IntegratieDbContext>()));
             manager.UserValidator = new UserValidator<BL.Domain.Account.Profile>(manager)
@@ -153,11 +153,11 @@ namespace PB.BL
                     if (UowManager == null)
                     {
                         UowManager = new UnitOfWorkManager();
-                        Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
+                        //Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
                     }
                     else
                     {
-                        Console.WriteLine("uo bestaat al");
+                        //Console.WriteLine("uo bestaat al");
                     }
 
                     ProfileRepo = new ProfileRepo(UowManager.UnitOfWork);
@@ -165,7 +165,7 @@ namespace PB.BL
                 else
                 {
                     ProfileRepo = new ProfileRepo();
-                    Console.WriteLine("OLD WAY REPO ACCOUNTMGR");
+                    //Console.WriteLine("OLD WAY REPO ACCOUNTMGR");
                 }
             }
         }
@@ -180,6 +180,10 @@ namespace PB.BL
             {
                 UserName = username,
                 Email = email,
+                Alerts = new List<Alert>(),
+                Dashboards = new List<Dashboard>(),
+                Settings = new List<UserSetting>(),
+                Subscriptions = new List<Item>()
 
             };
             profile.UserData = new UserData() { Profile = profile };

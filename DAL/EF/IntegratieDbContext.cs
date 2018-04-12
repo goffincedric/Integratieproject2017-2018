@@ -14,7 +14,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace PB.DAL.EF
 {
     [DbConfigurationType(typeof(IntegratieDbConfiguration))]
-    public class IntegratieDbContext : IdentityDbContext<BL.Domain.Account.Profile>
+    public class IntegratieDbContext : IdentityDbContext<Profile>
     {
         private readonly bool delaySave;
 
@@ -25,7 +25,7 @@ namespace PB.DAL.EF
 
         public IntegratieDbContext(bool unitOfworkPresent = false) : base("IntegratieDB_EFCodeFirst")
         {
-            System.Data.Entity.Database.SetInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
+            Database.SetInitializer(new IntegratieDbInitializer());
             delaySave = unitOfworkPresent;
         }
 
@@ -44,7 +44,7 @@ namespace PB.DAL.EF
              * Database Configuration
              */
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             //modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Properties<DateTime>()
                 .Configure(c => c.HasColumnType("datetime2"));
@@ -74,6 +74,26 @@ namespace PB.DAL.EF
                 .WithMany(p => p.Admins)
                 .Map(m => { m.ToTable("tblSubplatformAdmins"); });
 
+            modelBuilder.Entity<Profile>()
+                .HasMany(p => p.Dashboards)
+                .WithRequired(d => d.Profile);
+
+            modelBuilder.Entity<Dashboard>()
+                .HasRequired(d => d.Subplatform)
+                .WithMany(s => s.Dashboards);
+
+            modelBuilder.Entity<Dashboard>()
+                .HasMany(d => d.Zones)
+                .WithRequired(z => z.Dashboard);
+
+            modelBuilder.Entity<Zone>()
+                .HasMany(z => z.Elements)
+                .WithRequired(e => e.Zone);
+
+            modelBuilder.Entity<Element>()
+                .HasRequired(e => e.Comparison)
+                .WithMany(c => c.Elements);
+
             modelBuilder.Entity<Item>()
                 .HasMany(t => t.Comparisons)
                 .WithMany(t => t.Items)
@@ -90,9 +110,9 @@ namespace PB.DAL.EF
                 .Map(m => { m.ToTable("tblSubplatformItem"); });
 
             modelBuilder.Entity<Record>()
-          .HasMany(r => r.Mentions)
-          .WithMany(m => m.Records)
-          .Map(m => { m.ToTable("tblRecordMention"); });
+                .HasMany(r => r.Mentions)
+                .WithMany(m => m.Records)
+                .Map(m => { m.ToTable("tblRecordMention"); });
 
             modelBuilder.Entity<Record>()
                 .HasMany(r => r.Words)
