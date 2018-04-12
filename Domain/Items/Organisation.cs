@@ -13,6 +13,7 @@ namespace PB.BL.Domain.Items
     {
         public string SocialMediaLink { get; set; }
         public string IconURL { get; set; }
+
         public List<Person> People { get; set; }
         public List<Record> Records { get; set; }
     }

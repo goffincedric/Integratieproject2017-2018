@@ -238,11 +238,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\acf3dcb7ff752b5296ca23ba2c7c2606.svg" />
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\cba68f986e60df8c74f4a53c3e39595c.svg" />
     <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
@@ -253,9 +251,8 @@
     <Content Include="Content\PreviewTheme\PFutureMode.css" />
     <Content Include="Content\PreviewTheme\PLightMode.css" />
     <Content Include="Scripts\contact.js" />
-    <Content Include="Content\style.css" />
+    <Content Include="Content\Styling\style.css" />
     <Content Include="Content\Styling\contact.css" />
-    <Content Include="Content\Styling\externallogins.css" />
     <Content Include="Content\Styling\FAQ.css" />
     <Content Include="Content\Theme\DarkMode.css" />
     <Content Include="Content\Theme\FutureMode.css" />
@@ -264,13 +261,13 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\2c454669bdf3aebf32a1bd8ac1e0d2d6.eot" />
-    <Content Include="Content\674f50d287a8c48dc19ba404d20fe713.eot" />
-    <Content Include="Content\a1ecc3b826d01251edddf29c3e4e1e97.woff" />
-    <Content Include="Content\af7ae505a9eed503f8b8e6982036873e.woff2" />
-    <Content Include="Content\b06871f281fee6b241d60582ae9369b9.ttf" />
-    <Content Include="Content\e23a7dcaefbde4e74e263247aa42ecd7.ttf" />
-    <Content Include="Content\fee66e712a8a08eef5805a46892932ad.woff" />
+    <Content Include="Content\Fonts\Themify\2c454669bdf3aebf32a1bd8ac1e0d2d6.eot" />
+    <Content Include="Content\Fonts\FontAwesome\674f50d287a8c48dc19ba404d20fe713.eot" />
+    <Content Include="Content\Fonts\Themify\a1ecc3b826d01251edddf29c3e4e1e97.woff" />
+    <Content Include="Content\Fonts\FontAwesome\af7ae505a9eed503f8b8e6982036873e.woff2" />
+    <Content Include="Content\Fonts\FontAwesome\b06871f281fee6b241d60582ae9369b9.ttf" />
+    <Content Include="Content\Fonts\Themify\e23a7dcaefbde4e74e263247aa42ecd7.ttf" />
+    <Content Include="Content\Fonts\FontAwesome\fee66e712a8a08eef5805a46892932ad.woff" />
     <Content Include="favicon.ico" />
     <Content Include="Scripts\bundle.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
@@ -286,6 +283,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\load.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />

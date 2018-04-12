@@ -13,12 +13,12 @@ using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
 {
-  [Authorize]
+  
+  [Authorize(Roles = "User,Admin,SuperAdmin")]
   [RequireHttps]
   public class AccountController : Controller
   {
     private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
-
     private AccountManager _accountMgr;
     private IntegratieSignInManager _signInManager;
 
@@ -58,6 +58,9 @@ namespace UI_MVC.Controllers
       }
     }
 
+    #region LoginRegister
+
+  
 
     [AllowAnonymous]
     public ActionResult Login()
@@ -70,12 +73,11 @@ namespace UI_MVC.Controllers
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Login(LoginViewModel model)
     {
-
       if (!ModelState.IsValid)
       {
         return View(model);
       }
-
+    
       var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: true);
       switch (result)
       {
@@ -84,8 +86,6 @@ namespace UI_MVC.Controllers
           return RedirectToAction("Index", "Home");
         case SignInStatus.LockedOut:
           return View("Lockout");
-        //case SignInStatus.RequiresVerification:
-        //  return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
         case SignInStatus.Failure:
         default:
           ModelState.AddModelError("", "Invalid login attempt.");
@@ -98,7 +98,6 @@ namespace UI_MVC.Controllers
     public ActionResult Register()
     {
       RegisterViewModel registerViewModel = new RegisterViewModel();
-
       return View(registerViewModel);
     }
 
@@ -119,7 +118,6 @@ namespace UI_MVC.Controllers
         {
           //Assign Role to user
           await UserManager.AddToRoleAsync(user.Id, "User");
-
           //Login
           await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
@@ -137,9 +135,9 @@ namespace UI_MVC.Controllers
       AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
       return RedirectToAction("Index", "Home");
     }
+    #endregion
 
-
-
+    #region Account
     public ActionResult Account()
     {
       //nog via pk maken
@@ -161,16 +159,15 @@ namespace UI_MVC.Controllers
       if (ModelState.IsValid)
       {
         UserManager.ChangeProfile(newprofile);
-        Console.WriteLine("werkt");
         return View(newprofile);
 
       }
-
-
-      Console.WriteLine("Modelfout");
       return View();
     }
 
+    #endregion
+
+    #region ExternalLogin
     [HttpPost]
     [AllowAnonymous]
     [ValidateAntiForgeryToken]
@@ -197,15 +194,11 @@ namespace UI_MVC.Controllers
           return RedirectToLocal(returnUrl);
         case SignInStatus.LockedOut:
           return View("Lockout");
-        //case SignInStatus.RequiresVerification:
-        //  return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
         case SignInStatus.Failure:
         default:
           // If the user does not have an account, then prompt the user to create an account
           ViewBag.ReturnUrl = returnUrl;
           ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-          //ViewBag.RoleList = new SelectList(UserManager.GetAllRoles(), "Name", "Name");
-
           return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
       }
     }
@@ -215,11 +208,8 @@ namespace UI_MVC.Controllers
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
     {
-    
-
       if (ModelState.IsValid)
       {
-        // Get the information about the user from the external login provider
         var info = await AuthenticationManager.GetExternalLoginInfoAsync();
         if (info == null)
         {
@@ -227,7 +217,6 @@ namespace UI_MVC.Controllers
         }
 
         var name = info.Email.Split('@')[0];
-
         var user = new Profile { UserName = name, Email = model.Email };
         user.UserData = new UserData() { Profile = user };
         user.Settings = new List<UserSetting>();
@@ -239,8 +228,6 @@ namespace UI_MVC.Controllers
           result = await UserManager.AddLoginAsync(user.Id, info.Login);
           //Assign Role to user Here      
           await UserManager.AddToRoleAsync(user.Id, "User");
-
-
           if (result.Succeeded)
           {
             await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -253,6 +240,8 @@ namespace UI_MVC.Controllers
       ViewBag.ReturnUrl = returnUrl;
       return View(model);
     }
+
+    #endregion
 
     #region Helpers
     private IAuthenticationManager AuthenticationManager

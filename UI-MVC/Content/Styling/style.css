@@ -1,15 +1,19 @@
+.btnLoginProviders {
+  margin: 0 15px 0 0;
+}
 
 .resizediv {
   border: 2px solid;
   padding: 20px;
   width: 300px;
   resize: both;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 #addGraph {
-  margin:25px;
+  margin: 25px;
 }
+
 #logoutForm {
   padding: 0 15px;
   cursor: pointer;
@@ -1664,23 +1668,23 @@ a.fc-more {
   width: auto;
 }
 
-.header .header-container .nav-right .dropdown-menu{
-    padding-top: 0px;
-    padding-bottom: 0px;
+.header .header-container .nav-right .dropdown-menu {
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
-.sidebar-menu li.dropdown .arrow{
-    transition: .5s;
+.sidebar-menu li.dropdown .arrow {
+  transition: .5s;
 }
 
-.main-content{
-    padding: 70px 20px 20px;
+.main-content {
+  padding: 70px 20px 20px;
 }
 
-#light-mode, #dark-mode, #future-mode{
-    cursor: pointer;
+#light-mode, #dark-mode, #future-mode {
+  cursor: pointer;
 }
 
 .sidebar {
-    width: 240px;
+  width: 240px;
 }
