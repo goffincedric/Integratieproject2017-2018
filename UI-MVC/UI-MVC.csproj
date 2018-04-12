@@ -247,9 +247,6 @@
     <Content Include="Content\Images\bg.jpg" />
     <Content Include="Content\Images\faqbg.jpg" />
     <Content Include="Content\Images\logo_new.png" />
-    <Content Include="Content\PreviewTheme\PDarkMode.css" />
-    <Content Include="Content\PreviewTheme\PFutureMode.css" />
-    <Content Include="Content\PreviewTheme\PLightMode.css" />
     <Content Include="Scripts\contact.js" />
     <Content Include="Content\Styling\style.css" />
     <Content Include="Content\Styling\contact.css" />
