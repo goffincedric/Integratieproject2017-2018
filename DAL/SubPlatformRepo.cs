@@ -21,7 +21,7 @@ namespace PB.DAL
         public SubplatformRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-             Console.WriteLine("UOW MADE SUBPLATFORMREPO");
+             //Console.WriteLine("UOW MADE SUBPLATFORMREPO");
         }
 
         public Subplatform CreateSubplatform(Subplatform subplatform)
