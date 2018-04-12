@@ -15,12 +15,13 @@ using Microsoft.AspNet.Identity;
 using PB.DAL.EF;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Domain.Settings;
 
 namespace PB.BL
 {
     //This class talks with the SupportCenterUserStore and tells it which
     //data to store, it also handles some logic and settings
-    public class AccountManager : UserManager<PB.BL.Domain.Account.Profile>
+    public class AccountManager : UserManager<PB.BL.Domain.Account.Profile>, IAccountManager
     {
 
         private IntegratieUserStore store;
@@ -47,7 +48,7 @@ namespace PB.BL
 
             //UowManager = uowMgr;
             this.store = store;
-            initNonExistingRepo(true);
+            InitNonExistingRepo(true);
             //ProfileRepo profileRepo = new ProfileRepo(UowManager.UnitOfWork);
             CreateRolesandUsers();
 
@@ -144,7 +145,7 @@ namespace PB.BL
         }
 
 
-        public void initNonExistingRepo(bool createWithUnitOfWork = false)
+        public void InitNonExistingRepo(bool createWithUnitOfWork = false)
         {
             if (ProfileRepo == null)
             {
@@ -172,10 +173,9 @@ namespace PB.BL
 
 
         #region Profile
-
         public Profile AddProfile(string username, string email)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             Profile profile = new Profile()
             {
                 UserName = username,
@@ -195,7 +195,7 @@ namespace PB.BL
 
         private Profile AddProfile(Profile profile)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             Profile newProfile = ProfileRepo.CreateProfile(profile);
             UowManager.Save();
             return profile;
@@ -203,31 +203,75 @@ namespace PB.BL
 
         public void ChangeProfile(Profile profile)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             ProfileRepo.UpdateProfile(profile);
             UowManager.Save();
         }
 
         public Profile GetProfile(string username)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return ProfileRepo.ReadProfile(username);
         }
 
         public IEnumerable<Profile> GetProfiles()
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return ProfileRepo.ReadProfiles();
         }
 
         public void RemoveProfile(string username)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             ProfileRepo.DeleteProfile(username);
             UowManager.Save();
         }
         #endregion
 
+        #region ProfileSettings
+        public Profile AddUserSetting(string username, Setting.Account settingName, string value)
+        {
+            InitNonExistingRepo();
+            Profile profile = GetProfile(username);
+            profile.Settings.Add(new UserSetting()
+            {
+                Profile = profile,
+                SettingName = settingName,
+                Value = value
+            });
+            ChangeProfile(profile);
+            UowManager.Save();
+            return profile;
+        }
+
+        public void ChangeUserSetting(string username, UserSetting userSetting)
+        {
+            InitNonExistingRepo();
+            Profile profile = GetProfile(username);
+            profile.Settings[profile.Settings.FindIndex(s => s.SettingName.Equals(userSetting.SettingName) && s.Username.Equals(userSetting.Username))] = userSetting;
+
+            ChangeProfile(profile);
+            UowManager.Save();
+        }
+
+        public void RemoveUserSetting(string username, Setting.Account accountSetting)
+        {
+            InitNonExistingRepo();
+            Profile profile = GetProfile(username);
+        }
+
+        public IEnumerable<UserSetting> GetUserSettings(string username)
+        {
+            InitNonExistingRepo();
+            return GetProfile(username).Settings;
+        }
+
+        public UserSetting GetUserSetting(string username, Setting.Account accountSetting)
+        {
+            InitNonExistingRepo();
+            return GetProfile(username).Settings.FirstOrDefault(s => s.SettingName.Equals(accountSetting));
+        }
+        #endregion
 
 
         public void LinkAlertsToProfile(List<Alert> alerts)
