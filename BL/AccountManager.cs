@@ -20,7 +20,7 @@ namespace PB.BL
 {
     //This class talks with the SupportCenterUserStore and tells it which
     //data to store, it also handles some logic and settings
-    public class AccountManager : UserManager<PB.BL.Domain.Account.Profile>
+    public class AccountManager : UserManager<PB.BL.Domain.Account.Profile>, IAccountManager
     {
 
         private IntegratieUserStore store;
