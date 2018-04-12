@@ -1,4 +1,15 @@
 
+.resizediv {
+  border: 2px solid;
+  padding: 20px;
+  width: 300px;
+  resize: both;
+  overflow:hidden;
+}
+
+#addGraph {
+  margin:25px;
+}
 #logoutForm {
   padding: 0 15px;
   cursor: pointer;

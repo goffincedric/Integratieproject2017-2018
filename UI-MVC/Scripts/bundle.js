@@ -390,16 +390,11 @@ webpackJsonp([0], {
               borderColor: p.a["deep-purple-800"],
               borderWidth: 1,
               data: [10, 50, 20, 40, 60, 30, 70]
-            }, {
-              label: "Dataset 2",
-              backgroundColor: p.a["light-blue-500"],
-              borderColor: p.a["light-blue-800"],
-              borderWidth: 1,
-              data: [10, 50, 20, 40, 60, 30, 70]
             }]
           },
           options: {
-            responsive: !0,
+            responsive: true,
+            maintainAspectRatio: false,
             legend: {
               position: "bottom"
             }
