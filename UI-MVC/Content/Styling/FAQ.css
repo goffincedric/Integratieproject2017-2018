@@ -1,0 +1,19 @@
+﻿ol {
+    margin-top: 5%;
+    list-style-type: none;
+    text-align: center;
+}
+body {
+    background-image: url('../Images/faqbg.jpg');
+    background-size: cover;
+   
+}
+li {
+    display: block;
+    align-self:center;
+}
+.collapse {
+    margin-right: 5%;
+    margin-bottom: 1%;
+}
+

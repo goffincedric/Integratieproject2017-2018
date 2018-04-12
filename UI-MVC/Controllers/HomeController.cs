@@ -131,7 +131,11 @@ namespace UI_MVC.Controllers
     {
       return View();
     }
-
+    
+    public ActionResult FAQ()
+    {
+      return View();
+    }
 
 
 
