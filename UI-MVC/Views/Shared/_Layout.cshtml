@@ -6,8 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
   <title>Barometer</title>
-  @Styles.Render("~/Content/bootstrapcss")
   @Styles.Render("~/Content/style.css")
+  @Styles.Render("~/Content/bootstrapcss")
+
+  <style>
+  </style>
   <link id="ThemeLink" href="/Content/Theme/LightMode.css" rel="stylesheet">
   <link id="PreviewLink" href="" rel="stylesheet">
 
@@ -199,9 +202,9 @@
                   {
                     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                     {
-                      @Html.AntiForgeryToken(){
-                        <a href="javascript:document.getElementById('logoutForm').submit()" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                          <i class="ti-power-off mR-10"></i> <span>Logoff</span>
+                      @Html.AntiForgeryToken(){ 
+                        <a href="javascript:document.getElementById('logoutForm').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                          <i class="ti-power-off mR-10"></i><span> Logoff</span>
                         </a>
                       }
                     }
