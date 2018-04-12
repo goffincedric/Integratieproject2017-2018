@@ -175,16 +175,51 @@ namespace UI_MVC.Controllers
     public ActionResult ExternalLogin(string provider, string returnUrl)
     {
       // Request a redirect to the external login provider
-      return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account"));
+      return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
     }
 
+    //[AllowAnonymous]
+    //public async Task<ActionResult> ExternalLoginCallback()
+    //{
+    //  var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+    //  if (loginInfo == null)
+    //  {
+    //    return RedirectToAction("Login", "Home");
+    //  }
+
+    //  // Sign in the user with this external login provider if the user already has a login
+    //  var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+    //  switch (result)
+    //  {
+    //    case SignInStatus.Success:
+    //      return RedirectToAction("Index", "Home");
+    //    case SignInStatus.LockedOut:
+    //      return View("Lockout");
+    //    //case SignInStatus.RequiresVerification:
+    //    //  return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+    //    case SignInStatus.Failure:
+    //      return View("Failed");
+    //    default:
+    //     await External();
+    //      return RedirectToAction("Index", "Home");
+    //      // If the user does not have an account, then prompt the user to create an account
+
+    //      //ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+    //      //ViewBag.RoleList = new SelectList(UserManager.GetAllRoles(), "Name", "Name");
+    //      //return RedirectToAction("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+
+
+
+    //  }
+    //}
+
     [AllowAnonymous]
-    public async Task<ActionResult> ExternalLoginCallback()
+    public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
     {
       var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
       if (loginInfo == null)
       {
-        return RedirectToAction("Login", "Home");
+        return RedirectToAction("Login", "Account");
       }
 
       // Sign in the user with this external login provider if the user already has a login
@@ -192,58 +227,108 @@ namespace UI_MVC.Controllers
       switch (result)
       {
         case SignInStatus.Success:
-          return RedirectToAction("Index", "Home");
+          return RedirectToLocal(returnUrl);
         case SignInStatus.LockedOut:
           return View("Lockout");
         //case SignInStatus.RequiresVerification:
         //  return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
         case SignInStatus.Failure:
-          return View("Failed");
         default:
           // If the user does not have an account, then prompt the user to create an account
-
-          //ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+          ViewBag.ReturnUrl = returnUrl;
+          ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
           //ViewBag.RoleList = new SelectList(UserManager.GetAllRoles(), "Name", "Name");
-          return RedirectToAction("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
-          
-        
 
+          return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
       }
     }
 
-
-    public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model)
+    [HttpPost]
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
     {
+    
 
-
-      // Get the information about the user from the external login provider
-      var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-      if (info == null)
+      if (ModelState.IsValid)
       {
-        return RedirectToAction("Index","Home") ;
-      }
+        // Get the information about the user from the external login provider
+        var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+        if (info == null)
+        {
+          return RedirectToAction("ExternalLoginFailure","Account");
+        }
 
-      var name = info.Email.Split('@')[0];
-      var user = new Profile { UserName = name, Email = info.Email };
-      var result = await UserManager.CreateAsync(user);
+        var name = info.Email.Split('@')[0];
 
-      if (result.Succeeded)
-      {
-        result = await UserManager.AddLoginAsync(user.Id, info.Login);
-        //Assign Role to user Here      
-        await UserManager.AddToRoleAsync(user.Id, "User");
-
+        var user = new Profile { UserName = name, Email = model.Email };
+        user.UserData = new UserData() { Profile = user };
+        var result = await UserManager.CreateAsync(user);
 
         if (result.Succeeded)
         {
-          await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-          return RedirectToAction("Index", "Home");
-        }
-      }
-      AddErrors(result);
-      return RedirectToAction("Index", "Home");
+          result = await UserManager.AddLoginAsync(user.Id, info.Login);
+          //Assign Role to user Here      
+          await UserManager.AddToRoleAsync(user.Id, "User");
 
+
+          if (result.Succeeded)
+          {
+            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            return RedirectToLocal(returnUrl);
+          }
+        }
+        AddErrors(result);
+      }
+     
+      ViewBag.ReturnUrl = returnUrl;
+      return View(model);
     }
+
+    //public async Task<ActionResult> External()
+    //{
+    //  var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+    //  if (info == null)
+    //  {
+    //    return RedirectToAction("Login", "Account");
+    //  }
+    //  var name = info.Email.Split('@')[0];
+    //  var user = new Profile { UserName = name, Email = info.Email };
+    //  var result = await UserManager.CreateAsync(user);
+
+    //  if (result.Succeeded)
+    //  {
+    //    result = await UserManager.AddLoginAsync(user.Id, info.Login);
+    //    //Assign Role to user Here      
+    //    await UserManager.AddToRoleAsync(user.Id, "User");
+
+
+    //    if (result.Succeeded)
+    //    {
+    //      await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+    //      return RedirectToAction("Index", "Home");
+    //    }
+    //  }
+    //  return RedirectToAction("Index", "Home");
+
+    //}
+
+
+    //public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model)
+    //{
+
+
+    //  // Get the information about the user from the external login provider
+
+
+
+
+
+
+    //  AddErrors(result);
+    //  return RedirectToAction("Index", "Home");
+
+    //}
 
 
     #region Helpers
