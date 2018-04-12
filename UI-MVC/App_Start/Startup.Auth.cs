@@ -54,9 +54,9 @@ namespace UI_MVC
       //    clientId: "",
       //    clientSecret: "");
 
-      //app.UseTwitterAuthentication(
-      //   consumerKey: "",
-      //   consumerSecret: "");
+      app.UseTwitterAuthentication(
+         consumerKey: "isng1J8G5YcEg27yiHk6OyvIR",
+         consumerSecret: "eWzANxGLJDSxW1E4LTSbkSDu08lkJhEJSAe9Fcfkkp6V4sKXKW");
 
       app.UseFacebookAuthentication(
          appId: "161271304692485",
