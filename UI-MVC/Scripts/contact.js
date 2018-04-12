@@ -13,8 +13,8 @@
       else {
         $(this).removeClass('has-val');
       }
-    })
-  })
+    });
+  });
 
 
 

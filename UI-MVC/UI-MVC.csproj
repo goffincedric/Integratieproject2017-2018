@@ -239,10 +239,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\acf3dcb7ff752b5296ca23ba2c7c2606.svg" />
-    <Content Include="Content\assets\1524739aae86f69026689ec798e10ebc.svg" />
-    <Content Include="Content\assets\dbc7556d44aaa93cc89743f163cc09c4.svg" />
-    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.svg" />
-    <Content Include="Content\assets\static\fonts\icons\themify\themify.svg" />
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -251,13 +247,7 @@
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
     <Content Include="Content\Images\bg.jpg" />
-    <Content Include="Content\Images\datatables\sort_asc.png" />
-    <Content Include="Content\Images\datatables\sort_asc_disabled.png" />
-    <Content Include="Content\Images\datatables\sort_both.png" />
-    <Content Include="Content\Images\datatables\sort_desc.png" />
-    <Content Include="Content\Images\datatables\sort_desc_disabled.png" />
-    <Content Include="Content\Images\logo.png" />
-    <Content Include="Content\Images\logo.svg" />
+    <Content Include="Content\Images\faqbg.jpg" />
     <Content Include="Content\Images\logo_new.png" />
     <Content Include="Content\PreviewTheme\PDarkMode.css" />
     <Content Include="Content\PreviewTheme\PFutureMode.css" />
@@ -274,14 +264,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.eot" />
-    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.ttf" />
-    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.woff" />
-    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.woff2" />
-    <Content Include="Content\assets\static\fonts\icons\fontawesome\FontAwesome.otf" />
-    <Content Include="Content\assets\static\fonts\icons\themify\themify.eot" />
-    <Content Include="Content\assets\static\fonts\icons\themify\themify.ttf" />
-    <Content Include="Content\assets\static\fonts\icons\themify\themify.woff" />
     <Content Include="Content\2c454669bdf3aebf32a1bd8ac1e0d2d6.eot" />
     <Content Include="Content\674f50d287a8c48dc19ba404d20fe713.eot" />
     <Content Include="Content\a1ecc3b826d01251edddf29c3e4e1e97.woff" />
@@ -328,13 +310,9 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Home\BasicTable.cshtml" />
     <Content Include="Views\Home\Blank.cshtml" />
-    <Content Include="Views\Home\DataTable.cshtml" />
-    <Content Include="Views\Home\Forms.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Home\UI.cshtml" />
     <Content Include="Scripts\popper.min.js.map" />
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
