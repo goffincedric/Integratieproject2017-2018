@@ -23,7 +23,6 @@ namespace PB.BL
     //data to store, it also handles some logic and settings
     public class AccountManager : UserManager<Profile>, IAccountManager
     {
-
         private IntegratieUserStore store;
         private IProfileRepo ProfileRepo;
         private UnitOfWorkManager UowManager;
@@ -49,6 +48,14 @@ namespace PB.BL
             this.store = store;
             InitNonExistingRepo(true);
             //ProfileRepo profileRepo = new ProfileRepo(UowManager.UnitOfWork);
+            CreateRolesandUsers();
+        }
+
+        public AccountManager(IntegratieUserStore store, UnitOfWorkManager uowMgr) : base(store)
+        {
+            UowManager = uowMgr;
+            this.store = store;
+            InitNonExistingRepo(true);
             CreateRolesandUsers();
         }
 
@@ -201,6 +208,7 @@ namespace PB.BL
         {
             InitNonExistingRepo();
             ProfileRepo.UpdateProfile(profile);
+            //Store.UpdateAsync(profile);
             UowManager.Save();
         }
 
@@ -221,6 +229,34 @@ namespace PB.BL
             InitNonExistingRepo();
             ProfileRepo.DeleteProfile(username);
             UowManager.Save();
+        }
+        #endregion
+
+        #region Subscriptions
+        public Profile AddSubscription(Profile profile, Item item)
+        {
+            InitNonExistingRepo();
+
+            profile.Subscriptions.Add(item);
+            item.SubscribedProfiles.Add(profile);
+
+            ChangeProfile(profile);
+            UowManager.Save();
+
+            return profile;
+        }
+
+        public Profile RemoveSubscription(Profile profile, Item item)
+        {
+            InitNonExistingRepo();
+
+            profile.Subscriptions.Remove(item);
+            item.SubscribedProfiles.Remove(profile);
+
+            ChangeProfile(profile);
+            UowManager.Save();
+
+            return profile;
         }
         #endregion
 
@@ -250,12 +286,6 @@ namespace PB.BL
             UowManager.Save();
         }
 
-        public void RemoveUserSetting(string username, Setting.Account accountSetting)
-        {
-            InitNonExistingRepo();
-            Profile profile = GetProfile(username);
-        }
-
         public IEnumerable<UserSetting> GetUserSettings(string username)
         {
             InitNonExistingRepo();
@@ -268,7 +298,6 @@ namespace PB.BL
             return GetProfile(username).Settings.FirstOrDefault(s => s.SettingName.Equals(accountSetting));
         }
         #endregion
-
 
         public void LinkAlertsToProfile(List<Alert> alerts)
         {

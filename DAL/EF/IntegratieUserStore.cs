@@ -8,16 +8,23 @@ namespace PB.DAL.EF
     public class IntegratieUserStore : UserStore<Profile>
     {
         private IntegratieDbContext ctx;
+        
+        public IntegratieUserStore()
+        {
+
+        }
 
         public IntegratieUserStore(IntegratieDbContext context) : base(context)
         {
             //System.Console.WriteLine("USERSTORE MADE");
-            this.ctx = context;
+            ctx = context;
+            AutoSaveChanges = false;
         }
 
         public IntegratieUserStore(UnitOfWork uow)
         {
             ctx = uow.Context;
+            AutoSaveChanges = false;
         }
 
         public List<IdentityRole> ReadAllRoles()

@@ -36,7 +36,7 @@ namespace PB.BL
             RecordRepo = new RecordRepo(uowMgr.UnitOfWork);
         }
 
-        public void initNonExistingRepo(bool createWithUnitOfWork = false)
+        public void InitNonExistingRepo(bool createWithUnitOfWork = false)
         {
             if (RecordRepo == null || ItemRepo == null)
             {
@@ -68,7 +68,7 @@ namespace PB.BL
         #region Items
         public Organisation AddOrganisation(string name, string socialMediaLink = null, string iconURL = null)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
 
             Organisation organisation = new Organisation()
             {
@@ -89,7 +89,7 @@ namespace PB.BL
 
         public Person AddPerson(string name, DateTime birthDay, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             Person person = new Person()
             {
                 Name = name,
@@ -108,7 +108,7 @@ namespace PB.BL
 
         public Theme AddTheme(string name, string description)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             Theme theme = new Theme()
             {
                 Name = name,
@@ -125,50 +125,50 @@ namespace PB.BL
 
         private Item AddItem(Item item)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return ItemRepo.CreateItem(item);
         }
 
         public void ChangeItem(Item item)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             ItemRepo.UpdateItem(item);
             UowManager.Save();
         }
 
         public Item GetItem(int itemId)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return ItemRepo.ReadItem(itemId);
         }
 
         public IEnumerable<Item> GetItems()
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return ItemRepo.ReadItems();
         }
 
         public Organisation GetOrganistation(int itemId)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return (Organisation)ItemRepo.ReadItem(itemId);
         }
 
         public Person GetPerson(int itemId)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return (Person)ItemRepo.ReadItem(itemId);
         }
 
         public Theme GetTheme(int itemId)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return (Theme)ItemRepo.ReadItem(itemId);
         }
 
         public void RemoveItem(int itemId)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             ItemRepo.DeleteItem(itemId);
             UowManager.Save();
         }
@@ -176,7 +176,7 @@ namespace PB.BL
 
         public IEnumerable<Person> GetPersons()
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return ItemRepo.ReadPersons();
         }
         #endregion
@@ -185,19 +185,19 @@ namespace PB.BL
         #region Records
         public IEnumerable<Record> GetRecords()
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return RecordRepo.ReadRecords();
         }
 
         public Record GetRecord(long id)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return RecordRepo.ReadRecord(id);
         }
 
         public Record AddRecord(long tweet_Id, RecordProfile recordProfile, List<Word> words, Sentiment sentiment, string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Theme> themes, List<Person> persons, DateTime date, double longitude, double latitude, bool retweet)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             Record record = new Record()
             {
                 Tweet_Id = tweet_Id,
@@ -224,36 +224,65 @@ namespace PB.BL
 
         private Record AddRecord(Record record)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return RecordRepo.CreateRecord(record);
         }
 
         public void ChangeRecord(Record record)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             RecordRepo.UpdateRecord(record);
             UowManager.Save();
         }
 
         public void RemoveRecord(long id)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             RecordRepo.DeleteRecord(id);
             UowManager.Save();
         }
         #endregion
 
 
+
+        #region Subscriptions
+        public Profile AddSubscription(Profile profile, Item item)
+        {
+            InitNonExistingRepo();
+
+            profile.Subscriptions.Add(item);
+            item.SubscribedProfiles.Add(profile);
+
+            ChangeItem(item);
+            UowManager.Save();
+
+            return profile;
+        }
+
+        public Profile RemoveSubscription(Profile profile, Item item)
+        {
+            InitNonExistingRepo();
+
+            profile.Subscriptions.Remove(item);
+            item.SubscribedProfiles.Remove(profile);
+
+            ChangeItem(item);
+            UowManager.Save();
+
+            return profile;
+        }
+        #endregion
+
         public void Seed(bool evenRecords = true)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             List<Record> toegevoegde = JClassToRecord(RecordRepo.Seed(evenRecords));
         }
 
         public void CleanupOldRecords(Subplatform subplatform)
         {
             int days = 14; //#DAGEN, VERANGEN DOOR SUBPLATFORMSETTING
-            initNonExistingRepo();
+            InitNonExistingRepo();
             List<Person> persons = ItemRepo.ReadPersons().Where(i => i.SubPlatforms.Contains(subplatform)).ToList();
             List<Record> oldRecords = new List<Record>();
 
@@ -268,7 +297,7 @@ namespace PB.BL
 
         public List<Record> JClassToRecord(List<JClass> data)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             List<Mention> allMentions = RecordRepo.ReadMentions().ToList();
             List<Word> allWords = RecordRepo.ReadWords().ToList();
             List<Hashtag> allHashtags = RecordRepo.ReadHashTags().ToList();
@@ -461,8 +490,7 @@ namespace PB.BL
 
         public void CheckTrend()
         {
-            initNonExistingRepo();
-            //initNonExistingRepoRecord();
+            InitNonExistingRepo();
             trendspotter.CheckTrendAverageRecords(GetRecords());
         }
 

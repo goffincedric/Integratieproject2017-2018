@@ -18,14 +18,11 @@ namespace UI_CA_Prototype
 {
     class Program
     {
-        private static IntegratieDbContext Context = new IntegratieDbContext();
-        private static readonly IntegratieUserStore Store = new IntegratieUserStore(Context);
-        private static readonly AccountManager AccountMgr = new AccountManager(Store);
-
         private static bool WillSeed = false;
         private static OptionSet CLIOptions;
 
         private static readonly UnitOfWorkManager Uow = new UnitOfWorkManager();
+        private static readonly AccountManager AccountMgr = new AccountManager(new IntegratieUserStore(Uow.UnitOfWork), Uow);
         private static readonly ItemManager ItemMgr = new ItemManager(Uow);
         private static readonly SubplatformManager SubplatformMgr = new SubplatformManager(Uow);
 
@@ -69,16 +66,16 @@ namespace UI_CA_Prototype
                 Console.WriteLine("99) Toon de CLI help pagina");
                 Console.WriteLine("0) Afsluiten");
 
-                try
-                {
+                //try
+                //{
                     DetectMenuAction();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine();
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //    Console.WriteLine();
+                //    Console.WriteLine(e.Message);
+                //    Console.WriteLine();
+                //}
                 Console.WriteLine("\n");
             }
         }
@@ -171,13 +168,11 @@ namespace UI_CA_Prototype
                         break;
                     case 4:
                         if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
-                        SelectedProfile.Subscriptions.Add(ExtensionMethods.SelectItem(ItemMgr.GetPersons()));
-                        AccountMgr.ChangeProfile(SelectedProfile);
+                        AccountMgr.AddSubscription(SelectedProfile, ExtensionMethods.SelectItem(ItemMgr.GetPersons()));
                         break;
                     case 5:
                         if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
-                        SelectedProfile.Subscriptions.Remove(ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
-                        AccountMgr.ChangeProfile(SelectedProfile);
+                        ItemMgr.RemoveSubscription(SelectedProfile, ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
                         break;
                     case 6:
                         ItemMgr.CheckTrend();

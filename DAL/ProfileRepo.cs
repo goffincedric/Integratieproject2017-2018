@@ -62,6 +62,7 @@ namespace PB.DAL
         public Profile ReadProfile(string username)
         {
             return ctx.Users
+                .Include("UserData")
                 .Include("Alerts")
                 .Include("Subscriptions")
                 .Include("Settings")
@@ -71,6 +72,7 @@ namespace PB.DAL
         public IEnumerable<Profile> ReadProfiles()
         {
             return ctx.Users
+                .Include("UserData")
                 .Include("Alerts")
                 .Include("Subscriptions")
                 .Include("Settings")
@@ -79,9 +81,9 @@ namespace PB.DAL
 
         public void UpdateProfile(Profile profile)
         {
-            ctx.Users.Attach(profile);
+            profile = ctx.Users.Attach(profile);
 
-            ctx.Entry(profile).State = System.Data.Entity.EntityState.Modified;
+            ctx.Entry(profile).State = EntityState.Modified;
             ctx.SaveChanges();
         }
     }
