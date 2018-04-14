@@ -171,7 +171,7 @@ namespace UI_CA_Prototype
                         break;
                     case 4:
                         if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
-                        SelectedProfile.Subscriptions.Add(ExtensionMethods.SelectItem(ItemMgr.GetItems()));
+                        SelectedProfile.Subscriptions.Add(ExtensionMethods.SelectItem(ItemMgr.GetPersons()));
                         AccountMgr.ChangeProfile(SelectedProfile);
                         break;
                     case 5:

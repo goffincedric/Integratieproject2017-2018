@@ -34,58 +34,23 @@ namespace PB.BL
             //Alle oldrecords van 1 persoon in een Dictionary met RecordPersoon als Key en de List van records als value
             Dictionary<Person, List<Record>> groupedOld = GroupRecordsPerPerson(RecordPersons, oldRecords);
 
-            //De List van records opdelen in Dictionary van List<Record> per DateTime van de Record
-            Console.WriteLine("=============OLD=============");
-            Dictionary<Person, Dictionary<DateTime, List<Record>>> groupedDateOld = new Dictionary<Person, Dictionary<DateTime, List<Record>>>();
-            Dictionary<Person, double> oldGemiddelde = new Dictionary<Person, double>();
-
-            groupedOld.Keys.ToList().ForEach(rp =>
-            {
-                if (!groupedDateOld.Keys.Contains(rp))
-                {
-                    List<Record> rpRecords;
-                    groupedOld.TryGetValue(rp, out rpRecords);
-                    Dictionary<DateTime, List<Record>> valueDict = new Dictionary<DateTime, List<Record>>();
-                    if (rpRecords.Count != 0)
-                    {
-                        rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d => valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
-                    }
-
-                    groupedDateOld.Add(rp, valueDict);
-
-                    oldGemiddelde.Add(rp, GetAverage(valueDict, period - 1));
-                    Console.WriteLine(rp.ToString() + " - " + GetAverage(valueDict, period - 1)); // period -1 omdat periode uitgezonder vandaag
-                }
-            });
-
-
-            Console.WriteLine("=============NEW=============");
             //Alle newrecords van 1 persoon in een Dictionary met RecordPersoon als Key en de List van records als value
             Dictionary<Person, List<Record>> groupedNew = GroupRecordsPerPerson(RecordPersons, newRecords);
 
-            //De List van records opdelen in Dictionary van List<Record> per dag
-            Dictionary<Person, Dictionary<DateTime, List<Record>>> groupedDatenew = new Dictionary<Person, Dictionary<DateTime, List<Record>>>();
-            Dictionary<Person, double> newGemiddelde = new Dictionary<Person, double>();
+            //De List van records opdelen in Dictionary van List<Record> per DateTime van de Record
+            Console.WriteLine("=============OLD=============");
+            Dictionary<Person, Dictionary<DateTime, List<Record>>> groupedDateOld = GetGroupedByDate(groupedOld);
+            Dictionary<Person, double> oldGemiddelde = GetAverageTweets(groupedOld, period);
 
-            groupedNew.Keys.ToList().ForEach(rp =>
-            {
-                if (!groupedDatenew.Keys.Contains(rp))
-                {
-                    List<Record> rpRecords;
-                    groupedNew.TryGetValue(rp, out rpRecords);
-                    Dictionary<DateTime, List<Record>> valueDict = new Dictionary<DateTime, List<Record>>();
-                    rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d => valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
+            
+            Console.WriteLine("=============NEW=============");
+            Dictionary<Person, Dictionary<DateTime, List<Record>>> groupedDatenew = GetGroupedByDate(groupedNew);
+            Dictionary<Person, double> newGemiddelde = GetAverageTweets(groupedNew, period);
 
-                    groupedDatenew.Add(rp, valueDict);
-
-                    newGemiddelde.Add(rp, GetAverage(valueDict, period - 1));
-                    Console.WriteLine(rp.ToString() + " - " + GetAverage(valueDict, period - 1)); // period -1 omdat periode is uitgezonderd vandaag
-                }
-            });
-
+            //De verschillen tonen in console
             Console.WriteLine("===========VERSCHIL===========");
             oldGemiddelde.Values.ToList().ForEach(v => Console.WriteLine(oldGemiddelde.Keys.ToList()[oldGemiddelde.Values.ToList().IndexOf(v)] + " = " + (newGemiddelde.Values.ToList()[oldGemiddelde.Values.ToList().IndexOf(v)] - v)));
-            
+
             Console.WriteLine("\n===== OLDRECORDPERSONS =====");
             oldGemiddelde.Keys.ToList().ForEach(v => Console.WriteLine(v));
 
@@ -127,7 +92,7 @@ namespace PB.BL
             return alerts;
         }
 
-        public List<Person> GetPersons(List<Record> records)
+        private List<Person> GetPersons(List<Record> records)
         {
             List<Person> RecordPersons = new List<Person>();
             records.ToList().ForEach(r =>
@@ -143,7 +108,7 @@ namespace PB.BL
             return RecordPersons;
         }
 
-        public Dictionary<Person, List<Record>> GroupRecordsPerPerson(List<Person> persons, List<Record> periodRecords)
+        private Dictionary<Person, List<Record>> GroupRecordsPerPerson(List<Person> persons, List<Record> periodRecords)
         {
             Dictionary<Person, List<Record>> groupedOld = new Dictionary<Person, List<Record>>();
 
@@ -157,6 +122,54 @@ namespace PB.BL
             });
 
             return groupedOld;
+        }
+
+        private Dictionary<Person, Dictionary<DateTime, List<Record>>> GetGroupedByDate(Dictionary<Person, List<Record>> groupedPerson)
+        {
+            Dictionary<Person, Dictionary<DateTime, List<Record>>> GroupedDate = new Dictionary<Person, Dictionary<DateTime, List<Record>>>();
+
+            groupedPerson.Keys.ToList().ForEach(rp =>
+            {
+                if (!GroupedDate.Keys.Contains(rp))
+                {
+                    List<Record> rpRecords;
+                    Dictionary<DateTime, List<Record>> valueDict = new Dictionary<DateTime, List<Record>>();
+
+                    groupedPerson.TryGetValue(rp, out rpRecords);
+
+                    if (rpRecords.Count != 0)
+                    {
+                        rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d => valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
+                    }
+
+                    GroupedDate.Add(rp, valueDict);
+                }
+            });
+
+            return GroupedDate;
+        }
+
+        private Dictionary<Person, double> GetAverageTweets(Dictionary<Person, List<Record>> groupedPerson, double period)
+        {
+            Dictionary<Person, double> AverageTweets = new Dictionary<Person, double>();
+
+            groupedPerson.Keys.ToList().ForEach(rp =>
+            {
+                Dictionary<DateTime, List<Record>> valueDict = new Dictionary<DateTime, List<Record>>();
+                List<Record> rpRecords;
+
+                groupedPerson.TryGetValue(rp, out rpRecords);
+
+                if (rpRecords.Count != 0)
+                {
+                    rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d => valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
+                }
+
+                AverageTweets.Add(rp, GetAverage(valueDict, period - 1));
+                Console.WriteLine(rp.ToString() + " - " + GetAverage(valueDict, period - 1)); // period -1 omdat periode is uitgezonderd vandaag
+            });
+
+            return AverageTweets;
         }
 
         private double GetAverage(Dictionary<DateTime, List<Record>> recordsPerDate, double period)
@@ -182,7 +195,7 @@ namespace PB.BL
                 Text = "A change is coming",
                 Profile = profile,
                 Username = profile.UserName,
-                
+
                 IsRead = false,
                 TimeStamp = DateTime.Now
             };

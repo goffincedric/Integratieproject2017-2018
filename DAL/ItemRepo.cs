@@ -71,7 +71,6 @@ namespace PB.DAL
         public Item ReadItem(int itemId)
         {
             return ctx.Items
-                .Include("Records")
                 .Include("SubPlatforms")
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
@@ -79,7 +78,6 @@ namespace PB.DAL
         public IEnumerable<Item> ReadItems()
         {
             return ctx.Items
-                .Include("Records")
                 .Include("SubPlatforms")
                 .AsEnumerable();
         }

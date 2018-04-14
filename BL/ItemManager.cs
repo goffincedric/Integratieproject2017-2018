@@ -421,6 +421,7 @@ namespace PB.BL
         {
             //Alle items uit profile subscriptions halen
             if (profile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
+            if (profile.Subscriptions == null || profile.Subscriptions.Count == 0) throw new Exception("U heeft nog geen subscriptions toegevoegd aan uw account, gelieve er eerst enkele te kiezen");
             List<Item> subscribedItems = profile.Subscriptions;
 
             //Items opdelen in Subklasses [Person, Organisation, Theme]

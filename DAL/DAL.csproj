@@ -73,11 +73,11 @@
     <Compile Include="EF\IntegratieDbContext.cs" />
     <Compile Include="EF\IntegratieDbInitializer.cs" />
     <Compile Include="EF\IntegratieUserStore.cs" />
-    <Compile Include="IDashboardRepo.cs" />
-    <Compile Include="IItemRepo.cs" />
-    <Compile Include="IProfileRepo.cs" />
-    <Compile Include="IRecordRepo.cs" />
-    <Compile Include="ISubplatformRepo.cs" />
+    <Compile Include="Interfaces\IDashboardRepo.cs" />
+    <Compile Include="Interfaces\IItemRepo.cs" />
+    <Compile Include="Interfaces\IProfileRepo.cs" />
+    <Compile Include="Interfaces\IRecordRepo.cs" />
+    <Compile Include="Interfaces\ISubplatformRepo.cs" />
     <Compile Include="ItemRepo.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProfileRepo.cs" />
