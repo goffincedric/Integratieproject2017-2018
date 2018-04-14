@@ -5,6 +5,7 @@
 
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <head>
   <link href="~/Content/Styling/contact.css" rel="stylesheet" />
 </head>
@@ -14,12 +15,12 @@
       <div class="bg-contact2">
         <div class="container-contact2">
           <div class="wrap-contact2">
-            <form class="contact2-form validate-form">
+            <form class="contact2-form validate-form" action="https://formspree.io/stef.havermans@gmail.com" method="POST">
               <span class="contact2-form-title">
                 Contact Us
               </span>
               <div class="wrap-input2 validate-input" data-validate="Name is required">
-                <input class="input2" type="text" name="name">
+                <input class="input2" type="text" name="name" id="name">
                 <span class="focus-input2" data-placeholder="NAME"></span>
               </div>
               <div class="wrap-input2 validate-input" data-validate="Valid email is required: ex@abc.xyz">

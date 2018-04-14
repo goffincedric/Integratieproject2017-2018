@@ -67,5 +67,15 @@
   }
 
 
+  $('contact2 - form validate- form').submit(function (e) {
+      var name = document.getElementById('name');
+      $.ajax({
+          url: "https://formspree.io/stef.havermans@gmail.com",
+          method: "POST",
+          data: $(this).serialize(),
+          dataType: "json"
+      });
+  
+  })
 
 })(jQuery);
