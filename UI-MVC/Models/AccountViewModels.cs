@@ -136,7 +136,7 @@ namespace UI_MVC.Models
         public string Street { get; set; }
         public int? PostalCode { get; set; }
         public string City { get; set; }
-        public DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
         public Province Province { get; set; }
         public Gender Gender { get; set; }
 
@@ -155,7 +155,7 @@ namespace UI_MVC.Models
             Street = profile.UserData.Street;
             PostalCode = profile.UserData.PostalCode;
             City = profile.UserData.City;
-            BirthDate = profile.UserData.BirthDate;
+            BirthDate = profile.UserData.BirthDate.Date.ToString("dd/MM/yyyy");
             Province = profile.UserData.Province;
             Gender = profile.UserData.Gender;
         }

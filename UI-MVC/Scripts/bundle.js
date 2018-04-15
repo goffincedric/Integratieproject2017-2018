@@ -899,7 +899,7 @@ webpackJsonp([0], {
       p = (a.n(n), a(237));
     a.n(p),
       function () {
-        r(".start-date").datepicker(), r(".end-date").datepicker()
+        r(".start-date").datepicker({ format: 'dd/mm/yyyy' }), r(".end-date").datepicker({ format: 'dd/mm/yyyy' })
       }()
   },
   238: function (t, i, a) {

@@ -13,7 +13,7 @@ namespace PB.BL.Domain.Items
     {
         public string Description { get; set; }
 
-        public List<Record> Records { get; set; }
+        public virtual List<Record> Records { get; set; }
 
         public override string ToString()
         {
