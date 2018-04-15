@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -167,7 +169,7 @@ namespace UI_MVC.Controllers
             newProfile.UserData.City = editedAccount.City;
             newProfile.UserData.Province = editedAccount.Province;
             newProfile.UserData.PostalCode = editedAccount.PostalCode;
-            newProfile.UserData.BirthDate = editedAccount.BirthDate;
+            newProfile.UserData.BirthDate = DateTime.ParseExact(editedAccount.BirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
             if (ModelState.IsValid)
             {
