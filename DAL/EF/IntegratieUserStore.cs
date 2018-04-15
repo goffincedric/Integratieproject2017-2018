@@ -18,13 +18,11 @@ namespace PB.DAL.EF
         {
             //System.Console.WriteLine("USERSTORE MADE");
             ctx = context;
-            AutoSaveChanges = false;
         }
 
         public IntegratieUserStore(UnitOfWork uow)
         {
             ctx = uow.Context;
-            AutoSaveChanges = false;
         }
 
         public List<IdentityRole> ReadAllRoles()

@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Domain.Account;
+using PB.BL.Domain.Account;
+using PB.BL.Domain.Dashboards;
+using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace UI_MVC.Models
@@ -113,4 +119,45 @@ namespace UI_MVC.Models
     [Display(Name = "Email")]
     public string Email { get; set; }
   }
+
+    public class AccountEditModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Username")]
+        public string UserName { get; set; }        
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Telephone { get; set; }
+        public string Street { get; set; }
+        public int? PostalCode { get; set; }
+        public string City { get; set; }
+        public DateTime BirthDate { get; set; }
+        public Province Province { get; set; }
+        public Gender Gender { get; set; }
+
+        public AccountEditModel()
+        {
+
+        }
+
+        public AccountEditModel(Profile profile)
+        {
+            Email = profile.Email;
+            UserName = profile.UserName;
+            FirstName = profile.UserData.FirstName;
+            LastName = profile.UserData.LastName;
+            Telephone = profile.UserData.Telephone;
+            Street = profile.UserData.Street;
+            PostalCode = profile.UserData.PostalCode;
+            City = profile.UserData.City;
+            BirthDate = profile.UserData.BirthDate;
+            Province = profile.UserData.Province;
+            Gender = profile.UserData.Gender;
+        }
+    }
 }
