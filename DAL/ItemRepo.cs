@@ -57,6 +57,7 @@ namespace PB.DAL
             return ctx.Persons
                 .Include("Records")
                 .Include("SubPlatforms")
+                .Include("SubscribedProfiles")
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
@@ -65,6 +66,7 @@ namespace PB.DAL
             return ctx.Persons
                 .Include("Records")
                 .Include("SubPlatforms")
+                .Include("SubscribedProfiles")
                 .AsEnumerable();
         }
 
@@ -72,6 +74,7 @@ namespace PB.DAL
         {
             return ctx.Items
                 .Include("SubPlatforms")
+                .Include("SubscribedProfiles")
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
@@ -79,6 +82,16 @@ namespace PB.DAL
         {
             return ctx.Items
                 .Include("SubPlatforms")
+                .Include("SubscribedProfiles")
+                .OfType<Person>()
+                .Concat<Item>(
+                    ctx.Items
+                    .OfType<Theme>()
+                )
+                .Concat<Item>(
+                    ctx.Items
+                    .OfType<Organisation>()
+                )
                 .AsEnumerable();
         }
 

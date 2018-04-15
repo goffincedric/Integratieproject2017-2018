@@ -8,11 +8,16 @@ namespace PB.DAL.EF
     public class IntegratieUserStore : UserStore<Profile>
     {
         private IntegratieDbContext ctx;
+        
+        public IntegratieUserStore()
+        {
+
+        }
 
         public IntegratieUserStore(IntegratieDbContext context) : base(context)
         {
             //System.Console.WriteLine("USERSTORE MADE");
-            this.ctx = context;
+            ctx = context;
         }
 
         public IntegratieUserStore(UnitOfWork uow)

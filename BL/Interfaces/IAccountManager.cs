@@ -22,7 +22,7 @@ namespace PB.BL
         UserSetting GetUserSetting(string username, Setting.Account accountSetting);
         Profile AddUserSetting(string username, Setting.Account accountSetting, string value);
         void ChangeUserSetting(string username, UserSetting userSetting);
-        void RemoveUserSetting(string username, Setting.Account accountSetting);
+        //void RemoveUserSetting(string username, Setting.Account accountSetting);
 
         void LinkAlertsToProfile(List<Alert> alerts);
     }
