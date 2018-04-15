@@ -2,41 +2,112 @@
 
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link href="~/Content/Styling/grid/grid.css" rel="stylesheet" />
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
     <div class="full-container">
-      <div class="addGraph">
-        <button value="Add" type="submit" class="btn btn-primary">Add +</button>
-      </div>
-      <div class="resizediv">
-        <canvas id="myChart" style="width:100%;height:100%"></canvas>
-      </div>
+      @*<div class="addGraph">
+          <button value="Add" type="submit" class="btn btn-primary">Add +</button>
+        </div>
+        <div class="resizediv">
+          <canvas id="myChart" style="width:100%;height:100%"></canvas>
+        </div>*@
+
+      <section class="grid-demo">
+        <div class="controls cf">
+          <div class="control search">
+            <div class="control-icon">
+              <i class="material-icons">&#xE8B6;</i>
+            </div>
+            <input class="control-field search-field form-control " type="text" name="search" placeholder="Search..." />
+          </div>
+          <div class="control filter">
+            <div class="control-icon">
+              <i class="material-icons">&#xE152;</i>
+            </div>
+            <div class="select-arrow">
+              <i class="material-icons">&#xE313;</i>
+            </div>
+            <select class="control-field filter-field form-control">
+              <option value="" selected>All</option>
+              <option value="red">Red</option>
+              <option value="blue">Blue</option>
+              <option value="green">Green</option>
+            </select>
+          </div>
+          <div class="control sort">
+            <div class="control-icon">
+              <i class="material-icons">&#xE164;</i>
+            </div>
+            <div class="select-arrow">
+              <i class="material-icons">&#xE313;</i>
+            </div>
+            <select class="control-field sort-field form-control">
+              <option value="order" selected>Drag</option>
+              <option value="title">Title (drag disabled)</option>
+              <option value="color">Color (drag disabled)</option>
+            </select>
+          </div>
+          <div class="control layout">
+            <div class="control-icon">
+              <i class="material-icons">&#xE871;</i>
+            </div>
+            <div class="select-arrow">
+              <i class="material-icons">&#xE313;</i>
+            </div>
+            <select class="control-field layout-field form-control">
+              <option value="left-top" selected>Left Top</option>
+              <option value="left-top-fillgaps">Left Top (fill gaps)</option>
+              <option value="right-top">Right Top</option>
+              <option value="right-top-fillgaps">Right Top (fill gaps)</option>
+              <option value="left-bottom">Left Bottom</option>
+              <option value="left-bottom-fillgaps">Left Bottom (fill gaps)</option>
+              <option value="right-bottom">Right Bottom</option>
+              <option value="right-bottom-fillgaps">Right Bottom (fill gaps)</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid"></div>
+        <div class="grid-footer">
+          <button class="add-more-items btn btn-primary"><i class="material-icons">&#xE145;</i>Add more items</button>
+        </div>
+      </section>
     </div>
   </div>
 </main>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.min.js"></script>
+<script src="~/Scripts/grid/velocity.min.js"></script>
+<script src="~/Scripts/grid/hammer-2.0.8.min.js"></script>
+<script src="~/Scripts/grid/muuri-0.5.4.js"></script>
+<script src="~/Scripts/grid/grid.js"></script>
 <script>
-  window.onload = function () {
-    var ctx = document.getElementById("myChart").getContext("2d");
-    var data = {
-      labels: ["A", "B", "C", "D", "E", "F", "G"],
-      datasets: [{
-        label: "Test",
-        data: [65, 59, 80, 81, 56, 55, 40],
-      }]
-    };
-    var myLineChart = new Chart(ctx, {
-      type: 'line',
-      data: data,
-      options: {
-        maintainAspectRatio: false
-      }
-    });
-
-    window.addEventListener('resize', function () {
-      myLineChart.resize()
-    })
-  }
+ 
+  $('.card').resize(function () {
+    console.log("resized");
+  });
+  
 </script>
+
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.min.js"></script>
+  <script>
+    window.onload = function () {
+      var ctx = document.getElementById("myChart").getContext("2d");
+      var data = {
+        labels: ["A", "B", "C", "D", "E", "F", "G"],
+        datasets: [{
+          label: "Test",
+          data: [65, 59, 80, 81, 56, 55, 40],
+        }]
+      };
+      var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+          maintainAspectRatio: false
+        }
+      });
+
+      window.addEventListener('resize', function () {
+        myLineChart.resize()
+      })
+    }
+  </script>*@
