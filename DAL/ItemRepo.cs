@@ -81,7 +81,6 @@ namespace PB.DAL
         public IEnumerable<Item> ReadItems()
         {
             return ctx.Items
-                .Include("Records")
                 .Include("SubPlatforms")
                 .Include("SubscribedProfiles")
                 .OfType<Person>()
