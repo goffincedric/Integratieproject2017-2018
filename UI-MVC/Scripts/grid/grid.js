@@ -1,4 +1,6 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+﻿
+
+document.addEventListener('DOMContentLoaded', function () {
 
 
   var grid = null;
@@ -65,6 +67,7 @@
   }
 
   function initGrid() {
+ 
 
     var dragCounter = 0;
 
@@ -93,8 +96,11 @@
         }
       })
       .on('move', updateIndices)
-      .on('sort', updateIndices);
+      .on('sort', updateIndices)
+      .on('resize', updateIndices);
 
+    var sensor = new ResizeSensor($('.card'), resize);
+    
   }
 
   function filter() {
@@ -108,6 +114,16 @@
     });
 
   }
+
+
+  function resize() {
+    console.log(arguments);
+    updateIndices();
+    
+  }
+
+
+
 
   function sort() {
 

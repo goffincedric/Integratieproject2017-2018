@@ -1,0 +1,65 @@
+﻿@{
+
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Styling/grid/grid.css" rel="stylesheet" />
+<main class="main-content bgc-grey-100">
+  <div id="mainContent">
+    <div class="full-container">
+      @*<div class="addGraph">
+          <button value="Add" type="submit" class="btn btn-primary">Add +</button>
+        </div>
+        <div class="resizediv">
+          <canvas id="myChart" style="width:100%;height:100%"></canvas>
+        </div>*@
+
+      <div class="row">
+        <div class="col-lg-10 grid-container">
+          <div class="grid-stack grid-stack-4"></div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</main>
+
+<script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.2.5/gridstack.min.js'></script>
+<script src="~/Scripts/grid2/gridload.js" defer></script>
+
+@*<script src="~/Scripts/grid/velocity.min.js"></script>
+  <script src="~/Scripts/grid/hammer-2.0.8.min.js"></script>
+  <script src="~/Scripts/grid/muuri-0.5.4.js"></script>
+  <script src="~/Scripts/grid/grid.js"></script>
+  <script src='https://rawgit.com/marcj/css-element-queries/master/src/ResizeSensor.js' defer></script>
+  <script src='https://rawgit.com/marcj/css-element-queries/master/src/ElementQueries.js' defer></script>
+  <script src="~/Scripts/grid/resizeloader.js" defer></script>*@
+
+
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.min.js"></script>
+  <script>
+    window.onload = function () {
+      var ctx = document.getElementById("myChart").getContext("2d");
+      var data = {
+        labels: ["A", "B", "C", "D", "E", "F", "G"],
+        datasets: [{
+          label: "Test",
+          data: [65, 59, 80, 81, 56, 55, 40],
+        }]
+      };
+      var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+          maintainAspectRatio: false
+        }
+      });
+
+      window.addEventListener('resize', function () {
+        myLineChart.resize()
+      })
+    }
+  </script>*@
