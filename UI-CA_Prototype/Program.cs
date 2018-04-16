@@ -12,7 +12,7 @@ using Domain.JSONConversion;
 using Mono.Options;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Items;
-
+using Domain.Settings;
 
 namespace UI_CA_Prototype
 {
@@ -66,16 +66,16 @@ namespace UI_CA_Prototype
                 Console.WriteLine("99) Toon de CLI help pagina");
                 Console.WriteLine("0) Afsluiten");
 
-                try
-                {
+                //try
+                //{
                     DetectMenuAction();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine();
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //    Console.WriteLine();
+                //    Console.WriteLine(e.Message);
+                //    Console.WriteLine();
+                //}
                 Console.WriteLine("\n");
             }
         }
@@ -222,7 +222,14 @@ namespace UI_CA_Prototype
                     Name = "Politieke Barometer",
                     URL = "DUMMYURL",
                     DateOnline = DateTime.Now,
-                    Settings = new List<SubplatformSetting>(),
+                    Settings = new List<SubplatformSetting>()
+                    {
+                        new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
+                            Value = "14"
+                        }
+                    },
                     Admins = new List<Profile>(),
                     Items = new List<Item>(),
                     Pages = new List<Page>()
@@ -237,19 +244,8 @@ namespace UI_CA_Prototype
 
             //Individueel api aanspreken
             List<JClass> requestedRecords = new List<JClass>();
-            requestedRecords.AddRange(restClient.RequestRecords("Annick De Ridder"));
-            requestedRecords.AddRange(restClient.RequestRecords("Caroline Bastiaens"));
-            requestedRecords.AddRange(restClient.RequestRecords("Jan Bertels"));
-            requestedRecords.AddRange(restClient.RequestRecords("Vera Celis"));
-            requestedRecords.AddRange(restClient.RequestRecords("Dirk De Kort"));
-            requestedRecords.AddRange(restClient.RequestRecords("Imade Annouri"));
-            requestedRecords.AddRange(restClient.RequestRecords("Caroline Gennez"));
-            requestedRecords.AddRange(restClient.RequestRecords("Kathleen Helsen"));
-            requestedRecords.AddRange(restClient.RequestRecords("Marc Hendrickx"));
-            requestedRecords.AddRange(restClient.RequestRecords("Jan Hofkens"));
-            requestedRecords.AddRange(restClient.RequestRecords("Yasmine Kherbache"));
-            requestedRecords.AddRange(restClient.RequestRecords("Kathleen Krekels"));
-            requestedRecords.AddRange(restClient.RequestRecords("Ingrid Pira"));
+            requestedRecords.AddRange(restClient.RequestRecords(since: DateTime.Now.AddDays(-int.Parse(pbSubplatform.Settings.First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value))));
+            //requestedRecords.AddRange(restClient.RequestRecords("Annick De Ridder", new DateTime(2017, 1, 1)));
 
             //Convert JClass to Record and persist to database
             requestedRecords.ForEach(r => r.Subplatforms.Add(pbSubplatform));
