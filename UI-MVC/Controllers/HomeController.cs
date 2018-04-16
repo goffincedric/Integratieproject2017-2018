@@ -83,7 +83,12 @@ namespace UI_MVC.Controllers
             return View();
         }
 
-        public ActionResult Blank()
+    public ActionResult Dashboard2()
+    {
+      return View();
+    }
+
+    public ActionResult Blank()
         {
             return View();
         }
