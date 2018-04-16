@@ -12,7 +12,7 @@ using Domain.JSONConversion;
 using Mono.Options;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Items;
-
+using Domain.Settings;
 
 namespace UI_CA_Prototype
 {
@@ -36,9 +36,6 @@ namespace UI_CA_Prototype
         {
             //Handles CLI options/args and acts accordingly
             HandleCLIArgs(args);
-
-            //Injects seed data
-            if (WillSeed) Seed();
 
             //Menu
             while (!Stop)
@@ -82,23 +79,37 @@ namespace UI_CA_Prototype
 
         private static void HandleCLIArgs(string[] args)
         {
-            List<Subplatform> subplatformsToClear = new List<Subplatform>();
+            List<Subplatform> SubplatformsToClear = new List<Subplatform>();
+            List<Subplatform> Subplatforms = null;
+            bool cleanupAll = false;
             //Available CLI options
             CLIOptions = new OptionSet {
-                {"s|seed", "Will use seed data from TextGainAPI to seed the database", ns => WillSeed = (ns != null) },
-                {"c|cleanup-db=", "Clean the database of old records for the given subplatforms", cdb =>
+                {"s|sync", "Will use data from TextGainAPI to sync the database.", ns => WillSeed = (ns != null) },
+                {"c|cleanup-db:", "Cleans the database of old records for the given subplatform and exits program. If no subplatforms are given, the database will clean up old records for all subplatforms. This option can be called multiple times.", cdb =>
                     {
-                        Subplatform subplatform = SubplatformMgr.GetSubplatforms().First(s => s.Name.Replace(" ", "").ToLower().Equals(cdb.Replace(" ", "").ToLower()));
-                        subplatformsToClear.Add(subplatform);
+                        if (cdb == null && SubplatformsToClear.Count == 0) {
+                            SubplatformsToClear.AddRange(SubplatformMgr.GetSubplatforms());
+                            cleanupAll = true;
+                        }
+                        if (!cleanupAll)
+                        {
+                            if (Subplatforms == null) Subplatforms = SubplatformMgr.GetSubplatforms().ToList();
+                            Subplatform subplatform = Subplatforms.FirstOrDefault(s => s.Name.Replace(" ", "").ToLower().Equals(cdb.Replace(" ", "").ToLower()));
+                            if (subplatform == null) Console.WriteLine("'" + cdb + "' is not a known subplatform");
+                            else SubplatformsToClear.Add(subplatform);
+                        }
                     }
                 },
-                { "h|help", "Shows this message and exit", h =>
+                { "h|help", "Shows this message and exits", h =>
                     {
                         ShowHelp();
                         Environment.Exit(0);
                     }
                 },
             };
+
+
+            /* ====== Start arg handeling  ====== */
 
             List<string> extra;
             try
@@ -112,16 +123,26 @@ namespace UI_CA_Prototype
                 Console.Write(AppDomain.CurrentDomain.FriendlyName + ": ");
                 Console.WriteLine(e.Message);
                 Console.WriteLine("Try '" + AppDomain.CurrentDomain.FriendlyName + " --help' for more information.");
+                Console.Write("Press any key to exit...");
+                Console.ReadKey();
                 Environment.Exit(1);
             }
 
-            if (subplatformsToClear.Count != 0)
+
+            //Injects seed data
+            if (WillSeed) Seed();
+
+            //Clear 
+            SubplatformsToClear.ForEach(s => Console.WriteLine(s));
+
+            if (SubplatformsToClear.Count != 0)
             {
                 try
                 {
-                    subplatformsToClear.ForEach(s =>
+                    SubplatformsToClear.ForEach(s =>
                     {
-                        ItemMgr.CleanupOldRecords(s);
+                        int days = int.Parse(s.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
+                        ItemMgr.CleanupOldRecords(s, days);
                     });
                 }
                 catch (Exception e)
@@ -148,11 +169,10 @@ namespace UI_CA_Prototype
         private static void DetectMenuAction()
         {
             bool inValidAction = false;
-            int keuze;
             do
             {
                 Console.Write("Keuze: ");
-                int.TryParse(Console.ReadLine(), out keuze);
+                int.TryParse(Console.ReadLine(), out int keuze);
                 Console.WriteLine("\n");
 
                 switch (keuze)
@@ -179,7 +199,8 @@ namespace UI_CA_Prototype
                         break;
                     case 7:
                         if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
-                        ItemMgr.CleanupOldRecords(SelectedSubplatform);
+                        int days = int.Parse(SelectedSubplatform.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
+                        ItemMgr.CleanupOldRecords(SelectedSubplatform, days);
                         break;
                     case 8:
                         Seed();
@@ -222,7 +243,14 @@ namespace UI_CA_Prototype
                     Name = "Politieke Barometer",
                     URL = "DUMMYURL",
                     DateOnline = DateTime.Now,
-                    Settings = new List<SubplatformSetting>(),
+                    Settings = new List<SubplatformSetting>()
+                    {
+                        new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
+                            Value = "14"
+                        }
+                    },
                     Admins = new List<Profile>(),
                     Items = new List<Item>(),
                     Pages = new List<Page>()
@@ -237,19 +265,8 @@ namespace UI_CA_Prototype
 
             //Individueel api aanspreken
             List<JClass> requestedRecords = new List<JClass>();
-            requestedRecords.AddRange(restClient.RequestRecords("Annick De Ridder"));
-            requestedRecords.AddRange(restClient.RequestRecords("Caroline Bastiaens"));
-            requestedRecords.AddRange(restClient.RequestRecords("Jan Bertels"));
-            requestedRecords.AddRange(restClient.RequestRecords("Vera Celis"));
-            requestedRecords.AddRange(restClient.RequestRecords("Dirk De Kort"));
-            requestedRecords.AddRange(restClient.RequestRecords("Imade Annouri"));
-            requestedRecords.AddRange(restClient.RequestRecords("Caroline Gennez"));
-            requestedRecords.AddRange(restClient.RequestRecords("Kathleen Helsen"));
-            requestedRecords.AddRange(restClient.RequestRecords("Marc Hendrickx"));
-            requestedRecords.AddRange(restClient.RequestRecords("Jan Hofkens"));
-            requestedRecords.AddRange(restClient.RequestRecords("Yasmine Kherbache"));
-            requestedRecords.AddRange(restClient.RequestRecords("Kathleen Krekels"));
-            requestedRecords.AddRange(restClient.RequestRecords("Ingrid Pira"));
+            requestedRecords.AddRange(restClient.RequestRecords(since: DateTime.Now.AddDays(-int.Parse(pbSubplatform.Settings.First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value))));
+            //requestedRecords.AddRange(restClient.RequestRecords("Annick De Ridder", new DateTime(2017, 1, 1)));
 
             //Convert JClass to Record and persist to database
             requestedRecords.ForEach(r => r.Subplatforms.Add(pbSubplatform));

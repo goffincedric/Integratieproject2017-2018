@@ -13,7 +13,8 @@ namespace PB.BL.Domain.Dashboards
     {
         [Key]
         public int ElementId { get; set; }
-        public int Position { get; set; }
+        public int XCoord { get; set; }
+        public int YCoord { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public string Title { get; set; }

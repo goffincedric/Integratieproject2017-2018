@@ -34,6 +34,6 @@ namespace PB.BL
         void RemoveRecord(long id);
 
         List<Record> JClassToRecord(List<JClass> data);
-        void CleanupOldRecords(Subplatform subplatform);
+        void CleanupOldRecords(Subplatform subplatform, int days);
     }
 }
