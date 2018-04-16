@@ -278,9 +278,8 @@ namespace PB.BL
             List<Record> toegevoegde = JClassToRecord(RecordRepo.Seed(evenRecords));
         }
 
-        public void CleanupOldRecords(Subplatform subplatform)
+        public void CleanupOldRecords(Subplatform subplatform, int days)
         {
-            int days = 14; //#DAGEN, VERANGEN DOOR SUBPLATFORMSETTING
             InitNonExistingRepo();
             List<Person> persons = ItemRepo.ReadPersons().Where(i => i.SubPlatforms.Contains(subplatform)).ToList();
             List<Record> oldRecords = new List<Record>();
