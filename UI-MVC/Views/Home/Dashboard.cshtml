@@ -67,11 +67,12 @@
             </select>
           </div>
         </div>
-        <div class="grid"></div>
-        <div class="grid-footer">
-          <button class="add-more-items btn btn-primary"><i class="material-icons">&#xE145;</i>Add more items</button>
-        </div>
-      </section>
+        <div class="grid">
+            </div>
+            <div class="grid-footer">
+              <button class="add-more-items btn btn-primary"><i class="material-icons">&#xE145;</i>Add more items</button>
+            </div>
+</section>
     </div>
   </div>
 </main>
@@ -79,13 +80,10 @@
 <script src="~/Scripts/grid/hammer-2.0.8.min.js"></script>
 <script src="~/Scripts/grid/muuri-0.5.4.js"></script>
 <script src="~/Scripts/grid/grid.js"></script>
-<script type="text/x-jquery-tmpl" defer>
- 
-  $('.card').resize(function () {
-    console.log("resized");
-  });
-  
-</script>
+<script src='https://rawgit.com/marcj/css-element-queries/master/src/ResizeSensor.js' defer></script>
+<script src='https://rawgit.com/marcj/css-element-queries/master/src/ElementQueries.js' defer></script>
+<script src="~/Scripts/grid/resizeloader.js" defer></script>
+
 
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.min.js"></script>
   <script>

@@ -257,6 +257,9 @@
     <Content Include="Content\Images\bg.jpg" />
     <Content Include="Content\Images\faqbg.jpg" />
     <Content Include="Content\Images\logo_new.png" />
+    <Content Include="Content\Styling\grid2\gridstack-extra.css" />
+    <Content Include="Content\Styling\grid2\gridstack.css" />
+    <Content Include="Content\Styling\grid\grid.css" />
     <Content Include="Scripts\contact.js" />
     <Content Include="Content\Styling\style.css" />
     <Content Include="Content\Styling\contact.css" />
@@ -277,6 +280,14 @@
     <Content Include="Content\Fonts\FontAwesome\fee66e712a8a08eef5805a46892932ad.woff" />
     <Content Include="favicon.ico" />
     <Content Include="Scripts\bundle.js" />
+    <Content Include="Scripts\grid2\gridstack.jQueryUI.js" />
+    <Content Include="Scripts\grid2\gridstack.js" />
+    <Content Include="Scripts\grid\grid.js" />
+    <Content Include="Scripts\grid\hammer-2.0.8.min.js" />
+    <Content Include="Scripts\grid\muuri-0.5.4.js" />
+    <Content Include="Scripts\grid\resizeloader.js" />
+    <Content Include="Scripts\grid\velocity.min.js" />
+    <Content Include="Scripts\grid\web-animations-2.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -332,6 +343,7 @@
     <Content Include="Views\Account\ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Home\Dashboard2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
