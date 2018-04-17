@@ -108,7 +108,6 @@ namespace UI_MVC.Controllers
       return View();
     }
 
-     public ActionResult GetThemeSetting()
     public ActionResult Test()
     {
       return View();
