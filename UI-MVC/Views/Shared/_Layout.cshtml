@@ -202,6 +202,10 @@
                         {
                             <li class="">
                                 <a href="@Url.Action("Login", "Account")" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
+                                    <div class="peer mR-10">
+                                        @Html.Action("ChangeProfilePic", "Home")
+                                    </div>
+
                                     <div class="peer">
                                         <span style="color: #2196f3" class="fsz-sm">
                                             Login/Register
@@ -213,12 +217,14 @@
                     </ul>
                 </div>
             </div>
-      @Scripts.Render("~/bundles/jquery")
-      @Scripts.Render("~/bundles/bootstrapjs")
-      @RenderSection("styles", false)
-      @RenderBody()
-      @Scripts.Render("~/bundles/adminator")
-      @*@Scripts.Render("~/bundles/changetheme")*@
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrapjs")
+            @RenderSection("styles", false)
+            @RenderBody()
+            @Scripts.Render("~/bundles/adminator")
+            @*@Scripts.Render("~/bundles/changetheme")*@
+        </div>
+    </div>
 
     <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span></footer>
 </body>
