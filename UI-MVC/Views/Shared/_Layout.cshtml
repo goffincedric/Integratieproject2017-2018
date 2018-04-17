@@ -202,6 +202,10 @@
                         {
                             <li class="">
                                 <a href="@Url.Action("Login", "Account")" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
+                                    <div class="peer mR-10">
+                                        @Html.Action("ChangeProfilePic", "Home")
+                                    </div>
+
                                     <div class="peer">
                                         <span style="color: #2196f3" class="fsz-sm">
                                             Login/Register
