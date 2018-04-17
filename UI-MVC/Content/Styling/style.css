@@ -1708,3 +1708,14 @@ a.fc-more {
   width: 240px;
 }
 
+.banner {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+}
+
+.banner-window {
+    
+}
