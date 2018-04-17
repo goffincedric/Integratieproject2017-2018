@@ -148,6 +148,17 @@ namespace PB.BL
             return ItemRepo.ReadItems();
         }
 
+
+        public IEnumerable<Organisation> GetOrganisations()
+        {
+            InitNonExistingRepo();
+            return ItemRepo.ReadOrganisations();
+        }
+        public IEnumerable<Theme> GetThemes()
+        {
+            InitNonExistingRepo();
+            return ItemRepo.ReadThemes();
+        }
         public Organisation GetOrganistation(int itemId)
         {
             InitNonExistingRepo();

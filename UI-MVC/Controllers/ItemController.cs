@@ -8,24 +8,93 @@ using PB.BL.Domain.Items;
 
 namespace UI_MVC.Controllers
 {
-  [RequireHttps]
-  [Authorize(Roles = "User,Admin,SuperAdmin")]
-  public class ItemController : Controller
-  {
-    private UnitOfWorkManager uow;
-    private ItemManager itemMgr;
-
-
-    public ItemController()
+    [RequireHttps]
+    [Authorize(Roles = "User,Admin,SuperAdmin")]
+    public class ItemController : Controller
     {
-      uow = new UnitOfWorkManager();
-      itemMgr = new ItemManager(uow);
+        private UnitOfWorkManager uow;
+        private ItemManager itemMgr;
 
+
+        public ItemController()
+        {
+            uow = new UnitOfWorkManager();
+            itemMgr = new ItemManager(uow);
+
+        }
+        public ActionResult ItemTables()
+        {
+            IEnumerable<Person> persons = itemMgr.GetPersons();
+           
+            return View(persons);
+        }
+
+        public ActionResult AdminCrud()
+        {
+            return View();
+        }
+
+        public PartialViewResult OrganisationPartialTable()
+        {
+            IEnumerable<Organisation> organisations = itemMgr.GetOrganisations();
+            return PartialView(organisations);
+        }
+
+
+        public PartialViewResult ThemaPartialTable()
+        {
+            IEnumerable<Theme> themes = itemMgr.GetThemes();
+            return PartialView(themes);
+        }
+
+        
+        public ActionResult OrganisationPartialCreate()
+        {
+           
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult OrganisationPartialCreate(Organisation organisation)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                itemMgr.AddOrganisation(organisation.Name,organisation.SocialMediaLink,organisation.IconURL);
+                return RedirectToAction("AdminCrud");
+            }
+            else
+            {
+                return View();
+
+            }
+            
+        }
+
+
+        public ActionResult ThemaPartialCreate()
+        {
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ThemaPartialCreate(Theme theme)
+        {
+
+            if (ModelState.IsValid)
+            {
+                itemMgr.AddTheme(theme.Name, theme.Description);
+                return RedirectToAction("AdminCrud");
+            }
+            else
+            {
+                return View();
+
+            }
+
+        }
     }
-    public ActionResult ItemTables()
-    {
-      IEnumerable<Person> persons = itemMgr.GetPersons();
-      return View(persons);
-    }
-  }
 }

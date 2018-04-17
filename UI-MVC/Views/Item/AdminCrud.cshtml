@@ -1,17 +1,27 @@
-﻿
-@{
-    ViewBag.Title = "AdminCrud";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+  ViewBag.Title = "AdminCrud";
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
     <div class="container-fluid">
-      @Html.Partial("OrganisationPartial")
 
-      <br />
+      @{
+    Html.RenderAction("OrganisationPartialCreate", "Item");
+      }
 
-      @Html.Partial("ThemePartial")
+      @{
+    Html.RenderAction("OrganisationPartialTable", "Item");
+      }
+
+      @{
+    Html.RenderAction("ThemaPartialCreate", "Item");
+      }
+
+      @{
+    Html.RenderAction("ThemaPartialTable", "Item");
+      }
 
     </div>
   </div>
