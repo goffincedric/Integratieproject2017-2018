@@ -16,7 +16,6 @@ namespace Domain.Items
     public double Latitude { get; set; }
     public bool Retweet { get; set; }
     public DateTime Date { get; set; }
-    public DateTime ListUpdatet { get; set; }
 
     public RecordProfile RecordProfile { get; set; }
     public Sentiment Sentiment { get; set; }

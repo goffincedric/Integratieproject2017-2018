@@ -213,8 +213,7 @@ namespace PB.BL
                 Date = date,
                 Longitude = longitude,
                 Latitude = latitude,
-                Retweet = retweet,
-                ListUpdatet = DateTime.Now
+                Retweet = retweet
             };
 
             record = AddRecord(record);
@@ -279,9 +278,8 @@ namespace PB.BL
             List<Record> toegevoegde = JClassToRecord(RecordRepo.Seed(evenRecords));
         }
 
-        public void CleanupOldRecords(Subplatform subplatform)
+        public void CleanupOldRecords(Subplatform subplatform, int days)
         {
-            int days = 14; //#DAGEN, VERANGEN DOOR SUBPLATFORMSETTING
             InitNonExistingRepo();
             List<Person> persons = ItemRepo.ReadPersons().Where(i => i.SubPlatforms.Contains(subplatform)).ToList();
             List<Record> oldRecords = new List<Record>();
@@ -317,7 +315,7 @@ namespace PB.BL
                         Tweet_Id = el.Id,
                         RecordProfile = el.Profile,
                         Words = new List<Word>(),
-                        Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
+                        Sentiment = (el.Sentiment.Count != 0) ? new Sentiment(el.Sentiment[0], el.Sentiment[1]) : new Sentiment(0, 0),
                         Source = el.Source,
                         Hashtags = new List<Hashtag>(),
                         Mentions = new List<Mention>(),
@@ -325,8 +323,7 @@ namespace PB.BL
                         Themes = new List<Theme>(),
                         Persons = new List<Person>(),
                         Date = el.Date,
-                        Retweet = el.Retweet,
-                        ListUpdatet = DateTime.Now
+                        Retweet = el.Retweet
                     };
 
                     if (el.Geo != null)

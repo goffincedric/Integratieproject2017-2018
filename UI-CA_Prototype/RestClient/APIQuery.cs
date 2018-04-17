@@ -10,7 +10,6 @@ namespace Domain.JSONConversion
 {
   public class APIQuery
   {
-    [Required]
     [JsonProperty("name")]
     public string Name { get; set; }
     [JsonProperty("since")]
