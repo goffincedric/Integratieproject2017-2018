@@ -1,4 +1,5 @@
 ﻿using PB.BL.Domain.Account;
+using PB.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace PB.DAL
     Profile ReadProfile(string username);
     void UpdateProfile(Profile profile);
     void DeleteProfile(string username);
+    
   }
 }
