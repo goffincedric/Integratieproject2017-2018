@@ -24,8 +24,9 @@ namespace UI_MVC.Controllers
         }
         public ActionResult ItemTables()
         {
-            
-            return View();
+            IEnumerable<Person> persons = itemMgr.GetPersons();
+           
+            return View(persons);
         }
 
         public ActionResult AdminCrud()
