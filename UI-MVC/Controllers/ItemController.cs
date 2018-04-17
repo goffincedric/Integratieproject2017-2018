@@ -47,8 +47,15 @@ namespace UI_MVC.Controllers
             return PartialView(themes);
         }
 
+        
+        public PartialViewResult OrganisationPartialCreate()
+        {
+           
+            return PartialView();
+        }
 
-        public PartialViewResult OrganisationPartialTableCreate(Organisation organisation)
+        [HttpPost]
+        public PartialViewResult OrganisationPartialCreate(Organisation organisation)
         {
             if (ModelState.IsValid)
             {

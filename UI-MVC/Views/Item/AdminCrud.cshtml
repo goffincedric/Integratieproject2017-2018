@@ -1,5 +1,4 @@
-﻿@model UI_MVC.Models.Items
-@{
+﻿@{
   ViewBag.Title = "AdminCrud";
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -7,7 +6,19 @@
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
     <div class="container-fluid">
-      @Html.Partial("OrganisationPartialTable",Model.organisation)
+
+      @{
+    Html.RenderAction("OrganisationPartialCreate", "Item");
+      }
+
+      @{
+    Html.RenderAction("OrganisationPartialTable", "Item");
+      }
+
+      @{
+    Html.RenderAction("ThemaPartialTable", "Item");
+      }
+
     </div>
   </div>
 </main>
