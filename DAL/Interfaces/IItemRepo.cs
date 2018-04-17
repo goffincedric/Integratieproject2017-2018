@@ -20,5 +20,8 @@ namespace PB.DAL
         IEnumerable<Person> ReadPersons();
         Person CreatePerson(Person person);
         Person ReadPerson(int itemId);
+
+        IEnumerable<Organisation> ReadOrganisations();
+        IEnumerable<Theme> ReadThemes();
     }
 }
