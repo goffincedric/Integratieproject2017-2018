@@ -1,0 +1,38 @@
+﻿@{
+  ViewBag.Title = "AdminCrud";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="main-content bgc-grey-100">
+  <div id="mainContent">
+    <div class="container-fluid">
+
+      <h1>Stats</h1>
+
+      @ViewBag.TotalUsers;
+      @ViewBag.TotalItems;
+
+
+      @{
+        Html.RenderAction("OrganisationPartialCreate", "Item");
+      }
+
+      @{
+        Html.RenderAction("OrganisationPartialTable", "Item");
+      }
+
+      @{
+        Html.RenderAction("ThemaPartialCreate", "Item");
+      }
+
+      @{
+        Html.RenderAction("ThemaPartialTable", "Item");
+      }
+
+      @{
+        Html.RenderAction("KeywordPartialTable", "Item");
+      }
+
+    </div>
+  </div>
+</main>

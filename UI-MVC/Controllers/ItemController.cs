@@ -29,10 +29,7 @@ namespace UI_MVC.Controllers
             return View(persons);
         }
 
-        public ActionResult AdminCrud()
-        {
-            return View();
-        }
+        
 
         public PartialViewResult OrganisationPartialTable()
         {
@@ -47,7 +44,12 @@ namespace UI_MVC.Controllers
             return PartialView(themes);
         }
 
-        
+        public PartialViewResult KeywordPartialTable()
+        {
+            IEnumerable<Keyword> keywords = itemMgr.GetKeywords();
+            return PartialView(keywords);
+        }
+
         public ActionResult OrganisationPartialCreate()
         {
            
@@ -62,7 +64,7 @@ namespace UI_MVC.Controllers
             if (ModelState.IsValid)
             {
                 itemMgr.AddOrganisation(organisation.Name,organisation.SocialMediaLink,organisation.IconURL);
-                return RedirectToAction("AdminCrud");
+                return RedirectToAction("AdminCrud","Home");
             }
             else
             {

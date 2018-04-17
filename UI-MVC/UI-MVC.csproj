@@ -340,11 +340,13 @@
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Home\Legal.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
-    <Content Include="Views\Item\AdminCrud.cshtml" />
+    <Content Include="Views\Home\AdminCrud.cshtml" />
     <Content Include="Views\Item\OrganisationPartialTable.cshtml" />
     <Content Include="Views\Item\ThemaPartialTable.cshtml" />
     <Content Include="Views\Item\OrganisationPartialCreate.cshtml" />
     <Content Include="Views\Item\ThemaPartialCreate.cshtml" />
+    <Content Include="Views\Item\KeywordPartialCreate.cshtml" />
+    <Content Include="Views\Item\KeywordPartialTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
