@@ -221,6 +221,15 @@
             @Scripts.Render("~/bundles/adminator")
 
         </div>
+      </div>
+      @Scripts.Render("~/bundles/jquery")
+      @Scripts.Render("~/bundles/bootstrapjs")
+      @RenderSection("styles", false)
+      @RenderBody()
+
+
+      @Scripts.Render("~/bundles/adminator")
+      @*@Scripts.Render("~/bundles/changetheme")*@
     </div>
 
     <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span></footer>
