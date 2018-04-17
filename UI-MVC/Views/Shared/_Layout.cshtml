@@ -60,6 +60,7 @@
             <ul class="dropdown-menu">
               <li class="nav-item dropdown"><a class="sidebar-link" href="@Url.Action("Contact", "Home")"><span>Contact</span></a></li>
               <li class="nav-item dropdown"><a href="@Url.Action("FAQ","Home")"><span>FAQ</span></a></li>
+                <li class="nav item dropdown"><a href="@Url.Action("Legal","Home")"><span>Legal</span></a></li>
               <li class="nav-item dropdown"><a href="@Url.Action("ItemTables","Item")"><span>Show items</span></a></li>
             </ul>
           </li>
@@ -222,7 +223,7 @@
 
 
       @Scripts.Render("~/bundles/adminator")
-      @Scripts.Render("~/bundles/changetheme")
+      @*@Scripts.Render("~/bundles/changetheme")*@
 
     </div>
   </div>
