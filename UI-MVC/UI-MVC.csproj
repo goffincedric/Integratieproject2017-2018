@@ -347,6 +347,9 @@
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Home\Dashboard2.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Item\AdminCrud.cshtml" />
+    <Content Include="Views\Item\OrganisationPartial.cshtml" />
+    <Content Include="Views\Item\ThemaPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
