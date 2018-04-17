@@ -48,20 +48,53 @@ namespace UI_MVC.Controllers
         }
 
         
-        public PartialViewResult OrganisationPartialCreate()
+        public ActionResult OrganisationPartialCreate()
         {
            
             return PartialView();
         }
 
         [HttpPost]
-        public PartialViewResult OrganisationPartialCreate(Organisation organisation)
+        [ValidateAntiForgeryToken]
+        public ActionResult OrganisationPartialCreate(Organisation organisation)
         {
+            
             if (ModelState.IsValid)
             {
                 itemMgr.AddOrganisation(organisation.Name,organisation.SocialMediaLink,organisation.IconURL);
+                return RedirectToAction("AdminCrud");
             }
+            else
+            {
+                return View();
+
+            }
+            
+        }
+
+
+        public ActionResult ThemaPartialCreate()
+        {
+
             return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ThemaPartialCreate(Theme theme)
+        {
+
+            if (ModelState.IsValid)
+            {
+                itemMgr.AddTheme(theme.Name, theme.Description);
+                return RedirectToAction("AdminCrud");
+            }
+            else
+            {
+                return View();
+
+            }
+
         }
     }
 }

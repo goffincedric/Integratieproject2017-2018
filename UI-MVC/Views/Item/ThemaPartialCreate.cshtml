@@ -1,13 +1,14 @@
-﻿@model PB.BL.Domain.Items.Organisation
+﻿@model PB.BL.Domain.Items.Theme
+
+
 
 <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style="min-width:320px">
-  <h4 class="fw-300 c-grey-900 mB-40">Create new organisation</h4>
-  @using (Html.BeginForm("OrganisationPartialCreate", "Item", FormMethod.Post))
+  <h4 class="fw-300 c-grey-900 mB-40">Create new theme</h4>
+  @using (Html.BeginForm("ThemaPartialCreate", "Item", FormMethod.Post))
   {
 
     @Html.AntiForgeryToken()
     <form>
-
       @Html.ValidationSummary(true, "", new { @class = "text-danger" })
       <div class="form-group">
         @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -28,18 +29,10 @@
       </div>
 
       <div class="form-group">
-        @Html.LabelFor(model => model.SocialMediaLink, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-          @Html.EditorFor(model => model.SocialMediaLink, new { htmlAttributes = new { @class = "form-control" } })
-          @Html.ValidationMessageFor(model => model.SocialMediaLink, "", new { @class = "text-danger" })
-        </div>
-      </div>
-
-      <div class="form-group">
-        @Html.LabelFor(model => model.IconURL, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-          @Html.EditorFor(model => model.IconURL, new { htmlAttributes = new { @class = "form-control" } })
-          @Html.ValidationMessageFor(model => model.IconURL, "", new { @class = "text-danger" })
+          @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
         </div>
       </div>
 
@@ -48,9 +41,10 @@
           <input type="submit" value="Create" class="btn btn-default" />
         </div>
       </div>
+
     </form>
   }
-
-  <div>
-  </div>
+</div>
+<div>
+  @Html.ActionLink("Back to List", "Index")
 </div>
