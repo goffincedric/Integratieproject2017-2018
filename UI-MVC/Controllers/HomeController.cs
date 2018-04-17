@@ -103,6 +103,11 @@ namespace UI_MVC.Controllers
             return View();
         }
 
+    public ActionResult Legal()
+    {
+      return View();
+    }
+
         public ActionResult GetThemeSetting()
         {
             if (User.Identity.IsAuthenticated)
