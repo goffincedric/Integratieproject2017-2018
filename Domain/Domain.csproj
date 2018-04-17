@@ -82,7 +82,6 @@
     <Compile Include="Items\Url.cs" />
     <Compile Include="Items\Word.cs" />
     <Compile Include="JSONConversion\JClass.cs" />
-    <Compile Include="JSONConversion\JClassSeedFormat.cs" />
     <Compile Include="Platforms\Page.cs" />
     <Compile Include="Platforms\Style.cs" />
     <Compile Include="Platforms\Subplatform.cs" />
