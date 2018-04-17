@@ -167,8 +167,8 @@
                                                     @ViewBag.Ingelogd
                                                 </span>
                                             </div>
-                                        }
-                                    }
+                                                            }
+                                                        }
                                 </a>
 
                                 <ul class="dropdown-menu fsz-sm">
@@ -198,23 +198,23 @@
                                     </li>
                                 </ul>
                             </li>
-                        }
-                        else
-                        {
-                            <li class="">
-                                <a href="@Url.Action("Login", "Account")" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
-                                    <div class="peer mR-10">
-                                        @Html.Action("ChangeProfilePic", "Home")
-                                    </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="">
+                                                                <a href="@Url.Action("Login", "Account")" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
+                                                                    <div class="peer mR-10">
+                                                                        @Html.Action("ChangeProfilePic", "Home")
+                                                                    </div>
 
-                                    <div class="peer">
-                                        <span style="color: #2196f3" class="fsz-sm">
-                                            Login/Register
-                                        </span>
-                                    </div>
-                                </a>
-                            </li>
-                        }
+                                                                    <div class="peer">
+                                                                        <span style="color: #2196f3" class="fsz-sm">
+                                                                            Login/Register
+                                                                        </span>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        }
                     </ul>
                 </div>
             </div>
@@ -222,11 +222,52 @@
             @Scripts.Render("~/bundles/bootstrapjs")
             @RenderSection("styles", false)
             @RenderBody()
+
+
             @Scripts.Render("~/bundles/adminator")
             @*@Scripts.Render("~/bundles/changetheme")*@
+
         </div>
     </div>
 
-    <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span></footer>
+
+    <section id="footer">
+        <div class="container">
+            <div class="row text-center text-xs-center text-sm-left text-md-left">
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <h5>Navigation</h5>
+                    <ul class="list-unstyled quick-links">
+                        <li><a href=""><i class="fa fa-angle-double-right"></i>Home</a></li>
+                        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-angle-double-right"></i>Home</a></li>
+                        <li><a href="@Url.Action("FAQ","Home")"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
+                        <li><a href="@Url.Action("Contact","Home")"><i class="fa fa-angle-double-right"></i>Contact</a></li>
+
+
+                    </ul>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+                    <ul class="list-unstyled list-inline social text-center">
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                </div>
+                </hr>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+                    <span>Copyright Integratieproject © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span>
+                </div>
+                </hr>
+            </div>
+        </div>
+    </section>
+    </div>
+    <!-- ./Footer -->
 </body>
 </html>
