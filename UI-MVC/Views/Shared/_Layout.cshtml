@@ -9,10 +9,7 @@
   @Styles.Render("~/Content/bootstrapcss")
   @Styles.Render("~/Content/Styling/style.css")
   <link id="ThemeLink" href="@Html.Action("GetThemeSetting","Home")" rel="stylesheet">
-
-
 </head>
-
 <body class="app">
   <div id="loader">
     <div class="spinner"></div>
@@ -219,10 +216,7 @@
       @Scripts.Render("~/bundles/bootstrapjs")
       @RenderSection("styles", false);
       @RenderBody()
-
-
       @Scripts.Render("~/bundles/adminator")
-      @Scripts.Render("~/bundles/changetheme")
 
     </div>
   </div>
