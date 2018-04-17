@@ -337,12 +337,8 @@
     <Content Include="Views\Account\ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Home\Dashboard.cshtml" />
-=======
-    <Content Include="Views\Home\Dashboard2.cshtml" />
     <Content Include="Views\Home\Legal.cshtml" />
->>>>>>> master
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Item\AdminCrud.cshtml" />
     <Content Include="Views\Item\OrganisationPartialTable.cshtml" />
