@@ -1720,9 +1720,16 @@ h3{
     float: right;
 }
 
-.col-md-33p{
-    float: left;
-    width: 33%;
-    margin-left: auto;
-    margin-right: auto;
+.cpwform{
+    display: none;
+}
+
+.form-row2 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -2.5px;
+    margin-left: -2.5px;
 }

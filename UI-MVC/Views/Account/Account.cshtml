@@ -13,20 +13,20 @@
             </div>
 
             <div class="bgc-white p-10 bd mB-10">
-                <h4 class="bb-2">Password Changes<span class="arrow-profile"><i class="ti-angle-up"></i></span></h4>
-                <form>
+                <h4 class="bb-2">Password Change<span class="arrow-profile"><i class="ti-angle-up"></i></span></h4>
+                <form class="cpwform">
                     <div class="form-row">
-                        <div class="form-group col-md-33p">
+                        <div class="form-group col-md-4">
                             <label for="inputCurrentPassword">Current Password</label>
                             @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputCurrentPassword", @type = "Password", @placeholder = "Current Password" } })
                         </div>
-                        <div class="form-group col-md-33p">
+                        <div class="form-group col-md-4">
                             <label for="inputNewPassword">New Password</label>
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputNewPassword", @type = "Password", @placeholder = "Current Password" } })
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputNewPassword", @type = "Password", @placeholder = "New Password" } })
                         </div>
-                        <div class="form-group col-md-33p">
+                        <div class="form-group col-md-4">
                             <label for="inputConfirmPassword">Confirm Password</label>
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputConfirmPassword", @type = "Password", @placeholder = "Current Password" } })
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputConfirmPassword", @type = "Password", @placeholder = "Confirm Password" } })
                         </div>
                     </div>
                     <button type="reset" class="btn btn-secondary">Clear</button>
@@ -42,113 +42,115 @@
                     <form>
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-row">
-                            <div class="form-group col-md-1">
-                                <img class="img-fluid" src=/Content/Images/1.jpg>
-
-                            </div>
-                            <div class="form-group col-md-11">
+                            <div class="form-group col-md-6">
                                 <div class="form-row">
-
+                                    <img class="img-fluid" src=/Content/Images/1.jpg>
+                                </div>
+                                <div class="form-row">
                                     <label for="inputEmail4">Gebruikersnaam</label>
                                     @*<input type="text" class="form-control" id="inputGebruikersnaam4" placeholder="Gebruikersnaam">*@
                                     @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputGebruikersnaam4", @type = "text", @placeholder = "Gebruikersnaam" } })
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Achternaam</label>
-                                        @*<input type="email" class="form-control" id="inputEmail4" placeholder="Email">*@
-                                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Achternaam" } })
+                                        <div class="form-row2">
+                                            <label for="inputEmail4">Achternaam</label>
+                                            @*<input type="email" class="form-control" id="inputEmail4" placeholder="Email">*@
+                                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Achternaam" } })
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Voornaam</label>
-                                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Voornaam" } })
-
+                                        <div class="form-row2">
+                                            <label for="inputEmail4">Voornaam</label>
+                                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Voornaam" } })
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Email</label>
-                                @*<input type="email" class="form-control" id="inputEmail4" placeholder="Email">*@
-                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })
+                                <div class="form-row">
+                                    <label for="inputEmail4">Email</label>
+                                    @*<input type="email" class="form-control" id="inputEmail4" placeholder="Email">*@
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })
+                                </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="inputEmail4">Telefoon</label>
-                                @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control", @type = "tel", @placeholder = "Gsm of telefoon nummer" } })
-
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Gender">Gender</label>
-                            <div class="col-md-4">
-                                @*@Html.RadioButtonFor(m=>m.UserData.Gender, new { id = "Gender.Picked" })*@
-
-                                <label class="radio-inline" for="Gender-0">
-                                    <input type="radio" name="Gender" id="Gender-0" value="1" checked="checked">
-                                    Male
-                                </label>
-                                <label class="radio-inline" for="Gender-1">
-                                    <input type="radio" name="Gender" id="Gender-1" value="2">
-                                    Female
-                                </label>
-                                <label class="radio-inline" for="Gender-2">
-                                    <input type="radio" name="Gender" id="Gender-2" value="3">
-                                    Other
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputAddress">Straat en huisnummer</label>
-                            @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat huisnummer" } })
-                            @*<input type="text" class="form-control" id="inputAddress" placeholder="Stationsstraat 144"></div>*@
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
+                                <div class="form-row">
+                                    <label for="inputAddress">Straat en huisnummer</label>
+                                    @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat huisnummer" } })
+                                </div>
+                                <div class="form-row">
+                                    <label for="inputEmail4">Telefoon</label>
+                                    @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control", @type = "tel", @placeholder = "Gsm of telefoon nummer" } })
+                                </div>
+                                <div class="form-row">
                                     <label for="inputCity">City</label>
                                     @*<input type="text" class="form-control" id="inputCity" placeholder="Itegem">*@
                                     @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Stad of dorp" } })
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label for="inputState">Provincie</label>
-                                    @*<select id="inputState" class="form-control">
-                                          <option selected="selected">Kies...</option>
-                                          <option>Antwerpen</option>
-                                          <option>Brussel</option>
-                                          <option>West-vlaanderen</option>
-                                          <option>Oost-Vlaanderen</option>
-                                          <option>Luik</option>
-                                          <option>Limburg</option>
-                                          <option>Vlaams-Brabant</option>
-                                          <option>Waals-Brabant</option>
-                                          <option>Henegouwen</option>
-                                          <option>Namen</option>
-                                          <option>Luxemburg</option>
-                                          <option>Andere</option>
-                                        </select>*@
-                                    @Html.EnumDropDownListFor(model => model.Province, htmlAttributes: new { @class = "form-control" })
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <div class="form-row2">
+                                            <label for="inputState">Provincie</label>
+                                            @*<select id="inputState" class="form-control">
+                                                  <option selected="selected">Kies...</option>
+                                                  <option>Antwerpen</option>
+                                                  <option>Brussel</option>
+                                                  <option>West-vlaanderen</option>
+                                                  <option>Oost-Vlaanderen</option>
+                                                  <option>Luik</option>
+                                                  <option>Limburg</option>
+                                                  <option>Vlaams-Brabant</option>
+                                                  <option>Waals-Brabant</option>
+                                                  <option>Henegouwen</option>
+                                                  <option>Namen</option>
+                                                  <option>Luxemburg</option>
+                                                  <option>Andere</option>
+                                                </select>*@
+                                            @Html.EnumDropDownListFor(model => model.Province, htmlAttributes: new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="form-row2">
+                                            <label for="inputZip">Postcode</label>
+                                            @*<input type="text" class="form-control" id="inputZip" placeholder="2222">*@
+                                            @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "postcode" } })
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-2">
-                                    <label for="inputZip">Postcode</label>
-                                    @*<input type="text" class="form-control" id="inputZip" placeholder="2222">*@
-                                    @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "postcode" } })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="fw-500">Geboortedatum</label>
-                                <div class="timepicker-input input-icon form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-addon bgc-white bd bdwR-0"><i class="ti-calendar"></i></div>
-                                        @*<input type="text" class="form-control bdc-grey-200 start-date" placeholder="Datepicker" data-provide="datepicker">*@
-                                        @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control bdc-grey-200 start-date", @placeholder = "Datepicker", @type = "text" } })
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label class="fw-500">Geboortedatum</label>
+                                        <div class="timepicker-input input-icon form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon bgc-white bd bdwR-0"><i class="ti-calendar"></i></div>
+                                                @*<input type="text" class="form-control bdc-grey-200 start-date" placeholder="Datepicker" data-provide="datepicker">*@
+                                                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control bdc-grey-200 start-date", @placeholder = "Datepicker", @type = "text" } })
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        @*<div class="form-group">
+                                <label for="Gender">Gender</label>
+                                <div class="col-md-4">
+                                    @Html.RadioButtonFor(m=>m.UserData.Gender, new { id = "Gender.Picked" })
+
+                                    <label class="radio-inline" for="Gender-0">
+                                        <input type="radio" name="Gender" id="Gender-0" value="1" checked="checked">
+                                        Male
+                                    </label>
+                                    <label class="radio-inline" for="Gender-1">
+                                        <input type="radio" name="Gender" id="Gender-1" value="2">
+                                        Female
+                                    </label>
+                                    <label class="radio-inline" for="Gender-2">
+                                        <input type="radio" name="Gender" id="Gender-2" value="3">
+                                        Other
+                                    </label>
+                                </div>
+                            </div>*@
+                        @*<input type="text" class="form-control" id="inputAddress" placeholder="Stationsstraat 144"></div>*@
                         <button type="submit" class="btn btn-primary">Opslaan</button>
                     </form>
                 }
