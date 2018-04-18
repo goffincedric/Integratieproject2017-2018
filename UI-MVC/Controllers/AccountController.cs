@@ -179,24 +179,37 @@ namespace UI_MVC.Controllers
             return View();
         }
 
+        public ActionResult ResetPassword()
+        {
+
+            return PartialView();
+        }
+
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return RedirectToAction("Account", "Account");
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-            //var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            //if (result.Succeeded)
-            //{
-            //    return RedirectToAction("ResetPasswordConfirmation", "Account");
-            //}
-            //AddErrors(result);
-            return View();
+            if(UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
+            {
+                return RedirectToAction("Account","Account");
+            }
+          
+            
+            string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+
+            var result = await UserManager.ResetPasswordAsync(user.Id, code, model.NewPassword);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Account", "Account");
+            }
+            AddErrors(result);
+            return RedirectToAction("Index","Home");
         }
 
         #endregion
