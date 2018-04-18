@@ -118,7 +118,7 @@ namespace UI_MVC.Controllers
             ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
             ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
             ViewBag.TotalPersons = itemMgr.GetPersonsCount().ToString();
-            ViewBag.TotalOrganisation = itemMgr.GetOrganisationsCount().ToString();
+            ViewBag.TotalOrganisations = itemMgr.GetOrganisationsCount().ToString();
             ViewBag.TotalThemes = itemMgr.GetThemesCount().ToString();
             ViewBag.TotalKeywords = itemMgr.GetKeywordsCount().ToString();
             return View();

@@ -2,7 +2,7 @@
 
 
 
-<div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style="min-width:320px">
+<div class="bgc-white p-20 bd">
   <h4 class="fw-300 c-grey-900 mB-40">Create new theme</h4>
   @using (Html.BeginForm("ThemaPartialCreate", "Item", FormMethod.Post))
   {
@@ -21,10 +21,13 @@
       <div class="form-group">
         @Html.LabelFor(model => model.IsHot, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-          <div class="checkbox">
-            @Html.CheckBoxFor(model => model.IsHot)
-            @Html.ValidationMessageFor(model => model.IsHot, "", new { @class = "text-danger" })
-          </div>
+          @*<div class="checkbox">*@
+          <label class="switch">
+            @Html.CheckBoxFor(model => model.IsHot, new { @class = "form-control" })
+            <div class="slider round"></div>
+          </label>
+          @Html.ValidationMessageFor(model => model.IsHot, "", new { @class = "text-danger" })
+          @*</div>*@
         </div>
       </div>
 

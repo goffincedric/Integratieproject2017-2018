@@ -17,7 +17,7 @@ namespace PB.BL
         Person GetPerson(int itemId);
         Organisation GetOrganistation(int itemId);
         Theme GetTheme(int itemId);
-        Person AddPerson(string name, DateTime birthDay, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null);
+        Person AddPerson(string name, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null);
         Organisation AddOrganisation(string name, string SocialMediaLink = null, string IconURL = null);
         Theme AddTheme(string themeName, string description);
         void ChangeItem(Item item);

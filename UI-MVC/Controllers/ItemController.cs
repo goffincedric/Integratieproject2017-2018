@@ -29,30 +29,16 @@ namespace UI_MVC.Controllers
             return View(persons);
         }
 
-        
-
+        #region organisation
         public PartialViewResult OrganisationPartialTable()
         {
             IEnumerable<Organisation> organisations = itemMgr.GetOrganisations();
             return PartialView(organisations);
         }
 
-
-        public PartialViewResult ThemaPartialTable()
-        {
-            IEnumerable<Theme> themes = itemMgr.GetThemes();
-            return PartialView(themes);
-        }
-
-        public PartialViewResult KeywordPartialTable()
-        {
-            IEnumerable<Keyword> keywords = itemMgr.GetKeywords();
-            return PartialView(keywords);
-        }
-
         public ActionResult OrganisationPartialCreate()
         {
-           
+
             return PartialView();
         }
 
@@ -60,39 +46,74 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult OrganisationPartialCreate(Organisation organisation)
         {
-            
+
             if (ModelState.IsValid)
             {
-                itemMgr.AddOrganisation(organisation.Name,organisation.SocialMediaLink,organisation.IconURL);
-                return RedirectToAction("AdminCrud","Home");
+                itemMgr.AddOrganisation(organisation.Name, organisation.SocialMediaLink, organisation.IconURL);
+                return RedirectToAction("AdminCrud", "Home");
             }
             else
             {
                 return View();
 
             }
-            
+
         }
 
-        //public ActionResult DeleteOrganisation(int id)
-        //{
-        //    Item item = itemMgr.GetItem(id);
-        //    return View(item);
-        //}
+        #endregion
+
+        #region keywords
+        public PartialViewResult KeywordPartialTable()
+        {
+            IEnumerable<Keyword> keywords = itemMgr.GetKeywords();
+            return PartialView(keywords);
+        }
+
+        public ActionResult KeywordPartialCreate()
+        {
+
+            return PartialView();
+        }
 
         [HttpPost]
-        public ActionResult DeleteItem(int id, FormCollection collection)
+        public ActionResult DeleteKeyword(int id, FormCollection collection)
         {
             try
             {
-                itemMgr.RemoveItem(id);
+                //itemMgr.R;
 
-                return RedirectToAction("AdminCrud","Home");
+                return RedirectToAction("AdminCrud", "Home");
             }
             catch
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult KeywordPartialCreate(Theme theme)
+        {
+
+            if (ModelState.IsValid)
+            {
+                //itemMgr.AddKeyword(theme.Name);
+                return RedirectToAction("AdminCrud");
+            }
+            else
+            {
+                return View();
+
+            }
+
+        }
+        #endregion
+
+        #region Thema
+        public PartialViewResult ThemaPartialTable()
+        {
+            IEnumerable<Theme> themes = itemMgr.GetThemes();
+            return PartialView(themes);
         }
 
         public ActionResult ThemaPartialCreate()
@@ -118,5 +139,59 @@ namespace UI_MVC.Controllers
             }
 
         }
+        #endregion
+
+        #region persons
+        public PartialViewResult PersonPartialTable()
+        {
+            IEnumerable<Person> persons = itemMgr.GetPersons();
+            return PartialView(persons);
+        }
+
+        public ActionResult PersonPartialCreate()
+        {
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PersonPartialCreate(Person person)
+        {
+
+            if (ModelState.IsValid)
+            {
+                itemMgr.AddPerson(person.Name, person.SocialMediaLink,person.IconURL, person.Organisation, person.Function);
+                return RedirectToAction("AdminCrud");
+            }
+            else
+            {
+                return View();
+
+            }
+
+        }
+        #endregion
+
+
+
+        [HttpPost]
+        public ActionResult DeleteItem(int id, FormCollection collection)
+        {
+            try
+            {
+                itemMgr.RemoveItem(id);
+
+                return RedirectToAction("AdminCrud","Home");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        
+
+       
     }
 }
