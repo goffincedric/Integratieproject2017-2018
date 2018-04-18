@@ -1,11 +1,7 @@
 
 /* width */
 ::-webkit-scrollbar {
-<<<<<<< HEAD
-  width: 4px;
-=======
-    width: 10px;
->>>>>>> master
+    width: 4px;
 }
 
 /* Track */
@@ -1894,12 +1890,9 @@ h3{
     border-bottom: 2px solid #DDD;
 }
 
-.arrow-profile{
+.arrow-account{
     float: right;
-}
-
-.arrow-password {
-    float: right;
+    transition: .5s;
 }
 
 .form-row {

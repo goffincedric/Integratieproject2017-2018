@@ -13,33 +13,38 @@
             </div>
 
             <div class="bgc-white p-10 bd mB-10">
-                <h4 class="bb-2">Password Change<span class="arrow-password-hide"><i class="ti-angle-up"></i></span></h4>
-                <form class="cpwform">
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="inputCurrentPassword">Current Password</label>
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputCurrentPassword", @type = "Password", @placeholder = "Current Password" } })
+                <h4 class="bb-2">Password Change<span class="arrow-account"><i class="ti-angle-up"></i></span></h4>
+                @using (Html.BeginForm("Password", "Account", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <form class="form">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputCurrentPassword">Current Password</label>
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputCurrentPassword", @type = "Password", @placeholder = "Current Password" } })
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputNewPassword">New Password</label>
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputNewPassword", @type = "Password", @placeholder = "New Password" } })
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputConfirmPassword">Confirm Password</label>
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputConfirmPassword", @type = "Password", @placeholder = "Confirm Password" } })
+                            </div>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="inputNewPassword">New Password</label>
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputNewPassword", @type = "Password", @placeholder = "New Password" } })
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="inputConfirmPassword">Confirm Password</label>
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputConfirmPassword", @type = "Password", @placeholder = "Confirm Password" } })
-                        </div>
-                    </div>
-                    <button type="reset" class="btn btn-secondary">Clear</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </form>
+                        <button id="btn-clear" type="reset" class="btn btn-secondary">Clear</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                }
             </div>
             <div class="bgc-white p-10 bd">
-                <h4 class="bb-2">Basic Profile<span class="arrow-profile"><i class="ti-angle-up"></i></span></h4>
+                <h4 class="bb-2">Basic Profile<span class="arrow-account"><i class="ti-angle-up"></i></span></h4>
 
                 @using (Html.BeginForm("Account", "Account", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
-                    <form>
+                    <form class="form">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -49,7 +54,7 @@
                                 <div class="form-row">
                                     <label for="inputEmail4">Gebruikersnaam</label>
                                     @*<input type="text" class="form-control" id="inputGebruikersnaam4" placeholder="Gebruikersnaam">*@
-                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputGebruikersnaam4", @type = "text", @placeholder = "Gebruikersnaam" } })
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputGebruikersnaam", @type = "text", @placeholder = "Gebruikersnaam" } })
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
@@ -90,21 +95,6 @@
                                     <div class="form-group col-md-6">
                                         <div class="form-row2">
                                             <label for="inputState">Provincie</label>
-                                            @*<select id="inputState" class="form-control">
-                                                  <option selected="selected">Kies...</option>
-                                                  <option>Antwerpen</option>
-                                                  <option>Brussel</option>
-                                                  <option>West-vlaanderen</option>
-                                                  <option>Oost-Vlaanderen</option>
-                                                  <option>Luik</option>
-                                                  <option>Limburg</option>
-                                                  <option>Vlaams-Brabant</option>
-                                                  <option>Waals-Brabant</option>
-                                                  <option>Henegouwen</option>
-                                                  <option>Namen</option>
-                                                  <option>Luxemburg</option>
-                                                  <option>Andere</option>
-                                                </select>*@
                                             @Html.EnumDropDownListFor(model => model.Province, htmlAttributes: new { @class = "form-control" })
                                         </div>
                                     </div>
@@ -159,7 +149,7 @@
     </div>
 </main>
 
-@Scripts.Render("~/bundles/hidecontent")
+@Scripts.Render("~/bundles/HideContentAccount")
 
 @*<script type="text/x-jquery-tmpl" defer>
         $(function () { // will trigger when the document is ready

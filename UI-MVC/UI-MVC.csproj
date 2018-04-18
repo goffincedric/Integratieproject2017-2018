@@ -284,17 +284,8 @@
     <Content Include="Scripts\bundle.js" />
     <Content Include="Scripts\grid2\gridstack.jQueryUI.js" />
     <Content Include="Scripts\grid2\gridstack.js" />
-<<<<<<< HEAD
-    <Content Include="Scripts\grid\grid.js" />
-    <Content Include="Scripts\grid\hammer-2.0.8.min.js" />
-    <Content Include="Scripts\grid\muuri-0.5.4.js" />
-    <Content Include="Scripts\grid\resizeloader.js" />
-    <Content Include="Scripts\grid\velocity.min.js" />
-    <Content Include="Scripts\grid\web-animations-2.3.1.min.js" />
-    <Content Include="Scripts\hidecontent.js" />
-=======
+    <Content Include="Scripts\HideContentAccount.js" />
     <Content Include="Scripts\index\hide-content.js" />
->>>>>>> master
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
