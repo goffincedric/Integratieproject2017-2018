@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -62,19 +63,20 @@ namespace PB.DAL
         public IEnumerable<Record> ReadRecords()
         {
             return ctx.Records
-                .Include("Mentions")
-                .Include("Persons")
-                .Include("Words")
-                .Include("Hashtags")
-                .Include("URLs")
-                .Include("Themes")
+                .Include(r => r.Mentions)
+                .Include(r => r.Persons)
+                .Include(r => r.Words)
+                .Include(r => r.Hashtags)
+                .Include(r => r.URLs)
+                .Include(r => r.Themes)
+                .Include(r => r.Date)
                 .AsEnumerable();
         }
 
         public IEnumerable<Mention> ReadMentions()
         {
             return ctx.Mentions
-                .Include("Records")
+                .Include(m => m.Records)
                 .AsEnumerable();
         }
 
@@ -118,11 +120,6 @@ namespace PB.DAL
             ctx.Records.Attach(record);
             ctx.Entry(record).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
-        }
-
-        public int GetNumberofMentions(Record record)
-        {
-            return record.Mentions.Count;
         }
 
         public IEnumerable<Record> GetAllRecordsBefore(Person person, DateTime end) =>
