@@ -1,6 +1,8 @@
 ﻿@{
   ViewBag.Title = "AdminCrud";
   Layout = "~/Views/Shared/_Layout.cshtml";
+
+
 }
 
 <main class="main-content bgc-grey-100">
@@ -12,57 +14,117 @@
       <span style="color: #2196f3" class="fsz-sm">
         Totaal aantal users: @Html.Label("Totaal aantal users:", (string)ViewBag.TotalUsers)
       </span>
+      <br />
 
       <span style="color: #2196f3" class="fsz-sm">
         Totaal aantal items: @Html.Label("Totaal aantal items", (string)ViewBag.TotalItems)
       </span>
-
+      <br />
       <span style="color: #2196f3" class="fsz-sm">
         Totaal aantal persons: @Html.Label("Totaal aantal users:", (string)ViewBag.TotalPersons)
       </span>
-
+      <br />
       <span style="color: #2196f3" class="fsz-sm">
-        Totaal aantal organisations: @Html.Label("Totaal aantal items", (string)ViewBag.TotalOrganisations)
+        Totaal aantal organisations: @Html.Label("Totaal aantal organisations", (string)ViewBag.TotalOrganisations)
       </span>
-
+      <br />
       <span style="color: #2196f3" class="fsz-sm">
         Totaal aantal themes: @Html.Label("Totaal aantal users:", (string)ViewBag.TotalThemes)
       </span>
-
+      <br />
       <span style="color: #2196f3" class="fsz-sm">
-        Totaal aantal keywords: @Html.Label("Totaal aantal items", (string)ViewBag.TotalKeywords)
+        Totaal aantal keywords: @Html.Label("Totaal aantal keywords", (string)ViewBag.TotalKeywords)
       </span>
-
+      <br />
       <hr />
 
-      <button type="button" class="btn btn-primary btn-md">Toon user beheer</button>
-      <button type="button" class="btn btn-primary btn-md">Toon organisatie beheer</button>
-      <button type="button" class="btn btn-primary btn-md">Toon persoon beheer</button>
-      <button type="button" class="btn btn-primary btn-md">Toon thema beheer</button>
-      <button type="button" class="btn btn-primary btn-md">Toon keyword beheer</button>
+      <button id="loadUser" type="button" class="btn btn-primary btn-md">Toon user beheer</button>
+      <button id="loadOrg" type="button" class="btn btn-primary btn-md">Toon organisatie beheer</button>
+      <button id="loadPers" type="button" class="btn btn-primary btn-md">Toon persoon beheer</button>
+      <button id="loadTheme" type="button" class="btn btn-primary btn-md">Toon thema beheer</button>
+      <button id="loadKeyw" type="button" class="btn btn-primary btn-md">Toon keyword beheer</button>
+
+      <hr />
+      <br />
 
 
+      <div id="org" style="display: none;">
+        @{
+          Html.RenderAction("OrganisationPartialCreate", "Item");
+        }
+        @{
+          Html.RenderAction("OrganisationPartialTable", "Item");
+        }
+      </div>
 
-      @{
-    Html.RenderAction("OrganisationPartialCreate", "Item");
-      }
+      <div id="them" style="display: none;">
 
-      @{
-    Html.RenderAction("OrganisationPartialTable", "Item");
-      }
+        @{
+          Html.RenderAction("ThemaPartialCreate", "Item");
+        }
+        @{
+          Html.RenderAction("ThemaPartialTable", "Item");
+        }
 
-      @{
-    Html.RenderAction("ThemaPartialCreate", "Item");
-      }
+      </div>
 
-      @{
-    Html.RenderAction("ThemaPartialTable", "Item");
-      }
+      <div id="keyw" style="display: none;">
+        @{
+          Html.RenderAction("KeywordPartialCreate", "Item");
+        }
+        @{
+          Html.RenderAction("KeywordPartialTable", "Item");
+        }
+      </div>
 
-      @{
-    Html.RenderAction("KeywordPartialTable", "Item");
-      }
+      <div id="pers" style="display: none;">
+        @{
+          Html.RenderAction("PersonPartialCreate", "Item");
+        }
+        @{
+          Html.RenderAction("PersonPartialTable", "Item");
+        }
+      </div>
 
     </div>
   </div>
 </main>
+
+<script type="text/javascript">
+
+  $(function () {
+    $("#loadOrg").click(function () {
+      $("#keyw").hide();
+      $("#pers").hide();
+      $("#them").hide();
+      $("#org").toggle();
+    });
+  });
+
+  $(function () {
+    $("#loadTheme").click(function () {
+      $("#org").hide();
+      $("#keyw").hide();
+      $("#pers").hide();
+      $("#them").toggle();
+    });
+  });
+
+  $(function () {
+    $("#loadKeyw").click(function () {
+      $("#pers").hide();
+      $("#them").hide();
+      $("#org").hide();
+      $("#keyw").toggle();
+    });
+  });
+
+  $(function () {
+    $("#loadPers").click(function () {
+      $("#them").hide();
+      $("#org").hide();
+      $("#keyw").hide();
+      $("#pers").toggle();
+    });
+  });
+</script>
