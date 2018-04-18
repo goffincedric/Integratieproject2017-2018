@@ -74,6 +74,26 @@ namespace UI_MVC.Controllers
             
         }
 
+        //public ActionResult DeleteOrganisation(int id)
+        //{
+        //    Item item = itemMgr.GetItem(id);
+        //    return View(item);
+        //}
+
+        [HttpPost]
+        public ActionResult DeleteItem(int id, FormCollection collection)
+        {
+            try
+            {
+                itemMgr.RemoveItem(id);
+
+                return RedirectToAction("AdminCrud","Home");
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
         public ActionResult ThemaPartialCreate()
         {

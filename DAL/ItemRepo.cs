@@ -122,11 +122,28 @@ namespace PB.DAL
                 .AsEnumerable();
         }
 
+        public Keyword CreateKeyword(Keyword keyword)
+        {
+            return ctx.Keywords.Add(keyword);
+        }
+
         public IEnumerable<Keyword> ReadKeywords()
         {
             return ctx.Keywords
                 .Include("Items")
                 .AsEnumerable();
+        }
+
+        public Keyword ReadKeyword(int keywordId)
+        {
+            return ctx.Keywords
+                .FirstOrDefault(k => k.KeywordId == keywordId);
+        }
+
+        public void DeleteKeyword(int keywordId)
+        {
+            Keyword keyword = ReadKeyword(keywordId);
+            ctx.Keywords.Remove(keyword);
         }
 
         public int ReadPersonsCount()
