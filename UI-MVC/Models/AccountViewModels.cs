@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace UI_MVC.Models
 {
+
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
@@ -108,8 +109,6 @@ namespace UI_MVC.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        public string Code { get; set; }
     }
 
     public class ForgotPasswordViewModel
@@ -120,10 +119,6 @@ namespace UI_MVC.Models
         public string Email { get; set; }
     }
 
-    public class PasswordEditModel
-    {
-
-    }
 
     public class AccountEditModel
     {

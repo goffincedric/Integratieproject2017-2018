@@ -86,7 +86,7 @@ namespace PB.BL
             return organisation;
         }
 
-        public Person AddPerson(string name, DateTime birthDay, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null)
+        public Person AddPerson(string name, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null)
         {
             InitNonExistingRepo();
             Person person = new Person()
