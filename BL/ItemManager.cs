@@ -502,6 +502,36 @@ namespace PB.BL
             trendspotter.CheckTrendAverageRecords(GetRecords());
         }
 
+        public IEnumerable<Keyword> GetKeywords()
+        {
+            return ItemRepo.ReadKeywords();
+        }
+
+        public int GetKeywordsCount()
+        {
+            return ItemRepo.ReadKeywordsCount();
+        }
+
+        public int GetThemesCount()
+        {
+            return ItemRepo.ReadThemesCount();
+        }
+
+        public int GetPersonsCount()
+        {
+            return ItemRepo.ReadPersonsCount();
+        }
+
+        public int GetOrganisationsCount()
+        {
+            return ItemRepo.ReadOrganisationsCount();
+        }
+
+        public int GetItemsCount()
+        {
+            return ItemRepo.ReadItemsCount();
+        }
+
         //private void RecordsToItems(List<Record> records)
         //{
         //    initNonExistingRepo();

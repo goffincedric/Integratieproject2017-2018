@@ -23,5 +23,14 @@ namespace PB.DAL
 
         IEnumerable<Organisation> ReadOrganisations();
         IEnumerable<Theme> ReadThemes();
+        IEnumerable<Keyword> ReadKeywords();
+
+
+        int ReadKeywordsCount();
+        int ReadThemesCount();
+        int ReadPersonsCount();
+        int ReadOrganisationsCount();
+        int ReadItemsCount();
+
     }
 }

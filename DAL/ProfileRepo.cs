@@ -86,5 +86,10 @@ namespace PB.DAL
             ctx.Entry(profile).State = EntityState.Modified;
             ctx.SaveChanges();
         }
+
+        public int ReadProfileCount()
+        {
+            return ctx.Users.Count();
+        }
     }
 }

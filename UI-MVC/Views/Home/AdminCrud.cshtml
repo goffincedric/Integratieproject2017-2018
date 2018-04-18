@@ -7,6 +7,12 @@
   <div id="mainContent">
     <div class="container-fluid">
 
+      <h1>Stats</h1>
+
+      @Html.Label("", (string)ViewBag.TotalUsers);
+      @Html.Label("", (string)ViewBag.TotalItems);
+
+
       @{
     Html.RenderAction("OrganisationPartialCreate", "Item");
       }
@@ -21,6 +27,10 @@
 
       @{
     Html.RenderAction("ThemaPartialTable", "Item");
+      }
+
+      @{
+    Html.RenderAction("KeywordPartialTable", "Item");
       }
 
     </div>

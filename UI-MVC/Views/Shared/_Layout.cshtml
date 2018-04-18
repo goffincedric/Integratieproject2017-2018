@@ -195,7 +195,17 @@
                         <i class="ti-power-off mR-10"></i> <span>Login/Register</span>
                       </a>
                     }
+
+                  <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
+                    <ul class="dropdown-menu">
+                      <li class="nav-item dropdown"><a class="sidebar-link" href="@Url.Action("Contact", "Home")"><span>Contact</span></a></li>
+                      <li class="nav-item dropdown"><a href="@Url.Action("FAQ","Home")"><span>FAQ</span></a></li>
+                      <li class="nav-item dropdown"><a href="@Url.Action("ItemTables","Item")"><span>Show items</span></a></li>
+                      <li class="nav-item dropdown"><a href="@Url.Action("AdminCrud","Home")"><span>Admintools</span></a></li>
+                    </ul>
                   </li>
+
                 </ul>
               </li>
             }
@@ -240,7 +250,7 @@
           <li style="display:inline; padding:0 2%"><a href="@Url.Action("Legal","Home")">Terms of use</a></li>
         </ul>
       </li>
-      
+
       <li><span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span></li>
 
     </ul>
