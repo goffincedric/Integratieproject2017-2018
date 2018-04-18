@@ -9,8 +9,15 @@
 
       <h1>Stats</h1>
 
-      @Html.Label("", (string)ViewBag.TotalUsers);
-      @Html.Label("", (string)ViewBag.TotalItems);
+      <span style="color: #2196f3" class="fsz-sm">
+        @Html.Label("Totaal aantal users:", (string)ViewBag.TotalUsers)
+      </span>
+
+      <span style="color: #2196f3" class="fsz-sm">
+        @Html.Label("Totaal aantal items", (string)ViewBag.TotalItems)
+      </span>
+
+      
 
 
       @{
