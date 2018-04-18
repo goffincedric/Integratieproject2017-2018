@@ -11,6 +11,7 @@ namespace PB.BL.Domain.Items
     [Table("tblOrganisation")]
     public class Organisation : Item
     {
+        public string Description { get; set; }
         public string SocialMediaLink { get; set; }
         public string IconURL { get; set; }
 
