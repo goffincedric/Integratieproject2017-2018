@@ -256,6 +256,7 @@
     <Content Include="Content\Images\500.png" />
     <Content Include="Content\Images\bg.jpg" />
     <Content Include="Content\Images\faqbg.jpg" />
+    <Content Include="Content\Images\Index\banner.jpg" />
     <Content Include="Content\Images\logo_new.png" />
     <Content Include="Content\Styling\account\custom.css" />
     <Content Include="Content\Styling\grid2\gridstack-extra.css" />
@@ -283,6 +284,7 @@
     <Content Include="Scripts\bundle.js" />
     <Content Include="Scripts\grid2\gridstack.jQueryUI.js" />
     <Content Include="Scripts\grid2\gridstack.js" />
+    <Content Include="Scripts\index\hide-content.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
