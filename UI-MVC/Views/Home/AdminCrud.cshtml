@@ -10,14 +10,37 @@
       <h1>Stats</h1>
 
       <span style="color: #2196f3" class="fsz-sm">
-        @Html.Label("Totaal aantal users:", (string)ViewBag.TotalUsers)
+        Totaal aantal users: @Html.Label("Totaal aantal users:", (string)ViewBag.TotalUsers)
       </span>
 
       <span style="color: #2196f3" class="fsz-sm">
-        @Html.Label("Totaal aantal items", (string)ViewBag.TotalItems)
+        Totaal aantal items: @Html.Label("Totaal aantal items", (string)ViewBag.TotalItems)
       </span>
 
-      
+      <span style="color: #2196f3" class="fsz-sm">
+        Totaal aantal persons: @Html.Label("Totaal aantal users:", (string)ViewBag.TotalPersons)
+      </span>
+
+      <span style="color: #2196f3" class="fsz-sm">
+        Totaal aantal organisations: @Html.Label("Totaal aantal items", (string)ViewBag.TotalOrganisations)
+      </span>
+
+      <span style="color: #2196f3" class="fsz-sm">
+        Totaal aantal themes: @Html.Label("Totaal aantal users:", (string)ViewBag.TotalThemes)
+      </span>
+
+      <span style="color: #2196f3" class="fsz-sm">
+        Totaal aantal keywords: @Html.Label("Totaal aantal items", (string)ViewBag.TotalKeywords)
+      </span>
+
+      <hr />
+
+      <button type="button" class="btn btn-primary btn-md">Toon user beheer</button>
+      <button type="button" class="btn btn-primary btn-md">Toon organisatie beheer</button>
+      <button type="button" class="btn btn-primary btn-md">Toon persoon beheer</button>
+      <button type="button" class="btn btn-primary btn-md">Toon thema beheer</button>
+      <button type="button" class="btn btn-primary btn-md">Toon keyword beheer</button>
+
 
 
       @{
