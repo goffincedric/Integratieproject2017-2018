@@ -1,6 +1,8 @@
 ﻿@{
   ViewBag.Title = "AdminCrud";
   Layout = "~/Views/Shared/_Layout.cshtml";
+
+
 }
 
 <main class="main-content bgc-grey-100">
@@ -12,57 +14,86 @@
       <span style="color: #2196f3" class="fsz-sm">
         Totaal aantal users: @Html.Label("Totaal aantal users:", (string)ViewBag.TotalUsers)
       </span>
+      <br />
 
       <span style="color: #2196f3" class="fsz-sm">
         Totaal aantal items: @Html.Label("Totaal aantal items", (string)ViewBag.TotalItems)
       </span>
-
+      <br />
       <span style="color: #2196f3" class="fsz-sm">
         Totaal aantal persons: @Html.Label("Totaal aantal users:", (string)ViewBag.TotalPersons)
       </span>
-
+      <br />
       <span style="color: #2196f3" class="fsz-sm">
         Totaal aantal organisations: @Html.Label("Totaal aantal items", (string)ViewBag.TotalOrganisations)
       </span>
-
+      <br />
       <span style="color: #2196f3" class="fsz-sm">
         Totaal aantal themes: @Html.Label("Totaal aantal users:", (string)ViewBag.TotalThemes)
       </span>
-
+      <br />
       <span style="color: #2196f3" class="fsz-sm">
         Totaal aantal keywords: @Html.Label("Totaal aantal items", (string)ViewBag.TotalKeywords)
       </span>
-
+      <br />
       <hr />
 
       <button type="button" class="btn btn-primary btn-md">Toon user beheer</button>
-      <button type="button" class="btn btn-primary btn-md">Toon organisatie beheer</button>
-      <button type="button" class="btn btn-primary btn-md">Toon persoon beheer</button>
-      <button type="button" class="btn btn-primary btn-md">Toon thema beheer</button>
-      <button type="button" class="btn btn-primary btn-md">Toon keyword beheer</button>
+      <button id="loadOrg" type="button" class="btn btn-primary btn-md">Toon organisatie beheer</button>
+      <button id="loadPers" type="button" class="btn btn-primary btn-md">Toon persoon beheer</button>
+      <button id="loadTheme" type="button" class="btn btn-primary btn-md">Toon thema beheer</button>
+      <button id="loadKeyw" type="button" class="btn btn-primary btn-md">Toon keyword beheer</button>
 
+      <div id="org" style="display: none;">
+        @{
+          Html.RenderAction("OrganisationPartialCreate", "Item");
+        }
+        @{
+          Html.RenderAction("OrganisationPartialTable", "Item");
+        }
+      </div>
 
+      <div id="them" style="display: none;">
 
-      @{
-    Html.RenderAction("OrganisationPartialCreate", "Item");
-      }
+        @{
+          Html.RenderAction("ThemaPartialCreate", "Item");
+        }
+        @{
+          Html.RenderAction("ThemaPartialTable", "Item");
+        }
 
-      @{
-    Html.RenderAction("OrganisationPartialTable", "Item");
-      }
+      </div>
 
-      @{
-    Html.RenderAction("ThemaPartialCreate", "Item");
-      }
-
-      @{
-    Html.RenderAction("ThemaPartialTable", "Item");
-      }
-
-      @{
-    Html.RenderAction("KeywordPartialTable", "Item");
-      }
+      <div id="keyw" style="display: none;">
+        @*@{
+            Html.RenderAction("KeywordPartialCreate", "Item");
+          }*@
+        @{
+          Html.RenderAction("KeywordPartialTable", "Item");
+        }
+      </div>
 
     </div>
   </div>
 </main>
+
+<script type="text/javascript">
+
+  $(function () {
+    $("#loadOrg").click(function () {
+      $("#org").toggle();
+    });
+  });
+
+  $(function () {
+    $("#loadTheme").click(function () {
+      $("#them").toggle();
+    });
+  });
+
+  $(function () {
+    $("#loadKeyw").click(function () {
+      $("#keyw").toggle();
+    });
+  });
+</script>
