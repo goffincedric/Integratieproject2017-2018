@@ -28,17 +28,11 @@ namespace UI_MVC.Controllers
     {
        
 
-        private UnitOfWorkManager uow;
-        private ItemManager itemMgr;
-        private AccountManager accountMgr;
+        private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
+        private ItemManager itemMgr = new ItemManager(uow);
+        private AccountManager accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
 
-        public HomeController()
-        {
-            accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
-            uow = new UnitOfWorkManager();
-            itemMgr = new ItemManager(uow);
-
-        }
+        
 
         #region profile
 
@@ -121,8 +115,8 @@ namespace UI_MVC.Controllers
 
         public ActionResult AdminCrud()
         {
-            ViewBag.TotalUsers = accountMgr.GetUserCount();
-            ViewBag.TotalItems = itemMgr.GetItemsCount();
+            ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
+            ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
             return View();
         }
 

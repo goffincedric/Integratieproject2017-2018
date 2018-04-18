@@ -9,28 +9,28 @@
 
       <h1>Stats</h1>
 
-      @ViewBag.TotalUsers;
-      @ViewBag.TotalItems;
+      @Html.Label("", (string)ViewBag.TotalUsers);
+      @Html.Label("", (string)ViewBag.TotalItems);
 
 
       @{
-        Html.RenderAction("OrganisationPartialCreate", "Item");
+    Html.RenderAction("OrganisationPartialCreate", "Item");
       }
 
       @{
-        Html.RenderAction("OrganisationPartialTable", "Item");
+    Html.RenderAction("OrganisationPartialTable", "Item");
       }
 
       @{
-        Html.RenderAction("ThemaPartialCreate", "Item");
+    Html.RenderAction("ThemaPartialCreate", "Item");
       }
 
       @{
-        Html.RenderAction("ThemaPartialTable", "Item");
+    Html.RenderAction("ThemaPartialTable", "Item");
       }
 
       @{
-        Html.RenderAction("KeywordPartialTable", "Item");
+    Html.RenderAction("KeywordPartialTable", "Item");
       }
 
     </div>
