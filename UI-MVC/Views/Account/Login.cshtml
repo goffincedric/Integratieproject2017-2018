@@ -15,19 +15,114 @@
   <title>Sign In</title>
   @Styles.Render("~/Content/Styling/style.css")
   @Styles.Render("~/Content/bootstrapcss")
+
+
+  <style>
+
+   
+
+    #labelcheck {
+      display: inline-block;
+      color: #fff;
+      cursor: pointer;
+      position: relative;
+    }
+
+      #labelcheck span {
+        display: inline-block;
+        position: relative;
+        background-color: transparent;
+        width: 25px;
+        height: 25px;
+        transform-origin: center;
+        border: 2px solid #2196f3;
+        border-radius: 50%;
+        vertical-align: -6px;
+        margin-right: 10px;
+        transition: background-color 150ms 200ms, transform 350ms cubic-bezier(0.78, -1.22, 0.17, 1.89);
+      }
+
+        #labelcheck span:before {
+          content: "";
+          width: 0px;
+          height: 2px;
+          border-radius: 2px;
+          background: #fff;
+          position: absolute;
+          transform: rotate(45deg);
+          top: 13px;
+          left: 9px;
+          transition: width 50ms ease 50ms;
+          transform-origin: 0% 0%;
+        }
+
+        #labelcheck span:after {
+          content: "";
+          width: 0;
+          height: 2px;
+          border-radius: 2px;
+          background: black;
+          position: absolute;
+          transform: rotate(305deg);
+          top: 16px;
+          left: 10px;
+          transition: width 50ms ease;
+          transform-origin: 0% 0%;
+        }
+
+      #labelcheck:hover span:before {
+        width: 5px;
+        transition: width 100ms ease;
+      }
+
+      #labelcheck:hover span:after {
+        width: 10px;
+        transition: width 150ms ease 100ms;
+      }
+
+    input[type="checkbox"] {
+      display: none;
+    }
+
+      input[type="checkbox"]:checked + #labelcheck span {
+        background-color: #fff;
+        transform: scale(1.25);
+      }
+
+        input[type="checkbox"]:checked + #labelcheck span:after {
+          width: 10px;
+          background: #1790b5;
+          transition: width 150ms ease 100ms;
+        }
+
+        input[type="checkbox"]:checked + #labelcheck span:before {
+          width: 5px;
+          background: #1790b5;
+          transition: width 150ms ease 100ms;
+        }
+
+      input[type="checkbox"]:checked + #labelcheck:hover span {
+        background-color: #fff;
+        transform: scale(1.25);
+      }
+
+        input[type="checkbox"]:checked + #labelcheck:hover span:after {
+          width: 10px;
+          background: #1790b5;
+          transition: width 150ms ease 100ms;
+        }
+
+        input[type="checkbox"]:checked + #labelcheck:hover span:before {
+          width: 5px;
+          background: #1790b5;
+          transition: width 150ms ease 100ms;
+        }
+  </style>
 </head>
 <body class="app">
   <div id="loader">
     <div class="spinner"></div>
   </div>
-  @*<script>
-      window.addEventListener('load', () => {
-        const loader = document.getElementById('loader');
-        setTimeout(() => {
-          loader.classList.add('fadeOut');
-        }, 300);
-      });
-    </script>*@
   <div class="peers ai-s fxw-nw h-100vh">
     <div class="d-n@sm- peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv" style="background-image:url(@Url.Content("~/Content/Images/bg.jpg"))">
       <div class="pos-a centerXY">
@@ -37,50 +132,62 @@
     <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style="min-width:320px">
       <h4 class="fw-300 c-grey-900 mB-40">Login</h4>
       @using (Html.BeginForm("Login", "Account", FormMethod.Post))
-      {
-        @Html.AntiForgeryToken()
-        <form>
-          @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-          <div class="form-group">
-            <label class="text-normal text-dark">Username</label>
-            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "John Doe" } })
-            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
-          </div>
-          <div class="form-group">
-            <label class="text-normal text-dark">Password</label>
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password", @type = "password" } })
-            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-          </div>
-          <div class="form-group">
-            <div class="peers ai-c jc-sb fxw-nw">
-              <div class="peer">
-                <div class="checkbox">
-                  @Html.CheckBoxFor(model => model.RememberMe)
+    {
+      @Html.AntiForgeryToken()
+      <form>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+          <label class="text-normal text-dark">Username</label>
+          @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "John Doe" } })
+          @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          <label class="text-normal text-dark">Password</label>
+          @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password", @type = "password" } })
+          @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+          <div class="peers ai-c jc-sb fxw-nw">
+            <div class="peer">
 
-                  @Html.LabelFor(model => model.RememberMe)
-                </div>
-              </div>
-              <div class="peer">
-                <button value="Log In" type="submit" class="btn btn-primary">Login</button>
-              </div>
+              @*@Html.CheckBoxFor(model => model.RememberMe, new { @class = "checkbox" })
+
+          @Html.LabelFor(model => model.RememberMe)*@
+
+              
+                  @Html.CheckBoxFor(model => model.RememberMe, new { @id = "check" })
+                  <span>
+                    @Html.LabelFor(model => model.RememberMe, new { @id = "labelcheck" })
+                  </span>
+               
+             
             </div>
           </div>
-
           <div class="peer">
-            <span><a href="@Url.Action("Register", "Account")">Nog geen account? Registreer je hier!</a></span>
+            <button value="Log In" type="submit" class="btn btn-primary">Login</button>
           </div>
-        </form>
-        <br />
-        <br />
-      }
+        </div>
+      </form>
+   
+
+    <br />
+    <br />
+}
+
+      <div class="peer">
+        <span><a href="@Url.Action("Register", "Account")">Nog geen account? Registreer je hier!</a></span>
+      </div>
+
+
+
 
       <section id="socialLoginForm">
         @Html.Partial("ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
       </section>
     </div>
-  </div>
-  @Scripts.Render("~/bundles/bootstrapjs")
-  @Scripts.Render("~/bundles/jquery")
-  @Scripts.Render("~/bundles/adminator")
-</body>
+    </div>
+    @Scripts.Render("~/bundles/bootstrapjs")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/adminator")
+  </body>
 </html>
