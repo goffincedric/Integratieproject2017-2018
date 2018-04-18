@@ -29,6 +29,9 @@ namespace PB.BL
         IEnumerable<Theme> GetThemes();
         IEnumerable<Keyword> GetKeywords();
 
+        Keyword AddKeyword(string name);
+        void RemoveKeyword(int keywordId);
+
         IEnumerable<Record> GetRecords();
         Record GetRecord(long id);
         Record AddRecord(long tweet_Id, RecordProfile recordProfile, List<Word> words, Sentiment sentiment, string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Theme> themes, List<Person> persons, DateTime date, double longitude, double latitude, bool retweet);

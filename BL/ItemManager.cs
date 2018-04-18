@@ -64,7 +64,6 @@ namespace PB.BL
             }
         }
 
-
         #region Items
         public Organisation AddOrganisation(string name, string socialMediaLink = null, string iconURL = null)
         {
@@ -148,17 +147,18 @@ namespace PB.BL
             return ItemRepo.ReadItems();
         }
 
-
         public IEnumerable<Organisation> GetOrganisations()
         {
             InitNonExistingRepo();
             return ItemRepo.ReadOrganisations();
         }
+
         public IEnumerable<Theme> GetThemes()
         {
             InitNonExistingRepo();
             return ItemRepo.ReadThemes();
         }
+
         public Organisation GetOrganistation(int itemId)
         {
             InitNonExistingRepo();
@@ -184,14 +184,84 @@ namespace PB.BL
             UowManager.Save();
         }
 
-
         public IEnumerable<Person> GetPersons()
         {
             InitNonExistingRepo();
             return ItemRepo.ReadPersons();
         }
-        #endregion
 
+        public void RemoveKeyword(int keywordId)
+        {
+            InitNonExistingRepo();
+
+            Keyword keyword = ItemRepo.ReadKeyword(keywordId);
+            keyword.Items.ForEach(i => i.Keywords.Remove(keyword));
+            ItemRepo.DeleteKeyword(keywordId);
+
+            UowManager.Save();
+        }
+
+        public Keyword AddKeyword(string name)
+        {
+            Keyword keyword = new Keyword()
+            {
+                Name = name,
+                Items = new List<Item>()
+            };
+
+            keyword = ItemRepo.CreateKeyword(keyword);
+            UowManager.Save();
+            return keyword;
+        }
+
+        public int GetNumberOfMentions(Record record)
+        {
+            InitNonExistingRepo();
+            return record.Mentions.Count;
+        }
+
+        public Dictionary<DateTime, int> GetTweetAmountByDate(Predicate<Record> predicate, DateTime since, DateTime until)
+        {
+            InitNonExistingRepo();
+            Dictionary<DateTime, int> records =
+                (from record in RecordRepo.ReadRecords().ToList().FindAll(r => predicate.Invoke(r) && r.Date > since && r.Date < until)
+                 group record by record.Date.Date
+                 into groupedRecords
+                 select groupedRecords)
+                    .ToDictionary(gr => gr.Key, gr => gr.ToList().Count);
+            return records;
+        }
+
+        public int GetTotalTweetsByDate(Predicate<Record> predicate, DateTime since, DateTime until)
+        {
+            InitNonExistingRepo();
+            return GetTweetAmountByDate(predicate, since, until).Values.Sum();
+        }
+
+        public Dictionary<DateTime, int> GetTweetAmountByDate(DateTime since, DateTime until)
+        {
+            InitNonExistingRepo();
+            Dictionary<DateTime, int> records =
+                (from record in RecordRepo.ReadRecords().ToList().FindAll(r => r.Date > since && r.Date < until)
+                 group record by record.Date.Date
+                 into groupedRecords
+                 select groupedRecords)
+                    .ToDictionary(gr => gr.Key, gr => gr.ToList().Count);
+            return records;
+        }
+
+        public int GetTotalTweetsByDate(DateTime since, DateTime until)
+        {
+            InitNonExistingRepo();
+            return GetTweetAmountByDate(since, until).Values.Sum();
+        }
+
+        public Dictionary<Person, int> GetTopPoliticians(int amount)
+        {
+            InitNonExistingRepo();
+            return ItemRepo.ReadPersons().OrderByDescending(p => p.Records.Count).ToDictionary(p => p, p => p.Records.Count);
+        }
+        #endregion
 
         #region Records
         public IEnumerable<Record> GetRecords()
@@ -252,9 +322,7 @@ namespace PB.BL
             UowManager.Save();
         }
         #endregion
-
-
-
+        
         #region Subscriptions
         public Profile AddSubscription(Profile profile, Item item)
         {
@@ -395,7 +463,6 @@ namespace PB.BL
                         if (wordCheck != null)
                         {
                             record.Words.Add(wordCheck);
-
                         }
                         else
                         {

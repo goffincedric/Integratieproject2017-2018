@@ -63,7 +63,7 @@ input[type="checkbox"]:checked + .slider:before {
 
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 4px;
 }
 
 /* Track */
@@ -1940,4 +1940,46 @@ section {
         padding-bottom: 0px;
         margin-bottom: 10px;
     }
+}
+
+h3{
+    margin-bottom: 0px;
+}
+
+.bb-2{
+    border-bottom: 2px solid #DDD;
+}
+
+.arrow-account{
+    float: right;
+    transition: .5s;
+}
+
+.form-row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.form-row2 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -2.5px;
+    margin-left: -5px;
+}
+.form-row3 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -5px;
+    margin-left: -2.5px;
 }
