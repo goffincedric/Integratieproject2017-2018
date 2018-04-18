@@ -23,7 +23,11 @@ namespace PB.DAL
 
         IEnumerable<Organisation> ReadOrganisations();
         IEnumerable<Theme> ReadThemes();
+
+        Keyword CreateKeyword(Keyword keyword);
         IEnumerable<Keyword> ReadKeywords();
+        Keyword ReadKeyword(int keywordId);
+        void DeleteKeyword(int keywordId);
 
 
         int ReadKeywordsCount();
