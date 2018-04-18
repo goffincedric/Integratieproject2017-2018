@@ -10,7 +10,7 @@
             <th>@Html.DisplayNameFor(model => model.ItemId)</th>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
             <th>@Html.DisplayNameFor(model => model.Description)</th>
-
+            <th>CRUD</th>
           </tr>
         </thead>
 
@@ -21,12 +21,23 @@
               <td>@Html.DisplayFor(modelItem => item.ItemId)</td>
               <td>@Html.DisplayFor(modelItem => item.Name)</td>
               <td>@Html.DisplayFor(modelItem => item.Description)</td>
+              <td>
 
-              @*<td>
-                  @Html.ActionLink("EditPerson", "Edit", new { id = item.ItemId }) |
-                  @Html.ActionLink("DetailsPerson", "DetailsPerson", new { id = item.ItemId }) |
-                  @Html.ActionLink("DeletePerson", "DeletPerson", new { id = item.ItemId })
-                </td>*@
+                @using (Html.BeginForm("DeleteItem", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete" }))
+                {
+                  @Html.AntiForgeryToken()
+
+                  <a href="javascript:document.getElementById('delete').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <span style="color: #2196f3" class="fsz-sm">
+                      Delete
+                    </span>
+                  </a>
+                }
+                @*@Html.ActionLink("EditPerson", "Edit", new { id = item.ItemId }) |
+                  @Html.ActionLink("DetailsPerson", "DetailsPerson", new { id = item.ItemId }) |*@
+                @*@Html.ActionLink("Delete", "DeleteOrganisation", "Item", new { id = item.ItemId })*@
+              </td>
+              
             </tr>
           }
         </tbody>
@@ -35,6 +46,6 @@
   </div>
 </div>
 <script>
-$(document).ready(function () {
+  $(document).ready(function () {
     $('#dataTable').DataTable();
   });</script>
