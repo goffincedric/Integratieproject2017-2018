@@ -1,7 +1,5 @@
 #myInput {
-    /*background-image: url('searchicon.png');
-    background-position: 14px 12px;
-    background-repeat: no-repeat;*/
+    
     font-size: 16px;
     padding: 14px 20px 12px 45px;
     border: none;
@@ -11,25 +9,23 @@ search-input active{
 border:none;
 } 
 
-.dropdown {
+.dropdownSearch {
     position: relative;
     display: inline-block;
 }
 
-    .dropdown-content a {
+    .dropdownSearch-content a {
         color: black;
         padding: 12px 16px;
         text-decoration: none;
         display: block;
     }
 
-.dropdown a:hover {
+.dropdownSearch a:hover {
     font-weight:bold;
 }
 
-.show {
-    display: block;
-}
+
 /*Style for toggle*/
 .switch {
     position: relative;
