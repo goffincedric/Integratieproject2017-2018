@@ -148,6 +148,17 @@ namespace PB.BL
             return ItemRepo.ReadItems();
         }
 
+
+        public IEnumerable<Organisation> GetOrganisations()
+        {
+            InitNonExistingRepo();
+            return ItemRepo.ReadOrganisations();
+        }
+        public IEnumerable<Theme> GetThemes()
+        {
+            InitNonExistingRepo();
+            return ItemRepo.ReadThemes();
+        }
         public Organisation GetOrganistation(int itemId)
         {
             InitNonExistingRepo();
@@ -489,6 +500,36 @@ namespace PB.BL
         {
             InitNonExistingRepo();
             trendspotter.CheckTrendAverageRecords(GetRecords());
+        }
+
+        public IEnumerable<Keyword> GetKeywords()
+        {
+            return ItemRepo.ReadKeywords();
+        }
+
+        public int GetKeywordsCount()
+        {
+            return ItemRepo.ReadKeywordsCount();
+        }
+
+        public int GetThemesCount()
+        {
+            return ItemRepo.ReadThemesCount();
+        }
+
+        public int GetPersonsCount()
+        {
+            return ItemRepo.ReadPersonsCount();
+        }
+
+        public int GetOrganisationsCount()
+        {
+            return ItemRepo.ReadOrganisationsCount();
+        }
+
+        public int GetItemsCount()
+        {
+            return ItemRepo.ReadItemsCount();
         }
 
         //private void RecordsToItems(List<Record> records)

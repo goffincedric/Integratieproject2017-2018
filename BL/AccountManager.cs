@@ -230,6 +230,11 @@ namespace PB.BL
             ProfileRepo.DeleteProfile(username);
             UowManager.Save();
         }
+
+        public int GetUserCount()
+        {
+            return ProfileRepo.ReadProfileCount();
+        }
         #endregion
 
         #region Subscriptions

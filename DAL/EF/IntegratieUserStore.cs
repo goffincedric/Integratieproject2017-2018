@@ -39,11 +39,5 @@ namespace PB.DAL.EF
         {
             return ctx.Users.ToList();
         }
-
-        public string ReadUserName(string AccountId)
-        {
-            Profile user = ctx.Users.Where(x => x.Id == AccountId).SingleOrDefault();
-            return user.UserName;
-        }
     }
 }

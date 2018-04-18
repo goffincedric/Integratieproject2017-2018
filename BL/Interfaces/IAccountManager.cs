@@ -25,5 +25,7 @@ namespace PB.BL
         //void RemoveUserSetting(string username, Setting.Account accountSetting);
 
         void LinkAlertsToProfile(List<Alert> alerts);
+
+        int GetUserCount();
     }
 }

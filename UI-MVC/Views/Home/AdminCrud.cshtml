@@ -1,0 +1,45 @@
+﻿@{
+  ViewBag.Title = "AdminCrud";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="main-content bgc-grey-100">
+  <div id="mainContent">
+    <div class="container-fluid">
+
+      <h1>Stats</h1>
+
+      <span style="color: #2196f3" class="fsz-sm">
+        @Html.Label("Totaal aantal users:", (string)ViewBag.TotalUsers)
+      </span>
+
+      <span style="color: #2196f3" class="fsz-sm">
+        @Html.Label("Totaal aantal items", (string)ViewBag.TotalItems)
+      </span>
+
+      
+
+
+      @{
+    Html.RenderAction("OrganisationPartialCreate", "Item");
+      }
+
+      @{
+    Html.RenderAction("OrganisationPartialTable", "Item");
+      }
+
+      @{
+    Html.RenderAction("ThemaPartialCreate", "Item");
+      }
+
+      @{
+    Html.RenderAction("ThemaPartialTable", "Item");
+      }
+
+      @{
+    Html.RenderAction("KeywordPartialTable", "Item");
+      }
+
+    </div>
+  </div>
+</main>

@@ -23,128 +23,136 @@ using Domain.Settings;
 
 namespace UI_MVC.Controllers
 {
-  [RequireHttps]
-  public class HomeController : Controller
-  {
-    private static readonly UnitOfWorkManager Uow = new UnitOfWorkManager();
-    private static readonly AccountManager AccountMgr = new AccountManager(new IntegratieUserStore(Uow.UnitOfWork), Uow);
-
-    #region profile
-
-    public ActionResult ChangeProfilePic()
+    [RequireHttps]
+    public class HomeController : Controller
     {
-      if (!User.Identity.IsAuthenticated)
-      {
-        return Content("<i class=\"ti-user\"></i>");
-      }
-      else
-      {
-        return Content("<img class=\"w-2r bdrs-50p\" src=/Content/Images/1.jpg>");
-      }
-    }
+       
 
+        private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
+        private ItemManager itemMgr = new ItemManager(uow);
+        private AccountManager accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
 
+        
 
-    public ActionResult ChangeLogoutin()
-    {
-      if (!User.Identity.IsAuthenticated)
-      {
-        return Content("Login/Register");
-      }
-      else
-      {
-        return Content("Logout");
-      }
-    }
+        #region profile
 
-    public ActionResult LinkLogoutin()
-    {
-      if (!User.Identity.IsAuthenticated)
-      {
-        return Content("/Account/Login");
-      }
-      else
-      {
-        RedirectToAction("Logoff", "Account");
-
-        return Content("\"\"");
-      }
-    }
-
-    #endregion
-
-    public ActionResult Index()
-    {
-      return View();
-    }
-
-    public ActionResult Dashboard()
-    {
-      return View();
-    }
-
-    public ActionResult Dashboard2()
-    {
-      return View();
-    }
-
-    public ActionResult Blank()
-    {
-      return View();
-    }
-
-    public ActionResult Contact()
-    {
-      return View();
-    }
-
-    public ActionResult FAQ()
-    {
-      return View();
-    }
-
-    public ActionResult Legal()
-    {
-      return View();
-    }
-
-    public ActionResult Test()
-    {
-      return View();
-    }
-    public ActionResult GetThemeSetting()
-    {
-      if (User.Identity.IsAuthenticated)
-      {
-        string theme = "";
-        Profile profile = AccountMgr.GetProfile(User.Identity.GetUserName());
-        UserSetting userSetting = AccountMgr.GetUserSetting(profile.UserName, Setting.Account.THEME);
-
-        switch (userSetting.Value)
+        public ActionResult ChangeProfilePic()
         {
-          case "light": theme = "LightMode"; break;
-          case "dark": theme = "DarkMode"; break;
-          case "future": theme = "FutureMode"; break;
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Content("<i class=\"ti-user\"></i>");
+            }
+            else
+            {
+                return Content("<img class=\"w-2r bdrs-50p\" src=/Content/Images/1.jpg>");
+            }
         }
-        return Content(string.Format("/Content/Theme/{0}.css", theme));
-      }
-      return Content("/Content/Theme/LightMode.css");
+
+
+
+        public ActionResult ChangeLogoutin()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Content("Login/Register");
+            }
+            else
+            {
+                return Content("Logout");
+            }
+        }
+
+        public ActionResult LinkLogoutin()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Content("/Account/Login");
+            }
+            else
+            {
+                RedirectToAction("Logoff", "Account");
+
+                return Content("\"\"");
+            }
+        }
+
+        #endregion
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
+        public ActionResult Blank()
+        {
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            return View();
+        }
+
+        public ActionResult FAQ()
+        {
+            return View();
+        }
+
+        public ActionResult Legal()
+        {
+            return View();
+        }
+
+        public ActionResult Test()
+        {
+            return View();
+        }
+
+        public ActionResult AdminCrud()
+        {
+            ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
+            ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
+            return View();
+        }
+
+        public ActionResult GetThemeSetting()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                string theme = "";
+                Profile profile = accountMgr.GetProfile(User.Identity.GetUserName());
+                UserSetting userSetting = accountMgr.GetUserSetting(profile.UserName, Setting.Account.THEME);
+
+                switch (userSetting.Value)
+                {
+                    case "light": theme = "LightMode"; break;
+                    case "dark": theme = "DarkMode"; break;
+                    case "future": theme = "FutureMode"; break;
+                }
+                return Content(string.Format("/Content/Theme/{0}.css", theme));
+            }
+            return Content("/Content/Theme/LightMode.css");
+        }
+
+        public ActionResult ChangeThemeSetting(string Theme)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                Profile profile = accountMgr.GetProfile(User.Identity.GetUserName());
+                UserSetting userSetting = accountMgr.GetUserSetting(profile.UserName, Setting.Account.THEME);
+
+                userSetting.Value = Theme;
+
+                accountMgr.ChangeUserSetting(profile.UserName, userSetting);
+
+                return View("~/Views/Home/Index.cshtml");
+            }
+            return View("~/Views/Home/Index.cshtml");
+        }
     }
-
-    public ActionResult ChangeThemeSetting(string Theme)
-    {
-      if (User.Identity.IsAuthenticated)
-      {
-        Profile profile = AccountMgr.GetProfile(User.Identity.GetUserName());
-        UserSetting userSetting = AccountMgr.GetUserSetting(profile.UserName, Setting.Account.THEME);
-
-        userSetting.Value = Theme;
-
-        AccountMgr.ChangeUserSetting(profile.UserName, userSetting);
-
-        return View("~/Views/Home/Index.cshtml");
-      }
-      return View("~/Views/Home/Index.cshtml");
-    }
-  }
 }

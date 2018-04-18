@@ -25,7 +25,9 @@ namespace PB.BL
 
 
         IEnumerable<Person> GetPersons();
-
+        IEnumerable<Organisation> GetOrganisations();
+        IEnumerable<Theme> GetThemes();
+        IEnumerable<Keyword> GetKeywords();
 
         IEnumerable<Record> GetRecords();
         Record GetRecord(long id);
@@ -35,5 +37,11 @@ namespace PB.BL
 
         List<Record> JClassToRecord(List<JClass> data);
         void CleanupOldRecords(Subplatform subplatform, int days);
+
+        int GetKeywordsCount();
+        int GetThemesCount();
+        int GetPersonsCount();
+        int GetOrganisationsCount();
+        int GetItemsCount();
     }
 }

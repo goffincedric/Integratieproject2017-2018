@@ -101,5 +101,62 @@ namespace PB.DAL
             ctx.Entry(item).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
         }
+
+
+        public IEnumerable<Organisation> ReadOrganisations()
+        {
+            return ctx.Organisations
+               .Include("Records")
+               .Include("SubPlatforms")
+               .Include("People")
+               .Include("Keywords")
+              .AsEnumerable();
+        }
+
+        public IEnumerable<Theme> ReadThemes()
+        {
+            return ctx.Themes
+                .Include("Records")
+                .Include("SubPlatforms")
+                .Include("Keywords")
+                .AsEnumerable();
+        }
+
+        public IEnumerable<Keyword> ReadKeywords()
+        {
+            return ctx.Keywords
+                .Include("Items")
+                .AsEnumerable();
+        }
+
+        public int ReadPersonsCount()
+        {
+            return ctx.Persons.Count();
+
+        }
+
+        public int ReadOrganisationsCount()
+        {
+            return ctx.Organisations.Count();
+
+        }
+
+        public int ReadThemesCount()
+        {
+            return ctx.Organisations.Count();
+
+        }
+
+        public int ReadKeywordsCount()
+        {
+            return ctx.Keywords.Count();
+
+        }
+
+        public int ReadItemsCount()
+        {
+            return ctx.Items.Count();
+
+        }
     }
 }
