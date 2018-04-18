@@ -65,13 +65,14 @@ namespace PB.BL
         }
 
         #region Items
-        public Organisation AddOrganisation(string name, string socialMediaLink = null, string iconURL = null)
+        public Organisation AddOrganisation(string name, string description, string socialMediaLink = null, string iconURL = null)
         {
             InitNonExistingRepo();
 
             Organisation organisation = new Organisation()
             {
                 Name = name,
+                Description = description,
                 SocialMediaLink = socialMediaLink,
                 IconURL = iconURL,
                 Keywords = new List<Keyword>(),
@@ -86,7 +87,7 @@ namespace PB.BL
             return organisation;
         }
 
-        public Person AddPerson(string name, DateTime birthDay, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null)
+        public Person AddPerson(string name, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null)
         {
             InitNonExistingRepo();
             Person person = new Person()
