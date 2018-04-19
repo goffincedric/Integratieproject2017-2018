@@ -12,10 +12,10 @@
                 <h3>My Profile Settings</h3>
             </div>
 
-             @{
-          Html.RenderAction("ResetPassword", "Account");
-        }
-            <div class="bgc-white p-10 bd">
+            @{
+                Html.RenderAction("ResetPassword", "Account");
+            }
+            <div class="bgc-white p-10 bd mB-10">
                 <h4 class="bb-2">Basic Profile<span class="arrow-account"><i class="ti-angle-up"></i></span></h4>
 
                 @using (Html.BeginForm("Account", "Account", FormMethod.Post))
@@ -121,6 +121,27 @@
                         <button type="submit" class="btn btn-primary">Opslaan</button>
                     </form>
                 }
+            </div>
+
+            <div class="bgc-white p-10 bd mB-10">
+                <h4 class="bb-2">Delete Profile<span class="arrow-account" style="transform: rotate(180deg);"><i class="ti-angle-up"></i></span></h4>
+                <form class="form" style="display: none;">
+                    <div class="form-row">
+                        <button type="button" class="btn btn-delete">Delete Profile</button>
+                    </div>
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <p>
+                                Bent u zeker dat u uw profiel wilt verwijderen?
+                            </p>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-delete" onclick="location.href='@Url.Action("DeleteProfile", "Account")'">Ja, Ik ben zeker</button>
+                                <button type="button" class="btn btn-primary btn-cancel">Nee, Ik heb mij bedacht</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

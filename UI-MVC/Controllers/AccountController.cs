@@ -135,7 +135,6 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
@@ -185,6 +184,15 @@ namespace UI_MVC.Controllers
         {
 
             return PartialView();
+        }
+
+        public ActionResult DeleteProfile()
+        {
+            UserManager.DeleteAsync(UserManager.GetProfile(User.Identity.GetUserName()));
+            UnitOfWorkManager uowMgr = new UnitOfWorkManager();
+            uowMgr.Save();
+            LogOff();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

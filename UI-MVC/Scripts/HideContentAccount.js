@@ -26,3 +26,15 @@ $("#btn-clear").click(function () {
     $("#inputNewPassword").removeAttr('value');
     $("#inputConfirmPassword").removeAttr('value');
 });
+
+$(".btn-delete").click(function () {
+    $(".modal").show();
+});
+
+$(".close").click(function () {
+    $(".modal").hide();
+});
+
+$(".btn-cancel").click(function () {
+    $(".modal").hide();
+});
