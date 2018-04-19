@@ -69,7 +69,6 @@ namespace PB.DAL
                 .Include(r => r.Hashtags)
                 .Include(r => r.URLs)
                 .Include(r => r.Themes)
-                .Include(r => r.Date)
                 .AsEnumerable();
         }
 
