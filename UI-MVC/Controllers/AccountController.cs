@@ -189,8 +189,7 @@ namespace UI_MVC.Controllers
         public ActionResult DeleteProfile()
         {
             UserManager.DeleteAsync(UserManager.GetProfile(User.Identity.GetUserName()));
-            UnitOfWorkManager uowMgr = new UnitOfWorkManager();
-            uowMgr.Save();
+            uow.Save();
             LogOff();
             return RedirectToAction("Index", "Home");
         }
