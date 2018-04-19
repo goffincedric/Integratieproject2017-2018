@@ -79,8 +79,9 @@ namespace UI_MVC.Controllers
             {
                 return View(model);
             }
-
-            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: true);
+            
+             var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: true);
+            
             switch (result)
             {
                 case SignInStatus.Success:
@@ -134,6 +135,7 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
