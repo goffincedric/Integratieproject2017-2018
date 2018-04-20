@@ -238,7 +238,7 @@ namespace UI_MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles=("Admin,SuperAdmin"))]
-        public ActionResult DeleteProfile(string username)
+        public ActionResult DeleteProfileAdmin(string username)
         {
             if (!ModelState.IsValid)
             {

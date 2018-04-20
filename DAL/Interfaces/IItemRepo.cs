@@ -13,6 +13,7 @@ namespace PB.DAL
         Item CreateItem(Item item);
         IEnumerable<Item> CreateItems(List<Item> items);
         Item ReadItem(int itemId);
+        Item ReadItem(string name);
         void UpdateItem(Item item);
         void DeleteItem(int itemId);
 

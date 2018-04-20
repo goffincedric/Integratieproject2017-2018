@@ -10,6 +10,8 @@
   @Styles.Render("~/Content/bootstrapcss")
   @Styles.Render("~/Content/Styling/style.css")
   <link id="ThemeLink" href="@Html.Action("GetThemeSetting","Home")" rel="stylesheet">
+  @Scripts.Render("~/bundles/jquery")
+  @Scripts.Render("~/bundles/bootstrapjs")
 </head>
 <body class="app">
   <div id="loader">
@@ -217,8 +219,7 @@
           </ul>
         </div>
       </div>
-      @Scripts.Render("~/bundles/jquery")
-      @Scripts.Render("~/bundles/bootstrapjs")
+     
 
       @RenderSection("styles", false)
       @RenderBody()

@@ -14,6 +14,7 @@ namespace PB.BL
     {
         IEnumerable<Item> GetItems();
         Item GetItem(int itemId);
+        Item GetItem(string name);
         Person GetPerson(int itemId);
         Organisation GetOrganistation(int itemId);
         Theme GetTheme(int itemId);

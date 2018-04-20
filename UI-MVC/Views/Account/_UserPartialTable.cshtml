@@ -25,7 +25,7 @@
               @*<td>@Html.DisplayFor(modelItem => item.Roles)</td>*@
               <td>
 
-                @using (Html.BeginForm("DeleteProfile", "Account", new { id = item.UserName }, FormMethod.Post, new { id = "delete" }))
+                @using (Html.BeginForm("DeleteProfileAdmin", "Account", new { id = item.UserName }, FormMethod.Post, new { id = "delete" }))
                 {
                   @Html.AntiForgeryToken()
 

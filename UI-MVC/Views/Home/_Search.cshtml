@@ -14,14 +14,9 @@
 
         @foreach (var x in Model)
         {
-          <a href="@x.Name">@x.Name</a>
+          <a id="itemref" href='@Url.Action("ItemDetail", "Item", new {id = x.ItemId})'>@x.Name</a>
         }
-        @*<a href="#base">Base</a>
-          <a href="#blog">Blog</a>
-          <a href="#contact">Contact</a>
-          <a href="#custom">Custom</a>
-          <a href="#support">Support</a>
-          <a href="#tools">Tools</a>*@
+
 
       </div>
     </div>
@@ -31,7 +26,14 @@
 </ul>
 
 
-<script>
+<script defer>
+  @*$("#itemref").click(function () {
+    window.location.href = '@Url.Action("ItemDetail","Item")/' + $("#itemref").text;
+    console.log("click on a");
+  });*@
+</script>
+
+<script type="text/javascript">
   var a, div;
   div = document.getElementById("myDropdown");
   a = div.getElementsByTagName("a");
