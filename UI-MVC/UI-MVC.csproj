@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44338</IISExpressSSLPort>
+    <IISExpressSSLPort>44372</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -284,6 +284,7 @@
     <Content Include="Scripts\bundle.js" />
     <Content Include="Scripts\grid2\gridstack.jQueryUI.js" />
     <Content Include="Scripts\grid2\gridstack.js" />
+    <Content Include="Scripts\AccountControl.js" />
     <Content Include="Scripts\index\hide-content.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
@@ -332,6 +333,7 @@
     <Content Include="Views\Item\KeywordPartialTable.cshtml" />
     <Content Include="Views\Item\PersonPartialCreate.cshtml" />
     <Content Include="Views\Item\PersonPartialTable.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\DeleteProfile.cshtml" />
   </ItemGroup>

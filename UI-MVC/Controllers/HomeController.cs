@@ -20,6 +20,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using System.Net;
 using Domain.Settings;
+using PB.BL.Domain.Items;
 
 namespace UI_MVC.Controllers
 {
@@ -111,6 +112,14 @@ namespace UI_MVC.Controllers
         public ActionResult Test()
         {
             return View();
+        }
+
+
+        public ActionResult Search()
+        {
+            IEnumerable<Person> persons = itemMgr.GetPersons();
+            return PartialView(persons);
+            
         }
 
         public ActionResult AdminCrud()
