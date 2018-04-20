@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44372</IISExpressSSLPort>
+    <IISExpressSSLPort>44338</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -337,6 +337,7 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\DeleteProfile.cshtml" />
     <Content Include="Views\Account\_UserPartialTable.cshtml" />
+    <Content Include="Views\Account\_NotificationDropdown.cshtml" />
     <Content Include="Views\Item\ItemDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
