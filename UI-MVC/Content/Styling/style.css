@@ -12,25 +12,25 @@ search-input active {
     border: none;
 }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
+.dropdownSearch {
+  position: relative;
+  display: inline-block;
 }
 
-.dropdown-content a {
+.dropdownSearch-content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
-.dropdown a:hover {
-    font-weight: bold;
+.dropdownSearch a:hover {
+  font-weight: bold;
 }
 
-.show {
+/*.show {
     display: block;
-}
+}*/
 /*Style for toggle*/
 .switch {
     position: relative;
