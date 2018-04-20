@@ -218,6 +218,11 @@ namespace UI_MVC.Controllers
             return PartialView();
         }
 
+        public ActionResult _NotificationDropdown()
+        {
+            return PartialView();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteProfile(DeleteProfileModel model)
