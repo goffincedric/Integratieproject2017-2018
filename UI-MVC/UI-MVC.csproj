@@ -284,6 +284,7 @@
     <Content Include="Scripts\bundle.js" />
     <Content Include="Scripts\grid2\gridstack.jQueryUI.js" />
     <Content Include="Scripts\grid2\gridstack.js" />
+    <Content Include="Scripts\AccountControl.js" />
     <Content Include="Scripts\index\hide-content.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />

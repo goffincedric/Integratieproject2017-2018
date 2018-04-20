@@ -10364,7 +10364,7 @@ hr {
 
 @media screen and (max-width:991px) {
   .sidebar {
-    left: -280px;
+    left: -240px;
     width: 250px
   }
 }
