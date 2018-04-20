@@ -22,21 +22,16 @@ namespace UI_MVC.Controllers
             itemMgr = new ItemManager(uow);
 
         }
-        public ActionResult ItemTables()
-        {
-            IEnumerable<Person> persons = itemMgr.GetPersons();
-           
-            return View(persons);
-        }
+       
 
         #region organisation
-        public PartialViewResult OrganisationPartialTable()
+        public PartialViewResult _OrganisationPartialTable()
         {
             IEnumerable<Organisation> organisations = itemMgr.GetOrganisations();
             return PartialView(organisations);
         }
 
-        public ActionResult OrganisationPartialCreate()
+        public ActionResult _OrganisationPartialCreate()
         {
 
             return PartialView();
@@ -44,7 +39,7 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult OrganisationPartialCreate(Organisation organisation)
+        public ActionResult _OrganisationPartialCreate(Organisation organisation)
         {
 
             if (ModelState.IsValid)
@@ -63,13 +58,13 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region keywords
-        public PartialViewResult KeywordPartialTable()
+        public PartialViewResult _KeywordPartialTable()
         {
             IEnumerable<Keyword> keywords = itemMgr.GetKeywords();
             return PartialView(keywords);
         }
 
-        public ActionResult KeywordPartialCreate()
+        public ActionResult _KeywordPartialCreate()
         {
 
             return PartialView();
@@ -92,7 +87,7 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult KeywordPartialCreate(Theme theme)
+        public ActionResult _KeywordPartialCreate(Theme theme)
         {
 
             if (ModelState.IsValid)
@@ -110,13 +105,13 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region Thema
-        public PartialViewResult ThemaPartialTable()
+        public PartialViewResult _ThemaPartialTable()
         {
             IEnumerable<Theme> themes = itemMgr.GetThemes();
             return PartialView(themes);
         }
 
-        public ActionResult ThemaPartialCreate()
+        public ActionResult _ThemaPartialCreate()
         {
 
             return PartialView();
@@ -124,7 +119,7 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemaPartialCreate(Theme theme)
+        public ActionResult _ThemaPartialCreate(Theme theme)
         {
 
             if (ModelState.IsValid)
@@ -142,13 +137,13 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region persons
-        public PartialViewResult PersonPartialTable()
+        public PartialViewResult _PersonPartialTable()
         {
             IEnumerable<Person> persons = itemMgr.GetPersons();
             return PartialView(persons);
         }
 
-        public ActionResult PersonPartialCreate()
+        public ActionResult _PersonPartialCreate()
         {
 
             return PartialView();
@@ -156,7 +151,7 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PersonPartialCreate(Person person)
+        public ActionResult _PersonPartialCreate(Person person)
         {
 
             if (ModelState.IsValid)
