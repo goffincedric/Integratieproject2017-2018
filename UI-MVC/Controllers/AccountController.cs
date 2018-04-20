@@ -141,6 +141,13 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region Account
+        public ActionResult GetNotificationCount()
+        {
+            Profile user = UserManager.GetProfile(User.Identity.GetUserName());
+            int alertCount = user.Alerts.Count;
+            return Content(String.Format("{0}", alertCount));
+        }
+
         public ActionResult Account()
         {
             //nog via pk maken
