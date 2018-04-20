@@ -186,14 +186,6 @@ namespace UI_MVC.Controllers
             return PartialView();
         }
 
-        public ActionResult DeleteProfile()
-        {
-            UserManager.DeleteAsync(UserManager.GetProfile(User.Identity.GetUserName()));
-            uow.Save();
-            LogOff();
-            return RedirectToAction("Index", "Home");
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
@@ -221,9 +213,31 @@ namespace UI_MVC.Controllers
             return RedirectToAction("Index","Home");
         }
 
+        public ActionResult DeleteProfile()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteProfile(DeleteProfileModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Account", "Account");
+            }
+            var user = UserManager.GetProfile(User.Identity.GetUserName());
+
+            UserManager.RemoveProfile(user.UserName);
+
+            LogOff();
+
+            return RedirectToAction("Index", "Home");
+        }
+
         #endregion
 
-        #region ExternalLogin
+            #region ExternalLogin
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

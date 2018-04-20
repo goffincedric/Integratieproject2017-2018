@@ -2014,6 +2014,9 @@ h3 {
 .close {
     color: #aaa;
     float: right;
+    right:5px;
+    width:10px;
+    text-align: center;
     font-size: 28px;
     font-weight: bold;
 }

@@ -94,7 +94,7 @@ namespace UI_MVC.Models
 
     public class ResetPasswordViewModel
     {
-        
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
         [DataType(DataType.Password)]
@@ -162,5 +162,9 @@ namespace UI_MVC.Models
             Province = profile.UserData.Province;
             Gender = profile.UserData.Gender;
         }
+    }
+    public class DeleteProfileModel
+    {
+
     }
 }
