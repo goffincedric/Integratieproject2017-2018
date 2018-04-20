@@ -1,23 +1,29 @@
-﻿@model IEnumerable<PB.BL.Domain.Items.Item>
+﻿@model IEnumerable<PB.BL.Domain.Items.Person>
 
-
-  
+<ul class="nav-left">
+  <li><a id="sidebar-toggle" class="sidebar-toggle" href="javascript:void(0);"><i class="ti-menu"></i></a></li>
   <li class="search-box"><a class="search-toggle no-pdd-right" href="javascript:void(0);"><i class="search-icon ti-search pdd-right-10"></i> <i class="search-icon-close ti-close pdd-right-10"></i></a></li>
   <li class="search-input" onclick="myFunction()">
-    <div class="dropdownSearch" style="z-index:99">
-      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-      <div id="myDropdown" style="z-index:2" class="dropdownSearch-content">
+    <div class="dropdown">
+      <div id="myDropdown" class="dropdown-content">
 
-
+        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
 
         @foreach (var x in Model)
         {
-          <a style="z-index:99;" href="@x.Name">@x.Name</a>
+          <a href="@x.Name">@x.Name</a>
         }
-
+        @*<a href="#base">Base</a>
+          <a href="#blog">Blog</a>
+          <a href="#contact">Contact</a>
+          <a href="#custom">Custom</a>
+          <a href="#support">Support</a>
+          <a href="#tools">Tools</a>*@
 
       </div>
     </div>
   </li>
 
+
+</ul>
 
