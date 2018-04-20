@@ -114,11 +114,11 @@ namespace UI_MVC.Controllers
             return View();
         }
 
-       
-        public PartialViewResult Search()
+
+        public ActionResult Search()
         {
-            IEnumerable<Item> items = itemMgr.GetItems();
-            return PartialView(items);
+            IEnumerable<Person> persons = itemMgr.GetPersons();
+            return PartialView(persons);
             
         }
 
