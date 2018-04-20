@@ -23,7 +23,7 @@ namespace UI_MVC
 
             bundles.Add(new ScriptBundle("~/bundles/contact").Include("~/Scripts/contact.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/HideContentAccount").Include("~/Scripts/HideContentAccount.js"));
+            bundles.Add(new ScriptBundle("~/bundles/AccountControl").Include("~/Scripts/AccountControl.js"));
 
             bundles.Add(new StyleBundle("~/Content/bootstrapcss").Include("~/Content/bootstrap.css"));
         }

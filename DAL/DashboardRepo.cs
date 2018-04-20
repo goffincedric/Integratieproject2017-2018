@@ -62,5 +62,7 @@ namespace PB.DAL
             ctx.Dashboards.Attach(dashboard);
             ctx.SaveChanges();
         }
+
+        
     }
 }

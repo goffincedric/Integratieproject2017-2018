@@ -87,6 +87,22 @@ namespace PB.DAL
             ctx.SaveChanges();
         }
 
+        public void DeleteUserData(int id)
+        {
+            UserData userData = ReadUserData(id);
+
+            if (userData != null)
+            {
+                ctx.UserData.Remove(userData);
+                ctx.SaveChanges();
+            }
+        }
+
+        public UserData ReadUserData(int id)
+        {
+            return ctx.UserData.FirstOrDefault(u => u.Id == id);
+        }
+
         public int ReadProfileCount()
         {
             return ctx.Users.Count();
