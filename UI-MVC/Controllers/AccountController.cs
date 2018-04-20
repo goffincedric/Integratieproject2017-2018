@@ -135,7 +135,6 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
@@ -214,9 +213,31 @@ namespace UI_MVC.Controllers
             return RedirectToAction("Index","Home");
         }
 
+        public ActionResult DeleteProfile()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteProfile(DeleteProfileModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Account", "Account");
+            }
+            var user = UserManager.GetProfile(User.Identity.GetUserName());
+
+            UserManager.RemoveProfile(user.UserName);
+
+            LogOff();
+
+            return RedirectToAction("Index", "Home");
+        }
+
         #endregion
 
-        #region ExternalLogin
+            #region ExternalLogin
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

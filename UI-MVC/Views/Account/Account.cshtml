@@ -12,16 +12,16 @@
                 <h3>My Profile Settings</h3>
             </div>
 
-             @{
-          Html.RenderAction("ResetPassword", "Account");
-        }
-            <div class="bgc-white p-10 bd">
+            @{
+                Html.RenderAction("ResetPassword", "Account");
+            }
+            <div class="bgc-white p-10 bd mB-10">
                 <h4 class="bb-2">Basic Profile<span class="arrow-account"><i class="ti-angle-up"></i></span></h4>
 
                 @using (Html.BeginForm("Account", "Account", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
-                    <form class="form">
+                    <form>
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -122,6 +122,11 @@
                     </form>
                 }
             </div>
+
+            @{
+                Html.RenderAction("DeleteProfile", "Account");
+            }
+
         </div>
     </div>
 </main>
