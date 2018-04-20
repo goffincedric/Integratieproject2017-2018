@@ -160,7 +160,7 @@ namespace PB.BL
             return ItemRepo.ReadThemes();
         }
 
-        public Organisation GetOrganistation(int itemId)
+        public Organisation GetOrganisation(int itemId)
         {
             InitNonExistingRepo();
             return (Organisation)ItemRepo.ReadItem(itemId);

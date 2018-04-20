@@ -15,7 +15,7 @@ namespace PB.BL
         IEnumerable<Item> GetItems();
         Item GetItem(int itemId);
         Person GetPerson(int itemId);
-        Organisation GetOrganistation(int itemId);
+        Organisation GetOrganisation(int itemId);
         Theme GetTheme(int itemId);
         Person AddPerson(string name, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null);
         Organisation AddOrganisation(string name, string description, string SocialMediaLink = null, string IconURL = null);

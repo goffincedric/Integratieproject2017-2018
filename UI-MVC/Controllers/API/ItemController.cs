@@ -9,10 +9,11 @@ using System.Web.Http;
 
 namespace UI_MVC.Controllers.API
 {
+    [Authorize]
     public class ItemController : ApiController
     {
         UnitOfWorkManager UowMgr;
-        ItemManager ItemMgr;
+        IItemManager ItemMgr;
 
         public ItemController()
         {
@@ -21,8 +22,8 @@ namespace UI_MVC.Controllers.API
         }
 
         // GET: api/item
-        [Route("api/item")]
-        public IHttpActionResult Get()
+        [HttpGet]
+        public IHttpActionResult GetItem()
         {
             IEnumerable<Item> items = ItemMgr.GetItems();
             if (items.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
@@ -31,12 +32,65 @@ namespace UI_MVC.Controllers.API
 
         // GET: api/item/5
         [HttpGet]
-        [Route("api/item/{id}")]
         public IHttpActionResult GetItem(int id)
         {
             Item item = ItemMgr.GetItem(id);
             if (item == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(item);
+        }
+
+        // GET: api/item/getperson
+        [HttpGet]
+        public IHttpActionResult GetPerson()
+        {
+            IEnumerable<Person> persons = ItemMgr.GetPersons();
+            if (persons.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(persons);
+        }
+
+        // GET: api/item/getperson/5
+        [HttpGet]
+        public IHttpActionResult GetPerson(int id)
+        {
+            Person person = ItemMgr.GetPerson(id);
+            if (person == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(person);
+        }
+
+        // GET: api/item/getorganisation
+        [HttpGet]
+        public IHttpActionResult GetOrganisation()
+        {
+            IEnumerable<Organisation> organisations = ItemMgr.GetOrganisations();
+            if (organisations.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(organisations);
+        }
+
+        // GET: api/item/getorganisation/5
+        [HttpGet]
+        public IHttpActionResult GetOrganisation(int id)
+        {
+            Organisation organisation = ItemMgr.GetOrganisation(id);
+            if (organisation == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(organisation);
+        }
+
+        // GET: api/item/gettheme
+        [HttpGet]
+        public IHttpActionResult GetTheme()
+        {
+            IEnumerable<Theme> themes = ItemMgr.GetThemes();
+            if (themes.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(themes);
+        }
+
+        // GET: api/item/gettheme/5
+        [HttpGet]
+        public IHttpActionResult GetTheme(int id)
+        {
+            Theme theme = ItemMgr.GetTheme(id);
+            if (theme == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(theme);
         }
 
         // POST: api/person
@@ -95,8 +149,8 @@ namespace UI_MVC.Controllers.API
         {
             if (id == null) return BadRequest("No Id provided");
             if (id < 0) return BadRequest("Wrong id has been provided");
-            if (ItemMgr.GetItem((int) id) == null) NotFound();
-            ItemMgr.RemoveItem((int) id);
+            if (ItemMgr.GetItem((int)id) == null) NotFound();
+            ItemMgr.RemoveItem((int)id);
             return StatusCode(HttpStatusCode.NoContent);
         }
     }

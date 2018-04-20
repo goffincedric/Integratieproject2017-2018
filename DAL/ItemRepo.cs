@@ -78,6 +78,12 @@ namespace PB.DAL
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
+        public Item ReadItemEmpty(int itemId)
+        {
+            return ctx.Items
+                .FirstOrDefault(p => p.ItemId == itemId);
+        }
+
         public IEnumerable<Item> ReadItems()
         {
             return ctx.Items
@@ -93,6 +99,11 @@ namespace PB.DAL
                     .OfType<Organisation>()
                 )
                 .AsEnumerable();
+        }
+
+        public IEnumerable<Item> ReadItemsEmpty()
+        {
+            return ctx.Items.AsEnumerable();
         }
 
         public void UpdateItem(Item item)

@@ -178,7 +178,7 @@ namespace UI_CA_Prototype
                 switch (keuze)
                 {
                     case 1:
-                        ExtensionMethods.WriteTestRecords();
+                        ExtensionMethods.WriteTestRecords(ItemMgr.GetRecords());
                         break;
                     case 2:
                         SelectedProfile = ExtensionMethods.SelectProfile(AccountMgr.GetProfiles());
