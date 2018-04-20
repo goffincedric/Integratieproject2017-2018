@@ -333,12 +333,9 @@
     <Content Include="Views\Item\KeywordPartialTable.cshtml" />
     <Content Include="Views\Item\PersonPartialCreate.cshtml" />
     <Content Include="Views\Item\PersonPartialTable.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\Home\Search.cshtml" />
-=======
+    <Content Include="Views\Home\_Search.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\DeleteProfile.cshtml" />
->>>>>>> master
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
