@@ -48,6 +48,13 @@
       <br />
 
 
+      <div id="user" style="display: none;">
+        @{
+          Html.RenderAction("_UserPartialTable", "Account");
+        }
+
+      </div>
+
       <div id="org" style="display: none;">
         @{
           Html.RenderAction("OrganisationPartialCreate", "Item");
@@ -92,11 +99,14 @@
 
 <script type="text/javascript">
 
+
+
   $(function () {
     $("#loadOrg").click(function () {
       $("#keyw").hide();
       $("#pers").hide();
       $("#them").hide();
+      $("#user").hide();
       $("#org").toggle();
     });
   });
@@ -106,6 +116,7 @@
       $("#org").hide();
       $("#keyw").hide();
       $("#pers").hide();
+      $("#user").hide();
       $("#them").toggle();
     });
   });
@@ -115,6 +126,7 @@
       $("#pers").hide();
       $("#them").hide();
       $("#org").hide();
+      $("#user").hide();
       $("#keyw").toggle();
     });
   });
@@ -124,7 +136,18 @@
       $("#them").hide();
       $("#org").hide();
       $("#keyw").hide();
+      $("#user").hide();
       $("#pers").toggle();
+    });
+  });
+
+  $(function () {
+    $("#loadUser").click(function () {
+      $("#them").hide();
+      $("#org").hide();
+      $("#keyw").hide();
+      $("#pers").hide();
+      $("#user").toggle();
     });
   });
 </script>
