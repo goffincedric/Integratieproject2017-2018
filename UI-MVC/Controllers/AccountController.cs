@@ -240,23 +240,23 @@ namespace UI_MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles=("Admin,SuperAdmin"))]
-        public ActionResult DeleteProfile(string username)
-        {
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction("AdminCrud", "Home");
-            }
-            var user = UserManager.GetProfile(username);
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles=("Admin,SuperAdmin"))]
+        //public ActionResult DeleteProfile(string username)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return RedirectToAction("AdminCrud", "Home");
+        //    }
+        //    var user = UserManager.GetProfile(username);
 
-            UserManager.RemoveProfile(user.UserName);
+        //    UserManager.RemoveProfile(user.UserName);
 
-            LogOff();
+        //    LogOff();
 
-            return RedirectToAction("AdminCrud", "Home");
-        }
+        //    return RedirectToAction("AdminCrud", "Home");
+        //}
 
         #endregion
 

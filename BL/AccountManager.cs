@@ -229,10 +229,10 @@ namespace PB.BL
             InitNonExistingRepo();
             Profile profile = ProfileRepo.ReadProfile(username);
 
-            int id = profile.UserData.Id;
+            //int id = profile.UserData.Id;
 
             ProfileRepo.DeleteProfile(username);
-            ProfileRepo.DeleteUserData(id);
+
             UowManager.Save();
         }
 

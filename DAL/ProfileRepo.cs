@@ -54,7 +54,9 @@ namespace PB.DAL
             Profile profile = ReadProfile(username);
             if (profile != null)
             {
+                UserData data = profile.UserData;
                 ctx.Users.Remove(profile);
+                ctx.UserData.Remove(data);
                 ctx.SaveChanges();
             }
         }
@@ -85,22 +87,6 @@ namespace PB.DAL
 
             ctx.Entry(profile).State = EntityState.Modified;
             ctx.SaveChanges();
-        }
-
-        public void DeleteUserData(int id)
-        {
-            UserData userData = ReadUserData(id);
-
-            if (userData != null)
-            {
-                ctx.UserData.Remove(userData);
-                ctx.SaveChanges();
-            }
-        }
-
-        public UserData ReadUserData(int id)
-        {
-            return ctx.UserData.FirstOrDefault(u => u.Id == id);
         }
 
         public int ReadProfileCount()
