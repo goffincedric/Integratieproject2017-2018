@@ -337,6 +337,7 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\DeleteProfile.cshtml" />
     <Content Include="Views\Account\_UserPartialTable.cshtml" />
+    <Content Include="Views\Item\ItemDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
