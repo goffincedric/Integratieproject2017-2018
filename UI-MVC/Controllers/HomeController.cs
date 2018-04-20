@@ -115,7 +115,7 @@ namespace UI_MVC.Controllers
         }
 
 
-        public ActionResult Search()
+        public ActionResult _Search()
         {
             IEnumerable<Person> persons = itemMgr.GetPersons();
             return PartialView(persons);
