@@ -1,63 +1,93 @@
+#myInput {
+    /*background-image: url('searchicon.png');
+    background-position: 14px 12px;
+    background-repeat: no-repeat;*/
+    font-size: 16px;
+    padding: 14px 20px 12px 10px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+
+search-input active {
+    border: none;
+}
+
+.dropdownSearch {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdownSearch a:hover {
+  font-weight: bold;
+}
+
 
 /*Style for toggle*/
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
 }
 
-  .switch input {
-    display: none;
-  }
+    .switch input {
+        display: none;
+    }
 
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
 }
 
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-  }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+    }
 
 input[type="checkbox"]:checked + input[type="hidden"] + .slider,
 input[type="checkbox"]:checked + .slider {
-  background-color: #2196F3;
+    background-color: #2196F3;
 }
 
 input[type="checkbox"]:focus + input[type="hidden"] + .slider,
 input[type="checkbox"]:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #2196F3;
 }
 
 input[type="checkbox"]:checked + input[type="hidden"] + .slider:before,
 input[type="checkbox"]:checked + .slider:before {
-  transform: translateX(26px);
+    transform: translateX(26px);
 }
 
 /* Rounded sliders */
 .slider.round {
-  border-radius: 34px;
+    border-radius: 34px;
 }
 
-  .slider.round:before {
-    border-radius: 50%;
-  }
+    .slider.round:before {
+        border-radius: 50%;
+    }
 
-  /*END TOGGLE*/
+/*END TOGGLE*/
 
 
 
@@ -1804,35 +1834,31 @@ a.fc-more {
         }
 
 .banner-text {
-   color:whitesmoke;
-   text-align: center;
-    
+    color: whitesmoke;
+    text-align: center;
 }
 
 .hide-content {
-  
-  padding: 0px;
-  width: 100%;
-  background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(30%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome4-9,Safari4-5 */
-  background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: -o-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%); /* Opera 11.10-11.50 */
-  background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%); /* IE10 preview */
-  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    padding: 0px;
+    width: 100%;
+    background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(30%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome4-9,Safari4-5 */
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: -o-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%); /* Opera 11.10-11.50 */
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
 }
 
     .hide-content > .outer {
         margin-top: 30px;
         color: #72777a;
         text-align: center;
-        
     }
 
 
-    .call-to-action-text {
-        color: black;
-    }
+.call-to-action-text {
+    color: black;
+}
 
 .call-to-action-button {
     margin: 0 auto;
@@ -1883,7 +1909,7 @@ section {
         color: #ffffff;
         text-decoration: none !important;
         background-color: transparent;
-        -webkit-text-decoration-skip: objects;
+     
     }
 
     #footer ul.social li {
@@ -1942,15 +1968,15 @@ section {
     }
 }
 
-h3{
+h3 {
     margin-bottom: 0px;
 }
 
-.bb-2{
+.bb-2 {
     border-bottom: 2px solid #DDD;
 }
 
-.arrow-account{
+.arrow-account {
     float: right;
     transition: .5s;
 }
@@ -1974,6 +2000,7 @@ h3{
     margin-right: -2.5px;
     margin-left: -5px;
 }
+
 .form-row3 {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1982,4 +2009,60 @@ h3{
     flex-wrap: wrap;
     margin-right: -5px;
     margin-left: -2.5px;
+}
+
+.btn-delete {
+    background-color: firebrick;
+    color: white;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    color: black;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    right: 5px;
+    width: 10px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+#myDropdown {
+    overflow-y: scroll;
+    max-height: 250px;
+    background-color: white;
+}
+
+.header{
+    max-height: 65px;
 }

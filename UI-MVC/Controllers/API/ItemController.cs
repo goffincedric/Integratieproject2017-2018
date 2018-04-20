@@ -27,7 +27,7 @@ namespace UI_MVC.Controllers.API
         {
             IEnumerable<Item> items = ItemMgr.GetItems();
             if (items.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
-            return Ok(items);
+            return Ok(items.ToList());
         }
 
         // GET: api/item/5

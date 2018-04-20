@@ -1,289 +1,260 @@
 ﻿@using Microsoft.AspNet.Identity
+
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <title>Barometer</title>
-  @* Styles *@
-  @Styles.Render("~/Content/bootstrapcss")
-  @Styles.Render("~/Content/Styling/style.css")
-  <link id="ThemeLink" href="@Html.Action("GetThemeSetting","Home")" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Barometer</title>
+    @* Styles *@
+    @Styles.Render("~/Content/bootstrapcss")
+    @Styles.Render("~/Content/Styling/style.css")
+    <link id="ThemeLink" href="@Html.Action("GetThemeSetting","Home")" rel="stylesheet">
 </head>
 <body class="app">
-  <div id="loader">
-    <div class="spinner"></div>
-  </div>
-  <div>
-    <div class="sidebar">
-      <div class="sidebar-inner">
-        <div class="sidebar-logo">
-          <div class="peers ai-c fxw-nw">
-            <div class="peer peer-greed">
-              <a class="sidebar-link td-n" href="@Url.Action("Index", "Home")">
-                <div class="peers ai-c fxw-nw">
-                  <div class="peer">
-                    <div class="logo">
-                      <img class="logopic" src="~/Content/Images/logo_new.png" alt="" />
-                    </div>
-                  </div>
-                  <div class="peer peer-greed">
-                    <h5 class="lh-1 mB-0 logo-text">Barometer</h5>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="peer">
-              <div class="mobile-toggle sidebar-toggle"><a href="" class="td-n"><i class="ti-arrow-circle-left"></i></a></div>
-            </div>
-          </div>
-        </div>
-        <ul class="sidebar-menu scrollable pos-r">
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Index", "Home")"><span class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span class="title">Homepage</span></a></li>
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard", "Home")"><span class="icon-holder"><i class="c-brown-500 ti-book"></i> </span><span class="title">Dashboard</span></a></li>
-          @if (Request.IsAuthenticated)
-          {
-            <li class="nav-item">
-              <a class="sidebar-link" href="@Url.Action("Account", "Account")">
-                <span class="icon-holder">
-                  <i class="c-blue-500 ti-face-smile"></i>
-                </span><span class="title">My account</span>
-              </a>
-            </li>
-          }
-          <li class="nav-item dropdown">
-            <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
-            <ul class="dropdown-menu">
-              <li class="nav-item dropdown"><a class="sidebar-link" href="@Url.Action("Contact", "Home")"><span>Contact</span></a></li>
-              <li class="nav-item dropdown"><a href="@Url.Action("FAQ","Home")"><span>FAQ</span></a></li>
-              @*<li class="nav-item dropdown"><a href="@Url.Action("ItemTables","Item")"><span>Show items</span></a></li>*@
-              <li class="nav-item dropdown"><a href="@Url.Action("AdminCrud","Home")"><span>Admintools</span></a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+    <div id="loader">
+        <div class="spinner"></div>
     </div>
-    <div class="page-container">
-      <div class="header navbar">
-        <div class="header-container">
-          <ul class="nav-left">
-            <li><a id="sidebar-toggle" class="sidebar-toggle" href="javascript:void(0);"><i class="ti-menu"></i></a></li>
-            <li class="search-box"><a class="search-toggle no-pdd-right" href="javascript:void(0);"><i class="search-icon ti-search pdd-right-10"></i> <i class="search-icon-close ti-close pdd-right-10"></i></a></li>
-            <li class="search-input"><input class="form-control" type="text" placeholder="Search..."></li>
-          </ul>
-          <ul class="nav-right">
-            @if (Request.IsAuthenticated)
-            {
-              <li class="themes dropdown">
-                <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-paint-bucket"></i></a>
-                <ul class="dropdown-menu">
-                  <li class="pX-20 pY-15 bdB"><i class="ti-paint-bucket pR-10"></i> <span class="fsz-sm fw-600 c-grey-900">Themes</span></li>
-                  <li>
-                    <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm">
-                      <li id="light-mode">
-                        <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "light" })">
-                          <div class="peer peer-greed">
-                            <span><span class="fw-500">Light Mode</span></span>
-                          </div>
-                        </a>
-                      </li>
-                      <li id="dark-mode">
-                        <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "dark" })">
-                          <div class="peer peer-greed">
-                            <span><span class="fw-500">Dark Mode</span></span>
-                          </div>
-                        </a>
-                      </li>
-                      <li id="future-mode">
-                        <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "future" })">
-                          <div class="peer peer-greed">
-                            <span><span class="fw-500">Future Mode</span></span>
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            }
-            @if (Request.IsAuthenticated)
-            {
-              <li class="notifications dropdown">
-                <span class="counter bgc-red">3</span> <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
-                <ul class="dropdown-menu">
-                  <li class="pX-20 pY-15 bdB"><i class="ti-bell pR-10"></i> <span class="fsz-sm fw-600 c-grey-900">Notifications</span></li>
-                  <li>
-                    <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm">
-                      <li>
-                        <a href="" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                          <div class="peer mR-15"><img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/1.jpg" alt=""></div>
-                          <div class="peer peer-greed">
-                            <span><span class="fw-500">John Doe</span> <span class="c-grey-600">liked your <span class="text-dark">post</span></span></span>
-                            <p class="m-0"><small class="fsz-xs">5 mins ago</small></p>
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                          <div class="peer mR-15"><img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/2.jpg" alt=""></div>
-                          <div class="peer peer-greed">
-                            <span><span class="fw-500">Moo Doe</span> <span class="c-grey-600">liked your <span class="text-dark">cover image</span></span></span>
-                            <p class="m-0"><small class="fsz-xs">7 mins ago</small></p>
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                          <div class="peer mR-15"><img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/3.jpg" alt=""></div>
-                          <div class="peer peer-greed">
-                            <span><span class="fw-500">Lee Doe</span> <span class="c-grey-600">commented on your <span class="text-dark">video</span></span></span>
-                            <p class="m-0"><small class="fsz-xs">10 mins ago</small></p>
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="pX-20 pY-15 ta-c bdT"><span><a href="" class="c-grey-600 cH-blue fsz-sm td-n">View All Notifications <i class="ti-angle-right fsz-xs mL-10"></i></a></span></li>
-                </ul>
-              </li>
-            }
-
-            @if (Request.IsAuthenticated)
-            {
-              <li class="dropdown">
-                <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
-                  <div class="peer mR-10">
-                    @Html.Action("ChangeProfilePic", "Home")
-                  </div>
-
-                  @if (Request.IsAuthenticated)
-                  {
-                    @Html.AntiForgeryToken()
-                    {
-                      <div class="peer">
-                        <span style="color: #2196f3" class="fsz-sm">
-                          @{ViewBag.Ingelogd = "Hi " + User.Identity.GetUserName();
-                          }
-                          @ViewBag.Ingelogd
-                        </span>
-                      </div>
-                    }
-                  }
-                </a>
-
-                <ul class="dropdown-menu fsz-sm">
-                  <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-settings mR-10"></i> <span>Setting</span></a></li>
-                  <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Profile</span></a></li>
-                  <li><a href="@Url.Action("Email", "Home")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-email mR-10"></i> <span>Messages</span></a></li>
-                  <li role="separator" class="divider"></li>
-                  <li>
-
+    <div>
+        <div class="sidebar">
+            <div class="sidebar-inner">
+                <div class="sidebar-logo">
+                    <div class="peers ai-c fxw-nw">
+                        <div class="peer peer-greed">
+                            <a class="sidebar-link td-n" href="@Url.Action("Index", "Home")">
+                                <div class="peers ai-c fxw-nw">
+                                    <div class="peer">
+                                        <div class="logo">
+                                            <img class="logopic" src="~/Content/Images/logo_new.png" alt="" />
+                                        </div>
+                                    </div>
+                                    <div class="peer peer-greed">
+                                        <h5 class="lh-1 mB-0 logo-text">Barometer</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="peer">
+                            <div class="mobile-toggle sidebar-toggle"><a href="" class="td-n"><i class="ti-arrow-circle-left"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="sidebar-menu scrollable pos-r">
+                    <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Index", "Home")"><span class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span class="title">Homepage</span></a></li>
+                    <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard", "Home")"><span class="icon-holder"><i class="c-brown-500 ti-book"></i> </span><span class="title">Dashboard</span></a></li>
                     @if (Request.IsAuthenticated)
                     {
-                      using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                      {
-                        @Html.AntiForgeryToken(){
-                          <a href="javascript:document.getElementById('logoutForm').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                            <i class="ti-power-off mR-10"></i><span> Logout</span>
-                          </a>
-                        }
-                      }
+                        <li class="nav-item">
+                            <a class="sidebar-link" href="@Url.Action("Account", "Account")">
+                                <span class="icon-holder">
+                                    <i class="c-blue-500 ti-face-smile"></i>
+                                </span><span class="title">My account</span>
+                            </a>
+                        </li>
                     }
-                    else
-                    {
-                      <a href="@Url.Action("Login", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                        <i class="ti-power-off mR-10"></i> <span>Login/Register</span>
-                      </a>
-                    }
-                  </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item dropdown"><a class="sidebar-link" href="@Url.Action("Contact", "Home")"><span>Contact</span></a></li>
+                            <li class="nav-item dropdown"><a href="@Url.Action("FAQ","Home")"><span>FAQ</span></a></li>
+                            @*<li class="nav-item dropdown"><a href="@Url.Action("ItemTables","Item")"><span>Show items</span></a></li>*@
+                            <li class="nav-item dropdown"><a href="@Url.Action("AdminCrud","Home")"><span>Admintools</span></a></li>
+                        </ul>
+                    </li>
                 </ul>
-              </li>
-            }
-            else
-            {
-              <li class="">
-                <a href="@Url.Action("Login", "Account")" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
-                  <div class="peer mR-10">
-                    @Html.Action("ChangeProfilePic", "Home")
-                  </div>
-
-                  <div class="peer">
-                    <span style="color: #2196f3" class="fsz-sm">
-                      Login/Register
-                    </span>
-                  </div>
-                </a>
-              </li>
-            }
-          </ul>
+            </div>
         </div>
-      </div>
-      @Scripts.Render("~/bundles/jquery")
-      @Scripts.Render("~/bundles/bootstrapjs")
-      @RenderSection("styles", false)
-      @RenderBody()
+        <div class="page-container">
+            <div class="header navbar">
+                <div class="header-container">
+                    @{
+                        Html.RenderAction("_Search", "Home");
+                    }
+                    <ul class="nav-right">
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li class="themes dropdown">
+                                <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-paint-bucket"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li class="pX-20 pY-15 bdB"><i class="ti-paint-bucket pR-10"></i> <span class="fsz-sm fw-600 c-grey-900">Themes</span></li>
+                                    <li>
+                                        <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm">
+                                            <li id="light-mode">
+                                                <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "light" })">
+                                                    <div class="peer peer-greed">
+                                                        <span><span class="fw-500">Light Mode</span></span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li id="dark-mode">
+                                                <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "dark" })">
+                                                    <div class="peer peer-greed">
+                                                        <span><span class="fw-500">Dark Mode</span></span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li id="future-mode">
+                                                <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "future" })">
+                                                    <div class="peer peer-greed">
+                                                        <span><span class="fw-500">Future Mode</span></span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li class="notifications dropdown">
+                                <span class="counter bgc-red">3</span> <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
+                                @{
+                                    Html.RenderAction("_NotificationDropdown", "Account");
+                                }
+                            </li>
+                        }
+
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li class="dropdown">
+                                <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
+                                    <div class="peer mR-10">
+                                        @Html.Action("ChangeProfilePic", "Home")
+                                    </div>
+
+                                    @if (Request.IsAuthenticated)
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        {
+                                            <div class="peer">
+                                                <span style="color: #2196f3" class="fsz-sm">
+                                                    @{ViewBag.Ingelogd = "Hi " + User.Identity.GetUserName();
+                                                    }
+                                                    @ViewBag.Ingelogd
+                                                </span>
+                                            </div>
+                                        }
+                                    }
+                                </a>
+
+                                <ul class="dropdown-menu fsz-sm">
+                                    <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-settings mR-10"></i> <span>Setting</span></a></li>
+                                    <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Profile</span></a></li>
+                                    <li><a href="@Url.Action("Email", "Home")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-email mR-10"></i> <span>Messages</span></a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+
+                                        @if (Request.IsAuthenticated)
+                                        {
+                                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                            {
+                                                @Html.AntiForgeryToken(){
+                                                    <a href="javascript:document.getElementById('logoutForm').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                                                        <i class="ti-power-off mR-10"></i><span> Logout</span>
+                                                    </a>
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("Login", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                                                <i class="ti-power-off mR-10"></i> <span>Login/Register</span>
+                                            </a>
+                                        }
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="">
+                                <a href="@Url.Action("Login", "Account")" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
+                                    <div class="peer mR-10">
+                                        @Html.Action("ChangeProfilePic", "Home")
+                                    </div>
+
+                                    <div class="peer">
+                                        <span style="color: #2196f3" class="fsz-sm">
+                                            Login/Register
+                                        </span>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrapjs")
+
+            @RenderSection("styles", false)
+            @RenderBody()
+            @Scripts.Render("~/bundles/adminator")
 
 
-      @Scripts.Render("~/bundles/adminator")
-      @*@Scripts.Render("~/bundles/changetheme")*@
+            @*@Scripts.Render("~/bundles/changetheme")*@
 
+        </div>
     </div>
-  </div>
 
-  <footer style="margin-left:250px;" class="bdT ta-c p-15 fsz-sm c-grey-600">
-    <ul style="list-style-type: none;">
-      <li style="width:100%; margin-bottom: 10px;">
-        <ul style="padding-left:0;">
-          <li style="display:inline; padding:0 2% 0 2%"><a href="@Url.Action("Index","Home")">Home</a></li>
-          <li style="display:inline; padding:0 2%"><a href="@Url.Action("FAQ","Home")">FAQ</a></li>
-          <li style="display:inline; padding:0 2%"><a href="@Url.Action("Contact","Home")">Contact</a></li>
-          <li style="display:inline; padding:0 2%"><a href="@Url.Action("Legal","Home")">Terms of use</a></li>
+    <footer style="margin-left:250px;" class="bdT ta-c p-15 fsz-sm c-grey-600">
+        <ul style="list-style-type: none;">
+            <li style="width:100%; margin-bottom: 10px;">
+                <ul style="padding-left:0;">
+                    <li style="display:inline; padding:0 2% 0 2%"><a href="@Url.Action("Index","Home")">Home</a></li>
+                    <li style="display:inline; padding:0 2%"><a href="@Url.Action("FAQ","Home")">FAQ</a></li>
+                    <li style="display:inline; padding:0 2%"><a href="@Url.Action("Contact","Home")">Contact</a></li>
+                    <li style="display:inline; padding:0 2%"><a href="@Url.Action("Legal","Home")">Terms of use</a></li>
+                </ul>
+            </li>
+
+            <li><span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span></li>
+
         </ul>
-      </li>
 
-      <li><span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span></li>
+    </footer>
 
-    </ul>
-
-  </footer>
-
-  @*<section id="footer">
-        <div class="container">
-            <div class="row text-center text-xs-center text-sm-left text-md-left">
-                <div class="col-xs-12 col-sm-4 col-md-4">
-                    <h5>Navigation</h5>
-                    <ul class="list-unstyled quick-links">
-                        <li><a href=""><i class="fa fa-angle-double-right"></i>Home</a></li>
-                        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-angle-double-right"></i>Home</a></li>
-                        <li><a href="@Url.Action("FAQ","Home")"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-                        <li><a href="@Url.Action("Contact","Home")"><i class="fa fa-angle-double-right"></i>Contact</a></li>
+    @*<section id="footer">
+            <div class="container">
+                <div class="row text-center text-xs-center text-sm-left text-md-left">
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                        <h5>Navigation</h5>
+                        <ul class="list-unstyled quick-links">
+                            <li><a href=""><i class="fa fa-angle-double-right"></i>Home</a></li>
+                            <li><a href="@Url.Action("Index","Home")"><i class="fa fa-angle-double-right"></i>Home</a></li>
+                            <li><a href="@Url.Action("FAQ","Home")"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
+                            <li><a href="@Url.Action("Contact","Home")"><i class="fa fa-angle-double-right"></i>Contact</a></li>
 
 
-                    </ul>
+                        </ul>
+                    </div>
+
                 </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+                        <ul class="list-unstyled list-inline social text-center">
+                            <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
+                            <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
+                            <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
+                            <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
+                            <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                        </ul>
+                    </div>
 
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
-                    <ul class="list-unstyled list-inline social text-center">
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
-                    </ul>
                 </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+                        <span>Copyright Integratieproject © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span>
+                    </div>
 
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
-                    <span>Copyright Integratieproject © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span>
                 </div>
-
             </div>
-        </div>
-    </section>*@
+        </section>*@
 
-  <!-- ./Footer -->
+    <!-- ./Footer -->
+
+
+
 </body>
 </html>

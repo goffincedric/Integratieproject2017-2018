@@ -54,7 +54,9 @@ namespace PB.DAL
             Profile profile = ReadProfile(username);
             if (profile != null)
             {
+                UserData data = profile.UserData;
                 ctx.Users.Remove(profile);
+                ctx.UserData.Remove(data);
                 ctx.SaveChanges();
             }
         }

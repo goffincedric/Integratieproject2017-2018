@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44372</IISExpressSSLPort>
+    <IISExpressSSLPort>44338</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -285,6 +285,7 @@
     <Content Include="Scripts\bundle.js" />
     <Content Include="Scripts\grid2\gridstack.jQueryUI.js" />
     <Content Include="Scripts\grid2\gridstack.js" />
+    <Content Include="Scripts\AccountControl.js" />
     <Content Include="Scripts\index\hide-content.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
@@ -318,22 +319,27 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\BadRequest.cshtml" />
-    <Content Include="Views\Account\ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Home\Legal.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Home\AdminCrud.cshtml" />
-    <Content Include="Views\Item\OrganisationPartialTable.cshtml" />
-    <Content Include="Views\Item\ThemaPartialTable.cshtml" />
-    <Content Include="Views\Item\OrganisationPartialCreate.cshtml" />
-    <Content Include="Views\Item\ThemaPartialCreate.cshtml" />
-    <Content Include="Views\Item\KeywordPartialCreate.cshtml" />
-    <Content Include="Views\Item\KeywordPartialTable.cshtml" />
-    <Content Include="Views\Item\PersonPartialCreate.cshtml" />
-    <Content Include="Views\Item\PersonPartialTable.cshtml" />
+    <Content Include="Views\Item\_OrganisationPartialTable.cshtml" />
+    <Content Include="Views\Item\_ThemaPartialTable.cshtml" />
+    <Content Include="Views\Item\_OrganisationPartialCreate.cshtml" />
+    <Content Include="Views\Item\_ThemaPartialCreate.cshtml" />
+    <Content Include="Views\Item\_KeywordPartialCreate.cshtml" />
+    <Content Include="Views\Item\_KeywordPartialTable.cshtml" />
+    <Content Include="Views\Item\_PersonPartialCreate.cshtml" />
+    <Content Include="Views\Item\_PersonPartialTable.cshtml" />
+    <Content Include="Views\Home\_Search.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\DeleteProfile.cshtml" />
+    <Content Include="Views\Account\_UserPartialTable.cshtml" />
+    <Content Include="Views\Account\_NotificationDropdown.cshtml" />
+    <Content Include="Views\Item\ItemDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -135,7 +135,6 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
@@ -214,7 +213,59 @@ namespace UI_MVC.Controllers
             return RedirectToAction("Index","Home");
         }
 
+        public ActionResult DeleteProfile()
+        {
+            return PartialView();
+        }
+
+        public ActionResult _NotificationDropdown()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteProfile(DeleteProfileModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Account", "Account");
+            }
+            var user = UserManager.GetProfile(User.Identity.GetUserName());
+
+            UserManager.RemoveProfile(user.UserName);
+
+            LogOff();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles=("Admin,SuperAdmin"))]
+        //public ActionResult DeleteProfile(string username)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return RedirectToAction("AdminCrud", "Home");
+        //    }
+        //    var user = UserManager.GetProfile(username);
+
+        //    UserManager.RemoveProfile(user.UserName);
+
+        //    LogOff();
+
+        //    return RedirectToAction("AdminCrud", "Home");
+        //}
+
         #endregion
+
+
+        public PartialViewResult _UserPartialTable()
+        {
+            IEnumerable<Profile> profiles = UserManager.GetProfiles();
+            return PartialView(profiles);
+        }
 
         #region ExternalLogin
         [HttpPost]
