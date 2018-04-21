@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PB.DAL.EF;
+﻿using PB.DAL.EF;
 
 namespace PB.DAL
 {
-  public class UnitOfWork
+    public class UnitOfWork
   {
 
     private IntegratieDbContext ctx;
 
     internal IntegratieDbContext Context
     {
-      get
-      {
-        if (ctx == null) ctx = new IntegratieDbContext(true);
-        return ctx;
-      }
+      get { return ctx ?? (ctx = new IntegratieDbContext(true)); }
     }
 
     /// <summary>

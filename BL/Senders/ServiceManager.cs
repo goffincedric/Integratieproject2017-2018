@@ -1,20 +1,13 @@
 ﻿using Microsoft.AspNet.Identity;
 using SendGrid;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using SendGrid.Helpers.Mail;
-using PB.BL.Senders;
+using System.Configuration;
+using System.Threading.Tasks;
 
 
-namespace PB.BL
+namespace PB.BL.Senders
 {
-  public class EmailService : IIdentityMessageService
+    public class EmailService : IIdentityMessageService
   {
     public async Task SendAsync(IdentityMessage message)
     {

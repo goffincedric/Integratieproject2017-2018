@@ -9,8 +9,8 @@
         var a = values[0];
         var b = values[1];
         var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
-    } else { var angle = 0; }
-    return (angle < 0) ? angle + 360 : angle;
+    } else { angle = 0; }
+    return angle < 0 ? angle + 360 : angle;
 }
 
 var rotation = 0;

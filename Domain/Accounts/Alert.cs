@@ -1,11 +1,11 @@
-﻿using System;
+﻿using PB.BL.Domain.Account;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using PB.BL.Domain.Account;
 
 namespace Domain.Account
 {
-  [Table("tblAlert")]
+    [Table("tblAlert")]
   public class Alert
   {
     [Key]
@@ -27,11 +27,11 @@ namespace Domain.Account
       if (!(obj is Alert)) return false;
       Alert alert = (Alert)obj;
 
-      if (!alert.Text.ToLower().Equals(this.Text.ToLower())) return false;
-      if (!alert.Description.ToLower().Equals(this.Description.ToLower())) return false;
-      if (!alert.Username.ToLower().Equals(this.Username.ToLower())) return false;
+      if (!alert.Text.ToLower().Equals(Text.ToLower())) return false;
+      if (!alert.Description.ToLower().Equals(Description.ToLower())) return false;
+      if (!alert.Username.ToLower().Equals(Username.ToLower())) return false;
       
-      if (!alert.TimeStamp.Date.Equals(this.TimeStamp.Date)) return false;
+      if (!alert.TimeStamp.Date.Equals(TimeStamp.Date)) return false;
       return true;
     }
 

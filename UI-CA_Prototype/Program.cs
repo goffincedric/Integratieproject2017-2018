@@ -1,18 +1,14 @@
-﻿using PB.BL;
+﻿using Domain.JSONConversion;
+using Domain.Settings;
+using Mono.Options;
+using PB.BL;
 using PB.BL.Domain.Account;
+using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
+using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Items;
-using PB.DAL.EF;
-using Domain.JSONConversion;
-using Mono.Options;
-using PB.BL.Domain.Platform;
-using PB.BL.Domain.Items;
-using Domain.Settings;
 
 namespace UI_CA_Prototype
 {
@@ -133,7 +129,7 @@ namespace UI_CA_Prototype
             if (WillSeed) Seed();
 
             //Clear 
-            SubplatformsToClear.ForEach(s => Console.WriteLine(s));
+            SubplatformsToClear.ForEach(Console.WriteLine);
 
             if (SubplatformsToClear.Count != 0)
             {

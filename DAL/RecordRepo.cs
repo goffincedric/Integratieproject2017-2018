@@ -15,7 +15,7 @@ namespace PB.DAL
 {
     public class RecordRepo : IRecordRepo
     {
-        private IntegratieDbContext ctx;
+        private readonly IntegratieDbContext ctx;
 
         public RecordRepo()
         {

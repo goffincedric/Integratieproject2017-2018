@@ -1,14 +1,9 @@
-﻿using PB.BL.Domain.Account;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Account;
+﻿using Domain.Account;
 using Domain.Settings;
+using PB.BL.Domain.Account;
+using System.Collections.Generic;
 
-namespace PB.BL
+namespace PB.BL.Interfaces
 {
     public interface IAccountManager
     {

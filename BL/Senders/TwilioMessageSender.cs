@@ -1,17 +1,12 @@
-﻿using PB.BL.Senders;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
+﻿using System.Configuration;
 using System.Threading.Tasks;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 
-namespace PB.BL
+namespace PB.BL.Senders
 {
-  public class TwilioMessageSender : ITwilioMessageSender
+    public class TwilioMessageSender : ITwilioMessageSender
   {
     public TwilioMessageSender()
     {
