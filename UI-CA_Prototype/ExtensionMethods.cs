@@ -141,20 +141,12 @@ namespace UI_CA_Prototype
         //Method to test write functionality of JsonConvert (read written json file on desktop for record-object structure)
         public void WriteTestRecords(IEnumerable<Record> records)
         {
-            List<Record> recordList = records.ToList();
-            recordList.ForEach(r =>
-            {
-                r.Hashtags = null;
-                r.Mentions = null;
-                r.Persons = null;
-                r.Themes = null;
-                r.URLs = null;
-                r.Words = null;
-            });
+            List<Record> recordList = records.Take(200).ToList();
 
             JsonSerializer serializer = new JsonSerializer
             {
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
 
             using (StreamWriter sw = new StreamWriter(Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory) + @"\structure.json"))
@@ -163,7 +155,7 @@ namespace UI_CA_Prototype
                 serializer.Serialize(writer, recordList);
             }
 
-            Console.WriteLine("Er werd een testbestand genaamd 'structure.json' weggeschreven naazr uw desktop met 2 test-records");
+            Console.WriteLine("Er werd een testbestand genaamd 'structure.json' weggeschreven naar uw desktop met max 200 test-records");
         }
     }
 }
