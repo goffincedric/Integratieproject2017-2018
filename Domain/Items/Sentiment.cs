@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Items
+﻿namespace Domain.Items
 {
-  
-  public class Sentiment
+
+    public class Sentiment
   {
     public double Objectivity { get; set; }
     public double Polarity { get; set; }

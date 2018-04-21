@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PB.BL.Domain.Items;
+﻿using PB.BL.Domain.Items;
 using PB.DAL.EF;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PB.DAL
 {
     public class ItemRepo : IItemRepo
     {
-        private IntegratieDbContext ctx;
+        private readonly IntegratieDbContext ctx;
 
         public ItemRepo()
         {

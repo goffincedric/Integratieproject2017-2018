@@ -1,12 +1,10 @@
-﻿using Domain.Items;
+﻿using Domain.Account;
+using Domain.Items;
 using PB.BL.Domain.Account;
+using PB.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Account;
-using PB.BL.Domain.Items;
 
 namespace PB.BL
 {
@@ -52,10 +50,10 @@ namespace PB.BL
             oldGemiddelde.Values.ToList().ForEach(v => Console.WriteLine(oldGemiddelde.Keys.ToList()[oldGemiddelde.Values.ToList().IndexOf(v)] + " = " + (newGemiddelde.Values.ToList()[oldGemiddelde.Values.ToList().IndexOf(v)] - v)));
 
             Console.WriteLine("\n===== OLDRECORDPERSONS =====");
-            oldGemiddelde.Keys.ToList().ForEach(v => Console.WriteLine(v));
+            oldGemiddelde.Keys.ToList().ForEach(Console.WriteLine);
 
             Console.WriteLine("\n===== NEWRECORDPERSONS =====");
-            newGemiddelde.Keys.ToList().ForEach(v => Console.WriteLine(v));
+            newGemiddelde.Keys.ToList().ForEach(Console.WriteLine);
 
             //Alerts maken
             List<Alert> alerts = new List<Alert>();
@@ -132,10 +130,9 @@ namespace PB.BL
             {
                 if (!GroupedDate.Keys.Contains(rp))
                 {
-                    List<Record> rpRecords;
                     Dictionary<DateTime, List<Record>> valueDict = new Dictionary<DateTime, List<Record>>();
 
-                    groupedPerson.TryGetValue(rp, out rpRecords);
+                    groupedPerson.TryGetValue(rp, out var rpRecords);
 
                     if (rpRecords.Count != 0)
                     {
@@ -156,9 +153,8 @@ namespace PB.BL
             groupedPerson.Keys.ToList().ForEach(rp =>
             {
                 Dictionary<DateTime, List<Record>> valueDict = new Dictionary<DateTime, List<Record>>();
-                List<Record> rpRecords;
 
-                groupedPerson.TryGetValue(rp, out rpRecords);
+                groupedPerson.TryGetValue(rp, out var rpRecords);
 
                 if (rpRecords.Count != 0)
                 {
@@ -179,8 +175,7 @@ namespace PB.BL
             List<Double> aantal = new List<double>();
             recordsPerDate.Keys.ToList().ForEach(k =>
             {
-                List<Record> records;
-                recordsPerDate.TryGetValue(k, out records);
+                recordsPerDate.TryGetValue(k, out var records);
                 aantal.Add(records.Count);
             });
             return aantal.Average() / period * aantal.Count;

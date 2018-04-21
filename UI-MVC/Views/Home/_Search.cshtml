@@ -34,9 +34,9 @@
 </script>
 
 <script type="text/javascript">
-  var a, div;
-  div = document.getElementById("myDropdown");
-  a = div.getElementsByTagName("a");
+  
+  var div = document.getElementById("myDropdown");
+  var a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     a[i].style.display = "none";
   }
@@ -47,10 +47,10 @@
   }
 
   function filterFunction() {
-    var input, filter, ul, li, a, i;
-    input = document.getElementById("myInput");
+    var ul, li, i;
+    var input = document.getElementById("myInput");
 
-    filter = input.value.toUpperCase();
+    var filter = input.value.toUpperCase();
     div = document.getElementById("myDropdown");
     a = div.getElementsByTagName("a");
     for (i = 0; i < a.length; i++) {

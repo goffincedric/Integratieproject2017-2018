@@ -2593,7 +2593,8 @@
             },
             guid: 1,
             support: Mt
-        }), "function" == typeof Symbol && (Tt.fn[Symbol.iterator] = ut[Symbol.iterator]), Tt.each("Boolean Number String Function Array Date RegExp Object Error Symbol".split(" "), function(t, e) {
+        }),
+          "function" == typeof Symbol && (Tt.fn[Symbol.iterator] = ut[Symbol.iterator]), Tt.each("Boolean Number String Function Array Date RegExp Object Error Symbol".split(" "), function(t, e) {
             gt["[object " + e + "]"] = e.toLowerCase()
         });
         var xt = function(t) {

@@ -1,13 +1,10 @@
 ﻿using PB.BL.Domain.Account;
+using PB.BL.Domain.Dashboards;
+using PB.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
-using PB.BL.Domain.Items;
-using PB.BL.Domain.Dashboards;
 
 namespace PB.BL.Domain.Platform
 {
