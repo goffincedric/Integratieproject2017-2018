@@ -24,6 +24,12 @@ namespace UI_MVC.Controllers
         }
        
 
+        public ActionResult ItemDetail(int id)
+        {
+            Item item = itemMgr.GetItem(id);
+            return View(item);
+        }
+
         #region organisation
         public PartialViewResult _OrganisationPartialTable()
         {

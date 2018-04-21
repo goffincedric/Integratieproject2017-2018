@@ -78,6 +78,14 @@ namespace PB.DAL
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
+        public Item ReadItem(string name)
+        {
+            return ctx.Items
+                .Include("SubPlatforms")
+                .Include("SubscribedProfiles")
+                .FirstOrDefault(p => p.Name.ToLower().Equals(name.ToLower()));
+        }
+
         public IEnumerable<Item> ReadItems()
         {
             return ctx.Items
