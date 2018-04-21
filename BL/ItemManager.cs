@@ -1,17 +1,15 @@
+using Domain.Account;
+using Domain.Items;
+using Domain.JSONConversion;
+using PB.BL.Domain.Account;
+using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
+using PB.BL.Interfaces;
 using PB.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Account;
-using Domain.Items;
-using PB.BL.Domain.Account;
-using Domain.JSONConversion;
-using PB.BL.Domain.Dashboards;
 
 namespace PB.BL
 {
@@ -22,7 +20,7 @@ namespace PB.BL
 
         private UnitOfWorkManager UowManager;
 
-        private Trendspotter trendspotter = new Trendspotter();
+        private readonly Trendspotter trendspotter = new Trendspotter();
 
         public ItemManager()
         {
@@ -65,7 +63,7 @@ namespace PB.BL
         }
 
         #region Items
-        public Organisation AddOrganisation(string name, string description, string socialMediaLink = null, string iconURL = null)
+        public Organisation AddOrganisation(string name, string description, string socialMediaLink = null, string iconUrl = null)
         {
             InitNonExistingRepo();
 
@@ -74,7 +72,7 @@ namespace PB.BL
                 Name = name,
                 Description = description,
                 SocialMediaLink = socialMediaLink,
-                IconURL = iconURL,
+                IconURL = iconUrl,
                 Keywords = new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>(),
                 Records = new List<Record>(),
@@ -87,14 +85,14 @@ namespace PB.BL
             return organisation;
         }
 
-        public Person AddPerson(string name, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null)
+        public Person AddPerson(string name, string socialMediaLink, string iconUrl, Organisation organisation = null, Function function = null)
         {
             InitNonExistingRepo();
             Person person = new Person()
             {
                 Name = name,
                 SocialMediaLink = socialMediaLink,
-                IconURL = iconURL,
+                IconURL = iconUrl,
                 Function = function,
                 Keywords = new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>(),
@@ -283,12 +281,12 @@ namespace PB.BL
             return RecordRepo.ReadRecord(id);
         }
 
-        public Record AddRecord(long tweet_Id, RecordProfile recordProfile, List<Word> words, Sentiment sentiment, string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Theme> themes, List<Person> persons, DateTime date, double longitude, double latitude, bool retweet)
+        public Record AddRecord(long tweetId, RecordProfile recordProfile, List<Word> words, Sentiment sentiment, string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Theme> themes, List<Person> persons, DateTime date, double longitude, double latitude, bool retweet)
         {
             InitNonExistingRepo();
             Record record = new Record()
             {
-                Tweet_Id = tweet_Id,
+                Tweet_Id = tweetId,
                 RecordProfile = recordProfile,
                 Words = words,
                 Sentiment = sentiment,
@@ -546,7 +544,7 @@ namespace PB.BL
 
             //Print all subscribed items
             Console.WriteLine("========= SUBSCRIBED =========");
-            subscribedItems.ForEach(i => Console.WriteLine(i));
+            subscribedItems.ForEach(Console.WriteLine);
 
             //Check trends voor people
             List<Alert> alerts = trendspotter.CheckTrendAverageRecords(peopleRecords);
@@ -583,27 +581,27 @@ namespace PB.BL
 
         public int GetKeywordsCount()
         {
-            return ItemRepo.ReadKeywordsCount();
+            return ItemRepo.ReadKeywords().Count();
         }
 
         public int GetThemesCount()
         {
-            return ItemRepo.ReadThemesCount();
+            return ItemRepo.ReadThemes().Count();
         }
 
         public int GetPersonsCount()
         {
-            return ItemRepo.ReadPersonsCount();
+            return ItemRepo.ReadPersons().Count();
         }
 
         public int GetOrganisationsCount()
         {
-            return ItemRepo.ReadOrganisationsCount();
+            return ItemRepo.ReadOrganisations().Count();
         }
 
         public int GetItemsCount()
         {
-            return ItemRepo.ReadItemsCount();
+            return ItemRepo.ReadItems().Count();
         }
 
         //private void RecordsToItems(List<Record> records)

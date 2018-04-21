@@ -1,14 +1,12 @@
+using Domain.Items;
 using Newtonsoft.Json;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Items;
-using PB.BL.Domain.Platform;
 
 namespace UI_CA_Prototype
 {
@@ -72,10 +70,7 @@ namespace UI_CA_Prototype
         //Show all records sorted by Name, then by Date descending
         public void ShowRecords(IEnumerable<Record> records)
         {
-            records.OrderBy(r => r.Tweet_Id).ThenByDescending(r => r.Date).ToList().ForEach(r =>
-            {
-                Console.WriteLine(r);
-            });
+            records.OrderBy(r => r.Tweet_Id).ThenByDescending(r => r.Date).ToList().ForEach(Console.WriteLine);
         }
 
         //Lets the user select an available item
@@ -110,7 +105,7 @@ namespace UI_CA_Prototype
         {
             if (profile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
             Console.WriteLine("Subscribed items:");
-            profile.Subscriptions.ForEach(subs => Console.WriteLine(subs));
+            profile.Subscriptions.ForEach(Console.WriteLine);
         }
 
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PB.DAL;
+﻿using PB.DAL;
 
 namespace PB.BL
 {
@@ -13,12 +8,7 @@ namespace PB.BL
 
         public UnitOfWork UnitOfWork
         {
-            get
-            {
-
-                if (uof == null) uof = new UnitOfWork();
-                return uof;
-            }
+            get { return uof ?? (uof = new UnitOfWork()); }
         }
 
         public void Save()

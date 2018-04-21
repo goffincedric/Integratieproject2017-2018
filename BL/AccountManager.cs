@@ -1,21 +1,17 @@
-﻿using PB.BL.Domain.Account;
-using PB.BL.Domain.Dashboards;
+﻿using Domain.Account;
+using Domain.Settings;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
+using PB.BL.Domain.Account;
 using PB.BL.Domain.Items;
-using PB.BL.Domain.Platform;
+using PB.BL.Interfaces;
 using PB.DAL;
+using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Account;
-using System.Security.Cryptography;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity;
-using PB.DAL.EF;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
-using Domain.Settings;
 
 namespace PB.BL
 {
@@ -23,7 +19,7 @@ namespace PB.BL
     //data to store, it also handles some logic and settings
     public class AccountManager : UserManager<Profile>, IAccountManager
     {
-        private IntegratieUserStore store;
+        private readonly IntegratieUserStore store;
         private IProfileRepo ProfileRepo;
         private UnitOfWorkManager UowManager;
 
@@ -123,8 +119,7 @@ namespace PB.BL
             if (!roleManager.RoleExists("SuperAdmin"))
             {
                 //Create SuperAdmin role
-                var role = new IdentityRole();
-                role.Name = "SuperAdmin";
+                var role = new IdentityRole {Name = "SuperAdmin"};
                 roleManager.Create(role);
 
             }
@@ -132,16 +127,14 @@ namespace PB.BL
             //Create Admin role
             if (!roleManager.RoleExists("Admin"))
             {
-                var role = new IdentityRole();
-                role.Name = "Admin";
+                var role = new IdentityRole {Name = "Admin"};
                 roleManager.Create(role);
 
             }
             //Create User role   
             if (!roleManager.RoleExists("User"))
             {
-                var role = new IdentityRole();
-                role.Name = "User";
+                var role = new IdentityRole {Name = "User"};
                 roleManager.Create(role);
 
             }
@@ -238,7 +231,7 @@ namespace PB.BL
 
         public int GetUserCount()
         {
-            return ProfileRepo.ReadProfileCount();
+            return ProfileRepo.ReadProfiles().Count();
         }
         #endregion
 

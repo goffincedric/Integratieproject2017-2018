@@ -1,16 +1,13 @@
-﻿using System;
+﻿using PB.BL.Domain.Dashboards;
+using PB.DAL.EF;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PB.BL.Domain.Dashboards;
-using PB.DAL.EF;
 
 namespace PB.DAL
 {
     public class DashboardRepo : IDashboardRepo
     {
-        private IntegratieDbContext ctx;
+        private readonly IntegratieDbContext ctx;
 
         public DashboardRepo()
         {

@@ -28,7 +28,7 @@ namespace Domain.Items
 
         public Hashtag(string hashTag)
         {
-            this.HashTag = hashTag;
+            HashTag = hashTag;
         }
     }
 }

@@ -1,9 +1,5 @@
 ﻿using PB.BL.Domain.Items;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PB.DAL
 {
@@ -29,13 +25,5 @@ namespace PB.DAL
         IEnumerable<Keyword> ReadKeywords();
         Keyword ReadKeyword(int keywordId);
         void DeleteKeyword(int keywordId);
-
-
-        int ReadKeywordsCount();
-        int ReadThemesCount();
-        int ReadPersonsCount();
-        int ReadOrganisationsCount();
-        int ReadItemsCount();
-
     }
 }

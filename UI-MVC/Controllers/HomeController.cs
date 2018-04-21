@@ -1,26 +1,11 @@
+using Domain.Settings;
+using Microsoft.AspNet.Identity;
 using PB.BL;
 using PB.BL.Domain.Account;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
-using System.Security.Principal;
-using System.Security.Cryptography;
-using System.Text;
-using System.IO;
-using PB.DAL.EF;
-using UI_MVC.Models;
-using Microsoft.AspNet.Identity;
-
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
-
-using Microsoft.Owin.Security;
-using System.Net;
-using Domain.Settings;
 using PB.BL.Domain.Items;
+using PB.DAL.EF;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace UI_MVC.Controllers
 {
@@ -30,8 +15,8 @@ namespace UI_MVC.Controllers
        
 
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
-        private ItemManager itemMgr = new ItemManager(uow);
-        private AccountManager accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
+        private readonly ItemManager itemMgr = new ItemManager(uow);
+        private readonly AccountManager accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
 
         
 
@@ -125,11 +110,11 @@ namespace UI_MVC.Controllers
         public ActionResult AdminCrud()
         {
             ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
-            ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
-            ViewBag.TotalPersons = itemMgr.GetPersonsCount().ToString();
+            ViewBag.TotalPersons = itemMgr.GetPersonsCount();
             ViewBag.TotalOrganisations = itemMgr.GetOrganisationsCount().ToString();
             ViewBag.TotalThemes = itemMgr.GetThemesCount().ToString();
             ViewBag.TotalKeywords = itemMgr.GetKeywordsCount().ToString();
+            ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
             return View();
         }
 
@@ -147,7 +132,7 @@ namespace UI_MVC.Controllers
                     case "dark": theme = "DarkMode"; break;
                     case "future": theme = "FutureMode"; break;
                 }
-                return Content(string.Format("/Content/Theme/{0}.css", theme));
+                return Content($"/Content/Theme/{theme}.css");
             }
             return Content("/Content/Theme/LightMode.css");
         }

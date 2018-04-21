@@ -3,12 +3,10 @@ using PB.BL.Domain.Account;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
+using PB.BL.Interfaces;
 using PB.DAL;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PB.BL
 {
@@ -62,7 +60,7 @@ namespace PB.BL
             return SubplatformRepo.ReadSubplatforms();
         }
 
-        public Subplatform AddSubplatform(string name, string url, string sourceAPI = null, string siteIconUrl = null)
+        public Subplatform AddSubplatform(string name, string url, string sourceApi = null, string siteIconUrl = null)
         {
             initNonExistingRepo();
             Subplatform subplatform = new Subplatform()
@@ -78,11 +76,11 @@ namespace PB.BL
                 Dashboards = new List<Dashboard>()
             };
 
-            if (sourceAPI != null) subplatform.Settings.Add(new SubplatformSetting()
+            if (sourceApi != null) subplatform.Settings.Add(new SubplatformSetting()
             {
                 SettingName = Setting.Platform.SOURCE_API_URL,
                 IsEnabled = true,
-                Value = sourceAPI
+                Value = sourceApi
             });
 
             if (siteIconUrl != null) subplatform.Settings.Add(new SubplatformSetting()
@@ -149,12 +147,12 @@ namespace PB.BL
         #endregion
 
         #region Pages
-        public Page AddPage(int subplatformId, string title, string faviconURL)
+        public Page AddPage(int subplatformId, string title, string faviconUrl)
         {
             Page page = new Page()
             {
                 Title = title,
-                FaviconURL = faviconURL,
+                FaviconURL = faviconUrl,
                 Tags = new List<Tag>()
             };
             return AddPage(subplatformId, page);

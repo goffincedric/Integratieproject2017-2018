@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Items
 {
-  [Table("tblRecord")]
+    [Table("tblRecord")]
   public class Record
   {
     [Key]

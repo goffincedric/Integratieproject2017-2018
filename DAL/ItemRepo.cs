@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PB.BL.Domain.Items;
+﻿using PB.BL.Domain.Items;
 using PB.DAL.EF;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PB.DAL
 {
     public class ItemRepo : IItemRepo
     {
-        private IntegratieDbContext ctx;
+        private readonly IntegratieDbContext ctx;
 
         public ItemRepo()
         {
@@ -149,36 +145,6 @@ namespace PB.DAL
         {
             Keyword keyword = ReadKeyword(keywordId);
             ctx.Keywords.Remove(keyword);
-        }
-
-        public int ReadPersonsCount()
-        {
-            return ctx.Persons.Count();
-
-        }
-
-        public int ReadOrganisationsCount()
-        {
-            return ctx.Organisations.Count();
-
-        }
-
-        public int ReadThemesCount()
-        {
-            return ctx.Organisations.Count();
-
-        }
-
-        public int ReadKeywordsCount()
-        {
-            return ctx.Keywords.Count();
-
-        }
-
-        public int ReadItemsCount()
-        {
-            return ctx.Items.Count();
-
         }
     }
 }

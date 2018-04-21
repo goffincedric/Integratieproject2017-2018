@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PB.BL.Domain.Account;
+﻿using PB.BL.Domain.Account;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
+using PB.BL.Interfaces;
 using PB.DAL;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PB.BL
 {

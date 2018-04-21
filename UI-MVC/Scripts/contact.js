@@ -67,14 +67,14 @@
     }
 
 
-    $('contact2 - form validate- form').submit(function (e) {
-        $.ajax({
-            url: "https://formspree.io/poba.politiekebarometer@gmail.com",
-            method: "POST",
-            data: $(this).serialize(),
-            dataType: "json"
-        });
+  $('contact2 - form validate- form').submit(function(e) {
+    $.ajax({
+      url: "https://formspree.io/poba.politiekebarometer@gmail.com",
+      method: "POST",
+      data: $(this).serialize(),
+      dataType: "json"
+    });
 
-    })
+  });
 
 })(jQuery);
