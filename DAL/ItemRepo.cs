@@ -78,12 +78,6 @@ namespace PB.DAL
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
-        public Item ReadItemEmpty(int itemId)
-        {
-            return ctx.Items
-                .FirstOrDefault(p => p.ItemId == itemId);
-        }
-
         public IEnumerable<Item> ReadItems()
         {
             return ctx.Items

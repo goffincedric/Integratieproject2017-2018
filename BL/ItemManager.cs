@@ -142,6 +142,12 @@ namespace PB.BL
             return ItemRepo.ReadItem(itemId);
         }
 
+        public Item GetItem(string name)
+        {
+            InitNonExistingRepo();
+            return ItemRepo.ReadItems().FirstOrDefault(i => i.Name.Equals(name));
+        }
+
         public IEnumerable<Item> GetItems()
         {
             InitNonExistingRepo();
