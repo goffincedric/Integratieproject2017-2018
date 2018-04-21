@@ -10,7 +10,7 @@ namespace UI_MVC.Controllers.API
     public class ItemController : ApiController
     {
         UnitOfWorkManager UowMgr;
-        /*readonly*/ ItemManager  ItemMgr;
+        readonly ItemManager  ItemMgr;
 
         public ItemController()
         {
