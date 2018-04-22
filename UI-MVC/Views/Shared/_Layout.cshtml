@@ -4,15 +4,15 @@
 <html>
 <head>
 
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <title>Barometer</title>
-  @* Styles *@
-  @Styles.Render("~/Content/bootstrapcss")
-  @Styles.Render("~/Content/Styling/style.css")
-  <link id="ThemeLink" href="@Html.Action("GetThemeSetting","Home")" rel="stylesheet">
-  @Scripts.Render("~/bundles/jquery")
-  @Scripts.Render("~/bundles/bootstrapjs")
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Barometer</title>
+    @* Styles *@
+    @Styles.Render("~/Content/bootstrapcss")
+    @Styles.Render("~/Content/Styling/style.css")
+    <link id="ThemeLink" href="@Html.Action("GetThemeSetting","Home")" rel="stylesheet">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrapjs")
 
 </head>
 <body class="app">
@@ -112,7 +112,7 @@
                         @if (Request.IsAuthenticated)
                         {
                             <li class="notifications dropdown">
-                                <span class="counter bgc-red">@Html.Action("GetNotificationCount", "Account")</span> <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
+                                @if (!Html.Action("GetNotificationCount", "Account").ToString().Equals("0")) {<span class="counter bgc-red">@Html.Action("GetNotificationCount", "Account")</span>} <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
                                 @{
                                     Html.RenderAction("_NotificationDropdown", "Account");
                                 }
@@ -179,20 +179,20 @@
                                     </div>
 
 
-          <div class="peer">
-            <span style="color: #2196f3" class="fsz-sm">
-              Login/Register
-            </span>
-          </div>
-        </a>
-      </li>
-}
-          </ul>
-        </div>
-      </div>
-     
+                                    <div class="peer">
+                                        <span style="color: #2196f3" class="fsz-sm">
+                                            Login/Register
+                                        </span>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
 
-                                  
+
+
 
             @RenderSection("styles", false)
             @RenderBody()
