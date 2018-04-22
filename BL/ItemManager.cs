@@ -545,22 +545,12 @@ namespace PB.BL
             subscribedItems.ForEach(Console.WriteLine);
 
             //Check trends voor people
-            List<Alert> alerts = trendspotter.CheckTrendAverageRecords(profile, peopleRecords);
-            Console.WriteLine("============ ALERTS ===========");
-
-            alerts.ForEach(a =>
-            {
-                if (!profile.Alerts.Contains(a))
-                {
-                    profile.Alerts.Add(a);
-                    Console.WriteLine(a);
-                }
-            });
+            List<Alert> newAlerts = trendspotter.CheckTrendAverageRecords(profile, peopleRecords);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 
             UowManager.Save();
 
             //Return alerts
-            return alerts;
+            return newAlerts;
         }
 
         public void CheckTrend()

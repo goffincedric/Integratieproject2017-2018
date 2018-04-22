@@ -19,7 +19,7 @@ namespace PB.BL
             double period = 14; //Aantal dagen vergelijken
 
             // Records ouder dan huidige dag
-            DateTime lastDate = records.ToList().OrderByDescending(r => r.Date).ToList()[0].Date;
+            DateTime lastDate = DateTime.Now;
 
             List<Record> oldRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date < lastDate.Date.AddDays(-1)).ToList();
             List<Record> newRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date <= lastDate.Date).ToList();
@@ -36,33 +36,34 @@ namespace PB.BL
             //De List van records opdelen in Dictionary van List<Record> per DateTime van de Record
             Console.WriteLine("=============OLD=============");
             Dictionary<Person, Dictionary<DateTime, List<Record>>> groupedDateOld = GetGroupedByDate(groupedOld);
-            Dictionary<Person, double> oldGemiddelde = GetAverageTweets(groupedOld, period);
+            Dictionary<Person, double> oldGemiddelde = GetAverageTweets(groupedOld, period - 1);
 
-            
+
             Console.WriteLine("=============NEW=============");
             Dictionary<Person, Dictionary<DateTime, List<Record>>> groupedDatenew = GetGroupedByDate(groupedNew);
             Dictionary<Person, double> newGemiddelde = GetAverageTweets(groupedNew, period);
 
             //De verschillen tonen in console
             Console.WriteLine("===========VERSCHIL===========");
-            oldGemiddelde.Values.ToList().ForEach(v => Console.WriteLine(oldGemiddelde.Keys.ToList()[oldGemiddelde.Values.ToList().IndexOf(v)] + " = " + (newGemiddelde.Values.ToList()[oldGemiddelde.Values.ToList().IndexOf(v)] - v)));
-
-            Console.WriteLine("\n===== OLDRECORDPERSONS =====");
-            oldGemiddelde.Keys.ToList().ForEach(Console.WriteLine);
-
-            Console.WriteLine("\n===== NEWRECORDPERSONS =====");
-            newGemiddelde.Keys.ToList().ForEach(Console.WriteLine);
+            oldGemiddelde.Keys.ToList().ForEach(k =>
+            {
+                newGemiddelde.TryGetValue(k, out double nieuw);
+                oldGemiddelde.TryGetValue(k, out double oud);
+                Console.WriteLine(k + " = " + (nieuw - oud));
+            });
 
             //Alerts maken
             List<Alert> alerts = new List<Alert>();
             oldGemiddelde.Keys.ToList().ForEach(k =>
             {
-                double verschil = 0;
-                verschil = newGemiddelde.Values.ToList()[oldGemiddelde.Keys.ToList().IndexOf(k)] - oldGemiddelde.Values.ToList()[oldGemiddelde.Keys.ToList().IndexOf(k)];
+                newGemiddelde.TryGetValue(k, out double nieuw);
+                oldGemiddelde.TryGetValue(k, out double oud);
+
+                double verschil = nieuw - oud;
 
                 if (verschil == 0) return;
 
-                if (verschil <= -0.02)
+                if (verschil <= -0.25)
                 {
                     alerts.Add(new Alert()
                     {
@@ -74,7 +75,7 @@ namespace PB.BL
                         Profile = profile
                     });
                 }
-                else if (verschil >= 0.02)
+                else if (verschil >= 0.25)
                 {
                     alerts.Add(new Alert()
                     {
@@ -88,8 +89,20 @@ namespace PB.BL
                 }
             });
 
-            //Return alerts
-            return alerts;
+
+            Console.WriteLine("========= NIEUWE ALERTS ========");
+            List<Alert> newAlerts = new List<Alert>();
+            alerts.ForEach(a =>
+            {
+                if (profile.Alerts.FirstOrDefault(pa => pa.TimeStamp.Date.Equals(a.TimeStamp.Date) && pa.Text.Equals(a.Text)) == null)
+                {
+                    Console.WriteLine(a);
+                    profile.Alerts.Add(a);
+                    newAlerts.Add(a);
+                }
+            });
+
+            return newAlerts;
         }
 
         private List<Person> GetPersons(List<Item> subscriptions, List<Record> records)
@@ -163,8 +176,8 @@ namespace PB.BL
                     rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d => valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
                 }
 
-                AverageTweets.Add(rp, GetAverage(valueDict, period - 1));
-                Console.WriteLine(rp.ToString() + " - " + GetAverage(valueDict, period - 1)); // period -1 omdat periode is uitgezonderd vandaag
+                AverageTweets.Add(rp, GetAverage(valueDict, period));
+                Console.WriteLine(rp.ToString() + " - " + GetAverage(valueDict, period)); // period -1 omdat periode is uitgezonderd vandaag
             });
 
             return AverageTweets;

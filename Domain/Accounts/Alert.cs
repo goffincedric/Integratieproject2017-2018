@@ -33,7 +33,7 @@ namespace PB.BL.Domain.Account
 
             if (!alert.Text.ToLower().Equals(Text.ToLower())) return false;
             if (!alert.Description.ToLower().Equals(Description.ToLower())) return false;
-            if (!alert.UserId.ToLower().Equals(UserId.ToLower())) return false;
+            if (!alert.Profile.Id.ToLower().Equals(Profile.Id.ToLower())) return false;
             if (!alert.TimeStamp.Date.Equals(TimeStamp.Date)) return false;
             return true;
         }
