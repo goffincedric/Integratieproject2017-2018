@@ -261,7 +261,7 @@ namespace UI_MVC.Controllers
 
             UserManager.ChangeProfile(profile);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ItemDetail", "Item", new {id = 6});
         }
 
         [HttpPost]
