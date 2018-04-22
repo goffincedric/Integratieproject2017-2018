@@ -1,5 +1,4 @@
-﻿using Domain.Account;
-using Domain.Settings;
+﻿using Domain.Settings;
 using PB.BL.Domain.Account;
 using System.Collections.Generic;
 

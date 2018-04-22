@@ -1,5 +1,4 @@
-﻿using Domain.Account;
-using Domain.Settings;
+﻿using Domain.Settings;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
