@@ -152,7 +152,7 @@ namespace UI_MVC.Controllers
         public ActionResult GetNotificationCount()
         {
             Profile user = UserManager.GetProfile(User.Identity.GetUserName());
-            int alertCount = user.Alerts.Count;
+            int alertCount = user.Alerts.FindAll(a => !a.IsRead).Count;
             return Content(String.Format("{0}", alertCount));
         }
 
