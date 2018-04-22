@@ -1,9 +1,9 @@
-﻿using Domain.Settings;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PB.BL;
 using PB.BL.Domain.Account;
+using PB.BL.Domain.Settings;
 using PB.BL.Interfaces;
 using System;
 using System.Collections.Generic;
