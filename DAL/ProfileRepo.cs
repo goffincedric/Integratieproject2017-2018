@@ -49,9 +49,9 @@ namespace PB.DAL
             return profile;
         }
 
-        public void DeleteProfile(string username)
+        public void DeleteProfile(string userId)
         {
-            Profile profile = ReadProfile(username);
+            Profile profile = ReadProfile(userId);
             if (profile != null)
             {
                 UserData data = profile.UserData;
@@ -61,14 +61,14 @@ namespace PB.DAL
             }
         }
 
-        public Profile ReadProfile(string username)
+        public Profile ReadProfile(string userId)
         {
             return ctx.Users
                 .Include("UserData")
                 .Include("Alerts")
                 .Include("Subscriptions")
                 .Include("Settings")
-                .FirstOrDefault(p => p.UserName == username);
+                .FirstOrDefault(p => p.Id.Equals(userId));
         }
 
         public IEnumerable<Profile> ReadProfiles()

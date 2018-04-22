@@ -545,19 +545,16 @@ namespace PB.BL
             subscribedItems.ForEach(Console.WriteLine);
 
             //Check trends voor people
-            List<Alert> alerts = trendspotter.CheckTrendAverageRecords(peopleRecords);
+            List<Alert> alerts = trendspotter.CheckTrendAverageRecords(profile, peopleRecords);
             Console.WriteLine("============ ALERTS ===========");
-            //Link profile to alerts
-            alerts.ForEach(a =>
-            {
-                Console.WriteLine(a);
-                a.Profile = profile;
-                a.Username = profile.UserName;
-            });
 
             alerts.ForEach(a =>
             {
-                if (!profile.Alerts.Contains(a)) profile.Alerts.Add(a);
+                if (!profile.Alerts.Contains(a))
+                {
+                    profile.Alerts.Add(a);
+                    Console.WriteLine(a);
+                }
             });
 
             UowManager.Save();
@@ -568,8 +565,8 @@ namespace PB.BL
 
         public void CheckTrend()
         {
-            InitNonExistingRepo();
-            trendspotter.CheckTrendAverageRecords(GetRecords());
+            //InitNonExistingRepo();
+            //trendspotter.CheckTrendAverageRecords(GetRecords());
         }
 
         public IEnumerable<Keyword> GetKeywords()

@@ -12,10 +12,10 @@ namespace PB.BL.Domain.Account
         public bool IsEnabled { get; set; }
         public string Value { get; set; }
         [Key, Column(Order = 2)]
-        public string Username { get; set; }
+        public string UserId { get; set; }
 
         [Required]
-        [ForeignKey("Username")]
+        [ForeignKey("UserId")]
         public Profile Profile { get; set; }
     }
 
