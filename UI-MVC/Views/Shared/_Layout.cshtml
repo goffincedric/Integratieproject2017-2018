@@ -112,7 +112,7 @@
                         @if (Request.IsAuthenticated)
                         {
                             <li class="notifications dropdown">
-                                <span class="counter bgc-red">3</span> <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
+                                <span class="counter bgc-red">@Html.Action("GetNotificationCount", "Account")</span> <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
                                 @{
                                     Html.RenderAction("_NotificationDropdown", "Account");
                                 }
