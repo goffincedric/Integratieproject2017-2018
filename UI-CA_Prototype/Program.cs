@@ -245,7 +245,7 @@ namespace UI_CA_Prototype
                         new SubplatformSetting()
                         {
                             SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
-                            Value = "14"
+                            Value = "31"
                         }
                     },
                     Admins = new List<Profile>(),
