@@ -44,12 +44,13 @@
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <div class="peers ai-c jc-sb fxw-nw">
-                            <div class="peer">
-                                @Html.CheckBoxFor(model => model.RememberMe, new { @type = "checkbox", @class = "form-check-input" })
-                                @Html.LabelFor(model => model.RememberMe, "Remember me")
+                        
+                          <div class="custom-control custom-checkbox" style="margin-bottom: 10px">
+                                @Html.EditorFor(model => model.RememberMe, new { htmlAttributes = new { @class = "custom-control-input", @type="checkbox", @id = "customCheck1" } })
+                            <label class="custom-control-label" for="customCheck1">Remember Me</label> 
+                                @*@Html.LabelFor(model => model.RememberMe)*@
                             </div>
-                        </div>
+                        
                         <div class="peer">
                             <button value="Log In" type="submit" class="btn btn-primary">Login</button>
                         </div>

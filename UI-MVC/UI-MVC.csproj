@@ -257,6 +257,7 @@
     <Content Include="Content\Images\faqbg.jpg" />
     <Content Include="Content\Images\Index\banner.jpg" />
     <Content Include="Content\Images\logo_new.png" />
+    <Content Include="Content\Images\nva.jpg" />
     <Content Include="Content\Styling\account\custom.css" />
     <Content Include="Content\Styling\grid2\gridstack-extra.css" />
     <Content Include="Content\Styling\grid2\gridstack.css" />

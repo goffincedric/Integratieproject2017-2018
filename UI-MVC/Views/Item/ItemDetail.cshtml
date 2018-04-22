@@ -1,38 +1,100 @@
 ﻿@model PB.BL.Domain.Items.Item
 
 @{
-    Layout = null;
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<main class="main-content bgc-grey-100">
+  <div id="mainContent" class="container-fluid">
+    
+    <div class="row">
+      <div class="w-25 p-3">
+        <img style="width: 200px;" src="~/Content/Images/nva.jpg" alt="logo" />
+      </div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ItemDetail</title>
-</head>
-<body>
-    <div>
+      <div class="w-75 p-3">
+        <div class="h-75 w-100 d-inline-block" style="text-align: center; vertical-align: middle;">
+          <h1 style="color: #2196f3; text-align: center; padding-top: 3%;" class="display-4"> @Html.DisplayFor(model => model.Name)</h1>
+        </div>
+        <div class="h-25 w-100 d-inline-block">
+          <button type="submit" value="Subscribe me!" class="btn btn-outline-primary btn-lg btn-block">Subcribe me!</button>
+        </div>
+      </div>
+    </div>
+    
+ 
+      <div class="row" style="margin-top: 10px;">
+
+        <div class="col-sm" style="margin-left: 0; margin-right: 25px; padding-left: 0; padding-right: 0">
+          <div class="layers bd bgc-white p-20">
+            <div class="layer w-100 mB-10">
+              <h6 class="lh-1">Populariteit</h6>
+            </div>
+            <div class="layer w-100">
+              <div class="peers ai-sb fxw-nw">
+                <div class="peer peer-greed"><span id="sparklinedash4"></span></div>
+                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">+10%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm" style="padding-left: 0; padding-right: 0;margin-right: 25px; margin-left: 25px;">
+          <div class="layers bd bgc-white p-20">
+            <div class="layer w-100 mB-10">
+              <h6 class="lh-1">Positiviteit</h6>
+            </div>
+            <div class="layer w-100">
+              <div class="peers ai-sb fxw-nw">
+                <div class="peer peer-greed"><span id="sparklinedash"></span></div>
+                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">+3%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-sm" style="margin-right: 0; margin-left: 25px; padding-left: 0; padding-right: 0">
+          <div class="layers bd bgc-white p-20">
+            <div class="layer w-100 mB-10">
+              <h6 class="lh-1">Activiteit</h6>
+            </div>
+            <div class="layer w-100">
+              <div class="peers ai-sb fxw-nw">
+                <div class="peer peer-greed"><span id="sparklinedash2"></span></div>
+                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">-7%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+  
+
+    </div>
+
+</main>
+
+  @*<div>
         <h4>Item</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.Name)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Name)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.IsHot)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.IsHot)
             </dd>
-    
+
         </dl>
-    </div>
-</body>
-</html>
+    </div>*@
