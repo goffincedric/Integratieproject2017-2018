@@ -10,8 +10,8 @@ namespace UI_MVC.Controllers.API
     [Authorize]
     public class ItemController : ApiController
     {
-        UnitOfWorkManager UowMgr;
-        readonly ItemManager ItemMgr;
+        private UnitOfWorkManager UowMgr;
+        private readonly ItemManager ItemMgr;
 
         public ItemController()
         {

@@ -9,7 +9,7 @@ namespace PB.BL
     public class Trendspotter
     {
 
-        public List<Alert> CheckTrendAverageRecords(IEnumerable<Record> records)
+        public List<Alert> CheckTrendAverageRecords(Profile profile, IEnumerable<Record> records)
         {
             /*
             *!!
@@ -25,7 +25,7 @@ namespace PB.BL
             List<Record> newRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date <= lastDate.Date).ToList();
 
             //Alle recordpersonen die records hebben van de afgelopen 14 dagen toevoegen aan lijst
-            List<Person> RecordPersons = GetPersons(newRecords);
+            List<Person> RecordPersons = GetPersons(profile.Subscriptions, newRecords);
 
             //Alle oldrecords van 1 persoon in een Dictionary met RecordPersoon als Key en de List van records als value
             Dictionary<Person, List<Record>> groupedOld = GroupRecordsPerPerson(RecordPersons, oldRecords);
@@ -69,7 +69,9 @@ namespace PB.BL
                         Description = "Daling populariteit " + k.Name,
                         Text = k.Name + " is minder populair vergeleken met de laatste 2 weken",
                         IsRead = false,
-                        TimeStamp = DateTime.Now
+                        TimeStamp = DateTime.Now,
+                        Item = k,
+                        Profile = profile
                     });
                 }
                 else if (verschil >= 0.02)
@@ -79,7 +81,9 @@ namespace PB.BL
                         Description = "Stijging populariteit " + k.Name,
                         Text = k.Name + " heeft meer populariteit gekregen vergeleken met de laatste 2 weken",
                         IsRead = false,
-                        TimeStamp = DateTime.Now
+                        TimeStamp = DateTime.Now,
+                        Item = k,
+                        Profile = profile
                     });
                 }
             });
@@ -88,14 +92,14 @@ namespace PB.BL
             return alerts;
         }
 
-        private List<Person> GetPersons(List<Record> records)
+        private List<Person> GetPersons(List<Item> subscriptions, List<Record> records)
         {
             List<Person> RecordPersons = new List<Person>();
             records.ToList().ForEach(r =>
             {
                 foreach (Person person in r.Persons)
                 {
-                    if (!RecordPersons.Contains(person))
+                    if (!RecordPersons.Contains(person) && subscriptions.Contains(person))
                     {
                         RecordPersons.Add(person);
                     }
@@ -187,7 +191,7 @@ namespace PB.BL
                 Description = "Something has happened",
                 Text = "A change is coming",
                 Profile = profile,
-                Username = profile.UserName,
+                UserId = profile.Id,
 
                 IsRead = false,
                 TimeStamp = DateTime.Now

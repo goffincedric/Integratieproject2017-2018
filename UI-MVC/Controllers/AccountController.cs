@@ -151,8 +151,13 @@ namespace UI_MVC.Controllers
         #region Notification
         public ActionResult GetNotificationCount()
         {
+<<<<<<< HEAD
             Profile user = UserManager.GetProfile(User.Identity.GetUserName());
             int alertCount = user.Alerts.FindAll(a => !a.IsRead).Count;
+=======
+            Profile user = UserManager.GetProfile(User.Identity.GetUserId());
+            int alertCount = user.Alerts.Count;
+>>>>>>> master
             return Content(String.Format("{0}", alertCount));
         }
         #endregion
@@ -164,7 +169,7 @@ namespace UI_MVC.Controllers
             //nog via pk maken
             if (Request.IsAuthenticated)
             {
-                AccountEditModel account = new AccountEditModel(UserManager.GetProfile(User.Identity.GetUserName()));
+                AccountEditModel account = new AccountEditModel(UserManager.GetProfile(User.Identity.GetUserId()));
                 return View(account);
             }
             else
@@ -178,7 +183,7 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Account(AccountEditModel editedAccount)
         {
-            Profile newProfile = UserManager.GetProfile(User.Identity.GetUserName());
+            Profile newProfile = UserManager.GetProfile(User.Identity.GetUserId());
             newProfile.UserData.LastName = editedAccount.LastName;
             newProfile.UserData.FirstName = editedAccount.FirstName;
             newProfile.Email = editedAccount.Email;
@@ -272,9 +277,9 @@ namespace UI_MVC.Controllers
             {
                 return RedirectToAction("Account", "Account");
             }
-            var user = UserManager.GetProfile(User.Identity.GetUserName());
+            var user = UserManager.GetProfile(User.Identity.GetUserId());
 
-            UserManager.RemoveProfile(user.UserName);
+            UserManager.RemoveProfile(user.Id);
 
             LogOff();
 
@@ -284,17 +289,17 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles=("Admin,SuperAdmin"))]
-        public ActionResult DeleteProfileAdmin(string username)
+        [Authorize(Roles=("User,Admin,SuperAdmin"))]
+        public ActionResult DeleteProfileAdmin(string userId)
         {
             if (!ModelState.IsValid)
             {
                 return RedirectToAction("AdminCrud", "Home");
             }
-            var user = UserManager.GetProfile(username);
+            var user = UserManager.GetProfile(userId);
         
 
-            UserManager.RemoveProfile(user.UserName);
+            UserManager.RemoveProfile(user.Id);
 
             LogOff();
 

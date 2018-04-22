@@ -27,5 +27,6 @@ namespace PB.BL.Domain.Items
         public List<Keyword> Keywords { get; set; }
         public List<Comparison> Comparisons { get; set; }
         public List<Profile> SubscribedProfiles { get; set; }
+        public List<Alert> Alerts { get; set; }
     }
 }

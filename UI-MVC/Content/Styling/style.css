@@ -1839,6 +1839,7 @@ a.fc-more {
 }
 
 .hide-content {
+    position: inherit;
     padding: 0px;
     width: 100%;
     background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
