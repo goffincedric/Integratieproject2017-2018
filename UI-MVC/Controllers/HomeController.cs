@@ -152,5 +152,22 @@ namespace UI_MVC.Controllers
             }
             return View("~/Views/Home/Index.cshtml");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSubscription(int id)
+        {
+            var user = accountMgr.GetProfile(User.Identity.GetUserName());
+            Item item = itemMgr.GetItem(id);
+
+            if (!user.Subscriptions.Contains(item))
+            {
+
+                accountMgr.AddSubscription(user, item);
+               return RedirectToAction("ItemDetail", "Item");
+            }
+            return RedirectToAction("ItemDetail", "Item");
+        }
+
     }
 }

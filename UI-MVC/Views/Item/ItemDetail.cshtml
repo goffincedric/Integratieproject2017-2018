@@ -17,12 +17,16 @@
           <h1 style="color: #2196f3; text-align: center; padding-top: 3%;" class="display-4"> @Html.DisplayFor(model => model.Name)</h1>
         </div>
         <div class="h-25 w-100 d-inline-block">
+        @using (Html.BeginForm("AddSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
+        {
+          @Html.AntiForgeryToken()
           <button type="submit" value="Subscribe me!" class="btn btn-outline-primary btn-lg btn-block">Subcribe me!</button>
+        }
         </div>
       </div>
     </div>
     
- 
+   
       <div class="row" style="margin-top: 10px;">
 
         <div class="col-sm" style="margin-left: 0; margin-right: 25px; padding-left: 0; padding-right: 0">
