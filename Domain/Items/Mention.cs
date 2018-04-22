@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Items
+namespace PB.BL.Domain.Items
 {
     [DataContract]
     [Table("tblMention")]

@@ -1,11 +1,10 @@
-﻿using Domain.Account;
-using Domain.Settings;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.Settings;
 using PB.BL.Interfaces;
 using PB.DAL;
 using PB.DAL.EF;

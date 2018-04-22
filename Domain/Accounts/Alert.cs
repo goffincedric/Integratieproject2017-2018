@@ -1,9 +1,8 @@
-﻿using PB.BL.Domain.Account;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Account
+namespace PB.BL.Domain.Account
 {
     [Table("tblAlert")]
   public class Alert

@@ -1,8 +1,8 @@
-using Domain.Settings;
 using Microsoft.AspNet.Identity;
 using PB.BL;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System.Collections.Generic;
 using System.Web.Mvc;

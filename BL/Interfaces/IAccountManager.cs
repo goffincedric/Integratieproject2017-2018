@@ -1,6 +1,5 @@
-﻿using Domain.Account;
-using Domain.Settings;
-using PB.BL.Domain.Account;
+﻿using PB.BL.Domain.Account;
+using PB.BL.Domain.Settings;
 using System.Collections.Generic;
 
 namespace PB.BL.Interfaces

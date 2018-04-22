@@ -1,5 +1,4 @@
-﻿using Domain.Account;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;

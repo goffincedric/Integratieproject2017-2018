@@ -1,8 +1,8 @@
-﻿using Domain.Settings;
-using PB.BL.Domain.Account;
+﻿using PB.BL.Domain.Account;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
+using PB.BL.Domain.Settings;
 using PB.BL.Interfaces;
 using PB.DAL;
 using System;
