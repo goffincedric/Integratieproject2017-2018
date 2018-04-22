@@ -253,6 +253,17 @@ namespace UI_MVC.Controllers
             return PartialView(model);
         }
 
+        public ActionResult ClickNotification(int id)
+        {
+            Profile profile = UserManager.GetProfile(User.Identity.GetUserName());
+            Alert alert = profile.Alerts.Find(a => a.AlertId == id);
+            alert.IsRead = true;
+
+            UserManager.ChangeProfile(profile);
+
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteProfile(DeleteProfileModel model)

@@ -5,15 +5,30 @@
         <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm notificationsList">
             @foreach (var a in Model)
             {
-                <li class="notificationsListItem">
-                    <a href="" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                        <div class="peer mR-15"><img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/1.jpg" alt=""></div>
-                        <div class="peer peer-greed">
-                            <span><span class="fw-500">John Doe</span> <span class="c-grey-600">liked your <span class="text-dark">post</span></span></span>
-                            <p class="m-0"><small class="fsz-xs"></small>@a.GetTime()</p>
-                        </div>
-                    </a>
-                </li>
+                if (a.IsRead)
+                {
+                    <li class="notificationsListItem">
+                        <a href="@Url.Action("ClickNotification","Account", new {id = a.AlertId})" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                            <div class="peer mR-15"><img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/23.jpg" alt=""></div>
+                            <div class="peer peer-greed">
+                                <span><span class="fw-500">John Doe</span> <span class="c-grey-600">@a.CheckChange() <span class="text-dark">Populariteit</span></span></span>
+                                <p class="m-0"><small class="fsz-xs"></small>@a.GetTime()</p>
+                            </div>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="notificationsListItem">
+                        <a href="@Url.Action("ClickNotification","Account", new {id = a.AlertId})" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgc-blue-50 bgcH-grey-100">
+                            <div class="peer mR-15"><img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/23.jpg" alt=""></div>
+                            <div class="peer peer-greed">
+                                <span><span class="fw-500">John Doe</span> <span class="c-grey-600">@a.CheckChange() <span class="text-dark">Populariteit</span></span></span>
+                                <p class="m-0"><small class="fsz-xs"></small>@a.GetTime()</p>
+                            </div>
+                        </a>
+                    </li>
+                }
             }
         </ul>
     </li>

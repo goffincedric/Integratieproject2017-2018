@@ -47,7 +47,7 @@ namespace PB.BL.Domain.Account
             {
                 returnString = "Gisteren om " + TimeStamp.ToShortTimeString();
             }
-            else if (timedifH > 1)
+            else if (timedifH > .9)
             {
                 returnString = "Ongeveer " + timedifH.ToString("F0") + " uur geleden";
             }
@@ -59,6 +59,20 @@ namespace PB.BL.Domain.Account
                 returnString = "Zonet";
             }
             return returnString;
+        }
+
+        public string CheckChange()
+        {
+            if (Description.ToLower().Contains("stijg"))
+            {
+                return "stijgt in";
+            } else if (Description.ToLower().Contains("daal"))
+            {
+                return "daalt in";
+            } else
+            {
+                return "unknown";
+            }
         }
 
         public override int GetHashCode()
