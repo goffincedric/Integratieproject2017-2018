@@ -1,9 +1,9 @@
-﻿using Domain.Settings;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PB.BL;
 using PB.BL.Domain.Account;
+using PB.BL.Domain.Settings;
 using PB.BL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -149,13 +149,23 @@ namespace UI_MVC.Controllers
         }
         #endregion
 
+        #region Notification
+        public ActionResult GetNotificationCount()
+        {
+            Profile user = UserManager.GetProfile(User.Identity.GetUserId());
+            int alertCount = user.Alerts.FindAll(a => !a.IsRead).Count;
+            return Content(String.Format("{0}", alertCount));
+        }
+        #endregion
+
+
         #region Account
         public ActionResult Account()
         {
             //nog via pk maken
             if (Request.IsAuthenticated)
             {
-                AccountEditModel account = new AccountEditModel(UserManager.GetProfile(User.Identity.GetUserName()));
+                AccountEditModel account = new AccountEditModel(UserManager.GetProfile(User.Identity.GetUserId()));
                 return View(account);
             }
             else
@@ -169,7 +179,7 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Account(AccountEditModel editedAccount)
         {
-            Profile newProfile = UserManager.GetProfile(User.Identity.GetUserName());
+            Profile newProfile = UserManager.GetProfile(User.Identity.GetUserId());
             newProfile.UserData.LastName = editedAccount.LastName;
             newProfile.UserData.FirstName = editedAccount.FirstName;
             newProfile.Email = editedAccount.Email;
@@ -189,7 +199,7 @@ namespace UI_MVC.Controllers
             return View();
         }
 
-        public ActionResult ResetPassword()
+        public ActionResult _ResetPassword()
         {
 
             return PartialView();
@@ -205,12 +215,12 @@ namespace UI_MVC.Controllers
             }
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-            if(UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
+            if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
             {
-                return RedirectToAction("Account","Account");
+                return RedirectToAction("Account", "Account");
             }
-          
-            
+
+
             string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
 
             var result = await UserManager.ResetPasswordAsync(user.Id, code, model.NewPassword);
@@ -219,17 +229,42 @@ namespace UI_MVC.Controllers
                 return RedirectToAction("Account", "Account");
             }
             AddErrors(result);
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult DeleteProfile()
+        public ActionResult _DeleteProfile()
         {
             return PartialView();
         }
 
         public ActionResult _NotificationDropdown()
         {
-            return PartialView();
+            var model = new List<Alert>();
+
+            model.AddRange(UserManager.GetProfile(User.Identity.GetUserId()).Alerts);
+
+            model.Sort(delegate (Alert x, Alert y)
+            {
+                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
+                else if (x.TimeStamp == null) return -1;
+                else if (y.TimeStamp == null) return 1;
+                else return y.TimeStamp.CompareTo(x.TimeStamp);
+            });
+
+            return PartialView(model);
+        }
+
+        public ActionResult ClickNotification(int id)
+        {
+            Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
+            Alert alert = profile.Alerts.Find(a => a.AlertId == id);
+            alert.IsRead = true;
+
+            UserManager.ChangeProfile(profile);
+
+            int itemId = alert.ItemId;
+
+            return RedirectToAction("ItemDetail", "Item", new {id = itemId});
         }
 
         [HttpPost]
@@ -240,9 +275,9 @@ namespace UI_MVC.Controllers
             {
                 return RedirectToAction("Account", "Account");
             }
-            var user = UserManager.GetProfile(User.Identity.GetUserName());
+            var user = UserManager.GetProfile(User.Identity.GetUserId());
 
-            UserManager.RemoveProfile(user.UserName);
+            UserManager.RemoveProfile(user.Id);
 
             LogOff();
 
@@ -252,17 +287,17 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles=("Admin,SuperAdmin"))]
-        public ActionResult DeleteProfileAdmin(string username)
+        [Authorize(Roles=("User,Admin,SuperAdmin"))]
+        public ActionResult DeleteProfileAdmin(string userId)
         {
             if (!ModelState.IsValid)
             {
                 return RedirectToAction("AdminCrud", "Home");
             }
-            var user = UserManager.GetProfile(username);
+            var user = UserManager.GetProfile(userId);
         
 
-            UserManager.RemoveProfile(user.UserName);
+            UserManager.RemoveProfile(user.Id);
 
             LogOff();
 

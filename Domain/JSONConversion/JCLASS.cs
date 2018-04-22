@@ -1,9 +1,9 @@
-﻿using Domain.Items;
+﻿using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using System;
 using System.Collections.Generic;
 
-namespace Domain.JSONConversion
+namespace PB.BL.Domain.JSONConversion
 {
     public class JClass
     {

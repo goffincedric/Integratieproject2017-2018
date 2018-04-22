@@ -1,5 +1,5 @@
-﻿using Domain.Items;
-using Domain.JSONConversion;
+﻿using PB.BL.Domain.Items;
+using PB.BL.Domain.JSONConversion;
 using System.Collections.Generic;
 
 namespace PB.DAL

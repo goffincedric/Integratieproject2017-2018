@@ -1,4 +1,3 @@
-using Domain.Items;
 using Newtonsoft.Json;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Items;
@@ -134,81 +133,23 @@ namespace UI_CA_Prototype
 
 
         //Method to test write functionality of JsonConvert (read written json file on desktop for record-object structure)
-        public void WriteTestRecords()
+        public void WriteTestRecords(IEnumerable<Record> records)
         {
-            List<Record> records = new List<Record>
+            List<Record> recordList = records.Take(200).ToList();
+
+            JsonSerializer serializer = new JsonSerializer
             {
-                new Record()
-                {
-                    Hashtags = new List<Hashtag>(),
-                    Words = new List<Word>()
-                    {
-                        new Word("annouri"),
-                        new Word("kasper goethals"),
-                        new Word("arabië"),
-                        new Word("imade"),
-                        new Word("iran")
-                    },
-                    Date = DateTime.Parse("2017-09-11 04:53:38"),
-                    Persons = new List<Person>()
-                    {
-                        new Person() {Name = "Imade Annouri"},
-                        new Person() {Name = "Annick De Ridder"},
-                    },
-                    Longitude = 4.399708,
-                    Latitude = 51.22111,
-                    Tweet_Id = 907104827896987600,
-                    Sentiment = new Sentiment(0, 0),
-                    Retweet = true,
-                    Source = "twitter",
-                    URLs = new List<Url>()
-                    {
-                        new Url("http://pltwps.it/_JY894kJ")
-                    },
-                    Mentions = new List<Mention>()
-                },
-                new Record()
-                {
-                    Hashtags = new List<Hashtag>()
-                    {
-                        new Hashtag("Firsts,")
-                    },
-                    Words = new List<Word>()
-                    {
-                        new Word("annouri"),
-                        new Word("imade"),
-                        new Word("reeks"),
-                        new Word("time")
-                    },
-                    Date = DateTime.Parse("2017-09-07 22:52:35"),
-                    Persons = new List<Person>()
-                    {
-                        new Person() {Name = "Bart De Wever"}
-                    },
-                    Longitude = 6.46744,
-                    Latitude = 52.81776,
-                    Tweet_Id = 905926801804980200,
-                    Sentiment = new Sentiment(0.7, 1),
-                    Retweet = false,
-                    Source = "twitter",
-                    URLs = new List<Url>()
-                    {
-                        new Url("https://twitter.com/TIME/status/905785286092877824"),
-                        new Url("http://pltwps.it/_xV6mWwE")
-                    },
-                    Mentions = new List<Mention>()
-                }
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
 
-
-            JsonSerializer serializer = new JsonSerializer();
             using (StreamWriter sw = new StreamWriter(Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory) + @"\structure.json"))
             using (JsonWriter writer = new JsonTextWriter(sw))
             {
-                serializer.Serialize(writer, records);
+                serializer.Serialize(writer, recordList);
             }
 
-            Console.WriteLine("Er werd een testbestand genaamd 'structure.json' weggeschreven naazr uw desktop met 2 test-records");
+            Console.WriteLine("Er werd een testbestand genaamd 'structure.json' weggeschreven naar uw desktop met max 200 test-records");
         }
     }
 }

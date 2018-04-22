@@ -1,9 +1,7 @@
-using Domain.Account;
-using Domain.Items;
-using Domain.JSONConversion;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.JSONConversion;
 using PB.BL.Domain.Platform;
 using PB.BL.Interfaces;
 using PB.DAL;
@@ -143,7 +141,7 @@ namespace PB.BL
         public Item GetItem(string name)
         {
             InitNonExistingRepo();
-            return ItemRepo.ReadItem(name);
+            return ItemRepo.ReadItems().FirstOrDefault(i => i.Name.Equals(name));
         }
 
         public IEnumerable<Item> GetItems()
@@ -164,7 +162,7 @@ namespace PB.BL
             return ItemRepo.ReadThemes();
         }
 
-        public Organisation GetOrganistation(int itemId)
+        public Organisation GetOrganisation(int itemId)
         {
             InitNonExistingRepo();
             return (Organisation)ItemRepo.ReadItem(itemId);
@@ -547,31 +545,18 @@ namespace PB.BL
             subscribedItems.ForEach(Console.WriteLine);
 
             //Check trends voor people
-            List<Alert> alerts = trendspotter.CheckTrendAverageRecords(peopleRecords);
-            Console.WriteLine("============ ALERTS ===========");
-            //Link profile to alerts
-            alerts.ForEach(a =>
-            {
-                Console.WriteLine(a);
-                a.Profile = profile;
-                a.Username = profile.UserName;
-            });
-
-            alerts.ForEach(a =>
-            {
-                if (!profile.Alerts.Contains(a)) profile.Alerts.Add(a);
-            });
+            List<Alert> newAlerts = trendspotter.CheckTrendAverageRecords(profile, peopleRecords);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 
             UowManager.Save();
 
             //Return alerts
-            return alerts;
+            return newAlerts;
         }
 
         public void CheckTrend()
         {
-            InitNonExistingRepo();
-            trendspotter.CheckTrendAverageRecords(GetRecords());
+            //InitNonExistingRepo();
+            //trendspotter.CheckTrendAverageRecords(GetRecords());
         }
 
         public IEnumerable<Keyword> GetKeywords()
@@ -581,27 +566,27 @@ namespace PB.BL
 
         public int GetKeywordsCount()
         {
-            return ItemRepo.ReadKeywordsCount();
+            return ItemRepo.ReadKeywords().Count();
         }
 
         public int GetThemesCount()
         {
-            return ItemRepo.ReadThemesCount();
+            return ItemRepo.ReadThemes().Count();
         }
 
         public int GetPersonsCount()
         {
-            return ItemRepo.ReadPersonsCount();
+            return ItemRepo.ReadPersons().Count();
         }
 
         public int GetOrganisationsCount()
         {
-            return ItemRepo.ReadOrganisationsCount();
+            return ItemRepo.ReadOrganisations().Count();
         }
 
         public int GetItemsCount()
         {
-            return ItemRepo.ReadItemsCount();
+            return ItemRepo.ReadItems().Count();
         }
 
         //private void RecordsToItems(List<Record> records)

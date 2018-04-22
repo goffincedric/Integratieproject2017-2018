@@ -1,11 +1,10 @@
-﻿using Domain.Account;
-using Domain.Settings;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.Settings;
 using PB.BL.Interfaces;
 using PB.DAL;
 using PB.DAL.EF;
@@ -73,8 +72,8 @@ namespace PB.BL
                 RequiredLength = 6,
                 RequireNonLetterOrDigit = false,
                 RequireDigit = true,
-                RequireLowercase = false,
-                RequireUppercase = false
+                RequireLowercase = true,
+                RequireUppercase = true
             };
 
             manager.UserLockoutEnabledByDefault = true;
@@ -205,10 +204,10 @@ namespace PB.BL
             UowManager.Save();
         }
 
-        public Profile GetProfile(string username)
+        public Profile GetProfile(string userId)
         {
             InitNonExistingRepo();
-            return ProfileRepo.ReadProfile(username);
+            return ProfileRepo.ReadProfile(userId);
         }
 
         public IEnumerable<Profile> GetProfiles()
@@ -217,21 +216,21 @@ namespace PB.BL
             return ProfileRepo.ReadProfiles();
         }
 
-        public void RemoveProfile(string username)
+        public void RemoveProfile(string userId)
         {
             InitNonExistingRepo();
-            Profile profile = ProfileRepo.ReadProfile(username);
+            Profile profile = ProfileRepo.ReadProfile(userId);
 
             //int id = profile.UserData.Id;
 
-            ProfileRepo.DeleteProfile(username);
+            ProfileRepo.DeleteProfile(userId);
 
             UowManager.Save();
         }
 
         public int GetUserCount()
         {
-            return ProfileRepo.ReadProfileCount();
+            return ProfileRepo.ReadProfiles().Count();
         }
         #endregion
 
@@ -264,10 +263,10 @@ namespace PB.BL
         #endregion
 
         #region ProfileSettings
-        public Profile AddUserSetting(string username, Setting.Account settingName, string value)
+        public Profile AddUserSetting(string userId, Setting.Account settingName, string value)
         {
             InitNonExistingRepo();
-            Profile profile = GetProfile(username);
+            Profile profile = GetProfile(userId);
             profile.Settings.Add(new UserSetting()
             {
                 Profile = profile,
@@ -279,26 +278,26 @@ namespace PB.BL
             return profile;
         }
 
-        public void ChangeUserSetting(string username, UserSetting userSetting)
+        public void ChangeUserSetting(string userId, UserSetting userSetting)
         {
             InitNonExistingRepo();
-            Profile profile = GetProfile(username);
-            profile.Settings[profile.Settings.FindIndex(s => s.SettingName.Equals(userSetting.SettingName) && s.Username.Equals(userSetting.Username))] = userSetting;
+            Profile profile = GetProfile(userId);
+            profile.Settings[profile.Settings.FindIndex(s => s.SettingName.Equals(userSetting.SettingName) && s.Profile.Id.Equals(userSetting.Profile.Id))] = userSetting;
 
             ChangeProfile(profile);
             UowManager.Save();
         }
 
-        public IEnumerable<UserSetting> GetUserSettings(string username)
+        public IEnumerable<UserSetting> GetUserSettings(string userId)
         {
             InitNonExistingRepo();
-            return GetProfile(username).Settings;
+            return GetProfile(userId).Settings;
         }
 
-        public UserSetting GetUserSetting(string username, Setting.Account accountSetting)
+        public UserSetting GetUserSetting(string userId, Setting.Account accountSetting)
         {
             InitNonExistingRepo();
-            return GetProfile(username).Settings.FirstOrDefault(s => s.SettingName.Equals(accountSetting));
+            return GetProfile(userId).Settings.FirstOrDefault(s => s.SettingName.Equals(accountSetting));
         }
         #endregion
 

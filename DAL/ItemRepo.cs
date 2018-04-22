@@ -74,14 +74,6 @@ namespace PB.DAL
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
-        public Item ReadItem(string name)
-        {
-            return ctx.Items
-                .Include("SubPlatforms")
-                .Include("SubscribedProfiles")
-                .FirstOrDefault(p => p.Name.ToLower().Equals(name.ToLower()));
-        }
-
         public IEnumerable<Item> ReadItems()
         {
             return ctx.Items
@@ -97,6 +89,11 @@ namespace PB.DAL
                     .OfType<Organisation>()
                 )
                 .AsEnumerable();
+        }
+
+        public IEnumerable<Item> ReadItemsEmpty()
+        {
+            return ctx.Items.AsEnumerable();
         }
 
         public void UpdateItem(Item item)
@@ -148,36 +145,6 @@ namespace PB.DAL
         {
             Keyword keyword = ReadKeyword(keywordId);
             ctx.Keywords.Remove(keyword);
-        }
-
-        public int ReadPersonsCount()
-        {
-            return ctx.Persons.Count();
-
-        }
-
-        public int ReadOrganisationsCount()
-        {
-            return ctx.Organisations.Count();
-
-        }
-
-        public int ReadThemesCount()
-        {
-            return ctx.Organisations.Count();
-
-        }
-
-        public int ReadKeywordsCount()
-        {
-            return ctx.Keywords.Count();
-
-        }
-
-        public int ReadItemsCount()
-        {
-            return ctx.Items.Count();
-
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Domain.Items;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
@@ -78,6 +77,10 @@ namespace PB.DAL.EF
             modelBuilder.Entity<Profile>()
                 .HasMany(p => p.Dashboards)
                 .WithRequired(d => d.Profile);
+
+            modelBuilder.Entity<Alert>()
+                .HasRequired(a => a.Item)
+                .WithMany(i => i.Alerts);
 
             modelBuilder.Entity<Dashboard>()
                 .HasRequired(d => d.Subplatform)

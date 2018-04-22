@@ -1,4 +1,4 @@
-﻿using Domain.Settings;
+﻿using PB.BL.Domain.Settings;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

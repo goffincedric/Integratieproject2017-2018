@@ -1,10 +1,10 @@
-﻿using Domain.JSONConversion;
-using Domain.Settings;
-using Mono.Options;
+﻿using Mono.Options;
 using PB.BL;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.JSONConversion;
 using PB.BL.Domain.Platform;
+using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
@@ -174,7 +174,7 @@ namespace UI_CA_Prototype
                 switch (keuze)
                 {
                     case 1:
-                        ExtensionMethods.WriteTestRecords();
+                        ExtensionMethods.WriteTestRecords(ItemMgr.GetRecords());
                         break;
                     case 2:
                         SelectedProfile = ExtensionMethods.SelectProfile(AccountMgr.GetProfiles());
@@ -191,7 +191,8 @@ namespace UI_CA_Prototype
                         ItemMgr.RemoveSubscription(SelectedProfile, ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
                         break;
                     case 6:
-                        ItemMgr.CheckTrend();
+                        Console.WriteLine("OUT OF ORDER");
+                        //ItemMgr.CheckTrend();
                         break;
                     case 7:
                         if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
@@ -244,7 +245,7 @@ namespace UI_CA_Prototype
                         new SubplatformSetting()
                         {
                             SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
-                            Value = "14"
+                            Value = "31"
                         }
                     },
                     Admins = new List<Profile>(),

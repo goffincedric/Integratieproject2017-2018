@@ -1,8 +1,8 @@
-using Domain.Settings;
 using Microsoft.AspNet.Identity;
 using PB.BL;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -110,11 +110,11 @@ namespace UI_MVC.Controllers
         public ActionResult AdminCrud()
         {
             ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
-            ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
             ViewBag.TotalPersons = itemMgr.GetPersonsCount().ToString();
             ViewBag.TotalOrganisations = itemMgr.GetOrganisationsCount().ToString();
             ViewBag.TotalThemes = itemMgr.GetThemesCount().ToString();
             ViewBag.TotalKeywords = itemMgr.GetKeywordsCount().ToString();
+            ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
             return View();
         }
 
@@ -123,8 +123,8 @@ namespace UI_MVC.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 string theme = "";
-                Profile profile = accountMgr.GetProfile(User.Identity.GetUserName());
-                UserSetting userSetting = accountMgr.GetUserSetting(profile.UserName, Setting.Account.THEME);
+                Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
+                UserSetting userSetting = accountMgr.GetUserSetting(profile.Id, Setting.Account.THEME);
 
                 switch (userSetting.Value)
                 {
@@ -141,12 +141,12 @@ namespace UI_MVC.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                Profile profile = accountMgr.GetProfile(User.Identity.GetUserName());
-                UserSetting userSetting = accountMgr.GetUserSetting(profile.UserName, Setting.Account.THEME);
+                Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
+                UserSetting userSetting = accountMgr.GetUserSetting(profile.Id, Setting.Account.THEME);
 
                 userSetting.Value = Theme;
 
-                accountMgr.ChangeUserSetting(profile.UserName, userSetting);
+                accountMgr.ChangeUserSetting(profile.Id, userSetting);
 
                 return View("~/Views/Home/Index.cshtml");
             }

@@ -1,4 +1,4 @@
-﻿namespace Domain.Items
+﻿namespace PB.BL.Domain.Items
 {
 
     public class Sentiment
