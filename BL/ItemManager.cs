@@ -143,7 +143,7 @@ namespace PB.BL
         public Item GetItem(string name)
         {
             InitNonExistingRepo();
-            return ItemRepo.ReadItem(name);
+            return ItemRepo.ReadItems().FirstOrDefault(i => i.Name.Equals(name));
         }
 
         public IEnumerable<Item> GetItems()
@@ -164,7 +164,7 @@ namespace PB.BL
             return ItemRepo.ReadThemes();
         }
 
-        public Organisation GetOrganistation(int itemId)
+        public Organisation GetOrganisation(int itemId)
         {
             InitNonExistingRepo();
             return (Organisation)ItemRepo.ReadItem(itemId);
@@ -581,27 +581,27 @@ namespace PB.BL
 
         public int GetKeywordsCount()
         {
-            return ItemRepo.ReadKeywordsCount();
+            return ItemRepo.ReadKeywords().Count();
         }
 
         public int GetThemesCount()
         {
-            return ItemRepo.ReadThemesCount();
+            return ItemRepo.ReadThemes().Count();
         }
 
         public int GetPersonsCount()
         {
-            return ItemRepo.ReadPersonsCount();
+            return ItemRepo.ReadPersons().Count();
         }
 
         public int GetOrganisationsCount()
         {
-            return ItemRepo.ReadOrganisationsCount();
+            return ItemRepo.ReadOrganisations().Count();
         }
 
         public int GetItemsCount()
         {
-            return ItemRepo.ReadItemsCount();
+            return ItemRepo.ReadItems().Count();
         }
 
         //private void RecordsToItems(List<Record> records)

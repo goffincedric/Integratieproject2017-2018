@@ -10,6 +10,5 @@ namespace PB.DAL
         Profile ReadProfile(string username);
         void UpdateProfile(Profile profile);
         void DeleteProfile(string username);
-        int ReadProfileCount();
     }
 }

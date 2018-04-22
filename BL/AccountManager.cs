@@ -231,7 +231,7 @@ namespace PB.BL
 
         public int GetUserCount()
         {
-            return ProfileRepo.ReadProfileCount();
+            return ProfileRepo.ReadProfiles().Count();
         }
         #endregion
 
