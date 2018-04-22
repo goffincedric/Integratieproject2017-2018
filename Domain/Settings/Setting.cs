@@ -1,4 +1,4 @@
-﻿namespace Domain.Settings
+﻿namespace PB.BL.Domain.Settings
 {
     public class Setting
     {

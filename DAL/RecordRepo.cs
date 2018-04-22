@@ -5,10 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Items;
-using Domain.JSONConversion;
 using Newtonsoft.Json;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.JSONConversion;
 using PB.DAL.EF;
 
 namespace PB.DAL
