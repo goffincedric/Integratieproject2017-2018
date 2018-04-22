@@ -110,11 +110,11 @@ namespace UI_MVC.Controllers
         public ActionResult AdminCrud()
         {
             ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
-            ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
-            ViewBag.TotalPersons = itemMgr.GetPersonsCount().ToString();
+            ViewBag.TotalPersons = itemMgr.GetPersonsCount();
             ViewBag.TotalOrganisations = itemMgr.GetOrganisationsCount().ToString();
             ViewBag.TotalThemes = itemMgr.GetThemesCount().ToString();
             ViewBag.TotalKeywords = itemMgr.GetKeywordsCount().ToString();
+            ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
             return View();
         }
 
