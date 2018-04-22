@@ -17,22 +17,6 @@ namespace PB.BL.Domain.Account
         public bool IsRead { get; set; }
         [Required]
         public DateTime TimeStamp { get; set; }
-<<<<<<< HEAD
-        public string Username { get; set; }
-        [Required]
-        [ForeignKey("Username")]
-        public Profile Profile { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is Alert)) return false;
-            Alert alert = (Alert)obj;
-
-            if (!alert.Text.ToLower().Equals(Text.ToLower())) return false;
-            if (!alert.Description.ToLower().Equals(Description.ToLower())) return false;
-            if (!alert.Username.ToLower().Equals(Username.ToLower())) return false;
-
-=======
         public string UserId { get; set; }
         public int ItemId { get; set; }
         [Required]
@@ -50,13 +34,10 @@ namespace PB.BL.Domain.Account
             if (!alert.Text.ToLower().Equals(Text.ToLower())) return false;
             if (!alert.Description.ToLower().Equals(Description.ToLower())) return false;
             if (!alert.UserId.ToLower().Equals(UserId.ToLower())) return false;
-
->>>>>>> master
             if (!alert.TimeStamp.Date.Equals(TimeStamp.Date)) return false;
             return true;
         }
 
-<<<<<<< HEAD
         public string GetTime()
         {
             string returnString = "";
@@ -98,8 +79,6 @@ namespace PB.BL.Domain.Account
             }
         }
 
-=======
->>>>>>> master
         public override int GetHashCode()
         {
             return base.GetHashCode();

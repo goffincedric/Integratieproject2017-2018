@@ -151,13 +151,8 @@ namespace UI_MVC.Controllers
         #region Notification
         public ActionResult GetNotificationCount()
         {
-<<<<<<< HEAD
-            Profile user = UserManager.GetProfile(User.Identity.GetUserName());
-            int alertCount = user.Alerts.FindAll(a => !a.IsRead).Count;
-=======
             Profile user = UserManager.GetProfile(User.Identity.GetUserId());
-            int alertCount = user.Alerts.Count;
->>>>>>> master
+            int alertCount = user.Alerts.FindAll(a => !a.IsRead).Count;
             return Content(String.Format("{0}", alertCount));
         }
         #endregion
@@ -245,7 +240,7 @@ namespace UI_MVC.Controllers
         {
             var model = new List<Alert>();
 
-            model.AddRange(UserManager.GetProfile(User.Identity.GetUserName()).Alerts);
+            model.AddRange(UserManager.GetProfile(User.Identity.GetUserId()).Alerts);
 
             model.Sort(delegate (Alert x, Alert y)
             {
@@ -260,13 +255,15 @@ namespace UI_MVC.Controllers
 
         public ActionResult ClickNotification(int id)
         {
-            Profile profile = UserManager.GetProfile(User.Identity.GetUserName());
+            Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
             Alert alert = profile.Alerts.Find(a => a.AlertId == id);
             alert.IsRead = true;
 
             UserManager.ChangeProfile(profile);
 
-            return RedirectToAction("ItemDetail", "Item", new {id = 6});
+            int itemId = alert.ItemId;
+
+            return RedirectToAction("ItemDetail", "Item", new {id = itemId});
         }
 
         [HttpPost]
