@@ -334,8 +334,8 @@
     <Content Include="Views\Item\_PersonPartialCreate.cshtml" />
     <Content Include="Views\Item\_PersonPartialTable.cshtml" />
     <Content Include="Views\Home\_Search.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\DeleteProfile.cshtml" />
+    <Content Include="Views\Account\_ResetPassword.cshtml" />
+    <Content Include="Views\Account\_DeleteProfile.cshtml" />
     <Content Include="Views\Account\_UserPartialTable.cshtml" />
     <Content Include="Views\Account\_NotificationDropdown.cshtml" />
     <Content Include="Views\Item\ItemDetail.cshtml" />

@@ -187,7 +187,7 @@ namespace UI_MVC.Controllers
             return View();
         }
 
-        public ActionResult ResetPassword()
+        public ActionResult _ResetPassword()
         {
 
             return PartialView();
@@ -203,12 +203,12 @@ namespace UI_MVC.Controllers
             }
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-            if(UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
+            if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
             {
-                return RedirectToAction("Account","Account");
+                return RedirectToAction("Account", "Account");
             }
-          
-            
+
+
             string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
 
             var result = await UserManager.ResetPasswordAsync(user.Id, code, model.NewPassword);
@@ -217,10 +217,10 @@ namespace UI_MVC.Controllers
                 return RedirectToAction("Account", "Account");
             }
             AddErrors(result);
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult DeleteProfile()
+        public ActionResult _DeleteProfile()
         {
             return PartialView();
         }
