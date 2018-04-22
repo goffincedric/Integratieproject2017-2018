@@ -1,17 +1,15 @@
-﻿using System;
+﻿using PB.BL.Domain.Platform;
+using PB.DAL.EF;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PB.BL.Domain.Platform;
-using PB.DAL.EF;
 
 namespace PB.DAL
 {
     public class SubplatformRepo : ISubplatformRepo
     {
-        private IntegratieDbContext ctx;
+        private readonly IntegratieDbContext ctx;
 
         public SubplatformRepo()
         {

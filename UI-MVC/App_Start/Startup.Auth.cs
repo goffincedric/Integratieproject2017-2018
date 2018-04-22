@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.Twitter;
@@ -9,12 +9,8 @@ using Owin;
 using PB.BL;
 using PB.BL.Domain.Account;
 using PB.DAL.EF;
-using UI_MVC;
-using UI_MVC.Models;
-using Microsoft.IdentityModel.Protocols;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.OpenIdConnect;
-using Microsoft.Owin.Security.Notifications;
+using System;
+using PB.BL.Interfaces;
 
 
 namespace UI_MVC

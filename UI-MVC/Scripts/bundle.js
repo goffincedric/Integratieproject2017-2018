@@ -772,12 +772,12 @@ webpackJsonp([0], {
               series: {
                   regions: [{
                       values: provinceData,
-                      scale: ['#C8EEFF', '#0071A4'],
-                      normalizeFunction: 'linear'
+                      scale: ["#C8EEFF", "#0071A4"],
+                      normalizeFunction: "linear"
                   }]
               },
               onRegionTipShow: function (e, el, code) {
-                  el.html(el.html() + ' (GDP - ' + provinceData[code] + ')');
+                  el.html(el.html() + " (GDP - " + provinceData[code] + ")");
               },
             backgroundColor: "transparent",
             borderColor: "hotpink",
@@ -804,7 +804,7 @@ webpackJsonp([0], {
   },
   231: function (t, i, a) {
     (function (t) {
-        t.fn.vectorMap('addMap', 'be_mill', {
+        t.fn.vectorMap("addMap", "be_mill", {
             "insets": [{
                 "width": 900,
                 "top": 0,
@@ -899,7 +899,7 @@ webpackJsonp([0], {
       p = (a.n(n), a(237));
     a.n(p),
       function () {
-        r(".start-date").datepicker({ format: 'dd/mm/yyyy' }), r(".end-date").datepicker({ format: 'dd/mm/yyyy' })
+        r(".start-date").datepicker({ format: "dd/mm/yyyy" }), r(".end-date").datepicker({ format: "dd/mm/yyyy" })
       }()
   },
   238: function (t, i, a) {

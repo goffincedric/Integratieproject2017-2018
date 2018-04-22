@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using PB.BL.Domain.Account;
+using PB.DAL.EF;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
-using Microsoft.AspNet.Identity.EntityFramework;
-using PB.BL.Domain.Account;
-using PB.DAL.EF;
 
 namespace PB.DAL
 {
     public class ProfileRepo : UserStore<Profile>, IProfileRepo
     {
-        private IntegratieDbContext ctx;
+        private readonly IntegratieDbContext ctx;
 
         public ProfileRepo()
         {

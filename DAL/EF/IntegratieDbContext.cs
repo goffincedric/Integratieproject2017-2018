@@ -1,14 +1,14 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using Domain.Items;
+﻿using Domain.Items;
+using Microsoft.AspNet.Identity.EntityFramework;
 using PB.BL.Domain.Account;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 
 namespace PB.DAL.EF

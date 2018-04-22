@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PB.BL.Domain.Items;
+﻿using PB.BL.Domain.Items;
 using PB.DAL.EF;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PB.DAL
 {
     public class ItemRepo : IItemRepo
     {
-        private IntegratieDbContext ctx;
+        private readonly IntegratieDbContext ctx;
 
         public ItemRepo()
         {
@@ -76,6 +72,14 @@ namespace PB.DAL
                 .Include("SubPlatforms")
                 .Include("SubscribedProfiles")
                 .FirstOrDefault(p => p.ItemId == itemId);
+        }
+
+        public Item ReadItem(string name)
+        {
+            return ctx.Items
+                .Include("SubPlatforms")
+                .Include("SubscribedProfiles")
+                .FirstOrDefault(p => p.Name.ToLower().Equals(name.ToLower()));
         }
 
         public IEnumerable<Item> ReadItems()

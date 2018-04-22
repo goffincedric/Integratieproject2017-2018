@@ -1,14 +1,9 @@
-﻿using PB.BL.Domain.Platform;
-using System;
+﻿using PB.BL.Domain.Account;
+using PB.BL.Domain.Dashboards;
+using PB.BL.Domain.Platform;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Items;
-using PB.BL.Domain.Dashboards;
-using PB.BL.Domain.Account;
 
 namespace PB.BL.Domain.Items
 {

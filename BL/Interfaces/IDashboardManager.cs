@@ -1,13 +1,9 @@
 ﻿using PB.BL.Domain.Account;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PB.BL
+namespace PB.BL.Interfaces
 {
     public interface IDashboardManager
     {

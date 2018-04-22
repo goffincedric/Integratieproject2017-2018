@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
 using PB.BL.Domain.Account;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PB.DAL.EF
 {
     public class IntegratieUserStore : UserStore<Profile>
     {
-        private IntegratieDbContext ctx;
+        private readonly IntegratieDbContext ctx;
         
         public IntegratieUserStore()
         {

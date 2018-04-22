@@ -1,9 +1,5 @@
 ﻿using PB.BL.Domain.Items;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PB.DAL
 {
@@ -13,6 +9,7 @@ namespace PB.DAL
         Item CreateItem(Item item);
         IEnumerable<Item> CreateItems(List<Item> items);
         Item ReadItem(int itemId);
+        Item ReadItem(string name);
         void UpdateItem(Item item);
         void DeleteItem(int itemId);
 

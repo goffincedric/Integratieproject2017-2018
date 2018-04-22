@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Domain.Settings;
+﻿using Domain.Settings;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PB.BL;
 using PB.BL.Domain.Account;
+using PB.BL.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
@@ -114,8 +114,16 @@ namespace UI_MVC.Controllers
             {
                 var user = new Profile { UserName = model.Username, Email = model.Email, };
                 user.UserData = new UserData() { Profile = user };
-                user.Settings = new List<UserSetting>();
-                user.Settings.Add(new UserSetting() { Profile = user, IsEnabled = true, SettingName = Setting.Account.THEME, Value = "light" });
+                user.Settings = new List<UserSetting>
+                {
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName = Setting.Account.THEME,
+                        Value = "light"
+                    }
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -247,23 +255,25 @@ namespace UI_MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize(Roles=("Admin,SuperAdmin"))]
-        //public ActionResult DeleteProfile(string username)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return RedirectToAction("AdminCrud", "Home");
-        //    }
-        //    var user = UserManager.GetProfile(username);
 
-        //    UserManager.RemoveProfile(user.UserName);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles=("Admin,SuperAdmin"))]
+        public ActionResult DeleteProfileAdmin(string username)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("AdminCrud", "Home");
+            }
+            var user = UserManager.GetProfile(username);
+        
 
-        //    LogOff();
+            UserManager.RemoveProfile(user.UserName);
 
-        //    return RedirectToAction("AdminCrud", "Home");
-        //}
+            LogOff();
+
+            return RedirectToAction("AdminCrud", "Home");
+        }
 
         #endregion
 
@@ -326,8 +336,16 @@ namespace UI_MVC.Controllers
                 var name = info.Email.Split('@')[0];
                 var user = new Profile { UserName = name, Email = model.Email };
                 user.UserData = new UserData() { Profile = user };
-                user.Settings = new List<UserSetting>();
-                user.Settings.Add(new UserSetting() { Profile = user, IsEnabled = true, SettingName = Setting.Account.THEME, Value = "light" });
+                user.Settings = new List<UserSetting>
+                {
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName = Setting.Account.THEME,
+                        Value = "light"
+                    }
+                };
                 var result = await UserManager.CreateAsync(user);
 
                 if (result.Succeeded)

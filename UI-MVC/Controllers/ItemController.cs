@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using PB.BL;
+﻿using PB.BL;
 using PB.BL.Domain.Items;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace UI_MVC.Controllers
 {
@@ -13,7 +10,7 @@ namespace UI_MVC.Controllers
     public class ItemController : Controller
     {
         private UnitOfWorkManager uow;
-        private ItemManager itemMgr;
+        private readonly ItemManager itemMgr;
 
 
         public ItemController()
@@ -23,6 +20,12 @@ namespace UI_MVC.Controllers
 
         }
        
+
+        public ActionResult ItemDetail(int id)
+        {
+            Item item = itemMgr.GetItem(id);
+            return View(item);
+        }
 
         #region organisation
         public PartialViewResult _OrganisationPartialTable()
