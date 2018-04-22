@@ -34,9 +34,49 @@ namespace PB.BL.Domain.Account
             if (!alert.Text.ToLower().Equals(Text.ToLower())) return false;
             if (!alert.Description.ToLower().Equals(Description.ToLower())) return false;
             if (!alert.Profile.Id.ToLower().Equals(Profile.Id.ToLower())) return false;
-
             if (!alert.TimeStamp.Date.Equals(TimeStamp.Date)) return false;
             return true;
+        }
+
+        public string GetTime()
+        {
+            string returnString = "";
+            double timedifH = DateTime.Now.Subtract(TimeStamp).TotalHours;
+            double timedifM = DateTime.Now.Subtract(TimeStamp).TotalMinutes;
+            if (timedifH > 48)
+            {
+                returnString = TimeStamp.ToLongDateString() + " om " + TimeStamp.ToShortTimeString();
+            }
+            else if (timedifH > 24)
+            {
+                returnString = "Gisteren om " + TimeStamp.ToShortTimeString();
+            }
+            else if (timedifH > .9)
+            {
+                returnString = "Ongeveer " + timedifH.ToString("F0") + " uur geleden";
+            }
+            else if (timedifM > 1)
+            {
+                returnString = timedifM.ToString("F0") + " minuten geleden";
+            } else
+            {
+                returnString = "Zonet";
+            }
+            return returnString;
+        }
+
+        public string CheckChange()
+        {
+            if (Description.ToLower().Contains("stijg"))
+            {
+                return "stijgt in";
+            } else if (Description.ToLower().Contains("daal"))
+            {
+                return "daalt in";
+            } else
+            {
+                return "unknown";
+            }
         }
 
         public override int GetHashCode()

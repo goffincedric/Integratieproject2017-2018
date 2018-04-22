@@ -148,14 +148,17 @@ namespace UI_MVC.Controllers
         }
         #endregion
 
-        #region Account
+        #region Notification
         public ActionResult GetNotificationCount()
         {
             Profile user = UserManager.GetProfile(User.Identity.GetUserId());
-            int alertCount = user.Alerts.Count;
+            int alertCount = user.Alerts.FindAll(a => !a.IsRead).Count;
             return Content(String.Format("{0}", alertCount));
         }
+        #endregion
 
+
+        #region Account
         public ActionResult Account()
         {
             //nog via pk maken
@@ -235,7 +238,32 @@ namespace UI_MVC.Controllers
 
         public ActionResult _NotificationDropdown()
         {
-            return PartialView();
+            var model = new List<Alert>();
+
+            model.AddRange(UserManager.GetProfile(User.Identity.GetUserId()).Alerts);
+
+            model.Sort(delegate (Alert x, Alert y)
+            {
+                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
+                else if (x.TimeStamp == null) return -1;
+                else if (y.TimeStamp == null) return 1;
+                else return y.TimeStamp.CompareTo(x.TimeStamp);
+            });
+
+            return PartialView(model);
+        }
+
+        public ActionResult ClickNotification(int id)
+        {
+            Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
+            Alert alert = profile.Alerts.Find(a => a.AlertId == id);
+            alert.IsRead = true;
+
+            UserManager.ChangeProfile(profile);
+
+            int itemId = alert.ItemId;
+
+            return RedirectToAction("ItemDetail", "Item", new {id = itemId});
         }
 
         [HttpPost]

@@ -117,6 +117,15 @@ namespace UI_MVC.Models
         public string Email { get; set; }
     }
 
+    public class AlertsViewModel
+    {
+        public List<Alert> Alerts { get; set; }
+
+        //public AlertsViewModel(Profile profile)
+        //{
+        //    Alerts = profile.Alerts;
+        //}
+    }
 
     public class AccountEditModel
     {

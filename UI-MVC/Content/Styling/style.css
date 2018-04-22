@@ -2066,4 +2066,13 @@ h3 {
 
 .header{
     max-height: 65px;
+    height: 65px;
+}
+
+.notificationsList{
+    max-height: 270px;
+}
+
+.notificationsListItem{
+    height: 90px;
 }
