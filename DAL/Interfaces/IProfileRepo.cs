@@ -7,8 +7,8 @@ namespace PB.DAL
     {
         IEnumerable<Profile> ReadProfiles();
         Profile CreateProfile(Profile profile);
-        Profile ReadProfile(string username);
+        Profile ReadProfile(string userId);
         void UpdateProfile(Profile profile);
-        void DeleteProfile(string username);
+        void DeleteProfile(string userId);
     }
 }

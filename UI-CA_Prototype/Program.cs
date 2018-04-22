@@ -191,7 +191,8 @@ namespace UI_CA_Prototype
                         ItemMgr.RemoveSubscription(SelectedProfile, ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
                         break;
                     case 6:
-                        ItemMgr.CheckTrend();
+                        Console.WriteLine("OUT OF ORDER");
+                        //ItemMgr.CheckTrend();
                         break;
                     case 7:
                         if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");

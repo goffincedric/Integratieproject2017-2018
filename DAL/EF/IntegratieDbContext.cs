@@ -78,6 +78,10 @@ namespace PB.DAL.EF
                 .HasMany(p => p.Dashboards)
                 .WithRequired(d => d.Profile);
 
+            modelBuilder.Entity<Alert>()
+                .HasRequired(a => a.Item)
+                .WithMany(i => i.Alerts);
+
             modelBuilder.Entity<Dashboard>()
                 .HasRequired(d => d.Subplatform)
                 .WithMany(s => s.Dashboards);
