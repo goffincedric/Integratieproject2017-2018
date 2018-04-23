@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PB.BL.Domain.Account
+namespace PB.BL.Domain.Accounts
 {
     [Table("tblUserData")]
   public class UserData

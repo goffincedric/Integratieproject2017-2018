@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PB.BL;
-using PB.BL.Domain.Account;
+using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Settings;
 using PB.BL.Interfaces;
 using System;
@@ -152,7 +152,7 @@ namespace UI_MVC.Controllers
         public ActionResult GetNotificationCount()
         {
             Profile user = UserManager.GetProfile(User.Identity.GetUserId());
-            int alertCount = user.Alerts.FindAll(a => !a.IsRead).Count;
+            int alertCount = user.ProfileAlerts.FindAll(pa => !pa.IsRead).Count;
             return Content(String.Format("{0}", alertCount));
         }
         #endregion
@@ -238,11 +238,11 @@ namespace UI_MVC.Controllers
 
         public ActionResult _NotificationDropdown()
         {
-            var model = new List<Alert>();
+            var model = new List<ProfileAlert>();
 
-            model.AddRange(UserManager.GetProfile(User.Identity.GetUserId()).Alerts);
+            model.AddRange(UserManager.GetProfile(User.Identity.GetUserId()).ProfileAlerts);
 
-            model.Sort(delegate (Alert x, Alert y)
+            model.Sort(delegate (ProfileAlert x, ProfileAlert y)
             {
                 if (x.TimeStamp == null && y.TimeStamp == null) return 0;
                 else if (x.TimeStamp == null) return -1;
@@ -256,12 +256,12 @@ namespace UI_MVC.Controllers
         public ActionResult ClickNotification(int id)
         {
             Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
-            Alert alert = profile.Alerts.Find(a => a.AlertId == id);
-            alert.IsRead = true;
+            ProfileAlert profileAlert = profile.ProfileAlerts.Find(pa => pa.AlertId == id);
+            profileAlert.IsRead = true;
 
             UserManager.ChangeProfile(profile);
 
-            int itemId = alert.ItemId;
+            int itemId = profileAlert.Alert.ItemId;
 
             return RedirectToAction("ItemDetail", "Item", new {id = itemId});
         }
@@ -283,7 +283,7 @@ namespace UI_MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
+        // TODO: REMOVE USER ROLE FROM AUTHORIZE 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles=("User,Admin,SuperAdmin"))]
