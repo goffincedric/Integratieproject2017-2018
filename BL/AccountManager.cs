@@ -22,19 +22,6 @@ namespace PB.BL
         private IProfileRepo ProfileRepo;
         private UnitOfWorkManager UowManager;
 
-
-
-        //public AccountManager(IntegratieUserStore store, UnitOfWorkManager uowMgr) : base(store)
-        //{
-        //Console.WriteLine("Gebruik accountmanager constructor met store and uow");
-        //  UowManager = uowMgr;
-        //  this.store = store;
-        //  ProfileRepo profileRepo = new ProfileRepo(UowManager.UnitOfWork);
-
-        //  CreateRolesandUsers();
-
-
-        //}
         public AccountManager(IntegratieUserStore store) : base(store)
         {
             //Console.WriteLine("Gebruik accountmanager constructor met store");

@@ -12,7 +12,7 @@
 
         @foreach (var x in Model)
         {
-          <a id="itemref" href='@Url.Action("ItemDetail", "Item", new {id = x.ItemId})'>@x.Name</a>
+          <a id="itemref" href='@Url.Action("ItemDetail", "Home", new {id = x.ItemId})'>@x.Name</a>
         }
 
 

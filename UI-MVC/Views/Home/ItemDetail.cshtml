@@ -1,0 +1,264 @@
+﻿@model PB.BL.Domain.Items.Item
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<style>
+	.vote {
+		border: none;
+		background-color: #F0F0F0;
+		width: 47px;
+		height: 21.5px;
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+	}
+	.vote:active {
+		outline: none;
+		border: none;
+	}
+	.vote:focus {
+		outline: 0;
+	}
+
+	.upArrow {
+		x: 0px;
+		y: 0px;
+		enable-background: new 0 0 11.5 6.4;
+	}
+	.upArrow path {
+		fill: #BBBBBB;
+		fill-rule: evenodd;
+		clip-rule: evenodd;
+		margin: 0;
+	}
+
+	.downArrow {
+		x: 0px;
+		y: 0px;
+		enable-background: new 0 0 11.5 6.4;
+	}
+	.downArrow path {
+		fill-rule: evenodd;
+		clip-rule: evenodd;
+		fill: #BBBBBB;
+	}
+
+	#upButton :hover {
+		fill: #6CC576;
+		cursor: pointer;
+	}
+
+	#downButton :hover {
+		fill: #FF586C;
+		cursor: pointer;
+	}
+
+</style>*@
+
+<main class="main-content bgc-grey-100">
+	<div id="mainContent" class="container-fluid">
+
+		<div class="row">
+			<div class="w-25 p-3">
+				<img style="width: 200px;" src="~/Content/Images/nva.jpg" alt="logo" />
+			</div>
+
+			<div class="w-50 p-3">
+				<div class="h-75 w-100 d-inline-block" style="text-align: center; vertical-align: middle;">
+					<h1 style="color: #2196f3; text-align: center; padding-top: 3%;" class="display-4"> @Html.DisplayFor(model => model.Name)</h1>
+				</div>
+				<div class="h-25 w-100 d-inline-block">
+
+
+
+
+					@if (ViewBag.Subscribed)
+				{
+					using (Html.BeginForm("RemoveSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
+					{
+						@Html.AntiForgeryToken()
+						<button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
+				}
+			}
+			else
+			{
+				using (Html.BeginForm("AddSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
+				{
+					@Html.AntiForgeryToken()
+					<button type="submit" value="Subscribe me!" class="btn btn-outline-primary btn-lg btn-block">Subcribe!</button>
+			}
+
+		}
+				</div>
+			</div>
+
+			@*<div class="w-25 p-3">
+						<button id="upButton" type="button" onclick="upVote()" class="vote">
+
+							<svg class="upArrow" viewBox="0 0 11.5 6.4" xml:space="preserve">
+							<path d="M11.4,5.4L6,0C5.9-0.1,5.8-0.1,5.8-0.1c-0.1,0-0.2,0-0.2,0.1
+			L0.1,5.4C0,5.6,0,5.7,0.1,5.9l0.4,0.4c0.1,0.1,0.3,0.1,0.4,0l4.8-4.8l4.8,4.8c0.1,0.1,0.3,0.1,0.4,0l0.4-0.4
+			C11.5,5.7,11.5,5.6,11.4,5.4z" />
+
+
+
+							</svg>
+
+						</button>
+						<h1 id="scoreCounter"></h1>
+						<button id="downButton" type="button" onclick="downVote()" class="vote">
+
+							<svg class="downArrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 11.5 6.4" xml:space="preserve">
+							<path d="M0.1,0.9l5.4,5.4c0.1,0.1,0.1,0.1,0.2,0.1c0.1,0,0.2,0,0.2-0.1
+			l5.4-5.4c0.1-0.1,0.1-0.3,0-0.4L11,0c-0.1-0.1-0.3-0.1-0.4,0L5.8,4.8L0.9,0C0.8-0.1,0.6-0.1,0.5,0L0.1,0.4C0,0.6,0,0.7,0.1,0.9z" />
+
+
+
+							</svg>
+						</button>
+					</div>*@
+		</div>
+
+
+		<div class="row" style="margin-top: 10px;">
+
+			<div class="col-sm" style="margin-left: 0; margin-right: 25px; padding-left: 0; padding-right: 0">
+				<div class="layers bd bgc-white p-20">
+					<div class="layer w-100 mB-10">
+						<h6 class="lh-1">Populariteit</h6>
+					</div>
+					<div class="layer w-100">
+						<div class="peers ai-sb fxw-nw">
+							<div class="peer peer-greed"><span id="sparklinedash4"></span></div>
+							<div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">+10%</span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm" style="padding-left: 0; padding-right: 0;margin-right: 25px; margin-left: 25px;">
+				<div class="layers bd bgc-white p-20">
+					<div class="layer w-100 mB-10">
+						<h6 class="lh-1">Positiviteit</h6>
+					</div>
+					<div class="layer w-100">
+						<div class="peers ai-sb fxw-nw">
+							<div class="peer peer-greed"><span id="sparklinedash"></span></div>
+							<div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">+3%</span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-sm" style="margin-right: 0; margin-left: 25px; padding-left: 0; padding-right: 0">
+				<div class="layers bd bgc-white p-20">
+					<div class="layer w-100 mB-10">
+						<h6 class="lh-1">Activiteit</h6>
+					</div>
+					<div class="layer w-100">
+						<div class="peers ai-sb fxw-nw">
+							<div class="peer peer-greed"><span id="sparklinedash2"></span></div>
+							<div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">-7%</span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<canvas width="800" height="600" id="mycanvas"></canvas>
+
+	</div>
+
+</main>
+
+<script src="https://nodebox.live/api/v1/ndbx.js"></script>
+
+<script>
+	var options = {
+		userId: 'TijgerVsMens',
+		projectId: 'sparkline',
+		canvasId: 'mycanvas',
+		autoplay: true
+	};
+
+  var itemid = @Html.Raw(Model.ItemId);
+	ndbx.embed(options, function(err, player) {
+		if (err) {
+			console.log('Load error:', err);
+		} else {
+      window.player = player;
+		  //player.setValue('import1', 'json', getJson(itemid));
+		  // Make the player object global.
+		  getJson(itemid,player);
+      function getJson(id,player) {
+        var dataS;
+		    $.ajax("https://localhost:44342/api/item/getrecordsfromperson/" + id,
+		      {
+		        type: "GET",
+		        dataType: "json"
+          }).done(function (data,player) {
+            dataS = JSON.parse(data);
+		        window.player.setValue('lookup1', 'json', data);
+
+		        //doWork(dataS);
+
+		      }
+      
+        );
+
+        function doWork(data) {
+          player.setValue('import1', 'json', getJson(itemid));
+        }
+
+      
+      }
+      }
+		 
+		   
+     
+
+
+
+
+		}
+  );
+	
+  
+
+
+  
+  
+</script>
+
+@*<script>
+	var score = document.getElementById("scoreCounter");
+	score.innerHTML = "0";
+	var scoreValue = 0;
+	checkScore();
+
+	function upVote() {
+		scoreValue++;
+		score.innerHTML = scoreValue;
+		checkScore();
+	}
+
+	function downVote() {
+		scoreValue--;
+		score.innerHTML = scoreValue;
+		checkScore();
+	}
+
+	function checkScore() {
+		if (scoreValue < 0) {
+			score.style.color = "#FF586C";
+		} else if (scoreValue > 0) {
+			score.style.color = "#6CC576";
+		} else {
+			score.style.color = "#666666";
+		}
+	}
+</script>*@

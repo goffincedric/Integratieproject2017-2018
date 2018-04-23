@@ -153,20 +153,48 @@ namespace UI_MVC.Controllers
             return View("~/Views/Home/Index.cshtml");
         }
 
+
+
+       
+
+        public ActionResult ItemDetail(int id)
+        {
+            Item item = itemMgr.GetItem(id);
+           ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));
+         
+            return View(item);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddSubscription(int id)
         {
-            var user = accountMgr.GetProfile(User.Identity.GetUserName());
+            var user = accountMgr.GetProfile(User.Identity.GetUserId());
             Item item = itemMgr.GetItem(id);
 
             if (!user.Subscriptions.Contains(item))
             {
 
                 accountMgr.AddSubscription(user, item);
-               return RedirectToAction("ItemDetail", "Item");
+               return RedirectToAction("ItemDetail", "Home", new { Id = id });
             }
-            return RedirectToAction("ItemDetail", "Item");
+            return RedirectToAction("ItemDetail", "Home", new { Id = id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveSubscription(int id)
+        {
+            var user = accountMgr.GetProfile(User.Identity.GetUserId());
+            Item item = itemMgr.GetItem(id);
+
+            if (user.Subscriptions.Contains(item))
+            {
+
+                accountMgr.RemoveSubscription(user, item);
+                return RedirectToAction("ItemDetail", "Home", new { Id = id });
+            }
+            return RedirectToAction("ItemDetail", "Home", new { Id=id});
         }
 
     }
