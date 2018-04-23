@@ -1,6 +1,6 @@
 ﻿using Mono.Options;
 using PB.BL;
-using PB.BL.Domain.Account;
+using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.JSONConversion;
 using PB.BL.Domain.Platform;
@@ -71,6 +71,72 @@ namespace UI_CA_Prototype
                 }
                 Console.WriteLine("\n");
             }
+        }
+
+        private static void DetectMenuAction()
+        {
+            bool inValidAction = false;
+            do
+            {
+                Console.Write("Keuze: ");
+                int.TryParse(Console.ReadLine(), out int keuze);
+                Console.WriteLine("\n");
+
+                switch (keuze)
+                {
+                    case 1:
+                        ExtensionMethods.WriteTestRecords(ItemMgr.GetRecords());
+                        break;
+                    case 2:
+                        SelectedProfile = ExtensionMethods.SelectProfile(AccountMgr.GetProfiles());
+                        break;
+                    case 3:
+                        SelectedSubplatform = ExtensionMethods.SelectSubplatform(SubplatformMgr.GetSubplatforms());
+                        break;
+                    case 4:
+                        if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
+                        AccountMgr.AddSubscription(SelectedProfile, ExtensionMethods.SelectItem(ItemMgr.GetPersons()));
+                        break;
+                    case 5:
+                        if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
+                        ItemMgr.RemoveSubscription(SelectedProfile, ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
+                        break;
+                    case 6:
+                        Console.WriteLine("OUT OF ORDER");
+                        //ItemMgr.CheckTrend();
+                        break;
+                    case 7:
+                        if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
+                        int days = int.Parse(SelectedSubplatform.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
+                        ItemMgr.CleanupOldRecords(SelectedSubplatform, days);
+                        break;
+                    case 8:
+                        Seed();
+                        break;
+                    case 9:
+                        AccountMgr.GenerateProfileAlerts(SelectedProfile);
+                        break;
+                    case 10:
+                        ExtensionMethods.ShowRecords(ItemMgr.GetRecords());
+                        break;
+                    case 11:
+                        ExtensionMethods.ShowPersons(ItemMgr.GetPersons());
+                        break;
+                    case 12:
+                        ExtensionMethods.ShowSubScribedItems(SelectedProfile);
+                        break;
+                    case 99:
+                        ShowHelp();
+                        break;
+                    case 0:
+                        Stop = true;
+                        return;
+                    default:
+                        Console.WriteLine("Geen geldige keuze!");
+                        inValidAction = true;
+                        break;
+                }
+            } while (inValidAction);
         }
 
         private static void HandleCLIArgs(string[] args)
@@ -152,6 +218,7 @@ namespace UI_CA_Prototype
                 Environment.Exit(0);
             }
         }
+
         private static void ShowHelp()
         {
             //Show app description
@@ -160,72 +227,6 @@ namespace UI_CA_Prototype
             //Output the CLI options
             Console.WriteLine("Options:");
             CLIOptions.WriteOptionDescriptions(Console.Out);
-        }
-
-        private static void DetectMenuAction()
-        {
-            bool inValidAction = false;
-            do
-            {
-                Console.Write("Keuze: ");
-                int.TryParse(Console.ReadLine(), out int keuze);
-                Console.WriteLine("\n");
-
-                switch (keuze)
-                {
-                    case 1:
-                        ExtensionMethods.WriteTestRecords(ItemMgr.GetRecords());
-                        break;
-                    case 2:
-                        SelectedProfile = ExtensionMethods.SelectProfile(AccountMgr.GetProfiles());
-                        break;
-                    case 3:
-                        SelectedSubplatform = ExtensionMethods.SelectSubplatform(SubplatformMgr.GetSubplatforms());
-                        break;
-                    case 4:
-                        if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
-                        AccountMgr.AddSubscription(SelectedProfile, ExtensionMethods.SelectItem(ItemMgr.GetPersons()));
-                        break;
-                    case 5:
-                        if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
-                        ItemMgr.RemoveSubscription(SelectedProfile, ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
-                        break;
-                    case 6:
-                        Console.WriteLine("OUT OF ORDER");
-                        //ItemMgr.CheckTrend();
-                        break;
-                    case 7:
-                        if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
-                        int days = int.Parse(SelectedSubplatform.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
-                        ItemMgr.CleanupOldRecords(SelectedSubplatform, days);
-                        break;
-                    case 8:
-                        Seed();
-                        break;
-                    case 9:
-                        ItemMgr.GenerateProfileAlerts(SelectedProfile);
-                        break;
-                    case 10:
-                        ExtensionMethods.ShowRecords(ItemMgr.GetRecords());
-                        break;
-                    case 11:
-                        ExtensionMethods.ShowPersons(ItemMgr.GetPersons());
-                        break;
-                    case 12:
-                        ExtensionMethods.ShowSubScribedItems(SelectedProfile);
-                        break;
-                    case 99:
-                        ShowHelp();
-                        break;
-                    case 0:
-                        Stop = true;
-                        return;
-                    default:
-                        Console.WriteLine("Geen geldige keuze!");
-                        inValidAction = true;
-                        break;
-                }
-            } while (inValidAction);
         }
 
         private static void Seed()

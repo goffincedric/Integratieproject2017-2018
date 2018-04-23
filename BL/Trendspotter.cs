@@ -1,4 +1,4 @@
-﻿using PB.BL.Domain.Account;
+﻿using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace PB.BL
             // Records ouder dan huidige dag
             DateTime lastDate = DateTime.Now;
 
-            List<Record> oldRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date < lastDate.Date.AddDays(-1)).ToList();
+            List<Record> oldRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date <= lastDate.Date.AddDays(-1)).ToList();
             List<Record> newRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date <= lastDate.Date).ToList();
 
             //Alle recordpersonen die records hebben van de afgelopen 14 dagen toevoegen aan lijst
@@ -69,10 +69,8 @@ namespace PB.BL
                     {
                         Description = "Daling populariteit " + k.Name,
                         Text = k.Name + " is minder populair vergeleken met de laatste 2 weken",
-                        IsRead = false,
-                        TimeStamp = DateTime.Now,
                         Item = k,
-                        Profile = profile
+                        ProfileAlerts = new List<ProfileAlert>()
                     });
                 }
                 else if (verschil >= 0.25)
@@ -81,34 +79,19 @@ namespace PB.BL
                     {
                         Description = "Stijging populariteit " + k.Name,
                         Text = k.Name + " heeft meer populariteit gekregen vergeleken met de laatste 2 weken",
-                        IsRead = false,
-                        TimeStamp = DateTime.Now,
                         Item = k,
-                        Profile = profile
+                        ProfileAlerts = new List<ProfileAlert>()
                     });
                 }
             });
 
-
-            Console.WriteLine("========= NIEUWE ALERTS ========");
-            List<Alert> newAlerts = new List<Alert>();
-            alerts.ForEach(a =>
-            {
-                if (profile.Alerts.FirstOrDefault(pa => pa.TimeStamp.Date.Equals(a.TimeStamp.Date) && pa.Text.Equals(a.Text)) == null)
-                {
-                    Console.WriteLine(a);
-                    profile.Alerts.Add(a);
-                    newAlerts.Add(a);
-                }
-            });
-
-            return newAlerts;
+            return alerts;
         }
 
         private List<Person> GetPersons(List<Item> subscriptions, List<Record> records)
         {
             List<Person> RecordPersons = new List<Person>();
-            records.ToList().ForEach(r =>
+            records.ForEach(r =>
             {
                 foreach (Person person in r.Persons)
                 {
@@ -196,19 +179,16 @@ namespace PB.BL
             return aantal.Average() / period * aantal.Count;
         }
 
-        public void generateAlert(Profile profile, string Trend)
-        {
-            Alert a = new Alert()
-            {
-                AlertId = 1,
-                Description = "Something has happened",
-                Text = "A change is coming",
-                Profile = profile,
-                UserId = profile.Id,
-
-                IsRead = false,
-                TimeStamp = DateTime.Now
-            };
-        }
+        //public void generateAlert(Profile profile, string Trend)
+        //{
+        //    Alert a = new Alert()
+        //    {
+        //        AlertId = 1,
+        //        Description = "Something has happened",
+        //        Text = "A change is coming",
+        //        ProfileAlerts = new List<ProfileAlert>(),
+        //        IsFlaggedImportant = false
+        //    };
+        //}
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.Twitter;
 using Owin;
 using PB.BL;
-using PB.BL.Domain.Account;
+using PB.BL.Domain.Accounts;
 using PB.DAL.EF;
 using System;
 using PB.BL.Interfaces;

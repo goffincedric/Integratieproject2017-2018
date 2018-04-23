@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using PB.BL.Domain.Account;
+using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
@@ -62,7 +62,7 @@ namespace PB.DAL.EF
             modelBuilder.Entity<Profile>()
                 .HasRequired(p => p.UserData)
                 .WithRequiredDependent(ud => ud.Profile)
-                .WillCascadeOnDelete();
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Profile>()
                 .HasMany(p => p.Subscriptions)
@@ -78,25 +78,22 @@ namespace PB.DAL.EF
                 .HasMany(p => p.Dashboards)
                 .WithRequired(d => d.Profile);
 
+            modelBuilder.Entity<Profile>()
+                .HasMany(p => p.ProfileAlerts)
+                .WithRequired(pa => pa.Profile)
+                .HasForeignKey(pa => pa.UserId)
+                .WillCascadeOnDelete(true);
+
             modelBuilder.Entity<Alert>()
-                .HasRequired(a => a.Item)
-                .WithMany(i => i.Alerts);
+                .HasMany(a => a.ProfileAlerts)
+                .WithRequired(pa => pa.Alert)
+                .HasForeignKey(pa => pa.AlertId)
+                .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<Dashboard>()
-                .HasRequired(d => d.Subplatform)
-                .WithMany(s => s.Dashboards);
-
-            modelBuilder.Entity<Dashboard>()
-                .HasMany(d => d.Zones)
-                .WithRequired(z => z.Dashboard);
-
-            modelBuilder.Entity<Zone>()
-                .HasMany(z => z.Elements)
-                .WithRequired(e => e.Zone);
-
-            modelBuilder.Entity<Element>()
-                .HasRequired(e => e.Comparison)
-                .WithMany(c => c.Elements);
+            modelBuilder.Entity<Item>()
+                .HasMany(i => i.Alerts)
+                .WithRequired(a => a.Item)
+                .HasForeignKey(a => a.ItemId);
 
             modelBuilder.Entity<Item>()
                 .HasMany(t => t.Comparisons)
@@ -143,6 +140,22 @@ namespace PB.DAL.EF
                 .WithMany(r => r.Themes)
                 .Map(m => { m.ToTable("tblThemeRecords"); });
 
+            modelBuilder.Entity<Dashboard>()
+                .HasRequired(d => d.Subplatform)
+                .WithMany(s => s.Dashboards);
+
+            modelBuilder.Entity<Dashboard>()
+                .HasMany(d => d.Zones)
+                .WithRequired(z => z.Dashboard);
+
+            modelBuilder.Entity<Zone>()
+                .HasMany(z => z.Elements)
+                .WithRequired(e => e.Zone);
+
+            modelBuilder.Entity<Element>()
+                .HasRequired(e => e.Comparison)
+                .WithMany(c => c.Elements);
+
 
             //identity tables
             modelBuilder.Entity<Profile>().ToTable("tblProfile");
@@ -185,6 +198,8 @@ namespace PB.DAL.EF
 
         public DbSet<UserData> UserData { get; set; }
         public DbSet<UserSetting> UserSettings { get; set; }
+        public DbSet<Alert> Alerts { get; set; }
+
         public DbSet<Comparison> Comparisons { get; set; }
         public DbSet<Dashboard> Dashboards { get; set; }
         public DbSet<Element> Elements { get; set; }

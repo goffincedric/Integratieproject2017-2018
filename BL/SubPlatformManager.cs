@@ -1,4 +1,4 @@
-﻿using PB.BL.Domain.Account;
+﻿using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;

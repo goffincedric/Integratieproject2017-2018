@@ -55,6 +55,7 @@
     <Compile Include="Accounts\Alert.cs" />
     <Compile Include="Accounts\Gender.cs" />
     <Compile Include="Accounts\Profile.cs" />
+    <Compile Include="Accounts\ProfileAlert.cs" />
     <Compile Include="Accounts\Province.cs" />
     <Compile Include="Accounts\UserData.cs" />
     <Compile Include="Accounts\UserSetting.cs" />

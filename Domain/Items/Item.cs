@@ -1,5 +1,4 @@
-﻿using PB.BL.Domain.Account;
-using PB.BL.Domain.Dashboards;
+﻿using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
+using PB.BL.Domain.Accounts;
 
 namespace PB.BL.Domain.Items
 {

@@ -66,11 +66,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlertRepo.cs" />
     <Compile Include="DashboardRepo.cs" />
     <Compile Include="EF\IntegratieDbConfiguration.cs" />
     <Compile Include="EF\IntegratieDbContext.cs" />
     <Compile Include="EF\IntegratieDbInitializer.cs" />
     <Compile Include="EF\IntegratieUserStore.cs" />
+    <Compile Include="Interfaces\IAlertRepo.cs" />
     <Compile Include="Interfaces\IDashboardRepo.cs" />
     <Compile Include="Interfaces\IItemRepo.cs" />
     <Compile Include="Interfaces\IProfileRepo.cs" />

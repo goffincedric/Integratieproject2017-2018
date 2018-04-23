@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace PB.BL.Domain.Account
+namespace PB.BL.Domain.Accounts
 {
     public class Profile : IdentityUser
     {
@@ -16,7 +16,7 @@ namespace PB.BL.Domain.Account
         public UserData UserData { get; set; }
         public List<UserSetting> Settings { get; set; }
         public List<Dashboard> Dashboards { get; set; }
-        public List<Alert> Alerts { get; set; }
+        public List<ProfileAlert> ProfileAlerts { get; set; }
         public List<Item> Subscriptions { get; set; }
         public List<Subplatform> AdminPlatforms { get; set; }
         
