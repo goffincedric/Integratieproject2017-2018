@@ -178,7 +178,23 @@
 <script src="https://nodebox.live/api/v1/ndbx.js"></script>
 
 <script>
-  var obj = "";
+  var itemid = @Html.Raw(Model.ItemId);
+
+  var tmp = "";
+    tmp = $.ajax({
+      async:false,
+      type: 'GET',
+      dataType: 'json',
+      url: "https://localhost:44342/api/item/getrecordsfromperson/" + itemid,
+        done: function (data) {
+        JSON.parse(data);
+        return results;
+      }
+  }).responseJSON;
+
+  
+  
+
   var options = {
     userId: 'ThomasVerhoeven',
     projectId: 'sparkline',
@@ -186,44 +202,23 @@
     autoplay: true
   };
 
-  var itemid = @Html.Raw(Model.ItemId);
+
   ndbx.embed(options,
     function(err, player) {
       if (err) {
         console.log('Load error:', err);
       } else {
         window.player = player;
+        //console.log(tmp);
+        var obj = tmp;
         console.log(obj);
-        window.player.setValue('datareader', 'json', obj);
+        console.log("ok");
+        player.setValue('datareader', 'json', obj);
+        player.start();
+
       }
 
     });
-	
-  //window.player.setValue('datareader', 'json', getJson(itemid));
-	
-
-  function getJson(id) {
-    $.ajax("https://localhost:44342/api/item/getrecordsfromperson/" + id,
-      {
-        type: "GET",
-        dataType: "json"
-      }).done(function (data) {
-        console.log(data);
-        //var data2 = JSON.parse(data.toString());
-        //window.player.setValue('datareader', 'json', data);
-        obj = data;
-				   
-      }
-    );
-    return obj;
-
-  }
-
-  //var obj = "";
-  //obj =
-  //getJson(itemid);
-  //console.log(obj);
-  //window.player.setValue('datareader', 'json', obj);
 
 
 </script>
