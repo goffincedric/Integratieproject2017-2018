@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using Newtonsoft.Json;
 
 namespace UI_MVC.Controllers.API
 {
@@ -150,6 +151,14 @@ namespace UI_MVC.Controllers.API
             if (ItemMgr.GetItem((int)id) == null) NotFound();
             ItemMgr.RemoveItem((int)id);
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetRecordsFromPerson(int id)
+        {
+            Person item = ItemMgr.GetPerson(id);
+            if (item == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(JsonConvert.SerializeObject(item.Records));
         }
     }
 }
