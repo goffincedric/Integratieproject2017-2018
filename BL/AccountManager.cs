@@ -325,7 +325,6 @@ namespace PB.BL
             subscribedItems.ForEach(Console.WriteLine);
 
             //Check trends voor people
-            Console.WriteLine("========= NIEUWE ALERTS ========");
             List<Alert> alerts = new Trendspotter().CheckTrendAverageRecords(profile, peopleRecords);
 
             //Replace generated alerts with existing alerts
@@ -339,6 +338,7 @@ namespace PB.BL
             List<Alert> alertsToCreate = new List<Alert>();
             List<Alert> alertsToUpdate = new List<Alert>();
 
+            Console.WriteLine("========= NIEUWE ALERTS ========");
             alerts.ForEach(a =>
             {
                 ProfileAlert profileAlert = new ProfileAlert()
