@@ -56,11 +56,11 @@ namespace PB.BL.Domain.Accounts
 
         public string CheckChange()
         {
-            if (Alert.Description.ToLower().Contains("stijg"))
+            if (Alert.Description.ToLower().Contains("stijging"))
             {
                 return "stijgt in";
             }
-            else if (Alert.Description.ToLower().Contains("daal"))
+            else if (Alert.Description.ToLower().Contains("daling"))
             {
                 return "daalt in";
             }
