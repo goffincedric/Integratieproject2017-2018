@@ -1,4 +1,4 @@
-using PB.BL.Domain.Account;
+using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.JSONConversion;
@@ -17,8 +17,6 @@ namespace PB.BL
         private IRecordRepo RecordRepo;
 
         private UnitOfWorkManager UowManager;
-
-        private readonly Trendspotter trendspotter = new Trendspotter();
 
         public ItemManager()
         {
@@ -524,45 +522,18 @@ namespace PB.BL
             return newRecords;
         }
 
-        public List<Alert> GenerateProfileAlerts(Profile profile)
-        {
-            //Alle items uit profile subscriptions halen
-            if (profile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
-            if (profile.Subscriptions == null || profile.Subscriptions.Count == 0) throw new Exception("U heeft nog geen subscriptions toegevoegd aan uw account, gelieve er eerst enkele te kiezen");
-            List<Item> subscribedItems = profile.Subscriptions;
-
-            //Items opdelen in Subklasses [Person, Organisation, Theme]
-            List<Person> people = subscribedItems.Where(i => i is Person).ToList().Select(i => (Person)i).ToList();
-            List<Organisation> organisations = new List<Organisation>(); // Alerts op organisaties;
-            List<Theme> themes = new List<Theme>(); // Alerts op thema's
-
-            //Records uit people halen
-            List<Record> peopleRecords = new List<Record>();
-            people.ForEach(p => p.Records.ForEach(r => peopleRecords.Add(r)));
-
-            //Print all subscribed items
-            Console.WriteLine("========= SUBSCRIBED =========");
-            subscribedItems.ForEach(Console.WriteLine);
-
-            //Check trends voor people
-            List<Alert> newAlerts = trendspotter.CheckTrendAverageRecords(profile, peopleRecords);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-
-            UowManager.Save();
-
-            //Return alerts
-            return newAlerts;
-        }
-
         public void CheckTrend()
         {
             //InitNonExistingRepo();
             //trendspotter.CheckTrendAverageRecords(GetRecords());
         }
 
+        #region Keywords
         public IEnumerable<Keyword> GetKeywords()
         {
             return ItemRepo.ReadKeywords();
         }
+        #endregion
 
         public int GetKeywordsCount()
         {
@@ -588,42 +559,5 @@ namespace PB.BL
         {
             return ItemRepo.ReadItems().Count();
         }
-
-        //private void RecordsToItems(List<Record> records)
-        //{
-        //    initNonExistingRepo();
-        //    //initNonExistingRepoRecord();
-        //    //initNonExistingRepoItem();
-        //    //List<Record> records = GetRecords().ToList();
-        //    List<Person> persons = GetPersons().ToList();
-        //    List<Person> people = new List<Person>();
-        //    Item item;
-
-        //    records.ToList().ForEach(r =>
-        //    {
-        //        item = persons.FirstOrDefault(p => p.FirstName.Equals(r.RecordPerson.FirstName) && p.LastName.Equals(r.RecordPerson.LastName));
-        //        if (item == null)
-        //        {
-        //            Person person = new Person()
-        //            {
-        //                ItemId = persons.Count,
-        //                FirstName = r.RecordPerson.FirstName,
-        //                LastName = r.RecordPerson.LastName,
-        //                Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w.Text }),
-        //                SubPlatforms = new List<Subplatform>(),
-        //                Records = new List<Record>() { r }
-        //            };
-        //            persons.Add(person);
-        //            people.Add(person);
-        //        }
-        //        else
-        //        {
-        //            item.Records.Add(r);
-        //        }
-        //    });
-
-        //    people.ForEach(p => ItemRepo.CreatePerson(p));
-        //    UowManager.Save();
-        //}
     }
 }

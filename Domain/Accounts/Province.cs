@@ -1,4 +1,4 @@
-﻿namespace PB.BL.Domain.Account
+﻿namespace PB.BL.Domain.Accounts
 {
     public enum Province
   {

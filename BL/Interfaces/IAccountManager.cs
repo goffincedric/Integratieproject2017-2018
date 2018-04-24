@@ -1,4 +1,4 @@
-using PB.BL.Domain.Account;
+using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Settings;
 using System.Collections.Generic;
 
@@ -18,7 +18,7 @@ namespace PB.BL.Interfaces
         void ChangeUserSetting(string userId, UserSetting userSetting);
         //void RemoveUserSetting(string username, Setting.Account accountSetting);
 
-        void LinkAlertsToProfile(List<Alert> alerts);
+        //void LinkAlertsToProfile(List<Alert> alerts);
 
         int GetUserCount();
     }

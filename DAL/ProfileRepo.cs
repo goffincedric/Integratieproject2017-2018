@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using PB.BL.Domain.Account;
+using PB.BL.Domain.Accounts;
 using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
@@ -21,13 +21,12 @@ namespace PB.DAL
         public ProfileRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-            //Console.WriteLine("UOW MADE PROFILEREPO");
         }
 
 
         public Profile CreateProfile(Profile profile)
         {
-            ctx.Users.Add(profile);
+            profile = ctx.Users.Add(profile);
 
             try
             {
@@ -54,9 +53,7 @@ namespace PB.DAL
             Profile profile = ReadProfile(userId);
             if (profile != null)
             {
-                UserData data = profile.UserData;
                 ctx.Users.Remove(profile);
-                ctx.UserData.Remove(data);
                 ctx.SaveChanges();
             }
         }
@@ -64,20 +61,20 @@ namespace PB.DAL
         public Profile ReadProfile(string userId)
         {
             return ctx.Users
-                .Include("UserData")
-                .Include("Alerts")
-                .Include("Subscriptions")
-                .Include("Settings")
+                .Include(p => p.UserData)
+                .Include(p => p.ProfileAlerts)
+                .Include(p => p.Subscriptions)
+                .Include(p => p.Settings)
                 .FirstOrDefault(p => p.Id.Equals(userId));
         }
 
         public IEnumerable<Profile> ReadProfiles()
         {
             return ctx.Users
-                .Include("UserData")
-                .Include("Alerts")
-                .Include("Subscriptions")
-                .Include("Settings")
+                .Include(p => p.UserData)
+                .Include(p => p.ProfileAlerts)
+                .Include(p => p.Subscriptions)
+                .Include(p => p.Settings)
                 .AsEnumerable();
         }
 

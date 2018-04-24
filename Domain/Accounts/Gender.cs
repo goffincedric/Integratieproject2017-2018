@@ -1,13 +1,10 @@
-﻿namespace PB.BL.Domain.Account
+﻿namespace PB.BL.Domain.Accounts
 {
     public enum Gender
-  {
-    MALE ='m',
-    FEMALE ='f',
-    OTHERS='o'
-
-     
-  }
-  
+    {
+        MALE = 'm',
+        FEMALE = 'f',
+        OTHERS = 'o'
+    }
 }
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using PB.BL.Domain.Account;
+using PB.BL.Domain.Accounts;
 using System.Collections.Generic;
 using System.Linq;
 

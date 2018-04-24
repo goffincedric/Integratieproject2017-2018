@@ -1,6 +1,6 @@
 using Microsoft.AspNet.Identity;
 using PB.BL;
-using PB.BL.Domain.Account;
+using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Settings;
 using PB.DAL.EF;
