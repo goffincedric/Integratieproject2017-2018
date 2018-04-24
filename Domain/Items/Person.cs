@@ -22,7 +22,7 @@ namespace PB.BL.Domain.Items
         {
             var person = obj as Person;
             return person != null &&
-                   Name.ToLower().Equals(person.SocialMediaLink.ToLower());
+                   Name.ToLower().Equals(person.Name.ToLower());
         }
 
         public override int GetHashCode()
