@@ -2070,9 +2070,13 @@ h3 {
 }
 
 .notificationsList{
-    max-height: 270px;
+    max-height: 500px;
 }
 
-.notificationsListItem{
+.dropdown-width {
+    min-width: 400px;
+}
+
+.notificationsListItem {
     height: 90px;
 }
