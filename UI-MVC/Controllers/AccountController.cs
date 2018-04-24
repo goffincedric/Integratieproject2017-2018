@@ -264,7 +264,7 @@ namespace UI_MVC.Controllers
 
             int itemId = profileAlert.Alert.ItemId;
 
-            return RedirectToAction("ItemDetail", "Item", new {id = itemId});
+            return RedirectToAction("ItemDetail", "Home", new {id = itemId});
         }
 
         [HttpPost]
