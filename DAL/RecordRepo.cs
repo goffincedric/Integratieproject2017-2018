@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Items;
-using Domain.JSONConversion;
 using Newtonsoft.Json;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.JSONConversion;
 using PB.DAL.EF;
 
 namespace PB.DAL
 {
     public class RecordRepo : IRecordRepo
     {
-        private IntegratieDbContext ctx;
+        private readonly IntegratieDbContext ctx;
 
         public RecordRepo()
         {
@@ -24,7 +24,7 @@ namespace PB.DAL
         public RecordRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-            Console.WriteLine("UOW MADE RECORD REPO");
+            //Console.WriteLine("UOW MADE RECORD REPO");
         }
 
         public Record CreateRecord(Record record)
@@ -35,7 +35,7 @@ namespace PB.DAL
         }
 
 
-        public List<Record> CreateRecords(List<Record> records)
+        public IEnumerable<Record> CreateRecords(IEnumerable<Record> records)
         {
             ctx.Records.AddRange(records);
             ctx.SaveChanges();
@@ -48,6 +48,12 @@ namespace PB.DAL
             ctx.SaveChanges();
         }
 
+        public void DeleteRecords(IEnumerable<Record> records)
+        {
+            ctx.Records.RemoveRange(records);
+            ctx.SaveChanges();
+        }
+
         public Record ReadRecord(long Tweet_Id)
         {
             return ctx.Records.FirstOrDefault(r => r.Tweet_Id == Tweet_Id);
@@ -56,19 +62,19 @@ namespace PB.DAL
         public IEnumerable<Record> ReadRecords()
         {
             return ctx.Records
-                .Include("Mentions")
-                .Include("Persons")
-                .Include("Words")
-                .Include("Hashtags")
-                .Include("URLs")
-                .Include("Themes")
+                .Include(r => r.Mentions)
+                .Include(r => r.Persons)
+                .Include(r => r.Words)
+                .Include(r => r.Hashtags)
+                .Include(r => r.URLs)
+                .Include(r => r.Themes)
                 .AsEnumerable();
         }
 
         public IEnumerable<Mention> ReadMentions()
         {
             return ctx.Mentions
-                .Include("Records")
+                .Include(m => m.Records)
                 .AsEnumerable();
         }
 
@@ -114,11 +120,6 @@ namespace PB.DAL
             ctx.SaveChanges();
         }
 
-        public int GetNumberofMentions(Record record)
-        {
-            return record.Mentions.Count;
-        }
-
         public IEnumerable<Record> GetAllRecordsBefore(Person person, DateTime end) =>
           // Returnt een lijst van Records met vermelding van dezelfde politieker. Er kan een einddatum worden meegegeven. 
           ctx.Records.Where(x => x.Date < end)
@@ -126,7 +127,8 @@ namespace PB.DAL
 
         public List<JClass> Seed(bool even)
         {
-            return JsonConvert.DeserializeObject<List<JClass>>(File.ReadAllText(@"TestData\textgaindump.json")).ToList().Where(r => (even) ? r.Id % 2 == 0 : r.Id % 2 != 0).ToList();
+            throw new Exception("Method is deprecated due to new structure json data; See new API Calls method.");
+            //return JsonConvert.DeserializeObject<List<JClass>>(File.ReadAllText(@"TestData\textgaindump.json")).ToList().Where(r => (even) ? r.Id % 2 == 0 : r.Id % 2 != 0).ToList();
 
             //List<Mention> allMentions = ctx.Mentions.ToList();
             //List<Word> allWords = ctx.Words.ToList();

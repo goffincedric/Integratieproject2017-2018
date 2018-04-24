@@ -1,13 +1,11 @@
 using Newtonsoft.Json;
-using PB.BL.Domain.Account;
+using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Items;
 
 namespace UI_CA_Prototype
 {
@@ -31,8 +29,8 @@ namespace UI_CA_Prototype
         public void ShowProfiles(IEnumerable<Profile> profiles)
         {
             if (profiles.ToList().Count == 0) throw new Exception("Er zijn nog geen accounts, maak er eerst een aan");
+            Console.WriteLine("\nAccounts: ");
             int counter = 1;
-            Console.WriteLine("\nSelecteer een account: ");
             profiles.ToList().ForEach(p =>
             {
                 Console.WriteLine(counter + ") " + p);
@@ -40,13 +38,38 @@ namespace UI_CA_Prototype
             });
         }
 
+        //Lets the user select an available subplatform
+        public Subplatform SelectSubplatform(IEnumerable<Subplatform> subplatforms)
+        {
+            int keuze = 0;
+            do
+            {
+                ShowSubplatforms(subplatforms);
+                Console.Write("Keuze: ");
+                int.TryParse(Console.ReadLine(), out keuze);
+            } while (keuze < 1 || keuze > subplatforms.ToList().Count);
+
+            return subplatforms.ElementAt(keuze - 1);
+        }
+
+        //Shows a list of all available profiles
+        public void ShowSubplatforms(IEnumerable<Subplatform> subplatforms)
+        {
+            if (subplatforms.ToList().Count == 0) throw new Exception("Er zijn nog geen subplatforms, maak er eerst een aan");
+            Console.WriteLine("\nSubplatforms: ");
+            int counter = 1;
+            subplatforms.ToList().ForEach(p =>
+            {
+                Console.WriteLine(counter + ") " + p);
+                counter++;
+            });
+        }
+
+
         //Show all records sorted by Name, then by Date descending
         public void ShowRecords(IEnumerable<Record> records)
         {
-            records.OrderBy(r => r.Tweet_Id).ThenByDescending(r => r.Date).ToList().ForEach(r =>
-            {
-                Console.WriteLine(r);
-            });
+            records.OrderBy(r => r.Tweet_Id).ThenByDescending(r => r.Date).ToList().ForEach(Console.WriteLine);
         }
 
         //Lets the user select an available item
@@ -81,106 +104,52 @@ namespace UI_CA_Prototype
         {
             if (profile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
             Console.WriteLine("Subscribed items:");
-            profile.Subscriptions.ForEach(subs => Console.WriteLine(subs));
+            profile.Subscriptions.ForEach(Console.WriteLine);
         }
 
 
-        public Profile CreateAccount()
-        {
-            string AccountName = "";
-            string email = "";
-            string password = "";
-            Console.Write("Accountname: ");
-            AccountName = Console.ReadLine();
-            Console.Write("Email: ");
-            email = Console.ReadLine();
-            Console.Write("Password: ");
-            password = Console.ReadLine();
 
-            Profile newProfile = new Profile()
-            {
-                Username = AccountName,
-                Email = email,
-                Password = password
-            };
+        //public Profile CreateAccount()
+        //{
+        //    string AccountName = "";
+        //    string email = "";
+        //    string password = "";
+        //    Console.Write("Accountname: ");
+        //    AccountName = Console.ReadLine();
+        //    Console.Write("Email: ");
+        //    email = Console.ReadLine();
+        //    Console.Write("Password: ");
+        //    password = Console.ReadLine();
 
-            return newProfile;
+        //    Profile newProfile = new Profile()
+        //    {
+        //        Username = AccountName,
+        //        Email = email,
+        //        Password = password
+        //    };
 
+        //    return newProfile;
+        //}
 
-        }
 
         //Method to test write functionality of JsonConvert (read written json file on desktop for record-object structure)
-        public void WriteTestRecords()
+        public void WriteTestRecords(IEnumerable<Record> records)
         {
-            List<Record> records = new List<Record>();
-            records.Add(new Record()
-            {
-                Hashtags = new List<Hashtag>(),
-                Words = new List<Word>() {
-                    new Word("annouri"),
-                    new Word("kasper goethals"),
-                    new Word("arabië"),
-                    new Word("imade"),
-                    new Word("iran")
-                },
-                Date = DateTime.Parse("2017-09-11 04:53:38"),
-                Persons = new List<Person>() {
-                    new Person() { Name = "Imade Annouri" },
-                    new Person() { Name = "Annick De Ridder"},
-                },
-                Longitude = 4.399708,
-                Latitude = 51.22111,
-                Tweet_Id = 907104827896987600,
-                Sentiment = new Sentiment(0, 0),
-                Retweet = true,
-                Source = "twitter",
-                URLs = new List<Url>(){
-                    new Url("http://pltwps.it/_JY894kJ")
-                },
-                Mentions = new List<Mention>()
-            }
-            );
+            List<Record> recordList = records.Take(200).ToList();
 
-            records.Add(new Record()
+            JsonSerializer serializer = new JsonSerializer
             {
-                Hashtags = new List<Hashtag>()
-                {
-                    new Hashtag("Firsts,")
-                },
-                Words = new List<Word>()
-                {
-                    new Word("annouri"),
-                    new Word("imade"),
-                    new Word("reeks"),
-                    new Word("time")
-                },
-                Date = DateTime.Parse("2017-09-07 22:52:35"),
-                Persons = new List<Person>() {
-                    new Person() { Name = "Bart De Wever" }
-                },
-                Longitude = 6.46744,
-                Latitude = 52.81776,
-                Tweet_Id = 905926801804980200,
-                Sentiment = new Sentiment(0.7, 1),
-                Retweet = false,
-                Source = "twitter",
-                URLs = new List<Url>()
-                {
-                    new Url("https://twitter.com/TIME/status/905785286092877824"),
-                    new Url("http://pltwps.it/_xV6mWwE")
-                },
-                Mentions = new List<Mention>()
-            }
-            );
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
 
-            JsonSerializer serializer = new JsonSerializer();
             using (StreamWriter sw = new StreamWriter(Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory) + @"\structure.json"))
             using (JsonWriter writer = new JsonTextWriter(sw))
             {
-                serializer.Serialize(writer, records);
+                serializer.Serialize(writer, recordList);
             }
 
-            Console.WriteLine("Er werd een testbestand genaamd 'structure.json' weggeschreven naazr uw desktop met 2 test-records");
+            Console.WriteLine("Er werd een testbestand genaamd 'structure.json' weggeschreven naar uw desktop met max 200 test-records");
         }
     }
 }

@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44342</IISExpressSSLPort>
+    <IISExpressSSLPort>44372</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -88,6 +88,18 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=5.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.5.2.1\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocols, Version=5.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Protocols.5.2.1\lib\net451\Microsoft.IdentityModel.Protocols.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect, Version=5.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Protocols.OpenIdConnect.5.2.1\lib\net451\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.2.1\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
     </Reference>
@@ -106,11 +118,11 @@
     <Reference Include="Microsoft.Owin.Security.Google, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.Google.4.0.0\lib\net451\Microsoft.Owin.Security.Google.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.4.0.0\lib\net451\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.0\lib\net451\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OpenIdConnect, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OpenIdConnect.4.0.0\lib\net451\Microsoft.Owin.Security.OpenIdConnect.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Security.Twitter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.4.0.0\lib\net451\Microsoft.Owin.Security.Twitter.dll</HintPath>
@@ -124,6 +136,29 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.2.1\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.2\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -132,6 +167,12 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -161,8 +202,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http">
-    </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Web.Optimization">
@@ -186,49 +225,48 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\Account2Controller.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\AccountController.cs" />
+    <Compile Include="Controllers\API\Helper_Code\Common\AuthorizationHeaderHandler.cs" />
+    <Compile Include="Controllers\API\ItemController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
-    <Compile Include="Controllers\Manage2Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\MasterProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controllers\API\Resource\Constants\ApiInfo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApiInfo.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\acf3dcb7ff752b5296ca23ba2c7c2606.svg" />
-    <Content Include="Content\assets\1524739aae86f69026689ec798e10ebc.svg" />
-    <Content Include="Content\assets\dbc7556d44aaa93cc89743f163cc09c4.svg" />
-    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.svg" />
-    <Content Include="Content\assets\static\fonts\icons\themify\themify.svg" />
+    <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\cba68f986e60df8c74f4a53c3e39595c.svg" />
     <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
     <Content Include="Content\Images\bg.jpg" />
-    <Content Include="Content\Images\datatables\sort_asc.png" />
-    <Content Include="Content\Images\datatables\sort_asc_disabled.png" />
-    <Content Include="Content\Images\datatables\sort_both.png" />
-    <Content Include="Content\Images\datatables\sort_desc.png" />
-    <Content Include="Content\Images\datatables\sort_desc_disabled.png" />
-    <Content Include="Content\Images\logo.png" />
-    <Content Include="Content\Images\logo.svg" />
+    <Content Include="Content\Images\faqbg.jpg" />
+    <Content Include="Content\Images\Index\banner.jpg" />
     <Content Include="Content\Images\logo_new.png" />
-    <Content Include="Content\PreviewTheme\PDarkMode.css" />
-    <Content Include="Content\PreviewTheme\PFutureMode.css" />
-    <Content Include="Content\PreviewTheme\PLightMode.css" />
-    <Content Include="Content\style.css" />
+    <Content Include="Content\Images\nva.jpg" />
+    <Content Include="Content\Styling\account\custom.css" />
+    <Content Include="Content\Styling\grid2\gridstack-extra.css" />
+    <Content Include="Content\Styling\grid2\gridstack.css" />
+    <Content Include="Scripts\account\custom.js" />
+    <Content Include="Scripts\contact.js" />
+    <Content Include="Content\Styling\style.css" />
+    <Content Include="Content\Styling\contact.css" />
+    <Content Include="Content\Styling\FAQ.css" />
     <Content Include="Content\Theme\DarkMode.css" />
     <Content Include="Content\Theme\FutureMode.css" />
     <Content Include="Content\Theme\LightMode.css" />
@@ -236,57 +274,28 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.eot" />
-    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.ttf" />
-    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.woff" />
-    <Content Include="Content\assets\static\fonts\icons\fontawesome\fontawesome-webfont.woff2" />
-    <Content Include="Content\assets\static\fonts\icons\fontawesome\FontAwesome.otf" />
-    <Content Include="Content\assets\static\fonts\icons\themify\themify.eot" />
-    <Content Include="Content\assets\static\fonts\icons\themify\themify.ttf" />
-    <Content Include="Content\assets\static\fonts\icons\themify\themify.woff" />
-    <Content Include="Content\2c454669bdf3aebf32a1bd8ac1e0d2d6.eot" />
-    <Content Include="Content\674f50d287a8c48dc19ba404d20fe713.eot" />
-    <Content Include="Content\a1ecc3b826d01251edddf29c3e4e1e97.woff" />
-    <Content Include="Content\af7ae505a9eed503f8b8e6982036873e.woff2" />
-    <Content Include="Content\b06871f281fee6b241d60582ae9369b9.ttf" />
-    <Content Include="Content\e23a7dcaefbde4e74e263247aa42ecd7.ttf" />
-    <Content Include="Content\fee66e712a8a08eef5805a46892932ad.woff" />
+    <Content Include="Content\Fonts\Themify\2c454669bdf3aebf32a1bd8ac1e0d2d6.eot" />
+    <Content Include="Content\Fonts\FontAwesome\674f50d287a8c48dc19ba404d20fe713.eot" />
+    <Content Include="Content\Fonts\Themify\a1ecc3b826d01251edddf29c3e4e1e97.woff" />
+    <Content Include="Content\Fonts\FontAwesome\af7ae505a9eed503f8b8e6982036873e.woff2" />
+    <Content Include="Content\Fonts\FontAwesome\b06871f281fee6b241d60582ae9369b9.ttf" />
+    <Content Include="Content\Fonts\Themify\e23a7dcaefbde4e74e263247aa42ecd7.ttf" />
+    <Content Include="Content\Fonts\FontAwesome\fee66e712a8a08eef5805a46892932ad.woff" />
     <Content Include="favicon.ico" />
     <Content Include="Scripts\bundle.js" />
-    <Content Include="Scripts\esm\popper-utils.js" />
-    <Content Include="Scripts\esm\popper-utils.min.js" />
-    <Content Include="Scripts\esm\popper.js" />
-    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\grid2\gridstack.jQueryUI.js" />
+    <Content Include="Scripts\grid2\gridstack.js" />
+    <Content Include="Scripts\AccountControl.js" />
+    <Content Include="Scripts\index\hide-content.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Scripts\esm\popper.js.map" />
-    <Content Include="Scripts\esm\popper-utils.min.js.map" />
-    <Content Include="Scripts\esm\popper-utils.js.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\changetheme.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\popper-utils.js" />
-    <Content Include="Scripts\popper-utils.min.js" />
-    <Content Include="Scripts\popper.js" />
-    <Content Include="Scripts\popper.min.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
-    <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\umd\popper-utils.js" />
-    <Content Include="Scripts\umd\popper-utils.min.js" />
-    <Content Include="Scripts\umd\popper.js" />
-    <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\load.js" />
     <Content Include="Scripts\vendor.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -297,64 +306,57 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account2\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account2\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account2\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account2\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account2\ForgotPassword.cshtml" />
-    <Content Include="Views\Account2\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account2\Login.cshtml" />
-    <Content Include="Views\Account2\Register.cshtml" />
-    <Content Include="Views\Account2\ResetPassword.cshtml" />
-    <Content Include="Views\Account2\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account2\SendCode.cshtml" />
-    <Content Include="Views\Account2\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\BasicTable.cshtml" />
     <Content Include="Views\Home\Blank.cshtml" />
-    <Content Include="Views\Home\Charts.cshtml" />
-    <Content Include="Views\Home\DataTable.cshtml" />
-    <Content Include="Views\Home\Forms.cshtml" />
-    <Content Include="Views\Home\Signin.cshtml" />
-    <Content Include="Views\Home\Signup.cshtml" />
-    <Content Include="Views\Home\Test404.cshtml" />
-    <Content Include="Views\Home\Test500.cshtml" />
-    <Content Include="Views\Home\UI.cshtml" />
-    <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Scripts\umd\popper.js.map" />
-    <Content Include="Scripts\umd\popper-utils.min.js.map" />
-    <Content Include="Scripts\umd\popper-utils.js.map" />
-    <Content Include="Scripts\README.md" />
-    <Content Include="Scripts\popper.min.js.map" />
-    <Content Include="Scripts\popper.js.map" />
-    <Content Include="Scripts\popper-utils.min.js.map" />
-    <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Account.cshtml" />
-    <Content Include="Views\Item\ItemTables.cshtml" />
+    <Content Include="Views\Home\FAQ.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\BadRequest.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Home\Legal.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Home\AdminCrud.cshtml" />
+    <Content Include="Views\Item\_OrganisationPartialTable.cshtml" />
+    <Content Include="Views\Item\_ThemaPartialTable.cshtml" />
+    <Content Include="Views\Item\_OrganisationPartialCreate.cshtml" />
+    <Content Include="Views\Item\_ThemaPartialCreate.cshtml" />
+    <Content Include="Views\Item\_KeywordPartialCreate.cshtml" />
+    <Content Include="Views\Item\_KeywordPartialTable.cshtml" />
+    <Content Include="Views\Item\_PersonPartialCreate.cshtml" />
+    <Content Include="Views\Item\_PersonPartialTable.cshtml" />
+    <Content Include="Views\Home\_Search.cshtml" />
+    <Content Include="Views\Account\_ResetPassword.cshtml" />
+    <Content Include="Views\Account\_DeleteProfile.cshtml" />
+    <Content Include="Views\Account\_UserPartialTable.cshtml" />
+    <Content Include="Views\Account\_NotificationDropdown.cshtml" />
+    <Content Include="Views\Home\ItemDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj">
       <Project>{0121FC24-E9DD-482E-BB81-489D94710A26}</Project>
       <Name>BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{3042C4D5-5062-4029-B571-F66BF3839AA2}</Project>
+      <Name>DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{97914871-385B-4A43-AA7E-DAFD0715AEB9}</Project>
@@ -365,7 +367,10 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\index.d.ts" />
+    <EmbeddedResource Include="Controllers\API\Resource\Constants\ApiInfo.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApiInfo.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

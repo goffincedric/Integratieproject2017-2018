@@ -1,50 +1,50 @@
-﻿using System;
+﻿using PB.BL.Domain.Items;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using PB.BL.Domain.Account;
 
-namespace Domain.Account
+namespace PB.BL.Domain.Accounts
 {
-  [Table("tblAlert")]
-  public class Alert
-  {
-    [Key]
-    public int AlertId { get; set; }
-    [Required]
-    public string Text { get; set; }
-    public string Description { get; set; }
-    public bool IsFlaggedImportant { get; set; }
-    public bool IsRead { get; set; }
-    [Required]
-    public DateTime TimeStamp { get; set; }
-
-    public string Username { get; set; }
-
-    [Required]
-    [ForeignKey("Username")]
-    public Profile Profile { get; set; }
-
-    public override bool Equals(object obj)
+    [Table("tblAlert")]
+    public class Alert
     {
-      if (!(obj is Alert)) return false;
-      Alert alert = (Alert)obj;
+        [Key]
+        public int AlertId { get; set; }
+        [Required]
+        public string Text { get; set; }
+        public string Description { get; set; }
+        public bool IsFlaggedImportant { get; set; }
+        [Required]
+        public List<ProfileAlert> ProfileAlerts { get; set; }
+        public int ItemId { get; set; }
 
-      if (!alert.Text.ToLower().Equals(this.Text.ToLower())) return false;
-      if (!alert.Description.ToLower().Equals(this.Description.ToLower())) return false;
-      if (!alert.Username.ToLower().Equals(this.Username.ToLower())) return false;
-      
-      if (!alert.TimeStamp.Date.Equals(this.TimeStamp.Date)) return false;
-      return true;
-    }
+        [Required]
+        public Item Item { get; set; }
 
-    public override int GetHashCode()
-    {
-      return base.GetHashCode();
-    }
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Alert)) return false;
+            Alert alert = (Alert)obj;
 
-    public override string ToString()
-    {
-      return Description + "; " + Text + ";";
+            if (!alert.Text.ToLower().Equals(Text.ToLower())) return false;
+            if (!alert.Description.ToLower().Equals(Description.ToLower())) return false;
+            if (IsFlaggedImportant != IsFlaggedImportant) return false;
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -1128482448;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Text);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Description);
+            hashCode = hashCode * -1521134295 + IsFlaggedImportant.GetHashCode();
+            return hashCode;
+        }
+
+        public override string ToString()
+        {
+            return Description + "; " + Text + ";";
+        }
     }
-  }
 }

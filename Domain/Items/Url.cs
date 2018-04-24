@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Resources;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Items
+namespace PB.BL.Domain.Items
 {
-
+    [DataContract]
     [Table("tblUrl")]
     public class Url
     {
-        [Key] public int Id { get; set; }
+        [Key]
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
         public string Link { get; set; }
 
         public List<Record> Records { get; set; }

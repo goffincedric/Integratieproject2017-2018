@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Items;
+using System.Runtime.Serialization;
 
 namespace PB.BL.Domain.Items
 {
+    [DataContract]
     [Table("tblPerson")]
     public class Person : Item
     {
+        [DataMember]
         public string SocialMediaLink { get; set; }
+        [DataMember]
         public string IconURL { get; set; }
+        [DataMember]
         public Function Function { get; set; }
+        [DataMember]
         public Organisation Organisation { get; set; }
-        public List<Record> Records { get; set; }
+        public virtual List<Record> Records { get; set; }
 
         public override string ToString()
         {

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<PB.BL.Domain.Items.Keyword>
+<div class="row">
+  <div class="col-md-12">
+    <div class="bgc-white bd bdrs-3 p-20 mB-20">
+      <h4 class="c-grey-900 mB-20">Keywords Table</h4>
+      <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" style="width:100%">
+        <thead>
+          <tr>
+            <th>@Html.DisplayNameFor(model => model.KeywordId)</th>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Items)</th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          @foreach (var item in Model)
+          {
+            <tr>
+              <td>@Html.DisplayFor(modelItem => item.KeywordId)</td>
+              <td>@Html.DisplayFor(modelItem => item.Name)</td>
+              <td>@Html.DisplayFor(modelItem => item.Items)</td>
+
+              @*<td>
+                  @Html.ActionLink("EditPerson", "Edit", new { id = item.ItemId }) |
+                  @Html.ActionLink("DetailsPerson", "DetailsPerson", new { id = item.ItemId }) |
+                  @Html.ActionLink("DeletePerson", "DeletPerson", new { id = item.ItemId })
+                </td>*@
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

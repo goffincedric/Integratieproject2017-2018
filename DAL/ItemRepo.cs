@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PB.BL.Domain.Items;
+﻿using PB.BL.Domain.Items;
 using PB.DAL.EF;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PB.DAL
 {
     public class ItemRepo : IItemRepo
     {
-        private IntegratieDbContext ctx;
+        private readonly IntegratieDbContext ctx;
 
         public ItemRepo()
         {
@@ -21,7 +17,7 @@ namespace PB.DAL
         public ItemRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-            Console.WriteLine("UOW MADE ITEMREPO");
+            //Console.WriteLine("UOW MADE ITEMREPO");
         }
 
         public Item CreateItem(Item item)
@@ -56,6 +52,8 @@ namespace PB.DAL
         {
             return ctx.Persons
                 .Include("Records")
+                .Include("SubPlatforms")
+                .Include("SubscribedProfiles")
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
@@ -63,15 +61,37 @@ namespace PB.DAL
         {
             return ctx.Persons
                 .Include("Records")
+                .Include("SubPlatforms")
+                .Include("SubscribedProfiles")
                 .AsEnumerable();
         }
 
         public Item ReadItem(int itemId)
         {
-            return ctx.Items.FirstOrDefault(p => p.ItemId == itemId);
+            return ctx.Items
+                .Include("SubPlatforms")
+                .Include("SubscribedProfiles")
+                .FirstOrDefault(p => p.ItemId == itemId);
         }
 
         public IEnumerable<Item> ReadItems()
+        {
+            return ctx.Items
+                .Include("SubPlatforms")
+                .Include("SubscribedProfiles")
+                .OfType<Person>()
+                .Concat<Item>(
+                    ctx.Items
+                    .OfType<Theme>()
+                )
+                .Concat<Item>(
+                    ctx.Items
+                    .OfType<Organisation>()
+                )
+                .AsEnumerable();
+        }
+
+        public IEnumerable<Item> ReadItemsEmpty()
         {
             return ctx.Items.AsEnumerable();
         }
@@ -81,6 +101,50 @@ namespace PB.DAL
             ctx.Items.Attach(item);
             ctx.Entry(item).State = System.Data.Entity.EntityState.Modified;
             ctx.SaveChanges();
+        }
+
+
+        public IEnumerable<Organisation> ReadOrganisations()
+        {
+            return ctx.Organisations
+               .Include("Records")
+               .Include("SubPlatforms")
+               .Include("People")
+               .Include("Keywords")
+              .AsEnumerable();
+        }
+
+        public IEnumerable<Theme> ReadThemes()
+        {
+            return ctx.Themes
+                .Include("Records")
+                .Include("SubPlatforms")
+                .Include("Keywords")
+                .AsEnumerable();
+        }
+
+        public Keyword CreateKeyword(Keyword keyword)
+        {
+            return ctx.Keywords.Add(keyword);
+        }
+
+        public IEnumerable<Keyword> ReadKeywords()
+        {
+            return ctx.Keywords
+                .Include("Items")
+                .AsEnumerable();
+        }
+
+        public Keyword ReadKeyword(int keywordId)
+        {
+            return ctx.Keywords
+                .FirstOrDefault(k => k.KeywordId == keywordId);
+        }
+
+        public void DeleteKeyword(int keywordId)
+        {
+            Keyword keyword = ReadKeyword(keywordId);
+            ctx.Keywords.Remove(keyword);
         }
     }
 }

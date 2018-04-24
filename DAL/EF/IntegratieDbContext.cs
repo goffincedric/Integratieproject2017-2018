@@ -1,39 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Data.Entity.Infrastructure.Annotations;
-using Domain.Items;
-using PB.BL.Domain.Account;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
+
 
 namespace PB.DAL.EF
 {
     [DbConfigurationType(typeof(IntegratieDbConfiguration))]
-    internal class IntegratieDbContext : System.Data.Entity.DbContext
+    public class IntegratieDbContext : IdentityDbContext<Profile>
     {
         private readonly bool delaySave;
 
-        public IntegratieDbContext() : base("IntegratieDB_EFCodeFirst")
+        public IntegratieDbContext() : base("IntegratieDB_EFCodeFirst", throwIfV1Schema: false)
         {
-            System.Data.Entity.Database.SetInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
 
         }
 
         public IntegratieDbContext(bool unitOfworkPresent = false) : base("IntegratieDB_EFCodeFirst")
         {
-            System.Data.Entity.Database.SetInitializer<IntegratieDbContext>(new IntegratieDbInitializer());
+            Database.SetInitializer(new IntegratieDbInitializer());
             delaySave = unitOfworkPresent;
         }
 
 
+        public static IntegratieDbContext Create()
+        {
+            return new IntegratieDbContext();
+        }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -44,8 +43,8 @@ namespace PB.DAL.EF
              * Database Configuration
              */
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            //modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Properties<DateTime>()
                 .Configure(c => c.HasColumnType("datetime2"));
 
@@ -62,7 +61,8 @@ namespace PB.DAL.EF
              */
             modelBuilder.Entity<Profile>()
                 .HasRequired(p => p.UserData)
-                .WithRequiredDependent(ud => ud.Profile);
+                .WithRequiredDependent(ud => ud.Profile)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Profile>()
                 .HasMany(p => p.Subscriptions)
@@ -74,6 +74,27 @@ namespace PB.DAL.EF
                 .WithMany(p => p.Admins)
                 .Map(m => { m.ToTable("tblSubplatformAdmins"); });
 
+            modelBuilder.Entity<Profile>()
+                .HasMany(p => p.Dashboards)
+                .WithRequired(d => d.Profile);
+
+            modelBuilder.Entity<Profile>()
+                .HasMany(p => p.ProfileAlerts)
+                .WithRequired(pa => pa.Profile)
+                .HasForeignKey(pa => pa.UserId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Alert>()
+                .HasMany(a => a.ProfileAlerts)
+                .WithRequired(pa => pa.Alert)
+                .HasForeignKey(pa => pa.AlertId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Item>()
+                .HasMany(i => i.Alerts)
+                .WithRequired(a => a.Item)
+                .HasForeignKey(a => a.ItemId);
+
             modelBuilder.Entity<Item>()
                 .HasMany(t => t.Comparisons)
                 .WithMany(t => t.Items)
@@ -83,6 +104,11 @@ namespace PB.DAL.EF
                 .HasMany(t => t.Keywords)
                 .WithMany(t => t.Items)
                 .Map(m => { m.ToTable("tblKeywordItem"); });
+
+            modelBuilder.Entity<Item>()
+                .HasMany(i => i.SubPlatforms)
+                .WithMany(s => s.Items)
+                .Map(m => { m.ToTable("tblSubplatformItem"); });
 
             modelBuilder.Entity<Record>()
                 .HasMany(r => r.Mentions)
@@ -113,6 +139,30 @@ namespace PB.DAL.EF
                 .HasMany(i => i.Records)
                 .WithMany(r => r.Themes)
                 .Map(m => { m.ToTable("tblThemeRecords"); });
+
+            modelBuilder.Entity<Dashboard>()
+                .HasRequired(d => d.Subplatform)
+                .WithMany(s => s.Dashboards);
+
+            modelBuilder.Entity<Dashboard>()
+                .HasMany(d => d.Zones)
+                .WithRequired(z => z.Dashboard);
+
+            modelBuilder.Entity<Zone>()
+                .HasMany(z => z.Elements)
+                .WithRequired(e => e.Zone);
+
+            modelBuilder.Entity<Element>()
+                .HasRequired(e => e.Comparison)
+                .WithMany(c => c.Elements);
+
+
+            //identity tables
+            modelBuilder.Entity<Profile>().ToTable("tblProfile");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("tblUserRole");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("tblUserLogin");
+            modelBuilder.Entity<IdentityRole>().ToTable("tblRole");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("tblUserClaim");
         }
 
         public override int SaveChanges()
@@ -145,9 +195,10 @@ namespace PB.DAL.EF
             throw new InvalidOperationException("Geen UnitOfWork presented, gebruik SaveChanges in de plaats");
         }
 
-        public DbSet<Profile> Profiles { get; set; }
+
         public DbSet<UserData> UserData { get; set; }
         public DbSet<UserSetting> UserSettings { get; set; }
+        public DbSet<Alert> Alerts { get; set; }
 
         public DbSet<Comparison> Comparisons { get; set; }
         public DbSet<Dashboard> Dashboards { get; set; }

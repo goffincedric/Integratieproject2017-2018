@@ -1,17 +1,13 @@
+using PB.BL.Domain.Accounts;
+using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.JSONConversion;
 using PB.BL.Domain.Platform;
+using PB.BL.Interfaces;
 using PB.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Account;
-using Domain.Items;
-using PB.BL.Domain.Account;
-using Domain.JSONConversion;
-using PB.BL.Domain.Dashboards;
 
 namespace PB.BL
 {
@@ -21,8 +17,6 @@ namespace PB.BL
         private IRecordRepo RecordRepo;
 
         private UnitOfWorkManager UowManager;
-
-        private Trendspotter trendspotter = new Trendspotter();
 
         public ItemManager()
         {
@@ -36,7 +30,7 @@ namespace PB.BL
             RecordRepo = new RecordRepo(uowMgr.UnitOfWork);
         }
 
-        public void initNonExistingRepo(bool createWithUnitOfWork = false)
+        public void InitNonExistingRepo(bool createWithUnitOfWork = false)
         {
             if (RecordRepo == null || ItemRepo == null)
             {
@@ -45,11 +39,11 @@ namespace PB.BL
                     if (UowManager == null)
                     {
                         UowManager = new UnitOfWorkManager();
-                        Console.WriteLine("UOW MADE IN ITEM MANAGER for Record and Item repo");
+                        //Console.WriteLine("UOW MADE IN ITEM MANAGER for Record and Item repo");
                     }
                     else
                     {
-                        Console.WriteLine("uo bestaat al");
+                        //Console.WriteLine("uo bestaat al");
                     }
 
                     RecordRepo = new RecordRepo(UowManager.UnitOfWork);
@@ -59,22 +53,22 @@ namespace PB.BL
                 {
                     RecordRepo = new RecordRepo();
                     ItemRepo = new ItemRepo();
-                    Console.WriteLine("OLD WAY REPO ITEMMGR");
+                    //Console.WriteLine("OLD WAY REPO ITEMMGR");
                 }
             }
         }
 
-
         #region Items
-        public Organisation AddOrganisation(string name, string socialMediaLink = null, string iconURL = null)
+        public Organisation AddOrganisation(string name, string description, string socialMediaLink = null, string iconUrl = null)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
 
             Organisation organisation = new Organisation()
             {
                 Name = name,
+                Description = description,
                 SocialMediaLink = socialMediaLink,
-                IconURL = iconURL,
+                IconURL = iconUrl,
                 Keywords = new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>(),
                 Records = new List<Record>(),
@@ -87,14 +81,14 @@ namespace PB.BL
             return organisation;
         }
 
-        public Person AddPerson(string name, DateTime birthDay, string socialMediaLink, string iconURL, Organisation organisation = null, Function function = null)
+        public Person AddPerson(string name, string socialMediaLink, string iconUrl, Organisation organisation = null, Function function = null)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             Person person = new Person()
             {
                 Name = name,
                 SocialMediaLink = socialMediaLink,
-                IconURL = iconURL,
+                IconURL = iconUrl,
                 Function = function,
                 Keywords = new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>(),
@@ -108,7 +102,7 @@ namespace PB.BL
 
         public Theme AddTheme(string name, string description)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             Theme theme = new Theme()
             {
                 Name = name,
@@ -125,82 +119,170 @@ namespace PB.BL
 
         private Item AddItem(Item item)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return ItemRepo.CreateItem(item);
         }
 
         public void ChangeItem(Item item)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             ItemRepo.UpdateItem(item);
             UowManager.Save();
         }
 
         public Item GetItem(int itemId)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return ItemRepo.ReadItem(itemId);
+        }
+
+        public Item GetItem(string name)
+        {
+            InitNonExistingRepo();
+            return ItemRepo.ReadItems().FirstOrDefault(i => i.Name.Equals(name));
         }
 
         public IEnumerable<Item> GetItems()
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return ItemRepo.ReadItems();
         }
 
-        public Organisation GetOrganistation(int itemId)
+        public IEnumerable<Organisation> GetOrganisations()
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
+            return ItemRepo.ReadOrganisations();
+        }
+
+        public IEnumerable<Theme> GetThemes()
+        {
+            InitNonExistingRepo();
+            return ItemRepo.ReadThemes();
+        }
+
+        public Organisation GetOrganisation(int itemId)
+        {
+            InitNonExistingRepo();
             return (Organisation)ItemRepo.ReadItem(itemId);
         }
 
         public Person GetPerson(int itemId)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return (Person)ItemRepo.ReadItem(itemId);
         }
 
         public Theme GetTheme(int itemId)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return (Theme)ItemRepo.ReadItem(itemId);
         }
 
         public void RemoveItem(int itemId)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             ItemRepo.DeleteItem(itemId);
             UowManager.Save();
         }
 
-
         public IEnumerable<Person> GetPersons()
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return ItemRepo.ReadPersons();
         }
-        #endregion
 
+        public void RemoveKeyword(int keywordId)
+        {
+            InitNonExistingRepo();
+
+            Keyword keyword = ItemRepo.ReadKeyword(keywordId);
+            keyword.Items.ForEach(i => i.Keywords.Remove(keyword));
+            ItemRepo.DeleteKeyword(keywordId);
+
+            UowManager.Save();
+        }
+
+        public Keyword AddKeyword(string name)
+        {
+            Keyword keyword = new Keyword()
+            {
+                Name = name,
+                Items = new List<Item>()
+            };
+
+            keyword = ItemRepo.CreateKeyword(keyword);
+            UowManager.Save();
+            return keyword;
+        }
+
+        public int GetNumberOfMentions(Record record)
+        {
+            InitNonExistingRepo();
+            return record.Mentions.Count;
+        }
+
+        public Dictionary<DateTime, int> GetTweetAmountByDate(Predicate<Record> predicate, DateTime since, DateTime until)
+        {
+            InitNonExistingRepo();
+            Dictionary<DateTime, int> records =
+                (from record in RecordRepo.ReadRecords().ToList().FindAll(r => predicate.Invoke(r) && r.Date > since && r.Date < until)
+                 group record by record.Date.Date
+                 into groupedRecords
+                 select groupedRecords)
+                    .ToDictionary(gr => gr.Key, gr => gr.ToList().Count);
+            return records;
+        }
+
+        public int GetTotalTweetsByDate(Predicate<Record> predicate, DateTime since, DateTime until)
+        {
+            InitNonExistingRepo();
+            return GetTweetAmountByDate(predicate, since, until).Values.Sum();
+        }
+
+        public Dictionary<DateTime, int> GetTweetAmountByDate(DateTime since, DateTime until)
+        {
+            InitNonExistingRepo();
+            Dictionary<DateTime, int> records =
+                (from record in RecordRepo.ReadRecords().ToList().FindAll(r => r.Date > since && r.Date < until)
+                 group record by record.Date.Date
+                 into groupedRecords
+                 select groupedRecords)
+                    .ToDictionary(gr => gr.Key, gr => gr.ToList().Count);
+            return records;
+        }
+
+        public int GetTotalTweetsByDate(DateTime since, DateTime until)
+        {
+            InitNonExistingRepo();
+            return GetTweetAmountByDate(since, until).Values.Sum();
+        }
+
+        public Dictionary<Person, int> GetTopPoliticians(int amount)
+        {
+            InitNonExistingRepo();
+            return ItemRepo.ReadPersons().OrderByDescending(p => p.Records.Count).ToDictionary(p => p, p => p.Records.Count);
+        }
+        #endregion
 
         #region Records
         public IEnumerable<Record> GetRecords()
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return RecordRepo.ReadRecords();
         }
 
         public Record GetRecord(long id)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return RecordRepo.ReadRecord(id);
         }
 
-        public Record AddRecord(long tweet_Id, RecordProfile recordProfile, List<Word> words, Sentiment sentiment, string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Theme> themes, List<Person> persons, DateTime date, double longitude, double latitude, bool retweet)
+        public Record AddRecord(long tweetId, RecordProfile recordProfile, List<Word> words, Sentiment sentiment, string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Theme> themes, List<Person> persons, DateTime date, double longitude, double latitude, bool retweet)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             Record record = new Record()
             {
-                Tweet_Id = tweet_Id,
+                Tweet_Id = tweetId,
                 RecordProfile = recordProfile,
                 Words = words,
                 Sentiment = sentiment,
@@ -213,8 +295,7 @@ namespace PB.BL
                 Date = date,
                 Longitude = longitude,
                 Latitude = latitude,
-                Retweet = retweet,
-                ListUpdatet = DateTime.Now
+                Retweet = retweet
             };
 
             record = AddRecord(record);
@@ -224,35 +305,77 @@ namespace PB.BL
 
         private Record AddRecord(Record record)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return RecordRepo.CreateRecord(record);
         }
 
         public void ChangeRecord(Record record)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             RecordRepo.UpdateRecord(record);
             UowManager.Save();
         }
 
         public void RemoveRecord(long id)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             RecordRepo.DeleteRecord(id);
             UowManager.Save();
         }
         #endregion
+        
+        #region Subscriptions
+        public Profile AddSubscription(Profile profile, Item item)
+        {
+            InitNonExistingRepo();
 
+            profile.Subscriptions.Add(item);
+            item.SubscribedProfiles.Add(profile);
+
+            ChangeItem(item);
+            UowManager.Save();
+
+            return profile;
+        }
+
+        public Profile RemoveSubscription(Profile profile, Item item)
+        {
+            InitNonExistingRepo();
+
+            profile.Subscriptions.Remove(item);
+            item.SubscribedProfiles.Remove(profile);
+
+            ChangeItem(item);
+            UowManager.Save();
+
+            return profile;
+        }
+        #endregion
 
         public void Seed(bool evenRecords = true)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             List<Record> toegevoegde = JClassToRecord(RecordRepo.Seed(evenRecords));
+        }
+
+        public void CleanupOldRecords(Subplatform subplatform, int days)
+        {
+            InitNonExistingRepo();
+            List<Person> persons = ItemRepo.ReadPersons().Where(i => i.SubPlatforms.Contains(subplatform)).ToList();
+            List<Record> oldRecords = new List<Record>();
+
+            persons.ForEach(p =>
+            {
+                oldRecords.AddRange(p.Records.Where(r => r.Date.Date < DateTime.Now.Date.AddDays(-days)));
+            });
+
+            RecordRepo.DeleteRecords(oldRecords);
+            UowManager.Save();
         }
 
         public List<Record> JClassToRecord(List<JClass> data)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             List<Mention> allMentions = RecordRepo.ReadMentions().ToList();
             List<Word> allWords = RecordRepo.ReadWords().ToList();
             List<Hashtag> allHashtags = RecordRepo.ReadHashTags().ToList();
@@ -272,7 +395,7 @@ namespace PB.BL
                         Tweet_Id = el.Id,
                         RecordProfile = el.Profile,
                         Words = new List<Word>(),
-                        Sentiment = new Sentiment(el.Sentiment[0], el.Sentiment[1]),
+                        Sentiment = (el.Sentiment.Count != 0) ? new Sentiment(el.Sentiment[0], el.Sentiment[1]) : new Sentiment(0, 0),
                         Source = el.Source,
                         Hashtags = new List<Hashtag>(),
                         Mentions = new List<Mention>(),
@@ -280,8 +403,7 @@ namespace PB.BL
                         Themes = new List<Theme>(),
                         Persons = new List<Person>(),
                         Date = el.Date,
-                        Retweet = el.Retweet,
-                        ListUpdatet = DateTime.Now
+                        Retweet = el.Retweet
                     };
 
                     if (el.Geo != null)
@@ -302,11 +424,18 @@ namespace PB.BL
                                 Records = new List<Record>(),
                                 Comparisons = new List<Comparison>(),
                                 Keywords = new List<Keyword>(),
-                                SubPlatforms = new List<Subplatform>(),
+                                SubPlatforms = el.Subplatforms,
                                 SubscribedProfiles = new List<Profile>()
                             };
                             oldPersons.Add(personCheck);
                             newPersons.Add(personCheck);
+                        }
+                        else
+                        {
+                            el.Subplatforms.ForEach(sp =>
+                            {
+                                if (!personCheck.SubPlatforms.Contains(sp)) personCheck.SubPlatforms.Add(sp);
+                            });
                         }
                         record.Persons.Add(personCheck);
                         personCheck.Records.Add(record);
@@ -335,7 +464,6 @@ namespace PB.BL
                         if (wordCheck != null)
                         {
                             record.Words.Add(wordCheck);
-
                         }
                         else
                         {
@@ -394,89 +522,42 @@ namespace PB.BL
             return newRecords;
         }
 
-        public List<Alert> GenerateProfileAlerts(Profile profile)
-        {
-            //Alle items uit profile subscriptions halen
-            if (profile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
-            List<Item> subscribedItems = profile.Subscriptions;
-
-            //Items opdelen in Subklasses [Person, Organisation, Theme]
-            List<Person> people = subscribedItems.Where(i => i is Person).ToList().Select(i => (Person)i).ToList();
-            List<Organisation> organisations = new List<Organisation>(); // Alerts op organisaties;
-            List<Theme> themes = new List<Theme>(); // Alerts op thema's
-
-            //Records uit people halen
-            List<Record> peopleRecords = new List<Record>();
-            people.ForEach(p => p.Records.ForEach(r => peopleRecords.Add(r)));
-
-            //Print all subscribed items
-            Console.WriteLine("========= SUBSCRIBED =========");
-            subscribedItems.ForEach(i => Console.WriteLine(i));
-
-            //Check trends voor people
-            List<Alert> alerts = trendspotter.CheckTrendAverageRecords(peopleRecords);
-            Console.WriteLine("============ ALERTS ===========");
-            //Link profile to alerts
-            alerts.ForEach(a =>
-            {
-                Console.WriteLine(a);
-                a.Profile = profile;
-                a.Username = profile.Username;
-            });
-
-            alerts.ForEach(a =>
-            {
-                if (!profile.Alerts.Contains(a)) profile.Alerts.Add(a);
-            });
-
-            UowManager.Save();
-
-            //Return alerts
-            return alerts;
-        }
-
         public void CheckTrend()
         {
-            initNonExistingRepo();
-            //initNonExistingRepoRecord();
-            trendspotter.CheckTrendAverageRecords(GetRecords());
+            //InitNonExistingRepo();
+            //trendspotter.CheckTrendAverageRecords(GetRecords());
         }
 
-        //private void RecordsToItems(List<Record> records)
-        //{
-        //    initNonExistingRepo();
-        //    //initNonExistingRepoRecord();
-        //    //initNonExistingRepoItem();
-        //    //List<Record> records = GetRecords().ToList();
-        //    List<Person> persons = GetPersons().ToList();
-        //    List<Person> people = new List<Person>();
-        //    Item item;
+        #region Keywords
+        public IEnumerable<Keyword> GetKeywords()
+        {
+            return ItemRepo.ReadKeywords();
+        }
+        #endregion
 
-        //    records.ToList().ForEach(r =>
-        //    {
-        //        item = persons.FirstOrDefault(p => p.FirstName.Equals(r.RecordPerson.FirstName) && p.LastName.Equals(r.RecordPerson.LastName));
-        //        if (item == null)
-        //        {
-        //            Person person = new Person()
-        //            {
-        //                ItemId = persons.Count,
-        //                FirstName = r.RecordPerson.FirstName,
-        //                LastName = r.RecordPerson.LastName,
-        //                Keywords = r.Words.ConvertAll(w => new Keyword() { Name = w.Text }),
-        //                SubPlatforms = new List<Subplatform>(),
-        //                Records = new List<Record>() { r }
-        //            };
-        //            persons.Add(person);
-        //            people.Add(person);
-        //        }
-        //        else
-        //        {
-        //            item.Records.Add(r);
-        //        }
-        //    });
+        public int GetKeywordsCount()
+        {
+            return ItemRepo.ReadKeywords().Count();
+        }
 
-        //    people.ForEach(p => ItemRepo.CreatePerson(p));
-        //    UowManager.Save();
-        //}
+        public int GetThemesCount()
+        {
+            return ItemRepo.ReadThemes().Count();
+        }
+
+        public int GetPersonsCount()
+        {
+            return ItemRepo.ReadPersons().Count();
+        }
+
+        public int GetOrganisationsCount()
+        {
+            return ItemRepo.ReadOrganisations().Count();
+        }
+
+        public int GetItemsCount()
+        {
+            return ItemRepo.ReadItems().Count();
+        }
     }
 }

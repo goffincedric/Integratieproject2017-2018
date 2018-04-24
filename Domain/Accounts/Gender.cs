@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PB.BL.Domain.Account
+﻿namespace PB.BL.Domain.Accounts
 {
-  public enum Gender
-  {
-    MALE = 'm',
-    FEMALE = 'f',
-    NOT_MENTIONED = 'n'
-  }
+    public enum Gender
+    {
+        MALE = 'm',
+        FEMALE = 'f',
+        OTHERS = 'o'
+    }
 }
 

@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using PB.BL.Domain.Accounts;
+using PB.DAL.EF;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PB.BL.Domain.Account;
-using PB.DAL.EF;
 
 namespace PB.DAL
 {
-    public class ProfileRepo : IProfileRepo
+    public class ProfileRepo : UserStore<Profile>, IProfileRepo
     {
-        private IntegratieDbContext ctx;
+        private readonly IntegratieDbContext ctx;
 
         public ProfileRepo()
         {
@@ -21,12 +21,12 @@ namespace PB.DAL
         public ProfileRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-            Console.WriteLine("UOW MADE PROFILEREPO");
         }
+
 
         public Profile CreateProfile(Profile profile)
         {
-            ctx.Profiles.Add(profile);
+            profile = ctx.Users.Add(profile);
 
             try
             {
@@ -48,37 +48,41 @@ namespace PB.DAL
             return profile;
         }
 
-        public void DeleteProfile(string username)
+        public void DeleteProfile(string userId)
         {
-            Profile profile = ReadProfile(username);
+            Profile profile = ReadProfile(userId);
             if (profile != null)
             {
-                ctx.Profiles.Remove(profile);
+                ctx.Users.Remove(profile);
                 ctx.SaveChanges();
             }
         }
 
-        public Profile ReadProfile(string username)
+        public Profile ReadProfile(string userId)
         {
-            return ctx.Profiles
-                .Include("Alerts")
-                .Include("Subscriptions")
-                .FirstOrDefault(p => p.Username == username);
+            return ctx.Users
+                .Include(p => p.UserData)
+                .Include(p => p.ProfileAlerts)
+                .Include(p => p.Subscriptions)
+                .Include(p => p.Settings)
+                .FirstOrDefault(p => p.Id.Equals(userId));
         }
 
         public IEnumerable<Profile> ReadProfiles()
         {
-            return ctx.Profiles
-                .Include("Alerts")
-                .Include("Subscriptions")
+            return ctx.Users
+                .Include(p => p.UserData)
+                .Include(p => p.ProfileAlerts)
+                .Include(p => p.Subscriptions)
+                .Include(p => p.Settings)
                 .AsEnumerable();
         }
 
         public void UpdateProfile(Profile profile)
         {
-            ctx.Profiles.Attach(profile);
-            
-            ctx.Entry(profile).State = System.Data.Entity.EntityState.Modified;
+            profile = ctx.Users.Attach(profile);
+
+            ctx.Entry(profile).State = EntityState.Modified;
             ctx.SaveChanges();
         }
     }

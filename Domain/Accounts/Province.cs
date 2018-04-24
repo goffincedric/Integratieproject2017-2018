@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PB.BL.Domain.Account
+﻿namespace PB.BL.Domain.Accounts
 {
-  public enum Province
+    public enum Province
   {
     ANTWERPEN,
     LIMBURG,
