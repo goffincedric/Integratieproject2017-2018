@@ -93,7 +93,8 @@ namespace PB.DAL.EF
             modelBuilder.Entity<Item>()
                 .HasMany(i => i.Alerts)
                 .WithRequired(a => a.Item)
-                .HasForeignKey(a => a.ItemId);
+                .HasForeignKey(a => a.ItemId)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Item>()
                 .HasMany(t => t.Comparisons)
