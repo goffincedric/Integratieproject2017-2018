@@ -1,6 +1,7 @@
 ﻿using Mono.Options;
 using PB.BL;
 using PB.BL.Domain.Accounts;
+using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.JSONConversion;
 using PB.BL.Domain.Platform;
@@ -254,6 +255,126 @@ namespace UI_CA_Prototype
                     Pages = new List<Page>()
                 };
             }
+
+            List<Item> OrganisationsToAdd = new List<Item>()
+            {
+                new Organisation()
+                {
+                    Name = "Partij van de Arbeid",
+                    Abbreviation = "PVDA-PTB",
+                    Keywords = new List<Keyword>(),
+                    People = new List<Person>(),
+                    Records = new List<Record>(),
+                    SubPlatforms = new List<Subplatform>()
+                    {
+                        pbSubplatform
+                    },
+                    SubscribedProfiles = new List<Profile>(),
+                    Alerts = new List<Alert>(),
+                    Comparisons = new List<Comparison>()
+                },
+                new Organisation()
+                {
+                    Name = "Christen-Democratisch en Vlaams",
+                    Abbreviation = "CD&V",
+                    Keywords = new List<Keyword>(),
+                    People = new List<Person>(),
+                    Records = new List<Record>(),
+                    SubPlatforms = new List<Subplatform>()
+                    {
+                        pbSubplatform
+                    },
+                    SubscribedProfiles = new List<Profile>(),
+                    Alerts = new List<Alert>(),
+                    Comparisons = new List<Comparison>()
+                },
+                new Organisation()
+                {
+                    Name = "Socialistische Partij Anders",
+                    Abbreviation = "SP.A",
+                    Keywords = new List<Keyword>(),
+                    People = new List<Person>(),
+                    Records = new List<Record>(),
+                    SubPlatforms = new List<Subplatform>()
+                    {
+                        pbSubplatform
+                    },
+                    SubscribedProfiles = new List<Profile>(),
+                    Alerts = new List<Alert>(),
+                    Comparisons = new List<Comparison>()
+                },
+                new Organisation()
+                {
+                    Name = "Open Vlaamse Liberalen en Democraten",
+                    Abbreviation = "Open Vld",
+                    Keywords = new List<Keyword>(),
+                    People = new List<Person>(),
+                    Records = new List<Record>(),
+                    SubPlatforms = new List<Subplatform>()
+                    {
+                        pbSubplatform
+                    },
+                    SubscribedProfiles = new List<Profile>(),
+                    Alerts = new List<Alert>(),
+                    Comparisons = new List<Comparison>()
+                },
+                new Organisation()
+                {
+                    Name = "Groen",
+                    Abbreviation = "Groen",
+                    Keywords = new List<Keyword>(),
+                    People = new List<Person>(),
+                    Records = new List<Record>(),
+                    SubPlatforms = new List<Subplatform>()
+                    {
+                        pbSubplatform
+                    },
+                    SubscribedProfiles = new List<Profile>(),
+                    Alerts = new List<Alert>(),
+                    Comparisons = new List<Comparison>()
+                },
+                new Organisation()
+                {
+                    Name = "Nieuw-Vlaamse Alliantie",
+                    Abbreviation = "N-VA",
+                    Keywords = new List<Keyword>(),
+                    People = new List<Person>(),
+                    Records = new List<Record>(),
+                    SubPlatforms = new List<Subplatform>()
+                    {
+                        pbSubplatform
+                    },
+                    SubscribedProfiles = new List<Profile>(),
+                    Alerts = new List<Alert>(),
+                    Comparisons = new List<Comparison>()
+                },
+                new Organisation()
+                {
+                    Name = "Vlaams Belang",
+                    Abbreviation = "VB",
+                    Keywords = new List<Keyword>(),
+                    People = new List<Person>(),
+                    Records = new List<Record>(),
+                    SubPlatforms = new List<Subplatform>()
+                    {
+                        pbSubplatform
+                    },
+                    SubscribedProfiles = new List<Profile>(),
+                    Alerts = new List<Alert>(),
+                    Comparisons = new List<Comparison>()
+                }
+            };
+
+            //Replace new organisations with existing alerts
+            ItemMgr.GetOrganisations().ToList().ForEach(o =>
+            {
+                Organisation organisation = (Organisation)OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
+                if (organisation != null) OrganisationsToAdd[OrganisationsToAdd.IndexOf(organisation)] = o;
+            });
+
+            //OrganisationsToAdd.ForEach(o => ItemMgr.AddOrganisation(o.Name, o.Description, o.Abbreviation, o.SocialMediaLink, o.IconURL));
+            ItemMgr.AddItems(OrganisationsToAdd);
+
 
             //Injects api seed data
             APICalls restClient = new APICalls()
