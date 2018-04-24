@@ -42,9 +42,9 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetPerson()
         {
-            IEnumerable<Person> persons = ItemMgr.GetPersons();
-            if (persons.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
-            return Ok(persons);
+            IEnumerable<Person> person = ItemMgr.GetPersons();
+            if (person.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(person);
         }
 
         // GET: api/item/getperson/5
@@ -159,6 +159,17 @@ namespace UI_MVC.Controllers.API
             Person item = ItemMgr.GetPerson(id);
             if (item == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(JsonConvert.SerializeObject(item.Records));
+        }
+
+
+        [HttpGet]
+        public IHttpActionResult GetPersonsTop()
+        {
+            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o=>o.Records.Count()).Take(5);
+            Dictionary<string, int> personmap = new Dictionary<string, int>();
+            persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
+            if (persons == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(personmap);
         }
     }
 }
