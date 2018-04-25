@@ -1,6 +1,7 @@
 ﻿using PB.BL.Domain.Items;
 using PB.DAL.EF;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace PB.DAL
@@ -60,25 +61,59 @@ namespace PB.DAL
         public IEnumerable<Person> ReadPersons()
         {
             return ctx.Persons
-                .Include("Records")
-                .Include("SubPlatforms")
-                .Include("SubscribedProfiles")
+                .Include(i => i.Records)
+                .Include(i => i.SubPlatforms)
+                .Include(i => i.SubscribedProfiles)
+                .Include(i => i.Keywords)
+                .Include(i => i.Alerts)
+                .Include(i => i.Comparisons)
+                .AsEnumerable();
+        }
+
+        public IEnumerable<Organisation> ReadOrganisations()
+        {
+            return ctx.Organisations
+                .Include(o => o.Records)
+                .Include(o => o.SubPlatforms)
+                .Include(o => o.People)
+                .Include(o => o.Keywords)
+                .Include(o => o.SubscribedProfiles)
+                .Include(o => o.Comparisons)
+                .Include(o => o.Alerts)
+                .AsEnumerable();
+        }
+
+        public IEnumerable<Theme> ReadThemes()
+        {
+            return ctx.Themes
+                .Include(t => t.Records)
+                .Include(t => t.SubPlatforms)
+                .Include(t => t.Keywords)
+                .Include(t => t.SubscribedProfiles)
+                .Include(t => t.Comparisons)
+                .Include(t => t.Alerts)
                 .AsEnumerable();
         }
 
         public Item ReadItem(int itemId)
         {
             return ctx.Items
-                .Include("SubPlatforms")
-                .Include("SubscribedProfiles")
+                .Include(i => i.SubPlatforms)
+                .Include(i => i.SubscribedProfiles)
+                .Include(i => i.Keywords)
+                .Include(i => i.Alerts)
+                .Include(i => i.Comparisons)
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
         public IEnumerable<Item> ReadItems()
         {
             return ctx.Items
-                .Include("SubPlatforms")
-                .Include("SubscribedProfiles")
+                .Include(i => i.SubPlatforms)
+                .Include(i => i.SubscribedProfiles)
+                .Include(i => i.Keywords)
+                .Include(i => i.Alerts)
+                .Include(i => i.Comparisons)
                 .OfType<Person>()
                 .Concat<Item>(
                     ctx.Items
@@ -99,28 +134,8 @@ namespace PB.DAL
         public void UpdateItem(Item item)
         {
             ctx.Items.Attach(item);
-            ctx.Entry(item).State = System.Data.Entity.EntityState.Modified;
+            ctx.Entry(item).State = EntityState.Modified;
             ctx.SaveChanges();
-        }
-
-
-        public IEnumerable<Organisation> ReadOrganisations()
-        {
-            return ctx.Organisations
-               .Include("Records")
-               .Include("SubPlatforms")
-               .Include("People")
-               .Include("Keywords")
-              .AsEnumerable();
-        }
-
-        public IEnumerable<Theme> ReadThemes()
-        {
-            return ctx.Themes
-                .Include("Records")
-                .Include("SubPlatforms")
-                .Include("Keywords")
-                .AsEnumerable();
         }
 
         public Keyword CreateKeyword(Keyword keyword)
@@ -131,7 +146,7 @@ namespace PB.DAL
         public IEnumerable<Keyword> ReadKeywords()
         {
             return ctx.Keywords
-                .Include("Items")
+                .Include(k => k.Items)
                 .AsEnumerable();
         }
 

@@ -19,6 +19,7 @@ namespace PB.BL.Domain.Items
         [DataMember]
         public int ItemId { get; set; }
         [DataMember]
+        [Required]
         public string Name { get; set; }
         [DataMember]
         public bool IsHot { get; set; }
