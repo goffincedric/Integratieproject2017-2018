@@ -8,19 +8,29 @@ namespace PB.BL
 {
     public class Trendspotter
     {
-        public List<Alert> GenerateAllAlertTypes(Profile profile, IEnumerable<Record> records)
+        public List<Alert> GenerateAllAlertTypes(List<Item> Subscriptions)
         {
             List<Alert> AllAlerts = new List<Alert>();
 
+
+            // Items opdelen in Subklasses [Person, Organisation, Theme]
+            List<Person> Persons = Subscriptions.Where(i => i is Person).Select(i => (Person)i).ToList();
+            List<Organisation> Organisations = Subscriptions.Where(i => i is Organisation).Select(i => (Organisation)i).ToList(); // Alerts op organisaties;
+            List<Theme> Themes = new List<Theme>(); // Alerts op thema's
+            
+            //Records uit people halen
+            List<Record> PersonsWithRecords = new List<Record>();
+            Persons.ForEach(p => p.Records.ForEach(r => PersonsWithRecords.Add(r)));
+
             // Call methodes to generate all types of alerts
-            AllAlerts.AddRange(GenerateAverageTweetsAlert(profile, records));
-            AllAlerts.AddRange(GenerateSentimentAlerts(profile, records));
+            AllAlerts.AddRange(GenerateAverageTweetsAlert(Persons, PersonsWithRecords));
+            AllAlerts.AddRange(GenerateSentimentAlerts(Persons, PersonsWithRecords));
 
             // return list of all alerts
             return AllAlerts;
         }
 
-        public List<Alert> GenerateAverageTweetsAlert(Profile profile, IEnumerable<Record> records)
+        public List<Alert> GenerateAverageTweetsAlert(List<Person> persons, IEnumerable<Record> records)
         {
             double period = 14; //Aantal dagen vergelijken
 
@@ -31,7 +41,7 @@ namespace PB.BL
             List<Record> newRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date <= lastDate.Date).ToList();
 
             //Alle recordpersonen die records hebben van de afgelopen 14 dagen toevoegen aan lijst
-            List<Person> RecordPersons = GetPersonsWithRecord(profile.Subscriptions, newRecords);
+            List<Person> RecordPersons = GetPersonsWithRecord(persons, newRecords);
 
             //Alle records van 1 persoon in een Dictionary met RecordPersoon als Key en de List van records als value
             Dictionary<Person, List<Record>> groupedOld = GetGroupRecordsPerPerson(RecordPersons, oldRecords);
@@ -87,7 +97,7 @@ namespace PB.BL
             return alerts;
         }
 
-        public List<Alert> GenerateSentimentAlerts(Profile profile, IEnumerable<Record> records)
+        public List<Alert> GenerateSentimentAlerts(List<Person> persons, IEnumerable<Record> records)
         {
             double period = 5; //Aantal dagen vergelijken
 
@@ -97,7 +107,7 @@ namespace PB.BL
             List<Record> PeriodRecords = records.Where(r => r.Date.Date >= LastDate.AddDays(-period-1).Date && r.Date.Date <= LastDate.Date).ToList();
 
             // alle personen met records
-            List<Person> PersonsWithRecords = GetPersonsWithRecord(profile.Subscriptions, PeriodRecords);
+            List<Person> PersonsWithRecords = GetPersonsWithRecord(persons, PeriodRecords);
 
             // alle records per persoon
             Dictionary<Person, List<Record>> PersonRecords = GetGroupRecordsPerPerson(PersonsWithRecords, PeriodRecords);
@@ -147,7 +157,7 @@ namespace PB.BL
             return alerts;
         }
 
-        private List<Person> GetPersonsWithRecord(List<Item> subscriptions, List<Record> records)
+        private List<Person> GetPersonsWithRecord(List<Person> subscriptions, List<Record> records)
         {
             List<Person> RecordPersons = new List<Person>();
             records.ForEach(r =>
