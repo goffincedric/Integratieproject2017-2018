@@ -176,12 +176,23 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetPersonEvolution(int id)
         {
-            IEnumerable<Record> records= ItemMgr.GetPerson(id).Records.Where(p=>p.Sentiment.Polarity != 0).OrderBy(a => a.GetHashCode()).Take(15);
-            Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
-            records.ToList().ForEach(p => { recordsmap.Add(p.Date, p.Sentiment.Polarity); });
-            recordsmap.OrderByDescending(o => o.Key);
-            if (records == null) return StatusCode(HttpStatusCode.NoContent);
-            return Ok(recordsmap);
+            Item item = ItemMgr.GetItem(id);
+            if(item is Person)
+            {
+                IEnumerable<Record> records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0).OrderBy(a => a.GetHashCode()).Take(15);
+                Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
+                records.ToList().ForEach(p => { recordsmap.Add(p.Date, p.Sentiment.Polarity); });
+                recordsmap.OrderByDescending(o => o.Key);
+                if (records == null) return StatusCode(HttpStatusCode.NoContent);
+                return Ok(recordsmap);
+
+
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            
         }
     }
 }
