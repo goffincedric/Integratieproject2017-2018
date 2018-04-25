@@ -9,14 +9,15 @@
   <style type="text/css">
 
     #grid1 {
-      background: lightcyan;
+      opacity: 0.7;
       <!-- border: 3px solid black; -->
       padding: 3px;
       margin-bottom: 10px;
     }
 
     #grid2 {
-      background: lightcyan;
+    
+      opacity: 0.7;
       <!-- border: 3px solid red; -->
       margin-top: 5px;
     }
@@ -44,37 +45,39 @@
 
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
-      <div>
-        <h1>Main trends</h1>
-        <div style="margin-bottom:5px">
-          <a class="btn btn-default" id="save-grid" href="#">Save Grid 1</a>
-          <a class="btn btn-default" id="load-grid" href="#">Load Grid 1</a>
-          <a class="btn btn-default" id="clear-grid" href="#">Clear Grid 1</a>
-        </div>
-        <div class="grid-stack grid-stack-6" id="grid1">
-        </div>
+    <div>
+      <h1>Main trends</h1>
+      <div style="margin-bottom:5px">
+        <a class="btn btn-default" id="save-grid" href="#">Save Grid 1</a>
+        <a class="btn btn-default" id="load-grid" href="#">Load Grid 1</a>
+        <a class="btn btn-default" id="clear-grid" href="#">Clear Grid 1</a>
       </div>
-
-
-
-      <div>
-        <h1>Personal trends</h1>
-        <div style="margin-bottom:5px">
-          <a class="btn btn-default" id="save-grid2" href="#">Save Grid 2</a>
-          <a class="btn btn-default" id="load-grid2" href="#">Load Grid 2</a>
-          <a class="btn btn-default" id="clear-grid2" href="#">Clear Grid 2</a>
-        </div>
-        <div class="grid-stack grid-stack-6" id="grid2">
-        </div>
+      <div class="grid-stack grid-stack-6" id="grid1">
       </div>
-
-
-      <br>
-      <hr />
-      <textarea id="saved-data-1" cols="20" rows="10" readonly="readonly"></textarea>
-      <textarea id="saved-data-2" cols="20" rows="10" readonly="readonly"></textarea>
-
     </div>
+
+
+
+    <div>
+      <h1>Personal trends</h1>
+      <div style="margin-bottom:5px">
+        <a class="btn btn-default" id="save-grid2" href="#">Save Grid 2</a>
+        <a class="btn btn-default" id="load-grid2" href="#">Load Grid 2</a>
+        <a class="btn btn-default" id="clear-grid2" href="#">Clear Grid 2</a>
+      </div>
+      <div class="grid-stack grid-stack-6" id="grid2">
+      </div>
+    </div>
+
+
+    <br>
+    <hr />
+    <textarea id="saved-data-1" cols="20" rows="10" readonly="readonly"></textarea>
+    <textarea id="saved-data-2" cols="20" rows="10" readonly="readonly"></textarea>
+
+    
+
+   
 
 </main>
 
@@ -101,19 +104,19 @@
 
     new function () {
       var items1 = [
-        { x: 0, y: 0, width: 1, height: 1 },
-        { x: 0, y: 1, width: 1, height: 2 },
-        { x: 1, y: 0, width: 1, height: 1 },
-        { x: 2, y: 3, width: 3, height: 1 },
-        { x: 2, y: 4, width: 1, height: 1 }
+        { x: 0, y: 0, width: 5, height: 5 },
+        { x: 0, y: 1, width: 2, height: 3 }
+        //{ x: 1, y: 0, width: 1, height: 1 },
+        //{ x: 2, y: 3, width: 3, height: 1 },
+        //{ x: 2, y: 4, width: 1, height: 1 }
       ];
 
       var items2 = [
-        { x: 0, y: 0, width: 2, height: 2 },
-        { x: 0, y: 1, width: 1, height: 2 },
-        { x: 1, y: 0, width: 1, height: 1 },
-        { x: 2, y: 3, width: 4, height: 1 },
-        { x: 3, y: 4, width: 1, height: 2 }
+        { x: 0, y: 0, width: 5, height: 5 },
+        { x: 0, y: 1, width: 2, height: 3 }
+        //{ x: 1, y: 0, width: 1, height: 1 },
+        //{ x: 2, y: 3, width: 4, height: 1 },
+        //{ x: 3, y: 4, width: 1, height: 2 }
       ];
 
       this.grid1 = $('#grid1').data('gridstack');

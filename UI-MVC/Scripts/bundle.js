@@ -386,8 +386,8 @@ webpackJsonp([0], {
             labels: ["January", "February", "March", "April", "May", "June", "July"],
             datasets: [{
               label: "Dataset 1",
-              backgroundColor: p.a["deep-purple-500"],
-              borderColor: p.a["deep-purple-800"],
+              borderColor: p.a["light-blue-800"],
+              backgroundColor: "rgba(3, 169, 244, 0.5)",
               borderWidth: 1,
               data: [10, 50, 20, 40, 60, 30, 70]
             }]

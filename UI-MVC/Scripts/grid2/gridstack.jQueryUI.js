@@ -14,9 +14,9 @@
             'jquery-ui/widgets/mouse', 'jquery-ui/widgets/draggable', 'jquery-ui/widgets/droppable',
             'jquery-ui/widgets/resizable'], factory);
     } else if (typeof exports !== 'undefined') {
-        try { jQuery = require('jquery'); } catch (e) {}
-        try { _ = require('lodash'); } catch (e) {}
-        try { GridStackUI = require('gridstack'); } catch (e) {}
+        try { jQuery = require('jquery'); } catch (e) {console.log(e)}
+      try { _ = require('lodash'); } catch (e) {console.log(e)}
+      try { GridStackUI = require('gridstack'); } catch (e) {console.log(e)}
         factory(jQuery, _, GridStackUI);
     } else {
         factory(jQuery, _, GridStackUI);
@@ -24,11 +24,7 @@
 })(function($, _, GridStackUI) {
 
     var scope = window;
-
-    /**
-    * @class JQueryUIGridStackDragDropPlugin
-    * jQuery UI implementation of drag'n'drop gridstack plugin.
-    */
+  
     function JQueryUIGridStackDragDropPlugin(grid) {
         GridStackUI.GridStackDragDropPlugin.call(this, grid);
     }

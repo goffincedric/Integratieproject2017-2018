@@ -66,15 +66,16 @@ namespace UI_MVC.Controllers
 
 
         [AllowAnonymous]
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -87,7 +88,7 @@ namespace UI_MVC.Controllers
             {
                 case SignInStatus.Success:
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.Failure:
@@ -359,7 +360,7 @@ namespace UI_MVC.Controllers
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
-                    return RedirectToAction("ExternalLoginFailure", "Account");
+                    return RedirectToAction("Login", "Account");
                 }
 
                 var name = info.Email.Split('@')[0];
@@ -453,6 +454,7 @@ namespace UI_MVC.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
+
 
         #endregion
     }

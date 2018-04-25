@@ -80,7 +80,7 @@ namespace UI_CA_Prototype
             do
             {
                 Console.Write("Keuze: ");
-                int.TryParse(Console.ReadLine(), out int keuze);
+               int.TryParse(Console.ReadLine(), out int keuze);
                 Console.WriteLine("\n");
 
                 switch (keuze)

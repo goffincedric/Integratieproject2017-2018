@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using Newtonsoft.Json;
+using System;
 
 namespace UI_MVC.Controllers.API
 {
@@ -42,9 +43,9 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetPerson()
         {
-            IEnumerable<Person> persons = ItemMgr.GetPersons();
-            if (persons.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
-            return Ok(persons);
+            IEnumerable<Person> person = ItemMgr.GetPersons();
+            if (person.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(person);
         }
 
         // GET: api/item/getperson/5
@@ -159,6 +160,39 @@ namespace UI_MVC.Controllers.API
             Person item = ItemMgr.GetPerson(id);
             if (item == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(JsonConvert.SerializeObject(item.Records));
+        }
+
+
+        [HttpGet]
+        public IHttpActionResult GetPersonsTop()
+        {
+            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o=>o.Records.Count()).Take(5);
+            Dictionary<string, int> personmap = new Dictionary<string, int>();
+            persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
+            if (persons == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(personmap);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetPersonEvolution(int id)
+        {
+            Item item = ItemMgr.GetItem(id);
+            if(item is Person)
+            {
+                IEnumerable<Record> records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0).OrderBy(a => a.GetHashCode()).Take(15);
+                Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
+                records.ToList().ForEach(p => { recordsmap.Add(p.Date, p.Sentiment.Polarity); });
+                recordsmap.OrderByDescending(o => o.Key);
+                if (records == null) return StatusCode(HttpStatusCode.NoContent);
+                return Ok(recordsmap);
+
+
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            
         }
     }
 }
