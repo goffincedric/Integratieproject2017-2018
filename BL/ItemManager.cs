@@ -334,7 +334,7 @@ namespace PB.BL
             UowManager.Save();
         }
         #endregion
-        
+
         #region Subscriptions
         public Profile AddSubscription(Profile profile, Item item)
         {
