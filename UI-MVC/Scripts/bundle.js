@@ -377,30 +377,30 @@ webpackJsonp([0], {
           }
         })
       }
-      //var a = document.getElementById("bar-chart");
-      //if (a) {
-      //  var r = a.getContext("2d");
-      //  new n.a(r, {
-      //    type: "bar",
-      //    data: {
-      //      labels: ["January", "February", "March", "April", "May", "June", "July"],
-      //      datasets: [{
-      //        label: "Dataset 1",
-      //        backgroundColor: p.a["deep-blue-500"],
-      //        borderColor: p.a["deep-blue-800"],
-      //        borderWidth: 1,
-      //        data: [10, 50, 20, 40, 60, 30, 70]
-      //      }]
-      //    },
-      //    options: {
-      //      responsive: true,
-      //      maintainAspectRatio: false,
-      //      legend: {
-      //        position: "bottom"
-      //      }
-      //    }
-      //  })
-      //}
+      var a = document.getElementById("bar-chart");
+      if (a) {
+        var r = a.getContext("2d");
+        new n.a(r, {
+          type: "bar",
+          data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+              label: "Dataset 1",
+              borderColor: p.a["light-blue-800"],
+              backgroundColor: "rgba(3, 169, 244, 0.5)",
+              borderWidth: 1,
+              data: [10, 50, 20, 40, 60, 30, 70]
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+              position: "bottom"
+            }
+          }
+        })
+      }
       var m = document.getElementById("area-chart");
       if (m) {
         var o = m.getContext("2d");

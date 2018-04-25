@@ -12,9 +12,9 @@
           <option value="" disabled selected>Select your graph type</option>
           <option value="1">Bar Chart</option>
           <option value="2">Line Chart</option>
-          <option value="3">Radar Chart</option>
-          <option value="4">Pie Chart</option>
-          <option value="5">Dougnout Chart</option>
+          <option value="3" disabled>Radar Chart</option>
+          <option value="4" disabled>Pie Chart</option>
+          <option value="5" disabled>Dougnout Chart</option>
         </select>
         <input id="itemid" class="form-control" style="width:200px" type="number" placeholder="vul itemid in" disabled />
         <button id="addGrafiek" class="btn btn-primary" type="submit">Add graph</button>
@@ -99,8 +99,8 @@
         datasets: [
           {
             label: "Aantal tweets",
-            backgroundColor: "#607d8b",
-            borderColor: "#37474f",
+            backgroundColor: "#673ab7",
+            borderColor: "#4527a0",
             data: values
           }
         ]
@@ -152,8 +152,8 @@
         datasets: [
           {
             label: "Polarity",
-            backgroundColor: "#607d8b",
-            borderColor: "#37474f",
+            backgroundColor: "rgba(3, 169, 244, 0.5)",
+            borderColor: "#0277bd",
             data: values
           }
         ]
