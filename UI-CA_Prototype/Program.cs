@@ -62,7 +62,7 @@ namespace UI_CA_Prototype
 
                 //try
                 //{
-                    DetectMenuAction();
+                DetectMenuAction();
                 //}
                 //catch (Exception e)
                 //{
@@ -80,7 +80,7 @@ namespace UI_CA_Prototype
             do
             {
                 Console.Write("Keuze: ");
-               int.TryParse(Console.ReadLine(), out int keuze);
+                int.TryParse(Console.ReadLine(), out int keuze);
                 Console.WriteLine("\n");
 
                 switch (keuze)
@@ -144,17 +144,18 @@ namespace UI_CA_Prototype
         {
             List<Subplatform> SubplatformsToClear = new List<Subplatform>();
             List<Subplatform> Subplatforms = null;
-            bool cleanupAll = false;
+            bool CleanupAll = false;
+            bool GenerateAlerts = false;
+            bool QuietMode = false;
             //Available CLI options
             CLIOptions = new OptionSet {
-                {"s|sync", "Will use data from TextGainAPI to sync the database.", ns => WillSeed = (ns != null) },
                 {"c|cleanup-db:", "Cleans the database of old records for the given subplatform and exits program. If no subplatforms are given, the database will clean up old records for all subplatforms. This option can be called multiple times.", cdb =>
                     {
                         if (cdb == null && SubplatformsToClear.Count == 0) {
                             SubplatformsToClear.AddRange(SubplatformMgr.GetSubplatforms());
-                            cleanupAll = true;
+                            CleanupAll = true;
                         }
-                        if (!cleanupAll)
+                        if (!CleanupAll)
                         {
                             if (Subplatforms == null) Subplatforms = SubplatformMgr.GetSubplatforms().ToList();
                             Subplatform subplatform = Subplatforms.FirstOrDefault(s => s.Name.Replace(" ", "").ToLower().Equals(cdb.Replace(" ", "").ToLower()));
@@ -163,17 +164,19 @@ namespace UI_CA_Prototype
                         }
                     }
                 },
-                { "h|help", "Shows this message and exits", h =>
+                {"g|generate-alerts", "Will generate alerts for all current profiles with subscriptions.", g => GenerateAlerts = (g != null) },
+                {"h|help", "Shows this message and exits", h =>
                     {
                         ShowHelp();
                         Environment.Exit(0);
                     }
                 },
+                {"q|quiet", "Will execute parsed commands and close quietly.", q => QuietMode = (q != null) },
+                {"s|sync", "Will use data from TextGainAPI to sync the database.", s => WillSeed = (s != null) },
             };
 
 
             /* ====== Start arg handeling  ====== */
-
             List<string> extra;
             try
             {
@@ -193,18 +196,27 @@ namespace UI_CA_Prototype
 
 
             //Injects seed data
-            if (WillSeed) Seed();
-
-            //Clear 
-            SubplatformsToClear.ForEach(Console.WriteLine);
-
-            if (SubplatformsToClear.Count != 0)
+            if (WillSeed)
             {
+                Console.WriteLine("=======================");
+                Console.WriteLine("==== Seed from API ====");
+                Console.WriteLine("=======================");
+                Seed();
+                Console.WriteLine(" ");
+            }
+
+            //Clears subplatforms
+            if (SubplatformsToClear.Count != 0 || CleanupAll)
+            {
+                Console.WriteLine("====================");
+                Console.WriteLine("==== Cleanup DB ====");
+                Console.WriteLine("====================");
                 try
                 {
                     SubplatformsToClear.ForEach(s =>
                     {
                         int days = int.Parse(s.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
+                        Console.WriteLine("Clear " + s.Name + " from records older than " + days + " days");
                         ItemMgr.CleanupOldRecords(s, days);
                     });
                 }
@@ -215,8 +227,24 @@ namespace UI_CA_Prototype
                     Console.ReadKey();
                     Environment.Exit(1);
                 }
+                Console.WriteLine(" ");
+            }
+
+            //Generates alerts
+            if (GenerateAlerts)
+            {
+                Console.WriteLine("=========================");
+                Console.WriteLine("==== Generate Alerts ====");
+                Console.WriteLine("=========================");
+                AccountMgr.GenerateAllAlerts();
+                Console.WriteLine(" ");
+            }
+
+            if (QuietMode)
+            {
                 Console.WriteLine("Done");
                 Environment.Exit(0);
+                Console.ReadKey();
             }
         }
 
@@ -369,11 +397,10 @@ namespace UI_CA_Prototype
             ItemMgr.GetOrganisations().ToList().ForEach(o =>
             {
                 Organisation organisation = (Organisation)OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
-                if (organisation != null) OrganisationsToAdd[OrganisationsToAdd.IndexOf(organisation)] = o;
+                if (organisation != null) OrganisationsToAdd.Remove(o);
             });
 
-            //OrganisationsToAdd.ForEach(o => ItemMgr.AddOrganisation(o.Name, o.Description, o.Abbreviation, o.SocialMediaLink, o.IconURL));
-            ItemMgr.AddItems(OrganisationsToAdd);
+            if (OrganisationsToAdd.Count != 0) ItemMgr.AddItems(OrganisationsToAdd);
 
 
             //Injects api seed data

@@ -174,19 +174,25 @@ namespace PB.BL
         public Organisation GetOrganisation(int itemId)
         {
             InitNonExistingRepo();
-            return (Organisation)ItemRepo.ReadItem(itemId);
+            Item item = ItemRepo.ReadItem(itemId);
+            if (!(item is Organisation)) return null;
+            return (Organisation)item;
         }
 
         public Person GetPerson(int itemId)
         {
             InitNonExistingRepo();
-            return (Person)ItemRepo.ReadItem(itemId);
+            Item item = ItemRepo.ReadItem(itemId);
+            if (!(item is Person)) return null;
+            return (Person)item;
         }
 
         public Theme GetTheme(int itemId)
         {
             InitNonExistingRepo();
-            return (Theme)ItemRepo.ReadItem(itemId);
+            Item item = ItemRepo.ReadItem(itemId);
+            if (!(item is Theme)) return null;
+            return (Theme)item;
         }
 
         public void RemoveItem(int itemId)
