@@ -12,8 +12,8 @@ namespace PB.BL.Domain.Items
     [Key]
     public long Tweet_Id { get; set; }
     public string Source { get; set; }
-    public double Longitude { get; set; }
-    public double Latitude { get; set; }
+    public double? Longitude { get; set; }
+    public double? Latitude { get; set; }
     public bool Retweet { get; set; }
     public DateTime Date { get; set; }
 

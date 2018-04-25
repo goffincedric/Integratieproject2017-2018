@@ -17,7 +17,7 @@ namespace PB.BL.Domain.JSONConversion
         public List<string> Themes { get; set; }
         public List<string> Persons { get; set; }
         public DateTime Date { get; set; }
-        public List<double> Geo { get; set; }
+        public List<double?> Geo { get; set; }
         public long Id { get; set; }
         public bool Retweet { get; set; }
 
@@ -35,9 +35,14 @@ namespace PB.BL.Domain.JSONConversion
             Themes = themes;
             Persons = persons;
             Date = date;
-            Geo = (geo is bool)?null:geo.ToObject<List<double>>();
+            Geo = (geo is bool) ? null : geo.ToObject<List<double?>>();
             Id = id;
             Retweet = retweet;
+
+            //Console.WriteLine("====");
+            //Console.WriteLine(sentiment is null);
+            //Console.WriteLine(sentiment[0]);
+            //Console.WriteLine(sentiment[1]);
 
             Subplatforms = new List<Subplatform>();
         }
