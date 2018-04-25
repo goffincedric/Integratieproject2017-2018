@@ -1,97 +1,177 @@
 ﻿
 @{
-    ViewBag.Title = "charts";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+  ViewBag.Title = "charts";
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
-    <div class="full-container">
-      <canvas id="bar-chart" width="100" height="100"></canvas>
-      @*<canvas id="pie-chart" width="800" height="450"></canvas>
-      <canvas id="radar-chart" width="800" height="600"></canvas>
-      <canvas id="doughnut-chart" width="800" height="450"></canvas>
-      <canvas id="bubble-chart" width="800" height="800"></canvas>*@
+ 
+      <div class="row">
+        <select style="width:200px;" id="graphtype" class="form-control" name="type">
+          <option value="" disabled selected>Select your graph type</option>
+          <option value="1">Bar Chart</option>
+          <option value="2">Line Chart</option>
+          <option value="3">Radar Chart</option>
+          <option value="4">Pie Chart</option>
+          <option value="5">Dougnout Chart</option>
+        </select>
+        <input id="itemid" class="form-control" style="width:200px" type="number" placeholder="vul itemid in" disabled />
+        <button id="addGrafiek" class="btn btn-primary" type="submit">Add graph</button>
+      </div>
+
+    <br />
+    <br />
+
+    <div id="graphs">
+
     </div>
-  </div>
+      
+     
+      @*<canvas id="pie-chart" width="800" height="450"></canvas>
+    <canvas id="radar-chart" width="800" height="600"></canvas>
+    <canvas id="doughnut-chart" width="800" height="450"></canvas>
+    <canvas id="bubble-chart" width="800" height="800"></canvas>*@
+    </div>
+
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 <script defer>
-  
-  var tmp = "";
-  tmp = $.ajax({
-    async: false,
-    type: 'GET',
-    dataType: 'json',
-    url: "https://localhost:44342/api/item/getpersonstop"
-  }).responseJSON
-
-  var keys = [];
-  keys = Object.keys(tmp);
-  var label = [];
-  var values = [];
-
-  for (var i = 0; i < keys.length; i++) {
-    label.push(keys[i]);
-    values.push(tmp[keys[i]]/10);
-  }
-
-  console.log(label);
-  console.log(values);  
-
-  var can = $('#bar-chart');
-  can.attr('width', 200); //max width
-  can.attr('height', 200); //max height  
-  new Chart(can, {
-    type: 'bar',
-    data: {
-      labels: label,
-      datasets: [
-        {
-          label: "Aantal tweets",
-          backgroundColor: "#607d8b",
-          borderColor: "#37474f",
-          data: values
-        }
-      ]
-    },
-    options: {
-      legend: { display: true },
-      title: {
-        display: true,
-        text: 'Top 5'
-      }
+  $("#graphtype").change(function () {
+    var e = $("#graphtype");
+    var keuze = e.prop('selectedIndex');
+    if (keuze == 2) {
+      document.getElementById("itemid").disabled = false;
     }
   });
-  
- 
 
- 
+  $("#addGrafiek").click(function () {
+    var e = $("#graphtype");
+    var keuze = e.prop('selectedIndex');
 
-  //new Chart(document.getElementById("bar-chart"), {
-  //  type: 'bar',
-  //  data: {
-  //    labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-  //    datasets: [
-  //      {
-  //        label: "Population (millions)",
-  //        backgroundColor: "#607d8b",
-  //        borderColor: "#37474f",
-  //        data: [2478, 5267, 734, 784, 433]
-  //      }
-  //    ]
-  //  },
-  //  options: {
-  //    legend: { display: false },
-  //    title: {
-  //      display: true,
-  //      text: 'Predicted world population (millions) in 2050'
-  //    }
-  //  }
-  //});
+    if (keuze == 1) {
+      $("#graphs").after("<div style=\"margin: 10px\" class=\"masonry-item col-md- 6\"> <div class=\"bgc-white p-20 bd\"> <h6 class=\"c-grey-900\">Bar chart</h6> <div class=\"mT-30\" id=\"graph-bar\"> </div></div></div>");
 
+      $("#graph-bar").append("<canvas id=\"bar-chart\" height=\"220\"></canvas>");
+      drawBarChart();
+    } else if (keuze == 2) {
+      $("#graphs").after("<div style=\"margin: 10px\" class=\"masonry-item col-md- 6\"> <div class=\"bgc-white p-20 bd\"> <h6 class=\"c-grey-900\">Line chart</h6> <div class=\"mT-30\" id=\"graph-bar\"> </div></div></div>");
+      
+      $("#graph-bar").append("<canvas id=\"line-chart\" height=\"220\"></canvas>");
+     var index = $("#itemid").val();
+      drawLineChart(index)
+    }
+    
+  });
+
+  function drawBarChart() {
+    var tmp = "";
+    tmp = $.ajax({
+      async: false,
+      type: 'GET',
+      dataType: 'json',
+      url: "https://localhost:44342/api/item/getpersonstop"
+    }).responseJSON
+
+    var keys = [];
+    keys = Object.keys(tmp);
+    var label = [];
+    var values = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      label.push(keys[i]);
+      values.push(tmp[keys[i]] / 10);
+    }
+
+    console.log(label);
+    console.log(values);
+
+    var can = $('#bar-chart');
+    //can.attr('width', '300px');
+    //can.attr('height', '300px');
+
+    new Chart(can, {
+      type: 'bar',
+      data: {
+        labels: label,
+        datasets: [
+          {
+            label: "Aantal tweets",
+            backgroundColor: "#607d8b",
+            borderColor: "#37474f",
+            data: values
+          }
+        ]
+      },
+      options: {
+        legend: { display: true },
+        responsive: true,
+        maintainAspectRatio: false,
+        title: {
+          display: true,
+          text: 'Top 5 politicians'
+        }
+      }
+    });
+  }
+
+
+  function drawLineChart(id) {
+
+    var tmp = "";
+    tmp = $.ajax({
+      async: false,
+      type: 'GET',
+      dataType: 'json',
+      url: "https://localhost:44342/api/item/GetPersonEvolution/" + id
+    }).responseJSON
+
+    var keys = [];
+    keys = Object.keys(tmp);
+    var label = [];
+    var values = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      label.push(keys[i]);
+      values.push(tmp[keys[i]] / 10);
+    }
+
+    console.log(label);
+    console.log(values);
+
+    var can = $('#line-chart');
+    //can.attr('width', '300px');
+    //can.attr('height', '300px');
+
+    new Chart(can, {
+      type: 'line',
+      data: {
+        labels: label,
+        datasets: [
+          {
+            label: "Polarity",
+            backgroundColor: "#607d8b",
+            borderColor: "#37474f",
+            data: values
+          }
+        ]
+      },
+      options: {
+        legend: { display: true },
+        responsive: true,
+        maintainAspectRatio: false,
+        title: {
+          display: true,
+          text: 'Politician evolution'
+        }
+      }
+    });
+  }
+
+  ///REM///
+/*
   new Chart(document.getElementById("pie-chart"), {
     type: 'pie',
     data: {
@@ -227,5 +307,5 @@
         }]
       }
     }
-  });
+  });*/
 </script>

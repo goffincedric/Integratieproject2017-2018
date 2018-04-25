@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using Newtonsoft.Json;
+using System;
 
 namespace UI_MVC.Controllers.API
 {
@@ -170,6 +171,17 @@ namespace UI_MVC.Controllers.API
             persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
             if (persons == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(personmap);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetPersonEvolution(int id)
+        {
+            IEnumerable<Record> records= ItemMgr.GetPerson(id).Records.Where(p=>p.Sentiment.Polarity != 0).OrderBy(a => a.GetHashCode()).Take(15);
+            Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
+            records.ToList().ForEach(p => { recordsmap.Add(p.Date, p.Sentiment.Polarity); });
+            recordsmap.OrderByDescending(o => o.Key);
+            if (records == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(recordsmap);
         }
     }
 }
