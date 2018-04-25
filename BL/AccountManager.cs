@@ -331,7 +331,7 @@ namespace PB.BL
             AlertRepo.ReadAlerts().ToList().ForEach(a =>
             {
                 Alert alert = alerts.FirstOrDefault(al => al.Equals(a));
-                if (alert != null) alerts[alerts.IndexOf(alert)] = a;
+                if (alert != null) alerts.Remove(a);
             });
 
             //Link alerts aan profile

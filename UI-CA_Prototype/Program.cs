@@ -62,7 +62,7 @@ namespace UI_CA_Prototype
 
                 //try
                 //{
-                    DetectMenuAction();
+                DetectMenuAction();
                 //}
                 //catch (Exception e)
                 //{
@@ -80,7 +80,7 @@ namespace UI_CA_Prototype
             do
             {
                 Console.Write("Keuze: ");
-               int.TryParse(Console.ReadLine(), out int keuze);
+                int.TryParse(Console.ReadLine(), out int keuze);
                 Console.WriteLine("\n");
 
                 switch (keuze)
@@ -369,11 +369,10 @@ namespace UI_CA_Prototype
             ItemMgr.GetOrganisations().ToList().ForEach(o =>
             {
                 Organisation organisation = (Organisation)OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
-                if (organisation != null) OrganisationsToAdd[OrganisationsToAdd.IndexOf(organisation)] = o;
+                if (organisation != null) OrganisationsToAdd.Remove(o);
             });
 
-            //OrganisationsToAdd.ForEach(o => ItemMgr.AddOrganisation(o.Name, o.Description, o.Abbreviation, o.SocialMediaLink, o.IconURL));
-            ItemMgr.AddItems(OrganisationsToAdd);
+            if (OrganisationsToAdd.Count != 0) ItemMgr.AddItems(OrganisationsToAdd);
 
 
             //Injects api seed data
