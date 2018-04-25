@@ -176,7 +176,8 @@ namespace UI_MVC.Controllers
             {
 
                 accountMgr.AddSubscription(user, item);
-               return RedirectToAction("ItemDetail", "Home", new { Id = id });
+                //return View();
+                return RedirectToAction("ItemDetail", "Home", new { Id = id });
             }
             return RedirectToAction("ItemDetail", "Home", new { Id = id });
         }
@@ -192,6 +193,7 @@ namespace UI_MVC.Controllers
             {
 
                 accountMgr.RemoveSubscription(user, item);
+                //return View();
                 return RedirectToAction("ItemDetail", "Home", new { Id = id });
             }
             return RedirectToAction("ItemDetail", "Home", new { Id=id});

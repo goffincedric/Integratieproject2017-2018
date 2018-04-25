@@ -340,6 +340,7 @@
     <Content Include="Views\Account\_UserPartialTable.cshtml" />
     <Content Include="Views\Account\_NotificationDropdown.cshtml" />
     <Content Include="Views\Home\ItemDetail.cshtml" />
+    <Content Include="Views\Item\Charts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
