@@ -3,10 +3,24 @@
 
     <li>
         <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm notificationsList">
-            @foreach (var a in Model)
+            @if (Model.Count == 0)
             {
+            <li class="notificationsListItem">
+                <a href="@Url.Action("Faq", "Home")" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-10">
+                    <div class="peer mR-15"><img class="w-3r bdrs-50p" src="~/Content/Images/question-mark.png" alt=""></div>
+                    <div class="peer peer-greed">
+                        <span><span class="fw-500">U hebt nog geen Notifications!</span></span>
+                        <p class="m-0"><small class="fsz-xs">Subscribe op een item.</small><p>
+                    </div>
+                </a>
+            </li>  
+            }
+            else
+            {
+                foreach (var a in Model)
+                {
                 <li class="notificationsListItem">
-                    <a href="@Url.Action("ClickNotification","Account", new {id = a.AlertId})" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue @(a.IsRead ? "" : "bgc-blue-50") bgcH-grey-10">
+                    <a href="@Url.Action("ClickNotification", "Account", new { id = a.AlertId })" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue @(a.IsRead ? "" : "bgc-blue-50") bgcH-grey-10">
                         <div class="peer mR-15"><img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/23.jpg" alt=""></div>
                         <div class="peer peer-greed">
                             <span><span class="fw-500">@a.Alert.Item.Name</span> <span class="c-grey-600">@a.Alert.Event <span class="text-dark">@a.Alert.Subject</span></span></span>
@@ -14,6 +28,7 @@
                         </div>
                     </a>
                 </li>
+                }
             }
         </ul>
     </li>
