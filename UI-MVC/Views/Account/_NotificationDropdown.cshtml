@@ -1,4 +1,4 @@
-﻿<ul class="dropdown-menu">
+﻿<ul class="dropdown-menu dropdown-width">
     <li class="pX-20 pY-15 bdB"><i class="ti-bell pR-10"></i> <span class="fsz-sm fw-600 c-grey-900">Notifications</span></li>
 
     <li>
@@ -11,7 +11,7 @@
                         <a href="@Url.Action("ClickNotification","Account", new {id = a.AlertId})" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
                             <div class="peer mR-15"><img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/23.jpg" alt=""></div>
                             <div class="peer peer-greed">
-                                <span><span class="fw-500">@a.Alert.Item.Name</span> <span class="c-grey-600">@a.CheckChange() <span class="text-dark">Populariteit</span></span></span>
+                                <span><span class="fw-500">@a.Alert.Item.Name</span> <span class="c-grey-600">@a.Alert.Event <span class="text-dark">@a.Alert.Subject</span></span></span>
                                 <p class="m-0"><small class="fsz-xs"></small>@a.GetTime()</p>
                             </div>
                         </a>
@@ -23,7 +23,7 @@
                         <a href="@Url.Action("ClickNotification","Account", new {id = a.AlertId})" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgc-blue-50 bgcH-grey-100">
                             <div class="peer mR-15"><img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/23.jpg" alt=""></div>
                             <div class="peer peer-greed">
-                                <span><span class="fw-500">@a.Alert.Item.Name</span> <span class="c-grey-600">@a.CheckChange() <span class="text-dark">Populariteit</span></span></span>
+                                <span><span class="fw-500">@a.Alert.Item.Name</span> <span class="c-grey-600">@a.Alert.Event <span class="text-dark">@a.Alert.Subject</span></span></span>
                                 <p class="m-0"><small class="fsz-xs"></small>@a.GetTime()</p>
                             </div>
                         </a>

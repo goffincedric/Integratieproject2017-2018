@@ -8,14 +8,20 @@ namespace PB.BL
 {
     public class Trendspotter
     {
-
-        public List<Alert> CheckTrendAverageRecords(Profile profile, IEnumerable<Record> records)
+        public List<Alert> GenerateAllAlertTypes(Profile profile, IEnumerable<Record> records)
         {
-            /*
-            *!!
-            *lastDate OVERAL AANPASSEN NAAR DATETIME.NOW WANNEER WE DE API KUNNEN AANSPREKEN
-            * !!
-            */
+            List<Alert> AllAlerts = new List<Alert>();
+
+            // Call methodes to generate all types of alerts
+            AllAlerts.AddRange(GenerateAverageTweetsAlert(profile, records));
+            AllAlerts.AddRange(GenerateSentimentAlerts(profile, records));
+
+            // return list of all alerts
+            return AllAlerts;
+        }
+
+        public List<Alert> GenerateAverageTweetsAlert(Profile profile, IEnumerable<Record> records)
+        {
             double period = 14; //Aantal dagen vergelijken
 
             // Records ouder dan huidige dag
@@ -25,34 +31,22 @@ namespace PB.BL
             List<Record> newRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date <= lastDate.Date).ToList();
 
             //Alle recordpersonen die records hebben van de afgelopen 14 dagen toevoegen aan lijst
-            List<Person> RecordPersons = GetPersons(profile.Subscriptions, newRecords);
+            List<Person> RecordPersons = GetPersonsWithRecord(profile.Subscriptions, newRecords);
 
-            //Alle oldrecords van 1 persoon in een Dictionary met RecordPersoon als Key en de List van records als value
-            Dictionary<Person, List<Record>> groupedOld = GroupRecordsPerPerson(RecordPersons, oldRecords);
-
-            //Alle newrecords van 1 persoon in een Dictionary met RecordPersoon als Key en de List van records als value
-            Dictionary<Person, List<Record>> groupedNew = GroupRecordsPerPerson(RecordPersons, newRecords);
+            //Alle records van 1 persoon in een Dictionary met RecordPersoon als Key en de List van records als value
+            Dictionary<Person, List<Record>> groupedOld = GetGroupRecordsPerPerson(RecordPersons, oldRecords);
+            Dictionary<Person, List<Record>> groupedNew = GetGroupRecordsPerPerson(RecordPersons, newRecords);
 
             //De List van records opdelen in Dictionary van List<Record> per DateTime van de Record
             Console.WriteLine("=============OLD=============");
-            Dictionary<Person, Dictionary<DateTime, List<Record>>> groupedDateOld = GetGroupedByDate(groupedOld);
             Dictionary<Person, double> oldGemiddelde = GetAverageTweets(groupedOld, period - 1);
-
-
+            
             Console.WriteLine("=============NEW=============");
-            Dictionary<Person, Dictionary<DateTime, List<Record>>> groupedDatenew = GetGroupedByDate(groupedNew);
             Dictionary<Person, double> newGemiddelde = GetAverageTweets(groupedNew, period);
 
             //De verschillen tonen in console
-            Console.WriteLine("===========VERSCHIL===========");
-            oldGemiddelde.Keys.ToList().ForEach(k =>
-            {
-                newGemiddelde.TryGetValue(k, out double nieuw);
-                oldGemiddelde.TryGetValue(k, out double oud);
-                Console.WriteLine(k + " = " + (nieuw - oud));
-            });
-
             //Alerts maken
+            Console.WriteLine("===========VERSCHIL===========");
             List<Alert> alerts = new List<Alert>();
             oldGemiddelde.Keys.ToList().ForEach(k =>
             {
@@ -60,6 +54,7 @@ namespace PB.BL
                 oldGemiddelde.TryGetValue(k, out double oud);
 
                 double verschil = nieuw - oud;
+                Console.WriteLine(k + " = " + verschil);
 
                 if (verschil == 0) return;
 
@@ -69,6 +64,8 @@ namespace PB.BL
                     {
                         Description = "Daling populariteit " + k.Name,
                         Text = k.Name + " is minder populair vergeleken met de laatste 2 weken",
+                        Event = "daalt in",
+                        Subject = "populariteit",
                         Item = k,
                         ProfileAlerts = new List<ProfileAlert>()
                     });
@@ -79,6 +76,8 @@ namespace PB.BL
                     {
                         Description = "Stijging populariteit " + k.Name,
                         Text = k.Name + " heeft meer populariteit gekregen vergeleken met de laatste 2 weken",
+                        Event = "stijgt in",
+                        Subject = "populariteit",
                         Item = k,
                         ProfileAlerts = new List<ProfileAlert>()
                     });
@@ -88,7 +87,67 @@ namespace PB.BL
             return alerts;
         }
 
-        private List<Person> GetPersons(List<Item> subscriptions, List<Record> records)
+        public List<Alert> GenerateSentimentAlerts(Profile profile, IEnumerable<Record> records)
+        {
+            double period = 5; //Aantal dagen vergelijken
+
+            // Records ouder dan huidige dag
+            DateTime LastDate = DateTime.Now;
+
+            List<Record> PeriodRecords = records.Where(r => r.Date.Date >= LastDate.AddDays(-period-1).Date && r.Date.Date <= LastDate.Date).ToList();
+
+            // alle personen met records
+            List<Person> PersonsWithRecords = GetPersonsWithRecord(profile.Subscriptions, PeriodRecords);
+
+            // alle records per persoon
+            Dictionary<Person, List<Record>> PersonRecords = GetGroupRecordsPerPerson(PersonsWithRecords, PeriodRecords);
+
+            // gemiddeld sentiment per persoon per datum
+            Console.WriteLine("=============AVERAGE=============");
+            Dictionary<Person, double> AveragePolarity = GetAverageTweetPolarity(PersonRecords, period-1);
+
+            // verschil
+            // alerts generaten
+            Console.WriteLine("=========== NEW ALERTS ==========");
+            List<Alert> alerts = new List<Alert>();
+            AveragePolarity.Keys.ToList().ForEach(k =>
+            {
+                AveragePolarity.TryGetValue(k, out double average);
+                
+                Console.WriteLine(k + " = " + average);
+
+                if (average == 0) return;
+
+                if (average <= -0.35)
+                {
+                    alerts.Add(new Alert()
+                    {
+                        Description = "Negatieve reacties op " + k.Name,
+                        Text = k.Name + " heeft gemiddeld meer negatieve reacties gekregen de laatste " + period + " dagen",
+                        Event = "kreeg negatievere",
+                        Subject = "reacties",
+                        Item = k,
+                        ProfileAlerts = new List<ProfileAlert>()
+                    });
+                }
+                else if (average >= 0.35)
+                {
+                    alerts.Add(new Alert()
+                    {
+                        Description = "Positieve reacties op " + k.Name,
+                        Text = k.Name + " heeft gemiddeld meer positieve reacties gekregen de laatste " + period + " dagen",
+                        Event = "kreeg positievere",
+                        Subject = "reacties",
+                        Item = k,
+                        ProfileAlerts = new List<ProfileAlert>()
+                    });
+                }
+            });
+
+            return alerts;
+        }
+
+        private List<Person> GetPersonsWithRecord(List<Item> subscriptions, List<Record> records)
         {
             List<Person> RecordPersons = new List<Person>();
             records.ForEach(r =>
@@ -104,7 +163,7 @@ namespace PB.BL
             return RecordPersons;
         }
 
-        private Dictionary<Person, List<Record>> GroupRecordsPerPerson(List<Person> persons, List<Record> periodRecords)
+        private Dictionary<Person, List<Record>> GetGroupRecordsPerPerson(List<Person> persons, List<Record> periodRecords)
         {
             Dictionary<Person, List<Record>> groupedOld = new Dictionary<Person, List<Record>>();
 
@@ -159,18 +218,18 @@ namespace PB.BL
                     rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d => valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
                 }
 
-                AverageTweets.Add(rp, GetAverage(valueDict, period));
-                Console.WriteLine(rp.ToString() + " - " + GetAverage(valueDict, period)); // period -1 omdat periode is uitgezonderd vandaag
+                AverageTweets.Add(rp, CalcAverageTweets(valueDict, period));
+                Console.WriteLine(rp.ToString() + " - " + CalcAverageTweets(valueDict, period)); // period -1 omdat periode is uitgezonderd vandaag
             });
 
             return AverageTweets;
         }
 
-        private double GetAverage(Dictionary<DateTime, List<Record>> recordsPerDate, double period)
+        private double CalcAverageTweets(Dictionary<DateTime, List<Record>> recordsPerDate, double period)
         {
             if (recordsPerDate.Values.Count == 0) return 0;
 
-            List<Double> aantal = new List<double>();
+            List<double> aantal = new List<double>();
             recordsPerDate.Keys.ToList().ForEach(k =>
             {
                 recordsPerDate.TryGetValue(k, out var records);
@@ -179,16 +238,40 @@ namespace PB.BL
             return aantal.Average() / period * aantal.Count;
         }
 
-        //public void generateAlert(Profile profile, string Trend)
-        //{
-        //    Alert a = new Alert()
-        //    {
-        //        AlertId = 1,
-        //        Description = "Something has happened",
-        //        Text = "A change is coming",
-        //        ProfileAlerts = new List<ProfileAlert>(),
-        //        IsFlaggedImportant = false
-        //    };
-        //}
+        private Dictionary<Person, double> GetAverageTweetPolarity(Dictionary<Person, List<Record>> groupedPerson, double period)
+        {
+            Dictionary<Person, double> AverageTweets = new Dictionary<Person, double>();
+
+            groupedPerson.Keys.ToList().ForEach(rp =>
+            {
+                Dictionary<DateTime, List<Record>> valueDict = new Dictionary<DateTime, List<Record>>();
+
+                groupedPerson.TryGetValue(rp, out var rpRecords);
+
+                if (rpRecords.Count != 0)
+                {
+                    rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d => valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
+                }
+
+                AverageTweets.Add(rp, CalcAverageTweetPolarity(valueDict, period));
+                Console.WriteLine(rp.ToString() + " - " + CalcAverageTweetPolarity(valueDict, period)); // period -1 omdat periode is uitgezonderd vandaag
+            });
+
+            return AverageTweets;
+        }
+
+        private double CalcAverageTweetPolarity(Dictionary<DateTime, List<Record>> recordsPerDate, double period)
+        {
+            if (recordsPerDate.Values.Count == 0) return 0;
+
+            List<double> aantal = new List<double>();
+            recordsPerDate.Keys.ToList().ForEach(k =>
+            {
+                recordsPerDate.TryGetValue(k, out var records);
+                aantal.Add(records.Average(r => r.Sentiment.Objectivity * r.Sentiment.Polarity));
+            });
+            Console.WriteLine(aantal.Average());
+            return aantal.Average();
+        }
     }
 }

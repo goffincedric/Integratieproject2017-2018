@@ -54,21 +54,21 @@ namespace PB.BL.Domain.Accounts
             return returnString;
         }
 
-        public string CheckChange()
-        {
-            if (Alert.Description.ToLower().Contains("stijging"))
-            {
-                return "stijgt in";
-            }
-            else if (Alert.Description.ToLower().Contains("daling"))
-            {
-                return "daalt in";
-            }
-            else
-            {
-                return "unknown";
-            }
-        }
+        //public string CheckChange()
+        //{
+        //    if (Alert.Description.ToLower().Contains("stijging"))
+        //    {
+        //        return "stijgt in";
+        //    }
+        //    else if (Alert.Description.ToLower().Contains("daling"))
+        //    {
+        //        return "daalt in";
+        //    }
+        //    else
+        //    {
+        //        return "unknown";
+        //    }
+        //}
 
         public override bool Equals(object obj)
         {

@@ -14,6 +14,10 @@ namespace PB.BL.Domain.Accounts
         [Required]
         public string Text { get; set; }
         public string Description { get; set; }
+        [Required]
+        public string Event { get; set; }
+        [Required]
+        public string Subject { get; set; }
         public bool IsFlaggedImportant { get; set; }
         [Required]
         public List<ProfileAlert> ProfileAlerts { get; set; }
@@ -44,7 +48,7 @@ namespace PB.BL.Domain.Accounts
 
         public override string ToString()
         {
-            return Description + "; " + Text + ";";
+            return Event + " " + Subject + " " + Item.Name;
         }
     }
 }

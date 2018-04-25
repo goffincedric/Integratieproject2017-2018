@@ -325,7 +325,7 @@ namespace PB.BL
             subscribedItems.ForEach(Console.WriteLine);
 
             //Check trends voor people
-            List<Alert> alerts = new Trendspotter().CheckTrendAverageRecords(profile, peopleRecords);
+            List<Alert> alerts = new Trendspotter().GenerateAllAlertTypes(profile, peopleRecords);
 
             //Replace generated alerts with existing alerts
             AlertRepo.ReadAlerts().ToList().ForEach(a =>

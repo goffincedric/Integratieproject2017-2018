@@ -59,7 +59,17 @@ namespace PB.BL
         }
 
         #region Items
-        public Organisation AddOrganisation(string name, string description, string socialMediaLink = null, string iconUrl = null)
+        public IEnumerable<Item> AddItems(List<Item> items)
+        {
+            InitNonExistingRepo();
+
+            IEnumerable<Item> CreatedItems = ItemRepo.CreateItems(items);
+            UowManager.Save();
+
+            return items;
+        }
+
+        public Organisation AddOrganisation(string name, string description, string abbreviation, string socialMediaLink = null, string iconUrl = null)
         {
             InitNonExistingRepo();
 
@@ -67,6 +77,7 @@ namespace PB.BL
             {
                 Name = name,
                 Description = description,
+                Abbreviation = abbreviation,
                 SocialMediaLink = socialMediaLink,
                 IconURL = iconUrl,
                 Keywords = new List<Keyword>(),
