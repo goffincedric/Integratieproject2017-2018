@@ -166,7 +166,7 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetPersonsTop()
         {
-            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o=>o.Records.Count()).Take(5);
+            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o => o.Records.Count()).Take(5);
             Dictionary<string, int> personmap = new Dictionary<string, int>();
             persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
             if (persons == null) return StatusCode(HttpStatusCode.NoContent);
@@ -174,12 +174,23 @@ namespace UI_MVC.Controllers.API
         }
 
         [HttpGet]
+        public IHttpActionResult GetPersonTweet(int itemId)
+        {
+            Person person = ItemMgr.GetPerson(itemId);
+            if (person == null) return NotFound();
+            Dictionary<DateTime, int> recordsmap = person.Records
+                .GroupBy(r => r.Date.Date)
+                .ToDictionary(r => r.Key, r => r.ToList().Count);
+            return Ok(recordsmap);
+        }
+
+        [HttpGet]
         public IHttpActionResult GetPersonEvolution(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            if(item is Person)
+            if (item is Person)
             {
-                IEnumerable<Record> records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0).Where(o=>o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(20);
+                IEnumerable<Record> records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0).Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(20);
                 Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
                 records.ToList().ForEach(p => { recordsmap.Add(p.Date, (p.Sentiment.Polarity * p.Sentiment.Objectivity)); });
                 recordsmap.OrderBy(o => o.Key);
@@ -192,7 +203,9 @@ namespace UI_MVC.Controllers.API
             {
                 return StatusCode(HttpStatusCode.NoContent);
             }
-            
+
         }
+
+       
     }
 }
