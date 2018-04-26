@@ -52,9 +52,12 @@ namespace PB.DAL
         public Person ReadPerson(int itemId)
         {
             return ctx.Persons
-                .Include("Records")
-                .Include("SubPlatforms")
-                .Include("SubscribedProfiles")
+                .Include(i => i.Records)
+                .Include(i => i.SubPlatforms)
+                .Include(i => i.SubscribedProfiles)
+                .Include(i => i.Keywords)
+                .Include(i => i.Alerts)
+                .Include(i => i.Comparisons)
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 

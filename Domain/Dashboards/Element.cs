@@ -8,13 +8,18 @@ namespace PB.BL.Domain.Dashboards
     {
         [Key]
         public int ElementId { get; set; }
-        public int XCoord { get; set; }
-        public int YCoord { get; set; }
+        [Required]
+        public int X { get; set; }
+        [Required]
+        public int Y { get; set; }
+        [Required]
         public int Width { get; set; }
+        [Required]
         public int Height { get; set; }
-        public string Title { get; set; }
         public bool IsDraggable { get; set; }
-
+        
+        public int ZoneId { get; set; }
+        [Required]
         public Zone Zone { get; set; }
         public Comparison Comparison { get; set; }
     }
