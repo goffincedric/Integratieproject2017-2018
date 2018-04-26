@@ -48,13 +48,11 @@ namespace PB.DAL.EF
             modelBuilder.Properties<DateTime>()
                 .Configure(c => c.HasColumnType("datetime2"));
 
-
             /*
              * Primary keys, configurations, ...
              */
             modelBuilder.Entity<Record>().Property(r => r.Tweet_Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
 
             /*
              * Relations, Foreign Keys, ...
@@ -77,7 +75,7 @@ namespace PB.DAL.EF
             modelBuilder.Entity<Profile>()
                 .HasMany(p => p.Dashboards)
                 .WithRequired(d => d.Profile)
-                .HasForeignKey(d => d.DashboardId)
+                .HasForeignKey(d => d.UserId)
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Profile>()
