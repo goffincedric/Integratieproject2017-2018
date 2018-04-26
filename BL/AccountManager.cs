@@ -303,6 +303,69 @@ namespace PB.BL
         #endregion
 
         #region alerts
+        public List<Alert> GenerateAllAlerts()
+        {
+            InitNonExistingRepo();
+
+            // Get all profiles with subscriptions
+            List<Profile> Profiles = ProfileRepo.ReadProfiles().Where(p => p.Subscriptions.Count > 0).ToList();
+
+            // Alle subscriptions uit profiles halen
+            List<Item> Subscriptions = Profiles.SelectMany(p => p.Subscriptions).Distinct().ToList();
+
+            // Check trends voor people
+            List<Alert> alerts = new Trendspotter().GenerateAllAlertTypes(Subscriptions);
+
+            //Replace generated alerts with existing alerts
+            AlertRepo.ReadAlerts().ToList().ForEach(a =>
+            {
+                Alert alert = alerts.FirstOrDefault(al => al.Equals(a));
+                if (alert != null) alerts[alerts.IndexOf(alert)] = a;
+            });
+
+            //Link alerts aan profile
+            List<Alert> alertsToCreate = new List<Alert>();
+            List<Alert> alertsToUpdate = new List<Alert>();
+
+            alerts.ForEach(alert =>
+            {
+                bool changed = false;
+                Profiles.ForEach(profile =>
+                {
+                    if (profile.Subscriptions.Contains(alert.Item))
+                    {
+                        ProfileAlert profileAlert = new ProfileAlert()
+                        {
+                            AlertId = alert.AlertId,
+                            Alert = alert,
+                            UserId = profile.Id,
+                            Profile = profile,
+                            IsRead = false,
+                            TimeStamp = DateTime.Now
+                        };
+
+                        if (!alert.ProfileAlerts.Contains(profileAlert) && !profile.ProfileAlerts.Contains(profileAlert))
+                        {
+                            changed = true;
+                            alert.ProfileAlerts.Add(profileAlert);
+                            profile.ProfileAlerts.Add(profileAlert);
+                            Console.WriteLine(alert);
+                        }
+                    }
+                });
+
+                if (alert.AlertId == 0) alertsToCreate.Add(alert);
+                else if (changed) alertsToUpdate.Add(alert);
+            });
+
+            //Persist alerts
+            AlertRepo.CreatAlerts(alertsToCreate).ToList();
+            alertsToUpdate.ForEach(AlertRepo.UpdateAlert);
+            UowManager.Save();
+
+            return alerts;
+        }
+
         public List<Alert> GenerateProfileAlerts(Profile profile)
         {
             InitNonExistingRepo();
@@ -316,22 +379,42 @@ namespace PB.BL
             List<Organisation> organisations = new List<Organisation>(); // Alerts op organisaties;
             List<Theme> themes = new List<Theme>(); // Alerts op thema's
 
-            //Records uit people halen
-            List<Record> peopleRecords = new List<Record>();
-            people.ForEach(p => p.Records.ForEach(r => peopleRecords.Add(r)));
-
+            /*
+             * Person Alerts
+             */
             //Print all subscribed items
             Console.WriteLine("========= SUBSCRIBED =========");
             subscribedItems.ForEach(Console.WriteLine);
 
             //Check trends voor people
-            List<Alert> alerts = new Trendspotter().GenerateAllAlertTypes(profile, peopleRecords);
+            List<Alert> alerts = new Trendspotter().GenerateAllAlertTypes(profile.Subscriptions);
 
+
+
+            /*
+             * Organisation Alerts
+             */
+
+
+
+
+
+            /*
+             * Theme Alerts
+             */
+
+
+
+
+
+            /*
+             * Linking Alerts
+             */
             //Replace generated alerts with existing alerts
             AlertRepo.ReadAlerts().ToList().ForEach(a =>
             {
                 Alert alert = alerts.FirstOrDefault(al => al.Equals(a));
-                if (alert != null) alerts[alerts.IndexOf(alert)] = a;
+                if (alert != null) alerts.Remove(a);
             });
 
             //Link alerts aan profile

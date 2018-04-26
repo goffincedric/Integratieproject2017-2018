@@ -135,7 +135,7 @@ namespace UI_CA_Prototype
         //Method to test write functionality of JsonConvert (read written json file on desktop for record-object structure)
         public void WriteTestRecords(IEnumerable<Record> records)
         {
-            List<Record> recordList = records.Take(200).ToList();
+            List<Record> recordList = records.Where(r => r.Tweet_Id %2 == 0).ToList();
 
             JsonSerializer serializer = new JsonSerializer
             {
