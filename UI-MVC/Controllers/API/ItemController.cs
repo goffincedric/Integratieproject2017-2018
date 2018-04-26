@@ -203,6 +203,7 @@ namespace UI_MVC.Controllers.API
             Dictionary<DateTime, int> recordsmap = person.Records
                 .GroupBy(r => r.Date.Date).OrderByDescending(o => o.Key).Take(20)
                 .ToDictionary(r => r.Key, r => r.ToList().Count);
+            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
     }
