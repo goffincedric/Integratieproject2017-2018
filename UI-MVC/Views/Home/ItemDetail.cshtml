@@ -19,17 +19,17 @@
             </div>
 
             <div class="col-9">
-              <div class="h-75 w-100 d-inline-block" style="text-align: center; vertical-align: middle;">
-                <div class="col-6" style="margin:0;">
-                  <h1 style="color: #2196f3; text-align: center;  width:100%; padding-top: 3%;" class="display-4"> @Html.DisplayFor(model => model.Name)</h1>
+              <div class="h-75 w-100">
+                <div class="row" style="margin:0; text-align:center;">
+                  <h1 style="color: #2196f3; text-align: center; padding-top: 3%; width:100%;" class="display-4"> @Html.DisplayFor(model => model.Name)</h1>
                 </div>
-                <div class="col-6">
+                <div class="row">
                   @if (Model is PB.BL.Domain.Items.Person)
                   {
-                    <ul>
-                      <li><h4 class="h4">@ViewBag.Vermeldingen Vermeldingen</h4></li>
-
-                      <li><h4 class="h4">Partijnaam</h4></li>
+                    <ul style="list-style-type:none; width:100%; text-align:center;">
+                      <li style="display:inline-block;"><h4 class="h4">@ViewBag.Vermeldingen Vermeldingen</h4></li>
+                      <li style="display:inline-block;"> <h4 class="h4">-</h4> </li>
+                      <li style="display:inline-block;"><h4 class="h4">Partijnaam</h4></li>
 
                     </ul>
                   }
