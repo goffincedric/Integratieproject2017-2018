@@ -5,6 +5,7 @@ using PB.BL.Domain.Items;
 using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace UI_MVC.Controllers
@@ -69,11 +70,7 @@ namespace UI_MVC.Controllers
             return View();
         }
 
-        public ActionResult Dashboard()
-        {
-            return View();
-        }
-
+       
         public ActionResult Blank()
         {
             return View();
@@ -102,8 +99,8 @@ namespace UI_MVC.Controllers
 
         public ActionResult _Search()
         {
-            IEnumerable<Person> persons = itemMgr.GetPersons();
-            return PartialView(persons);
+            IEnumerable<Item> items = itemMgr.GetItems();
+            return PartialView(items);
             
         }
 
@@ -159,7 +156,29 @@ namespace UI_MVC.Controllers
 
         public ActionResult ItemDetail(int id)
         {
+           
             Item item = itemMgr.GetItem(id);
+            if(item is Person)
+            {
+                Person person = (Person) item;
+                int? count = person.Records.Count();
+                ViewBag.Vermeldingen = (count is null)? 0: count ;
+            }
+            if(item is Organisation)
+            {
+                Organisation organisation = (Organisation)item;
+
+                // int? count = organisation.People.Count();
+                //ViewBag.Leden = (count is null) ? 0 : count;
+                ViewBag.Leden = 0;
+            }
+            if(item is Theme)
+            {
+                Theme theme = (Theme)item;
+                //int? count = theme.Records.Count();
+                //ViewBag.Associaties = (count is null) ? 0 : count;
+                ViewBag.Associaties = 0;
+            }
            ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));
          
             return View(item);
