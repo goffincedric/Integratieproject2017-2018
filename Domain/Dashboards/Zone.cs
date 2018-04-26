@@ -9,12 +9,8 @@ namespace PB.BL.Domain.Dashboards
     {
         [Key]
         public int ZoneId { get; set; }
-        public string Name { get; set; }
-        public bool IsFull { get; set; }
-        public readonly int MAX_ELEMENTS;
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public int Position { get; set; }
+        public string Title { get; set; }
+        public int DashboardId { get; set; }
 
         public Dashboard Dashboard { get; set; }
         public List<Element> Elements { get; set; }

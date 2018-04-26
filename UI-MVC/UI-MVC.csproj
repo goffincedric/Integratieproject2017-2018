@@ -230,9 +230,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\AccountController.cs" />
-    <Compile Include="Controllers\API\Helper_Code\Common\AuthorizationHeaderHandler.cs" />
+    <Compile Include="Controllers\API\Helper_Code\AuthorizationHeaderHandler.cs" />
     <Compile Include="Controllers\API\ItemController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\API\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />

@@ -14,7 +14,16 @@ namespace PB.BL.Interfaces
         void ChangeDashboard(Dashboard dashboard);
         void RemoveDashboard(int dashboardId);
 
-        //void AddZone(int dashboardId, string Name, bool IsFull, int Width, int Height, int Position);
-        //void RemoveZone(int zoneId);
+        IEnumerable<Zone> GetZones();
+        Zone GetZone(int zoneId);
+        Zone AddZone(Dashboard dashboard, string title);
+        void ChangeZone(Zone zone);
+        void RemoveZone(int zoneId);
+
+        IEnumerable<Element> GetElements();
+        Element GetElement(int elementId);
+        Element AddElement(Zone zone, Comparison comparison, int x, int y, int width, int height, bool isDraggable);
+        void ChangeElement(Element element);
+        void RemoveElement(int elementId);
     }
 }

@@ -100,5 +100,95 @@ namespace PB.BL
             DashboardRepo.DeleteDashboard(dashboardId);
             UowManager.Save();
         }
+
+        public IEnumerable<Zone> GetZones()
+        {
+            InitNonExistingRepo();
+            return DashboardRepo.ReadZones();
+        }
+
+        public Zone GetZone(int zoneId)
+        {
+            InitNonExistingRepo();
+            return DashboardRepo.ReadZone(zoneId);
+        }
+
+        public Zone AddZone(Dashboard dashboard, string title)
+        {
+            InitNonExistingRepo();
+            Zone zone = new Zone()
+            {
+                Dashboard = dashboard,
+                Title = title,
+                Elements = new List<Element>()
+            };
+            dashboard.Zones.Add(zone);
+
+            zone = DashboardRepo.CreateZone(zone);
+            UowManager.Save();
+
+            return zone;
+        }
+
+        public void ChangeZone(Zone zone)
+        {
+            InitNonExistingRepo();
+            DashboardRepo.UpdateZone(zone);
+            UowManager.Save();
+        }
+
+        public void RemoveZone(int zoneId)
+        {
+            InitNonExistingRepo();
+            DashboardRepo.DeleteZone(zoneId);
+            UowManager.Save();
+        }
+
+        public IEnumerable<Element> GetElements()
+        {
+            InitNonExistingRepo();
+            return DashboardRepo.ReadElements();
+        }
+
+        public Element GetElement(int elementId)
+        {
+            InitNonExistingRepo();
+            return DashboardRepo.ReadElement(elementId);
+        }
+
+        public Element AddElement(Zone zone, Comparison comparison, int x, int y, int width, int height, bool isDraggable = true)
+        {
+            InitNonExistingRepo();
+            Element element = new Element()
+            {
+                Zone = zone,
+                Comparison = comparison,
+                X = x,
+                Y = y,
+                Width = width,
+                Height = height,
+                IsDraggable = isDraggable
+            };
+            zone.Elements.Add(element);
+
+            element = DashboardRepo.CreateElement(element);
+            UowManager.Save();
+
+            return element;
+        }
+
+        public void ChangeElement(Element element)
+        {
+            InitNonExistingRepo();
+            DashboardRepo.UpdateElement(element);
+            UowManager.Save();
+        }
+
+        public void RemoveElement(int elementId)
+        {
+            InitNonExistingRepo();
+            DashboardRepo.DeleteElement(elementId);
+            UowManager.Save();
+        }
     }
 }
