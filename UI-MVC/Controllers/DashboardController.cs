@@ -24,7 +24,5 @@ namespace UI_MVC.Controllers
         }
 
 
-        public ActionResult SaveDashboard(int zoneId, FormBody)
-
     }
 }
