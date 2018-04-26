@@ -174,17 +174,6 @@ namespace UI_MVC.Controllers.API
         }
 
         [HttpGet]
-        public IHttpActionResult GetPersonTweet(int itemId)
-        {
-            Person person = ItemMgr.GetPerson(itemId);
-            if (person == null) return NotFound();
-            Dictionary<DateTime, int> recordsmap = person.Records
-                .GroupBy(r => r.Date.Date)
-                .ToDictionary(r => r.Key, r => r.ToList().Count);
-            return Ok(recordsmap);
-        }
-
-        [HttpGet]
         public IHttpActionResult GetPersonEvolution(int id)
         {
             Item item = ItemMgr.GetItem(id);
@@ -206,6 +195,15 @@ namespace UI_MVC.Controllers.API
 
         }
 
-       
+        [HttpGet]
+        public IHttpActionResult GetPersonTweet(int id)
+        {
+            Person person = ItemMgr.GetPerson(id);
+            if (person == null) return NotFound();
+            Dictionary<DateTime, int> recordsmap = person.Records
+                .GroupBy(r => r.Date.Date).OrderByDescending(o => o.Key).Take(20)
+                .ToDictionary(r => r.Key, r => r.ToList().Count);
+            return Ok(recordsmap);
+        }
     }
 }
