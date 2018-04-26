@@ -179,10 +179,10 @@ namespace UI_MVC.Controllers.API
             Item item = ItemMgr.GetItem(id);
             if(item is Person)
             {
-                IEnumerable<Record> records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0).OrderBy(a => a.GetHashCode()).Take(15);
+                IEnumerable<Record> records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0).Where(o=>o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(20);
                 Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
-                records.ToList().ForEach(p => { recordsmap.Add(p.Date, p.Sentiment.Polarity); });
-                recordsmap.OrderByDescending(o => o.Key);
+                records.ToList().ForEach(p => { recordsmap.Add(p.Date, (p.Sentiment.Polarity * p.Sentiment.Objectivity)); });
+                recordsmap.OrderBy(o => o.Key);
                 if (records == null) return StatusCode(HttpStatusCode.NoContent);
                 return Ok(recordsmap);
 
