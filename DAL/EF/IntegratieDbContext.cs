@@ -76,7 +76,9 @@ namespace PB.DAL.EF
 
             modelBuilder.Entity<Profile>()
                 .HasMany(p => p.Dashboards)
-                .WithRequired(d => d.Profile);
+                .WithRequired(d => d.Profile)
+                .HasForeignKey(d => d.DashboardId)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Profile>()
                 .HasMany(p => p.ProfileAlerts)
@@ -141,22 +143,28 @@ namespace PB.DAL.EF
                 .WithMany(r => r.Themes)
                 .Map(m => { m.ToTable("tblThemeRecords"); });
 
-            modelBuilder.Entity<Dashboard>()
-                .HasRequired(d => d.Subplatform)
-                .WithMany(s => s.Dashboards);
+            modelBuilder.Entity<Subplatform>()
+                .HasMany(s => s.Dashboards)
+                .WithRequired(d => d.Subplatform)
+                .HasForeignKey(d => d.SubplatformId)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Dashboard>()
                 .HasMany(d => d.Zones)
-                .WithRequired(z => z.Dashboard);
+                .WithRequired(z => z.Dashboard)
+                .HasForeignKey(z => z.DashboardId)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Zone>()
                 .HasMany(z => z.Elements)
-                .WithRequired(e => e.Zone);
+                .WithRequired(e => e.Zone)
+                .HasForeignKey(e => e.ZoneId)
+                .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<Element>()
-                .HasRequired(e => e.Comparison)
-                .WithMany(c => c.Elements);
-
+            modelBuilder.Entity<Comparison>()
+                .HasMany(c => c.Elements)
+                .WithRequired(e => e.Comparison)
+                .WillCascadeOnDelete(true);        // FOREIGN KEY?
 
             //identity tables
             modelBuilder.Entity<Profile>().ToTable("tblProfile");
