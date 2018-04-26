@@ -198,11 +198,12 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetPersonTweet(int id)
         {
-            Person person = ItemMgr.GetPerson(id);
-            if (person == null) return NotFound();
-            Dictionary<DateTime, int> recordsmap = person.Records
-                .GroupBy(r => r.Date.Date).OrderByDescending(o => o.Key).Take(20)
-                .ToDictionary(r => r.Key, r => r.ToList().Count);
+            IEnumerable<Record> records = ItemMgr.GetPerson(id).Records;
+            if (records == null) return NotFound();
+            Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
+
+            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
+            .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
             if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
