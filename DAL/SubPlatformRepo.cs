@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Data.Entity;
 
 namespace PB.DAL
 {
@@ -14,6 +15,11 @@ namespace PB.DAL
         public SubplatformRepo()
         {
             ctx = new IntegratieDbContext();
+        }
+
+        public SubplatformRepo(IntegratieDbContext context)
+        {
+            ctx = context;
         }
 
         public SubplatformRepo(UnitOfWork uow)
@@ -59,21 +65,25 @@ namespace PB.DAL
         public IEnumerable<Subplatform> ReadSubplatforms()
         {
             return ctx.Subplatforms
-                .Include("Settings")
+                .Include(s => s.Settings)
+                .Include(s => s.Admins)
+                .Include(s => s.Dashboards)
                 .AsEnumerable();
         }
 
         public Subplatform ReadSubplatform(int subplatformId)
         {
             return ctx.Subplatforms
-                .Include("Settings")
+                .Include(s => s.Settings)
+                .Include(s => s.Admins)
+                .Include(s => s.Dashboards)
                 .FirstOrDefault(s => s.SubplatformId == subplatformId);
         }
 
         public void UpdateSubplatform(Subplatform subplatform)
         {
             ctx.Subplatforms.Attach(subplatform);
-            ctx.Entry(subplatform).State = System.Data.Entity.EntityState.Modified;
+            ctx.Entry(subplatform).State = EntityState.Modified;
             ctx.SaveChanges();
         }
     }

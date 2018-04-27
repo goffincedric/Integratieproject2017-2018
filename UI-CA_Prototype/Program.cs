@@ -280,7 +280,8 @@ namespace UI_CA_Prototype
                     },
                     Admins = new List<Profile>(),
                     Items = new List<Item>(),
-                    Pages = new List<Page>()
+                    Pages = new List<Page>(),
+                    Dashboards = new List<Dashboard>()
                 };
             }
 

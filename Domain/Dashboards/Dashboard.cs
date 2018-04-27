@@ -14,9 +14,8 @@ namespace PB.BL.Domain.Dashboards
         public UserType DashboardType { get; set; }
         public List<Zone> Zones { get; set; }
         public string UserId { get; set; }
-        public int SubplatformId { get; set; }
-
-        [Required]
+        public int? SubplatformId { get; set; } // TODO: int? => int
+        
         public Profile Profile { get; set; }
         public Subplatform Subplatform { get; set; }
     }
