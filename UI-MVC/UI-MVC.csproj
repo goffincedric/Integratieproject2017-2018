@@ -271,7 +271,7 @@
     <Content Include="Content\Images\Themes\eu.png" />
     <Content Include="Content\Images\Themes\migratie.png" />
     <Content Include="Content\Images\Themes\milieu.png" />
-    <Content Include="Content\Images\Themes\Mobiliteit.png" />
+    <Content Include="Content\Images\Themes\mobiliteit.png" />
     <Content Include="Content\Images\Themes\onderwijs.png" />
     <Content Include="Content\Images\Themes\veiligheid.png" />
     <Content Include="Content\Images\Themes\zorg.png" />
@@ -361,6 +361,7 @@
     <Content Include="Views\Home\ItemDetail.cshtml" />
     <Content Include="Views\Item\Charts.cshtml" />
     <Content Include="Views\Account\Notifications.cshtml" />
+    <Content Include="Views\Item\Charts2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
