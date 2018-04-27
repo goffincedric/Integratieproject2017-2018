@@ -1991,6 +1991,11 @@ h3 {
     transition: .5s;
 }
 
+.arrow-dashboard {
+    float: right;
+    transition: .5s;
+}
+
 .form-row {
     display: -webkit-box;
     display: -ms-flexbox;
