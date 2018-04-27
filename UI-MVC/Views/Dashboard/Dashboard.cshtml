@@ -1,84 +1,70 @@
 ﻿@{
 
-  Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section styles{
 
-  <link href="~/Content/Styling/grid2/gridstack.css" rel="stylesheet" />
-  <link href="~/Content/Styling/grid2/gridstack-extra.css" rel="stylesheet" />
-  <style type="text/css">
+    <link href="~/Content/Styling/grid2/gridstack.css" rel="stylesheet" />
+    <link href="~/Content/Styling/grid2/gridstack-extra.css" rel="stylesheet" />
+    <style type="text/css">
 
-    #grid1 {
-      opacity: 0.7;
-      <!-- border: 3px solid black; -->
-      padding: 3px;
-      margin-bottom: 10px;
-    }
+        #grid1 {
+            <!-- border: 3px solid black; -->
+            padding: 3px;
+            margin-bottom: 10px;
+        }
 
-    #grid2 {
-    
-      opacity: 0.7;
-      <!-- border: 3px solid red; -->
-      margin-top: 5px;
-    }
+        #grid2 {
+            <!-- border: 3px solid red; -->
+            margin-top: 5px;
+        }
 
-    .grid-stack-item-content {
-      color: #2c3e50;
-      text-align: center;
-      background-color: #18bc9c;
-    }
+        .grid-stack-item-content {
+            color: #2c3e50;
+            text-align: center;
+            background-color: #18bc9c;
+        }
 
-    #grid2 .grid-stack-item-content {
-      background-color: grey;
-      opacity: 0.3;
-    }
+        #grid2 .grid-stack-item-content {
+            background-color: grey;;
+        }
 
-    #grid1 .grid-stack-item-content {
-      background-color: grey;
-      opacity: 0.3;
-    }
-  </style>
+        #grid1 .grid-stack-item-content {
+            background-color: grey;;
+        }
+    </style>
 }
 
-
-
-
 <main class="main-content bgc-grey-100">
-  <div id="mainContent">
-    <div>
-      <h1>Main trends</h1>
-      <div style="margin-bottom:5px">
-        <a class="btn btn-default" id="save-grid" href="#">Save Grid 1</a>
-        <a class="btn btn-default" id="load-grid" href="#">Load Grid 1</a>
-        <a class="btn btn-default" id="clear-grid" href="#">Clear Grid 1</a>
-      </div>
-      <div class="grid-stack grid-stack-6" id="grid1">
-      </div>
-    </div>
+    <div id="mainContent">
+        <div>
+            <h1>Main trends</h1>
+            <div style="margin-bottom:5px" class="buttons">
+                <a class="btn btn-default save-grid" id="save-grid" href="#">Save Grid 1</a>
+                <a class="btn btn-default load-grid" id="load-grid" href="#">Load Grid 1</a>
+                <a class="btn btn-default clear-grid" id="clear-grid" href="#">Clear Grid 1</a>
+            </div>
+            <div class="grid-stack grid-stack-6" id="grid1">
+            </div>
+        </div>
 
-
-
-    <div>
-      <h1>Personal trends</h1>
-      <div style="margin-bottom:5px">
-        <a class="btn btn-default" id="save-grid2" href="#">Save Grid 2</a>
-        <a class="btn btn-default" id="load-grid2" href="#">Load Grid 2</a>
-        <a class="btn btn-default" id="clear-grid2" href="#">Clear Grid 2</a>
-      </div>
-      <div class="grid-stack grid-stack-6" id="grid2">
-      </div>
+        <div>
+            <h1>Personal trends</h1>
+            <div style="margin-bottom:5px" class="buttons">
+                <a class="btn btn-default save-grid" id="save-grid2" href="#">Save Grid 2</a>
+                <a class="btn btn-default load-grid" id="load-grid2" href="#">Load Grid 2</a>
+                <a class="btn btn-default clear-grid" id="clear-grid2" href="#">Clear Grid 2</a>
+            </div>
+            <div class="grid-stack grid-stack-6" id="grid2">
+            </div>
+        </div>
     </div>
 
 
     <br>
     <hr />
-    <textarea id="saved-data-1" cols="20" rows="10" readonly="readonly"></textarea>
-    <textarea id="saved-data-2" cols="20" rows="10" readonly="readonly"></textarea>
-
-    
-
-   
-
+    @*<textarea id="saved-data-1" cols="20" rows="10" readonly="readonly"></textarea>
+        <textarea id="saved-data-2" cols="20" rows="10" readonly="readonly"></textarea>*@
 </main>
 
 
@@ -89,115 +75,99 @@
 <script src="~/Scripts/grid2/gridstack.jQueryUI.js"></script>
 
 <script type="text/javascript">
-  $(function () {
-    var options = {
-      width: 6,
-      float: false,
-      removable: '.trash',
-      removeTimeout: 100,
-      acceptWidgets: '.grid-stack-item'
-    };
-    $('#grid1').gridstack(options);
-    $('#grid2').gridstack(_.defaults({
-      float: true
-    }, options));
+    $(function () {
+        var options = {
+            width: 6,
+            float: false,
+            removable: '.trash',
+            removeTimeout: 100,
+            acceptWidgets: '.grid-stack-item'
+        };
+        $('.grid-stack').gridstack(options);
+        //$('.grid-stack').gridstack(_.defaults({
+        //    float: true
+        //}, options));
 
-    new function () {
-      var items1 = [{ "x": 0, "y": 3, "width": 5, "height": 5 }, { "x": 0, "y": 0, "width": 2, "height": 3 }];
+        new function () {
+            var items1 = [{ "x": 0, "y": 3, "width": 5, "height": 5 }, { "x": 0, "y": 0, "width": 2, "height": 3 }];
+            var items2 = [{ "x": 0, "y": 0, "width": 5, "height": 5 }, { "x": 0, "y": 1, "width": 2, "height": 3 }];
 
+            this.grid1 = $('#grid1').data('gridstack'); 
+            this.grid2 = $('#grid2').data('gridstack');
 
-      var items2 = [{ "x": 0, "y": 0, "width": 5, "height": 5 }, { "x": 0, "y": 1, "width": 2, "height": 3 }];
+            //done
+            clearGrid = function (grid) {
+                grid.removeAll();
 
-      this.grid1 = $('#grid1').data('gridstack');
-      this.grid2 = $('#grid2').data('gridstack');
-
-      clearGrid1 = function () {
-        this.grid1.removeAll();
-
-        return false;
-      }.bind(this);
-
-      clearGrid2 = function () {
-        this.grid2.removeAll();
-
-        return false;
-      }.bind(this);
+                return false;
+            }.bind(this);
 
 
+            loadGrid = function (grid) {
+                console.log(grid);
+                grid.each(function () {
 
+                    var grid = $(this).data('gridstack');
 
-      this.loadGrid1 = function () {
-        clearGrid1();
-        $('#grid1').each(function () {
+                    //this for now(change later)
+                    _.each(items1, function (node) {
+                        grid.addWidget($('<div><div class="grid-stack-item-content bgc-white bd"/><div/>'),
+                            node.x, node.y, node.width, node.height);
+                    }, this);
+                });
+            }
 
-          var grid = $(this).data('gridstack');
+            this.saveGrid1 = function () {
+                this.items1 = _.map($('#grid1 > .grid-stack-item:visible'), function (el) {
+                    el = $(el);
+                    var node = el.data('_gridstack_node');
+                    return {
+                        x: node.x,
+                        y: node.y,
+                        width: node.width,
+                        height: node.height
+                    };
+                }, this);
+                $('#saved-data-1').val(JSON.stringify(this.items1, null, '    '));
+                return false;
+            }.bind(this);
 
-          _.each(items1, function (node) {
-            grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
-              node.x, node.y, node.width, node.height);
-          }, this);
-        });
+            this.saveGrid2 = function () {
+                this.items2 = _.map($('#grid2 > .grid-stack-item:visible'), function (el) {
+                    el = $(el);
+                    var node = el.data('_gridstack_node');
+                    return {
+                        x: node.x,
+                        y: node.y,
+                        width: node.width,
+                        height: node.height
+                    };
+                }, this);
+                $('#saved-data-2').val(JSON.stringify(this.items2, null, '    '));
+                return false;
+            }.bind(this);
 
-      }
+            $(".grid-stack").each(function () {
+                this.grid = $(this).data('gridstack');
+                //console.log($('#grid1'));
 
+                $(this).siblings('.buttons').children('.load-grid').on("click", function () {
+                    this.grid = $(this).parent().siblings('.grid-stack').data('gridstack');
+                    console.log("yooo");
+                    loadGrid($(this).parent().siblings('.grid-stack'));
+                });
 
-      this.loadGrid2 = function () {
-        clearGrid2();
-        $('#grid2').each(function () {
-          var grid = $(this).data('gridstack');
+                //Clearing Zone/grid done
+                $(this).siblings('.buttons').children('.clear-grid').on("click", function () {
+                    this.grid = $(this).parent().siblings('.grid-stack').data('gridstack');
+                    clearGrid(this.grid);
+                });
 
-          _.each(items2, function (node) {
-            grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
-              node.x, node.y, node.width, node.height);
-          }, this);
-        });
+                loadGrid($(this));
+            });
 
-      };
-
-
-      this.saveGrid1 = function () {
-        this.items1 = _.map($('#grid1 > .grid-stack-item:visible'), function (el) {
-          el = $(el);
-          var node = el.data('_gridstack_node');
-          return {
-            x: node.x,
-            y: node.y,
-            width: node.width,
-            height: node.height
-          };
-        }, this);
-        $('#saved-data-1').val(JSON.stringify(this.items1, null, '    '));
-        return false;
-      }.bind(this);
-
-
-
-      this.saveGrid2 = function () {
-        this.items2 = _.map($('#grid2 > .grid-stack-item:visible'), function (el) {
-          el = $(el);
-          var node = el.data('_gridstack_node');
-          return {
-            x: node.x,
-            y: node.y,
-            width: node.width,
-            height: node.height
-          };
-        }, this);
-        $('#saved-data-2').val(JSON.stringify(this.items2, null, '    '));
-        return false;
-      }.bind(this);
-
-
-
-      $('#save-grid').click(this.saveGrid1);
-      $('#load-grid').click(this.loadGrid1);
-      $('#clear-grid').click(clearGrid1);
-      $('#save-grid2').click(this.saveGrid2);
-      $('#load-grid2').click(this.loadGrid2);
-      $('#clear-grid2').click(clearGrid2);
-
-      this.loadGrid1();
-      this.loadGrid2();
-    };
-  });
+            $('#save-grid').click(this.saveGrid1);
+            $('#save-grid2').click(this.saveGrid2);
+        };
+    });
 </script>

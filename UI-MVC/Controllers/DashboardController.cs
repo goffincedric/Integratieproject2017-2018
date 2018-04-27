@@ -23,6 +23,9 @@ namespace UI_MVC.Controllers
             return View();
         }
 
-
+        public ActionResult _Dash()
+        {
+            return View();
+        }
     }
 }

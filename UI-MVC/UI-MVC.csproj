@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44372</IISExpressSSLPort>
+    <IISExpressSSLPort>44338</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -269,7 +269,6 @@
     <Content Include="Content\Images\Partijen\spa.jpg" />
     <Content Include="Content\Images\Partijen\vb.png" />
     <Content Include="Content\Images\Users\user.png" />
-    <Content Include="Content\Images\nva.jpg" />
     <Content Include="Content\Images\Profile-pic.png" />
     <Content Include="Content\Images\question-mark.png" />
     <Content Include="Content\Styling\account\custom.css" />
