@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 
-namespace UI_MVC.Controllers
+namespace UI_MVC.Controllers.API
 {
     [Authorize]
     public class DashboardController : ApiController
