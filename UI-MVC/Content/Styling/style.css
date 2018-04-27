@@ -13,8 +13,8 @@ search-input active {
 }
 
 .dropdownSearch {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .dropdown-content a {
@@ -25,7 +25,7 @@ search-input active {
 }
 
 .dropdownSearch a:hover {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 
@@ -1868,7 +1868,17 @@ a.fc-more {
 
 @media screen and (min-width:992px) and (max-width:1439px) {
     .sidebar .sidebar-inner .sidebar-menu > li > a .title {
-        display: initial;
+        display: none;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        margin-left: 240px !important;
+        padding-left: 20px;
+        border: 1px solid #888;
+        color: black;
+        width: 80%; /* Could be more or less, depending on screen size */
     }
 }
 
@@ -1910,7 +1920,6 @@ section {
         color: #ffffff;
         text-decoration: none !important;
         background-color: transparent;
-     
     }
 
     #footer ul.social li {
@@ -1992,6 +2001,16 @@ h3 {
     margin-left: 0px;
 }
 
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
 .form-row2 {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -2035,10 +2054,11 @@ h3 {
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
+    margin-left: 360px;
+    padding-left: 20px;
     border: 1px solid #888;
     color: black;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: calc(80% - 240px); /* Could be more or less, depending on screen size */
 }
 
 .close {
@@ -2064,12 +2084,12 @@ h3 {
     background-color: white;
 }
 
-.header{
+.header {
     max-height: 65px;
     height: 65px;
 }
 
-.notificationsList{
+.notificationsList {
     max-height: 500px;
 }
 
@@ -2079,4 +2099,20 @@ h3 {
 
 .notificationsListItem {
     height: 90px;
+}
+
+.alert-img {
+    width: 100%;
+    height: auto;
+}
+
+.alert-text {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+@media screen and (max-width: 1439px) and (min-width: 992px) {
+    .sidebar {
+        width: 70px;
+    }
 }
