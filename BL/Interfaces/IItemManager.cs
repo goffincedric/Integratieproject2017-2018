@@ -16,7 +16,7 @@ namespace PB.BL.Interfaces
         Theme GetTheme(int itemId);
         IEnumerable<Item> AddItems(List<Item> items);
         Person AddPerson(string name, string socialMediaLink, string iconUrl, Organisation organisation = null, Function function = null);
-        Organisation AddOrganisation(string name, string description, string abbreviation, string socialMediaLink = null, string iconUrl = null);
+        Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, string iconUrl = null);
         Theme AddTheme(string themeName, string description);
         void ChangeItem(Item item);
         void RemoveItem(int itemId);

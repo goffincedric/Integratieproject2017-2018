@@ -6,6 +6,7 @@ using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace UI_MVC.Controllers
@@ -157,8 +158,19 @@ namespace UI_MVC.Controllers
         public ActionResult ItemDetail(int id)
         {
            
+           
             Item item = itemMgr.GetItem(id);
-            if(item is Person)
+            if(item.IconURL is null)
+            {
+                //ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Users/user.png");
+            }
+            else
+            {
+                ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
+            }
+            
+            //ViewBag.Icon=@"~\Content\Images\Partijen\vb.png";
+            if (item is Person)
             {
                 Person person = (Person) item;
                 int? count = person.Records.Count();
@@ -171,6 +183,7 @@ namespace UI_MVC.Controllers
                 // int? count = organisation.People.Count();
                 //ViewBag.Leden = (count is null) ? 0 : count;
                 ViewBag.Leden = 0;
+                ViewBag.FullName = organisation.FullName;
             }
             if(item is Theme)
             {
@@ -178,6 +191,7 @@ namespace UI_MVC.Controllers
                 //int? count = theme.Records.Count();
                 //ViewBag.Associaties = (count is null) ? 0 : count;
                 ViewBag.Associaties = 0;
+                ViewBag.Keywords = theme.Keywords.ToList();
             }
            ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));
          
