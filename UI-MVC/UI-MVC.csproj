@@ -257,6 +257,7 @@
     <Content Include="Content\Images\bg.jpg" />
     <Content Include="Content\Images\faqbg.jpg" />
     <Content Include="Content\Images\Index\banner.jpg" />
+    <Content Include="Content\Images\info-icon.png" />
     <Content Include="Content\Images\logo_new.png" />
     <Content Include="Content\Images\nva.jpg" />
     <Content Include="Content\Images\Profile-pic.png" />
