@@ -175,7 +175,30 @@ namespace UI_MVC.Controllers
                         {
                             new Zone()
                             {
-                                Title = "Main Zone",
+                                Title = "Main Trends",
+                                Elements = new List<Element>()
+                                {
+                                    new Element()
+                                    {
+                                        X = 0,
+                                        Y = 3,
+                                        Width = 5,
+                                        Height = 5,
+                                        Comparison = new Comparison()
+                                    },
+                                    new Element()
+                                    {
+                                        X = 0,
+                                        Y = 0,
+                                        Width = 2,
+                                        Height = 3,
+                                        Comparison = new Comparison()
+                                    }
+                                }
+                            },
+                            new Zone()
+                            {
+                                Title = "Personal Trends",
                                 Elements = new List<Element>()
                                 {
                                     new Element()

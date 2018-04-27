@@ -81,6 +81,14 @@
 <script src="~/Scripts/grid2/gridstack.jQueryUI.js"></script>
 
 <script type="text/javascript">
+    var test = "";
+    test = $.ajax({
+        async: false,
+        type: 'GET',
+        dataType: 'json',
+        url: "https://localhost:44342/api/dashboard/getdashboardzones/1"
+    }).responseJSON
+
     $(function () {
         var options = {
             width: 6,
@@ -134,7 +142,7 @@
                 }
             ];
 
-            console.log(json[0].Elements);
+            console.log(json);
 
             var items1 = [{ "x": 0, "y": 3, "width": 5, "height": 5 }, { "x": 0, "y": 0, "width": 2, "height": 3 }];
             var items2 = [{ "x": 0, "y": 0, "width": 5, "height": 5 }, { "x": 0, "y": 1, "width": 2, "height": 3 }];
@@ -193,7 +201,7 @@
                 return false;
             }.bind(this);
 
-            $(".grid-stack").each(function () {
+            $(".grid-stack").each(function (i) {
                 this.grid = $(this).data('gridstack');
 
                 //loading and adding graphs

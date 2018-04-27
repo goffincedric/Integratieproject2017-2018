@@ -26,7 +26,7 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetDashboardZones(int id)
         {
-            Dashboard dashboard = new Dashboard();
+            Dashboard dashboard = DashboardMgr.GetDashboard(id);
             if (dashboard == null) return StatusCode(HttpStatusCode.NoContent);
             if (dashboard.Zones.Count == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(dashboard.Zones);
