@@ -158,8 +158,7 @@ namespace UI_MVC.Controllers
             return Content(String.Format("{0}", alertCount));
         }
         #endregion
-
-
+        
         #region Account
         public ActionResult Account()
         {

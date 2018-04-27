@@ -55,7 +55,8 @@ namespace UI_MVC.Controllers.API
 
             Dashboard dashboard = DashboardMgr.GetDashboard(id);
             if (dashboard == null) return NotFound();
-            DashboardMgr.AddZone(dashboard, zone.Title);
+            if (zone.Elements == null || zone.Elements.Count == 0) DashboardMgr.AddZone(dashboard, zone.Title);
+            else DashboardMgr.AddZone(dashboard, zone.Title, zone.Elements);
             
             return Ok(zone); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte zone
         }

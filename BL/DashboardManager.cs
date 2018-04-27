@@ -130,6 +130,24 @@ namespace PB.BL
             return zone;
         }
 
+        public Zone AddZone(Dashboard dashboard, string title, List<Element> elements)
+        {
+            InitNonExistingRepo();
+            Zone zone = new Zone()
+            {
+                Dashboard = dashboard,
+                Title = title,
+                Elements = elements
+            };
+            dashboard.Zones.Add(zone);
+            elements.ForEach(e => e.Zone = zone);
+
+            zone = DashboardRepo.CreateZone(zone);
+            UowManager.Save();
+
+            return zone;
+        }
+
         public void ChangeZone(Zone zone)
         {
             InitNonExistingRepo();
