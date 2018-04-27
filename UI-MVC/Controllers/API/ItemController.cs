@@ -166,7 +166,7 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetPersonsTop()
         {
-            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o=>o.Records.Count()).Take(5);
+            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o => o.Records.Count()).Take(5);
             Dictionary<string, int> personmap = new Dictionary<string, int>();
             persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
             if (persons == null) return StatusCode(HttpStatusCode.NoContent);
@@ -177,12 +177,12 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetPersonEvolution(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            if(item is Person)
+            if (item is Person)
             {
-                IEnumerable<Record> records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0).OrderBy(a => a.GetHashCode()).Take(15);
+                IEnumerable<Record> records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0).Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(20);
                 Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
-                records.ToList().ForEach(p => { recordsmap.Add(p.Date, p.Sentiment.Polarity); });
-                recordsmap.OrderByDescending(o => o.Key);
+                records.ToList().ForEach(p => { recordsmap.Add(p.Date, (p.Sentiment.Polarity * p.Sentiment.Objectivity)); });
+                recordsmap.OrderBy(o => o.Key);
                 if (records == null) return StatusCode(HttpStatusCode.NoContent);
                 return Ok(recordsmap);
 
@@ -192,7 +192,20 @@ namespace UI_MVC.Controllers.API
             {
                 return StatusCode(HttpStatusCode.NoContent);
             }
-            
+
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetPersonTweet(int id)
+        {
+            IEnumerable<Record> records = ItemMgr.GetPerson(id).Records;
+            if (records == null) return NotFound();
+            Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
+
+            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
+            .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
+            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(recordsmap);
         }
     }
 }

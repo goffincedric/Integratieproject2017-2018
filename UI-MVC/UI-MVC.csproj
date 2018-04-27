@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44338</IISExpressSSLPort>
+    <IISExpressSSLPort>44372</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -230,8 +230,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\AccountController.cs" />
-    <Compile Include="Controllers\API\Helper_Code\Common\AuthorizationHeaderHandler.cs" />
+    <Compile Include="Controllers\API\Helper_Code\AuthorizationHeaderHandler.cs" />
     <Compile Include="Controllers\API\ItemController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\API\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
@@ -260,8 +262,11 @@
     <Content Include="Content\Images\info-icon.png" />
     <Content Include="Content\Images\logo_new.png" />
     <Content Include="Content\Images\nva.jpg" />
+<<<<<<< HEAD
     <Content Include="Content\Images\Profile-pic.png" />
     <Content Include="Content\Images\question-mark.png" />
+=======
+>>>>>>> master
     <Content Include="Content\Styling\account\custom.css" />
     <Content Include="Content\Styling\grid2\gridstack-extra.css" />
     <Content Include="Content\Styling\grid2\gridstack.css" />
@@ -325,7 +330,7 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\Home\Legal.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Home\AdminCrud.cshtml" />
