@@ -205,6 +205,9 @@ namespace UI_MVC.Controllers.API
 
         }
 
+
+       
+
         [HttpGet]
         public IHttpActionResult GetPersonTweet(int id)
         {
@@ -217,5 +220,20 @@ namespace UI_MVC.Controllers.API
             if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
+    
+
+
+    [HttpGet]
+    public IHttpActionResult GetPersonAveragePol(int id)
+    {
+        IEnumerable<Record> records = ItemMgr.GetPerson(id).Records;
+        if (records == null) return NotFound();
+        Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
+
+        recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
+        .ToDictionary(r => r.Key.Date, r => (r.Average(p=>p.Sentiment.Objectivity)*(r.Average(f=>f.Sentiment.Polarity))));
+        if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+        return Ok(JsonConvert.SerializeObject(recordsmap));
     }
+}
 }
