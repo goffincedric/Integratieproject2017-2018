@@ -262,11 +262,8 @@
     <Content Include="Content\Images\info-icon.png" />
     <Content Include="Content\Images\logo_new.png" />
     <Content Include="Content\Images\nva.jpg" />
-<<<<<<< HEAD
     <Content Include="Content\Images\Profile-pic.png" />
     <Content Include="Content\Images\question-mark.png" />
-=======
->>>>>>> master
     <Content Include="Content\Styling\account\custom.css" />
     <Content Include="Content\Styling\grid2\gridstack-extra.css" />
     <Content Include="Content\Styling\grid2\gridstack.css" />
