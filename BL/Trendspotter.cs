@@ -8,6 +8,67 @@ namespace PB.BL
 {
     public class Trendspotter
     {
+        public List<Item> CheckHotItems(List<Item> items, int topAmount)
+        {
+            // Calc average subscribed profiles per person
+            int averageSubscriptions = (int)Math.Round(items.Where(i => i is Person).Average(i => i.SubscribedProfiles.Count));
+
+            // Reset trending scores and status
+            items.ForEach(i => i.IsHot = false);
+
+            /* People */
+            List<Person> hotPeople = new List<Person>();
+            items.ForEach(i =>
+            {
+                if (i is Person person)
+                {
+                    person.TrendingScore = person.Records.Count * (person.SubscribedProfiles.Count * averageSubscriptions);
+                    hotPeople.Add(person);
+                }
+            });
+            hotPeople
+                .OrderByDescending(p => p.TrendingScore)
+                .Take(10)
+                .ToList().ForEach(p =>
+                    {
+                        p.IsHot = true;
+                        items[items.FindIndex(i => i.ItemId == p.ItemId)] = p;
+                    });
+
+            /* Organisations */
+            //Get amount of hot people per organisation
+            Dictionary<Organisation, int> organisations = hotPeople
+                .GroupBy(p => p.Organisation)
+                .ToDictionary(kv => kv.Key, kv => kv.ToList().Count);
+            // calculate max amount of hot people per organisation & filter
+            int max = organisations.Values.Max();
+            organisations = organisations.
+                Where(kv => kv.Value == max)
+                .ToDictionary(kv => kv.Key, kv => kv.Value);
+
+            // Get organisation based on sum of trendingscore of hot people from organisation
+            Organisation organisation = organisations.First().Key;
+            if (organisations.Count > 1)
+            {
+                organisations.Keys.ToList().ForEach(o =>
+                {
+                    if (o.People.Sum(p => p.TrendingScore) >= organisation.People.Where(p => p.IsHot).Sum(p => p.TrendingScore))
+                    {
+                        organisation = o;
+                    }
+                });
+            }
+            organisation.IsHot = true;
+            items[items.FindIndex(i => i.ItemId == organisation.ItemId)] = organisation;
+
+            /* Themes */
+            // TODO
+
+
+            // TODO: Zie of trending organisatie veranderd is, ja => alert maken voor alle profiles die daarop subscribed zijn
+            return items;
+        }
+
         public List<Alert> GenerateAllAlertTypes(List<Item> Subscriptions)
         {
             List<Alert> AllAlerts = new List<Alert>();
@@ -17,7 +78,7 @@ namespace PB.BL
             List<Person> Persons = Subscriptions.Where(i => i is Person).Select(i => (Person)i).ToList();
             List<Organisation> Organisations = Subscriptions.Where(i => i is Organisation).Select(i => (Organisation)i).ToList(); // Alerts op organisaties;
             List<Theme> Themes = new List<Theme>(); // Alerts op thema's
-            
+
             //Records uit people halen
             List<Record> PersonsWithRecords = new List<Record>();
             Persons.ForEach(p => p.Records.ForEach(r => PersonsWithRecords.Add(r)));
@@ -50,7 +111,7 @@ namespace PB.BL
             //De List van records opdelen in Dictionary van List<Record> per DateTime van de Record
             Console.WriteLine("=============OLD=============");
             Dictionary<Person, double> oldGemiddelde = GetAverageTweets(groupedOld, period - 1);
-            
+
             Console.WriteLine("=============NEW=============");
             Dictionary<Person, double> newGemiddelde = GetAverageTweets(groupedNew, period);
 
@@ -104,7 +165,7 @@ namespace PB.BL
             // Records ouder dan huidige dag
             DateTime LastDate = DateTime.Now;
 
-            List<Record> PeriodRecords = records.Where(r => r.Date.Date >= LastDate.AddDays(-period-1).Date && r.Date.Date <= LastDate.Date).ToList();
+            List<Record> PeriodRecords = records.Where(r => r.Date.Date >= LastDate.AddDays(-period - 1).Date && r.Date.Date <= LastDate.Date).ToList();
 
             // alle personen met records
             List<Person> PersonsWithRecords = GetPersonsWithRecord(persons, PeriodRecords);
@@ -114,7 +175,7 @@ namespace PB.BL
 
             // gemiddeld sentiment per persoon per datum
             Console.WriteLine("=============AVERAGE=============");
-            Dictionary<Person, double> AveragePolarity = GetAverageTweetPolarity(PersonRecords, period-1);
+            Dictionary<Person, double> AveragePolarity = GetAverageTweetPolarity(PersonRecords, period - 1);
 
             // verschil
             // alerts generaten
@@ -123,7 +184,7 @@ namespace PB.BL
             AveragePolarity.Keys.ToList().ForEach(k =>
             {
                 AveragePolarity.TryGetValue(k, out double average);
-                
+
                 Console.WriteLine(k + " = " + average);
 
                 if (average == 0) return;
