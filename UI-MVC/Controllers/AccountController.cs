@@ -157,6 +157,54 @@ namespace UI_MVC.Controllers
             int alertCount = user.ProfileAlerts.FindAll(pa => !pa.IsRead).Count;
             return Content(String.Format("{0}", alertCount));
         }
+
+        public ActionResult ClickNotification(int id)
+        {
+            Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
+            ProfileAlert profileAlert = profile.ProfileAlerts.Find(pa => pa.AlertId == id);
+            profileAlert.IsRead = true;
+
+            UserManager.ChangeProfile(profile);
+
+            int itemId = profileAlert.Alert.ItemId;
+
+            return RedirectToAction("ItemDetail", "Home", new { id = itemId });
+        }
+
+        public ActionResult _NotificationDropdown()
+        {
+            var model = new List<ProfileAlert>();
+
+            model.AddRange(UserManager.GetProfile(User.Identity.GetUserId()).ProfileAlerts);
+
+            model.Sort(delegate (ProfileAlert x, ProfileAlert y)
+            {
+                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
+                else if (x.TimeStamp == null) return -1;
+                else if (y.TimeStamp == null) return 1;
+                else return y.TimeStamp.CompareTo(x.TimeStamp);
+            });
+
+            return PartialView(model);
+        }
+
+        public ActionResult Notifications()
+        {
+            var model = new List<ProfileAlert>();
+
+            model.AddRange(UserManager.GetProfile(User.Identity.GetUserId()).ProfileAlerts);
+
+            model.Sort(delegate (ProfileAlert x, ProfileAlert y)
+            {
+                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
+                else if (x.TimeStamp == null) return -1;
+                else if (y.TimeStamp == null) return 1;
+                else return y.TimeStamp.CompareTo(x.TimeStamp);
+            });
+
+            return View(model);
+        }
+
         #endregion
 
 
@@ -236,36 +284,6 @@ namespace UI_MVC.Controllers
         public ActionResult _DeleteProfile()
         {
             return PartialView();
-        }
-
-        public ActionResult _NotificationDropdown()
-        {
-            var model = new List<ProfileAlert>();
-
-            model.AddRange(UserManager.GetProfile(User.Identity.GetUserId()).ProfileAlerts);
-
-            model.Sort(delegate (ProfileAlert x, ProfileAlert y)
-            {
-                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
-                else if (x.TimeStamp == null) return -1;
-                else if (y.TimeStamp == null) return 1;
-                else return y.TimeStamp.CompareTo(x.TimeStamp);
-            });
-
-            return PartialView(model);
-        }
-
-        public ActionResult ClickNotification(int id)
-        {
-            Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
-            ProfileAlert profileAlert = profile.ProfileAlerts.Find(pa => pa.AlertId == id);
-            profileAlert.IsRead = true;
-
-            UserManager.ChangeProfile(profile);
-
-            int itemId = profileAlert.Alert.ItemId;
-
-            return RedirectToAction("ItemDetail", "Home", new {id = itemId});
         }
 
         [HttpPost]
