@@ -4,13 +4,16 @@
     text-align: center;
 }
 body {
-    background-image: url('../Images/faqbg.jpg');
-    background-size: cover;
-   
+
+  background-image: url('../Images/faqbg.jpg');
+  background-size: cover;
+
+
 }
+
 li {
-    display: block;
-    align-self:center;
+  display: block;
+  align-self: center;
 }
 .collapse {
     margin-right: 5%;

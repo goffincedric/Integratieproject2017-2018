@@ -261,6 +261,14 @@
     <Content Include="Content\Images\Index\banner.jpg" />
     <Content Include="Content\Images\info-icon.png" />
     <Content Include="Content\Images\logo_new.png" />
+    <Content Include="Content\Images\Partijen\cdv.png" />
+    <Content Include="Content\Images\Partijen\groen.jpg" />
+    <Content Include="Content\Images\Partijen\nva.jpg" />
+    <Content Include="Content\Images\Partijen\openvld.png" />
+    <Content Include="Content\Images\Partijen\pvda.jpg" />
+    <Content Include="Content\Images\Partijen\spa.jpg" />
+    <Content Include="Content\Images\Partijen\vb.png" />
+    <Content Include="Content\Images\Users\user.png" />
     <Content Include="Content\Images\nva.jpg" />
     <Content Include="Content\Images\Profile-pic.png" />
     <Content Include="Content\Images\question-mark.png" />

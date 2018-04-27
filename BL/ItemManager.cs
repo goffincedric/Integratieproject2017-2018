@@ -69,15 +69,14 @@ namespace PB.BL
             return items;
         }
 
-        public Organisation AddOrganisation(string name, string description, string abbreviation, string socialMediaLink = null, string iconUrl = null)
+        public Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, string iconUrl = null)
         {
             InitNonExistingRepo();
 
             Organisation organisation = new Organisation()
             {
                 Name = name,
-                Description = description,
-                Abbreviation = abbreviation,
+                FullName = fullname,
                 SocialMediaLink = socialMediaLink,
                 IconURL = iconUrl,
                 Keywords = new List<Keyword>(),
@@ -438,6 +437,7 @@ namespace PB.BL
                             {
                                 Name = person,
                                 IsHot = false,
+                                IconURL = @"~/Content/Images/Users/user.png",
                                 Records = new List<Record>(),
                                 Comparisons = new List<Comparison>(),
                                 Keywords = new List<Keyword>(),

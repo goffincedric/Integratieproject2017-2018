@@ -114,7 +114,7 @@ namespace UI_MVC.Controllers.API
             if (organisation == null) return BadRequest();
             if (!ModelState.IsValid) return BadRequest(ModelState);
             if (ItemMgr.GetItem(organisation.ItemId) != null) return Conflict();
-            organisation = ItemMgr.AddOrganisation(organisation.Name, organisation.Description, organisation.SocialMediaLink, organisation.IconURL);
+            organisation = ItemMgr.AddOrganisation(organisation.Name, organisation.FullName, organisation.SocialMediaLink, organisation.IconURL);
 
             return Ok(organisation); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte item
         }

@@ -10,8 +10,7 @@ namespace PB.BL.Domain.Items
     {
         [DataMember]
         public string SocialMediaLink { get; set; }
-        [DataMember]
-        public string IconURL { get; set; }
+        
         [DataMember]
         public Function Function { get; set; }
         [DataMember]
