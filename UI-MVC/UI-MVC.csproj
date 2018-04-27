@@ -269,12 +269,12 @@
     <Content Include="Content\Images\Partijen\spa.jpg" />
     <Content Include="Content\Images\Partijen\vb.png" />
     <Content Include="Content\Images\Themes\eu.png" />
-    <Content Include="Content\Images\Themes\migratie.jpg" />
-    <Content Include="Content\Images\Themes\milieu.jpg" />
+    <Content Include="Content\Images\Themes\migratie.png" />
+    <Content Include="Content\Images\Themes\milieu.png" />
     <Content Include="Content\Images\Themes\Mobiliteit.png" />
-    <Content Include="Content\Images\Themes\onderwijs.jpg" />
+    <Content Include="Content\Images\Themes\onderwijs.png" />
     <Content Include="Content\Images\Themes\veiligheid.png" />
-    <Content Include="Content\Images\Themes\zorg.jpg" />
+    <Content Include="Content\Images\Themes\zorg.png" />
     <Content Include="Content\Images\Users\user.png" />
     <Content Include="Content\Images\Profile-pic.png" />
     <Content Include="Content\Images\question-mark.png" />

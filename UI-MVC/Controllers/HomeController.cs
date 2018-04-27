@@ -154,7 +154,7 @@ namespace UI_MVC.Controllers
 
 
        
-
+        [Authorize]
         public ActionResult ItemDetail(int id)
         {
            

@@ -414,7 +414,7 @@ namespace UI_CA_Prototype
             new Theme()
                 {
                     Name = "Migratie",
-                    IconURL=@"~/Content/Images/Themes/migratie.jpg",
+                    IconURL=@"~/Content/Images/Themes/migratie.png",
                     IsHot = false,
                 },
              new Theme()
@@ -432,7 +432,7 @@ namespace UI_CA_Prototype
                new Theme()
                 {
                     Name = "Zorg",
-                    IconURL=@"~/Content/Images/Themes/zorg.jpg",
+                    IconURL=@"~/Content/Images/Themes/zorg.png",
                     Records = new List<Record>()
                 },
                new Theme()
@@ -445,7 +445,12 @@ namespace UI_CA_Prototype
                 {
                     Name = "Milieu",
                     IconURL=@"~/Content/Images/Themes/eu.png"
-                }
+                },
+               new Theme()
+               {
+                   Name="Mobiliteit",
+                   IconURL=@"~/Content/Images/Themes/mobiliteit.png"
+               }
               
             };
 

@@ -164,9 +164,9 @@ namespace UI_MVC.Controllers.API
 
 
         [HttpGet]
-        public IHttpActionResult GetPersonsTop()
+        public IHttpActionResult GetPersonsTop(int id)
         {
-            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o => o.Records.Count()).Take(5);
+            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o => o.Records.Count()).Take(id);
             Dictionary<string, int> personmap = new Dictionary<string, int>();
             persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
             if (persons == null) return StatusCode(HttpStatusCode.NoContent);

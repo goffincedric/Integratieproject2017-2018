@@ -189,6 +189,11 @@ namespace UI_MVC.Controllers
             return View();
         }
 
+        public ActionResult Charts2()
+        {
+            return View();
+        }
+
 
     }
 }
