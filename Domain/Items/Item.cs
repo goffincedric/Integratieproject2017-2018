@@ -23,6 +23,8 @@ namespace PB.BL.Domain.Items
         public string Name { get; set; }
         [DataMember]
         public bool IsHot { get; set; }
+        [DataMember]
+        public string IconURL { get; set; }
 
         public List<Subplatform> SubPlatforms { get; set; }
         public List<Keyword> Keywords { get; set; }

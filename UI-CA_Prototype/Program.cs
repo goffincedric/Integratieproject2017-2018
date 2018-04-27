@@ -288,8 +288,9 @@ namespace UI_CA_Prototype
             {
                 new Organisation()
                 {
-                    Name = "Partij van de Arbeid",
-                    Abbreviation = "PVDA-PTB",
+                    Name = "PVDA",
+                    FullName = "Partij van de Arbeid",
+                    IconURL="~/Content/Images/pvda.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -303,8 +304,9 @@ namespace UI_CA_Prototype
                 },
                 new Organisation()
                 {
-                    Name = "Christen-Democratisch en Vlaams",
-                    Abbreviation = "CD&V",
+                    Name = "CD&V",
+                    FullName = "Christen-Democratisch en Vlaams",
+                    IconURL="~/Content/Images/cdv.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -318,8 +320,9 @@ namespace UI_CA_Prototype
                 },
                 new Organisation()
                 {
-                    Name = "Socialistische Partij Anders",
-                    Abbreviation = "SP.A",
+                    Name =  "SP.A",
+                    FullName ="Socialistische Partij Anders",
+                    IconURL="~/Content/Images/spa.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -333,8 +336,9 @@ namespace UI_CA_Prototype
                 },
                 new Organisation()
                 {
-                    Name = "Open Vlaamse Liberalen en Democraten",
-                    Abbreviation = "Open Vld",
+                    Name = "Open Vld",
+                    FullName = "Open Vlaamse Liberalen en Democraten",
+                    IconURL="~/Content/Images/openvld.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -349,7 +353,8 @@ namespace UI_CA_Prototype
                 new Organisation()
                 {
                     Name = "Groen",
-                    Abbreviation = "Groen",
+                    FullName = "Groen",
+                    IconURL="~/Content/Images/groen.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -363,8 +368,9 @@ namespace UI_CA_Prototype
                 },
                 new Organisation()
                 {
-                    Name = "Nieuw-Vlaamse Alliantie",
-                    Abbreviation = "N-VA",
+                    Name = "N-VA",
+                    FullName = "Nieuw-Vlaamse Alliantie",
+                    IconURL="~/Content/Images/nva.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -378,8 +384,9 @@ namespace UI_CA_Prototype
                 },
                 new Organisation()
                 {
-                    Name = "Vlaams Belang",
-                    Abbreviation = "VB",
+                    Name = "VB",
+                    FullName ="Vlaams Belang" ,
+                    IconURL="~/Content/Images/vb.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),

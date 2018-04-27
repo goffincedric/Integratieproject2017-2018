@@ -157,8 +157,10 @@ namespace UI_MVC.Controllers
         public ActionResult ItemDetail(int id)
         {
            
+           
             Item item = itemMgr.GetItem(id);
-            if(item is Person)
+            ViewBag.Icon = item.IconURL;
+            if (item is Person)
             {
                 Person person = (Person) item;
                 int? count = person.Records.Count();
