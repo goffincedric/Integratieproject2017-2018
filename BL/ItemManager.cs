@@ -437,6 +437,7 @@ namespace PB.BL
                             {
                                 Name = person,
                                 IsHot = false,
+                                IconURL = @"~/Content/Images/Users/user.png",
                                 Records = new List<Record>(),
                                 Comparisons = new List<Comparison>(),
                                 Keywords = new List<Keyword>(),

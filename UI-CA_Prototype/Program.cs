@@ -290,7 +290,7 @@ namespace UI_CA_Prototype
                 {
                     Name = "PVDA",
                     FullName = "Partij van de Arbeid",
-                    IconURL="~/Content/Images/pvda.jpg",
+                    IconURL=@"~/Content/Images/Partijen/pvda.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -306,7 +306,7 @@ namespace UI_CA_Prototype
                 {
                     Name = "CD&V",
                     FullName = "Christen-Democratisch en Vlaams",
-                    IconURL="~/Content/Images/cdv.png",
+                    IconURL=@"~/Content/Images/Partijen/cdv.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -322,7 +322,7 @@ namespace UI_CA_Prototype
                 {
                     Name =  "SP.A",
                     FullName ="Socialistische Partij Anders",
-                    IconURL="~/Content/Images/spa.jpg",
+                    IconURL=@"~/Content/Images/Partijen/spa.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -338,7 +338,7 @@ namespace UI_CA_Prototype
                 {
                     Name = "Open Vld",
                     FullName = "Open Vlaamse Liberalen en Democraten",
-                    IconURL="~/Content/Images/openvld.png",
+                    IconURL=@"~/Content/Images/Partijen/openvld.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -354,7 +354,7 @@ namespace UI_CA_Prototype
                 {
                     Name = "Groen",
                     FullName = "Groen",
-                    IconURL="~/Content/Images/groen.jpg",
+                    IconURL=@"~/Content/Images/Partijen/groen.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -370,7 +370,7 @@ namespace UI_CA_Prototype
                 {
                     Name = "N-VA",
                     FullName = "Nieuw-Vlaamse Alliantie",
-                    IconURL="~/Content/Images/nva.jpg",
+                    IconURL=@"~/Content/Images/Partijen/nva.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -386,7 +386,7 @@ namespace UI_CA_Prototype
                 {
                     Name = "VB",
                     FullName ="Vlaams Belang" ,
-                    IconURL="~/Content/Images/vb.png",
+                    IconURL=@"~/Content/Images/Partijen/vb.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),

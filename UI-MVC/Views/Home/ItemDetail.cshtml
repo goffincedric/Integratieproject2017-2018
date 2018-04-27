@@ -15,7 +15,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-3">
-              <img style="width: 200px; margin-top:20px;" src="@ViewBag.Icon" alt="logo" />
+              <img style="width: 200px; height: auto;position: absolute; margin: auto;top: 0;left: 0;right: 0;bottom: 0;" src="@ViewBag.Icon" alt="logo" />
             </div>
 
             <div class="col-9">
@@ -35,11 +35,24 @@
                   }
                   else if (Model is PB.BL.Domain.Items.Organisation)
                   {
-                    <h4 class="h4">@ViewBag.Leden Leden</h4>
+
+                    <ul style="list-style-type:none; width:100%; text-align:center;">
+                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Leden Leden</h5></li>
+                      <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
+                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.FullName</h5></li>
+
+                    </ul>
+
                   }
                   else
                   {
-                    <h4 class="h4">@ViewBag.Associaties Associaties</h4>
+                    <ul style="list-style-type:none; width:100%; text-align:center;">
+                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Associaties Associaties</h5></li>
+                      <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
+                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Keywords</h5></li>
+
+                    </ul>
+                    
                   }
                 </div>
 
