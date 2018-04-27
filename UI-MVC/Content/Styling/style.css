@@ -2080,3 +2080,13 @@ h3 {
 .notificationsListItem {
     height: 90px;
 }
+
+.alert-img{
+    width: 100%;
+    height: auto;
+}
+
+.alert-text{
+    margin-top:auto;
+    margin-bottom:auto;
+}
