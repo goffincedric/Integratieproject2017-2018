@@ -26,14 +26,12 @@ namespace UI_MVC.Controllers.API.Helper_Code.Common
     public class AuthorizationHeaderHandler : DelegatingHandler
     {
         private UnitOfWorkManager UowMgr;
-        private AccountManager _accountMgr;
         private IntegratieSignInManager _signInManager;
 
 
         public AuthorizationHeaderHandler()
         {
             UowMgr = new UnitOfWorkManager();
-            AccountMgr = new AccountManager(new PB.DAL.EF.IntegratieUserStore(UowMgr.UnitOfWork));
         }
 
         public IntegratieSignInManager SignInManager
@@ -45,18 +43,6 @@ namespace UI_MVC.Controllers.API.Helper_Code.Common
             private set
             {
                 _signInManager = value;
-            }
-        }
-
-        public AccountManager AccountMgr
-        {
-            get
-            {
-                return _accountMgr ?? HttpContext.Current.GetOwinContext().GetUserManager<AccountManager>();
-            }
-            private set
-            {
-                _accountMgr = value;
             }
         }
 
@@ -124,7 +110,7 @@ namespace UI_MVC.Controllers.API.Helper_Code.Common
         /// Set principal method
         /// </summary>   
         /// <param name="principal">Principal parameter</param>   
-        private static async void SetPrincipal(IPrincipal principal)
+        private static void SetPrincipal(IPrincipal principal)
         {
             // setting
             Thread.CurrentPrincipal = principal;
