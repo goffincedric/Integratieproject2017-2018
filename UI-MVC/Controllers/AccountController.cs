@@ -13,6 +13,7 @@ using System.Web;
 using System.Web.Mvc;
 using PB.BL.Domain.Items;
 using UI_MVC.Models;
+using PB.BL.Domain.Dashboards;
 
 namespace UI_MVC.Controllers
 {
@@ -116,6 +117,38 @@ namespace UI_MVC.Controllers
             {
                 var user = new Profile { UserName = model.Username, Email = model.Email, };
                 user.UserData = new UserData() { Profile = user };
+                user.Dashboards = new List<Dashboard> {
+                    new Dashboard()
+                    {
+                        Profile = user,
+                        DashboardType = UserType.USER,
+                        Zones = new List<Zone>
+                        {
+                            new Zone()
+                            {
+                                Title = "Main Zone",
+                                Elements = new List<Element>()
+                                {
+                                    new Element()
+                                    {
+                                        X = 0,
+                                        Y = 3,
+                                        Width = 5,
+                                        Height = 5,
+                                        Comparison= new Comparison()
+                                    },new Element()
+                                    {
+                                        X = 0,
+                                        Y = 0,
+                                        Width = 2,
+                                        Height = 3,
+                                        Comparison= new Comparison()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
                 user.Settings = new List<UserSetting>
                 {
                     new UserSetting()

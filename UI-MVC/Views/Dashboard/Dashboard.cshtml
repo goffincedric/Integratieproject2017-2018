@@ -26,11 +26,13 @@
         }
 
         #grid2 .grid-stack-item-content {
-            background-color: grey;;
+            background-color: grey;
+            ;
         }
 
         #grid1 .grid-stack-item-content {
-            background-color: grey;;
+            background-color: grey;
+            ;
         }
     </style>
 }
@@ -56,6 +58,17 @@
                 <a class="btn btn-default clear-grid" id="clear-grid2" href="#">Clear Grid 2</a>
             </div>
             <div class="grid-stack grid-stack-6" id="grid2">
+            </div>
+        </div>
+
+        <div>
+            <h1>Main trends</h1>
+            <div style="margin-bottom:5px" class="buttons">
+                <a class="btn btn-default save-grid" id="save-grid3" href="#">Save Grid 1</a>
+                <a class="btn btn-default load-grid" id="load-grid3" href="#">Load Grid 1</a>
+                <a class="btn btn-default clear-grid" id="clear-grid3" href="#">Clear Grid 1</a>
+            </div>
+            <div class="grid-stack grid-stack-6" id="grid3">
             </div>
         </div>
     </div>
@@ -89,10 +102,51 @@
         //}, options));
 
         new function () {
+            var json = [
+                {
+                    "ZoneId": 1,
+                    "Title": "Personal",
+                    "Elements": [
+                        {
+                            "x": 0,
+                            "y": 3,
+                            "width": 5,
+                            "height": 5
+                        },
+                        {
+                            "x": 0,
+                            "y": 0,
+                            "width": 2,
+                            "height": 3
+                        }
+                    ]
+                },
+                {
+                    "ZoneId": 2,
+                    "Title": "Trending",
+                    "Elements": [
+                        {
+                            "x": 1,
+                            "y": 4,
+                            "width": 5,
+                            "height": 5
+                        },
+                        {
+                            "x": 0,
+                            "y": 3,
+                            "width": 2,
+                            "height": 4
+                        }
+                    ]
+                }
+            ];
+
+            console.log(json[0].Elements);
+
             var items1 = [{ "x": 0, "y": 3, "width": 5, "height": 5 }, { "x": 0, "y": 0, "width": 2, "height": 3 }];
             var items2 = [{ "x": 0, "y": 0, "width": 5, "height": 5 }, { "x": 0, "y": 1, "width": 2, "height": 3 }];
 
-            this.grid1 = $('#grid1').data('gridstack'); 
+            this.grid1 = $('#grid1').data('gridstack');
             this.grid2 = $('#grid2').data('gridstack');
 
             //done
@@ -104,7 +158,6 @@
 
 
             loadGrid = function (grid) {
-                console.log(grid);
                 grid.each(function () {
 
                     var grid = $(this).data('gridstack');
@@ -149,18 +202,23 @@
 
             $(".grid-stack").each(function () {
                 this.grid = $(this).data('gridstack');
-                //console.log($('#grid1'));
 
+                //loading and adding graphs
                 $(this).siblings('.buttons').children('.load-grid').on("click", function () {
                     this.grid = $(this).parent().siblings('.grid-stack').data('gridstack');
                     console.log("yooo");
                     loadGrid($(this).parent().siblings('.grid-stack'));
                 });
 
-                //Clearing Zone/grid done
+                //Clearing Zone/Grid done
                 $(this).siblings('.buttons').children('.clear-grid').on("click", function () {
                     this.grid = $(this).parent().siblings('.grid-stack').data('gridstack');
                     clearGrid(this.grid);
+                });
+
+                $(this).siblings('.buttons').children('.save-grid').on("click", function () {
+                    this.grid = $(this).parent().siblings('.grid-stack').data('gridstack');
+                    saveGrid1()
                 });
 
                 loadGrid($(this));
