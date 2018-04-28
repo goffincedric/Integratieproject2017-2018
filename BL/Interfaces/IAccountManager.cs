@@ -1,4 +1,5 @@
 using PB.BL.Domain.Accounts;
+using PB.BL.Domain.Items;
 using PB.BL.Domain.Settings;
 using System.Collections.Generic;
 
@@ -19,6 +20,12 @@ namespace PB.BL.Interfaces
         //void RemoveUserSetting(string username, Setting.Account accountSetting);
 
         //void LinkAlertsToProfile(List<Alert> alerts);
+
+        Profile AddSubscription(Profile profile, Item item);
+        Profile RemoveSubscription(Profile profile, Item item);
+
+        List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems, out List<Item> itemsToUpdate);
+        List<Alert> GenerateProfileAlerts(Profile profile);
 
         int GetUserCount();
     }

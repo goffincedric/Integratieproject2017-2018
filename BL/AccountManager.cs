@@ -55,6 +55,34 @@ namespace PB.BL
 
 
         #region Init & create
+        public void InitNonExistingRepo(bool createWithUnitOfWork = false)
+        {
+            if (ProfileRepo == null)
+            {
+                if (createWithUnitOfWork)
+                {
+                    if (UowManager == null)
+                    {
+                        UowManager = new UnitOfWorkManager();
+                        //Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
+                    }
+                    else
+                    {
+                        //Console.WriteLine("uo bestaat al");
+                    }
+
+                    ProfileRepo = new ProfileRepo(UowManager.UnitOfWork);
+                    AlertRepo = new AlertRepo(UowManager.UnitOfWork);
+                }
+                else
+                {
+                    ProfileRepo = new ProfileRepo();
+                    AlertRepo = new AlertRepo();
+                    //Console.WriteLine("OLD WAY REPO ACCOUNTMGR");
+                }
+            }
+        }
+
         public static AccountManager Create(IdentityFactoryOptions<AccountManager> options, IOwinContext context)
         {
             //Console.WriteLine("Create accountmanager wordt gedaan");
@@ -138,36 +166,7 @@ namespace PB.BL
             }
         }
         #endregion
-
-        public void InitNonExistingRepo(bool createWithUnitOfWork = false)
-        {
-            if (ProfileRepo == null)
-            {
-                if (createWithUnitOfWork)
-                {
-                    if (UowManager == null)
-                    {
-                        UowManager = new UnitOfWorkManager();
-                        //Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
-                    }
-                    else
-                    {
-                        //Console.WriteLine("uo bestaat al");
-                    }
-
-                    ProfileRepo = new ProfileRepo(UowManager.UnitOfWork);
-                    AlertRepo = new AlertRepo(UowManager.UnitOfWork);
-                }
-                else
-                {
-                    ProfileRepo = new ProfileRepo();
-                    AlertRepo = new AlertRepo();
-                    //Console.WriteLine("OLD WAY REPO ACCOUNTMGR");
-                }
-            }
-        }
-
-
+        
         #region Profile
         //public Profile AddProfile(string username, string email)
         //{
@@ -303,18 +302,24 @@ namespace PB.BL
         #endregion
 
         #region alerts
-        public List<Alert> GenerateAllAlerts()
+        public List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems, out List<Item> itemsToUpdate)
         {
             InitNonExistingRepo();
+
+            //Create alerts list
+            List<Alert> alerts = new List<Alert>();
+
+            // Update trending items
+            itemsToUpdate = Trendspotter.CheckTrendingItems(allItems.ToList(), 10 /* TODO: ?Subplatform setting? */, ref alerts);
 
             // Get all profiles with subscriptions
             List<Profile> Profiles = ProfileRepo.ReadProfiles().Where(p => p.Subscriptions.Count > 0).ToList();
 
             // Alle subscriptions uit profiles halen
             List<Item> Subscriptions = Profiles.SelectMany(p => p.Subscriptions).Distinct().ToList();
-
+            
             // Check trends voor people
-            List<Alert> alerts = new Trendspotter().GenerateAllAlertTypes(Subscriptions);
+            alerts.AddRange(Trendspotter.GenerateAllAlertTypes(Subscriptions));
 
             //Replace generated alerts with existing alerts
             AlertRepo.ReadAlerts().ToList().ForEach(a =>
@@ -387,25 +392,8 @@ namespace PB.BL
             subscribedItems.ForEach(Console.WriteLine);
 
             //Check trends voor people
-            List<Alert> alerts = new Trendspotter().GenerateAllAlertTypes(profile.Subscriptions);
-
-
-
-            /*
-             * Organisation Alerts
-             */
-
-
-
-
-
-            /*
-             * Theme Alerts
-             */
-
-
-
-
+            List<Alert> alerts = Trendspotter.GenerateAllAlertTypes(profile.Subscriptions);
+            
 
             /*
              * Linking Alerts
@@ -448,6 +436,8 @@ namespace PB.BL
             //Persist alerts
             AlertRepo.CreatAlerts(alertsToCreate).ToList();
             alertsToUpdate.ForEach(AlertRepo.UpdateAlert);
+
+            // Save all pending changes
             UowManager.Save();
 
             return alerts;

@@ -11,6 +11,7 @@ namespace PB.DAL
         IEnumerable<Item> CreateItems(List<Item> items);
         Item ReadItem(int itemId);
         void UpdateItem(Item item);
+        void UpdateItems(List<Item> items);
         void DeleteItem(int itemId);
 
 

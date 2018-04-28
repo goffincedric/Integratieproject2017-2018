@@ -5,6 +5,7 @@ using PB.BL.Domain.JSONConversion;
 using PB.BL.Domain.Platform;
 using PB.BL.Interfaces;
 using PB.DAL;
+using PB.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace PB.BL
     {
         private IItemRepo ItemRepo;
         private IRecordRepo RecordRepo;
+        private IAlertRepo AlertRepo;
 
         private UnitOfWorkManager UowManager;
 
@@ -28,6 +30,7 @@ namespace PB.BL
             UowManager = uowMgr;
             ItemRepo = new ItemRepo(uowMgr.UnitOfWork);
             RecordRepo = new RecordRepo(uowMgr.UnitOfWork);
+
         }
 
         public void InitNonExistingRepo(bool createWithUnitOfWork = false)
@@ -39,21 +42,17 @@ namespace PB.BL
                     if (UowManager == null)
                     {
                         UowManager = new UnitOfWorkManager();
-                        //Console.WriteLine("UOW MADE IN ITEM MANAGER for Record and Item repo");
-                    }
-                    else
-                    {
-                        //Console.WriteLine("uo bestaat al");
                     }
 
                     RecordRepo = new RecordRepo(UowManager.UnitOfWork);
                     ItemRepo = new ItemRepo(UowManager.UnitOfWork);
+                    AlertRepo = new AlertRepo(UowManager.UnitOfWork);
                 }
                 else
                 {
                     RecordRepo = new RecordRepo();
                     ItemRepo = new ItemRepo();
-                    //Console.WriteLine("OLD WAY REPO ITEMMGR");
+                    AlertRepo = new AlertRepo();
                 }
             }
         }
@@ -137,6 +136,13 @@ namespace PB.BL
         {
             InitNonExistingRepo();
             ItemRepo.UpdateItem(item);
+            UowManager.Save();
+        }
+
+        public void ChangeItems(List<Item> items)
+        {
+            InitNonExistingRepo();
+            ItemRepo.UpdateItems(items);
             UowManager.Save();
         }
 
@@ -340,34 +346,6 @@ namespace PB.BL
         }
         #endregion
 
-        #region Subscriptions
-        public Profile AddSubscription(Profile profile, Item item)
-        {
-            InitNonExistingRepo();
-
-            profile.Subscriptions.Add(item);
-            item.SubscribedProfiles.Add(profile);
-
-            ChangeItem(item);
-            UowManager.Save();
-
-            return profile;
-        }
-
-        public Profile RemoveSubscription(Profile profile, Item item)
-        {
-            InitNonExistingRepo();
-
-            profile.Subscriptions.Remove(item);
-            item.SubscribedProfiles.Remove(profile);
-
-            ChangeItem(item);
-            UowManager.Save();
-
-            return profile;
-        }
-        #endregion
-
         public void Seed(bool evenRecords = true)
         {
             InitNonExistingRepo();
@@ -436,7 +414,7 @@ namespace PB.BL
                             personCheck = new Person()
                             {
                                 Name = person,
-                                IsHot = false,
+                                IsTrending = false,
                                 IconURL = @"~/Content/Images/Users/user.png",
                                 Records = new List<Record>(),
                                 Comparisons = new List<Comparison>(),
@@ -537,12 +515,6 @@ namespace PB.BL
             UowManager.Save();
 
             return newRecords;
-        }
-
-        public void CheckTrend()
-        {
-            //InitNonExistingRepo();
-            //trendspotter.CheckTrendAverageRecords(GetRecords());
         }
 
         #region Keywords
