@@ -62,13 +62,16 @@
 <script src="~/Scripts/grid2/gridstack.jQueryUI.js"></script>
 
 <script type="text/javascript">
-    var json = "";
-    json = $.ajax({
+    //api call working
+    var test = "";
+    test = $.ajax({
         async: false,
         type: 'GET',
         dataType: 'json',
         url: "https://localhost:44342/api/dashboard/getdashboardzones/" + @Model.DashboardId
     }).responseJSON
+
+    console.log(test);
 
     $(function () {
         var options = {
