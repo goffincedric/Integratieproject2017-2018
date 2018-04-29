@@ -63,25 +63,19 @@
 <script src="~/Scripts/grid2/gridstack.jQueryUI.js"></script>
 
 <script type="text/javascript">
+    var Username = '@User.Identity.Name';
+    let Headers = { "x-api-key": "303d22a4-402b-4d3c-b279-9e81c0480711", "Authorization": "Basic " + btoa(Username + ":Disney2017") };
+
     //api call working
     var DashData = "";
+
     DashData = $.ajax({
         async: false,
         type: 'GET',
         dataType: 'json',
+        headers: Headers,
         url: "https://localhost:44342/api/dashboard/getdashboardzones/" + @Model.DashboardId
-    }).responseJSON
-
-    var ZoneData = [];
-
-    for (i in DashData) {
-        ZoneData.push($.ajax({
-            async: false,
-            type: 'GET',
-            dataType: 'json',
-            url: "https://localhost:44342/api/dashboard/getzoneelements/" + DashData[i].ZoneId
-        }).responseJSON);
-    }
+    }).responseJSON;
 
     $(function () {
         var options = {
@@ -106,10 +100,9 @@
                     async: false,
                     type: 'GET',
                     dataType: 'json',
+                    headers: Headers,
                     url: "https://localhost:44342/api/dashboard/getzoneelements/" + id
                 }).responseJSON;
-
-                console.log(ZoneData);
 
                 return ZoneData;
             };
@@ -122,14 +115,12 @@
 
                 var Element = JSON.parse('{"Comparison" : "null", "X" : "0", "Y" : "0", "Width": "2", "Height": "2", "IsDraggble": "true"}');
 
-                console.log(Element);
-
                 $.ajax({
                     async: false,
                     type: 'POST',
                     data: Element,
-                    contentType: "application/json; charset=utf-8",
                     dataType: 'json',
+                    headers: Headers,
                     url: "https://localhost:44342/api/dashboard/postelement/" + ZoneId
                 })
             }
