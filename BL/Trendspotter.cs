@@ -32,7 +32,7 @@ namespace PB.BL
         public static List<Item> CheckTrendingItems(List<Item> items, int topAmount, ref List<Alert> alerts)
         {
             // Calc average subscribed profiles per person
-            int averageSubscriptions = (int)Math.Round(items.Where(i => i is Person).Average(i => i.SubscribedProfiles.Count));
+            int averageSubscriptions = (int)Math.Ceiling(items.Where(i => i is Person).Average(i => i.SubscribedProfiles.Count));
 
             // Get previous trending organisation, later needed
             Organisation oldTrendingOrganisation = (Organisation)items.FirstOrDefault(i => i is Organisation && i.IsTrending);
@@ -49,15 +49,18 @@ namespace PB.BL
 
             /* People */
             List<Person> hotPeople = new List<Person>();
-            items.ForEach(i =>
+            items.ToList().ForEach(i =>
             {
                 if (i is Person person)
                 {
-                    person.TrendingScore = person.Records.Count * (person.SubscribedProfiles.Count * averageSubscriptions);
+                    person.TrendingScore = person.Records.Count + (person.SubscribedProfiles.Count * averageSubscriptions * 50);
+                    items[items.IndexOf(person)] = person;
                     hotPeople.Add(person);
                 }
             });
-            hotPeople
+            items
+                .Where(i => i is Person)
+                .Select(i => (Person)i)
                 .OrderByDescending(p => p.TrendingScore)
                 .Take(10)
                 .ToList().ForEach(p =>
@@ -69,18 +72,20 @@ namespace PB.BL
             /* Organisations */
             //Get amount of hot people per organisation
             Dictionary<Organisation, int> organisations = hotPeople
-                .GroupBy(p => p.Organisation)
+                .Where(p => p.Organisation != null)
+                .GroupBy(p => p.Organisation, p => p)
                 .ToDictionary(kv => kv.Key, kv => kv.ToList().Count);
-            // calculate max amount of hot people per organisation & filter
-            int max = organisations.Values.Max();
-            organisations = organisations.
-                Where(kv => kv.Value == max)
-                .ToDictionary(kv => kv.Key, kv => kv.Value);
 
-            // Get organisation based on sum of trendingscore of hot people from organisation
-            Organisation organisation = organisations.First().Key;
-            if (organisations.Count > 1)
+            if (organisations.Count > 0)
             {
+                // calculate max amount of hot people per organisation & filter
+                int max = organisations.Values.Max();
+                organisations = organisations.
+                    Where(kv => kv.Value == max)
+                    .ToDictionary(kv => kv.Key, kv => kv.Value);
+
+                // Get organisation based on sum of trendingscore of hot people from organisation
+                Organisation organisation = organisations.First().Key;
                 organisations.Keys.ToList().ForEach(o =>
                 {
                     if (o.People.Sum(p => p.TrendingScore) >= organisation.People.Where(p => p.IsTrending).Sum(p => p.TrendingScore))
@@ -88,24 +93,24 @@ namespace PB.BL
                         organisation = o;
                     }
                 });
-            }
-            organisation.IsTrending = true;
-            items[items.FindIndex(i => i.ItemId == organisation.ItemId)] = organisation;
+                organisation.IsTrending = true;
+                items[items.FindIndex(i => i.ItemId == organisation.ItemId)] = organisation;
 
-            if (!organisation.Equals(oldTrendingOrganisation))
-            {
-                Alert alert = new Alert()
+                if (!organisation.Equals(oldTrendingOrganisation))
                 {
-                    Description = organisation + " is de top trending organisatie",
-                    Text = organisation.Name + " is de nieuwe top trending organisatie" + ((oldTrendingOrganisation != null) ? ". Vorige top trending organisatie: " + oldTrendingOrganisation.Name : ""),
-                    Event = "is top trending",
-                    Subject = "organisatie",
-                    Item = organisation,
-                    ProfileAlerts = new List<ProfileAlert>()
-                };
-                organisation.Alerts.Add(alert);
+                    Alert alert = new Alert()
+                    {
+                        Description = organisation + " is de top trending organisatie",
+                        Text = organisation.Name + " is de nieuwe top trending organisatie" + ((oldTrendingOrganisation != null) ? ". Vorige top trending organisatie: " + oldTrendingOrganisation.Name : ""),
+                        Event = "is top trending",
+                        Subject = "organisatie",
+                        Item = organisation,
+                        ProfileAlerts = new List<ProfileAlert>()
+                    };
+                    organisation.Alerts.Add(alert);
 
-                alerts.Add(alert);
+                    alerts.Add(alert);
+                }
             }
 
             /* Themes */

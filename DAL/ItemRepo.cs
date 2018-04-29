@@ -146,7 +146,6 @@ namespace PB.DAL
             items.ForEach(item =>
             {
                 ctx.Items.Attach(item);
-                ctx.Entry(item).State = EntityState.Modified;
             });
             ctx.SaveChanges();
         }
