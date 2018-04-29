@@ -314,8 +314,7 @@ namespace UI_MVC.Controllers
         }
 
         #endregion
-
-
+        
         #region Account
         public ActionResult Account()
         {
