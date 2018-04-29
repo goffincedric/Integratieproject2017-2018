@@ -75,7 +75,7 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetZoneElements(int id)
         {
-            Zone zone = new Zone();
+            Zone zone = DashboardMgr.GetZone(id);
             if (zone == null) return StatusCode(HttpStatusCode.NoContent);
             if (zone.Elements.Count == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(zone.Elements);

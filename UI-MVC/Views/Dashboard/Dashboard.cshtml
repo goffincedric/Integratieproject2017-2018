@@ -45,6 +45,7 @@
                         <a class="btn btn-default save-grid" id="save-grid" href="#">Save Grid</a>
                         <a class="btn btn-default load-grid" id="load-grid" href="#">Load Grid</a>
                         <a class="btn btn-default clear-grid" id="clear-grid" href="#">Clear Grid</a>
+                        <a class="btn btn-default add-element" id="clear-grid" href="#">Add Element</a>
                     </div>
                     <div class="grid-stack grid-stack-6" id="zone-@zone.ZoneId">
                     </div>
@@ -63,15 +64,24 @@
 
 <script type="text/javascript">
     //api call working
-    var test = "";
-    test = $.ajax({
+    var DashData = "";
+    DashData = $.ajax({
         async: false,
         type: 'GET',
         dataType: 'json',
         url: "https://localhost:44342/api/dashboard/getdashboardzones/" + @Model.DashboardId
     }).responseJSON
 
-    console.log(test);
+    var ZoneData = [];
+
+    for (i in DashData) {
+        ZoneData.push($.ajax({
+            async: false,
+            type: 'GET',
+            dataType: 'json',
+            url: "https://localhost:44342/api/dashboard/getzoneelements/" + DashData[i].ZoneId
+        }).responseJSON);
+    }
 
     $(function () {
         var options = {
@@ -82,9 +92,6 @@
             acceptWidgets: '.grid-stack-item'
         };
         $('.grid-stack').gridstack(options);
-        //$('.grid-stack').gridstack(_.defaults({
-        //    float: true
-        //}, options));
 
         new function () {
 
@@ -94,22 +101,36 @@
             this.grid1 = $('#grid1').data('gridstack');
             this.grid2 = $('#grid2').data('gridstack');
 
+            findElements = function (id) {
+                var ZoneData = $.ajax({
+                    async: false,
+                    type: 'GET',
+                    dataType: 'json',
+                    url: "https://localhost:44342/api/dashboard/getzoneelements/" + id
+                }).responseJSON;
+
+                return ZoneData;
+            };
+
             //done
             clearGrid = function (grid) {
                 grid.removeAll();
                 return false;
             }.bind(this);
 
-
             loadGrid = function (grid) {
+                var ZoneId = grid.attr('id');
+                ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
+                var elements = findElements(ZoneId);
+
                 grid.each(function () {
 
                     var grid = $(this).data('gridstack');
 
-                    //this for now(change later)
-                    _.each(items1, function (node) {
+                    //this for now(change later), Gets correct data from database
+                    _.each(elements, function (node) {
                         grid.addWidget($('<div><div class="grid-stack-item-content bgc-white bd"/><div/>'),
-                            node.x, node.y, node.width, node.height);
+                            node.X, node.Y, node.Width, node.Height);
                     }, this);
                 });
             }
@@ -144,11 +165,13 @@
                 return false;
             }.bind(this);
 
-            $(".grid-stack").each(function (i) {
+            $(".grid-stack").each(function () {
                 this.grid = $(this).data('gridstack');
 
                 //loading and adding graphs
                 $(this).siblings('.buttons').children('.load-grid').on("click", function () {
+                    var ZoneId = $(this).parent().siblings('.grid-stack').attr('id');
+                    console.log(ZoneId.substring(ZoneId.indexOf('-')+1, ZoneId.length));
                     this.grid = $(this).parent().siblings('.grid-stack').data('gridstack');
                     loadGrid($(this).parent().siblings('.grid-stack'));
                 });
