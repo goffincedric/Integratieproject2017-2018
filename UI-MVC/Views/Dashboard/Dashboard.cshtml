@@ -45,7 +45,7 @@
                         <a class="btn btn-default save-grid" id="save-grid" href="#">Save Grid</a>
                         <a class="btn btn-default load-grid" id="load-grid" href="#">Load Grid</a>
                         <a class="btn btn-default clear-grid" id="clear-grid" href="#">Clear Grid</a>
-                        <a class="btn btn-default add-element" id="clear-grid" href="#">Add Element</a>
+                        <a class="btn btn-default add-element" id="add-element" href="#">Add Element</a>
                     </div>
                     <div class="grid-stack grid-stack-6" id="zone-@zone.ZoneId">
                     </div>
@@ -109,8 +109,30 @@
                     url: "https://localhost:44342/api/dashboard/getzoneelements/" + id
                 }).responseJSON;
 
+                console.log(ZoneData);
+
                 return ZoneData;
             };
+
+            addElement = function (grid) {
+                var ZoneId = grid.attr('id');
+                ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
+
+                console.log(ZoneId);
+
+                var Element = JSON.parse('{"Comparison" : "null", "X" : "0", "Y" : "0", "Width": "2", "Height": "2", "IsDraggble": "true"}');
+
+                console.log(Element);
+
+                $.ajax({
+                    async: false,
+                    type: 'POST',
+                    data: Element,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    url: "https://localhost:44342/api/dashboard/postelement/" + ZoneId
+                })
+            }
 
             //done
             clearGrid = function (grid) {
@@ -118,7 +140,9 @@
                 return false;
             }.bind(this);
 
+            //almost done
             loadGrid = function (grid) {
+                clearGrid(grid.data('gridstack'));
                 var ZoneId = grid.attr('id');
                 ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
                 var elements = findElements(ZoneId);
@@ -170,8 +194,6 @@
 
                 //loading and adding graphs
                 $(this).siblings('.buttons').children('.load-grid').on("click", function () {
-                    var ZoneId = $(this).parent().siblings('.grid-stack').attr('id');
-                    console.log(ZoneId.substring(ZoneId.indexOf('-')+1, ZoneId.length));
                     this.grid = $(this).parent().siblings('.grid-stack').data('gridstack');
                     loadGrid($(this).parent().siblings('.grid-stack'));
                 });
@@ -185,6 +207,10 @@
                 $(this).siblings('.buttons').children('.save-grid').on("click", function () {
                     this.grid = $(this).parent().siblings('.grid-stack').data('gridstack');
                     saveGrid1()
+                });
+
+                $(this).siblings('.buttons').children('.add-element').on("click", function () {
+                    addElement($(this).parent().siblings('.grid-stack'))
                 });
 
                 loadGrid($(this));
