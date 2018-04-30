@@ -24,7 +24,7 @@ namespace PB.DAL.EF
 
         public IntegratieDbContext(bool unitOfworkPresent = false) : base("IntegratieDB_EFCodeFirst")
         {
-            Database.SetInitializer(new IntegratieDbInitializer());
+            //Database.SetInitializer(new IntegratieDbInitializer()); // Verplaatst naar DbConfiguration
             delaySave = unitOfworkPresent;
         }
 

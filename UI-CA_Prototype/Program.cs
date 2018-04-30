@@ -288,6 +288,8 @@ namespace UI_CA_Prototype
                 };
             }
 
+            #region Items
+            #region Organisations
             List<Item> OrganisationsToAdd = new List<Item>()
             {
                 new Organisation()
@@ -404,15 +406,16 @@ namespace UI_CA_Prototype
                 }
             };
 
-            //Replace new organisations with existing alerts
+            //Replace new organisations with existing organisations
             ItemMgr.GetOrganisations().ToList().ForEach(o =>
             {
                 Organisation organisation = (Organisation)OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
                 if (organisation != null) OrganisationsToAdd.Remove(o);
             });
-
             if (OrganisationsToAdd.Count != 0) ItemMgr.AddItems(OrganisationsToAdd);
+            #endregion
 
+            #region Themes
             List<Item> ThemesToAdd = new List<Item>()
             {
             new Theme()
@@ -455,17 +458,18 @@ namespace UI_CA_Prototype
                    Name="Mobiliteit",
                    IconURL=@"~/Content/Images/Themes/mobiliteit.png"
                }
-              
+
             };
 
-            ItemMgr.GetThemes().ToList().ForEach(o =>
+            ItemMgr.GetThemes().ToList().ForEach(t =>
             {
-                Theme theme = (Theme)ThemesToAdd.FirstOrDefault(them => them.Equals(o));
-                if (theme != null) ThemesToAdd.Remove(o);
+                Theme theme = (Theme)ThemesToAdd.FirstOrDefault(them => them.Equals(t));
+                if (theme != null) ThemesToAdd.Remove(t);
             });
-
             if (ThemesToAdd.Count != 0) ItemMgr.AddItems(ThemesToAdd);
+            #endregion
 
+            #region Persons
             //Injects api seed data
             APICalls restClient = new APICalls()
             {
@@ -474,7 +478,7 @@ namespace UI_CA_Prototype
 
             //Individueel api aanspreken
             List<JClass> requestedRecords = new List<JClass>();
-            
+
             try
             {
                 requestedRecords.AddRange(restClient.RequestRecords(since: DateTime.Now.AddDays(-int.Parse(pbSubplatform.Settings.First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value))));
@@ -489,38 +493,8 @@ namespace UI_CA_Prototype
             //Convert JClass to Record and persist to database
             requestedRecords.ForEach(r => r.Subplatforms.Add(pbSubplatform));
             ItemMgr.JClassToRecord(requestedRecords);
-
-            // Api aanspreken via collectie
-            //List<APIQuery> apiQueries = new List<APIQuery>()
-            //{
-            //    new APIQuery("Annick De Ridder"),
-            //    new APIQuery("Caroline Bastiaens"),
-            //    new APIQuery("Jan Bertels"),
-            //    new APIQuery("Vera Celis"),
-            //    new APIQuery("Dirk De Kort"),
-            //    new APIQuery("Imade Annouri"),
-            //    new APIQuery("Caroline Gennez"),
-            //    new APIQuery("Kathleen Helsen"),
-            //    new APIQuery("Marc Hendrickx"),
-            //    new APIQuery("Jan Hofkens"),
-            //    new APIQuery("Yasmine Kherbache"),
-            //    new APIQuery("Kathleen Krekels"),
-            //    new APIQuery("Ingrid Pira")
-            //};
-            //itemMgr.JClassToRecord(restClient.RequestRecords(apiQueries));
-
-
-            //Old seed method, deprecated json structure
-            //itemMgr.Seed();
-            //accountMgr.Seed();
-            //accountMgr.SubscribeProfiles(itemMgr.GetItems());
-
-
-            //private static void newAccount()
-            //{
-            //  Profile profile = extensionMethods.CreateAccount();
-            //  accountMgr.AddProfile(profile.UserName, profile.Email);
-            //}
+            #endregion
+            #endregion
         }
     }
 }
