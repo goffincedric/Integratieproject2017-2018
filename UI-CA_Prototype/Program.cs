@@ -413,6 +413,58 @@ namespace UI_CA_Prototype
 
             if (OrganisationsToAdd.Count != 0) ItemMgr.AddItems(OrganisationsToAdd);
 
+            List<Item> ThemesToAdd = new List<Item>()
+            {
+            new Theme()
+                {
+                    Name = "Migratie",
+                    IconURL=@"~/Content/Images/Themes/migratie.png",
+                    IsTrending = false,
+                },
+             new Theme()
+                {
+                    Name = "Onderwijs",
+                    IconURL=@"~/Content/Images/Themes/onderwijs.png",
+                    Records = new List<Record>()
+                },
+              new Theme()
+                {
+                    Name = "Veiligheid",
+                    IconURL=@"~/Content/Images/Themes/veiligheid.png",
+                    Records = new List<Record>()
+                },
+               new Theme()
+                {
+                    Name = "Zorg",
+                    IconURL=@"~/Content/Images/Themes/zorg.png",
+                    Records = new List<Record>()
+                },
+               new Theme()
+                {
+                    Name = "Europa",
+                    IconURL=@"~/Content/Images/Themes/eu.png",
+                    Records = new List<Record>()
+                },
+               new Theme()
+                {
+                    Name = "Milieu",
+                    IconURL=@"~/Content/Images/Themes/eu.png"
+                },
+               new Theme()
+               {
+                   Name="Mobiliteit",
+                   IconURL=@"~/Content/Images/Themes/mobiliteit.png"
+               }
+              
+            };
+
+            ItemMgr.GetThemes().ToList().ForEach(o =>
+            {
+                Theme theme = (Theme)ThemesToAdd.FirstOrDefault(them => them.Equals(o));
+                if (theme != null) ThemesToAdd.Remove(o);
+            });
+
+            if (ThemesToAdd.Count != 0) ItemMgr.AddItems(ThemesToAdd);
 
             //Injects api seed data
             APICalls restClient = new APICalls()
