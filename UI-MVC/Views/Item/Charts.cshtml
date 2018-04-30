@@ -73,7 +73,8 @@
       async: false,
       type: 'GET',
       dataType: 'json',
-      url: "https://localhost:44342/api/item/getpersonstop/5"
+        url: "https://localhost:44342/api/item/getpersonstop/5",
+        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
     }).responseJSON
 
     var keys = [];
@@ -126,7 +127,8 @@
       async: false,
       type: 'GET',
       dataType: 'json',
-      url: "https://localhost:44342/api/item/GetPersonEvolution/" + id
+        url: "https://localhost:44342/api/item/GetPersonEvolution/" + id,
+        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
     }).responseJSON
 
     var keys = [];
