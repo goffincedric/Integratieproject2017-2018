@@ -6,10 +6,12 @@ using PB.BL.Domain.Items;
 using PB.BL.Domain.JSONConversion;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
+using PB.BL.Interfaces;
 using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 
 namespace UI_CA_Prototype
 {
@@ -19,9 +21,9 @@ namespace UI_CA_Prototype
         private static OptionSet CLIOptions;
 
         private static readonly UnitOfWorkManager Uow = new UnitOfWorkManager();
-        private static readonly AccountManager AccountMgr = new AccountManager(new IntegratieUserStore(Uow.UnitOfWork), Uow);
-        private static readonly ItemManager ItemMgr = new ItemManager(Uow);
-        private static readonly SubplatformManager SubplatformMgr = new SubplatformManager(Uow);
+        private static readonly IAccountManager AccountMgr = new AccountManager(new IntegratieUserStore(Uow.UnitOfWork), Uow);
+        private static readonly IItemManager ItemMgr = new ItemManager(Uow);
+        private static readonly ISubplatformManager SubplatformMgr = new SubplatformManager(Uow);
 
         private static readonly ExtensionMethods ExtensionMethods = new ExtensionMethods();
 
@@ -100,7 +102,7 @@ namespace UI_CA_Prototype
                         break;
                     case 5:
                         if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
-                        ItemMgr.RemoveSubscription(SelectedProfile, ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
+                        AccountMgr.RemoveSubscription(SelectedProfile, ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
                         break;
                     case 6:
                         Console.WriteLine("OUT OF ORDER");
@@ -164,8 +166,8 @@ namespace UI_CA_Prototype
                         }
                     }
                 },
-                {"g|generate-alerts", "Will generate alerts for all current profiles with subscriptions.", g => GenerateAlerts = (g != null) },
-                {"h|help", "Shows this message and exits", h =>
+                {"g|generate-alerts", "Will generate alerts for all current profiles with subscriptions and update item trending status.", g => GenerateAlerts = (g != null) },
+                {"h|help", "Shows this message and exits.", h =>
                     {
                         ShowHelp();
                         Environment.Exit(0);
@@ -230,13 +232,15 @@ namespace UI_CA_Prototype
                 Console.WriteLine(" ");
             }
 
-            //Generates alerts
+            //Generates alerts for all profiles & Updates trending status items
             if (GenerateAlerts)
             {
                 Console.WriteLine("=========================");
                 Console.WriteLine("==== Generate Alerts ====");
                 Console.WriteLine("=========================");
-                AccountMgr.GenerateAllAlerts();
+                List<Item> itemsToUpdate = new List<Item>();
+                AccountMgr.GenerateAllAlerts(ItemMgr.GetItems(), out itemsToUpdate);
+                ItemMgr.ChangeItems(itemsToUpdate);
                 Console.WriteLine(" ");
             }
 
@@ -470,8 +474,17 @@ namespace UI_CA_Prototype
 
             //Individueel api aanspreken
             List<JClass> requestedRecords = new List<JClass>();
-            requestedRecords.AddRange(restClient.RequestRecords(since: DateTime.Now.AddDays(-int.Parse(pbSubplatform.Settings.First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value))));
-            //requestedRecords.AddRange(restClient.RequestRecords("Annick De Ridder", new DateTime(2017, 1, 1)));
+            
+            try
+            {
+                requestedRecords.AddRange(restClient.RequestRecords(since: DateTime.Now.AddDays(-int.Parse(pbSubplatform.Settings.First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value))));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.GetType().Name + ": " + e.Message);
+                if (e.InnerException != null) Console.WriteLine("Inner Exception: " + e.InnerException);
+                return;
+            }
 
             //Convert JClass to Record and persist to database
             requestedRecords.ForEach(r => r.Subplatforms.Add(pbSubplatform));
