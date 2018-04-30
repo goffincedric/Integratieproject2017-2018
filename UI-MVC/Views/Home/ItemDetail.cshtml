@@ -166,19 +166,16 @@
 
 
 
-    function drawLineChart(id) {
-      
-      let headers = {
-        "x-api-key": "303d22a4-402b-4d3c-b279-9e81c0480711"
-      }
+  function drawLineChart(id) {
 
     var test = "";
-    test = $.ajax({
+      test = $.ajax({
       async: false,
       type: 'GET',
       dataType: 'json',
-      Headers: headers,
-      url: "https://localhost:44342/api/item/GetPersonTweet/" + id,
+          url: "https://localhost:44342/api/item/GetPersonTweet/" + id,
+          headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+
     }).responseJSON
 
     var keys = [];
@@ -232,16 +229,14 @@
 {
   <script>
   var itemid = @Html.Raw(Model.ItemId);
-    let headers = {
-      "x-api-key": "303d22a4-402b-4d3c-b279-9e81c0480711"
-    }
+
   var tmp = "";
     tmp = $.ajax({
       async:false,
       type: 'GET',
       dataType: 'json',
-      Headers: headers,
-      url: "https://localhost:44342/api/item/getrecordsfromperson/" + itemid
+        url: "https://localhost:44342/api/item/getrecordsfromperson/" + itemid,
+        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
   }).responseJSON;
 
   var options = {

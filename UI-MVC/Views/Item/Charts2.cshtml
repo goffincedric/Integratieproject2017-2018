@@ -36,7 +36,8 @@
     type: 'GET',
     Headers: headers,
     dataType: 'json',
-    url: "https://localhost:44342/api/item/getpersonstop/" + 10
+      url: "https://localhost:44342/api/item/getpersonstop/" + 10,
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
   }).responseJSON
 
   var keys = [];
