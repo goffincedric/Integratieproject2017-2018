@@ -86,23 +86,5 @@ namespace UI_MVC.Controllers.API.Resource.Constants {
                 return ResourceManager.GetString("JSON_CONTENT_TYPE", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DenAfwas.
-        /// </summary>
-        public static string PASSWORD_VALUE {
-            get {
-                return ResourceManager.GetString("PASSWORD_VALUE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to AuthApiUser.
-        /// </summary>
-        public static string USERNAME_VALUE {
-            get {
-                return ResourceManager.GetString("USERNAME_VALUE", resourceCulture);
-            }
-        }
     }
 }
