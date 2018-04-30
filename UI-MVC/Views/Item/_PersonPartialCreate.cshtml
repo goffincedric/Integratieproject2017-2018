@@ -18,7 +18,7 @@
     <div class="form-group">
       @Html.LabelFor(model => model.Organisation, htmlAttributes: new { @class = "control-label col-md-2" })
       <div class="col-md-10">
-        @Html.EnumDropDownListFor(model => model.Organisation)
+        @Html.DropDownList("FromJson", new SelectList(Enumerable.Empty<SelectList>()));
         @Html.ValidationMessageFor(model => model.Organisation, "", new { @class = "text-danger" })
       </div>
     </div>
@@ -67,6 +67,26 @@
   </div>
 </div>
 <script>
+  var tmp = "";
+  let headers = {
+    "x-api-key": "303d22a4-402b-4d3c-b279-9e81c0480711"
+  }
+  $.ajax({
+    async: false,
+    type: 'GET',
+    dataType: 'json',
+    Headers: headers,
+    url: "https://localhost:44342/api/item/GetOrganisation",
+    succes: function (result) {
+      $(result).each(function () {
+        $("FromJson").append($("<option></option>").val(this.ID).html(this.Name));
+
+      });
+    },
+    error: function (data) { }
+  });
+
+
   //$('#table1').DataTable().ajax.reload();
   $(document).ready(function () {
     $("#IsHot").change(function () {
