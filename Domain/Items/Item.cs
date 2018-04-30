@@ -22,7 +22,7 @@ namespace PB.BL.Domain.Items
         [Required]
         public string Name { get; set; }
         [DataMember]
-        public bool IsHot { get; set; }
+        public bool IsTrending { get; set; }
         [DataMember]
         public string IconURL { get; set; }
 

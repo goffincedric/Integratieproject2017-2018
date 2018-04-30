@@ -19,6 +19,7 @@ namespace PB.BL.Interfaces
         Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, string iconUrl = null);
         Theme AddTheme(string themeName, string description);
         void ChangeItem(Item item);
+        void ChangeItems(List<Item> items);
         void RemoveItem(int itemId);
 
 

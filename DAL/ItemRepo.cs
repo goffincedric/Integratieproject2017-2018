@@ -141,6 +141,15 @@ namespace PB.DAL
             ctx.SaveChanges();
         }
 
+        public void UpdateItems(List<Item> items)
+        {
+            items.ForEach(item =>
+            {
+                ctx.Items.Attach(item);
+            });
+            ctx.SaveChanges();
+        }
+
         public Keyword CreateKeyword(Keyword keyword)
         {
             return ctx.Keywords.Add(keyword);

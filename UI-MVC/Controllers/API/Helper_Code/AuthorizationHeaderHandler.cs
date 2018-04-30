@@ -62,7 +62,7 @@ namespace UI_MVC.Controllers.API.Helper_Code.Common
             string password = null;
             HttpResponseMessage responseMessage;
             // Verification
-            if (request.Headers.TryGetValues(ApiInfo.API_KEY_HEADER, out apiKeyHeaderValues) && !string.IsNullOrEmpty(authorization.Parameter))
+            if (request.Headers.TryGetValues(ApiInfo.API_KEY_HEADER, out apiKeyHeaderValues) && !string.IsNullOrEmpty(authorization?.Parameter))
             {
                 var apiKeyHeaderValue = apiKeyHeaderValues.First();
                 // Get the auth token   
