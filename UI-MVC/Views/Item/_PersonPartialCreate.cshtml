@@ -15,6 +15,13 @@
         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
       </div>
     </div>
+    <div class="form-group">
+      @Html.LabelFor(model => model.Organisation, htmlAttributes: new { @class = "control-label col-md-2" })
+      <div class="col-md-10">
+        @Html.EnumDropDownListFor(model => model.Organisation)
+        @Html.ValidationMessageFor(model => model.Organisation, "", new { @class = "text-danger" })
+      </div>
+    </div>
     @using (Html.BeginForm(new { htmlAttributes = new { @id = "formCheck" } }))
   {
     <div class="form-group">
@@ -29,7 +36,7 @@
         @*</div>*@
       </div>
     </div>
-
+    
 }
 
     <div class="form-group">
@@ -60,7 +67,7 @@
   </div>
 </div>
 <script>
-
+  //$('#table1').DataTable().ajax.reload();
   $(document).ready(function () {
     $("#IsHot").change(function () {
       if ($("#IsHot").is(":checked")) {

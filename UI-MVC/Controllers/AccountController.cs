@@ -264,6 +264,7 @@ namespace UI_MVC.Controllers
             }
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
+            
             if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
             {
                 return RedirectToAction("Account", "Account");
