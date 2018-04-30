@@ -18,7 +18,9 @@
     <div class="form-group">
       @Html.LabelFor(model => model.Organisation, htmlAttributes: new { @class = "control-label col-md-2" })
       <div class="col-md-10">
+
         @Html.DropDownList("FromJson", new SelectList(Enumerable.Empty<SelectList>()));
+
         @Html.ValidationMessageFor(model => model.Organisation, "", new { @class = "text-danger" })
       </div>
     </div>
