@@ -419,7 +419,7 @@ namespace UI_CA_Prototype
                 {
                     Name = "Migratie",
                     IconURL=@"~/Content/Images/Themes/migratie.png",
-                    IsHot = false,
+                    IsTrending = false,
                 },
              new Theme()
                 {
