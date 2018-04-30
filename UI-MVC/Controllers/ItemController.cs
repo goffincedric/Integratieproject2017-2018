@@ -123,7 +123,7 @@ namespace UI_MVC.Controllers
 
             if (ModelState.IsValid)
             {
-                itemMgr.AddTheme(theme.Name, theme.Description);
+                itemMgr.AddTheme(theme.Name, theme.Description, theme.IconURL, theme.IsTrending);
                 return RedirectToAction("AdminCrud");
             }
             else

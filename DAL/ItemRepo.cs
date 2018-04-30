@@ -49,6 +49,20 @@ namespace PB.DAL
             return person;
         }
 
+        public Organisation CreateOrganisation(Organisation organisation)
+        {
+            organisation = ctx.Organisations.Add(organisation);
+            ctx.SaveChanges();
+            return organisation;
+        }
+
+        public Theme CreateTheme(Theme theme)
+        {
+            theme = ctx.Themes.Add(theme);
+            ctx.SaveChanges();
+            return theme;
+        }
+
         public Person ReadPerson(int itemId)
         {
             return ctx.Persons
@@ -73,6 +87,19 @@ namespace PB.DAL
                 .AsEnumerable();
         }
 
+        public Organisation ReadOrganisation(int itemId)
+        {
+            return ctx.Organisations
+                .Include(o => o.Records)
+                .Include(o => o.SubPlatforms)
+                .Include(o => o.People)
+                .Include(o => o.Keywords)
+                .Include(o => o.SubscribedProfiles)
+                .Include(o => o.Comparisons)
+                .Include(o => o.Alerts)
+                .FirstOrDefault(o => o.ItemId == itemId);
+        }
+
         public IEnumerable<Organisation> ReadOrganisations()
         {
             return ctx.Organisations
@@ -84,6 +111,18 @@ namespace PB.DAL
                 .Include(o => o.Comparisons)
                 .Include(o => o.Alerts)
                 .AsEnumerable();
+        }
+
+        public Theme ReadTheme(int itemId)
+        {
+            return ctx.Themes
+                .Include(t => t.Records)
+                .Include(t => t.SubPlatforms)
+                .Include(t => t.Keywords)
+                .Include(t => t.SubscribedProfiles)
+                .Include(t => t.Comparisons)
+                .Include(t => t.Alerts)
+                .FirstOrDefault(t => t.ItemId == itemId);
         }
 
         public IEnumerable<Theme> ReadThemes()

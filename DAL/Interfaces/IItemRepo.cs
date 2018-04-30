@@ -15,12 +15,17 @@ namespace PB.DAL
         void DeleteItem(int itemId);
 
 
+        Person ReadPerson(int itemId);
         IEnumerable<Person> ReadPersons();
         Person CreatePerson(Person person);
-        Person ReadPerson(int itemId);
 
+        Organisation ReadOrganisation(int itemId);
         IEnumerable<Organisation> ReadOrganisations();
+        Organisation CreateOrganisation(Organisation organisation);
+
+        Theme ReadTheme(int itemId);
         IEnumerable<Theme> ReadThemes();
+        Theme CreateTheme(Theme theme);
 
         Keyword CreateKeyword(Keyword keyword);
         IEnumerable<Keyword> ReadKeywords();
