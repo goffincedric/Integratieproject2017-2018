@@ -18,14 +18,14 @@
     @using (Html.BeginForm(new { htmlAttributes = new { @id = "formCheck" } }))
   {
     <div class="form-group">
-      @Html.LabelFor(model => model.IsHot, htmlAttributes: new { @class = "control-label col-md-2" })
+      @Html.LabelFor(model => model.IsTrending, htmlAttributes: new { @class = "control-label col-md-2" })
       <div class="col-md-10">
         @*<div class="checkbox">*@
         <label class="switch">
-          @Html.CheckBoxFor(model => model.IsHot, new { @class = "form-control" })
+          @Html.CheckBoxFor(model => model.IsTrending, new { @class = "form-control" })
           <div class="slider round"></div>
         </label>
-        @Html.ValidationMessageFor(model => model.IsHot, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.IsTrending, "", new { @class = "text-danger" })
         @*</div>*@
       </div>
     </div>
