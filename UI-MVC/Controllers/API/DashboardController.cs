@@ -82,15 +82,36 @@ namespace UI_MVC.Controllers.API
             return Ok(zone.Elements);
         }
 
-        // PUT: api/dashboard/putelement/{zoneId}
+        // PUT: api/dashboard/putelement/{elementId}
         [HttpPut]
         public IHttpActionResult PutElement(int id, [FromBody]Element element)
         {
             if (!ModelState.IsValid) return BadRequest();
             if (element.ElementId != id) return BadRequest();
-            Element oldElement = DashboardMgr.GetElement(id);
-            if (oldElement == null) return NotFound();
-            DashboardMgr.ChangeElement(element);
+            Element newElement = DashboardMgr.GetElement(id);
+            if (newElement == null) return NotFound();
+            element.Comparison = newElement.Comparison;
+            Zone newZone = DashboardMgr.GetZone(element.ZoneId);
+            if (newZone == null) return NotFound();
+
+            //int index = newZone.Elements.FindIndex(e => e.ElementId == id);
+
+            //newZone.Elements[index].X = element.X;
+            //newZone.Elements[index].Y = element.Y;
+            //newZone.Elements[index].Width = element.Width;
+            //newZone.Elements[index].Height = element.Height;
+
+            if (!(newElement.Height == element.Height && newElement.Width == element.Width && newElement.X == element.X && newElement.Y == element.Y && newElement.ZoneId == element.ZoneId))
+            {
+                newElement.Height = element.Height;
+                newElement.Width = element.Width;
+                newElement.X = element.X;
+                newElement.Y = element.Y;
+                newElement.ZoneId = element.ZoneId;
+                newElement.Zone = newZone;
+
+                DashboardMgr.ChangeElement(newElement);
+            }
             return StatusCode(HttpStatusCode.NoContent);
         }
 

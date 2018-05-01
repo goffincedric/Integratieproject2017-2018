@@ -128,7 +128,8 @@ namespace PB.DAL
 
         public void UpdateElement(Element element)
         {
-            ctx.Elements.Attach(element);
+            element = ctx.Elements.Attach(element);
+
             ctx.Entry(element).State = EntityState.Modified;
             ctx.SaveChanges();
         }

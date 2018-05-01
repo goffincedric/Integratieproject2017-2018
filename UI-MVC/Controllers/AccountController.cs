@@ -542,7 +542,7 @@ namespace UI_MVC.Controllers
                                         Y = 3,
                                         Width = 5,
                                         Height = 5,
-                                        Comparison = new Comparison()
+                                        Comparison = null
                                     },
                                     new Element()
                                     {
@@ -550,7 +550,7 @@ namespace UI_MVC.Controllers
                                         Y = 0,
                                         Width = 2,
                                         Height = 3,
-                                        Comparison = new Comparison()
+                                        Comparison = null
                                     }
                                 }
                             }

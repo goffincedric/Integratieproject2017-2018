@@ -42,7 +42,6 @@
                 <h4 class="bb-2">@zone.Title<span class="arrow-dashboard"><i class="ti-angle-up"></i></span></h4>
                 <div class="dashboard">
                     <div style="margin-bottom:5px" class="buttons">
-                        <a class="btn btn-default save-grid" id="save-grid" href="#">Save Grid</a>
                         <a class="btn btn-default load-grid" id="load-grid" href="#">Load Grid</a>
                         <a class="btn btn-default clear-grid" id="clear-grid" href="#">Clear Grid</a>
                         <a class="btn btn-default add-element" id="add-element" href="#">Add Element</a>
@@ -79,7 +78,8 @@
     $(function () {
         var options = {
             width: 12,
-            float: false,
+            animate: true,
+            float: true,
             removable: '.trash',
             removeTimeout: 100,
             acceptWidgets: '.grid-stack-item'
@@ -87,13 +87,6 @@
         $('.grid-stack').gridstack(options);
 
         new function () {
-
-            var items1 = [{ "x": 0, "y": 3, "width": 5, "height": 5 }, { "x": 0, "y": 0, "width": 2, "height": 3 }];
-            var items2 = [{ "x": 0, "y": 0, "width": 5, "height": 5 }, { "x": 0, "y": 1, "width": 5, "height": 5 }];
-
-            this.grid1 = $('#grid1').data('gridstack');
-            this.grid2 = $('#grid2').data('gridstack');
-
             findElements = function (id) {
                 var ZoneData = $.ajax({
                     async: false,
@@ -111,7 +104,7 @@
                 var ZoneId = grid.attr('id');
                 ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
 
-                var Element = JSON.parse('{"Comparison" : "null", "X" : "0", "Y" : "0", "Width": "2", "Height": "2", "IsDraggable": "true", "ZoneId": "' + ZoneId + '"}');
+                var Element = JSON.parse('{"X" : "0", "Y" : "0", "Width": "2", "Height": "2", "IsDraggable": "true", "ZoneId": "' + ZoneId + '"}');
 
                 $.ajax({
                     async: false,
@@ -123,6 +116,29 @@
                 })
 
                 loadGrid(grid);
+            }
+
+            changeElements = function (elements, grid) {
+                var ZoneId = grid.attr('id');
+                ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
+
+                for (var e in elements) {
+                    var element = elements[e];
+
+                    var ElementId = element.el.children('div').attr('id');
+                    ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
+
+                    var Element = JSON.parse('{"ElementId":"' + ElementId +'", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove +'", "ZoneId": "' + ZoneId + '"}');
+
+                    $.ajax({
+                        async: false,
+                        type: 'PUT',
+                        data: Element,
+                        dataType: 'json',
+                        headers: Headers,
+                        url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
+                    })
+                }
             }
 
             //done
@@ -139,49 +155,20 @@
                 var elements = findElements(ZoneId);
 
                 grid.each(function () {
-
                     var grid = $(this).data('gridstack');
 
                     //this for now(change later), Gets correct data from database
                     _.each(elements, function (node) {
-                        grid.addWidget($('<div><div class="grid-stack-item-content bgc-white bd"/><div/>'),
+                        grid.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + node.ElementId + '"/><div/>'),
                             node.X, node.Y, node.Width, node.Height);
                     }, this);
                 });
             }
 
-            this.saveGrid1 = function () {
-                this.items1 = _.map($('#grid1 > .grid-stack-item:visible'), function (el) {
-                    el = $(el);
-                    var node = el.data('_gridstack_node');
-                    return {
-                        x: node.x,
-                        y: node.y,
-                        width: node.width,
-                        height: node.height
-                    };
-                }, this);
-                $('#saved-data-1').val(JSON.stringify(this.items1, null, '    '));
-                return false;
-            }.bind(this);
-
-            this.saveGrid2 = function () {
-                this.items2 = _.map($('#grid2 > .grid-stack-item:visible'), function (el) {
-                    el = $(el);
-                    var node = el.data('_gridstack_node');
-                    return {
-                        x: node.x,
-                        y: node.y,
-                        width: node.width,
-                        height: node.height
-                    };
-                }, this);
-                $('#saved-data-2').val(JSON.stringify(this.items2, null, '    '));
-                return false;
-            }.bind(this);
-
             $(".grid-stack").each(function () {
                 this.grid = $(this).data('gridstack');
+
+                loadGrid($(this));
 
                 //loading and adding graphs
                 $(this).siblings('.buttons').children('.load-grid').on("click", function () {
@@ -195,27 +182,15 @@
                     clearGrid(this.grid);
                 });
 
-                $(this).siblings('.buttons').children('.save-grid').on("click", function () {
-                    this.grid = $(this).parent().siblings('.grid-stack').data('gridstack');
-                    saveGrid1()
-                });
-
                 //working
                 $(this).siblings('.buttons').children('.add-element').on("click", function () {
                     addElement($(this).parent().siblings('.grid-stack'))
                 });
 
-                loadGrid($(this));
-
-                $(this).children().each(function () {
-                    $(this).on("change", function (e, items) {
-                        console.log("test");
-                    })
+                $(this).on('change', function (e, items) {
+                    changeElements(items, $(this));
                 });
             });
-
-            $('#save-grid').click(this.saveGrid1);
-            $('#save-grid2').click(this.saveGrid2);
         };
     });
 </script>

@@ -161,7 +161,7 @@ namespace PB.DAL.EF
 
             modelBuilder.Entity<Comparison>()
                 .HasMany(c => c.Elements)
-                .WithRequired(e => e.Comparison)
+                .WithOptional(e => e.Comparison)
                 .WillCascadeOnDelete(true);        // FOREIGN KEY?
 
             //identity tables
