@@ -29,18 +29,17 @@ namespace UI_MVC.Controllers
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private AccountManager _accountMgr;
         private IntegratieSignInManager _signInManager;
-        private ISubplatformManager SubplatformMgr;
+        private SubplatformManager _subplatformMgr;
 
         public AccountController()
         {
-            SubplatformMgr = new SubplatformManager(uow);
+
         }
 
-        public AccountController(AccountManager userManager, IntegratieSignInManager signInManager, SubplatformManager subplatformManager)
+        public AccountController(AccountManager userManager, IntegratieSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
-            SubplatformMgr = new SubplatformManager(uow);
         }
 
         public IntegratieSignInManager SignInManager
@@ -64,6 +63,18 @@ namespace UI_MVC.Controllers
             private set
             {
                 _accountMgr = value;
+            }
+        }
+
+        public SubplatformManager SubplatformMgr
+        {
+            get
+            {
+                return _subplatformMgr ?? new SubplatformManager(HttpContext.GetOwinContext().Get<IntegratieDbContext>()); ;
+            }
+            private set
+            {
+                _subplatformMgr = value;
             }
         }
 
@@ -118,45 +129,24 @@ namespace UI_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                /* START PSEUDO SEED */
-                // TODO: SubplatformId/SubplatformNaam/SubplatformAfkorting meegeven in RegisterViewModel, 
-                //       gebruiken om juiste subplatform op te halen!!
-                Subplatform pbSubplatform = SubplatformMgr.GetSubplatforms().FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
-                if (pbSubplatform == null)
-                {
-                    pbSubplatform = new Subplatform()
-                    {
-                        Name = "Politieke Barometer",
-                        URL = "DUMMYURL",
-                        DateOnline = DateTime.Now,
-                        Settings = new List<SubplatformSetting>()
-                    {
-                        new SubplatformSetting()
-                        {
-                            SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
-                            Value = "31"
-                        }
-                    },
-                        Admins = new List<Profile>(),
-                        Items = new List<Item>(),
-                        Pages = new List<Page>(),
-                        Dashboards = new List<Dashboard>()
-                    };
-                }
-                /* END PSEUDO SEED */
-
-
-                var user = new Profile
-                {
-                    UserName = model.Username,
-                    Email = model.Email
-                };
+                var user = new Profile { UserName = model.Username, Email = model.Email, };
                 user.UserData = new UserData() { Profile = user };
+                user.Settings = new List<UserSetting>
+                {
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName = Setting.Account.THEME,
+                        Value = "light"
+                    }
+                };
                 user.Dashboards = new List<Dashboard> {
                     new Dashboard()
                     {
                         Profile = user,
                         DashboardType = UserType.USER,
+                        Subplatform = SubplatformMgr.GetSubplatform(subplatform),
                         Zones = new List<Zone>
                         {
                             new Zone()
@@ -205,19 +195,7 @@ namespace UI_MVC.Controllers
                                     }
                                 }
                             }
-                        },
-                        Subplatform = pbSubplatform
-                    }
-                };
-                pbSubplatform.Dashboards.Add(user.Dashboards[0]); // [0] ZAL ENKEL WERKEN INDIEN DE GEBRUIKEN EEN DASHBOARD TOEGEWEZEN KRIJGT
-                user.Settings = new List<UserSetting>
-                {
-                    new UserSetting()
-                    {
-                        Profile = user,
-                        IsEnabled = true,
-                        SettingName = Setting.Account.THEME,
-                        Value = "light"
+                        }
                     }
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
