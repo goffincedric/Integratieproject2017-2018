@@ -74,7 +74,6 @@ namespace UI_MVC.Controllers
         public ActionResult Index2()
         {
             return RedirectToAction("Index", "Home", new { subplatform = "politieke-barometer" });
-            return Redirect("~/politieke-barometer/");
         }
 
         [Route("")]
@@ -121,10 +120,9 @@ namespace UI_MVC.Controllers
             Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
             IEnumerable<Item> items = itemMgr.GetItems().Where(i => i.SubPlatforms.Contains(sp));
             return PartialView(items);
-
         }
 
-        public ActionResult AdminCrud()
+        public ActionResult PlatformSettings()
         {
             ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
             ViewBag.TotalPersons = itemMgr.GetPersonsCount().ToString();

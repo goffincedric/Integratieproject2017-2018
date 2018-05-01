@@ -89,7 +89,7 @@ namespace UI_MVC.Controllers
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    return View("Index");
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -327,10 +327,11 @@ namespace UI_MVC.Controllers
         #endregion
 
 
-        public PartialViewResult _UserPartialTable()
+
+        public ViewResult UserBeheer()
         {
             IEnumerable<Profile> profiles = UserManager.GetProfiles();
-            return PartialView(profiles);
+            return View(profiles);
         }
 
         #region ExternalLogin
@@ -359,7 +360,7 @@ namespace UI_MVC.Controllers
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    return View("Index");
                 case SignInStatus.Failure:
                 default:
                     // If the user does not have an account, then prompt the user to create an account

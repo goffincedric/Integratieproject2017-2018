@@ -1,43 +1,15 @@
 ﻿
-@{
-  ViewBag.Title = "charts";
-  Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<style>
-  #myChart {
-    height: 100%;
-    width: 100%;
-    min-height: 500px;
-  }
-
-  .zc-ref {
-    display: none;
-  }
-</style>
-<main class="main-content bgc-grey-100">
-  <div id="mainContent">
-    <div id="myChart"></div>
-  </div>
-</main>
-
-<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-<script>
-  zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
-  ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];</script>
-
-
-<script>
-  let headers = {
-    "x-api-key": "303d22a4-402b-4d3c-b279-9e81c0480711"
+ let headers = {
+      "x-api-key": "303d22a4-402b-4d3c-b279-9e81c0480711"
   }
   var tmp = "";
   tmp = $.ajax({
-    async: false,
+      async: false,
     type: 'GET',
     Headers: headers,
     dataType: 'json',
       url: "https://localhost:44342/api/item/getpersonstop/" + 10,
-      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+      headers: {'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
   }).responseJSON
 
   var keys = [];
@@ -59,15 +31,15 @@
 
   }
 
- 
+
   var myConfig = {
-    "graphset": [
+      "graphset": [
       {
-        "type": "wordcloud",
+      "type": "wordcloud",
         "options": {
-          "style": {
-            "tooltip": {
-              visible: true,
+      "style": {
+      "tooltip": {
+      visible: true,
               text: '%text: %hits'
             }
           },
@@ -80,11 +52,11 @@
   };
 
   zingchart.render({
-    id: 'myChart',
+      id: 'myChart',
     data: myConfig,
     height: '100%',
-    width: '100%'
+    width: '100%',
+   
   });
 
 
-</script>

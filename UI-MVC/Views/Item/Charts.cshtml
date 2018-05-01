@@ -68,6 +68,7 @@
   });
 
   function drawBarChart() {
+   
     var tmp = "";
     tmp = $.ajax({
       async: false,
@@ -75,6 +76,7 @@
       dataType: 'json',
         url: "https://localhost:44342/api/item/getpersonstop/5",
         headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+
     }).responseJSON
 
     var keys = [];
@@ -121,7 +123,9 @@
 
 
   function drawLineChart(id) {
-
+    let headers = {
+      "x-api-key": "303d22a4-402b-4d3c-b279-9e81c0480711"
+    }
     var tmp = "";
     tmp = $.ajax({
       async: false,
