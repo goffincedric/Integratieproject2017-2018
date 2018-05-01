@@ -2116,6 +2116,13 @@ h3 {
     margin-bottom: auto;
 }
 
+.add-element {
+    object-fit: contain;
+    height: 80px;
+    width: auto;
+    cursor:pointer;
+}
+
 @media screen and (max-width: 1439px) and (min-width: 992px) {
     .sidebar {
         width: 70px;
