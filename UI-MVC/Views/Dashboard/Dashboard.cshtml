@@ -75,6 +75,8 @@
     }).responseJSON;
 
     $(function () {
+        var addingElement = false;
+
         $('.grid-stack').gridstack({
             resizable: {
                 handles: 'se, sw'
@@ -106,6 +108,7 @@
 
             //done
             addElement = function (grid) {
+                addingElement = true;
                 var ZoneId = grid.attr('id');
                 ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
 
@@ -115,28 +118,21 @@
 
                 var Element = JSON.parse('{"X" : "'+X+'", "Y" : "'+Y+'", "Width": "3", "Height": "3", "IsDraggable": "true", "ZoneId": "' + ZoneId + '"}');
 
-                $.ajax({
+                var ElementId = $.ajax({
                     async: false,
                     type: 'POST',
                     data: Element,
                     dataType: 'json',
                     headers: Headers,
                     url: "https://localhost:44342/api/dashboard/postelement/" + ZoneId
-                })
+                }).responseJSON.ElementId
 
-                //$.ajax({
-                //    async: false,
-                //    type: 'PUT',
-                //    data: Element,
-                //    dataType: 'json',
-                //    headers: Headers,
-                //    url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
-                //})
-
-                loadGrid(grid);
+                newElement.children('#Element-x').attr('id', 'Element-' + ElementId);
+                addingElement = false;
             }
 
             changeElements = function (elements, grid) {
+                if (!addingElement) {
                 var ZoneId = grid.attr('id');
                 ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
 
@@ -152,15 +148,15 @@
 
                     var Element = JSON.parse('{"ElementId":"' + ElementId +'", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove +'", "ZoneId": "' + ZoneId + '"}');
 
-                    //$.ajax({
-                    //    async: false,
-                    //    type: 'PUT',
-                    //    data: Element,
-                    //    dataType: 'json',
-                    //    headers: Headers,
-                    //    url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
-                    //    })
-
+                    $.ajax({
+                        async: false,
+                        type: 'PUT',
+                        data: Element,
+                        dataType: 'json',
+                        headers: Headers,
+                        url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
+                        })
+                    }
                     }
                 }
             }
