@@ -38,11 +38,7 @@ namespace UI_MVC.Controllers.API.Helper_Code.Common
             HttpResponseMessage responseMessage;
 
             // Verification
-<<<<<<< HEAD
-            if (request.Headers.TryGetValues(ApiInfo.API_KEY_HEADER, out apiKeyHeaderValues) && !string.IsNullOrEmpty(authorization?.Parameter))
-=======
             if (request.Headers.TryGetValues(ApiInfo.API_KEY_HEADER, out IEnumerable<string> apiKeyHeaderValues))
->>>>>>> master
             {
                 // Get the API key
                 var apiKeyHeaderValue = apiKeyHeaderValues.First();

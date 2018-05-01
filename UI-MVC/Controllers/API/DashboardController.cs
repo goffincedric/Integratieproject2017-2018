@@ -100,12 +100,14 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult PostElement(int id, [FromBody]Element element)
         {
             if (element == null) return BadRequest();
-            if (!ModelState.IsValid) return BadRequest(ModelState);
             if (DashboardMgr.GetElement(element.ElementId) != null) return Conflict();
-
             Zone zone = DashboardMgr.GetZone(id);
             if (zone == null) return NotFound();
+            element.Zone = zone;
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
             element = DashboardMgr.AddElement(zone, element.Comparison, element.X, element.Y, element.Width, element.Height, element.IsDraggable);
+            zone.Elements.Add(element);
 
             return Ok(element); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte element
         }

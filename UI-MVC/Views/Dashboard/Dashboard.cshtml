@@ -63,8 +63,7 @@
 <script src="~/Scripts/grid2/gridstack.jQueryUI.js"></script>
 
 <script type="text/javascript">
-    var Username = '@User.Identity.Name';
-    let Headers = { "x-api-key": "303d22a4-402b-4d3c-b279-9e81c0480711", "Authorization": "Basic " + btoa(Username + ":Disney2017") };
+    let Headers = { "x-api-key": "303d22a4-402b-4d3c-b279-9e81c0480711"};
 
     //api call working
     var DashData = "";
@@ -113,7 +112,7 @@
 
                 console.log(ZoneId);
 
-                var Element = JSON.parse('{"Comparison" : "null", "X" : "0", "Y" : "0", "Width": "2", "Height": "2", "IsDraggble": "true"}');
+                var Element = JSON.parse('{"Comparison" : "null", "X" : "0", "Y" : "0", "Width": "2", "Height": "2", "IsDraggable": "true", "ZoneId": "' + ZoneId + '"}');
 
                 $.ajax({
                     async: false,
@@ -123,6 +122,8 @@
                     headers: Headers,
                     url: "https://localhost:44342/api/dashboard/postelement/" + ZoneId
                 })
+
+                loadGrid(grid);
             }
 
             //done
