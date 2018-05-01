@@ -5,12 +5,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PB.BL.Domain.Platform
 {
     [Table("tblSubPlatformSetting")]
-  public class SubplatformSetting
-  {
-    [Key]
-    public Setting.Platform SettingName { get; set; }
-    public bool IsEnabled { get; set; }
-    public string Value { get; set; }
+    public class SubplatformSetting
+    {
+        [Key, Column(Order = 0)]
+        public Setting.Platform SettingName { get; set; }
+        [Key, Column(Order = 1)]
+        public int SubplatformId { get; set; }
 
-  }
+        public bool IsEnabled { get; set; }
+        public string Value { get; set; }
+        public Subplatform Subplatform { get; set; }
+
+    }
 }

@@ -33,6 +33,7 @@ namespace PB.BL
 
         }
 
+        #region Init
         public void InitNonExistingRepo(bool createWithUnitOfWork = false)
         {
             if (RecordRepo == null || ItemRepo == null)
@@ -56,6 +57,7 @@ namespace PB.BL
                 }
             }
         }
+        #endregion
 
         #region Items
         public IEnumerable<Item> AddItems(List<Item> items)
@@ -68,7 +70,13 @@ namespace PB.BL
             return items;
         }
 
-        public Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, string iconUrl = null)
+        private Item AddItem(Item item)
+        {
+            InitNonExistingRepo();
+            return ItemRepo.CreateItem(item);
+        }
+
+        public Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, string iconUrl = null, bool isTrending = false)
         {
             InitNonExistingRepo();
 
@@ -78,19 +86,23 @@ namespace PB.BL
                 FullName = fullname,
                 SocialMediaLink = socialMediaLink,
                 IconURL = iconUrl,
+                IsTrending = isTrending,
+                Alerts = new List<Alert>(),
+                Comparisons = new List<Comparison>(),
+                SubscribedProfiles = new List<Profile>(),
                 Keywords = new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>(),
                 Records = new List<Record>(),
                 People = new List<Person>()
             };
 
-            organisation = (Organisation)AddItem(organisation);
+            organisation = ItemRepo.CreateOrganisation(organisation);
             UowManager.Save();
 
             return organisation;
         }
 
-        public Person AddPerson(string name, string socialMediaLink, string iconUrl, Organisation organisation = null, Function function = null)
+        public Person AddPerson(string name, string socialMediaLink, string iconUrl, Organisation organisation = null, Function function = null, bool isTrending = false)
         {
             InitNonExistingRepo();
             Person person = new Person()
@@ -98,38 +110,42 @@ namespace PB.BL
                 Name = name,
                 SocialMediaLink = socialMediaLink,
                 IconURL = iconUrl,
+                IsTrending = isTrending,
+                TrendingScore = 0,
                 Function = function,
+                Comparisons = new List<Comparison>(),
+                SubscribedProfiles = new List<Profile>(),
+                Alerts = new List<Alert>(),
                 Keywords = new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>(),
                 Records = new List<Record>(),
                 Organisation = organisation
             };
-            person = (Person)AddItem(person);
+            person = ItemRepo.CreatePerson(person);
             UowManager.Save();
             return person;
         }
 
-        public Theme AddTheme(string name, string description)
+        public Theme AddTheme(string name, string description, string iconUrl, bool isTrending = false)
         {
             InitNonExistingRepo();
             Theme theme = new Theme()
             {
                 Name = name,
                 Description = description,
+                IconURL = iconUrl,
+                IsTrending = isTrending,
+                Alerts = new List<Alert>(),
+                Comparisons = new List<Comparison>(),
+                SubscribedProfiles = new List<Profile>(),
                 Keywords = new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>(),
                 Records = new List<Record>()
             };
 
-            theme = (Theme)AddItem(theme);
+            theme = ItemRepo.CreateTheme(theme);
             UowManager.Save();
             return theme;
-        }
-
-        private Item AddItem(Item item)
-        {
-            InitNonExistingRepo();
-            return ItemRepo.CreateItem(item);
         }
 
         public void ChangeItem(Item item)
@@ -170,34 +186,37 @@ namespace PB.BL
             return ItemRepo.ReadOrganisations();
         }
 
+        public Organisation GetOrganisation(int itemId)
+        {
+            InitNonExistingRepo();
+            Organisation item = ItemRepo.ReadOrganisation(itemId);
+            return item;
+        }
+
+        public IEnumerable<Person> GetPersons()
+        {
+            InitNonExistingRepo();
+            return ItemRepo.ReadPersons();
+        }
+
+        public Person GetPerson(int itemId)
+        {
+            InitNonExistingRepo();
+            Person item = ItemRepo.ReadPerson(itemId);
+            return item;
+        }
+
         public IEnumerable<Theme> GetThemes()
         {
             InitNonExistingRepo();
             return ItemRepo.ReadThemes();
         }
 
-        public Organisation GetOrganisation(int itemId)
-        {
-            InitNonExistingRepo();
-            Item item = ItemRepo.ReadItem(itemId);
-            if (!(item is Organisation)) return null;
-            return (Organisation)item;
-        }
-
-        public Person GetPerson(int itemId)
-        {
-            InitNonExistingRepo();
-            Item item = ItemRepo.ReadItem(itemId);
-            if (!(item is Person)) return null;
-            return (Person)item;
-        }
-
         public Theme GetTheme(int itemId)
         {
             InitNonExistingRepo();
-            Item item = ItemRepo.ReadItem(itemId);
-            if (!(item is Theme)) return null;
-            return (Theme)item;
+            Theme item = ItemRepo.ReadTheme(itemId);
+            return item;
         }
 
         public void RemoveItem(int itemId)
@@ -205,12 +224,6 @@ namespace PB.BL
             InitNonExistingRepo();
             ItemRepo.DeleteItem(itemId);
             UowManager.Save();
-        }
-
-        public IEnumerable<Person> GetPersons()
-        {
-            InitNonExistingRepo();
-            return ItemRepo.ReadPersons();
         }
 
         public void RemoveKeyword(int keywordId)

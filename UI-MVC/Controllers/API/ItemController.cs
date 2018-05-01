@@ -130,7 +130,7 @@ namespace UI_MVC.Controllers.API
             if (theme == null) return BadRequest();
             if (!ModelState.IsValid) return BadRequest(ModelState);
             if (ItemMgr.GetItem(theme.ItemId) != null) return Conflict();
-            ItemMgr.AddTheme(theme.Name, theme.Description);
+            ItemMgr.AddTheme(theme.Name, theme.Description, theme.IconURL, theme.IsTrending);
 
             return Ok(theme); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte item
         }

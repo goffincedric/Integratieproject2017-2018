@@ -9,6 +9,7 @@ namespace PB.BL.Interfaces
         IEnumerable<Subplatform> GetSubplatforms();
         Subplatform AddSubplatform(string name, string url, string sourceApi = null, string siteIconUrl = null);
         Subplatform GetSubplatform(int subplatformId);
+        Subplatform GetSubplatform(string subplatformURL);
         void ChangeSubplatform(Subplatform profile);
         void RemoveSubplatform(int subplatformId);
 

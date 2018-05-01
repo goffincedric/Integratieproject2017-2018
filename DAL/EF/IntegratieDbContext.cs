@@ -24,7 +24,7 @@ namespace PB.DAL.EF
 
         public IntegratieDbContext(bool unitOfworkPresent = false) : base("IntegratieDB_EFCodeFirst")
         {
-            Database.SetInitializer(new IntegratieDbInitializer());
+            //Database.SetInitializer(new IntegratieDbInitializer()); // Verplaatst naar DbConfiguration
             delaySave = unitOfworkPresent;
         }
 
@@ -146,6 +146,15 @@ namespace PB.DAL.EF
                 .WithRequired(d => d.Subplatform)
                 .HasForeignKey(d => d.SubplatformId)
                 .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Subplatform>()
+                .HasMany(s => s.Settings)
+                .WithRequired(ss => ss.Subplatform)
+                .HasForeignKey(ss => ss.SubplatformId)
+                .WillCascadeOnDelete(true);
+
+            //modelBuilder.Entity<SubplatformSetting>()
+            //    .HasKey(ss => new { ss.SubplatformId, ss.SettingName });
 
             modelBuilder.Entity<Dashboard>()
                 .HasMany(d => d.Zones)

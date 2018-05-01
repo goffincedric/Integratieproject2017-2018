@@ -2,25 +2,29 @@ using Microsoft.AspNet.Identity;
 using PB.BL;
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace UI_MVC.Controllers
 {
     [RequireHttps]
+    [RoutePrefix("{subplatform}")]
     public class HomeController : Controller
     {
-       
+
 
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private readonly ItemManager itemMgr = new ItemManager(uow);
         private readonly AccountManager accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
+        private readonly SubplatformManager SubplatformMgr = new SubplatformManager(uow);
 
-        
+
 
         #region profile
 
@@ -60,49 +64,64 @@ namespace UI_MVC.Controllers
             {
                 RedirectToAction("Logoff", "Account");
 
-                return Content("\"\"");
+                return Content("");
             }
         }
 
         #endregion
 
-        public ActionResult Index()
+        [Route("~/")]
+        public ActionResult Index2()
         {
-            return View();
+            return RedirectToAction("Index", "Home", new { subplatform = "politieke-barometer" });
+            return Redirect("~/politieke-barometer/");
         }
 
-       
-        public ActionResult Blank()
+        [Route("")]
+        public ActionResult Index(string subplatform)
         {
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            return View();
-        }
-
-        public ActionResult FAQ()
-        {
-            return View();
-        }
-
-        public ActionResult Legal()
-        {
-            return View();
-        }
-
-        public ActionResult Test()
-        {
-            return View();
+            ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
+            return View("Index");
         }
 
 
-        public ActionResult _Search()
+        public ActionResult Blank(string subplatform)
         {
-            IEnumerable<Item> items = itemMgr.GetItems();
+            ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
+            return View();
+        }
+
+        public ActionResult Contact(string subplatform)
+        {
+            ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
+            return View();
+        }
+
+        public ActionResult FAQ(string subplatform)
+        {
+            ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
+            return View();
+        }
+
+        public ActionResult Legal(string subplatform)
+        {
+            ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
+            return View();
+        }
+
+        public ActionResult Test(string subplatform)
+        {
+            ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
+            return View();
+        }
+
+
+        public ActionResult _Search(string subplatform)
+        {
+            Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
+            IEnumerable<Item> items = itemMgr.GetItems().Where(i => i.SubPlatforms.Contains(sp));
             return PartialView(items);
-            
+
         }
 
         public ActionResult PlatformSettings()
@@ -153,14 +172,16 @@ namespace UI_MVC.Controllers
 
 
 
-       
+
         [Authorize]
-        public ActionResult ItemDetail(int id)
+        public ActionResult ItemDetail(string subplatform, int id)
         {
-           
-           
+
+
             Item item = itemMgr.GetItem(id);
-            if(item.IconURL is null)
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            if (!item.SubPlatforms.Contains(Subplatform)) return HttpNotFound();
+            if (item.IconURL is null)
             {
                 //ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Users/user.png");
             }
@@ -168,15 +189,15 @@ namespace UI_MVC.Controllers
             {
                 ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
             }
-            
+
             //ViewBag.Icon=@"~\Content\Images\Partijen\vb.png";
             if (item is Person)
             {
-                Person person = (Person) item;
+                Person person = (Person)item;
                 int? count = person.Records.Count();
-                ViewBag.Vermeldingen = (count is null)? 0: count ;
+                ViewBag.Vermeldingen = (count is null) ? 0 : count;
             }
-            if(item is Organisation)
+            if (item is Organisation)
             {
                 Organisation organisation = (Organisation)item;
 
@@ -185,7 +206,7 @@ namespace UI_MVC.Controllers
                 ViewBag.Leden = 0;
                 ViewBag.FullName = organisation.FullName;
             }
-            if(item is Theme)
+            if (item is Theme)
             {
                 Theme theme = (Theme)item;
                 //int? count = theme.Records.Count();
@@ -193,8 +214,8 @@ namespace UI_MVC.Controllers
                 ViewBag.Associaties = 0;
                 ViewBag.Keywords = theme.Keywords.ToList();
             }
-           ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));
-         
+            ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));
+
             return View(item);
         }
 
@@ -229,7 +250,7 @@ namespace UI_MVC.Controllers
                 //return View();
                 return RedirectToAction("ItemDetail", "Home", new { Id = id });
             }
-            return RedirectToAction("ItemDetail", "Home", new { Id=id});
+            return RedirectToAction("ItemDetail", "Home", new { Id = id });
         }
 
     }
