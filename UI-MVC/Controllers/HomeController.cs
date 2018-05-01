@@ -250,6 +250,16 @@ namespace UI_MVC.Controllers
             }
             return RedirectToAction("ItemDetail", "Home", new { Id = id });
         }
+        
+        [HttpPost]
+        public ActionResult GenerateAlertsManually()
+        {
+            List<Item> itemsToUpdate = new List<Item>();
+            accountMgr.GenerateAllAlerts(itemMgr.GetItems(), out itemsToUpdate);
+            itemMgr.ChangeItems(itemsToUpdate);
+
+            return RedirectToAction("PlatformSettings", "Home");
+        }
 
     }
 }

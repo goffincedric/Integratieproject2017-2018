@@ -13,7 +13,8 @@
         {
             DAYS_TO_KEEP_RECORDS,
             SOURCE_API_URL,
-            SITE_ICON_URL
+            SITE_ICON_URL,
+            DEFAULT_THEME
         }
     }
 }

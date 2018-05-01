@@ -45,23 +45,61 @@
 
       <div class="row">
         <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
-          <div class="bgc-white p-20 bd">
-            Change/create subplatform
-            <br />
-            Change default theme
-            <br />
-            Change site Logo
-            <br />
-            Change site name
+          <div class="bgc-white p-20 bd" style="min-height:310px;">
+            <div class="form-group row">
+              <div class="col-sm-3">
+                <label>Subplatform</label>
+              </div>
+              <div class="col-sm-7">
+                <select style="margin-bottom: 5%" id="inputState" class="form-control" name="type">
+                  <option value="" disabled selected>Select subplatform</option>
+                  <option>Politieke barometer</option>
+                  <option>Testing testing</option>
+                </select>
+              </div>
+
+
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-3">
+                <label>Default Theme</label>
+              </div>
+              <div class="col-sm-7">
+                <select style="margin-bottom: 5%" id="inputState" class="form-control" name="type">
+                  <option value="" disabled selected>Select default</option>
+                  <option>Light mode</option>
+                  <option>Dark mode</option>
+                  <option>Future mode</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-3">
+                <label>Change site logo</label>
+              </div>
+              <div class="col-sm-7">
+                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3">Change site name</label>
+              <div class="col-sm-8"><input type="text" class="form-control"></div>
+            </div>
           </div>
         </div>
 
         <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
-          <div class="bgc-white p-20 bd">
+          <div class="bgc-white p-20 bd" style="min-height:310px;">
             <h6 class="h6">Sync tools</h6>
-            <button type="button" style="margin-bottom: 25px;"class="btn btn-primary btn-lg">Syncroniseer API</button>
+
+            <button type="submit" style="margin: 25px 0 ;" class="btn btn-primary btn-lg">Syncroniseer API</button>
+
             <br />
-            <button type="button" class="btn btn-primary btn-lg">Generate alerts manually</button>
+            @using (Html.BeginForm("GenerateAlertsManually", "Home", FormMethod.Post))
+            {
+              <button type="button" style="margin-bottom: 25px " ; class="btn btn-primary btn-lg">Generate alerts manually</button>
+            }
             <br />
           </div>
         </div>
