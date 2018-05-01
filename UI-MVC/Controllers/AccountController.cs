@@ -205,7 +205,7 @@ namespace UI_MVC.Controllers
                                     {
                                         X = 0,
                                         Y = 3,
-                                        Width = 5,
+                                        Width = 6,
                                         Height = 5,
                                         Comparison = new Comparison()
                                     },
@@ -214,7 +214,7 @@ namespace UI_MVC.Controllers
                                         X = 0,
                                         Y = 0,
                                         Width = 2,
-                                        Height = 3,
+                                        Height = 4,
                                         Comparison = new Comparison()
                                     }
                                 }
