@@ -1,84 +1,57 @@
 ﻿@{
-
-  Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section styles{
 
-  <link href="~/Content/Styling/grid2/gridstack.css" rel="stylesheet" />
-  <link href="~/Content/Styling/grid2/gridstack-extra.css" rel="stylesheet" />
-  <style type="text/css">
+    <link href="~/Content/Styling/grid2/gridstack.css" rel="stylesheet" />
+    <link href="~/Content/Styling/grid2/gridstack-extra.css" rel="stylesheet" />
+    <style type="text/css">
 
-    #grid1 {
-      opacity: 0.7;
-      <!-- border: 3px solid black; -->
-      padding: 3px;
-      margin-bottom: 10px;
-    }
+        #grid1 {
+            <!-- border: 3px solid black; -->
+            padding: 3px;
+            margin-bottom: 10px;
+        }
 
-    #grid2 {
-    
-      opacity: 0.7;
-      <!-- border: 3px solid red; -->
-      margin-top: 5px;
-    }
+        #grid2 {
+            <!-- border: 3px solid red; -->
+            margin-top: 5px;
+        }
 
-    .grid-stack-item-content {
-      color: #2c3e50;
-      text-align: center;
-      background-color: #18bc9c;
-    }
+        .grid-stack-item-content {
+            color: #2c3e50;
+            text-align: center;
+            background-color: #18bc9c;
+        }
 
-    #grid2 .grid-stack-item-content {
-      background-color: grey;
-      opacity: 0.3;
-    }
+        #grid2 .grid-stack-item-content {
+            background-color: grey;
+        }
 
-    #grid1 .grid-stack-item-content {
-      background-color: grey;
-      opacity: 0.3;
-    }
-  </style>
+        #grid1 .grid-stack-item-content {
+            background-color: grey;
+        }
+    </style>
 }
 
-
-
-
 <main class="main-content bgc-grey-100">
-  <div id="mainContent">
-    <div>
-      <h1>Main trends</h1>
-      <div style="margin-bottom:5px">
-        <a class="btn btn-default" id="save-grid" href="#">Save Grid 1</a>
-        <a class="btn btn-default" id="load-grid" href="#">Load Grid 1</a>
-        <a class="btn btn-default" id="clear-grid" href="#">Clear Grid 1</a>
-      </div>
-      <div class="grid-stack grid-stack-6" id="grid1">
-      </div>
+    <div id="mainContent">
+        @foreach (var zone in Model.Zones)
+        {
+            <div class="p-10 mB-10">
+                <h4 class="bb-2">@zone.Title<span class="arrow-dashboard"><i class="ti-angle-up"></i></span></h4>
+                <div class="dashboard">
+                    <div style="margin-bottom:5px" class="buttons">
+                        <a class="btn btn-default load-grid" id="load-grid" href="#">Load Grid</a>
+                        <a class="btn btn-default clear-grid" id="clear-grid" href="#">Clear Grid</a>
+                        <a class="btn btn-default add-element" id="add-element" href="#">Add Element</a>
+                    </div>
+                    <div class="grid-stack grid-stack-12" id="zone-@zone.ZoneId">
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-
-
-
-    <div>
-      <h1>Personal trends</h1>
-      <div style="margin-bottom:5px">
-        <a class="btn btn-default" id="save-grid2" href="#">Save Grid 2</a>
-        <a class="btn btn-default" id="load-grid2" href="#">Load Grid 2</a>
-        <a class="btn btn-default" id="clear-grid2" href="#">Clear Grid 2</a>
-      </div>
-      <div class="grid-stack grid-stack-6" id="grid2">
-      </div>
-    </div>
-
-
-    <br>
-    <hr />
-    <textarea id="saved-data-1" cols="20" rows="10" readonly="readonly"></textarea>
-    <textarea id="saved-data-2" cols="20" rows="10" readonly="readonly"></textarea>
-
-    
-
-   
-
 </main>
 
 
@@ -89,115 +62,137 @@
 <script src="~/Scripts/grid2/gridstack.jQueryUI.js"></script>
 
 <script type="text/javascript">
-  $(function () {
-    var options = {
-      width: 6,
-      float: false,
-      removable: '.trash',
-      removeTimeout: 100,
-      acceptWidgets: '.grid-stack-item'
-    };
-    $('#grid1').gridstack(options);
-    $('#grid2').gridstack(_.defaults({
-      float: true
-    }, options));
+    let Headers = { "x-api-key": "303d22a4-402b-4d3c-b279-9e81c0480711"};
 
-    new function () {
-      var items1 = [{ "x": 0, "y": 3, "width": 5, "height": 5 }, { "x": 0, "y": 0, "width": 2, "height": 3 }];
+    //api call working
+    var DashData = "";
 
+    DashData = $.ajax({
+        async: false,
+        type: 'GET',
+        dataType: 'json',
+        headers: Headers,
+        url: "https://localhost:44342/api/dashboard/getdashboardzones/" + @Model.DashboardId
+    }).responseJSON;
 
-      var items2 = [{ "x": 0, "y": 0, "width": 5, "height": 5 }, { "x": 0, "y": 1, "width": 2, "height": 3 }];
+    $(function () {
+        var options = {
+            width: 12,
+            animate: true,
+            float: true,
+            removable: '.trash',
+            removeTimeout: 100,
+            acceptWidgets: '.grid-stack-item'
+        };
+        $('.grid-stack').gridstack(options);
 
-      this.grid1 = $('#grid1').data('gridstack');
-      this.grid2 = $('#grid2').data('gridstack');
+        new function () {
+            findElements = function (id) {
+                var ZoneData = $.ajax({
+                    async: false,
+                    type: 'GET',
+                    dataType: 'json',
+                    headers: Headers,
+                    url: "https://localhost:44342/api/dashboard/getzoneelements/" + id
+                }).responseJSON;
 
-      clearGrid1 = function () {
-        this.grid1.removeAll();
+                return ZoneData;
+            };
 
-        return false;
-      }.bind(this);
+            //done
+            addElement = function (grid) {
+                var ZoneId = grid.attr('id');
+                ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
 
-      clearGrid2 = function () {
-        this.grid2.removeAll();
+                var Element = JSON.parse('{"X" : "0", "Y" : "0", "Width": "2", "Height": "2", "IsDraggable": "true", "ZoneId": "' + ZoneId + '"}');
 
-        return false;
-      }.bind(this);
+                $.ajax({
+                    async: false,
+                    type: 'POST',
+                    data: Element,
+                    dataType: 'json',
+                    headers: Headers,
+                    url: "https://localhost:44342/api/dashboard/postelement/" + ZoneId
+                })
 
+                loadGrid(grid);
+            }
 
+            changeElements = function (elements, grid) {
+                var ZoneId = grid.attr('id');
+                ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
 
+                for (var e in elements) {
+                    var element = elements[e];
 
-      this.loadGrid1 = function () {
-        clearGrid1();
-        $('#grid1').each(function () {
+                    var ElementId = element.el.children('div').attr('id');
+                    ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
 
-          var grid = $(this).data('gridstack');
+                    var Element = JSON.parse('{"ElementId":"' + ElementId +'", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove +'", "ZoneId": "' + ZoneId + '"}');
 
-          _.each(items1, function (node) {
-            grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
-              node.x, node.y, node.width, node.height);
-          }, this);
-        });
+                    $.ajax({
+                        async: false,
+                        type: 'PUT',
+                        data: Element,
+                        dataType: 'json',
+                        headers: Headers,
+                        url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
+                    })
+                }
+            }
 
-      }
+            //done
+            clearGrid = function (grid) {
+                grid.removeAll();
+                return false;
+            }.bind(this);
 
+            //almost done
+            loadGrid = function (grid) {
+                clearGrid(grid.data('gridstack'));
+                var ZoneId = grid.attr('id');
+                ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
+                var elements = findElements(ZoneId);
 
-      this.loadGrid2 = function () {
-        clearGrid2();
-        $('#grid2').each(function () {
-          var grid = $(this).data('gridstack');
+                grid.each(function () {
+                    var grid = $(this).data('gridstack');
 
-          _.each(items2, function (node) {
-            grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
-              node.x, node.y, node.width, node.height);
-          }, this);
-        });
+                    //this for now(change later), Gets correct data from database
+                    _.each(elements, function (node) {
+                        grid.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + node.ElementId + '"/><div/>'),
+                            node.X, node.Y, node.Width, node.Height);
+                    }, this);
+                });
+            }
 
-      };
+            $(".grid-stack").each(function () {
+                this.grid = $(this).data('gridstack');
 
+                loadGrid($(this));
 
-      this.saveGrid1 = function () {
-        this.items1 = _.map($('#grid1 > .grid-stack-item:visible'), function (el) {
-          el = $(el);
-          var node = el.data('_gridstack_node');
-          return {
-            x: node.x,
-            y: node.y,
-            width: node.width,
-            height: node.height
-          };
-        }, this);
-        $('#saved-data-1').val(JSON.stringify(this.items1, null, '    '));
-        return false;
-      }.bind(this);
+                //loading and adding graphs
+                $(this).siblings('.buttons').children('.load-grid').on("click", function () {
+                    this.grid = $(this).parent().siblings('.grid-stack').data('gridstack');
+                    loadGrid($(this).parent().siblings('.grid-stack'));
+                });
 
+                //Clearing Zone/Grid done
+                $(this).siblings('.buttons').children('.clear-grid').on("click", function () {
+                    this.grid = $(this).parent().siblings('.grid-stack').data('gridstack');
+                    clearGrid(this.grid);
+                });
 
+                //working
+                $(this).siblings('.buttons').children('.add-element').on("click", function () {
+                    addElement($(this).parent().siblings('.grid-stack'))
+                });
 
-      this.saveGrid2 = function () {
-        this.items2 = _.map($('#grid2 > .grid-stack-item:visible'), function (el) {
-          el = $(el);
-          var node = el.data('_gridstack_node');
-          return {
-            x: node.x,
-            y: node.y,
-            width: node.width,
-            height: node.height
-          };
-        }, this);
-        $('#saved-data-2').val(JSON.stringify(this.items2, null, '    '));
-        return false;
-      }.bind(this);
-
-
-
-      $('#save-grid').click(this.saveGrid1);
-      $('#load-grid').click(this.loadGrid1);
-      $('#clear-grid').click(clearGrid1);
-      $('#save-grid2').click(this.saveGrid2);
-      $('#load-grid2').click(this.loadGrid2);
-      $('#clear-grid2').click(clearGrid2);
-
-      this.loadGrid1();
-      this.loadGrid2();
-    };
-  });
+                $(this).on('change', function (e, items) {
+                    changeElements(items, $(this));
+                });
+            });
+        };
+    });
 </script>
+
+@Scripts.Render("~/bundles/DashboardControl")

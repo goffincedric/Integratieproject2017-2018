@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44372</IISExpressSSLPort>
+    <IISExpressSSLPort>44338</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -303,6 +303,7 @@
     <Content Include="Content\Fonts\FontAwesome\fee66e712a8a08eef5805a46892932ad.woff" />
     <Content Include="favicon.ico" />
     <Content Include="Scripts\bundle.js" />
+    <Content Include="Scripts\DashboardControl.js" />
     <Content Include="Scripts\grid2\gridstack.jQueryUI.js" />
     <Content Include="Scripts\grid2\gridstack.js" />
     <Content Include="Scripts\AccountControl.js" />

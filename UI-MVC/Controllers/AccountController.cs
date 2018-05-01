@@ -13,7 +13,11 @@ using System.Web;
 using System.Web.Mvc;
 using PB.BL.Domain.Items;
 using UI_MVC.Models;
+using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
+using System.Linq;
+using System.Data.Entity.Validation;
+using PB.DAL.EF;
 
 namespace UI_MVC.Controllers
 {
@@ -25,7 +29,7 @@ namespace UI_MVC.Controllers
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private AccountManager _accountMgr;
         private IntegratieSignInManager _signInManager;
-        private SubplatformManager SubplatformMgr = new SubplatformManager(uow);
+        private SubplatformManager _subplatformMgr;
 
         public AccountController()
         {
@@ -34,7 +38,6 @@ namespace UI_MVC.Controllers
 
         public AccountController(AccountManager userManager, IntegratieSignInManager signInManager)
         {
-
             UserManager = userManager;
             SignInManager = signInManager;
         }
@@ -60,6 +63,18 @@ namespace UI_MVC.Controllers
             private set
             {
                 _accountMgr = value;
+            }
+        }
+
+        public SubplatformManager SubplatformMgr
+        {
+            get
+            {
+                return _subplatformMgr ?? new SubplatformManager(HttpContext.GetOwinContext().Get<IntegratieDbContext>()); ;
+            }
+            private set
+            {
+                _subplatformMgr = value;
             }
         }
 
@@ -124,6 +139,63 @@ namespace UI_MVC.Controllers
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
                         Value = "light"
+                    }
+                };
+                user.Dashboards = new List<Dashboard> {
+                    new Dashboard()
+                    {
+                        Profile = user,
+                        DashboardType = UserType.USER,
+                        Subplatform = SubplatformMgr.GetSubplatform(subplatform),
+                        Zones = new List<Zone>
+                        {
+                            new Zone()
+                            {
+                                Title = "Main Trends",
+                                Elements = new List<Element>()
+                                {
+                                    new Element()
+                                    {
+                                        X = 0,
+                                        Y = 3,
+                                        Width = 5,
+                                        Height = 5,
+                                        Comparison = new Comparison()
+                                    },
+                                    new Element()
+                                    {
+                                        X = 0,
+                                        Y = 0,
+                                        Width = 2,
+                                        Height = 3,
+                                        Comparison = new Comparison()
+                                    }
+                                }
+                            },
+                            new Zone()
+                            {
+                                Title = "Personal Trends",
+                                Elements = new List<Element>()
+                                {
+                                    new Element()
+                                    {
+                                        X = 0,
+                                        Y = 3,
+                                        Width = 6,
+                                        Height = 5,
+                                        Comparison = new Comparison()
+                                    },
+                                    new Element()
+                                    {
+                                        X = 0,
+                                        Y = 0,
+                                        Width = 2,
+                                        Height = 4,
+                                        Comparison = new Comparison()
+                                    }
+                                }
+                            }
+                        }
                     }
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -364,9 +436,76 @@ namespace UI_MVC.Controllers
                     return RedirectToAction("Login", "Account");
                 }
 
+                /* START PSEUDO SEED */
+                // TODO: SubplatformId/SubplatformNaam/SubplatformAfkorting meegeven in ExternalLoginConfirmationViewModel, 
+                //       gebruiken om juiste subplatform op te halen!!
+                Subplatform pbSubplatform = SubplatformMgr.GetSubplatforms().FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
+                if (pbSubplatform == null)
+                {
+                    pbSubplatform = new Subplatform()
+                    {
+                        Name = "Politieke Barometer",
+                        URL = "DUMMYURL",
+                        DateOnline = DateTime.Now,
+                        Settings = new List<SubplatformSetting>()
+                    {
+                        new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
+                            Value = "31"
+                        }
+                    },
+                        Admins = new List<Profile>(),
+                        Items = new List<Item>(),
+                        Pages = new List<Page>(),
+                        Dashboards = new List<Dashboard>()
+                    };
+                }
+                /* END PSEUDO SEED */
+
+
                 var name = info.Email.Split('@')[0];
-                var user = new Profile { UserName = name, Email = model.Email };
+                var user = new Profile
+                {
+                    UserName = name,
+                    Email = model.Email
+                };
                 user.UserData = new UserData() { Profile = user };
+                user.Dashboards = new List<Dashboard> {
+                    new Dashboard()
+                    {
+                        Profile = user,
+                        DashboardType = UserType.USER,
+                        Zones = new List<Zone>
+                        {
+                            new Zone()
+                            {
+                                Title = "Main Zone",
+                                Elements = new List<Element>()
+                                {
+                                    new Element()
+                                    {
+                                        X = 0,
+                                        Y = 3,
+                                        Width = 5,
+                                        Height = 5,
+                                        Comparison = new Comparison()
+                                    },
+                                    new Element()
+                                    {
+                                        X = 0,
+                                        Y = 0,
+                                        Width = 2,
+                                        Height = 3,
+                                        Comparison = new Comparison()
+                                    }
+                                }
+                            }
+                        },
+                        Subplatform = pbSubplatform
+                    }
+                };
+                pbSubplatform.Dashboards.Add(user.Dashboards[0]); // [0] ZAL ENKEL WERKEN INDIEN DE GEBRUIKEN EEN DASHBOARD TOEGEWEZEN KRIJGT
                 user.Settings = new List<UserSetting>
                 {
                     new UserSetting()
@@ -377,8 +516,8 @@ namespace UI_MVC.Controllers
                         Value = "light"
                     }
                 };
-                var result = await UserManager.CreateAsync(user);
 
+                var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);

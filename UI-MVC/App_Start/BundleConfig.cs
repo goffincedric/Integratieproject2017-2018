@@ -24,6 +24,8 @@ namespace UI_MVC
 
             bundles.Add(new ScriptBundle("~/bundles/AccountControl").Include("~/Scripts/AccountControl.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/DashboardControl").Include("~/Scripts/DashboardControl.js"));
+
             bundles.Add(new StyleBundle("~/Content/bootstrapcss").Include("~/Content/bootstrap.css"));
         }
     }

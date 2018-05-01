@@ -5,6 +5,7 @@ using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.BL.Interfaces;
 using PB.DAL;
+using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
 
@@ -18,6 +19,11 @@ namespace PB.BL
         public SubplatformManager()
         {
 
+        }
+
+        public SubplatformManager(IntegratieDbContext context)
+        {
+            SubplatformRepo = new SubplatformRepo(context);
         }
 
         public SubplatformManager(UnitOfWorkManager uowMgr)

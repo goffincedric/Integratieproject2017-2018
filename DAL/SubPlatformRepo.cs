@@ -17,6 +17,11 @@ namespace PB.DAL
             ctx = new IntegratieDbContext();
         }
 
+        public SubplatformRepo(IntegratieDbContext context)
+        {
+            ctx = context;
+        }
+
         public SubplatformRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
@@ -60,6 +65,7 @@ namespace PB.DAL
         public IEnumerable<Subplatform> ReadSubplatforms()
         {
             return ctx.Subplatforms
+                .Include(s => s.Dashboards)
                 .Include(s => s.Admins)
                 .Include(s => s.Items)
                 .Include(s => s.Settings)
@@ -69,6 +75,7 @@ namespace PB.DAL
         public Subplatform ReadSubplatform(int subplatformId)
         {
             return ctx.Subplatforms
+                .Include(s => s.Dashboards)
                 .Include(s => s.Admins)
                 .Include(s => s.Items)
                 .Include(s => s.Settings)
@@ -87,7 +94,7 @@ namespace PB.DAL
         public void UpdateSubplatform(Subplatform subplatform)
         {
             ctx.Subplatforms.Attach(subplatform);
-            ctx.Entry(subplatform).State = System.Data.Entity.EntityState.Modified;
+            ctx.Entry(subplatform).State = EntityState.Modified;
             ctx.SaveChanges();
         }
     }

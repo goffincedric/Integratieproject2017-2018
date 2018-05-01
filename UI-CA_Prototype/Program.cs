@@ -264,8 +264,7 @@ namespace UI_CA_Prototype
         {
             //Makes PB subplatform
             Subplatform pbSubplatform = SubplatformMgr.GetSubplatforms().FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
-
-            
+            ItemMgr.SyncDatabase(pbSubplatform);
         }
     }
 }

@@ -19,7 +19,6 @@ namespace PB.BL.Domain.Dashboards
         public bool IsDraggable { get; set; }
         
         public int ZoneId { get; set; }
-        [Required]
         public Zone Zone { get; set; }
         public Comparison Comparison { get; set; }
     }
