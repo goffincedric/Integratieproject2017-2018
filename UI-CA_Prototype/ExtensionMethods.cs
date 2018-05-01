@@ -69,7 +69,7 @@ namespace UI_CA_Prototype
         //Show all records sorted by Name, then by Date descending
         public void ShowRecords(IEnumerable<Record> records)
         {
-            records.OrderBy(r => r.Tweet_Id).ThenByDescending(r => r.Date).ToList().ForEach(Console.WriteLine);
+            records.OrderBy(r => r.Date).ThenBy(r => r.Persons[0].Name).ThenBy(r => r.Tweet_Id).ToList().ForEach(Console.WriteLine);
         }
 
         //Lets the user select an available item

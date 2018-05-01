@@ -18,7 +18,5 @@ namespace PB.DAL
         void UpdateRecord(Record record);
         void DeleteRecord(long id);
         void DeleteRecords(IEnumerable<Record> records);
-
-        List<JClass> Seed(bool even);
     }
 }

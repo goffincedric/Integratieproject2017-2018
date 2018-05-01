@@ -11,7 +11,6 @@ using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 
 namespace UI_CA_Prototype
 {
@@ -111,7 +110,7 @@ namespace UI_CA_Prototype
                     case 7:
                         if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
                         int days = int.Parse(SelectedSubplatform.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
-                        ItemMgr.CleanupOldRecords(SelectedSubplatform, days);
+                        ItemMgr.CleanupOldRecords(SelectedSubplatform);
                         break;
                     case 8:
                         Seed();
@@ -196,7 +195,6 @@ namespace UI_CA_Prototype
                 Environment.Exit(1);
             }
 
-
             //Injects seed data
             if (WillSeed)
             {
@@ -219,7 +217,7 @@ namespace UI_CA_Prototype
                     {
                         int days = int.Parse(s.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
                         Console.WriteLine("Clear " + s.Name + " from records older than " + days + " days");
-                        ItemMgr.CleanupOldRecords(s, days);
+                        ItemMgr.CleanupOldRecords(s);
                     });
                 }
                 catch (Exception e)
@@ -267,6 +265,7 @@ namespace UI_CA_Prototype
             //Makes PB subplatform
             Subplatform pbSubplatform = SubplatformMgr.GetSubplatforms().FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
 
+<<<<<<< HEAD
             if (pbSubplatform == null)
             {
                 pbSubplatform = new Subplatform()
@@ -475,53 +474,9 @@ namespace UI_CA_Prototype
 
             //Individueel api aanspreken
             List<JClass> requestedRecords = new List<JClass>();
+=======
+>>>>>>> master
             
-            try
-            {
-                requestedRecords.AddRange(restClient.RequestRecords(since: DateTime.Now.AddDays(-int.Parse(pbSubplatform.Settings.First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value))));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.GetType().Name + ": " + e.Message);
-                if (e.InnerException != null) Console.WriteLine("Inner Exception: " + e.InnerException);
-                return;
-            }
-
-            //Convert JClass to Record and persist to database
-            requestedRecords.ForEach(r => r.Subplatforms.Add(pbSubplatform));
-            ItemMgr.JClassToRecord(requestedRecords);
-
-            // Api aanspreken via collectie
-            //List<APIQuery> apiQueries = new List<APIQuery>()
-            //{
-            //    new APIQuery("Annick De Ridder"),
-            //    new APIQuery("Caroline Bastiaens"),
-            //    new APIQuery("Jan Bertels"),
-            //    new APIQuery("Vera Celis"),
-            //    new APIQuery("Dirk De Kort"),
-            //    new APIQuery("Imade Annouri"),
-            //    new APIQuery("Caroline Gennez"),
-            //    new APIQuery("Kathleen Helsen"),
-            //    new APIQuery("Marc Hendrickx"),
-            //    new APIQuery("Jan Hofkens"),
-            //    new APIQuery("Yasmine Kherbache"),
-            //    new APIQuery("Kathleen Krekels"),
-            //    new APIQuery("Ingrid Pira")
-            //};
-            //itemMgr.JClassToRecord(restClient.RequestRecords(apiQueries));
-
-
-            //Old seed method, deprecated json structure
-            //itemMgr.Seed();
-            //accountMgr.Seed();
-            //accountMgr.SubscribeProfiles(itemMgr.GetItems());
-
-
-            //private static void newAccount()
-            //{
-            //  Profile profile = extensionMethods.CreateAccount();
-            //  accountMgr.AddProfile(profile.UserName, profile.Email);
-            //}
         }
     }
 }

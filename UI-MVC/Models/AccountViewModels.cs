@@ -1,6 +1,8 @@
 ﻿using PB.BL.Domain.Accounts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace UI_MVC.Models
 {
@@ -166,7 +168,28 @@ namespace UI_MVC.Models
             Province = profile.UserData.Province;
             Gender = profile.UserData.Gender;
         }
+
+        public Profile GetProfile()
+        {
+            return new Profile()
+            {
+                UserData = new UserData()
+                {
+                    LastName = LastName,
+                    FirstName = FirstName,
+                    Telephone = Telephone,
+                    Gender = Gender,
+                    Street = Street,
+                    City = City,
+                    Province = Province,
+                    PostalCode = PostalCode,
+                    BirthDate = DateTime.ParseExact(BirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)
+                },
+                Email = Email
+            };
+        }
     }
+
     public class DeleteProfileModel
     {
 

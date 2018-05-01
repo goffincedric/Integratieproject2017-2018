@@ -32,7 +32,7 @@ namespace PB.BL
             SubplatformRepo = new SubplatformRepo(uowMgr.UnitOfWork);
         }
 
-        public void initNonExistingRepo(bool createWithUnitOfWork = false)
+        public void InitNonExistingRepo(bool createWithUnitOfWork = false)
         {
             if (SubplatformRepo == null)
             {
@@ -62,13 +62,13 @@ namespace PB.BL
 
         public IEnumerable<Subplatform> GetSubplatforms()
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return SubplatformRepo.ReadSubplatforms();
         }
 
         public Subplatform AddSubplatform(string name, string url, string sourceApi = null, string siteIconUrl = null)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             Subplatform subplatform = new Subplatform()
             {
                 Name = name,
@@ -103,32 +103,39 @@ namespace PB.BL
 
         private Subplatform AddSubplatform(Subplatform subplatform)
         {
+            InitNonExistingRepo();
             return SubplatformRepo.CreateSubplatform(subplatform);
         }
 
         public Subplatform GetSubplatform(int subplatformId)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             return SubplatformRepo.ReadSubplatform(subplatformId);
+        }
+
+        public Subplatform GetSubplatform(string subplatformURL)
+        {
+            InitNonExistingRepo();
+            return SubplatformRepo.ReadSubplatform(subplatformURL);
         }
 
         public void ChangeSubplatform(Subplatform profile)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             SubplatformRepo.UpdateSubplatform(profile);
             uowManager.Save();
         }
 
         public void RemoveSubplatform(int subplatformId)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             SubplatformRepo.DeleteSubplatform(subplatformId);
             uowManager.Save();
         }
 
         public void AddAdmin(int subplatformId, Profile admin)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             Subplatform subplatform = SubplatformRepo.ReadSubplatform(subplatformId);
             if (subplatform == null) throw new Exception("Subplatform with id (" + subplatformId + ") doesnt exist"); //Subplatform bestaat niet
 
@@ -141,7 +148,7 @@ namespace PB.BL
 
         public void RemoveAdmin(int subplatformId, Profile admin)
         {
-            initNonExistingRepo();
+            InitNonExistingRepo();
             Subplatform subplatform = SubplatformRepo.ReadSubplatform(subplatformId);
 
             if (subplatform == null) throw new Exception("Subplatform with id (" + subplatformId + ") doesnt exist"); //Subplatform bestaat niet
@@ -155,6 +162,7 @@ namespace PB.BL
         #region Pages
         public Page AddPage(int subplatformId, string title, string faviconUrl)
         {
+            InitNonExistingRepo();
             Page page = new Page()
             {
                 Title = title,
@@ -166,6 +174,7 @@ namespace PB.BL
 
         private Page AddPage(int subplatformId, Page page)
         {
+            InitNonExistingRepo();
             Subplatform subplatform = SubplatformRepo.ReadSubplatform(subplatformId);
             subplatform.Pages.Add(page);
 

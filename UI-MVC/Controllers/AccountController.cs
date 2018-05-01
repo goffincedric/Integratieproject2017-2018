@@ -13,11 +13,15 @@ using System.Web;
 using System.Web.Mvc;
 using PB.BL.Domain.Items;
 using UI_MVC.Models;
+<<<<<<< HEAD
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
 using System.Linq;
 using System.Data.Entity.Validation;
 using PB.DAL.EF;
+=======
+using PB.BL.Domain.Platform;
+>>>>>>> master
 
 namespace UI_MVC.Controllers
 {
@@ -29,7 +33,11 @@ namespace UI_MVC.Controllers
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private AccountManager _accountMgr;
         private IntegratieSignInManager _signInManager;
+<<<<<<< HEAD
         private SubplatformManager _subplatformMgr;
+=======
+        private SubplatformManager SubplatformMgr = new SubplatformManager(uow);
+>>>>>>> master
 
         public AccountController()
         {
@@ -80,20 +88,18 @@ namespace UI_MVC.Controllers
         }
 
         #region LoginRegister
-
-
-
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string subplatform, string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            ViewBag.Subplatform = subplatform;
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(string subplatform, LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -105,10 +111,9 @@ namespace UI_MVC.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    return View("Index");
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -118,9 +123,10 @@ namespace UI_MVC.Controllers
 
 
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string subplatform)
         {
             RegisterViewModel registerViewModel = new RegisterViewModel();
+            ViewBag.Subplatform = subplatform;
             return View(registerViewModel);
         }
 
@@ -128,7 +134,7 @@ namespace UI_MVC.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(string subplatform, RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -242,7 +248,7 @@ namespace UI_MVC.Controllers
                     //Login
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { subplatform });
                 }
                 AddErrors(result);
             }
@@ -251,18 +257,18 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        public ActionResult LogOff(string subplatform)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { subplatform });
         }
         #endregion
 
         #region Notification
-        public ActionResult GetNotificationCount()
+        public ActionResult GetNotificationCount(string subplatform)
         {
             Profile user = UserManager.GetProfile(User.Identity.GetUserId());
-            int alertCount = user.ProfileAlerts.FindAll(pa => !pa.IsRead).Count;
+            int alertCount = user.ProfileAlerts.FindAll(pa => !pa.IsRead && pa.Alert.Item.SubPlatforms.Find(s => s.URL.ToLower().Equals(subplatform)) != null).Count;
             return Content(String.Format("{0}", alertCount));
         }
 
@@ -279,42 +285,22 @@ namespace UI_MVC.Controllers
             return RedirectToAction("ItemDetail", "Home", new { id = itemId });
         }
 
-        public ActionResult _NotificationDropdown()
+        public ActionResult _NotificationDropdown(string subplatform)
         {
-            var model = new List<ProfileAlert>();
-
-            model.AddRange(UserManager.GetProfile(User.Identity.GetUserId()).ProfileAlerts);
-
-            model.Sort(delegate (ProfileAlert x, ProfileAlert y)
-            {
-                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
-                else if (x.TimeStamp == null) return -1;
-                else if (y.TimeStamp == null) return 1;
-                else return y.TimeStamp.CompareTo(x.TimeStamp);
-            });
-
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            var model = UserManager.GetProfileAlerts(Subplatform, UserManager.GetProfile(User.Identity.GetUserId()));
             return PartialView(model);
         }
 
-        public ActionResult Notifications()
+        public ActionResult Notifications(string subplatform)
         {
-            var model = new List<ProfileAlert>();
-
-            model.AddRange(UserManager.GetProfile(User.Identity.GetUserId()).ProfileAlerts);
-
-            model.Sort(delegate (ProfileAlert x, ProfileAlert y)
-            {
-                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
-                else if (x.TimeStamp == null) return -1;
-                else if (y.TimeStamp == null) return 1;
-                else return y.TimeStamp.CompareTo(x.TimeStamp);
-            });
-
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            var model = UserManager.GetProfileAlerts(Subplatform, UserManager.GetProfile(User.Identity.GetUserId()));
             return View(model);
         }
 
         #endregion
-        
+
         #region Account
         public ActionResult Account()
         {
@@ -331,6 +317,7 @@ namespace UI_MVC.Controllers
 
         }
 
+        // TODO: MOET PUT ZIJN I.P.V. POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Account(AccountEditModel editedAccount)
@@ -371,7 +358,7 @@ namespace UI_MVC.Controllers
             }
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-            
+
             if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
             {
                 return RedirectToAction("Account", "Account");
@@ -396,7 +383,7 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteProfile(DeleteProfileModel model)
+        public ActionResult DeleteProfile(string subplatform, DeleteProfileModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -406,7 +393,7 @@ namespace UI_MVC.Controllers
 
             UserManager.RemoveProfile(user.Id);
 
-            LogOff();
+            LogOff(subplatform);
 
             return RedirectToAction("Index", "Home");
         }
@@ -415,7 +402,11 @@ namespace UI_MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = ("User,Admin,SuperAdmin"))]
+<<<<<<< HEAD
         public ActionResult DeleteProfileAdmin(string userId)
+=======
+        public ActionResult DeleteProfileAdmin(string subplatform, string userId)
+>>>>>>> master
         {
             if (!ModelState.IsValid)
             {
@@ -426,7 +417,7 @@ namespace UI_MVC.Controllers
 
             UserManager.RemoveProfile(user.Id);
 
-            LogOff();
+            LogOff(subplatform);
 
             return RedirectToAction("AdminCrud", "Home");
         }
@@ -434,29 +425,30 @@ namespace UI_MVC.Controllers
         #endregion
 
 
-        public PartialViewResult _UserPartialTable()
+
+        public ViewResult UserBeheer()
         {
             IEnumerable<Profile> profiles = UserManager.GetProfiles();
-            return PartialView(profiles);
+            return View(profiles);
         }
 
         #region ExternalLogin
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
+        public ActionResult ExternalLogin(string subplatform, string provider, string returnUrl)
         {
             // Request a redirect to the external login provider
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { subplatform, returnUrl }));
         }
 
         [AllowAnonymous]
-        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
+        public async Task<ActionResult> ExternalLoginCallback(string subplatform, string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Account", new { subplatform, returnUrl });
             }
 
             // Sign in the user with this external login provider if the user already has a login
@@ -466,11 +458,12 @@ namespace UI_MVC.Controllers
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    return View("Index");
                 case SignInStatus.Failure:
                 default:
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.Subplatform = subplatform;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
@@ -479,7 +472,7 @@ namespace UI_MVC.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
+        public async Task<ActionResult> ExternalLoginConfirmation(string subplatform, ExternalLoginConfirmationViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -586,6 +579,7 @@ namespace UI_MVC.Controllers
             }
 
             ViewBag.ReturnUrl = returnUrl;
+            ViewBag.Subplatform = subplatform;
             return View(model);
         }
 

@@ -27,6 +27,20 @@ namespace PB.BL.Domain.Platform
         public List<Item> Items { get; set; }
         public List<Dashboard> Dashboards { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            var subplatform = obj as Subplatform;
+            if (subplatform == null) return false;
+            if (subplatform.URL.ToLower().Equals(URL.ToLower()) || 
+                subplatform.SubplatformId == SubplatformId) return true;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return -1251312914 + EqualityComparer<string>.Default.GetHashCode(URL);
+        }
+
         public override string ToString()
         {
             return Name + " - " + URL;

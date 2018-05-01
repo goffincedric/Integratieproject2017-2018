@@ -1,29 +1,31 @@
 ﻿@model PB.BL.Domain.Items.Person
 
 <div class="bgc-white p-20 bd">
+
   <h4 class="fw-300 c-grey-900 mB-40">Create new person</h4>
-  @using (Html.BeginForm("PersonPartialCreate", "Item", FormMethod.Post))
-  {
+  @*@using (Html.BeginForm("PersonPartialCreate", "Item", FormMethod.Post))
+  {*@
+
     @Html.AntiForgeryToken()
-  <form>
+  <form id="form" method="post">
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
       @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
       <div class="col-md-10">
-        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control",@id="PersonName" } })
         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
       </div>
     </div>
     <div class="form-group">
       @Html.LabelFor(model => model.Organisation, htmlAttributes: new { @class = "control-label col-md-2" })
       <div class="col-md-10">
-        @*@Html.EnumDropDownListFor(model => model.Organisation)*@
+
+        @Html.DropDownListFor(model => model.Organisation, new SelectList(Enumerable.Empty<SelectList>()), "Kies een partij", new { @class = "form-control", @id = "FromJson" })
+
         @Html.ValidationMessageFor(model => model.Organisation, "", new { @class = "text-danger" })
       </div>
     </div>
-    @using (Html.BeginForm(new { htmlAttributes = new { @id = "formCheck" } }))
-  {
     <div class="form-group">
       @Html.LabelFor(model => model.IsTrending, htmlAttributes: new { @class = "control-label col-md-2" })
       <div class="col-md-10">
@@ -32,12 +34,10 @@
           @Html.CheckBoxFor(model => model.IsTrending, new { @class = "form-control" })
           <div class="slider round"></div>
         </label>
-        @Html.ValidationMessageFor(model => model.IsTrending, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.IsTrending, "", new { @class = "text-danger", @id = "IsHot" })
         @*</div>*@
       </div>
     </div>
-    
-}
 
     <div class="form-group">
       @Html.LabelFor(model => model.SocialMediaLink, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -57,23 +57,59 @@
 
     <div class="form-group">
       <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Create" class="btn btn-default" />
+        <input id="submit" type="submit" value="Create" class="btn btn-default" />
       </div>
     </div>
   </form>
-  }
+  @*}*@
 
   <div>
   </div>
 </div>
-<script>
-  //$('#table1').DataTable().ajax.reload();
+
+
+<script type="text/javascript">
   $(document).ready(function () {
-    $("#IsHot").change(function () {
-      if ($("#IsHot").is(":checked")) {
-        $("#formCheck").submit();
-      }
+    $("#IsHot").change();
+  });
+</script>
+<script>
+
+  $('#form').submit(function (e) {
+    e.preventDefault();
+    $.ajax({
+      async: false,
+      url: 'https://localhost:44342/api/person',
+      type: 'POST',
+      dataType: 'JSON',
+      header: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
+      data: $('#form').serialize(),
+      contentType: 'application/json; charset=utf-8'
     });
   });
+    
+
+
+
+</script>
+<script>
+  var tmp = "";
+
+  tmp = $.ajax({
+    async: false,
+    type: 'GET',
+    dataType: 'json',
+    headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
+    url: "https://localhost:44342/api/item/GetOrganisation"
+  }).responseJSON;
+
+
+
+  for (var i = 0; i < tmp.length; i++) {
+    $("#FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
+    //$("FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
+
+  }
+
 
 </script>

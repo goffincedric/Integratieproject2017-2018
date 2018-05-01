@@ -26,7 +26,7 @@ namespace PB.BL.Domain.Items
         [DataMember]
         public string IconURL { get; set; }
 
-        public List<Subplatform> SubPlatforms { get; set; }
+        public virtual List<Subplatform> SubPlatforms { get; set; }
         public List<Keyword> Keywords { get; set; }
         public List<Comparison> Comparisons { get; set; }
         public List<Profile> SubscribedProfiles { get; set; }
