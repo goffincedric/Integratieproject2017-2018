@@ -112,6 +112,9 @@
                 var ZoneId = grid.attr('id');
                 ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
 
+                var removeElement = grid.children()[grid.children().length-1];
+
+                grid.data('gridstack').removeWidget(removeElement);
                 var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"/><div/>'), 0, 0, 3, 3, true);
                 var X = newElement.data().gsX;
                 var Y = newElement.data().gsY;
@@ -128,6 +131,13 @@
                 }).responseJSON.ElementId
 
                 newElement.children('#Element-x').attr('id', 'Element-' + ElementId);
+
+                var plusElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
+
+                plusElement.children('.grid-stack-item-content').children('div').children('img').on("click", function () {
+                    addElement(grid);
+                });
+
                 addingElement = false;
             }
 
@@ -183,7 +193,9 @@
                             node.X, node.Y, node.Width, node.Height);
                     }, this);
 
-                    var plusElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 2, 2, true);
+                    var plusElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
+
+                    console.log(plusElement);
 
                     plusElement.resizable(false);
 
