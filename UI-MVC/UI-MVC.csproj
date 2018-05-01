@@ -330,7 +330,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Home\Blank.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
@@ -363,6 +362,9 @@
     <Content Include="Views\Item\Charts.cshtml" />
     <Content Include="Views\Account\Notifications.cshtml" />
     <Content Include="Views\Item\Charts2.cshtml" />
+    <Content Include="Views\Home\PlatformSettings.cshtml" />
+    <Content Include="Views\Account\UserBeheer.cshtml" />
+    <Content Include="Views\Item\ItemBeheer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -24,7 +24,7 @@ namespace UI_MVC.Controllers
        
 
         #region organisation
-        public PartialViewResult _OrganisationPartialTable()
+        public ActionResult _OrganisationPartialTable()
         {
             IEnumerable<Organisation> organisations = itemMgr.GetOrganisations();
             return PartialView(organisations);
@@ -57,7 +57,7 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region keywords
-        public PartialViewResult _KeywordPartialTable()
+        public ActionResult _KeywordPartialTable()
         {
             IEnumerable<Keyword> keywords = itemMgr.GetKeywords();
             return PartialView(keywords);
@@ -90,13 +90,13 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region Thema
-        public PartialViewResult _ThemaPartialTable()
+        public ActionResult _ThemaPartialTable()
         {
             IEnumerable<Theme> themes = itemMgr.GetThemes();
             return PartialView(themes);
         }
 
-        public PartialViewResult _ThemaPartialCreate()
+        public ActionResult _ThemaPartialCreate()
         {
 
             return PartialView();
@@ -122,7 +122,7 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region persons
-        public PartialViewResult _PersonPartialTable()
+        public ActionResult _PersonPartialTable()
         {
             IEnumerable<Person> persons = itemMgr.GetPersons();
             return PartialView(persons);
@@ -178,6 +178,12 @@ namespace UI_MVC.Controllers
         }
 
         public ActionResult Charts2()
+        {
+            return View();
+        }
+
+
+        public ActionResult ItemBeheer()
         {
             return View();
         }

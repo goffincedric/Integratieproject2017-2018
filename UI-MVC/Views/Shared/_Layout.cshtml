@@ -74,127 +74,126 @@
       <div class="header navbar">
         <div class="header-container">
           @{
-            Html.RenderAction("_Search", "Home");
+        Html.RenderAction("_Search", "Home");
           }
           <ul class="nav-right">
             @if (Request.IsAuthenticated)
-            {
-              <li class="themes dropdown">
-                <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-paint-bucket"></i></a>
-                <ul class="dropdown-menu">
-                  <li class="pX-20 pY-15 bdB"><i class="ti-paint-bucket pR-10"></i> <span class="fsz-sm fw-600 c-grey-900">Themes</span></li>
-                  <li>
-                    <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm">
-                      <li id="light-mode">
-                        <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "light" })">
-                          <div class="peer peer-greed">
-                            <span><span class="fw-500">Light Mode</span></span>
-                          </div>
-                        </a>
-                      </li>
-                      <li id="dark-mode">
-                        <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "dark" })">
-                          <div class="peer peer-greed">
-                            <span><span class="fw-500">Dark Mode</span></span>
-                          </div>
-                        </a>
-                      </li>
-                      <li id="future-mode">
-                        <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "future" })">
-                          <div class="peer peer-greed">
-                            <span><span class="fw-500">Future Mode</span></span>
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            }
-            @if (Request.IsAuthenticated)
-            {
-              <li class="notifications dropdown">
-                @if (!Html.Action("GetNotificationCount", "Account").ToString().Equals("0"))
-                {<span class="counter bgc-red">@Html.Action("GetNotificationCount", "Account")</span>} <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
-                @{
-                  Html.RenderAction("_NotificationDropdown", "Account");
-                }
-              </li>
-            }
-
-            @if (Request.IsAuthenticated)
-            {
-              <li class="dropdown">
-                <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
-                  <div class="peer mR-10">
-                    @Html.Action("ChangeProfilePic", "Home")
-                  </div>
-
-                  @if (Request.IsAuthenticated)
-                  {
-                    @Html.AntiForgeryToken()
-                    {
-                      <div class="peer">
-                        <span style="color: #2196f3" class="fsz-sm">
-                          @{ViewBag.Ingelogd = "Hi " + User.Identity.GetUserName();
-                          }
-                          @ViewBag.Ingelogd
-                        </span>
+        {
+          <li class="themes dropdown">
+            <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-paint-bucket"></i></a>
+            <ul class="dropdown-menu">
+              <li class="pX-20 pY-15 bdB"><i class="ti-paint-bucket pR-10"></i> <span class="fsz-sm fw-600 c-grey-900">Themes</span></li>
+              <li>
+                <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm">
+                  <li id="light-mode">
+                    <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "light" })">
+                      <div class="peer peer-greed">
+                        <span><span class="fw-500">Light Mode</span></span>
                       </div>
-                    }
-                  }
-                </a>
-
-                <ul class="dropdown-menu fsz-sm">
-                  <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-settings mR-10"></i> <span>Account settings</span></a></li>
-                  <li><a href="@Url.Action("Account", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Profile</span></a></li>
-
-                  <li role="separator" class="divider"></li>
-                  <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Beheer Users</span></a></li>
-                  <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-panel mR-10"></i> <span>Beheer Items</span></a></li>
-                  <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-dashboard mR-10"></i> <span>Beheer Platform</span></a></li>
-
-                  <li role="separator" class="divider"></li>
-                  <li>
-
-                    @if (Request.IsAuthenticated)
-    {
-      using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-      {
-                @Html.AntiForgeryToken(){
-                <a href="javascript:document.getElementById('logoutForm').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                  <i class="ti-power-off mR-10"></i><span> Logout</span>
-                </a>
-}
-}
-}
-else
-{
-                <a href="@Url.Action("Login", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                  <i class="ti-power-off mR-10"></i> <span>Login/Register</span>
-                </a>
-}
+                    </a>
+                  </li>
+                  <li id="dark-mode">
+                    <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "dark" })">
+                      <div class="peer peer-greed">
+                        <span><span class="fw-500">Dark Mode</span></span>
+                      </div>
+                    </a>
+                  </li>
+                  <li id="future-mode">
+                    <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "future" })">
+                      <div class="peer peer-greed">
+                        <span><span class="fw-500">Future Mode</span></span>
+                      </div>
+                    </a>
                   </li>
                 </ul>
               </li>
+            </ul>
+          </li>
+    }
+            @if (Request.IsAuthenticated)
+        {
+          <li class="notifications dropdown">
+            @if (!Html.Action("GetNotificationCount", "Account").ToString().Equals("0"))
+        {<span class="counter bgc-red">@Html.Action("GetNotificationCount", "Account")</span>} <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
+            @{
+          Html.RenderAction("_NotificationDropdown", "Account");
             }
-            else
+          </li>
+    }
+
+            @if (Request.IsAuthenticated)
+        {
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
+              <div class="peer mR-10">
+                @Html.Action("ChangeProfilePic", "Home")
+              </div>
+
+              @if (Request.IsAuthenticated)
+          {
+            @Html.AntiForgeryToken()
+        {
+          <div class="peer">
+            <span style="color: #2196f3" class="fsz-sm">
+              @{ViewBag.Ingelogd = "Hi " + User.Identity.GetUserName();
+              }
+              @ViewBag.Ingelogd
+            </span>
+          </div>
+    }
+  }
+            </a>
+
+            <ul class="dropdown-menu fsz-sm">
+              <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-settings mR-10"></i> <span>Account settings</span></a></li>
+              <li><a href="@Url.Action("Account", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Profile</span></a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="@Url.Action("UserBeheer", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-panel mR-10"></i> <span>Beheer Users</span></a></li>
+              <li><a href="@Url.Action("ItemBeheer", "Item")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Beheer Items</span></a></li>
+              <li><a href="@Url.Action("PlatformSettings", "Home")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-dashboard mR-10"></i> <span>Beheer Platform</span></a></li>
+
+              <li role="separator" class="divider"></li>
+              <li>
+
+                @if (Request.IsAuthenticated)
             {
-              <li class="">
-                <a href="@Url.Action("Login", "Account")" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
-                  <div class="peer mR-10">
-                    @Html.Action("ChangeProfilePic", "Home")
-                  </div>
-
-
-                  <div class="peer">
-                    <span style="color: #2196f3" class="fsz-sm">
-                      Login/Register
-                    </span>
-                  </div>
-                </a>
+              using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+              {
+                @Html.AntiForgeryToken(){
+              <a href="javascript:document.getElementById('logoutForm').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                <i class="ti-power-off mR-10"></i><span> Logout</span>
+              </a>
+        }
+      }
+    }
+    else
+    {
+      <a href="@Url.Action("Login", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+        <i class="ti-power-off mR-10"></i> <span>Login/Register</span>
+      </a>
+}
               </li>
-            }
+            </ul>
+          </li>
+    }
+    else
+    {
+      <li class="">
+        <a href="@Url.Action("Login", "Account")" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
+          <div class="peer mR-10">
+            @Html.Action("ChangeProfilePic", "Home")
+          </div>
+
+
+          <div class="peer">
+            <span style="color: #2196f3" class="fsz-sm">
+              Login/Register
+            </span>
+          </div>
+        </a>
+      </li>
+}
           </ul>
         </div>
       </div>
@@ -206,8 +205,6 @@ else
       @RenderBody()
       @Scripts.Render("~/bundles/adminator")
 
-
-      @*@Scripts.Render("~/bundles/changetheme")*@
 
     </div>
   </div>
@@ -228,47 +225,5 @@ else
     </ul>
 
   </footer>
-
-  @*<section id="footer">
-        <div class="container">
-            <div class="row text-center text-xs-center text-sm-left text-md-left">
-                <div class="col-xs-12 col-sm-4 col-md-4">
-                    <h5>Navigation</h5>
-                    <ul class="list-unstyled quick-links">
-                        <li><a href=""><i class="fa fa-angle-double-right"></i>Home</a></li>
-                        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-angle-double-right"></i>Home</a></li>
-                        <li><a href="@Url.Action("FAQ","Home")"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-                        <li><a href="@Url.Action("Contact","Home")"><i class="fa fa-angle-double-right"></i>Contact</a></li>
-
-
-                    </ul>
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
-                    <ul class="list-unstyled list-inline social text-center">
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
-                    </ul>
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
-                    <span>Copyright Integratieproject © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span>
-                </div>
-
-            </div>
-        </div>
-    </section>*@
-
-  <!-- ./Footer -->
-
-
-
 </body>
 </html>

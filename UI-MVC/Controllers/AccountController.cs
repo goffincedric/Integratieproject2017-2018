@@ -332,6 +332,12 @@ namespace UI_MVC.Controllers
             return PartialView(profiles);
         }
 
+        public ViewResult UserBeheer()
+        {
+            IEnumerable<Profile> profiles = UserManager.GetProfiles();
+            return View(profiles);
+        }
+
         #region ExternalLogin
         [HttpPost]
         [AllowAnonymous]

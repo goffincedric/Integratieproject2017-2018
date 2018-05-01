@@ -116,6 +116,19 @@ namespace UI_MVC.Controllers
             return View();
         }
 
+
+
+        public ActionResult PlatformSettings()
+        {
+            ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
+            ViewBag.TotalPersons = itemMgr.GetPersonsCount().ToString();
+            ViewBag.TotalOrganisations = itemMgr.GetOrganisationsCount().ToString();
+            ViewBag.TotalThemes = itemMgr.GetThemesCount().ToString();
+            ViewBag.TotalKeywords = itemMgr.GetKeywordsCount().ToString();
+            ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
+            return View();
+        }
+
         public ActionResult GetThemeSetting()
         {
             if (User.Identity.IsAuthenticated)
