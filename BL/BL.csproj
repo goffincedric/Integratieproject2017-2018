@@ -115,6 +115,8 @@
     <Compile Include="Interfaces\IItemManager.cs" />
     <Compile Include="Interfaces\IntegratieSignInManager.cs" />
     <Compile Include="Interfaces\ISubplatformManager.cs" />
+    <Compile Include="RestClient\APICalls.cs" />
+    <Compile Include="RestClient\APIQuery.cs" />
     <Compile Include="Senders\ITwilioMessageSender.cs" />
     <Compile Include="Senders\ServiceManager.cs" />
     <Compile Include="SubplatformManager.cs" />

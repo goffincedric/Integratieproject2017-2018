@@ -3,7 +3,9 @@ using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.JSONConversion;
 using PB.BL.Domain.Platform;
+using PB.BL.Domain.Settings;
 using PB.BL.Interfaces;
+using PB.BL.RestClient;
 using PB.DAL;
 using PB.DAL.Interfaces;
 using System;
@@ -359,10 +361,46 @@ namespace PB.BL
         }
         #endregion
 
-        public void Seed(bool evenRecords = true)
+        public void SyncDatabase(Subplatform subplatform)
         {
             InitNonExistingRepo();
-            List<Record> toegevoegde = JClassToRecord(RecordRepo.Seed(evenRecords));
+
+            // Validation
+            if (subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.DAYS_TO_KEEP_RECORDS) is null)
+            {
+                throw new Exception("Subplatform has no set period to keep records");
+            }
+
+            // Injects api seed data
+            APICalls restClient = new APICalls()
+            {
+                API_URL = "http://kdg.textgain.com/query"
+            };
+
+            // Call API with request
+            List<JClass> requestedRecords = new List<JClass>();
+            try
+            {
+                requestedRecords.AddRange(restClient.RequestRecords(since: DateTime.Now.AddDays(-int.Parse(subplatform.Settings.First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value))));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.GetType().Name + ": " + e.Message);
+                if (e.InnerException != null) Console.WriteLine("Inner Exception: " + e.InnerException);
+                return;
+            }
+
+            // Link items to subplatform
+            requestedRecords.ForEach(r => r.Subplatforms.Add(subplatform));
+
+            //Convert JClass to Record and persist to database
+            List<Record> newRecords = JClassToRecord(requestedRecords);
+
+            // Persist items tgo database
+            RecordRepo.CreateRecords(newRecords);
+
+            // Save pending changes
+            UowManager.Save();
         }
 
         public void CleanupOldRecords(Subplatform subplatform, int days)
@@ -523,9 +561,6 @@ namespace PB.BL
                     }
                 }
             }
-
-            RecordRepo.CreateRecords(newRecords);
-            UowManager.Save();
 
             return newRecords;
         }

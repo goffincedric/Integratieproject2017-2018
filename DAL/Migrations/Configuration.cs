@@ -1,17 +1,17 @@
+using PB.BL.Domain.Accounts;
+using PB.BL.Domain.Dashboards;
+using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
+using PB.BL.Domain.Settings;
+using PB.DAL.EF;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Linq;
+
 namespace PB.DAL.Migrations
 {
-    using PB.BL.Domain.Accounts;
-    using PB.BL.Domain.Dashboards;
-    using PB.BL.Domain.Items;
-    using PB.BL.Domain.Platform;
-    using PB.BL.Domain.Settings;
-    using PB.DAL.EF;
-    using System;
-    using System.Collections.Generic;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
     internal sealed class Configuration : DbMigrationsConfiguration<IntegratieDbContext>
     {
         public Configuration()
@@ -21,6 +21,9 @@ namespace PB.DAL.Migrations
 
         protected override void Seed(IntegratieDbContext ctx)
         {
+            // TODO: SUPERADMIN SEED
+
+            #region Subplatforms
             //Makes PB subplatform
             Subplatform pbSubplatform = ctx.Subplatforms.FirstOrDefaultAsync(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower())).Result;
             if (pbSubplatform == null)
@@ -66,7 +69,9 @@ namespace PB.DAL.Migrations
                     Pages = new List<Page>()
                 };
             }
+#endregion
 
+            #region Organisation
             //Makes all organisations
             List<Organisation> OrganisationsToAdd = new List<Organisation>()
             {
@@ -188,11 +193,13 @@ namespace PB.DAL.Migrations
             };
             ctx.Organisations.ForEachAsync(o =>
                     {
-                        Organisation organisation = (Organisation)OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
+                        Organisation organisation = OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
                         if (organisation != null) OrganisationsToAdd.Remove(o);
                     }).Wait();
             if (OrganisationsToAdd.Count != 0) ctx.Organisations.AddRange(OrganisationsToAdd);
+#endregion
 
+            #region Themes
             // Makes all themes
             List<Theme> ThemesToAdd = new List<Theme>()
             {
@@ -297,10 +304,11 @@ namespace PB.DAL.Migrations
             };
             ctx.Themes.ForEachAsync(t =>
                         {
-                            Theme theme = (Theme)ThemesToAdd.FirstOrDefault(them => them.Equals(t));
+                            Theme theme = ThemesToAdd.FirstOrDefault(them => them.Equals(t));
                             if (theme != null) ThemesToAdd.Remove(t);
                         }).Wait();
             if (ThemesToAdd.Count != 0) ctx.Themes.AddRange(ThemesToAdd);
+            #endregion
 
             // Save all pending changes
             ctx.SaveChanges();
