@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.BL.Interfaces;
 using PB.DAL;
@@ -168,34 +169,6 @@ namespace PB.BL
         #endregion
         
         #region Profile
-        //public Profile AddProfile(string username, string email)
-        //{
-        //    InitNonExistingRepo();
-        //    Profile profile = new Profile()
-        //    {
-        //        UserName = username,
-        //        Email = email,
-        //        Alerts = new List<Alert>(),
-        //        Dashboards = new List<Dashboard>(),
-        //        Settings = new List<UserSetting>(),
-        //        Subscriptions = new List<Item>()
-
-        //    };
-        //    profile.UserData = new UserData() { Profile = profile };
-
-        //    profile = AddProfile(profile);
-        //    UowManager.Save();
-        //    return profile;
-        //}
-
-        //private Profile AddProfile(Profile profile)
-        //{
-        //    InitNonExistingRepo();
-        //    Profile newProfile = ProfileRepo.CreateProfile(profile);
-        //    UowManager.Save();
-        //    return profile;
-        //}
-
         public void ChangeProfile(Profile profile)
         {
             InitNonExistingRepo();
@@ -443,16 +416,22 @@ namespace PB.BL
             return alerts;
         }
 
-        //public void LinkAlertsToProfile(List<Alert> alerts)
-        //{
-        //    alerts.ForEach(a =>
-        //    {
-        //        a.Profile.Alerts.Add(a);
-        //        ProfileRepo.UpdateProfile(a.Profile);
-        //    });
+        public List<ProfileAlert> GetProfileAlerts(Subplatform subplatform, Profile profile)
+        {
+            List<ProfileAlert> profileAlerts = new List<ProfileAlert>();
 
-        //    UowManager.Save();
-        //}
+            profileAlerts.AddRange(profile.ProfileAlerts.FindAll(pa => pa.Alert.Item.SubPlatforms.Contains(subplatform)));
+
+            profileAlerts.Sort(delegate (ProfileAlert x, ProfileAlert y)
+            {
+                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
+                else if (x.TimeStamp == null) return -1;
+                else if (y.TimeStamp == null) return 1;
+                else return y.TimeStamp.CompareTo(x.TimeStamp);
+            });
+
+            return profileAlerts;
+        }
         #endregion
     }
 }

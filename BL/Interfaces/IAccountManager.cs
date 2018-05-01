@@ -1,5 +1,6 @@
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using System.Collections.Generic;
 
@@ -19,7 +20,7 @@ namespace PB.BL.Interfaces
         void ChangeUserSetting(string userId, UserSetting userSetting);
         //void RemoveUserSetting(string username, Setting.Account accountSetting);
 
-        //void LinkAlertsToProfile(List<Alert> alerts);
+        List<ProfileAlert> GetProfileAlerts(Subplatform subplatform, Profile profile);
 
         Profile AddSubscription(Profile profile, Item item);
         Profile RemoveSubscription(Profile profile, Item item);

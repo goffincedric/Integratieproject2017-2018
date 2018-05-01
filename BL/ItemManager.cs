@@ -32,7 +32,6 @@ namespace PB.BL
             UowManager = uowMgr;
             ItemRepo = new ItemRepo(uowMgr.UnitOfWork);
             RecordRepo = new RecordRepo(uowMgr.UnitOfWork);
-
         }
 
         #region Init
@@ -361,6 +360,13 @@ namespace PB.BL
         }
         #endregion
 
+        #region Keywords
+        public IEnumerable<Keyword> GetKeywords()
+        {
+            return ItemRepo.ReadKeywords();
+        }
+        #endregion
+
         public void SyncDatabase(Subplatform subplatform)
         {
             InitNonExistingRepo();
@@ -368,13 +374,17 @@ namespace PB.BL
             // Validation
             if (subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.DAYS_TO_KEEP_RECORDS) is null)
             {
-                throw new Exception("Subplatform has no set period to keep records");
+                throw new Exception("Subplatform has no set period to keep records!");
+            }
+            if (subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.SOURCE_API_URL) is null)
+            {
+                throw new Exception("Subplatform has no set API url!");
             }
 
             // Injects api seed data
             APICalls restClient = new APICalls()
             {
-                API_URL = "http://kdg.textgain.com/query"
+                API_URL = subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.SOURCE_API_URL).Value
             };
 
             // Call API with request
@@ -387,7 +397,7 @@ namespace PB.BL
             {
                 Console.WriteLine(e.GetType().Name + ": " + e.Message);
                 if (e.InnerException != null) Console.WriteLine("Inner Exception: " + e.InnerException);
-                return;
+                throw (e);
             }
 
             // Link items to subplatform
@@ -403,18 +413,33 @@ namespace PB.BL
             UowManager.Save();
         }
 
-        public void CleanupOldRecords(Subplatform subplatform, int days)
+        public void CleanupOldRecords(Subplatform subplatform)
         {
             InitNonExistingRepo();
-            List<Person> persons = ItemRepo.ReadPersons().Where(i => i.SubPlatforms.Contains(subplatform)).ToList();
-            List<Record> oldRecords = new List<Record>();
 
-            persons.ForEach(p =>
+            // Validation
+            if (subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.DAYS_TO_KEEP_RECORDS) is null)
             {
-                oldRecords.AddRange(p.Records.Where(r => r.Date.Date < DateTime.Now.Date.AddDays(-days)));
-            });
+                throw new Exception("Subplatform has no set period to keep records!");
+            }
+            
+            // Days to keep records
+            int days = int.Parse(subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.DAYS_TO_KEEP_RECORDS).Value);
 
+            // All persons
+            List<Person> persons = ItemRepo.ReadPersons().Where(i => i.SubPlatforms.Contains(subplatform)).ToList();
+
+            // All records to clear
+            List<Record> oldRecords = persons
+                .SelectMany(p => p.Records)
+                .Distinct()
+                .Where(r => r.Date.Date < DateTime.Now.Date.AddDays(-days))
+                .ToList();
+
+            // Persist deleted records
             RecordRepo.DeleteRecords(oldRecords);
+
+            // Save pending changes
             UowManager.Save();
         }
 
@@ -565,12 +590,6 @@ namespace PB.BL
             return newRecords;
         }
 
-        #region Keywords
-        public IEnumerable<Keyword> GetKeywords()
-        {
-            return ItemRepo.ReadKeywords();
-        }
-        #endregion
 
         public int GetKeywordsCount()
         {

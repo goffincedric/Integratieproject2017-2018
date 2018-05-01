@@ -39,6 +39,13 @@ namespace PB.DAL.Migrations
                             SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
                             Value = "31",
                             Subplatform = pbSubplatform
+                        },
+                        new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.SOURCE_API_URL,
+                            Value = "http://kdg.textgain.com/query",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
                         }
                     },
                     Admins = new List<Profile>(),
@@ -62,6 +69,13 @@ namespace PB.DAL.Migrations
                             SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
                             Value = "31",
                             Subplatform = testSubplatform
+                        },
+                        new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.SOURCE_API_URL,
+                            Value = "http://kdg.textgain.com/query",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
                         }
                     },
                     Admins = new List<Profile>(),
@@ -69,7 +83,7 @@ namespace PB.DAL.Migrations
                     Pages = new List<Page>()
                 };
             }
-#endregion
+            #endregion
 
             #region Organisation
             //Makes all organisations
@@ -197,7 +211,7 @@ namespace PB.DAL.Migrations
                         if (organisation != null) OrganisationsToAdd.Remove(o);
                     }).Wait();
             if (OrganisationsToAdd.Count != 0) ctx.Organisations.AddRange(OrganisationsToAdd);
-#endregion
+            #endregion
 
             #region Themes
             // Makes all themes

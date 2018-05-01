@@ -110,7 +110,7 @@ namespace UI_CA_Prototype
                     case 7:
                         if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
                         int days = int.Parse(SelectedSubplatform.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
-                        ItemMgr.CleanupOldRecords(SelectedSubplatform, days);
+                        ItemMgr.CleanupOldRecords(SelectedSubplatform);
                         break;
                     case 8:
                         Seed();
@@ -195,7 +195,6 @@ namespace UI_CA_Prototype
                 Environment.Exit(1);
             }
 
-
             //Injects seed data
             if (WillSeed)
             {
@@ -218,7 +217,7 @@ namespace UI_CA_Prototype
                     {
                         int days = int.Parse(s.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
                         Console.WriteLine("Clear " + s.Name + " from records older than " + days + " days");
-                        ItemMgr.CleanupOldRecords(s, days);
+                        ItemMgr.CleanupOldRecords(s);
                     });
                 }
                 catch (Exception e)
@@ -266,7 +265,7 @@ namespace UI_CA_Prototype
             //Makes PB subplatform
             Subplatform pbSubplatform = SubplatformMgr.GetSubplatforms().FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
 
-            // LINK IMGR
+            
         }
     }
 }

@@ -22,7 +22,6 @@ namespace PB.BL.Interfaces
         void ChangeItems(List<Item> items);
         void RemoveItem(int itemId);
 
-
         IEnumerable<Person> GetPersons();
         IEnumerable<Organisation> GetOrganisations();
         IEnumerable<Theme> GetThemes();
@@ -38,7 +37,8 @@ namespace PB.BL.Interfaces
         void RemoveRecord(long id);
 
         List<Record> JClassToRecord(List<JClass> data);
-        void CleanupOldRecords(Subplatform subplatform, int days);
+        void SyncDatabase(Subplatform subplatform);
+        void CleanupOldRecords(Subplatform subplatform);
 
         int GetKeywordsCount();
         int GetThemesCount();

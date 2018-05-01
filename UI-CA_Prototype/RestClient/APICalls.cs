@@ -11,22 +11,14 @@ namespace UI_CA_Prototype
     public class APICalls
     {
         public string API_URL { get; set; }
-        // HttpClient http = new HttpClient()
-        // HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:POORT/api/course");
-        // request.Headers.Add("Accept", "application/json");
-        //
-        // HttpResponseMessage response = http.SendAsync(request).Result;
-        // var responseContentAsString = response.Content.ReadAsStringAsync().Result;
-        // requestedData = JsonConvert.DeserializeObject<List<JeObject>>(responseContentAsString);
 
         public APICalls()
         {
-            API_URL = "http://kdg.textgain.com/query";
         }
 
         public APICalls(string api_url)
         {
-
+            API_URL = api_url;
         }
 
         public List<JClass> RequestRecords(string name = null, DateTime? since = null, DateTime? until = null, Dictionary<string, string[]> themes = null)
