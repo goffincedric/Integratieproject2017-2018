@@ -326,11 +326,6 @@ namespace UI_MVC.Controllers
         #endregion
 
 
-        public PartialViewResult _UserPartialTable()
-        {
-            IEnumerable<Profile> profiles = UserManager.GetProfiles();
-            return PartialView(profiles);
-        }
 
         public ViewResult UserBeheer()
         {

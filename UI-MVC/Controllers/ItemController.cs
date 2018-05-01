@@ -44,11 +44,11 @@ namespace UI_MVC.Controllers
             if (ModelState.IsValid)
             {
                 itemMgr.AddOrganisation(organisation.Name, organisation.FullName, organisation.SocialMediaLink, organisation.IconURL);
-                return RedirectToAction("AdminCrud", "Home");
+                return RedirectToAction("ItemBeheer", "Item");
             }
             else
             {
-                return RedirectToAction("AdminCrud", "Home");
+                return RedirectToAction("ItemBeheer", "Item");
 
             }
 
@@ -78,11 +78,11 @@ namespace UI_MVC.Controllers
             if (ModelState.IsValid)
             {
                 itemMgr.AddKeyword(theme.Name);
-                return RedirectToAction("AdminCrud","Home");
+                return RedirectToAction("ItemBeheer", "Item");
             }
             else
             {
-                return RedirectToAction("AdminCrud", "Home");
+                return RedirectToAction("ItemBeheer", "Item");
 
             }
 
@@ -110,11 +110,11 @@ namespace UI_MVC.Controllers
             if (ModelState.IsValid)
             {
                 itemMgr.AddTheme(theme.Name, theme.Description);
-                return RedirectToAction("AdminCrud","Home");
+                return RedirectToAction("ItemBeheer", "Item");
             }
             else
             {
-                return RedirectToAction("AdminCrud", "Home");
+                return RedirectToAction("ItemBeheer", "Item");
 
             }
 
@@ -144,11 +144,11 @@ namespace UI_MVC.Controllers
             if (ModelState.IsValid)
             {
                 itemMgr.AddPerson(person.Name, person.SocialMediaLink,person.IconURL, person.Organisation,null);
-                return RedirectToAction("AdminCrud","Home");
+                return RedirectToAction("ItemBeheer", "Item");
             }
             else
             {
-                return RedirectToAction("AdminCrud", "Home");
+                return RedirectToAction("ItemBeheer", "Item");
 
             }
 
@@ -158,17 +158,17 @@ namespace UI_MVC.Controllers
 
 
         [HttpPost]
-        public ActionResult DeleteItem(int id, FormCollection collection)
+        public ActionResult DeleteItem(int id)
         {
             try
             {
                 itemMgr.RemoveItem(id);
 
-                return RedirectToAction("AdminCrud","Home");
+                return RedirectToAction("ItemBeheer", "Item");
             }
             catch
             {
-                return View();
+                return RedirectToAction("ItemBeheer", "Item");
             }
         }
 

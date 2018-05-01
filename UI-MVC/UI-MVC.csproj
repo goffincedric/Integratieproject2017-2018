@@ -317,6 +317,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\load.js" />
     <Content Include="Scripts\vendor.js" />
+    <Content Include="Scripts\wordcloud\wordcloud.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -344,7 +345,6 @@
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\Home\Legal.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
-    <Content Include="Views\Home\AdminCrud.cshtml" />
     <Content Include="Views\Item\_OrganisationPartialTable.cshtml" />
     <Content Include="Views\Item\_ThemaPartialTable.cshtml" />
     <Content Include="Views\Item\_OrganisationPartialCreate.cshtml" />
@@ -356,7 +356,6 @@
     <Content Include="Views\Home\_Search.cshtml" />
     <Content Include="Views\Account\_ResetPassword.cshtml" />
     <Content Include="Views\Account\_DeleteProfile.cshtml" />
-    <Content Include="Views\Account\_UserPartialTable.cshtml" />
     <Content Include="Views\Account\_NotificationDropdown.cshtml" />
     <Content Include="Views\Home\ItemDetail.cshtml" />
     <Content Include="Views\Item\Charts.cshtml" />
