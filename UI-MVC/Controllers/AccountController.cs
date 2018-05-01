@@ -13,15 +13,11 @@ using System.Web;
 using System.Web.Mvc;
 using PB.BL.Domain.Items;
 using UI_MVC.Models;
-<<<<<<< HEAD
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
 using System.Linq;
 using System.Data.Entity.Validation;
 using PB.DAL.EF;
-=======
-using PB.BL.Domain.Platform;
->>>>>>> master
 
 namespace UI_MVC.Controllers
 {
@@ -33,22 +29,18 @@ namespace UI_MVC.Controllers
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private AccountManager _accountMgr;
         private IntegratieSignInManager _signInManager;
-<<<<<<< HEAD
-        private SubplatformManager _subplatformMgr;
-=======
-        private SubplatformManager SubplatformMgr = new SubplatformManager(uow);
->>>>>>> master
+        private ISubplatformManager SubplatformMgr;
 
         public AccountController()
         {
-
+            SubplatformMgr = new SubplatformManager(uow);
         }
 
         public AccountController(AccountManager userManager, IntegratieSignInManager signInManager, SubplatformManager subplatformManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
-            SubplatformManager = subplatformManager;
+            SubplatformMgr = new SubplatformManager(uow);
         }
 
         public IntegratieSignInManager SignInManager
@@ -72,18 +64,6 @@ namespace UI_MVC.Controllers
             private set
             {
                 _accountMgr = value;
-            }
-        }
-
-        public SubplatformManager SubplatformManager
-        {
-            get
-            {
-                return _subplatformMgr ?? new SubplatformManager(HttpContext.GetOwinContext().Get<IntegratieDbContext>());
-            }
-            private set
-            {
-                _subplatformMgr = value;
             }
         }
 
@@ -141,7 +121,7 @@ namespace UI_MVC.Controllers
                 /* START PSEUDO SEED */
                 // TODO: SubplatformId/SubplatformNaam/SubplatformAfkorting meegeven in RegisterViewModel, 
                 //       gebruiken om juiste subplatform op te halen!!
-                Subplatform pbSubplatform = SubplatformManager.GetSubplatforms().FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
+                Subplatform pbSubplatform = SubplatformMgr.GetSubplatforms().FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
                 if (pbSubplatform == null)
                 {
                     pbSubplatform = new Subplatform()
@@ -402,11 +382,7 @@ namespace UI_MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = ("User,Admin,SuperAdmin"))]
-<<<<<<< HEAD
-        public ActionResult DeleteProfileAdmin(string userId)
-=======
         public ActionResult DeleteProfileAdmin(string subplatform, string userId)
->>>>>>> master
         {
             if (!ModelState.IsValid)
             {
@@ -485,7 +461,7 @@ namespace UI_MVC.Controllers
                 /* START PSEUDO SEED */
                 // TODO: SubplatformId/SubplatformNaam/SubplatformAfkorting meegeven in ExternalLoginConfirmationViewModel, 
                 //       gebruiken om juiste subplatform op te halen!!
-                Subplatform pbSubplatform = SubplatformManager.GetSubplatforms().FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
+                Subplatform pbSubplatform = SubplatformMgr.GetSubplatforms().FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
                 if (pbSubplatform == null)
                 {
                     pbSubplatform = new Subplatform()
@@ -535,7 +511,7 @@ namespace UI_MVC.Controllers
                                         Y = 3,
                                         Width = 5,
                                         Height = 5,
-                                        Comparison = null
+                                        Comparison = new Comparison()
                                     },
                                     new Element()
                                     {
@@ -543,7 +519,7 @@ namespace UI_MVC.Controllers
                                         Y = 0,
                                         Width = 2,
                                         Height = 3,
-                                        Comparison = null
+                                        Comparison = new Comparison()
                                     }
                                 }
                             }
