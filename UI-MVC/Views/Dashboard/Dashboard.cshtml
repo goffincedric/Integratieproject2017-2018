@@ -47,7 +47,7 @@
                         <a class="btn btn-default clear-grid" id="clear-grid" href="#">Clear Grid</a>
                         <a class="btn btn-default add-element" id="add-element" href="#">Add Element</a>
                     </div>
-                    <div class="grid-stack grid-stack-6" id="zone-@zone.ZoneId">
+                    <div class="grid-stack grid-stack-12" id="zone-@zone.ZoneId">
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
 
     $(function () {
         var options = {
-            width: 6,
+            width: 12,
             float: false,
             removable: '.trash',
             removeTimeout: 100,
@@ -106,11 +106,10 @@
                 return ZoneData;
             };
 
+            //done
             addElement = function (grid) {
                 var ZoneId = grid.attr('id');
                 ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
-
-                console.log(ZoneId);
 
                 var Element = JSON.parse('{"Comparison" : "null", "X" : "0", "Y" : "0", "Width": "2", "Height": "2", "IsDraggable": "true", "ZoneId": "' + ZoneId + '"}');
 
@@ -201,11 +200,18 @@
                     saveGrid1()
                 });
 
+                //working
                 $(this).siblings('.buttons').children('.add-element').on("click", function () {
                     addElement($(this).parent().siblings('.grid-stack'))
                 });
 
                 loadGrid($(this));
+
+                $(this).children().each(function () {
+                    $(this).on("change", function (e, items) {
+                        console.log("test");
+                    })
+                });
             });
 
             $('#save-grid').click(this.saveGrid1);
