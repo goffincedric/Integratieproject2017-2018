@@ -147,6 +147,15 @@ namespace PB.DAL.EF
                 .HasForeignKey(d => d.SubplatformId)
                 .WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<Subplatform>()
+                .HasMany(s => s.Settings)
+                .WithRequired(ss => ss.Subplatform)
+                .HasForeignKey(ss => ss.SubplatformId)
+                .WillCascadeOnDelete(true);
+
+            //modelBuilder.Entity<SubplatformSetting>()
+            //    .HasKey(ss => new { ss.SubplatformId, ss.SettingName });
+
             modelBuilder.Entity<Dashboard>()
                 .HasMany(d => d.Zones)
                 .WithRequired(z => z.Dashboard)

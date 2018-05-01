@@ -21,23 +21,21 @@ namespace PB.DAL.Migrations
 
         protected override void Seed(IntegratieDbContext ctx)
         {
-            Subplatform pbSubplatform = ctx.Subplatforms.FirstOrDefaultAsync(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower())).Result;
-
             //Makes PB subplatform
-
+            Subplatform pbSubplatform = ctx.Subplatforms.FirstOrDefaultAsync(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower())).Result;
             if (pbSubplatform == null)
             {
                 pbSubplatform = new Subplatform()
                 {
                     Name = "Politieke Barometer",
-                    URL = "DUMMYURL",
+                    URL = "politieke-barometer",
                     DateOnline = DateTime.Now,
                     Settings = new List<SubplatformSetting>()
                     {
-                        new SubplatformSetting()
-                        {
+                        new SubplatformSetting(){
                             SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
-                            Value = "31"
+                            Value = "31",
+                            Subplatform = pbSubplatform
                         }
                     },
                     Admins = new List<Profile>(),
@@ -46,7 +44,31 @@ namespace PB.DAL.Migrations
                 };
             }
 
-            List<Item> OrganisationsToAdd = new List<Item>()
+            //Makes Test subplatform
+            Subplatform testSubplatform = ctx.Subplatforms.FirstOrDefaultAsync(s => s.Name.ToLower().Equals("Test".ToLower())).Result;
+            if (testSubplatform == null)
+            {
+                testSubplatform = new Subplatform()
+                {
+                    Name = "Test",
+                    URL = "testing-testing",
+                    DateOnline = DateTime.Now,
+                    Settings = new List<SubplatformSetting>()
+                    {
+                        new SubplatformSetting(){
+                            SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
+                            Value = "31",
+                            Subplatform = testSubplatform
+                        }
+                    },
+                    Admins = new List<Profile>(),
+                    Items = new List<Item>(),
+                    Pages = new List<Page>()
+                };
+            }
+
+            //Makes all organisations
+            List<Organisation> OrganisationsToAdd = new List<Organisation>()
             {
                 new Organisation()
                 {
@@ -58,7 +80,8 @@ namespace PB.DAL.Migrations
                     Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
-                        pbSubplatform
+                        pbSubplatform,
+                        testSubplatform
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
@@ -74,7 +97,8 @@ namespace PB.DAL.Migrations
                     Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
-                        pbSubplatform
+                        pbSubplatform,
+                        testSubplatform
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
@@ -90,7 +114,8 @@ namespace PB.DAL.Migrations
                     Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
-                        pbSubplatform
+                        pbSubplatform,
+                        testSubplatform
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
@@ -162,12 +187,14 @@ namespace PB.DAL.Migrations
                 }
             };
             ctx.Organisations.ForEachAsync(o =>
-            {
-                Organisation organisation = (Organisation)OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
-                if (organisation != null) OrganisationsToAdd.Remove(o);
-            }).Wait();
+                    {
+                        Organisation organisation = (Organisation)OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
+                        if (organisation != null) OrganisationsToAdd.Remove(o);
+                    }).Wait();
+            if (OrganisationsToAdd.Count != 0) ctx.Organisations.AddRange(OrganisationsToAdd);
 
-            List<Item> ThemesToAdd = new List<Item>()
+            // Makes all themes
+            List<Theme> ThemesToAdd = new List<Theme>()
             {
                 new Theme()
                 {
@@ -269,14 +296,13 @@ namespace PB.DAL.Migrations
                 }
             };
             ctx.Themes.ForEachAsync(t =>
-            {
-                Theme theme = (Theme)ThemesToAdd.FirstOrDefault(them => them.Equals(t));
-                if (theme != null) ThemesToAdd.Remove(t);
-            }).Wait();
+                        {
+                            Theme theme = (Theme)ThemesToAdd.FirstOrDefault(them => them.Equals(t));
+                            if (theme != null) ThemesToAdd.Remove(t);
+                        }).Wait();
+            if (ThemesToAdd.Count != 0) ctx.Themes.AddRange(ThemesToAdd);
 
-            if (OrganisationsToAdd.Count != 0) ctx.Items.AddRange(OrganisationsToAdd);
-            if (ThemesToAdd.Count != 0) ctx.Items.AddRange(ThemesToAdd);
-
+            // Save all pending changes
             ctx.SaveChanges();
         }
     }

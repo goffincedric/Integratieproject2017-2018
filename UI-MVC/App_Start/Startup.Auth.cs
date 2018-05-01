@@ -11,7 +11,8 @@ using PB.BL.Domain.Accounts;
 using PB.DAL.EF;
 using System;
 using PB.BL.Interfaces;
-
+using System.Web;
+using System.Web.Mvc;
 
 namespace UI_MVC
 {
@@ -33,14 +34,15 @@ namespace UI_MVC
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
                 ExpireTimeSpan = TimeSpan.FromDays(5),
-              Provider = new CookieAuthenticationProvider
-        {
-            // Enables the application to validate the security stamp when the user logs in.
-            // This is a security feature which is used when you change a password or add an external login to your account.  
-            OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<AccountManager, Profile>(
-                        validateInterval: TimeSpan.FromMinutes(30),
-                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-        },
+                Provider = new CookieAuthenticationProvider
+                {
+                    OnApplyRedirect = ApplyRedirect,
+                    // Enables the application to validate the security stamp when the user logs in.
+                    // This is a security feature which is used when you change a password or add an external login to your account.  
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<AccountManager, Profile>(
+                                validateInterval: TimeSpan.FromMinutes(30),
+                                regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
+                },
 
                 CookieName = "MyAuthCookie",
                 CookieHttpOnly = false,
@@ -88,6 +90,13 @@ namespace UI_MVC
             });
 
 
+        }
+
+        private static void ApplyRedirect(CookieApplyRedirectContext context)
+        {
+            UrlHelper _url = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            String actionUri = _url.Action("Login", "Account", new { returnUrl = context.Request.Uri.PathAndQuery });
+            context.Response.Redirect(actionUri);
         }
     }
 }
