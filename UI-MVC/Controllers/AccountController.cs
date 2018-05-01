@@ -153,7 +153,7 @@ namespace UI_MVC.Controllers
         #region Notification
         public ActionResult GetNotificationCount(string subplatform)
         {
-            Profile user = UserManager.GetProfile(User.Identity.GetUserId());            
+            Profile user = UserManager.GetProfile(User.Identity.GetUserId());
             int alertCount = user.ProfileAlerts.FindAll(pa => !pa.IsRead && pa.Alert.Item.SubPlatforms.Find(s => s.URL.ToLower().Equals(subplatform)) != null).Count;
             return Content(String.Format("{0}", alertCount));
         }
@@ -173,36 +173,15 @@ namespace UI_MVC.Controllers
 
         public ActionResult _NotificationDropdown(string subplatform)
         {
-            var model = new List<ProfileAlert>();
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            
-            model.AddRange(UserManager.GetProfile(User.Identity.GetUserId()).ProfileAlerts.FindAll(pa => pa.Alert.Item.SubPlatforms.Contains(Subplatform)));
-
-            model.Sort(delegate (ProfileAlert x, ProfileAlert y)
-            {
-                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
-                else if (x.TimeStamp == null) return -1;
-                else if (y.TimeStamp == null) return 1;
-                else return y.TimeStamp.CompareTo(x.TimeStamp);
-            });
-
+            var model = UserManager.GetProfileAlerts(Subplatform, UserManager.GetProfile(User.Identity.GetUserId()));
             return PartialView(model);
         }
 
-        public ActionResult Notifications()
+        public ActionResult Notifications(string subplatform)
         {
-            var model = new List<ProfileAlert>();
-
-            model.AddRange(UserManager.GetProfile(User.Identity.GetUserId()).ProfileAlerts);
-
-            model.Sort(delegate (ProfileAlert x, ProfileAlert y)
-            {
-                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
-                else if (x.TimeStamp == null) return -1;
-                else if (y.TimeStamp == null) return 1;
-                else return y.TimeStamp.CompareTo(x.TimeStamp);
-            });
-
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            var model = UserManager.GetProfileAlerts(Subplatform, UserManager.GetProfile(User.Identity.GetUserId()));
             return View(model);
         }
 
@@ -224,6 +203,7 @@ namespace UI_MVC.Controllers
 
         }
 
+        // TODO: MOET PUT ZIJN I.P.V. POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Account(AccountEditModel editedAccount)

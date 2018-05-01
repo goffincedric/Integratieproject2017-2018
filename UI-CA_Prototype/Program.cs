@@ -11,7 +11,6 @@ using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 
 namespace UI_CA_Prototype
 {
@@ -111,7 +110,7 @@ namespace UI_CA_Prototype
                     case 7:
                         if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
                         int days = int.Parse(SelectedSubplatform.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
-                        ItemMgr.CleanupOldRecords(SelectedSubplatform, days);
+                        ItemMgr.CleanupOldRecords(SelectedSubplatform);
                         break;
                     case 8:
                         Seed();
@@ -196,7 +195,6 @@ namespace UI_CA_Prototype
                 Environment.Exit(1);
             }
 
-
             //Injects seed data
             if (WillSeed)
             {
@@ -219,7 +217,7 @@ namespace UI_CA_Prototype
                     {
                         int days = int.Parse(s.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
                         Console.WriteLine("Clear " + s.Name + " from records older than " + days + " days");
-                        ItemMgr.CleanupOldRecords(s, days);
+                        ItemMgr.CleanupOldRecords(s);
                     });
                 }
                 catch (Exception e)
@@ -267,234 +265,7 @@ namespace UI_CA_Prototype
             //Makes PB subplatform
             Subplatform pbSubplatform = SubplatformMgr.GetSubplatforms().FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
 
-            if (pbSubplatform == null)
-            {
-                pbSubplatform = new Subplatform()
-                {
-                    Name = "Politieke Barometer",
-                    URL = "DUMMYURL",
-                    DateOnline = DateTime.Now,
-                    Settings = new List<SubplatformSetting>()
-                    {
-                        new SubplatformSetting()
-                        {
-                            SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
-                            Value = "31"
-                        }
-                    },
-                    Admins = new List<Profile>(),
-                    Items = new List<Item>(),
-                    Pages = new List<Page>()
-                };
-            }
-
-            #region Items
-            #region Organisations
-            List<Item> OrganisationsToAdd = new List<Item>()
-            {
-                new Organisation()
-                {
-                    Name = "PVDA",
-                    FullName = "Partij van de Arbeid",
-                    IconURL=@"~/Content/Images/Partijen/pvda.jpg",
-                    Keywords = new List<Keyword>(),
-                    People = new List<Person>(),
-                    Records = new List<Record>(),
-                    SubPlatforms = new List<Subplatform>()
-                    {
-                        pbSubplatform
-                    },
-                    SubscribedProfiles = new List<Profile>(),
-                    Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
-                },
-                new Organisation()
-                {
-                    Name = "CD&V",
-                    FullName = "Christen-Democratisch en Vlaams",
-                    IconURL=@"~/Content/Images/Partijen/cdv.png",
-                    Keywords = new List<Keyword>(),
-                    People = new List<Person>(),
-                    Records = new List<Record>(),
-                    SubPlatforms = new List<Subplatform>()
-                    {
-                        pbSubplatform
-                    },
-                    SubscribedProfiles = new List<Profile>(),
-                    Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
-                },
-                new Organisation()
-                {
-                    Name =  "SP.A",
-                    FullName ="Socialistische Partij Anders",
-                    IconURL=@"~/Content/Images/Partijen/spa.jpg",
-                    Keywords = new List<Keyword>(),
-                    People = new List<Person>(),
-                    Records = new List<Record>(),
-                    SubPlatforms = new List<Subplatform>()
-                    {
-                        pbSubplatform
-                    },
-                    SubscribedProfiles = new List<Profile>(),
-                    Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
-                },
-                new Organisation()
-                {
-                    Name = "Open Vld",
-                    FullName = "Open Vlaamse Liberalen en Democraten",
-                    IconURL=@"~/Content/Images/Partijen/openvld.png",
-                    Keywords = new List<Keyword>(),
-                    People = new List<Person>(),
-                    Records = new List<Record>(),
-                    SubPlatforms = new List<Subplatform>()
-                    {
-                        pbSubplatform
-                    },
-                    SubscribedProfiles = new List<Profile>(),
-                    Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
-                },
-                new Organisation()
-                {
-                    Name = "Groen",
-                    FullName = "Groen",
-                    IconURL=@"~/Content/Images/Partijen/groen.jpg",
-                    Keywords = new List<Keyword>(),
-                    People = new List<Person>(),
-                    Records = new List<Record>(),
-                    SubPlatforms = new List<Subplatform>()
-                    {
-                        pbSubplatform
-                    },
-                    SubscribedProfiles = new List<Profile>(),
-                    Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
-                },
-                new Organisation()
-                {
-                    Name = "N-VA",
-                    FullName = "Nieuw-Vlaamse Alliantie",
-                    IconURL=@"~/Content/Images/Partijen/nva.jpg",
-                    Keywords = new List<Keyword>(),
-                    People = new List<Person>(),
-                    Records = new List<Record>(),
-                    SubPlatforms = new List<Subplatform>()
-                    {
-                        pbSubplatform
-                    },
-                    SubscribedProfiles = new List<Profile>(),
-                    Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
-                },
-                new Organisation()
-                {
-                    Name = "VB",
-                    FullName ="Vlaams Belang" ,
-                    IconURL=@"~/Content/Images/Partijen/vb.png",
-                    Keywords = new List<Keyword>(),
-                    People = new List<Person>(),
-                    Records = new List<Record>(),
-                    SubPlatforms = new List<Subplatform>()
-                    {
-                        pbSubplatform
-                    },
-                    SubscribedProfiles = new List<Profile>(),
-                    Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
-                }
-            };
-
-            //Replace new organisations with existing organisations
-            ItemMgr.GetOrganisations().ToList().ForEach(o =>
-            {
-                Organisation organisation = (Organisation)OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
-                if (organisation != null) OrganisationsToAdd.Remove(o);
-            });
-            if (OrganisationsToAdd.Count != 0) ItemMgr.AddItems(OrganisationsToAdd);
-            #endregion
-
-            #region Themes
-            List<Item> ThemesToAdd = new List<Item>()
-            {
-            new Theme()
-                {
-                    Name = "Migratie",
-                    IconURL=@"~/Content/Images/Themes/migratie.png",
-                    IsTrending = false,
-                },
-             new Theme()
-                {
-                    Name = "Onderwijs",
-                    IconURL=@"~/Content/Images/Themes/onderwijs.png",
-                    Records = new List<Record>()
-                },
-              new Theme()
-                {
-                    Name = "Veiligheid",
-                    IconURL=@"~/Content/Images/Themes/veiligheid.png",
-                    Records = new List<Record>()
-                },
-               new Theme()
-                {
-                    Name = "Zorg",
-                    IconURL=@"~/Content/Images/Themes/zorg.png",
-                    Records = new List<Record>()
-                },
-               new Theme()
-                {
-                    Name = "Europa",
-                    IconURL=@"~/Content/Images/Themes/eu.png",
-                    Records = new List<Record>()
-                },
-               new Theme()
-                {
-                    Name = "Milieu",
-                    IconURL=@"~/Content/Images/Themes/eu.png"
-                },
-               new Theme()
-               {
-                   Name="Mobiliteit",
-                   IconURL=@"~/Content/Images/Themes/mobiliteit.png"
-               }
-
-            };
-
-            ItemMgr.GetThemes().ToList().ForEach(t =>
-            {
-                Theme theme = (Theme)ThemesToAdd.FirstOrDefault(them => them.Equals(t));
-                if (theme != null) ThemesToAdd.Remove(t);
-            });
-            if (ThemesToAdd.Count != 0) ItemMgr.AddItems(ThemesToAdd);
-            #endregion
-
-            #region Persons
-            //Injects api seed data
-            APICalls restClient = new APICalls()
-            {
-                API_URL = "http://kdg.textgain.com/query"
-            };
-
-            //Individueel api aanspreken
-            List<JClass> requestedRecords = new List<JClass>();
-
-            try
-            {
-                requestedRecords.AddRange(restClient.RequestRecords(since: DateTime.Now.AddDays(-int.Parse(pbSubplatform.Settings.First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value))));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.GetType().Name + ": " + e.Message);
-                if (e.InnerException != null) Console.WriteLine("Inner Exception: " + e.InnerException);
-                return;
-            }
-
-            //Convert JClass to Record and persist to database
-            requestedRecords.ForEach(r => r.Subplatforms.Add(pbSubplatform));
-            ItemMgr.JClassToRecord(requestedRecords);
-            #endregion
-            #endregion
+            
         }
     }
 }

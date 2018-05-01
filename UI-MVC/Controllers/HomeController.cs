@@ -163,9 +163,9 @@ namespace UI_MVC.Controllers
 
                 accountMgr.ChangeUserSetting(profile.Id, userSetting);
 
-                return View("~/Views/Home/Index.cshtml");
+                return View("Index");
             }
-            return View("~/Views/Home/Index.cshtml");
+            return View("Index");
         }
 
 
@@ -174,8 +174,6 @@ namespace UI_MVC.Controllers
         [Authorize]
         public ActionResult ItemDetail(string subplatform, int id)
         {
-
-
             Item item = itemMgr.GetItem(id);
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             if (!item.SubPlatforms.Contains(Subplatform)) return HttpNotFound();
@@ -189,24 +187,21 @@ namespace UI_MVC.Controllers
             }
 
             //ViewBag.Icon=@"~\Content\Images\Partijen\vb.png";
-            if (item is Person)
+            if (item is Person person)
             {
-                Person person = (Person)item;
                 int? count = person.Records.Count();
                 ViewBag.Vermeldingen = (count is null) ? 0 : count;
             }
-            if (item is Organisation)
+            if (item is Organisation organisation)
             {
-                Organisation organisation = (Organisation)item;
 
                 // int? count = organisation.People.Count();
                 //ViewBag.Leden = (count is null) ? 0 : count;
                 ViewBag.Leden = 0;
                 ViewBag.FullName = organisation.FullName;
             }
-            if (item is Theme)
+            if (item is Theme theme)
             {
-                Theme theme = (Theme)item;
                 //int? count = theme.Records.Count();
                 //ViewBag.Associaties = (count is null) ? 0 : count;
                 ViewBag.Associaties = 0;
