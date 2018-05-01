@@ -4,16 +4,18 @@ using System.Web.Routing;
 namespace UI_MVC
 {
     public class RouteConfig
-  {
-    public static void RegisterRoutes(RouteCollection routes)
     {
-      routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-      routes.MapRoute(
-          name: "Default",
-          url: "{controller}/{action}/{id}",
-          defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-      );
+            routes.MapMvcAttributeRoutes();
+
+            routes.MapRoute(
+                name: "Default",
+                url: "{subplatform}/{controller}/{action}/{id}",
+                defaults: new { subplatform = "politieke-barometer", controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+        }
     }
-  }
 }

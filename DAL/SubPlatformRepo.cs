@@ -2,6 +2,7 @@
 using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 
@@ -59,15 +60,28 @@ namespace PB.DAL
         public IEnumerable<Subplatform> ReadSubplatforms()
         {
             return ctx.Subplatforms
-                .Include("Settings")
+                .Include(s => s.Admins)
+                .Include(s => s.Items)
+                .Include(s => s.Settings)
                 .AsEnumerable();
         }
 
         public Subplatform ReadSubplatform(int subplatformId)
         {
             return ctx.Subplatforms
-                .Include("Settings")
+                .Include(s => s.Admins)
+                .Include(s => s.Items)
+                .Include(s => s.Settings)
                 .FirstOrDefault(s => s.SubplatformId == subplatformId);
+        }
+
+        public Subplatform ReadSubplatform(string subplatformURL)
+        {
+            return ctx.Subplatforms
+                .Include(s => s.Admins)
+                .Include(s => s.Items)
+                .Include(s => s.Settings)
+                .FirstOrDefault(s => s.URL.ToLower().Equals(subplatformURL.ToLower()));
         }
 
         public void UpdateSubplatform(Subplatform subplatform)
