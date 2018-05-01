@@ -129,10 +129,4 @@
     <value>application/json</value>
     <comment>Accepted body content</comment>
   </data>
-  <data name="PASSWORD_VALUE" xml:space="preserve">
-    <value>DenAfwas</value>
-  </data>
-  <data name="USERNAME_VALUE" xml:space="preserve">
-    <value>AuthApiUser</value>
-  </data>
 </root>

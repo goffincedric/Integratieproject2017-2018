@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace UI_MVC.Controllers.API
 {
-    [Authorize]
+    [Authorize(Roles = "User,Admin,SuperAdmin")]
     public class AccountController : ApiController
     {
         // GET: api/Account

@@ -1,160 +1,162 @@
 ﻿@model PB.BL.Domain.Items.Item
 
 @{
-  Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <main class="main-content bgc-grey-100">
-  <div id="mainContent" class="container-fluid">
+    <div id="mainContent" class="container-fluid">
 
-    <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
-      <div class="bgc-white p-20 bd">
+        <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
+            <div class="bgc-white p-20 bd">
 
 
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-3">
-              <img style="width: 200px; height: auto;position: absolute; margin: auto;top: 0;left: 0;right: 0;bottom: 0;" src="@ViewBag.Icon" alt="logo" />
-            </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-3">
+                            <img style="width: 200px; height: auto;position: absolute; margin: auto;top: 0;left: 0;right: 0;bottom: 0;" src="@ViewBag.Icon" alt="logo" />
+                        </div>
 
-            <div class="col-9">
-              <div class="h-75 w-100">
-                <div class="row" style="margin:0; text-align:center;">
-                  <h1 style="color: #2196f3; text-align: center; padding-top: 3%; width:100%;" class="display-4"> @Html.DisplayFor(model => model.Name)</h1>
+                        <div class="col-9">
+                            <div class="h-75 w-100">
+                                <div class="row" style="margin:0; text-align:center;">
+                                    <h1 style="color: #2196f3; text-align: center; padding-top: 3%; width:100%;" class="display-4"> @Html.DisplayFor(model => model.Name)</h1>
+                                </div>
+                                <div class="row">
+                                    @if (Model is PB.BL.Domain.Items.Person)
+                                    {
+                                        <ul style="list-style-type:none; width:100%; text-align:center;">
+                                            <li style="display:inline-block;"><h5 class="h5">@ViewBag.Vermeldingen Vermeldingen</h5></li>
+                                            <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
+                                            <li style="display:inline-block;"><h5 class="h5">Partijnaam</h5></li>
+
+                                        </ul>
+                                    }
+                                    else if (Model is PB.BL.Domain.Items.Organisation)
+                                    {
+
+                                        <ul style="list-style-type:none; width:100%; text-align:center;">
+                                            <li style="display:inline-block;"><h5 class="h5">@ViewBag.Leden Leden</h5></li>
+                                            <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
+                                            <li style="display:inline-block;"><h5 class="h5">@ViewBag.FullName</h5></li>
+
+                                        </ul>
+
+                                    }
+                                    else
+                                    {
+                                        <ul style="list-style-type:none; width:100%; text-align:center;">
+                                            <li style="display:inline-block;"><h5 class="h5">@ViewBag.Associaties Associaties</h5></li>
+                                            <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
+                                            <li style="display:inline-block;"><h5 class="h5">@ViewBag.Keywords</h5></li>
+
+                                        </ul>
+
+                                    }
+                                </div>
+
+                            </div>
+                            <div class="h-25 w-100 d-inline-block">
+
+                                @if (ViewBag.Subscribed)
+                                {
+                                    using (Html.BeginForm("RemoveSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
+                                    }
+                                }
+                                else
+                                {
+                                    using (Html.BeginForm("AddSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" value="Subscribe me!" class="btn btn-outline-primary btn-lg btn-block">Subcribe!</button>
+                                    }
+
+                                }
+                            </div>
+                        </div>
+
+
+                    </div>
                 </div>
-                <div class="row">
-                  @if (Model is PB.BL.Domain.Items.Person)
-                  {
-                    <ul style="list-style-type:none; width:100%; text-align:center;">
-                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Vermeldingen Vermeldingen</h5></li>
-                      <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
-                      <li style="display:inline-block;"><h5 class="h5">Partijnaam</h5></li>
+            </div>
 
-                    </ul>
-                  }
-                  else if (Model is PB.BL.Domain.Items.Organisation)
-                  {
 
-                    <ul style="list-style-type:none; width:100%; text-align:center;">
-                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Leden Leden</h5></li>
-                      <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
-                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.FullName</h5></li>
 
-                    </ul>
+            <div class="row" style="margin-top: 10px;">
 
-                  }
-                  else
-                  {
-                    <ul style="list-style-type:none; width:100%; text-align:center;">
-                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Associaties Associaties</h5></li>
-                      <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
-                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Keywords</h5></li>
-
-                    </ul>
-                    
-                  }
+                <div class="col-sm" style="padding:0; margin:0">
+                    <div class="layers bd bgc-white p-20">
+                        <div class="layer w-100 mB-10">
+                            <h6 class="lh-1">Populariteit</h6>
+                        </div>
+                        <div class="layer w-100">
+                            <div class="peers ai-sb fxw-nw">
+                                <div class="peer peer-greed"><span id="sparklinedash4"></span></div>
+                                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">+10%</span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-              </div>
-              <div class="h-25 w-100 d-inline-block">
+                <div class="col-sm">
+                    <div class="layers bd bgc-white p-20">
+                        <div class="layer w-100 mB-10">
+                            <h6 class="lh-1">Positiviteit</h6>
+                        </div>
+                        <div class="layer w-100">
+                            <div class="peers ai-sb fxw-nw">
+                                <div class="peer peer-greed"><span id="sparklinedash"></span></div>
+                                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">+3%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                @if (ViewBag.Subscribed)
-                {
-                  using (Html.BeginForm("RemoveSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
-                  {
-                    @Html.AntiForgeryToken()
-                    <button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
-                  }
-                }
-                else
-                {
-                  using (Html.BeginForm("AddSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
-                  {
-                    @Html.AntiForgeryToken()
-                    <button type="submit" value="Subscribe me!" class="btn btn-outline-primary btn-lg btn-block">Subcribe!</button>
-                  }
 
-                }
-              </div>
+                <div class="col-sm" style="padding:0; margin:0">
+                    <div class="layers bd bgc-white p-20">
+                        <div class="layer w-100 mB-10">
+                            <h6 class="lh-1">Activiteit</h6>
+                        </div>
+                        <div class="layer w-100">
+                            <div class="peers ai-sb fxw-nw">
+                                <div class="peer peer-greed"><span id="sparklinedash2"></span></div>
+                                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">-7%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
+            <div id="graphs">
 
-          </div>
+            </div>
+
+            @if (Model is PB.BL.Domain.Items.Person)
+            {
+                <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
+                    <div class="bgc-white p-20 bd">
+                        <h6 class="c-grey-900">Sentiment analyse</h6> <div class="mT-30" style="text-align:center">
+                            <canvas width="800" height="200" id="mycanvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-      </div>
-
-
-
-      <div class="row" style="margin-top: 10px;">
-
-        <div class="col-sm">
-          <div class="layers bd bgc-white p-20">
-            <div class="layer w-100 mB-10">
-              <h6 class="lh-1">Populariteit</h6>
-            </div>
-            <div class="layer w-100">
-              <div class="peers ai-sb fxw-nw">
-                <div class="peer peer-greed"><span id="sparklinedash4"></span></div>
-                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">+10%</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm">
-          <div class="layers bd bgc-white p-20">
-            <div class="layer w-100 mB-10">
-              <h6 class="lh-1">Positiviteit</h6>
-            </div>
-            <div class="layer w-100">
-              <div class="peers ai-sb fxw-nw">
-                <div class="peer peer-greed"><span id="sparklinedash"></span></div>
-                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">+3%</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="col-sm">
-          <div class="layers bd bgc-white p-20">
-            <div class="layer w-100 mB-10">
-              <h6 class="lh-1">Activiteit</h6>
-            </div>
-            <div class="layer w-100">
-              <div class="peers ai-sb fxw-nw">
-                <div class="peer peer-greed"><span id="sparklinedash2"></span></div>
-                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">-7%</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div id="graphs">
-
-      </div>
-
-
-      <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
-        <div class="bgc-white p-20 bd">
-          <h6 class="c-grey-900">Sentiment analyse</h6> <div class="mT-30" style="text-align:center">
-            <canvas width="800" height="200" id="mycanvas"></canvas>
-          </div>
-        </div>
-      </div>
-
     </div>
-  </div>
 
 </main>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<script>
-
+@if (Model is PB.BL.Domain.Items.Person)
+{
+    <script>
   $("#graphs").after("<div style=\"margin: 10px 0\" class=\"masonry-item col-md- 12\"> <div class=\"bgc-white p-20 bd\"> <h6 class=\"c-grey-900\">Line chart</h6> <div class=\"mT-30\" id=\"graph-bar\"> </div></div></div>");
 
   $("#graph-bar").append("<canvas id=\"line-chart2\" height=\"400\"></canvas>");
@@ -167,11 +169,13 @@
   function drawLineChart(id) {
 
     var test = "";
-    test = $.ajax({
+      test = $.ajax({
       async: false,
       type: 'GET',
       dataType: 'json',
-      url: "https://localhost:44342/api/item/GetPersonTweet/" + id
+          url: "https://localhost:44342/api/item/GetPersonTweet/" + id,
+          headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+
     }).responseJSON
 
     var keys = [];
@@ -216,10 +220,14 @@
     });
   }
 
-</script>
 
+    </script>
+}
 <script src="https://nodebox.live/api/v1/ndbx.js"></script>
-<script>
+
+@if (Model is PB.BL.Domain.Items.Person)
+{
+    <script>
   var itemid = @Html.Raw(Model.ItemId);
 
   var tmp = "";
@@ -227,7 +235,8 @@
       async:false,
       type: 'GET',
       dataType: 'json',
-      url: "https://localhost:44342/api/item/getrecordsfromperson/" + itemid
+        url: "https://localhost:44342/api/item/getrecordsfromperson/" + itemid,
+        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
   }).responseJSON;
 
   var options = {
@@ -250,7 +259,7 @@
       }
     });
 
-</script>
+    </script>
 
 
-
+}

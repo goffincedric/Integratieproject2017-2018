@@ -9,7 +9,6 @@ using System;
 
 namespace UI_MVC.Controllers.API
 {
-    [Authorize]
     public class ItemController : ApiController
     {
         private UnitOfWorkManager UowMgr;
@@ -96,6 +95,7 @@ namespace UI_MVC.Controllers.API
         // POST: api/person
         [HttpPost]
         [Route("api/person")]
+        [Authorize(Roles = "User,Admin,SuperAdmin")]
         public IHttpActionResult PostPerson([FromBody]Person person)
         {
             if (person == null) return BadRequest();
@@ -109,6 +109,7 @@ namespace UI_MVC.Controllers.API
         // POST: api/organisation
         [HttpPost]
         [Route("api/organisation")]
+        [Authorize(Roles = "User,Admin,SuperAdmin")]
         public IHttpActionResult PostOrganisation([FromBody]Organisation organisation)
         {
             if (organisation == null) return BadRequest();
@@ -122,6 +123,7 @@ namespace UI_MVC.Controllers.API
         // POST: api/theme
         [HttpPost]
         [Route("api/theme")]
+        [Authorize(Roles = "User,Admin,SuperAdmin")]
         public IHttpActionResult PostTheme([FromBody]Theme theme)
         {
             if (theme == null) return BadRequest();
@@ -134,6 +136,7 @@ namespace UI_MVC.Controllers.API
 
         // PUT: api/item/5
         [HttpPut]
+        [Authorize(Roles = "User,Admin,SuperAdmin")]
         public IHttpActionResult Put(int id, [FromBody]Item item)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -145,6 +148,7 @@ namespace UI_MVC.Controllers.API
 
         // DELETE: api/item/5
         [HttpDelete]
+        [Authorize(Roles = "User,Admin,SuperAdmin")]
         public IHttpActionResult Delete([FromBody]int? id)
         {
             if (id == null) return BadRequest("No Id provided");
@@ -164,13 +168,23 @@ namespace UI_MVC.Controllers.API
 
 
         [HttpGet]
-        public IHttpActionResult GetPersonsTop()
+        public IHttpActionResult GetPersonsTop(int id)
         {
-            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o => o.Records.Count()).Take(5);
+            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o => o.Records.Count()).Take(id);
             Dictionary<string, int> personmap = new Dictionary<string, int>();
             persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
             if (persons == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(personmap);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetPersonsTopJSON(int id)
+        {
+            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o => o.Records.Count()).Take(id);
+            Dictionary<string, int> personmap = new Dictionary<string, int>();
+            persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
+            if (persons == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(JsonConvert.SerializeObject(personmap));
         }
 
         [HttpGet]
@@ -206,6 +220,21 @@ namespace UI_MVC.Controllers.API
             .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
             if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
+        }
+
+
+
+        [HttpGet]
+        public IHttpActionResult GetPersonAveragePol(int id)
+        {
+            IEnumerable<Record> records = ItemMgr.GetPerson(id).Records;
+            if (records == null) return NotFound();
+            Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
+
+            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
+            .ToDictionary(r => r.Key.Date, r => (r.Average(p => p.Sentiment.Objectivity) * (r.Average(f => f.Sentiment.Polarity))));
+            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(JsonConvert.SerializeObject(recordsmap));
         }
     }
 }

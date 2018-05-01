@@ -1,0 +1,87 @@
+﻿
+@{
+  ViewBag.Title = "charts";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+  #myChart {
+    height: 100%;
+    width: 100%;
+    min-height: 500px;
+  }
+
+  .zc-ref {
+    display: none;
+  }
+</style>
+<main class="main-content bgc-grey-100">
+  <div id="mainContent">
+    <div id="myChart"></div>
+  </div>
+</main>
+
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script>
+  zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+  ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];</script>
+
+
+<script>
+
+  var tmp = "";
+  tmp = $.ajax({
+    async: false,
+    type: 'GET',
+    dataType: 'json',
+      url: "https://localhost:44342/api/item/getpersonstop/" + 10,
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+  }).responseJSON
+
+  var keys = [];
+  keys = Object.keys(tmp);
+  var label = [];
+  var values = [];
+
+
+  var obj = "[";
+  var obj2 = [];
+  for (var i    = 0; i < keys.length; i++) {
+    var result  = new Object();
+    result.text = keys[i];
+    result.count = tmp[keys[i]];
+    var objKeysRegex = /({|,)(?:\s*)(?:')?([A-Za-z_$\.][A-Za-z0-9_ \-\.$]*)(?:')?(?:\s*):/g;
+    var newQuotedKeysString = JSON.stringify(result).replace(objKeysRegex, "$1\"$2\":");
+    var newObject = JSON.parse(newQuotedKeysString);
+    obj2.push(newObject);
+
+  }
+
+ 
+  var myConfig = {
+    "graphset": [
+      {
+        "type": "wordcloud",
+        "options": {
+          "style": {
+            "tooltip": {
+              visible: true,
+              text: '%text: %hits'
+            }
+          },
+          "words": obj2
+
+
+        }
+      }
+    ]
+  };
+
+  zingchart.render({
+    id: 'myChart',
+    data: myConfig,
+    height: '100%',
+    width: '100%'
+  });
+
+
+</script>

@@ -9,8 +9,9 @@ namespace PB.BL.Domain.Items
     public class Person : Item
     {
         [DataMember]
+        public int TrendingScore { get; set; }
+        [DataMember]
         public string SocialMediaLink { get; set; }
-        
         [DataMember]
         public Function Function { get; set; }
         [DataMember]

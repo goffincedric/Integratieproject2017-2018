@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace UI_MVC.Controllers.API
 {
-    [Authorize]
+    [Authorize(Roles = "User,Admin,SuperAdmin")]
     public class DashboardController : ApiController
     {
         private readonly UnitOfWorkManager UowMgr;

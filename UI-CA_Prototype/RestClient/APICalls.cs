@@ -41,7 +41,7 @@ namespace UI_CA_Prototype
                 if (until != null) apiQuery.Until = until;
                 if (themes != null) apiQuery.Themes = themes;
             }
-            
+
 
             return RequestRecords(
                 JsonConvert.SerializeObject(apiQuery, Formatting.None, new JsonSerializerSettings
@@ -70,7 +70,7 @@ namespace UI_CA_Prototype
 
         private List<JClass> RequestRecords(string body)
         {
-            List<JClass> requestedRecords;
+            List<JClass> requestedRecords = null;
 
             using (HttpClient http = new HttpClient())
             {
@@ -87,7 +87,9 @@ namespace UI_CA_Prototype
                 //request.Content = new StringContent("{\"name\":\"Annick De Ridder\",\"since\":\"" + new DateTime(2018, 1, 1, 0, 0, 0).ToString() + "\",\"until\":\"" + DateTime.Now.ToString() +"\",\"themes\":{ \"religie\":[\"christian\", \"muslim\"],\"media\":[\"nieuws\",\"krant\"]}}", Encoding.UTF8, "application/json");
 
                 //Request naar API zenden
-                HttpResponseMessage response = http.SendAsync(request).Result;
+                HttpResponseMessage response;
+                response = http.SendAsync(request).Result;
+
                 if (response.IsSuccessStatusCode)
                 {
                     //Response als string lezen
