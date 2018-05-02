@@ -366,6 +366,7 @@
     <Content Include="Views\Account\UserBeheer.cshtml" />
     <Content Include="Views\Item\ItemBeheer.cshtml" />
     <Content Include="Views\Account\UserSettings.cshtml" />
+    <Content Include="Views\Home\_UrlList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

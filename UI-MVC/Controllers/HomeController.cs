@@ -292,5 +292,15 @@ namespace UI_MVC.Controllers
 
 
         }
+
+        public ActionResult _UrlList(int id)
+        {
+            List<Url> urls = null;
+            itemMgr.GetPerson(id).Records.ForEach(p => urls.ForEach(u => urls.Add(u)));
+
+
+
+            return PartialView(urls);
+        }
     }
 }
