@@ -6,6 +6,7 @@ using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -245,7 +246,7 @@ namespace UI_MVC.Controllers
             }
             return RedirectToAction("ItemDetail", "Home", new { Id = id });
         }
-        
+
         [HttpPost]
         public ActionResult GenerateAlertsManually()
         {
@@ -256,5 +257,40 @@ namespace UI_MVC.Controllers
             return RedirectToAction("PlatformSettings", "Home");
         }
 
+        [HttpPost]
+        public ActionResult CleanupDB(string subplatform)
+        {
+            Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
+            itemMgr.CleanupOldRecords(sp);
+            return RedirectToAction("PlatformSettings", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Syncronize(string subplatform)
+        {
+            Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
+            itemMgr.SyncDatabase(sp);
+            return RedirectToAction("PlatformSettings", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Upload()
+        {
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), fileName);
+                    file.SaveAs(path);
+                }
+            }
+
+            return RedirectToAction("PlatformSettings","Home");
+
+
+        }
     }
 }
