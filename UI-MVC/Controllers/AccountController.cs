@@ -304,20 +304,18 @@ namespace UI_MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = ("User,Admin,SuperAdmin"))]
-        public ActionResult DeleteProfileAdmin(string subplatform, string userId)
+        public ActionResult DeleteProfileAdmin(string userId)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || userId.Equals(User.Identity.GetUserId()))
             {
-                return RedirectToAction("AdminCrud", "Home");
+                return RedirectToAction("UserBeheer", "Account");
             }
-            var user = UserManager.GetProfile(userId);
 
+            var user = UserManager.GetProfile(userId);
 
             UserManager.RemoveProfile(user.Id);
 
-            LogOff(subplatform);
-
-            return RedirectToAction("AdminCrud", "Home");
+            return RedirectToAction("UserBeheer", "Account");
         }
 
         #endregion
