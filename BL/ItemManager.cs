@@ -77,7 +77,7 @@ namespace PB.BL
             return ItemRepo.CreateItem(item);
         }
 
-        public Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, string iconUrl = null, bool isTrending = false)
+        public Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, string iconUrl = null, bool isTrending = false, Subplatform subplatform = null)
         {
             InitNonExistingRepo();
 
@@ -96,6 +96,11 @@ namespace PB.BL
                 Records = new List<Record>(),
                 People = new List<Person>()
             };
+            if (subplatform != null)
+            {
+                organisation.SubPlatforms.Add(subplatform);
+                subplatform.Items.Add(organisation);
+            }
 
             organisation = ItemRepo.CreateOrganisation(organisation);
             UowManager.Save();
@@ -103,7 +108,7 @@ namespace PB.BL
             return organisation;
         }
 
-        public Person AddPerson(string name, string socialMediaLink, string iconUrl, Organisation organisation = null, Function function = null, bool isTrending = false)
+        public Person AddPerson(string name, string socialMediaLink, string iconUrl, Organisation organisation = null, Function function = null, bool isTrending = false, Subplatform subplatform = null)
         {
             InitNonExistingRepo();
             Person person = new Person()
@@ -122,12 +127,18 @@ namespace PB.BL
                 Records = new List<Record>(),
                 Organisation = organisation
             };
+            if (subplatform != null)
+            {
+                person.SubPlatforms.Add(subplatform);
+                subplatform.Items.Add(person);
+            }
+
             person = ItemRepo.CreatePerson(person);
             UowManager.Save();
             return person;
         }
 
-        public Theme AddTheme(string name, string description, string iconUrl, bool isTrending = false)
+        public Theme AddTheme(string name, string description, string iconUrl, bool isTrending = false, Subplatform subplatform = null)
         {
             InitNonExistingRepo();
             Theme theme = new Theme()
@@ -143,6 +154,11 @@ namespace PB.BL
                 SubPlatforms = new List<Subplatform>(),
                 Records = new List<Record>()
             };
+            if (subplatform != null)
+            {
+                theme.SubPlatforms.Add(subplatform);
+                subplatform.Items.Add(theme);
+            }
 
             theme = ItemRepo.CreateTheme(theme);
             UowManager.Save();
@@ -227,6 +243,20 @@ namespace PB.BL
             UowManager.Save();
         }
 
+        public void RemoveItem(int itemId, Subplatform subplatform)
+        {
+            InitNonExistingRepo();
+            Item item = ItemRepo.ReadItem(itemId);
+            if (item.SubPlatforms.Contains(subplatform))
+            {
+                item.SubPlatforms.Remove(subplatform);
+                subplatform.Items.Remove(item);
+
+                ItemRepo.UpdateItem(item);
+                UowManager.Save();
+            }
+        }
+
         public void RemoveKeyword(int keywordId)
         {
             InitNonExistingRepo();
@@ -238,13 +268,17 @@ namespace PB.BL
             UowManager.Save();
         }
 
-        public Keyword AddKeyword(string name)
+        public Keyword AddKeyword(string name, List<Item> items = null)
         {
             Keyword keyword = new Keyword()
             {
                 Name = name,
-                Items = new List<Item>()
+                Items = items ?? new List<Item>()
             };
+            if (items != null)
+            {
+                items.ForEach(i => i.Keywords.Add(keyword));
+            }
 
             keyword = ItemRepo.CreateKeyword(keyword);
             UowManager.Save();

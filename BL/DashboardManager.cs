@@ -46,15 +46,17 @@ namespace PB.BL
             }
         }
 
-        public Dashboard AddDashboard(Subplatform subplatform, Profile profile, UserType dashboardType = UserType.HOME)
+        public Dashboard AddDashboard(Subplatform subplatform, Profile profile, UserType dashboardType = UserType.HOME, List<Zone> zones = null)
         {
             Dashboard dashboard = new Dashboard()
             {
                 DashboardType = dashboardType,
-                Zones = new List<Zone>(),
+                Zones = zones ?? new List<Zone>(),
                 Profile = profile,
                 Subplatform = subplatform
             };
+            subplatform.Dashboards.Add(dashboard);
+            profile.Dashboards.Add(dashboard);
 
             dashboard = AddDashboard(dashboard);
             UowManager.Save();

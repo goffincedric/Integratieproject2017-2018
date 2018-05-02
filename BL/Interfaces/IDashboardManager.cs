@@ -8,11 +8,12 @@ namespace PB.BL.Interfaces
     public interface IDashboardManager
     {
         IEnumerable<Dashboard> GetDashboards();
-        Dashboard AddDashboard(Subplatform subplatform, Profile profile, UserType dashboardType = UserType.HOME);
+        Dashboard AddDashboard(Subplatform subplatform, Profile profile, UserType dashboardType = UserType.HOME, List<Zone> zones = null);
         List<Dashboard> AddDashboards(List<Dashboard> dashboards);
         Dashboard GetDashboard(int dashboardId);
         void ChangeDashboard(Dashboard dashboard);
         void RemoveDashboard(int dashboardId);
+
 
         IEnumerable<Zone> GetZones();
         Zone GetZone(int zoneId);

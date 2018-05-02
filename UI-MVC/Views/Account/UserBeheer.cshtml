@@ -41,11 +41,11 @@
                     @*<td>@Html.DisplayFor(modelItem => item.Roles)</td>*@
                     <td>
 
-                      @using (Html.BeginForm("DeleteProfileAdmin", "Account", new { userId = item.Id }, FormMethod.Post, new { id = "delete" }))
+                      @using (Html.BeginForm("DeleteProfileAdmin", "Account", new { userId = item.Id }, FormMethod.Post, new { id = "delete-" + item.Id }))
                       {
                         @Html.AntiForgeryToken()
 
-                        <a href="javascript:document.getElementById('delete').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                        <a href="javascript:document.getElementById('delete-@item.Id').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                           <span style="color: #2196f3" class="fsz-sm">
                             Delete
                           </span>
