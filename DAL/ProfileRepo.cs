@@ -62,9 +62,10 @@ namespace PB.DAL
         {
             return ctx.Users
                 .Include(p => p.UserData)
+                .Include(p => p.Settings)
                 .Include(p => p.ProfileAlerts)
                 .Include(p => p.Subscriptions)
-                .Include(p => p.Settings)
+                .Include(p => p.Dashboards)
                 .FirstOrDefault(p => p.Id.Equals(userId));
         }
 
@@ -72,9 +73,10 @@ namespace PB.DAL
         {
             return ctx.Users
                 .Include(p => p.UserData)
+                .Include(p => p.Settings)
                 .Include(p => p.ProfileAlerts)
                 .Include(p => p.Subscriptions)
-                .Include(p => p.Settings)
+                .Include(p => p.Dashboards)
                 .AsEnumerable();
         }
 
