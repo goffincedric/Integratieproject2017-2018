@@ -328,6 +328,11 @@ namespace UI_MVC.Controllers
             return View(profiles);
         }
 
+        public ViewResult UserSettings()
+        {
+            IEnumerable<Item> Subscriptions = UserManager.GetProfile(User.Identity.GetUserId()).Subscriptions;
+            return View(Subscriptions);
+        }
         #region ExternalLogin
         [HttpPost]
         [AllowAnonymous]

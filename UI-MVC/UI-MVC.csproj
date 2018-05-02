@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44338</IISExpressSSLPort>
+    <IISExpressSSLPort>44372</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -365,9 +365,12 @@
     <Content Include="Views\Home\PlatformSettings.cshtml" />
     <Content Include="Views\Account\UserBeheer.cshtml" />
     <Content Include="Views\Item\ItemBeheer.cshtml" />
+    <Content Include="Views\Account\UserSettings.cshtml" />
+    <Content Include="Views\Home\_UrlList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\Site\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

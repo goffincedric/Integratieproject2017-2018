@@ -237,5 +237,32 @@ namespace UI_MVC.Controllers.API
             if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(JsonConvert.SerializeObject(recordsmap));
         }
+
+
+        [HttpGet]
+        public IHttpActionResult GetTrendingMentions()
+        {
+            //IEnumerable<Mention> mentions = ItemMgr
+            //if (mentions == null) return NotFound();
+            //Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
+
+            //recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
+            //.ToDictionary(r => r.Key.Date, r => (r.Average(p => p.Sentiment.Objectivity) * (r.Average(f => f.Sentiment.Polarity))));
+            //if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetTrendingHashtags()
+        {
+            //IEnumerable<Hashtag> hashtags = ItemMgr.GetPerson(id).Records;
+            //if (records == null) return NotFound();
+            //Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
+
+            //recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
+            //.ToDictionary(r => r.Key.Date, r => (r.Average(p => p.Sentiment.Objectivity) * (r.Average(f => f.Sentiment.Polarity))));
+            //if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok();
+        }
     }
 }
