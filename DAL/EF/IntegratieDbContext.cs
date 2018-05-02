@@ -59,7 +59,7 @@ namespace PB.DAL.EF
              */
             modelBuilder.Entity<Profile>()
                 .HasRequired(p => p.UserData)
-                .WithRequiredDependent(ud => ud.Profile)
+                .WithRequiredPrincipal(ud => ud.Profile)
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Profile>()
