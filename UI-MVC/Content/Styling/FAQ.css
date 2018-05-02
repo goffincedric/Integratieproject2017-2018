@@ -1,14 +1,15 @@
 ﻿ol {
-    margin-top: 5%;
+    padding-top:60px;
     list-style-type: none;
     text-align: center;
 }
-body {
-
+#backgroundfaq {
   background-image: url('../Images/faqbg.jpg');
+  min-height:100vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
   background-size: cover;
-
-
 }
 
 li {
