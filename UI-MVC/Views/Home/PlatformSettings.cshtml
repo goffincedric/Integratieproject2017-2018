@@ -82,9 +82,9 @@
                 <div class="row">
                   <input type="file" class="form-control-file w-50" name="file">
                   @using (Html.BeginForm("Upload", "Home", FormMethod.Post))
-  {
+        {
 
-                <button type="submit" value="Upload" class="btn btn-primary btn-sm">Upload</button>
+          <button type="submit" value="Upload" class="btn btn-primary btn-sm">Upload</button>
 
 
 }
@@ -98,8 +98,24 @@
               <div class="col-sm-7">
                 <input name="changename" class="form-control" type="text" />
               </div>
+            </div>
 
+            <div class="form-group row">
+              <div class="col-sm-3">
+                <label>Aantal dagen bijhouden data</label>
+              </div>
+              <div class="col-sm-7">
+                <input class="form-control" type="number" />
+              </div>
+            </div>
 
+            <div class="form-group row">
+              <div class="col-sm-3">
+                <label># Database sync/dag </label>
+              </div>
+              <div class="col-sm-7">
+                <input class="form-control" type="number" />
+              </div>
             </div>
 
           </div>
