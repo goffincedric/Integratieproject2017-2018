@@ -51,15 +51,15 @@
               <div class="form-group col-md-6">
                 <div class="form-row">
                   <label for="inputAddress">Straat en huisnummer</label>
-                  @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat huisnummer" } })
+                  @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat + huisnummer" } })
                 </div>
-                <div class="form-row">
+                @*<div class="form-row">
                   <label for="inputEmail4">Telefoon</label>
                   @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control", @type = "tel", @placeholder = "Gsm of telefoon nummer" } })
-                </div>
+                </div>*@
                 <div class="form-row">
                   <label for="inputCity">Stad</label>
-                  @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Stad of dorp" } })
+                  @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "City" } })
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-6">
@@ -75,7 +75,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-row">
+                @*<div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="geboortedatum">Geboortedatum</label>
                     <div class="timepicker-input input-icon form-group">
@@ -85,7 +85,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div>*@
               </div>
             </div>
             <button type="submit" class="btn btn-primary">Opslaan</button>

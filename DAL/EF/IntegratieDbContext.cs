@@ -243,12 +243,12 @@ namespace PB.DAL.EF
         public DbSet<Comparison> Comparisons { get; set; }
         public DbSet<Dashboard> Dashboards { get; set; }
         public DbSet<Element> Elements { get; set; }
-        public DbSet<Graph> Graphs { get; set; }
-        public DbSet<Map> Maps { get; set; }
-        public DbSet<Ranking> Rankings { get; set; }
+        //public DbSet<Graph> Graphs { get; set; }
+        //public DbSet<Map> Maps { get; set; }
+        //public DbSet<Ranking> Rankings { get; set; }
         public DbSet<Zone> Zones { get; set; }
 
-        public DbSet<Function> Functions { get; set; }
+        //public DbSet<Function> Functions { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Keyword> Keywords { get; set; }
         public DbSet<Organisation> Organisations { get; set; }

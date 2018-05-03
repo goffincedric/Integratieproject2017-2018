@@ -46,6 +46,34 @@ namespace PB.DAL.Migrations
                             Value = "http://kdg.textgain.com/query",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
+                        },
+                         new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.DEFAULT_THEME,
+                            Value = "Light",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                        new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
+                            Value = @"~/Content/Images/Users/user.png",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                        new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.DEFAULTL_NEW_ITEM_ICON,
+                            Value = @"~/Content/Images/Users/user.png",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                        new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.SITE_ICON_URL,
+                            Value = @"~/Content/Images/logo_new.png",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
                         }
                     },
                     Admins = new List<Profile>(),
