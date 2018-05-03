@@ -24,7 +24,6 @@ namespace PB.DAL
         public RecordRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-            //Console.WriteLine("UOW MADE RECORD REPO");
         }
 
         public Record CreateRecord(Record record)
@@ -55,17 +54,24 @@ namespace PB.DAL
 
         public Record ReadRecord(long Tweet_Id)
         {
-            return ctx.Records.FirstOrDefault(r => r.Tweet_Id == Tweet_Id);
+            return ctx.Records
+                .Include(r => r.Persons)
+                .Include(r => r.Mentions)
+                .Include(r => r.URLs)
+                .Include(r => r.Hashtags)
+                .Include(r => r.Words)
+                .Include(r => r.Themes)
+                .FirstOrDefault(r => r.Tweet_Id == Tweet_Id);
         }
 
         public IEnumerable<Record> ReadRecords()
         {
             return ctx.Records
-                .Include(r => r.Mentions)
                 .Include(r => r.Persons)
-                .Include(r => r.Words)
-                .Include(r => r.Hashtags)
+                .Include(r => r.Mentions)
                 .Include(r => r.URLs)
+                .Include(r => r.Hashtags)
+                .Include(r => r.Words)
                 .Include(r => r.Themes)
                 .AsEnumerable();
         }
@@ -115,7 +121,7 @@ namespace PB.DAL
         public void UpdateRecord(Record record)
         {
             ctx.Records.Attach(record);
-            ctx.Entry(record).State = System.Data.Entity.EntityState.Modified;
+            ctx.Entry(record).State = EntityState.Modified;
             ctx.SaveChanges();
         }
 
