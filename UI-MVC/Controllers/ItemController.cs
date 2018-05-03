@@ -4,6 +4,7 @@ using PB.BL.Domain.Platform;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
 {
@@ -132,12 +133,19 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PersonPartialCreate(string subplatform, Person person)
+        public ActionResult PersonPartialCreate(string subplatform, PersonEditModel personEditModel)
         {
             if (ModelState.IsValid)
             {
+                Organisation organisation = null;
+                if (personEditModel.OrganisationId != null && personEditModel.OrganisationId > 1)
+                {
+                     organisation = itemMgr.GetOrganisation((int)personEditModel.OrganisationId);
+                    if (organisation == null)
+                        return RedirectToAction("ItemBeheer", "Item");
+                }
                 Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-                itemMgr.AddPerson(person.Name, person.SocialMediaLink,person.IconURL, person.Organisation, subplatform: Subplatform);
+                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, personEditModel.IconURL, organisation, subplatform: Subplatform);
                 return RedirectToAction("ItemBeheer", "Item");
             }
             else
