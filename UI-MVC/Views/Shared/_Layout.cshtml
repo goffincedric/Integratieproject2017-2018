@@ -73,6 +73,11 @@
             Html.RenderAction("_Search", "Home");
           }
           <ul class="nav-right">
+
+
+
+
+
             @if (Request.IsAuthenticated)
             {
               <li class="themes dropdown">
@@ -106,9 +111,6 @@
                   </li>
                 </ul>
               </li>
-            }
-            @if (Request.IsAuthenticated)
-            {
               <li class="notifications dropdown">
                 @if (!Html.Action("GetNotificationCount", "Account").ToString().Equals("0"))
                 {<span class="counter bgc-red">@Html.Action("GetNotificationCount", "Account")</span>} <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
@@ -116,14 +118,12 @@
                   Html.RenderAction("_NotificationDropdown", "Account");
                 }
               </li>
-            }
-
-            @if (Request.IsAuthenticated)
-            {
               <li class="dropdown">
                 <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
                   <div class="peer mR-10">
-                    @Html.Action("ChangeProfilePic", "Home")
+
+                    <img class="w-2r bdrs-50p" src="@Html.Action("ChangeProfilePic", "Home")" />
+                    @*@Html.Action("ChangeProfilePic", "Home")*@
                   </div>
 
                   @if (Request.IsAuthenticated)
@@ -178,7 +178,7 @@
               <li class="">
                 <a href="@Url.Action("Login", "Account")" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
                   <div class="peer mR-10">
-                    @Html.Action("ChangeProfilePic", "Home")
+                    <i class="ti-user"></i>
                   </div>
 
 

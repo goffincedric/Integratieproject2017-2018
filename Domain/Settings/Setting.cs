@@ -6,6 +6,7 @@
         {
             WANTS_EMAIL_NOTIFICATIONS,
             WANTS_ANDROID_NOTIFICATIONS,
+            WANTS_SITE_NOTIFICATIONS,
             THEME
         }
 
