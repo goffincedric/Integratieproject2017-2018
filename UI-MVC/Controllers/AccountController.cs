@@ -140,6 +140,27 @@ namespace UI_MVC.Controllers
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
                         Value = "light"
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
                     }
                 };
                 

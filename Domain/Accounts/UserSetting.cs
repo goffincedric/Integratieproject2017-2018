@@ -10,7 +10,7 @@ namespace PB.BL.Domain.Accounts
         [Key, Column(Order = 0)]
         public Setting.Account SettingName { get; set; }
         public bool IsEnabled { get; set; }
-        public string Value { get; set; }
+        public dynamic Value { get; set; }
         [Key, Column(Order = 2)]
         public string UserId { get; set; }
 
