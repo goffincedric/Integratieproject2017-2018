@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Web;
 
 namespace UI_MVC.Models
 {
@@ -148,6 +149,7 @@ namespace UI_MVC.Models
         public string BirthDate { get; set; }
         public Province Province { get; set; }
         public Gender Gender { get; set; }
+        public HttpPostedFileBase file { get; set; }
 
         public AccountEditModel()
         {
@@ -167,6 +169,7 @@ namespace UI_MVC.Models
             BirthDate = profile.UserData.BirthDate.Date.ToString("dd/MM/yyyy");
             Province = profile.UserData.Province;
             Gender = profile.UserData.Gender;
+
         }
 
         public Profile GetProfile()
@@ -190,8 +193,13 @@ namespace UI_MVC.Models
         }
     }
 
+
+
+
+
     public class DeleteProfileModel
     {
 
     }
+
 }

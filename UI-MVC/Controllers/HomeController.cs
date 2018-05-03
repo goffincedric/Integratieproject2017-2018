@@ -194,21 +194,25 @@ namespace UI_MVC.Controllers
             {
                 int? count = person.Records.Count();
                 ViewBag.Vermeldingen = (count is null) ? 0 : count;
+
+                ViewBag.Partij = (person.Organisation is null) ? "Geen partij" : person.Organisation.Name;
             }
             if (item is Organisation organisation)
             {
 
                 // int? count = organisation.People.Count();
                 //ViewBag.Leden = (count is null) ? 0 : count;
-                ViewBag.Leden = 0;
+                int? count = organisation.People.Count();
+                ViewBag.Leden =  (count is null) ? 0 : count ;
                 ViewBag.FullName = organisation.FullName;
             }
             if (item is Theme theme)
             {
-                //int? count = theme.Records.Count();
+                //int? count          = theme.Records.Count();
                 //ViewBag.Associaties = (count is null) ? 0 : count;
-                ViewBag.Associaties = 0;
-                ViewBag.Keywords = theme.Keywords.ToList();
+                int? count            = theme.Records.Count();
+                ViewBag.Associaties   = (count is null) ? 0 : count;
+                ViewBag.Keywords      = theme.Keywords.ToList();
             }
             ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));
 
@@ -272,6 +276,9 @@ namespace UI_MVC.Controllers
         {
             if (!ItemManager.IsSyncing)
             {
+                // Set IsSyncing field
+                ItemManager.IsSyncing = true;
+
                 UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
                 SubplatformManager subplatformManager = new SubplatformManager(unitOfWorkManager);
                 ItemManager itemManager = new ItemManager(unitOfWorkManager);
@@ -282,31 +289,30 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload()
+        public ActionResult Upload(HttpPostedFileBase file)
         {
-            if (Request.Files.Count > 0)
+            try
             {
-                var file = Request.Files[0];
-
-                if (file != null && file.ContentLength > 0)
+                if (file.ContentLength > 0)
                 {
-                    var fileName = Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), fileName);
-                    file.SaveAs(path);
+                    string _FileName = Path.GetFileName(file.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), _FileName);
+                    file.SaveAs(_path);
                 }
+        
+                return RedirectToAction("Index","Home");
             }
-
-            return RedirectToAction("PlatformSettings", "Home");
-
-
+            catch
+            {
+                return RedirectToAction("Index","Home");
+            }
         }
 
         public ActionResult _UrlList(int id)
         {
             List<Url> urls = null;
+
             itemMgr.GetPerson(id).Records.ForEach(p => urls.ForEach(u => urls.Add(u)));
-
-
 
             return PartialView(urls);
         }

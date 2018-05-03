@@ -21,7 +21,7 @@ namespace PB.BL
         private IRecordRepo RecordRepo;
         private IAlertRepo AlertRepo;
 
-        public static bool IsSyncing = false;
+        public static bool IsSyncing;
 
         private UnitOfWorkManager UowManager;
 
@@ -407,17 +407,12 @@ namespace PB.BL
         public void SyncDatabase(Subplatform subplatform)
         {
             // Set IsSyncing field
-            IsSyncing = true;
             SyncDatabaseAsync(subplatform).Wait();
-            IsSyncing = false;
         }
 
         public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
         {
             InitNonExistingRepo();
-
-            // Set IsSyncing field
-            IsSyncing = true;
 
             // Validation
             if (subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.DAYS_TO_KEEP_RECORDS) is null)
