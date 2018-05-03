@@ -136,7 +136,11 @@
       <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
           <h1 class="h3" style="text-align: center">Gerelateerde urls</h1>
-          @*@Html.Action("_UrlList", "Url", new { id = Model.ItemId })*@
+          
+          <div  id="urls" class="mT-30">
+
+           </div>
+
         </div>
       </div>
 
@@ -165,7 +169,8 @@
 {
 
 
-  <script>
+  <script defer>
+    
     var personid= @Html.Raw(Model.ItemId);
     var urls = "";
     urls = $.ajax({
@@ -174,10 +179,27 @@
       dataType: 'json',
       url: "https://localhost:44342/api/item/GetTrendingUrl/" + personid,
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseJSON
+    }).responseText;
 
-    //console.log(urls);
+  
 
+    var array = urls.split(',');
+    function shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    array = shuffle(array);
+    array = array.slice(0, 5);
+    alert(array.length);
+    $.each(array, function (data, realdata) {
+      $("#urls").append("<a src=" + realdata + "</a>");
+    });
+      
+   
+    
   $("#graphs").after("<div style=\"margin: 10px 0\" class=\"masonry-item col-md- 12\"> <div class=\"bgc-white p-20 bd\"> <h6 class=\"c-grey-900\">Line chart</h6> <div class=\"mT-30\" id=\"graph-bar\"> </div></div></div>");
 
   $("#graph-bar").append("<canvas id=\"line-chart2\" height=\"400\"></canvas>");
@@ -247,17 +269,18 @@
 
 @if (Model is PB.BL.Domain.Items.Person)
 {
-  <script>
+  <script defer>
   var itemid = @Html.Raw(Model.ItemId);
 
   var tmp = "";
     tmp = $.ajax({
-      async:false,
+      async: false,
       type: 'GET',
       dataType: 'json',
-        url: "https://localhost:44342/api/item/getrecordsfromperson/" + itemid,
-        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-  }).responseJSON;
+      url: "https://localhost:44342/api/item/getrecordsfromperson/" + itemid,
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+    }).responseText;
+
 
   var options = {
     userId: 'ThomasVerhoeven',

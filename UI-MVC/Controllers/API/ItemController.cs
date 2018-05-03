@@ -260,7 +260,9 @@ namespace UI_MVC.Controllers.API
             if(ItemMgr.GetItem(id) is Person)
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
-                List<Url> urls = records.SelectMany(r => r.URLs).Distinct().ToList();
+                List<string> urls = new List<string>();
+                records.SelectMany(r => r.URLs).Distinct().ToList().ForEach(p => urls.Add(p.Link));
+                urls.Distinct();
                 return Ok(urls);
             }
             else

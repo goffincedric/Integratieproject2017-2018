@@ -374,6 +374,24 @@ namespace UI_MVC.Controllers
             IEnumerable<Profile> profiles = UserManager.GetProfiles();
             return View(profiles);
         }
+        //public PartialViewResult UserBeheer()
+        //{
+        //    IEnumerable<Profile> profiles = UserManager.GetProfiles()
+        //        //.Where(p => p.Roles.Where(p.Equals(UserManager.GetAllRoles().Where(r => r.Name.Equals("User")));
+        //        //.Where(p => p.Roles.Where(p.Equals(UserManager.GetAllRoles().Where(r => r.Name.Equals("User"), true))));
+        //    return PartialView();
+        //}
+
+
+        public ActionResult VoteToAdmin(string id)
+        {
+            Profile profile = UserManager.GetProfile(id);
+            UserManager.AddToRole(id, "Admin");
+            UserManager.RemoveFromRole(id, "User");
+            
+
+            return View();
+        }
 
         
 
