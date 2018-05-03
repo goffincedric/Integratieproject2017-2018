@@ -83,10 +83,11 @@
 
                 @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                  <div class="">
-                    @Html.TextBox("file", "", new { type = "file" }) <br />
+                  <div class="row">
+                    <input type="file" class="form-control w-50" name="file" id="file" />
+                    @*@Html.TextBox("file", "", new { type = "file", @class="form-control"}) <br />*@
 
-                    <input type="submit" value="Upload" />
+                    <input type="submit" value="Upload" class="btn btn-primary btn-sm mL-10"/>
 
                   </div>
                 }
