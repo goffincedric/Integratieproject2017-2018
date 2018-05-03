@@ -18,6 +18,7 @@ using PB.BL.Domain.Platform;
 using System.Linq;
 using System.Data.Entity.Validation;
 using PB.DAL.EF;
+using System.IO;
 
 namespace UI_MVC.Controllers
 {
@@ -209,7 +210,9 @@ namespace UI_MVC.Controllers
             //nog via pk maken
             if (Request.IsAuthenticated)
             {
-                AccountEditModel account = new AccountEditModel(UserManager.GetProfile(User.Identity.GetUserId()));
+                Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
+                ViewBag.ProfileImage = VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+                AccountEditModel account = new AccountEditModel(profile);
                 return View(account);
             }
             else
@@ -224,6 +227,14 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Account(AccountEditModel editedAccount)
         {
+            string _FileName = "";
+            if (editedAccount.file.ContentLength > 0)
+            {
+                _FileName = Path.GetFileName(editedAccount.file.FileName);
+                string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), _FileName);
+                editedAccount.file.SaveAs(_path);
+            }
+
             Profile newProfile = UserManager.GetProfile(User.Identity.GetUserId());
             newProfile.UserData.LastName = editedAccount.LastName;
             newProfile.UserData.FirstName = editedAccount.FirstName;
@@ -235,11 +246,12 @@ namespace UI_MVC.Controllers
             newProfile.UserData.Province = editedAccount.Province;
             newProfile.UserData.PostalCode = editedAccount.PostalCode;
             newProfile.UserData.BirthDate = DateTime.ParseExact(editedAccount.BirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            newProfile.ProfileIcon = @"~/Content/Images/Users/" + _FileName;
 
             if (ModelState.IsValid)
             {
                 UserManager.ChangeProfile(newProfile);
-                return View(editedAccount);
+                return RedirectToAction("Account","Account");
             }
             return View();
         }
