@@ -274,24 +274,32 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload()
+        public ActionResult Upload(HttpPostedFileBase file)
         {
-            if (Request.Files.Count > 0)
+            try
             {
-                var file = Request.Files[0];
-
-                if (file != null && file.ContentLength > 0)
+                if (file.ContentLength > 0)
                 {
-                    var fileName = Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), fileName);
-                    file.SaveAs(path);
+                    string _FileName = Path.GetFileName(file.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), _FileName);
+                    file.SaveAs(_path);
                 }
+        
+                return RedirectToAction("Index","Home");
             }
-
-            return RedirectToAction("PlatformSettings","Home");
-
-
+            catch
+            {
+               
+                return RedirectToAction("Index","Home");
+            }
         }
+
+
+
+
+
+
+
 
         public ActionResult _UrlList(int id)
         {
