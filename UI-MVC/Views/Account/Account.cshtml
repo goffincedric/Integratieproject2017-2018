@@ -11,10 +11,6 @@
             <div class="bgc-white p-10 bd mB-10">
                 <h3>My Profile Settings</h3>
             </div>
-
-            @{
-                Html.RenderAction("_ResetPassword", "Account");
-            }
             <div class="bgc-white p-10 bd mB-10">
                 <h4 class="bb-2">Basic Profile<span class="arrow-account"><i class="ti-angle-up"></i></span></h4>
 
@@ -122,6 +118,10 @@
                     </form>
                 }
             </div>
+
+            @{
+                Html.RenderAction("_ResetPassword", "Account");
+            }
 
             @{
                 Html.RenderAction("_DeleteProfile", "Account");

@@ -143,7 +143,7 @@ namespace UI_MVC.Models
         public string LastName { get; set; }
         public string Telephone { get; set; }
         public string Street { get; set; }
-        public int? PostalCode { get; set; }
+        public string PostalCode { get; set; }
         public string City { get; set; }
         public string BirthDate { get; set; }
         public Province Province { get; set; }
