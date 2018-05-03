@@ -253,6 +253,24 @@ namespace UI_MVC.Controllers.API
         }
 
         [HttpGet]
+        public IHttpActionResult GetTrendingUrl(int id)
+        {
+            List<Url> urls = null;
+            if(ItemMgr.GetItem(id) is Person)
+            {
+                
+                ItemMgr.GetPerson(id).Records.ForEach(p => p.URLs.ForEach(u => urls.Add(u)));
+                return Ok(urls);
+            }
+            else
+            {
+                return NotFound();
+            }
+           
+           
+        }
+
+        [HttpGet]
         public IHttpActionResult GetTrendingHashtags()
         {
             //IEnumerable<Hashtag> hashtags = ItemMgr.GetPerson(id).Records;
