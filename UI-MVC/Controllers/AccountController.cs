@@ -130,7 +130,7 @@ namespace UI_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Profile { UserName = model.Username, Email = model.Email, };
+                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon= @"~/Content/Images/Users/user.png" };
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
@@ -211,7 +211,7 @@ namespace UI_MVC.Controllers
             if (Request.IsAuthenticated)
             {
                 Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
-                ViewBag.ProfileImage = VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+                ViewBag.ProfileImage = (profile.ProfileIcon is null) ? VirtualPathUtility.ToAbsolute(@"~/Content/Images/Users/user.png") : VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
                 AccountEditModel account = new AccountEditModel(profile);
                 return View(account);
             }

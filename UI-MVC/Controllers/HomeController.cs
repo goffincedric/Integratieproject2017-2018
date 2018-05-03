@@ -37,7 +37,9 @@ namespace UI_MVC.Controllers
             }
             else
             {
-                return Content("<img class=\"w-2r bdrs-50p\" src=/Content/Images/1.jpg>");
+                Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
+                var image = (profile.ProfileIcon is null) ? VirtualPathUtility.ToAbsolute(@"~/Content/Images/Users/user.png") : VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+                return Content("<img class=\"w-2r bdrs-50p\" src="+image +"\"/>");
             }
         }
 
