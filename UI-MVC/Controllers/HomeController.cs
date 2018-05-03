@@ -8,6 +8,7 @@ using PB.DAL.EF;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -18,14 +19,15 @@ namespace UI_MVC.Controllers
     [RoutePrefix("{subplatform}")]
     public class HomeController : Controller
     {
-
-
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private readonly ItemManager itemMgr = new ItemManager(uow);
         private readonly AccountManager accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
         private readonly SubplatformManager SubplatformMgr = new SubplatformManager(uow);
 
+        public HomeController()
+        {
 
+        }
 
         #region profile
 
@@ -268,8 +270,14 @@ namespace UI_MVC.Controllers
         [HttpPost]
         public ActionResult Syncronize(string subplatform)
         {
-            Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
-            itemMgr.SyncDatabase(sp);
+            if (!ItemManager.IsSyncing)
+            {
+                UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
+                SubplatformManager subplatformManager = new SubplatformManager(unitOfWorkManager);
+                ItemManager itemManager = new ItemManager(unitOfWorkManager);
+                Subplatform sp = subplatformManager.GetSubplatform(subplatform);
+                itemManager.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(new System.Action(() => ItemManager.IsSyncing = false));
+            }
             return RedirectToAction("PlatformSettings", "Home");
         }
 
@@ -288,7 +296,7 @@ namespace UI_MVC.Controllers
                 }
             }
 
-            return RedirectToAction("PlatformSettings","Home");
+            return RedirectToAction("PlatformSettings", "Home");
 
 
         }

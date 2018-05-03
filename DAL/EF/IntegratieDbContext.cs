@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
-
+using System.Threading.Tasks;
 
 namespace PB.DAL.EF
 {
@@ -194,6 +194,30 @@ namespace PB.DAL.EF
                 try
                 {
                     return base.SaveChanges();
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Console.WriteLine("Property: {0} Error: {1}",
+                                                    validationError.PropertyName,
+                                                    validationError.ErrorMessage);
+                        }
+                    }
+                }
+            }
+            throw new InvalidOperationException("Geen UnitOfWork presented, gebruik SaveChanges in de plaats");
+        }
+
+        async internal Task<int> CommitChangesAsync()
+        {
+            if (delaySave)
+            {
+                try
+                {
+                    return await base.SaveChangesAsync();
                 }
                 catch (DbEntityValidationException dbEx)
                 {
