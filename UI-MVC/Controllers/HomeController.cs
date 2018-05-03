@@ -192,21 +192,25 @@ namespace UI_MVC.Controllers
             {
                 int? count = person.Records.Count();
                 ViewBag.Vermeldingen = (count is null) ? 0 : count;
+
+                ViewBag.Partij = (person.Organisation is null) ? "Geen partij" : person.Organisation.Name;
             }
             if (item is Organisation organisation)
             {
 
                 // int? count = organisation.People.Count();
                 //ViewBag.Leden = (count is null) ? 0 : count;
-                ViewBag.Leden = 0;
+                int? count = organisation.People.Count();
+                ViewBag.Leden =  (count is null) ? 0 : count ;
                 ViewBag.FullName = organisation.FullName;
             }
             if (item is Theme theme)
             {
-                //int? count = theme.Records.Count();
+                //int? count          = theme.Records.Count();
                 //ViewBag.Associaties = (count is null) ? 0 : count;
-                ViewBag.Associaties = 0;
-                ViewBag.Keywords = theme.Keywords.ToList();
+                int? count            = theme.Records.Count();
+                ViewBag.Associaties   = (count is null) ? 0 : count;
+                ViewBag.Keywords      = theme.Keywords.ToList();
             }
             ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));
 
