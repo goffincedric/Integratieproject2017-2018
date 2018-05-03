@@ -130,7 +130,7 @@ namespace UI_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon= @"~/Content/Images/Users/user.png" };
+                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon = @"~/Content/Images/Users/user.png" };
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
@@ -163,7 +163,7 @@ namespace UI_MVC.Controllers
                         Value=true, //moet nog boolean worden
                     }
                 };
-                
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -249,30 +249,39 @@ namespace UI_MVC.Controllers
         public ActionResult Account(AccountEditModel editedAccount)
         {
             string _FileName = "";
-            if (editedAccount.file.ContentLength > 0)
-            {
-                _FileName = Path.GetFileName(editedAccount.file.FileName);
-                string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), _FileName);
-                editedAccount.file.SaveAs(_path);
-            }
+            Profile newProfile = UserManager.GetProfile(User.Identity.GetUserId()); 
 
-            Profile newProfile = UserManager.GetProfile(User.Identity.GetUserId());
+            if (editedAccount.file != null)
+            {
+                if (editedAccount.file.ContentLength > 0)
+                {
+                    _FileName = Path.GetFileName(editedAccount.file.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), _FileName);
+                    editedAccount.file.SaveAs(_path);
+                    newProfile.ProfileIcon = @"~/Content/Images/Users/" + _FileName;
+                }
+            }
+            else
+            {
+                newProfile.ProfileIcon = newProfile.ProfileIcon;
+            }
+            
             newProfile.UserData.LastName = editedAccount.LastName;
             newProfile.UserData.FirstName = editedAccount.FirstName;
             newProfile.Email = editedAccount.Email;
-            newProfile.UserData.Telephone = editedAccount.Telephone;
-            newProfile.UserData.Gender = editedAccount.Gender;
+            //newProfile.UserData.Telephone = editedAccount.Telephone;
+            //newProfile.UserData.Gender = editedAccount.Gender;
             newProfile.UserData.Street = editedAccount.Street;
             newProfile.UserData.City = editedAccount.City;
             newProfile.UserData.Province = editedAccount.Province;
             newProfile.UserData.PostalCode = editedAccount.PostalCode;
-            newProfile.UserData.BirthDate = DateTime.ParseExact(editedAccount.BirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            newProfile.ProfileIcon = @"~/Content/Images/Users/" + _FileName;
+
+
 
             if (ModelState.IsValid)
             {
                 UserManager.ChangeProfile(newProfile);
-                return RedirectToAction("Account","Account");
+                return RedirectToAction("Account", "Account");
             }
             return View();
         }
@@ -415,12 +424,13 @@ namespace UI_MVC.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
-                
+
                 var name = info.Email.Split('@')[0];
                 var user = new Profile
                 {
                     UserName = name,
-                    Email = model.Email
+                    Email = model.Email,
+                    ProfileIcon = @"~/Content/Images/Users/user.png"
                 };
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>
@@ -431,6 +441,27 @@ namespace UI_MVC.Controllers
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
                         Value = "light"
+                    },
+                     new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
                     }
                 };
 
