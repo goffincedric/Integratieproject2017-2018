@@ -24,7 +24,7 @@
     overflow: hidden;
     height: 45px;
     margin-top: 27.5px;
-    margin-left:30px;
+    margin-left: 30px;
   }
 
     .fileUpload input.uploadlogo {
@@ -64,16 +64,21 @@
           <form>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-row">
-              <div class="form-group col-md-6">
-                <div class="form-row">
-                  <img class="img-fluid" src="@ViewBag.ProfileImage" style="max-height: 100px; max-width: 100px;">
-                  <div class="fileUpload blue-btn btn width100">
+              <div class="form-group col-md-6" style="margin-bottom:75px;">
+                <div class="form-row h-50" style="padding-top:25px;"  >
+                  <img class="img-fluid" src="@ViewBag.ProfileImage" style="max-height:100px; max-width:100px;">
+                  <div class="fileUpload blue-btn btn width100 w-75">
                     <span>Upload a new profile picture</span>
                     <input type="file" class="uploadlogo" name="file" id="file" />
                   </div>
                 </div>
-            
-                <div class="form-row" style="margin-top:25px">
+
+                <div class="form-row">
+                  <label for="inputEmail4">Email</label>
+                  @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })
+                </div>
+
+                <div class="form-row">
                   <label for="inputEmail4">Gebruikersnaam</label>
                   @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputGebruikersnaam", @type = "text", @placeholder = "Gebruikersnaam" } })
                 </div>
@@ -91,38 +96,42 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-row">
-                  <label for="inputEmail4">Email</label>
-                  @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })
-                </div>
+
               </div>
-              <div class="form-group col-md-6">
-                <div class="form-row">
-                  <label for="inputAddress">Straat en huisnummer</label>
-                  @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat + huisnummer" } })
-                </div>
-                <div class="form-row">
-                  <label for="inputCity">Stad</label>
-                  @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "City" } })
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <div class="form-row2">
-                      <label for="inputState">Provincie</label>
-                      @Html.EnumDropDownListFor(model => model.Province, htmlAttributes: new { @class = "form-control" })
+              <div class="form-group col-md-6" style="margin-bottom:75px">
+                <div class="h-50"></div>
+                <div class="h-50">
+                  <div class="form-row">
+                    <label for="inputAddress">Straat en huisnummer</label>
+                    @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat + huisnummer" } })
+                  </div>
+                  <div class="form-row">
+                    <label for="inputCity">Stad</label>
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "City" } })
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <div class="form-row2">
+                        <label for="inputState">Provincie</label>
+                        @Html.EnumDropDownListFor(model => model.Province, htmlAttributes: new { @class = "form-control" })
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <div class="form-row3">
+                        <label for="inputZip">Postcode</label>
+                        @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "postcode" } })
+                      </div>
                     </div>
                   </div>
-                  <div class="form-group col-md-6">
-                    <div class="form-row3">
-                      <label for="inputZip">Postcode</label>
-                      @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "postcode" } })
-                    </div>
-                  </div>
                 </div>
-    
+
+                
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Opslaan</button>
+            <div class="form-row col-md-12">
+              <button type="submit" class="btn btn-primary">Opslaan</button>
+            </div>
+            
           </form>
         }
       </div>
@@ -139,3 +148,36 @@
   </div>
 </main>
 @Scripts.Render("~/bundles/AccountControl")
+<script>
+  $(document).ready(function ($) {
+
+    // Upload btn on change call function
+    $(".uploadlogo").change(function () {
+      var filename = readURL(this);
+      var name = filename.substring(filename.indexOf(".") + 1); 
+      var username = "@Model.UserName.ToString()";
+      console.log(name);
+      $(this).parent().children('span').html( username + "." + name);
+    });
+
+    // Read File and return value  
+    function readURL(input) {
+      var url = input.value;
+     
+      var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+      if (input.files && input.files[0] && (
+        ext == "png" || ext == "jpeg" || ext == "jpg" || ext == "gif" 
+      )) {
+        var path = $(input).val();
+        var filename = path.replace(/^.*\\/, "");
+        // $('.fileUpload span').html('Uploaded Proof : ' + filename);
+        return "Uploaded file : " + filename;
+      } else {
+        $(input).val("");
+        return "Only image formats are allowed!";
+      }
+    }
+    // Upload btn end
+
+  });
+</script>

@@ -256,9 +256,12 @@ namespace UI_MVC.Controllers
                 if (editedAccount.file.ContentLength > 0)
                 {
                     _FileName = Path.GetFileName(editedAccount.file.FileName);
-                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), _FileName);
+                 
+                    var username = newProfile.UserName.ToString();
+                    var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
                     editedAccount.file.SaveAs(_path);
-                    newProfile.ProfileIcon = @"~/Content/Images/Users/" + _FileName;
+                    newProfile.ProfileIcon = @"~/Content/Images/Users/" + newName;
                 }
             }
             else
