@@ -42,7 +42,6 @@
                 <h4 class="bb-2">@zone.Title<span class="arrow-dashboard"><i class="ti-angle-up"></i></span></h4>
                 <div class="dashboard">
                     <div style="margin-bottom:5px" class="buttons">
-                        <a class="btn btn-default load-grid" id="load-grid" href="#">Load Grid</a>
                         <a class="btn btn-default clear-grid" id="clear-grid" href="#">Clear Grid</a>
                     </div>
                     <div class="grid-stack grid-stack-12" id="zone-@zone.ZoneId">
@@ -77,11 +76,11 @@
     $(function () {
         var addingElement = false;
 
-        $('.grid-stack').gridstack({
-            resizable: {
-                handles: 'se, sw'
-            }
-        });
+        //$('.grid-stack').gridstack({
+        //    resizable: {
+        //        handles: 'se, sw'
+        //    }
+        //});
 
         var options = {
             width: 12,
@@ -94,6 +93,8 @@
         $('.grid-stack').gridstack(options);
 
         new function () {
+
+            //done
             findElements = function (id) {
                 var ZoneData = $.ajax({
                     async: false,
@@ -145,11 +146,10 @@
                 if (!addingElement) {
                 var ZoneId = grid.attr('id');
                 ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
+                    var count = 0;
+                    for (var e in elements) {
 
-                for (var e in elements) {
                     var element = elements[e];
-
-                    console.log("change");
 
                     var ElementId = element.el.children('div').attr('id');
                     ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
@@ -195,8 +195,6 @@
 
                     var plusElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
-                    console.log(plusElement);
-
                     plusElement.resizable(false);
 
                     plusElement.children('.grid-stack-item-content').children('div').children('img').on("click", function () {
@@ -209,12 +207,6 @@
                 this.grid = $(this).data('gridstack');
 
                 loadGrid($(this));
-
-                //loading and adding graphs
-                $(this).siblings('.buttons').children('.load-grid').on("click", function () {
-                    this.grid = $(this).parent().siblings('.grid-stack').data('gridstack');
-                    loadGrid($(this).parent().siblings('.grid-stack'));
-                });
 
                 //Clearing Zone/Grid done
                 $(this).siblings('.buttons').children('.clear-grid').on("click", function () {
