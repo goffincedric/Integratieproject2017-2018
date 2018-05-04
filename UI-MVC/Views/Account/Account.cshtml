@@ -4,6 +4,50 @@
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+  .blue-btn:hover,
+  .blue-btn:active,
+  .blue-btn:focus,
+  .blue-btn {
+    background: transparent;
+    border: solid 1px #27a9e0;
+    border-radius: 3px;
+    color: #27a9e0;
+    font-size: 16px;
+    margin-bottom: 20px;
+    outline: none !important;
+    padding: 10px 20px;
+  }
+
+  .fileUpload {
+    position: relative;
+    overflow: hidden;
+    height: 45px;
+    margin-top: 27.5px;
+    margin-left:30px;
+  }
+
+    .fileUpload input.uploadlogo {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0 0 0 0;
+      padding: 0;
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0;
+      filter: alpha(opacity=0);
+      width: 100%;
+      height: 42px;
+    }
+
+  /*Chrome fix*/
+  input::-webkit-file-upload-button {
+    cursor: pointer !important;
+    height: 42px;
+    width: 100%;
+  }
+</style>
 
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
@@ -23,9 +67,13 @@
               <div class="form-group col-md-6">
                 <div class="form-row">
                   <img class="img-fluid" src="@ViewBag.ProfileImage" style="max-height: 100px; max-width: 100px;">
-                  <input type="file" class="btn btn-primary" name="file" id="file" />
+                  <div class="fileUpload blue-btn btn width100">
+                    <span>Upload a new profile picture</span>
+                    <input type="file" class="uploadlogo" name="file" id="file" />
+                  </div>
                 </div>
-                <div class="form-row">
+            
+                <div class="form-row" style="margin-top:25px">
                   <label for="inputEmail4">Gebruikersnaam</label>
                   @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputGebruikersnaam", @type = "text", @placeholder = "Gebruikersnaam" } })
                 </div>
@@ -53,10 +101,6 @@
                   <label for="inputAddress">Straat en huisnummer</label>
                   @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat + huisnummer" } })
                 </div>
-                @*<div class="form-row">
-                  <label for="inputEmail4">Telefoon</label>
-                  @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control", @type = "tel", @placeholder = "Gsm of telefoon nummer" } })
-                </div>*@
                 <div class="form-row">
                   <label for="inputCity">Stad</label>
                   @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "City" } })
@@ -75,17 +119,7 @@
                     </div>
                   </div>
                 </div>
-                @*<div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="geboortedatum">Geboortedatum</label>
-                    <div class="timepicker-input input-icon form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon bgc-white bd bdwR-0"><i class="ti-calendar"></i></div>
-                        @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @id = "geboortedatum", @class = "form-control bdc-grey-200 start-date", @placeholder = "Datepicker", @type = "text" } })
-                      </div>
-                    </div>
-                  </div>
-                </div>*@
+    
               </div>
             </div>
             <button type="submit" class="btn btn-primary">Opslaan</button>
