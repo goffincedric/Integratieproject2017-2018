@@ -6,8 +6,6 @@ namespace UI_MVC.App_Start
     {
         public static void Register(HttpConfiguration config)
         {
-            // TODO: Add any additional configuration code.
-
             // Web API routes
             config.MapHttpAttributeRoutes();
 

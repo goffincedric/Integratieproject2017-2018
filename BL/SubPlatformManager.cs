@@ -151,10 +151,29 @@ namespace PB.BL
             InitNonExistingRepo();
             Subplatform subplatform = SubplatformRepo.ReadSubplatform(subplatformId);
 
-            if (subplatform == null) throw new Exception("Subplatform with id (" + subplatformId + ") doesnt exist"); //Subplatform bestaat niet
+            if (subplatform == null) throw new Exception("Subplatform with id (" + subplatformId + ") doesn't exist"); //Subplatform bestaat niet
             if (!subplatform.Admins.Remove(admin)) throw new Exception("Couldn't remove admin, maybe the admin doesn't exist?");
             if (!admin.AdminPlatforms.Remove(subplatform)) throw new Exception("Couldn't remove admin, maybe the admin doesn't exist?");
 
+            uowManager.Save();
+        }
+        #endregion
+
+        #region Subplatformsettings
+        public void ChangeSubplatformSetting(string subplatformURL, SubplatformSetting setting)
+        {
+            InitNonExistingRepo();
+            Subplatform subplatform = GetSubplatform(subplatformURL);
+            if (subplatform == null) throw new Exception("Subplatform with subplatformurl (" + subplatformURL + ") doesn't exist");
+            if (!subplatform.Settings.Contains(setting))
+            {
+                subplatform.Settings.Add(setting);
+            }
+            else
+            {
+                subplatform.Settings[subplatform.Settings.IndexOf(setting)] = setting;
+            }
+            SubplatformRepo.UpdateSubplatform(subplatform);
             uowManager.Save();
         }
         #endregion

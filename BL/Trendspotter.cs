@@ -116,8 +116,7 @@ namespace PB.BL
             /* Themes */
             // TODO
 
-
-            // TODO: Zie of trending organisatie veranderd is, ja => alert maken voor alle profiles die daarop subscribed zijn
+           
             return items;
         }
 

@@ -11,6 +11,7 @@ using PB.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PB.BL
 {
@@ -19,6 +20,8 @@ namespace PB.BL
         private IItemRepo ItemRepo;
         private IRecordRepo RecordRepo;
         private IAlertRepo AlertRepo;
+
+        public static bool IsSyncing;
 
         private UnitOfWorkManager UowManager;
 
@@ -403,6 +406,12 @@ namespace PB.BL
 
         public void SyncDatabase(Subplatform subplatform)
         {
+            // Set IsSyncing field
+            SyncDatabaseAsync(subplatform).Wait();
+        }
+
+        public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
+        {
             InitNonExistingRepo();
 
             // Validation
@@ -444,7 +453,7 @@ namespace PB.BL
             RecordRepo.CreateRecords(newRecords);
 
             // Save pending changes
-            UowManager.Save();
+            return await UowManager.SaveAsync();
         }
 
         public void CleanupOldRecords(Subplatform subplatform)
@@ -456,7 +465,7 @@ namespace PB.BL
             {
                 throw new Exception("Subplatform has no set period to keep records!");
             }
-            
+
             // Days to keep records
             int days = int.Parse(subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.DAYS_TO_KEEP_RECORDS).Value);
 
