@@ -263,6 +263,7 @@ namespace UI_MVC.Controllers.API
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
                 List<string> hashtags = new List<string>();
+                
                  records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h=>h.Records.Count).Take(12).ToList().ForEach(p=> hashtags.Add(p.HashTag));
                 return Ok(hashtags);
             }
@@ -271,6 +272,26 @@ namespace UI_MVC.Controllers.API
                 return NotFound();
             }
         }
+
+
+        [HttpGet]
+        public IHttpActionResult GetTrendingHashtagsCount(int id)
+        {
+
+            if (ItemMgr.GetItem(id) is Person)
+            {
+                IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
+                Dictionary<string,int> hashtags = new Dictionary<string, int>();
+
+                records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h => h.Records.Count).Distinct().Take(10).ToList().ForEach(p => hashtags.Add(p.HashTag, p.Records.Count));
+                return Ok(hashtags);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
 
         [HttpGet]
         public IHttpActionResult GetTrendingUrl(int id)
