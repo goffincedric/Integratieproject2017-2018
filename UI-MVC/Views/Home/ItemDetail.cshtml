@@ -216,7 +216,7 @@
     array = array.slice(0, 5);
 
     $.each(array, function (data, realdata) {
-      $("#urls").append('<i style="margin-right:10px" class="ti-link"></i>'+"<a href=" + realdata + ">" + realdata.substring(1, (realdata.length - 1)) + "</a><br/>");
+      $("#urls").append('<i style="margin-right:10px" class="fas fa-link"></i>'+"<a href=" + realdata + ">" + realdata.substring(1, (realdata.length - 1)) + "</a><br/>");
     });
 
 
@@ -225,13 +225,13 @@
 
   $("#graph-bar").append("<canvas id=\"line-chart2\" height=\"400\"></canvas>");
 
-     drawLineChart(personid)
+      drawLineChart(personid)
 
 
 
 
   function drawLineChart(id) {
-
+  
     var test = "";
       test = $.ajax({
       async: false,
@@ -287,8 +287,9 @@
   </script>
 
   <script>
-  var itemid = @Html.Raw(Model.ItemId);
 
+  var itemid = @Html.Raw(Model.ItemId);
+   
   var tmp = "";
     tmp = $.ajax({
       async: false,
@@ -316,43 +317,56 @@
         window.player = player;
 
           player.setValue('datareader', 'v', tmp);
-         player.start();
+        player.start();
+        player.stop(); //anders infinite loop
 
       }
+        });
+
+   
+
+  </script>
+
+  <script>
+    var personid= @Html.Raw(Model.ItemId);
+    var hashtags = "";
+    
+    hashtags = $.ajax({
+      async: false,
+      type: 'GET',
+      dataType: 'json',
+      url: "https://localhost:44342/api/item/GetTrendingHashtags/" + personid,
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+    }).responseJSON;
+    console.log(hashtags);
+
+   
+   
+    $.each(hashtags, function (data, realdata) {
+      var name = 'https://twitter.com/search?q=%23' + realdata + '&src=tyah&lang=nl';
+      console.log(name);
+      $("#hashtags").append('<i style="margin-right:10px" class="fas fa-link"></i>' + "<a href=" + name + ">" +realdata + '</a><br/>');
+      
     });
 
   </script>
 
   <script>
     var personid= @Html.Raw(Model.ItemId);
-    var urls = "";
-    urls = $.ajax({
+    var mentions = "";
+    mentions = $.ajax({
       async: false,
       type: 'GET',
       dataType: 'json',
-      url: "https://localhost:44342/api/item/GetTrendingHashtags" + personid,
+      url: "https://localhost:44342/api/item/GetTrendingMentions/" + personid,
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseText;
+    }).responseJSON;
+    
+    $.each(mentions, function (data, realdata) {
+      var name = 'https://twitter.com/' + realdata;
+      //$("#mentions").append('<div class="row"><i style="margin-right:10px" class="fas fa-at"></i><h6>' + realdata + '</h6></br></div>');
+      $("#mentions").append('<i style="margin-right:10px" class="fas fa-link"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
 
-    $.each(array, function (data, realdata) {
-      $("#hashtags").append('<i class="fas fa-at"></i>');
-    });
-
-  </script>
-
-  <script>
-        var personid= @Html.Raw(Model.ItemId);
-    var urls = "";
-    urls = $.ajax({
-      async: false,
-      type: 'GET',
-      dataType: 'json',
-      url: "https://localhost:44342/api/item/GetTrendingMentions" + personid,
-      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseText;
-
-    $.each(array, function (data, realdata) {
-      $("#hashtags").append('<i class="fas fa-hashtag"></i>');
     });
   </script>
 }

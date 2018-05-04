@@ -245,7 +245,8 @@ namespace UI_MVC.Controllers.API
             if (ItemMgr.GetItem(id) is Person)
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
-                List<Mention> mentions = records.SelectMany(r => r.Mentions).Distinct().OrderByDescending(m=>m.Records.Count).Take(10).ToList();
+                List<string> mentions = new List<string>(); 
+                    records.SelectMany(r => r.Mentions).Distinct().OrderByDescending(m=>m.Records.Count).Take(10).ToList().ForEach(p=> mentions.Add(p.Name));
                 return Ok(mentions);
             }
             else
@@ -261,7 +262,8 @@ namespace UI_MVC.Controllers.API
             if (ItemMgr.GetItem(id) is Person)
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
-                List<Hashtag> hashtags = records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h=>h.Records.Count).Take(10).ToList();
+                List<string> hashtags = new List<string>();
+                 records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h=>h.Records.Count).Take(10).ToList().ForEach(p=> hashtags.Add(p.HashTag));
                 return Ok(hashtags);
             }
             else
