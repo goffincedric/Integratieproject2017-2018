@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Web;
 
 namespace UI_MVC.Models
 {
@@ -141,13 +142,14 @@ namespace UI_MVC.Models
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Telephone { get; set; }
+        //public string Telephone { get; set; }
         public string Street { get; set; }
-        public int? PostalCode { get; set; }
+        public string PostalCode { get; set; }
         public string City { get; set; }
-        public string BirthDate { get; set; }
+        //public string BirthDate { get; set; }
         public Province Province { get; set; }
-        public Gender Gender { get; set; }
+        //public Gender Gender { get; set; }
+        public HttpPostedFileBase file { get; set; }
 
         public AccountEditModel()
         {
@@ -160,13 +162,14 @@ namespace UI_MVC.Models
             UserName = profile.UserName;
             FirstName = profile.UserData.FirstName;
             LastName = profile.UserData.LastName;
-            Telephone = profile.UserData.Telephone;
+            //Telephone = profile.UserData.Telephone;
             Street = profile.UserData.Street;
             PostalCode = profile.UserData.PostalCode;
             City = profile.UserData.City;
-            BirthDate = profile.UserData.BirthDate.Date.ToString("dd/MM/yyyy");
+            //BirthDate = profile.UserData.BirthDate.Date.ToString("dd/MM/yyyy");
             Province = profile.UserData.Province;
-            Gender = profile.UserData.Gender;
+            //Gender = profile.UserData.Gender;
+
         }
 
         public Profile GetProfile()
@@ -177,21 +180,26 @@ namespace UI_MVC.Models
                 {
                     LastName = LastName,
                     FirstName = FirstName,
-                    Telephone = Telephone,
-                    Gender = Gender,
+                    //Telephone = Telephone,
+                    //Gender = Gender,
                     Street = Street,
                     City = City,
                     Province = Province,
                     PostalCode = PostalCode,
-                    BirthDate = DateTime.ParseExact(BirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)
+                    //BirthDate = DateTime.ParseExact(BirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)
                 },
                 Email = Email
             };
         }
     }
 
+
+
+
+
     public class DeleteProfileModel
     {
 
     }
+
 }

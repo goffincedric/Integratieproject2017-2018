@@ -65,9 +65,9 @@ namespace PB.DAL
         public IEnumerable<Subplatform> ReadSubplatforms()
         {
             return ctx.Subplatforms
+                .Include(s => s.Items)
                 .Include(s => s.Dashboards)
                 .Include(s => s.Admins)
-                .Include(s => s.Items)
                 .Include(s => s.Settings)
                 .AsEnumerable();
         }
@@ -75,9 +75,9 @@ namespace PB.DAL
         public Subplatform ReadSubplatform(int subplatformId)
         {
             return ctx.Subplatforms
+                .Include(s => s.Items)
                 .Include(s => s.Dashboards)
                 .Include(s => s.Admins)
-                .Include(s => s.Items)
                 .Include(s => s.Settings)
                 .FirstOrDefault(s => s.SubplatformId == subplatformId);
         }
@@ -85,8 +85,9 @@ namespace PB.DAL
         public Subplatform ReadSubplatform(string subplatformURL)
         {
             return ctx.Subplatforms
-                .Include(s => s.Admins)
                 .Include(s => s.Items)
+                .Include(s => s.Dashboards)
+                .Include(s => s.Admins)
                 .Include(s => s.Settings)
                 .FirstOrDefault(s => s.URL.ToLower().Equals(subplatformURL.ToLower()));
         }

@@ -1,140 +1,107 @@
 ﻿@model UI_MVC.Models.AccountEditModel
 @{
-    ViewBag.Title = "My Account";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+  ViewBag.Title = "My Account";
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <main class="main-content bgc-grey-100">
-    <div id="mainContent">
-        <div class="container-fluid">
-            <div class="bgc-white p-10 bd mB-10">
-                <h3>My Profile Settings</h3>
+  <div id="mainContent">
+    <div class="container-fluid">
+      <div class="bgc-white p-10 bd mB-10">
+        <h3>My Profile Settings</h3>
+      </div>
+      <div class="bgc-white p-10 bd mB-10">
+        <h4 class="bb-2">Basic Profile<span class="arrow-account"><i class="ti-angle-up"></i></span></h4>
+
+        @using (Html.BeginForm("Account", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+          @Html.AntiForgeryToken()
+          <form>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <div class="form-row">
+                  <img class="img-fluid" src="@ViewBag.ProfileImage" style="max-height: 100px; max-width: 100px;">
+                  <input type="file" class="btn btn-primary" name="file" id="file" />
+                </div>
+                <div class="form-row">
+                  <label for="inputEmail4">Gebruikersnaam</label>
+                  @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputGebruikersnaam", @type = "text", @placeholder = "Gebruikersnaam" } })
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <div class="form-row2">
+                      <label for="inputEmail4">Achternaam</label>
+                      @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Achternaam" } })
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <div class="form-row3">
+                      <label for="inputEmail4">Voornaam</label>
+                      @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Voornaam" } })
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label for="inputEmail4">Email</label>
+                  @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <div class="form-row">
+                  <label for="inputAddress">Straat en huisnummer</label>
+                  @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat + huisnummer" } })
+                </div>
+                @*<div class="form-row">
+                  <label for="inputEmail4">Telefoon</label>
+                  @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control", @type = "tel", @placeholder = "Gsm of telefoon nummer" } })
+                </div>*@
+                <div class="form-row">
+                  <label for="inputCity">Stad</label>
+                  @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "City" } })
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <div class="form-row2">
+                      <label for="inputState">Provincie</label>
+                      @Html.EnumDropDownListFor(model => model.Province, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <div class="form-row3">
+                      <label for="inputZip">Postcode</label>
+                      @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "postcode" } })
+                    </div>
+                  </div>
+                </div>
+                @*<div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="geboortedatum">Geboortedatum</label>
+                    <div class="timepicker-input input-icon form-group">
+                      <div class="input-group">
+                        <div class="input-group-addon bgc-white bd bdwR-0"><i class="ti-calendar"></i></div>
+                        @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @id = "geboortedatum", @class = "form-control bdc-grey-200 start-date", @placeholder = "Datepicker", @type = "text" } })
+                      </div>
+                    </div>
+                  </div>
+                </div>*@
+              </div>
             </div>
+            <button type="submit" class="btn btn-primary">Opslaan</button>
+          </form>
+        }
+      </div>
 
-            @{
-                Html.RenderAction("_ResetPassword", "Account");
-            }
-            <div class="bgc-white p-10 bd mB-10">
-                <h4 class="bb-2">Basic Profile<span class="arrow-account"><i class="ti-angle-up"></i></span></h4>
+      @{
+        Html.RenderAction("_ResetPassword", "Account");
+      }
 
-                @using (Html.BeginForm("Account", "Account", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <form>
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <div class="form-row">
-                                    <img class="img-fluid" src=/Content/Images/1.jpg>
-                                </div>
-                                <div class="form-row">
-                                    <label for="inputEmail4">Gebruikersnaam</label>
-                                    @*<input type="text" class="form-control" id="inputGebruikersnaam4" placeholder="Gebruikersnaam">*@
-                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputGebruikersnaam", @type = "text", @placeholder = "Gebruikersnaam" } })
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <div class="form-row2">
-                                            <label for="inputEmail4">Achternaam</label>
-                                            @*<input type="email" class="form-control" id="inputEmail4" placeholder="Email">*@
-                                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Achternaam" } })
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <div class="form-row3">
-                                            <label for="inputEmail4">Voornaam</label>
-                                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Voornaam" } })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <label for="inputEmail4">Email</label>
-                                    @*<input type="email" class="form-control" id="inputEmail4" placeholder="Email">*@
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <div class="form-row">
-                                    <label for="inputAddress">Straat en huisnummer</label>
-                                    @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat huisnummer" } })
-                                </div>
-                                <div class="form-row">
-                                    <label for="inputEmail4">Telefoon</label>
-                                    @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control", @type = "tel", @placeholder = "Gsm of telefoon nummer" } })
-                                </div>
-                                <div class="form-row">
-                                    <label for="inputCity">Stad</label>
-                                    @*<input type="text" class="form-control" id="inputCity" placeholder="Itegem">*@
-                                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Stad of dorp" } })
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <div class="form-row2">
-                                            <label for="inputState">Provincie</label>
-                                            @Html.EnumDropDownListFor(model => model.Province, htmlAttributes: new { @class = "form-control" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <div class="form-row3">
-                                            <label for="inputZip">Postcode</label>
-                                            @*<input type="text" class="form-control" id="inputZip" placeholder="2222">*@
-                                            @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "postcode" } })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="geboortedatum">Geboortedatum</label>
-                                        <div class="timepicker-input input-icon form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon bgc-white bd bdwR-0"><i class="ti-calendar"></i></div>
-                                                @*<input type="text" class="form-control bdc-grey-200 start-date" placeholder="Datepicker" data-provide="datepicker">*@
-                                                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @id = "geboortedatum", @class = "form-control bdc-grey-200 start-date", @placeholder = "Datepicker", @type = "text" } })
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+      @{
+        Html.RenderAction("_DeleteProfile", "Account");
+      }
 
-                        @*<div class="form-group">
-                                <label for="Gender">Gender</label>
-                                <div class="col-md-4">
-                                    @Html.RadioButtonFor(m=>m.UserData.Gender, new { id = "Gender.Picked" })
-
-                                    <label class="radio-inline" for="Gender-0">
-                                        <input type="radio" name="Gender" id="Gender-0" value="1" checked="checked">
-                                        Male
-                                    </label>
-                                    <label class="radio-inline" for="Gender-1">
-                                        <input type="radio" name="Gender" id="Gender-1" value="2">
-                                        Female
-                                    </label>
-                                    <label class="radio-inline" for="Gender-2">
-                                        <input type="radio" name="Gender" id="Gender-2" value="3">
-                                        Other
-                                    </label>
-                                </div>
-                            </div>*@
-                        @*<input type="text" class="form-control" id="inputAddress" placeholder="Stationsstraat 144"></div>*@
-                        <button type="submit" class="btn btn-primary">Opslaan</button>
-                    </form>
-                }
-            </div>
-
-            @{
-                Html.RenderAction("_DeleteProfile", "Account");
-            }
-
-        </div>
     </div>
+  </div>
 </main>
-
 @Scripts.Render("~/bundles/AccountControl")
-
-@*<script type="text/x-jquery-tmpl" defer>
-        $(function () { // will trigger when the document is ready
-        $('#BirthDate').datepicker({ dateFormat: 'dd/mm/yyyy' }); //Initialise any date pickers
-        });
-    </script>*@

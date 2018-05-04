@@ -6,6 +6,7 @@ using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -30,14 +31,10 @@ namespace UI_MVC.Controllers
 
         public ActionResult ChangeProfilePic()
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return Content("<i class=\"ti-user\"></i>");
-            }
-            else
-            {
-                return Content("<img class=\"w-2r bdrs-50p\" src=/Content/Images/1.jpg>");
-            }
+                Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
+                var image = (profile.ProfileIcon is null) ? VirtualPathUtility.ToAbsolute(@"~/Content/Images/Users/user.png") : VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+                return Content(image);
+            
         }
 
 
@@ -191,21 +188,25 @@ namespace UI_MVC.Controllers
             {
                 int? count = person.Records.Count();
                 ViewBag.Vermeldingen = (count is null) ? 0 : count;
+
+                ViewBag.Partij = (person.Organisation is null) ? "Geen partij" : person.Organisation.Name;
             }
             if (item is Organisation organisation)
             {
 
                 // int? count = organisation.People.Count();
                 //ViewBag.Leden = (count is null) ? 0 : count;
-                ViewBag.Leden = 0;
+                int? count = organisation.People.Count();
+                ViewBag.Leden =  (count is null) ? 0 : count ;
                 ViewBag.FullName = organisation.FullName;
             }
             if (item is Theme theme)
             {
-                //int? count = theme.Records.Count();
+                //int? count          = theme.Records.Count();
                 //ViewBag.Associaties = (count is null) ? 0 : count;
-                ViewBag.Associaties = 0;
-                ViewBag.Keywords = theme.Keywords.ToList();
+                int? count            = theme.Records.Count();
+                ViewBag.Associaties   = (count is null) ? 0 : count;
+                ViewBag.Keywords      = theme.Keywords.ToList();
             }
             ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));
 
@@ -245,7 +246,7 @@ namespace UI_MVC.Controllers
             }
             return RedirectToAction("ItemDetail", "Home", new { Id = id });
         }
-        
+
         [HttpPost]
         public ActionResult GenerateAlertsManually()
         {
@@ -256,5 +257,58 @@ namespace UI_MVC.Controllers
             return RedirectToAction("PlatformSettings", "Home");
         }
 
+        [HttpPost]
+        public ActionResult CleanupDB(string subplatform)
+        {
+            Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
+            itemMgr.CleanupOldRecords(sp);
+            return RedirectToAction("PlatformSettings", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Syncronize(string subplatform)
+        {
+            Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
+            itemMgr.SyncDatabase(sp);
+            return RedirectToAction("PlatformSettings", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase file)
+        {
+            try
+            {
+                if (file.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(file.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), _FileName);
+                    file.SaveAs(_path);
+                }
+        
+                return RedirectToAction("Index","Home");
+            }
+            catch
+            {
+               
+                return RedirectToAction("Index","Home");
+            }
+        }
+
+
+
+
+
+
+
+
+        public ActionResult _UrlList(int id)
+        {
+            List<Url> urls = null;
+            itemMgr.GetPerson(id).Records.ForEach(p => urls.ForEach(u => urls.Add(u)));
+
+
+
+            return PartialView(urls);
+        }
     }
 }

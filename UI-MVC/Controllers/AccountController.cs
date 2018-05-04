@@ -18,6 +18,7 @@ using PB.BL.Domain.Platform;
 using System.Linq;
 using System.Data.Entity.Validation;
 using PB.DAL.EF;
+using System.IO;
 
 namespace UI_MVC.Controllers
 {
@@ -129,7 +130,7 @@ namespace UI_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Profile { UserName = model.Username, Email = model.Email, };
+                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon = @"~/Content/Images/Users/user.png" };
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
@@ -139,65 +140,30 @@ namespace UI_MVC.Controllers
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
                         Value = "light"
-                    }
-                };
-                user.Dashboards = new List<Dashboard> {
-                    new Dashboard()
+                    },
+                    new UserSetting()
                     {
                         Profile = user,
-                        DashboardType = UserType.USER,
-                        Subplatform = SubplatformMgr.GetSubplatform(subplatform),
-                        Zones = new List<Zone>
-                        {
-                            new Zone()
-                            {
-                                Title = "Main Trends",
-                                Elements = new List<Element>()
-                                {
-                                    new Element()
-                                    {
-                                        X = 0,
-                                        Y = 3,
-                                        Width = 5,
-                                        Height = 5,
-                                        Comparison = new Comparison()
-                                    },
-                                    new Element()
-                                    {
-                                        X = 0,
-                                        Y = 0,
-                                        Width = 2,
-                                        Height = 3,
-                                        Comparison = new Comparison()
-                                    }
-                                }
-                            },
-                            new Zone()
-                            {
-                                Title = "Personal Trends",
-                                Elements = new List<Element>()
-                                {
-                                    new Element()
-                                    {
-                                        X = 0,
-                                        Y = 3,
-                                        Width = 6,
-                                        Height = 5,
-                                        Comparison = new Comparison()
-                                    },
-                                    new Element()
-                                    {
-                                        X = 0,
-                                        Y = 0,
-                                        Width = 2,
-                                        Height = 4,
-                                        Comparison = new Comparison()
-                                    }
-                                }
-                            }
-                        }
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
                     }
                 };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -265,7 +231,9 @@ namespace UI_MVC.Controllers
             //nog via pk maken
             if (Request.IsAuthenticated)
             {
-                AccountEditModel account = new AccountEditModel(UserManager.GetProfile(User.Identity.GetUserId()));
+                Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
+                ViewBag.ProfileImage = (profile.ProfileIcon is null) ? VirtualPathUtility.ToAbsolute(@"~/Content/Images/Users/user.png") : VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+                AccountEditModel account = new AccountEditModel(profile);
                 return View(account);
             }
             else
@@ -280,22 +248,40 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Account(AccountEditModel editedAccount)
         {
-            Profile newProfile = UserManager.GetProfile(User.Identity.GetUserId());
+            string _FileName = "";
+            Profile newProfile = UserManager.GetProfile(User.Identity.GetUserId()); 
+
+            if (editedAccount.file != null)
+            {
+                if (editedAccount.file.ContentLength > 0)
+                {
+                    _FileName = Path.GetFileName(editedAccount.file.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), _FileName);
+                    editedAccount.file.SaveAs(_path);
+                    newProfile.ProfileIcon = @"~/Content/Images/Users/" + _FileName;
+                }
+            }
+            else
+            {
+                newProfile.ProfileIcon = newProfile.ProfileIcon;
+            }
+            
             newProfile.UserData.LastName = editedAccount.LastName;
             newProfile.UserData.FirstName = editedAccount.FirstName;
             newProfile.Email = editedAccount.Email;
-            newProfile.UserData.Telephone = editedAccount.Telephone;
-            newProfile.UserData.Gender = editedAccount.Gender;
+            //newProfile.UserData.Telephone = editedAccount.Telephone;
+            //newProfile.UserData.Gender = editedAccount.Gender;
             newProfile.UserData.Street = editedAccount.Street;
             newProfile.UserData.City = editedAccount.City;
             newProfile.UserData.Province = editedAccount.Province;
             newProfile.UserData.PostalCode = editedAccount.PostalCode;
-            newProfile.UserData.BirthDate = DateTime.ParseExact(editedAccount.BirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+
 
             if (ModelState.IsValid)
             {
                 UserManager.ChangeProfile(newProfile);
-                return View(editedAccount);
+                return RedirectToAction("Account", "Account");
             }
             return View();
         }
@@ -360,20 +346,18 @@ namespace UI_MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = ("User,Admin,SuperAdmin"))]
-        public ActionResult DeleteProfileAdmin(string subplatform, string userId)
+        public ActionResult DeleteProfileAdmin(string userId)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || userId.Equals(User.Identity.GetUserId()))
             {
-                return RedirectToAction("AdminCrud", "Home");
+                return RedirectToAction("UserBeheer", "Account");
             }
-            var user = UserManager.GetProfile(userId);
 
+            var user = UserManager.GetProfile(userId);
 
             UserManager.RemoveProfile(user.Id);
 
-            LogOff(subplatform);
-
-            return RedirectToAction("AdminCrud", "Home");
+            return RedirectToAction("UserBeheer", "Account");
         }
 
         #endregion
@@ -386,6 +370,11 @@ namespace UI_MVC.Controllers
             return View(profiles);
         }
 
+        public ViewResult UserSettings()
+        {
+            IEnumerable<Item> Subscriptions = UserManager.GetProfile(User.Identity.GetUserId()).Subscriptions;
+            return View(Subscriptions);
+        }
         #region ExternalLogin
         [HttpPost]
         [AllowAnonymous]
@@ -436,76 +425,14 @@ namespace UI_MVC.Controllers
                     return RedirectToAction("Login", "Account");
                 }
 
-                /* START PSEUDO SEED */
-                // TODO: SubplatformId/SubplatformNaam/SubplatformAfkorting meegeven in ExternalLoginConfirmationViewModel, 
-                //       gebruiken om juiste subplatform op te halen!!
-                Subplatform pbSubplatform = SubplatformMgr.GetSubplatforms().FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
-                if (pbSubplatform == null)
-                {
-                    pbSubplatform = new Subplatform()
-                    {
-                        Name = "Politieke Barometer",
-                        URL = "DUMMYURL",
-                        DateOnline = DateTime.Now,
-                        Settings = new List<SubplatformSetting>()
-                    {
-                        new SubplatformSetting()
-                        {
-                            SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
-                            Value = "31"
-                        }
-                    },
-                        Admins = new List<Profile>(),
-                        Items = new List<Item>(),
-                        Pages = new List<Page>(),
-                        Dashboards = new List<Dashboard>()
-                    };
-                }
-                /* END PSEUDO SEED */
-
-
                 var name = info.Email.Split('@')[0];
                 var user = new Profile
                 {
                     UserName = name,
-                    Email = model.Email
+                    Email = model.Email,
+                    ProfileIcon = @"~/Content/Images/Users/user.png"
                 };
                 user.UserData = new UserData() { Profile = user };
-                user.Dashboards = new List<Dashboard> {
-                    new Dashboard()
-                    {
-                        Profile = user,
-                        DashboardType = UserType.USER,
-                        Zones = new List<Zone>
-                        {
-                            new Zone()
-                            {
-                                Title = "Main Zone",
-                                Elements = new List<Element>()
-                                {
-                                    new Element()
-                                    {
-                                        X = 0,
-                                        Y = 3,
-                                        Width = 5,
-                                        Height = 5,
-                                        Comparison = new Comparison()
-                                    },
-                                    new Element()
-                                    {
-                                        X = 0,
-                                        Y = 0,
-                                        Width = 2,
-                                        Height = 3,
-                                        Comparison = new Comparison()
-                                    }
-                                }
-                            }
-                        },
-                        Subplatform = pbSubplatform
-                    }
-                };
-                pbSubplatform.Dashboards.Add(user.Dashboards[0]); // [0] ZAL ENKEL WERKEN INDIEN DE GEBRUIKEN EEN DASHBOARD TOEGEWEZEN KRIJGT
                 user.Settings = new List<UserSetting>
                 {
                     new UserSetting()
@@ -514,6 +441,27 @@ namespace UI_MVC.Controllers
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
                         Value = "light"
+                    },
+                     new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
                     }
                 };
 

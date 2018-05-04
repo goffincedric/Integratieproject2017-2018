@@ -9,7 +9,7 @@ namespace UI_MVC.App_Start
             // TODO: Add any additional configuration code.
 
             // Web API routes
-            //config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
