@@ -142,6 +142,7 @@ namespace PB.BL
             IntegratieDbContext context = store.ReadContext();
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var userManager = new UserManager<Profile>(new UserStore<Profile>(context));
 
             if (!roleManager.RoleExists("SuperAdmin"))
             {
@@ -165,9 +166,55 @@ namespace PB.BL
                 roleManager.Create(role);
 
             }
+
+            // Create superadmin
+            if (userManager.Users.FirstOrDefault(p => p.UserName.Equals("captain")) is null)
+            {
+                var user = new Profile { UserName = "captain", Email = "example@example.tld", ProfileIcon = @"~/Content/Images/Users/user.png" };
+                user.UserData = new UserData() { Profile = user };
+                user.Settings = new List<UserSetting>
+                {
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName = Setting.Account.THEME,
+                        Value = "light"
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
+                        Value=true, //moet nog boolean worden
+                    }
+                };
+
+                var result = userManager.CreateAsync(user, "FliesAway").Result;
+                if (result.Succeeded)
+                {
+                    //Assign Role to user
+                    userManager.AddToRoleAsync(user.Id, "SuperAdmin");
+                }
+            }
+
         }
         #endregion
-        
+
         #region Profile
         public void ChangeProfile(Profile profile)
         {
@@ -283,14 +330,14 @@ namespace PB.BL
             List<Alert> alerts = new List<Alert>();
 
             // Update trending items
-            itemsToUpdate = Trendspotter.CheckTrendingItems(allItems.ToList(), 10 /* TODO: ?Subplatform setting? */, ref alerts);
+            itemsToUpdate = Trendspotter.CheckTrendingItems(allItems.ToList(), 10, ref alerts);
 
             // Get all profiles with subscriptions
             List<Profile> Profiles = ProfileRepo.ReadProfiles().Where(p => p.Subscriptions.Count > 0).ToList();
 
             // Alle subscriptions uit profiles halen
             List<Item> Subscriptions = Profiles.SelectMany(p => p.Subscriptions).Distinct().ToList();
-            
+
             // Check trends voor people
             alerts.AddRange(Trendspotter.GenerateAllAlertTypes(Subscriptions));
 
@@ -366,7 +413,7 @@ namespace PB.BL
 
             //Check trends voor people
             List<Alert> alerts = Trendspotter.GenerateAllAlertTypes(profile.Subscriptions);
-            
+
 
             /*
              * Linking Alerts

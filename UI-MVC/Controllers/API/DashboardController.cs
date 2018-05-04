@@ -1,4 +1,5 @@
-﻿using PB.BL;
+﻿using Microsoft.AspNet.Identity;
+using PB.BL;
 using PB.BL.Domain.Dashboards;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace UI_MVC.Controllers.API
         {
             Dashboard dashboard = DashboardMgr.GetDashboard(id);
             if (dashboard == null) return StatusCode(HttpStatusCode.NoContent);
+            if (!dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
             if (dashboard.Zones.Count == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(dashboard.Zones);
         }
@@ -39,6 +41,7 @@ namespace UI_MVC.Controllers.API
             if (!ModelState.IsValid) return BadRequest();
             if (zone.ZoneId != id) return BadRequest();
             Zone oldZone = DashboardMgr.GetZone(id);
+            if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
             if (oldZone == null) return NotFound();
             DashboardMgr.ChangeZone(zone);
             return StatusCode(HttpStatusCode.NoContent);
@@ -54,6 +57,7 @@ namespace UI_MVC.Controllers.API
             if (DashboardMgr.GetZone(zone.ZoneId) != null) return Conflict();
 
             Dashboard dashboard = DashboardMgr.GetDashboard(id);
+            if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
             if (dashboard == null) return NotFound();
             if (zone.Elements == null || zone.Elements.Count == 0) zone = DashboardMgr.AddZone(dashboard, zone.Title);
             else zone = DashboardMgr.AddZone(dashboard, zone.Title, zone.Elements);
@@ -67,7 +71,9 @@ namespace UI_MVC.Controllers.API
         {
             if (id == null) return BadRequest("No Id provided");
             if (id < 0) return BadRequest("Wrong id has been provided");
-            if (DashboardMgr.GetZone((int)id) == null) NotFound();
+            Zone zone = DashboardMgr.GetZone((int)id);
+            if (zone == null) NotFound();
+            if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
             DashboardMgr.RemoveZone((int)id);
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -78,6 +84,7 @@ namespace UI_MVC.Controllers.API
         {
             Zone zone = DashboardMgr.GetZone(id);
             if (zone == null) return StatusCode(HttpStatusCode.NoContent);
+            if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
             if (zone.Elements.Count == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(zone.Elements);
         }
@@ -93,13 +100,7 @@ namespace UI_MVC.Controllers.API
             element.Comparison = newElement.Comparison;
             Zone newZone = DashboardMgr.GetZone(element.ZoneId);
             if (newZone == null) return NotFound();
-
-            //int index = newZone.Elements.FindIndex(e => e.ElementId == id);
-
-            //newZone.Elements[index].X = element.X;
-            //newZone.Elements[index].Y = element.Y;
-            //newZone.Elements[index].Width = element.Width;
-            //newZone.Elements[index].Height = element.Height;
+            if (!newZone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
 
             if (!(newElement.Height == element.Height && newElement.Width == element.Width && newElement.X == element.X && newElement.Y == element.Y && newElement.ZoneId == element.ZoneId))
             {
@@ -124,6 +125,7 @@ namespace UI_MVC.Controllers.API
             if (DashboardMgr.GetElement(element.ElementId) != null) return Conflict();
             Zone zone = DashboardMgr.GetZone(id);
             if (zone == null) return NotFound();
+            if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
             element.Zone = zone;
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -140,6 +142,8 @@ namespace UI_MVC.Controllers.API
             if (id == null) return BadRequest("No Id provided");
             if (id < 0) return BadRequest("Wrong id has been provided");
             if (DashboardMgr.GetElement((int)id) == null) NotFound();
+            Element element = DashboardMgr.GetElement((int)id);
+
             DashboardMgr.RemoveElement((int)id);
             return StatusCode(HttpStatusCode.NoContent);
         }

@@ -1,4 +1,5 @@
 ﻿using PB.DAL;
+using System.Threading.Tasks;
 
 namespace PB.BL
 {
@@ -14,6 +15,11 @@ namespace PB.BL
         public void Save()
         {
             UnitOfWork.CommitChanges();
+        }
+
+        public async Task<int> SaveAsync()
+        {
+            return await UnitOfWork.CommitChangesAsync();
         }
     }
 }
