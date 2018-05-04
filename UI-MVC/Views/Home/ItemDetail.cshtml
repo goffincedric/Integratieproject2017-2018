@@ -4,6 +4,7 @@
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 
 <main class="main-content bgc-grey-100">
   <div id="mainContent" class="container-fluid">
@@ -25,57 +26,57 @@
                 </div>
                 <div class="row">
                   @if (Model is PB.BL.Domain.Items.Person)
-              {
-                <ul style="list-style-type:none; width:100%; text-align:center;">
-                  <li style="display:inline-block;"><h5 class="h5">@ViewBag.Vermeldingen Vermeldingen</h5></li>
-                  <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
-                  <li style="display:inline-block;"><h5 class="h5">@ViewBag.Partij</h5></li>
+                  {
+                    <ul style="list-style-type:none; width:100%; text-align:center;">
+                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Vermeldingen Vermeldingen</h5></li>
+                      <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
+                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Partij</h5></li>
 
-                </ul>
-          }
-          else if (Model is PB.BL.Domain.Items.Organisation)
-          {
+                    </ul>
+                  }
+                  else if (Model is PB.BL.Domain.Items.Organisation)
+                  {
 
-            <ul style="list-style-type:none; width:100%; text-align:center;">
-              <li style="display:inline-block;"><h5 class="h5">@ViewBag.Leden Leden</h5></li>
-              <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
-              <li style="display:inline-block;"><h5 class="h5">@ViewBag.FullName</h5></li>
+                    <ul style="list-style-type:none; width:100%; text-align:center;">
+                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Leden Leden</h5></li>
+                      <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
+                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.FullName</h5></li>
 
-            </ul>
+                    </ul>
 
-      }
-      else
-      {
-        <ul style="list-style-type:none; width:100%; text-align:center;">
-          <li style="display:inline-block;"><h5 class="h5">@ViewBag.Associaties Associaties</h5></li>
-          <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
-          <li style="display:inline-block;"><h5 class="h5">@ViewBag.Keywords</h5></li>
+                  }
+                  else
+                  {
+                    <ul style="list-style-type:none; width:100%; text-align:center;">
+                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Associaties Associaties</h5></li>
+                      <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
+                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Keywords</h5></li>
 
-        </ul>
+                    </ul>
 
-  }
+                  }
                 </div>
 
               </div>
               <div class="h-25 w-100 d-inline-block">
 
                 @if (ViewBag.Subscribed)
-            {
-              using (Html.BeginForm("RemoveSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
-              {
-                @Html.AntiForgeryToken()
-                <button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
-          }
-        }
-        else
-        {
-          using (Html.BeginForm("AddSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
-          {
-            @Html.AntiForgeryToken()
-            <button type="submit" value="Subscribe me!" class="btn btn-outline-primary btn-lg btn-block">Subcribe!</button>
-      }
+                {
+                  using (Html.BeginForm("RemoveSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
+                  {
+                    @Html.AntiForgeryToken()
+                    <button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
+                  }
+                }
+                else
+                {
+                  using (Html.BeginForm("AddSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
+                  {
+                    @Html.AntiForgeryToken()
+                    <button type="submit" value="Subscribe me!" class="btn btn-outline-primary btn-lg btn-block">Subcribe!</button>
+                  }
 
-    }
+                }
               </div>
             </div>
 
@@ -143,39 +144,54 @@
       <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
           <h1 class="h3" style="text-align: center">Gerelateerde urls</h1>
-
           <div id="urls" class="mT-30">
-
           </div>
-
         </div>
       </div>
-      
-      @if (Model is PB.BL.Domain.Items.Person)
-  {
-    <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
-      <div class="bgc-white p-20 bd">
-        <h6 class="c-grey-900">Sentiment analyse</h6> <div class="mT-30" style="text-align:center">
-          <canvas width="800" height="200" id="mycanvas"></canvas>
+
+      <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
+        <div class="bgc-white p-20 bd">
+          <h1 class="h3" style="text-align: center">Top mentions</h1>
+          <div id="mentions" class="mT-30">
+          </div>
         </div>
       </div>
-    </div>
-}
 
 
+      <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
+        <div class="bgc-white p-20 bd">
+          <h1 class="h3" style="text-align: center">Top Hashtags</h1>
+          <div id="hashtags" class="mT-30">
+          </div>
+        </div>
+
+
+        @if (Model is PB.BL.Domain.Items.Person)
+        {
+          <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
+            <div class="bgc-white p-20 bd">
+              <h6 class="c-grey-900">Sentiment analyse</h6> <div class="mT-30" style="text-align:center">
+                <canvas width="800" height="200" id="mycanvas"></canvas>
+              </div>
+            </div>
+          </div>
+        }
+
+
+      </div>
     </div>
   </div>
+
 
 </main>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://nodebox.live/api/v1/ndbx.js"></script>
 @if (Model is PB.BL.Domain.Items.Person)
 {
-
-
   <script defer>
-    
+
     var personid= @Html.Raw(Model.ItemId);
     var urls = "";
     urls = $.ajax({
@@ -186,7 +202,7 @@
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
     }).responseText;
 
-  
+
 
     var array = urls.split(',');
     function shuffle(a) {
@@ -202,13 +218,13 @@
     $.each(array, function (data, realdata) {
       $("#urls").append('<i style="margin-right:10px" class="ti-link"></i>'+"<a href=" + realdata + ">" + realdata.substring(1, (realdata.length - 1)) + "</a><br/>");
     });
-      
-   
-    
+
+
+
   $("#graphs").after("<div style=\"margin: 10px 0\" class=\"masonry-item col-md- 12\"> <div class=\"bgc-white p-20 bd\"> <h6 class=\"c-grey-900\">Line chart</h6> <div class=\"mT-30\" id=\"graph-bar\"> </div></div></div>");
 
   $("#graph-bar").append("<canvas id=\"line-chart2\" height=\"400\"></canvas>");
-     
+
      drawLineChart(personid)
 
 
@@ -232,7 +248,7 @@
     var values = [];
 
     for (var i = 0; i < keys.length; i++) {
-      label.push(keys[i]);
+      label.push(keys[i].substring(0,10));
       values.push(test[keys[i]] / 10);
     }
 
@@ -269,11 +285,7 @@
 
 
   </script>
-}
-<script src="https://nodebox.live/api/v1/ndbx.js"></script>
 
-@if (Model is PB.BL.Domain.Items.Person)
-{
   <script>
   var itemid = @Html.Raw(Model.ItemId);
 
@@ -284,7 +296,7 @@
       dataType: 'json',
       url: "https://localhost:44342/api/item/getrecordsfromperson/" + itemid,
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseText;
+    }).responseJSON;
 
 
   var options = {
@@ -294,13 +306,15 @@
       canvasId: 'mycanvas'
   };
 
+
+
   ndbx.embed(options,
     function(err, player) {
       if (err) {
         console.log('Load error:', err);
       } else {
         window.player = player;
-        
+
           player.setValue('datareader', 'v', tmp);
          player.start();
 
@@ -309,5 +323,38 @@
 
   </script>
 
+  <script>
+    var personid= @Html.Raw(Model.ItemId);
+    var urls = "";
+    urls = $.ajax({
+      async: false,
+      type: 'GET',
+      dataType: 'json',
+      url: "https://localhost:44342/api/item/GetTrendingHashtags" + personid,
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+    }).responseText;
 
+    $.each(array, function (data, realdata) {
+      $("#hashtags").append('<i class="fas fa-at"></i>');
+    });
+
+  </script>
+
+  <script>
+        var personid= @Html.Raw(Model.ItemId);
+    var urls = "";
+    urls = $.ajax({
+      async: false,
+      type: 'GET',
+      dataType: 'json',
+      url: "https://localhost:44342/api/item/GetTrendingMentions" + personid,
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+    }).responseText;
+
+    $.each(array, function (data, realdata) {
+      $("#hashtags").append('<i class="fas fa-hashtag"></i>');
+    });
+  </script>
 }
+
+

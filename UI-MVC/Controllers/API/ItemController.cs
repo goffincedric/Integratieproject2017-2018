@@ -245,8 +245,24 @@ namespace UI_MVC.Controllers.API
             if (ItemMgr.GetItem(id) is Person)
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
-                List<Mention> mentions = records.SelectMany(r => r.Mentions).Distinct().ToList();
+                List<Mention> mentions = records.SelectMany(r => r.Mentions).Distinct().OrderByDescending(m=>m.Records.Count).Take(10).ToList();
                 return Ok(mentions);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetTrendingHashtags(int id)
+        {
+
+            if (ItemMgr.GetItem(id) is Person)
+            {
+                IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
+                List<Hashtag> hashtags = records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h=>h.Records.Count).Take(10).ToList();
+                return Ok(hashtags);
             }
             else
             {
@@ -271,20 +287,6 @@ namespace UI_MVC.Controllers.API
             }
         }
 
-        [HttpGet]
-        public IHttpActionResult GetTrendingHashtags(int id)
-        {
-
-            if (ItemMgr.GetItem(id) is Person)
-            {
-                IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
-                List<Hashtag> hashtags = records.SelectMany(r => r.Hashtags).Distinct().ToList();
-                return Ok(hashtags);
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
+        
     }
 }
