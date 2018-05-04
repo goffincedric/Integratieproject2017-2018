@@ -4,6 +4,13 @@
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+  .colom-4-center {
+    padding: 0 0 0 10%;
+
+  }
+</style>
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 
 <main class="main-content bgc-grey-100">
@@ -141,18 +148,16 @@
       </div>
 
 
-      <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
-        <div class="bgc-white p-20 bd">
-          <h1 class="h3" style="text-align: center">Gerelateerde urls</h1>
-          <div id="urls" class="mT-30">
-          </div>
-        </div>
-      </div>
+
 
       <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
           <h1 class="h3" style="text-align: center">Top mentions</h1>
-          <div id="mentions" class="mT-30">
+          <br />
+          <div id="mentions" class="row">
+            <div id="mention1" class="col-4 colom-4-center"></div>
+            <div id="mention2" class="col-4 colom-4-center"></div>
+            <div id="mention3" class="col-4 colom-4-center"></div>
           </div>
         </div>
       </div>
@@ -161,7 +166,12 @@
       <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
           <h1 class="h3" style="text-align: center">Top Hashtags</h1>
-          <div id="hashtags" class="mT-30">
+          <br />
+          <div id="hashtags" class="row">
+    
+            <div id="hashtag1"  class="col-4 colom-4-center"></div>
+            <div id="hashtag2"  class="col-4 colom-4-center"></div>
+            <div id="hashtag3"  class="col-4 colom-4-center"></div>
           </div>
         </div>
 
@@ -177,6 +187,14 @@
           </div>
         }
 
+
+        <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
+          <div class="bgc-white p-20 bd">
+            <h1 class="h3" style="text-align: center">Gerelateerde urls</h1>
+            <div id="urls" class="mT-30">
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -215,6 +233,7 @@
     array = shuffle(array);
     array = array.slice(0, 5);
 
+
     $.each(array, function (data, realdata) {
       $("#urls").append('<i style="margin-right:10px" class="fas fa-link"></i>'+"<a href=" + realdata + ">" + realdata.substring(1, (realdata.length - 1)) + "</a><br/>");
     });
@@ -231,7 +250,7 @@
 
 
   function drawLineChart(id) {
-  
+
     var test = "";
       test = $.ajax({
       async: false,
@@ -289,7 +308,7 @@
   <script>
 
   var itemid = @Html.Raw(Model.ItemId);
-   
+
   var tmp = "";
     tmp = $.ajax({
       async: false,
@@ -323,14 +342,14 @@
       }
         });
 
-   
+
 
   </script>
 
   <script>
     var personid= @Html.Raw(Model.ItemId);
     var hashtags = "";
-    
+
     hashtags = $.ajax({
       async: false,
       type: 'GET',
@@ -340,13 +359,21 @@
     }).responseJSON;
     console.log(hashtags);
 
-   
-   
+    var counter = 0;
+
     $.each(hashtags, function (data, realdata) {
+      counter++;
       var name = 'https://twitter.com/search?q=%23' + realdata + '&src=tyah&lang=nl';
       console.log(name);
-      $("#hashtags").append('<i style="margin-right:10px" class="fas fa-link"></i>' + "<a href=" + name + ">" +realdata + '</a><br/>');
-      
+      if (counter <= 4) {
+        $("#hashtag1").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+      } else if (counter <= 8) {
+        $("#hashtag2").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+      } else {
+        $("#hashtag3").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+      }
+
+
     });
 
   </script>
@@ -361,12 +388,21 @@
       url: "https://localhost:44342/api/item/GetTrendingMentions/" + personid,
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
     }).responseJSON;
-    
+
+    var counter2 = 0;
     $.each(mentions, function (data, realdata) {
       var name = 'https://twitter.com/' + realdata;
       //$("#mentions").append('<div class="row"><i style="margin-right:10px" class="fas fa-at"></i><h6>' + realdata + '</h6></br></div>');
-      $("#mentions").append('<i style="margin-right:10px" class="fas fa-link"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+      counter2++;
+      if (counter2 <= 4) {
+        $("#mention1").append('<i style="margin-right:10px" class="fas fa-at"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+      } else if (counter2 <= 8) {
+        $("#mention2").append('<i style="margin-right:10px" class="fas fa-at"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+      } else {
+        $("#mention3").append('<i style="margin-right:10px" class="fas fa-at"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+      }
 
+    
     });
   </script>
 }
