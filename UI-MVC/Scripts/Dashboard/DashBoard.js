@@ -45,14 +45,10 @@ $(function () {
         addElement = function (grid) {
             addingElement = true;
 
-            console.log(grid);
             var addZone = $('.add-zone');
-
             var ZoneId = grid.attr('id');
 
             ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
-
-            console.log(ZoneId);
 
             var removeElement = grid.children()[grid.children().length - 1];
 
@@ -93,6 +89,12 @@ $(function () {
 
                 grid = newZone.children('.zone-' + ZoneId).children('#zone-' + ZoneId);
 
+                var deletezone = grid.parent().children('h4').children('.delete-zone');
+
+                deletezone.on('click', function () {
+                    removeZone(grid.parent());
+                });
+                
                 addZone = addZone.children('.add-zone').children('div').children('#zone-x');
                 var plusElement = addZone.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
@@ -127,7 +129,7 @@ $(function () {
         }
 
         removeZone = function (grid) {
-            console.log(grid);
+            //console.log(grid);
 
             var ZoneId = grid.attr('class');
 
