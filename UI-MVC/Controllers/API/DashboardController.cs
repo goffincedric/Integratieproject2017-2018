@@ -55,15 +55,15 @@ namespace UI_MVC.Controllers.API
 
             Dashboard dashboard = DashboardMgr.GetDashboard(id);
             if (dashboard == null) return NotFound();
-            if (zone.Elements == null || zone.Elements.Count == 0) DashboardMgr.AddZone(dashboard, zone.Title);
-            else DashboardMgr.AddZone(dashboard, zone.Title, zone.Elements);
+            if (zone.Elements == null || zone.Elements.Count == 0) zone = DashboardMgr.AddZone(dashboard, zone.Title);
+            else zone = DashboardMgr.AddZone(dashboard, zone.Title, zone.Elements);
             
             return Ok(zone); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte zone
         }
 
-        // DELETE: api/dashboard/deletezone
+        // DELETE: api/dashboard/deletezone/zoneId
         [HttpDelete]
-        public IHttpActionResult DeleteZone([FromBody]int? id)
+        public IHttpActionResult DeleteZone(int? id)
         {
             if (id == null) return BadRequest("No Id provided");
             if (id < 0) return BadRequest("Wrong id has been provided");

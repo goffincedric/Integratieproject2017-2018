@@ -16,7 +16,7 @@
 var rotation = 0;
 
 $(".arrow-dashboard").click(function () {
-    $(this).parent().parent().children(".dashboard").toggle(300);
+    $(this).parent().parent().children(".DashZone").toggle(300);
     rotation = getRotationDegrees($(this)) + 180;
     $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
 });
