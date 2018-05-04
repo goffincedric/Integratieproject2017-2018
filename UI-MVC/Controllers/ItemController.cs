@@ -8,6 +8,10 @@ using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
 {
+    /// <summary>   
+    /// Controller for everything that has to handle with items (persons, organisations, themes)
+    /// Authorized by all roles at the moment
+    /// </summary
     [RequireHttps]
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     public class ItemController : Controller

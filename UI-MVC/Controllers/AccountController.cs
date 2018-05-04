@@ -22,7 +22,10 @@ using System.IO;
 
 namespace UI_MVC.Controllers
 {
-
+    /// <summary>   
+    /// Controller for everything that has to handle with account or to get an account
+    /// Authorized by all roles
+    /// </summary> 
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     [RequireHttps]
     public class AccountController : Controller
