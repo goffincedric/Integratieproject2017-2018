@@ -3,6 +3,7 @@ using PB.BL.Domain.JSONConversion;
 using PB.BL.Domain.Platform;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PB.BL.Interfaces
 {
@@ -40,6 +41,7 @@ namespace PB.BL.Interfaces
 
         List<Record> JClassToRecord(List<JClass> data);
         void SyncDatabase(Subplatform subplatform);
+        Task<int> SyncDatabaseAsync(Subplatform subplatform);
         void CleanupOldRecords(Subplatform subplatform);
 
         int GetKeywordsCount();

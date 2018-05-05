@@ -13,6 +13,8 @@ namespace PB.BL.Interfaces
         void ChangeSubplatform(Subplatform profile);
         void RemoveSubplatform(int subplatformId);
 
+        
+
         void AddAdmin(int subplatformId, Profile admin);
         void RemoveAdmin(int subplatformId, Profile admin);
 
