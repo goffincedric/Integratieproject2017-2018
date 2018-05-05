@@ -25,7 +25,7 @@
     <br />
 
     <div id="graphs">
-
+   
     </div>
       
      
@@ -62,7 +62,7 @@
 
       $("#graph-bar").append("<canvas id=\"line-chart\" height=\"220\"></canvas>");
       var index = $("#itemid").val();
-      drawLineChart(index);
+      drawLineChart();
     } else if (keuze == 5) {
       $("#graphs").after("<div style=\"margin: 10px\" class=\"masonry-item col-md- 6\"> <div class=\"bgc-white p-20 bd\"> <h6 class=\"c-grey-900\">Line chart</h6> <div class=\"mT-30\" id=\"graph-bar\"> </div></div></div>");
 
@@ -128,56 +128,89 @@
   }
 
 
-  function drawLineChart(id) {
-   
-    var tmp = "";
-    tmp = $.ajax({
+  function drawLineChart() {
+    var persons = "";
+    persons = $.ajax({
       async: false,
       type: 'GET',
       dataType: 'json',
-        url: "https://localhost:44342/api/item/GetPersonEvolution/" + id,
-        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+      url: "https://localhost:44342/api/item/GetMostPopularPersons",
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
     }).responseJSON
 
-    var keys = [];
-    keys = Object.keys(tmp);
-    var label = [];
-    var values = [];
 
-    for (var i = 0; i < keys.length; i++) {
-      label.push(keys[i]);
-      values.push(tmp[keys[i]] / 10);
-    }
-
- 
 
     var can = $('#line-chart');
-    can.attr('style', 'width: 300px; height: 300px');
+    can.attr('style', 'width: 300px; height: 200px');
     //can.attr('height', '300px');
 
-    new Chart(can, {
+    var datagrafiek = {
+      labels: ["Dag 1", "Dag 2","Dag 3","Dag 4","Dag 5","Dag 6","Dag 7","Dag 8","Dag 9","Dag 10"],
+      datasets: []
+    };
+
+   // var labelslist; 
+ 
+    var myLineChart = new Chart(can, {
       type: 'line',
-      data: {
-        labels: label,
-        datasets: [
-          {
-            label: "Polarity",
-            backgroundColor: "rgba(3, 169, 244, 0.5)",
-            borderColor: "#0277bd",
-            data: values
-          }
-        ]
-      },
+      data: datagrafiek,
       options: {
-        legend: { display: true },
         responsive: true,
-        maintainAspectRatio: false,
-        title: {
-          display: true,
-          text: 'Politician evolution'
-        }
+        maintainAspectRatio:true
       }
+      
     });
+
+
+    var counter = 0 ;
+    $.each(persons, function (key, value) {
+      var tweet = "";
+      tweet = $.ajax({
+        async: false,
+        type: 'GET',
+        dataType: 'json',
+        url: "https://localhost:44342/api/item/GetPersonEvolution/" + key,
+        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+      }).responseJSON
+      
+     
+      var keys = [];
+      keys = Object.keys(tweet);
+
+      var label = [];
+      var values = [];
+
+      var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)","rgba(3, 169, 244, 0.5)"];
+      var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+      var points = ["#512da8", "#1976d2","#388e3c"];
+
+      for (var i = 0; i < keys.length; i++) {
+        label.push(keys[i]);
+        values.push(tweet[keys[i]] / 10);
+      }
+
+      console.log(label);
+      console.log(values);
+
+   
+
+      var myNewDataSet = {
+        label: value,
+        data: values,
+        borderWidth: 2,
+        backgroundColor: backgroundcolors[counter],
+        borderColor: borderColors[counter],
+        pointBackgroundColor: points[counter]
+
+      }
+
+      datagrafiek.datasets.push(myNewDataSet);
+
+      myLineChart.update();
+      counter++;
+    });
+
+    
   }
 
   function donutPerson(id) {

@@ -194,7 +194,7 @@ namespace UI_MVC.Controllers.API
             Item item = ItemMgr.GetItem(id);
             if (item is Person)
             {
-                IEnumerable<Record> records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0).Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(20);
+                IEnumerable<Record> records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0).Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(10);
                 Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
                 records.ToList().ForEach(p => { recordsmap.Add(p.Date, (p.Sentiment.Polarity * p.Sentiment.Objectivity)); });
                 recordsmap.OrderBy(o => o.Key);
@@ -224,6 +224,20 @@ namespace UI_MVC.Controllers.API
         }
 
 
+        [HttpGet]
+        public IHttpActionResult GetPersonTweet5(int id)
+        {
+            IEnumerable<Record> records = ItemMgr.GetPerson(id).Records;
+            if (records == null) return NotFound();
+            Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
+
+            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key).Take(5)
+            .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
+            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(recordsmap);
+        }
+
+
 
         [HttpGet]
         public IHttpActionResult GetPersonAveragePol(int id)
@@ -232,10 +246,10 @@ namespace UI_MVC.Controllers.API
             if (records == null) return NotFound();
             Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
 
-            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
+            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key).Take(10)
             .ToDictionary(r => r.Key.Date, r => (r.Average(p => p.Sentiment.Objectivity) * (r.Average(f => f.Sentiment.Polarity))));
             if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
-            return Ok(JsonConvert.SerializeObject(recordsmap));
+            return Ok(recordsmap);
         }
 
 
@@ -341,6 +355,16 @@ namespace UI_MVC.Controllers.API
 
             return Ok(person.ItemId);
          
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetMostPopularPersons()
+        {
+            Dictionary<int,string> ids = new Dictionary<int, string>();
+             ItemMgr.GetPersons().OrderByDescending(p => p.Records.Count).ToList().Take(3).ToList().ForEach(p => ids.Add(p.ItemId,p.Name));
+
+            return Ok(ids);
+
         }
 
 
