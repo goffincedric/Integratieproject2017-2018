@@ -26,6 +26,8 @@ namespace UI_MVC.Controllers
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             var user = accountMgr.GetProfile(User.Identity.GetUserId());
 
+            uow.Save();
+
             Dashboard model = dashboardMgr.GetDashboards().FirstOrDefault(d => d.Profile.Id == user.Id && d.Subplatform.URL.ToLower().Equals(subplatform.ToLower()));
             if (model == null)
             {

@@ -74,7 +74,10 @@ namespace UI_MVC.Controllers.API
             Zone zone = DashboardMgr.GetZone((int)id);
             if (zone == null) NotFound();
             if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
+            Dashboard dashboard = DashboardMgr.GetDashboard(zone.DashboardId);
+            dashboard.Zones.Remove(zone);
             DashboardMgr.RemoveZone((int)id);
+
             return StatusCode(HttpStatusCode.NoContent);
         }
 
