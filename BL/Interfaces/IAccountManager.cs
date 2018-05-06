@@ -25,6 +25,7 @@ namespace PB.BL.Interfaces
         Profile AddSubscription(Profile profile, Item item);
         Profile RemoveSubscription(Profile profile, Item item);
 
+        Dictionary<Profile, List<ProfileAlert>> SendWeeklyReviews();
         List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems, out List<Item> itemsToUpdate);
         List<Alert> GenerateProfileAlerts(Profile profile);
 

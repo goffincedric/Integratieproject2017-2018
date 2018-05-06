@@ -117,13 +117,14 @@
     <Compile Include="Interfaces\ISubplatformManager.cs" />
     <Compile Include="RestClient\APICalls.cs" />
     <Compile Include="RestClient\APIQuery.cs" />
-    <Compile Include="Senders\ITwilioMessageSender.cs" />
-    <Compile Include="Senders\ServiceManager.cs" />
+    <Compile Include="Senders\GmailSender.cs" />
+    <Compile Include="Senders\Twilio\ITwilioMessageSender.cs" />
+    <Compile Include="Senders\Twilio\ServiceManager.cs" />
     <Compile Include="SubplatformManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ItemManager.cs" />
     <Compile Include="Trendspotter.cs" />
-    <Compile Include="Senders\TwilioMessageSender.cs" />
+    <Compile Include="Senders\Twilio\TwilioMessageSender.cs" />
     <Compile Include="UnitOfWorkManager.cs" />
   </ItemGroup>
   <ItemGroup>
