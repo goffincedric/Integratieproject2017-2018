@@ -321,7 +321,43 @@ namespace PB.BL
         }
         #endregion
 
-        #region alerts
+        #region Alerts
+        public Dictionary<Profile, List<ProfileAlert>> GenerateWeeklyreviews()
+        {
+            Dictionary<Profile, List<ProfileAlert>> AlertsPerProfile = new Dictionary<Profile, List<ProfileAlert>>();
+
+            // Get all profiles with at least 1 read profilealert from last week
+            List<Profile> allProfiles = GetProfiles()
+                .Where(p =>
+                    p.Subscriptions.Count > 0 &&
+                    p.ProfileAlerts.FindAll(pa =>
+                        pa.TimeStamp.Date >= DateTime.Now.Date.AddDays(-7))
+                    .Count > 0)
+                .ToList();
+
+            // Pick 1 random alert from each day
+            allProfiles.ForEach(p =>
+            {
+                Dictionary<DateTime, List<ProfileAlert>> profileAlertsByDate = p.ProfileAlerts.GroupBy(pa => pa.TimeStamp.Date).ToDictionary(kv => kv.Key, kv => kv.ToList());
+                List<ProfileAlert> profileAlerts = new List<ProfileAlert>();
+
+                Random random = new Random();
+                profileAlertsByDate.Values.ToList().ForEach(v =>
+                {
+                    if (v.Count > 1)
+                    {
+                        profileAlerts.Add(v[random.Next(0, v.Count - 1)]);
+                    }
+                });
+
+                AlertsPerProfile.Add(p, profileAlerts);
+            });
+
+            
+
+            return AlertsPerProfile;
+        }
+
         public List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems, out List<Item> itemsToUpdate)
         {
             InitNonExistingRepo();
