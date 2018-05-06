@@ -37,6 +37,7 @@ namespace PB.BL.Interfaces
         Record AddRecord(long tweetId, RecordProfile recordProfile, List<Word> words, Sentiment sentiment, string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Theme> themes, List<Person> persons, DateTime date, double longitude, double latitude, bool retweet);
         void ChangeRecord(Record record);
         void RemoveRecord(long id);
+        IEnumerable<Record> GetRecordsFromItem(int itemId);
 
         List<Record> JClassToRecord(List<JClass> data);
         void SyncDatabase(Subplatform subplatform);

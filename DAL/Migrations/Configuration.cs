@@ -63,7 +63,7 @@ namespace PB.DAL.Migrations
                         },
                         new SubplatformSetting()
                         {
-                            SettingName = Setting.Platform.DEFAULTL_NEW_ITEM_ICON,
+                            SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
                             Value = @"~/Content/Images/Users/user.png",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
