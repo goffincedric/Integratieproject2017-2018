@@ -104,5 +104,12 @@ namespace UI_MVC.Controllers
 
             return View(model);
         }
+
+
+        public ActionResult Wizard(string subplatform)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            return View();
+        }
     }
 }
