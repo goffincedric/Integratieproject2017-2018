@@ -285,6 +285,8 @@
     <Content Include="Content\Styling\account\custom.css" />
     <Content Include="Content\Styling\grid2\gridstack-extra.css" />
     <Content Include="Content\Styling\grid2\gridstack.css" />
+    <Content Include="Content\Styling\wizard\bootstrap.min.css" />
+    <Content Include="Content\Styling\wizard\material-bootstrap-wizard.css" />
     <Content Include="Scripts\account\custom.js" />
     <Content Include="Scripts\contact.js" />
     <Content Include="Content\Styling\style.css" />
@@ -322,6 +324,10 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\load.js" />
     <Content Include="Scripts\vendor.js" />
+    <Content Include="Scripts\wizard\bootstrap.min.js" />
+    <Content Include="Scripts\wizard\jquery.bootstrap.js" />
+    <Content Include="Scripts\wizard\jquery.validate.min.js" />
+    <Content Include="Scripts\wizard\material-bootstrap-wizard.js" />
     <Content Include="Scripts\wordcloud\wordcloud.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -373,6 +379,7 @@
     <Content Include="Views\Home\_UrlList.cshtml" />
     <Content Include="Views\Account\_AdminAccounts.cshtml" />
     <Content Include="Views\Account\_NotificationSetting.cshtml" />
+    <Content Include="Views\Dashboard\Wizard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
