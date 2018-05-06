@@ -2119,9 +2119,10 @@ h3 {
 
 .add-element {
     object-fit: contain;
-    height: 80px;
+    height: 120px;
     width: auto;
     cursor:pointer;
+    margin-top: 40px;
 }
 
 .delete-zone {
@@ -2133,6 +2134,11 @@ h3 {
 
 .edit-zone {
     color: blue;
+    cursor: pointer;
+}
+
+.delete-element {
+    color: red;
     cursor: pointer;
 }
 

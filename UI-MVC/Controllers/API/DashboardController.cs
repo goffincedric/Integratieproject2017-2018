@@ -141,7 +141,7 @@ namespace UI_MVC.Controllers.API
 
         // DELETE: api/dashboard/deleteelement
         [HttpDelete]
-        public IHttpActionResult DeleteElement([FromBody]int? id)
+        public IHttpActionResult DeleteElement(int? id)
         {
             if (id == null) return BadRequest("No Id provided");
             if (id < 0) return BadRequest("Wrong id has been provided");
