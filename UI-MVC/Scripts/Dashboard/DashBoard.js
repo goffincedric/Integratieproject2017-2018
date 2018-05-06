@@ -73,7 +73,7 @@ $(function () {
                 //zorgen dat pagina niet herladen moet worden
                 var $newdiv = $('<div class="p-10 mB-10 zone-'+ZoneId+'"></div>');
                 $newdiv.append($('<h4 class="bb-2"></h4>'));
-                $newdiv.children('h4').append($('<span class="title">New Zone </span>'));
+                $newdiv.children('h4').append($('<span class="title">New Zone</span>'));
                 $newdiv.children('h4').append($('<span class="edit-zone"></span>'));
                 $newdiv.children('h4').children('.edit-zone').append($('<i class="ti-pencil"></i>'));
                 $newdiv.children('h4').append($('<span class="arrow-dashboard"></span>'));
@@ -129,26 +129,42 @@ $(function () {
             addingElement = false;
         }
 
+        resizeInput = function (event, titleTag) {
+
+        }
+
         editZone = function (grid) {
             var ZoneId = grid.parent().parent().attr('class');
 
             ZoneId = ZoneId.substring(ZoneId.indexOf('zone-') + 5, ZoneId.length);
 
             titleTag = grid.siblings('.title');
-            oldTitle = titleTag.html().slice(0,-1);
+            oldTitle = titleTag.html();
 
             titleWidth = titleTag.width();
             titleHeight = titleTag.height();
 
-            titleTag.replaceWith($('<input type="text" name="title" style="width: ' + titleWidth + 'px; height:' + titleHeight + 'px ; font-weight: bold;">'));
+            titleTag.replaceWith($('<input type="text" name="title" style="width: ' + titleWidth + 'px; height:' + titleHeight + 'px;font-weight: bold; margin-right: 15px; max-width: 600px;">'));
 
             grid.siblings('input').focus();
 
             grid.siblings('input').val(oldTitle);
 
             grid.siblings('input').keypress(function (e) {
+                var input = $(this);
+
+                titleTag.html($(this).val() + e.key);
+
+                grid.parent().append(titleTag);
+
+                var inputwidth = titleTag.width();
+
+                titleTag.remove();
+
+                input.width(inputwidth);
+
                 if (e.which == 13) {
-                    newTitle = $(this).val()
+                    newTitle = $(this).val();
 
                     Zone = JSON.parse('{ "Title": "'+ newTitle +'", "ZoneId": "'+ ZoneId +'"}');
 
@@ -161,9 +177,7 @@ $(function () {
                         url: "https://localhost:44342/api/dashboard/putzone/" + ZoneId
                     })
 
-                    console.log(newTitle);
-
-                    titleTag.html(newTitle + ' ');
+                    titleTag.html(newTitle);
 
                     $(this).replaceWith(titleTag);
                 }

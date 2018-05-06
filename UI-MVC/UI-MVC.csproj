@@ -20,12 +20,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-<<<<<<< HEAD
-    <IISExpressSSLPort>44338</IISExpressSSLPort>
-=======
     <IISExpressSSLPort>
     </IISExpressSSLPort>
->>>>>>> master
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
