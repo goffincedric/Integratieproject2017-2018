@@ -7,12 +7,14 @@ using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.BL.Interfaces;
+using PB.BL.Senders;
 using PB.DAL;
 using PB.DAL.EF;
 using PB.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace PB.BL
 {
@@ -322,26 +324,26 @@ namespace PB.BL
         #endregion
 
         #region Alerts
-        public Dictionary<Profile, List<ProfileAlert>> GenerateWeeklyreviews()
+        public Dictionary<Profile, List<ProfileAlert>> SendWeeklyReviews()
         {
-            Dictionary<Profile, List<ProfileAlert>> AlertsPerProfile = new Dictionary<Profile, List<ProfileAlert>>();
-
             // Get all profiles with at least 1 read profilealert from last week
             List<Profile> allProfiles = GetProfiles()
                 .Where(p =>
                     p.Subscriptions.Count > 0 &&
+                    p.Email != null &&
                     p.ProfileAlerts.FindAll(pa =>
-                        pa.TimeStamp.Date >= DateTime.Now.Date.AddDays(-7))
+                        pa.TimeStamp.Date >= DateTime.Today.AddDays(-7))
                     .Count > 0)
                 .ToList();
 
             // Pick 1 random alert from each day
+            Dictionary<Profile, List<ProfileAlert>> AlertsPerProfile = new Dictionary<Profile, List<ProfileAlert>>();
+            Random random = new Random();
             allProfiles.ForEach(p =>
             {
                 Dictionary<DateTime, List<ProfileAlert>> profileAlertsByDate = p.ProfileAlerts.GroupBy(pa => pa.TimeStamp.Date).ToDictionary(kv => kv.Key, kv => kv.ToList());
                 List<ProfileAlert> profileAlerts = new List<ProfileAlert>();
 
-                Random random = new Random();
                 profileAlertsByDate.Values.ToList().ForEach(v =>
                 {
                     if (v.Count > 1)
@@ -353,7 +355,46 @@ namespace PB.BL
                 AlertsPerProfile.Add(p, profileAlerts);
             });
 
-            
+            // Send mail
+            GmailSender sender = new GmailSender
+            {
+                IsHtml = true,
+                Subject = "Weekly Review"
+            };
+
+            AlertsPerProfile.Keys.ToList().ForEach(p =>
+            {
+                // Get profileAlerts
+                List<ProfileAlert> profileAlerts = new List<ProfileAlert>();
+                AlertsPerProfile.TryGetValue(p, out profileAlerts);
+                if (profileAlerts.Count == 0) return;
+
+                // Construct body
+                StringBuilder sbBody = new StringBuilder(GmailSender.WeeklyReviewBody);
+                sbBody.Replace(GmailSender.DefaultUsernameSubstring, p.UserData.FirstName ?? p.UserName);
+                StringBuilder sb = new StringBuilder();
+                profileAlerts.ForEach(pa =>
+                {
+                    StringBuilder sbItem = new StringBuilder(GmailSender.WeeklyReviewListItem);
+                    sbItem.Replace(GmailSender.WeeklyReviewListItemIconSubstring, pa.Alert.Item.IconURL ?? GmailSender.DefaultItemIcon);
+                    sbItem.Replace(GmailSender.DefaultItemLinkSubstring, "#");
+                    sbItem.Replace(GmailSender.WeeklyReviewListItemNameSubstring, pa.Alert.Item.Name);
+                    sbItem.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring, 
+                        pa.Alert.Item.Name + " " + pa.Alert.Event + " " + pa.Alert.Subject + " - " + pa.TimeStamp.Date + "<br>" + pa.Alert.Text
+                    );
+                    sb.Append(sbItem.ToString());
+                });
+                sbBody.Replace(GmailSender.WeeklyReviewListSubstring, sb.ToString());
+
+                // Set mail body
+                sender.Body = sbBody.ToString();
+
+                // Set mail recipient
+                sender.ToEmail = p.Email;
+
+                // Send mail
+                sender.Send();
+            });
 
             return AlertsPerProfile;
         }

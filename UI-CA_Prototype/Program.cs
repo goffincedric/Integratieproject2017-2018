@@ -49,7 +49,7 @@ namespace UI_CA_Prototype
                 Console.WriteLine("3) Selecteer subplatform");
                 Console.WriteLine("4) Voeg subscription toe");
                 Console.WriteLine("5) Verwijder subscription");
-                Console.WriteLine("6) Show gemiddelde tweets/dag per persoon voorbij 14 dagen");
+                Console.WriteLine("6) Verstuur weekly reviews");
                 Console.WriteLine("7) Verwijder oude records uit database");
                 Console.WriteLine("8) Voeg API data toe");
                 Console.WriteLine("9) Voeg alerts to aan selected profile");
@@ -104,8 +104,7 @@ namespace UI_CA_Prototype
                         AccountMgr.RemoveSubscription(SelectedProfile, ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
                         break;
                     case 6:
-                        Console.WriteLine("OUT OF ORDER");
-                        //ItemMgr.CheckTrend();
+                        AccountMgr.SendWeeklyReviews();
                         break;
                     case 7:
                         if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");

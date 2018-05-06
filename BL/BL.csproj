@@ -117,7 +117,7 @@
     <Compile Include="Interfaces\ISubplatformManager.cs" />
     <Compile Include="RestClient\APICalls.cs" />
     <Compile Include="RestClient\APIQuery.cs" />
-    <Compile Include="Senders\MailSender.cs" />
+    <Compile Include="Senders\GmailSender.cs" />
     <Compile Include="Senders\Twilio\ITwilioMessageSender.cs" />
     <Compile Include="Senders\Twilio\ServiceManager.cs" />
     <Compile Include="SubplatformManager.cs" />
