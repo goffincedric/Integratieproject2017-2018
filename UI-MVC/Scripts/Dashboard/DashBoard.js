@@ -66,8 +66,6 @@ $(function () {
                     url: "https://localhost:44342/api/dashboard/postzone/" + DashBoardId
                 }).responseJSON.ZoneId
 
-                console.log(ZoneId);
-
                 $('.add-zone').remove();
 
                 //zorgen dat pagina niet herladen moet worden
@@ -99,8 +97,6 @@ $(function () {
                 addZone = addZone.children('.add-zone').children('div').children('#zone-x');
                 var plusElement = addZone.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
-                movable(plusElement, false);
-
                 plusElement.children('.grid-stack-item-content').children('div').children('img').on("click", function () {
                     addElement(addZone);
                 });
@@ -124,8 +120,6 @@ $(function () {
 
             plusElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
-            movable(plusElement, false);
-
             plusElement.children('.grid-stack-item-content').children('div').children('img').on("click", function () {
                 addElement(grid);
             });
@@ -134,10 +128,6 @@ $(function () {
                 deleteElement($(this));
             });
             addingElement = false;
-        }
-
-        resizeInput = function (event, titleTag) {
-
         }
 
         editZone = function (grid) {
@@ -160,8 +150,6 @@ $(function () {
             grid.siblings('input').keypress(function (e) {
                 var input = $(this);
 
-                console.log("press");
-
                 titleTag.html($(this).val());
 
                 grid.parent().append(titleTag);
@@ -170,7 +158,7 @@ $(function () {
 
                 titleTag.remove();
 
-                input.width(inputwidth + 10);
+                input.width(inputwidth +10);
 
                 if (e.which == 13) {
                     newTitle = $(this).val();
@@ -194,8 +182,6 @@ $(function () {
         }
 
         removeZone = function (grid) {
-            //console.log(grid);
-
             var ZoneId = grid.attr('class');
 
             ZoneId = ZoneId.substring(ZoneId.indexOf('zone-') + 5, ZoneId.length);
@@ -248,8 +234,6 @@ $(function () {
             var ElementId = Element.attr('id');
             ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
             Element = Element.parent();
-
-            console.log(Element.data('gridstack'));
 
             $.ajax({
                 async: false,
