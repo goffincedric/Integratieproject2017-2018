@@ -153,7 +153,9 @@ $(function () {
             grid.siblings('input').keypress(function (e) {
                 var input = $(this);
 
-                titleTag.html($(this).val() + e.key);
+                console.log("press");
+
+                titleTag.html($(this).val());
 
                 grid.parent().append(titleTag);
 
@@ -161,7 +163,7 @@ $(function () {
 
                 titleTag.remove();
 
-                input.width(inputwidth);
+                input.width(inputwidth + 10);
 
                 if (e.which == 13) {
                     newTitle = $(this).val();
