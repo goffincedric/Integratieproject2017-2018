@@ -40,10 +40,11 @@ namespace UI_MVC.Controllers.API
         {
             if (!ModelState.IsValid) return BadRequest();
             if (zone.ZoneId != id) return BadRequest();
-            Zone oldZone = DashboardMgr.GetZone(id);
-            if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
-            if (oldZone == null) return NotFound();
-            DashboardMgr.ChangeZone(zone);
+            Zone newZone = DashboardMgr.GetZone(id);
+            if (!newZone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
+            if (newZone == null) return NotFound();
+            newZone.Title = zone.Title;
+            DashboardMgr.ChangeZone(newZone);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
