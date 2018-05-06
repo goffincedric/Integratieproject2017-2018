@@ -72,7 +72,8 @@ $(function () {
 
                 //zorgen dat pagina niet herladen moet worden
                 var $newdiv = $('<div class="p-10 mB-10 zone-'+ZoneId+'"></div>');
-                $newdiv.append($('<h4 class="bb-2">New Zone </h4>'));
+                $newdiv.append($('<h4 class="bb-2"></h4>'));
+                $newdiv.children('h4').append($('<span class="title">New Zone </span>'));
                 $newdiv.children('h4').append($('<span class="edit-zone"></span>'));
                 $newdiv.children('h4').children('.edit-zone').append($('<i class="ti-pencil"></i>'));
                 $newdiv.children('h4').append($('<span class="arrow-dashboard"></span>'));
@@ -126,6 +127,47 @@ $(function () {
                 });
 
             addingElement = false;
+        }
+
+        editZone = function (grid) {
+            var ZoneId = grid.parent().parent().attr('class');
+
+            ZoneId = ZoneId.substring(ZoneId.indexOf('zone-') + 5, ZoneId.length);
+
+            titleTag = grid.siblings('.title');
+            oldTitle = titleTag.html().slice(0,-1);
+
+            titleWidth = titleTag.width();
+            titleHeight = titleTag.height();
+
+            titleTag.replaceWith($('<input type="text" name="title" style="width: ' + titleWidth + 'px; height:' + titleHeight + 'px ; font-weight: bold;">'));
+
+            grid.siblings('input').focus();
+
+            grid.siblings('input').val(oldTitle);
+
+            grid.siblings('input').keypress(function (e) {
+                if (e.which == 13) {
+                    newTitle = $(this).val()
+
+                    Zone = JSON.parse('{ "Title": "'+ newTitle +'", "ZoneId": "'+ ZoneId +'"}');
+
+                    $.ajax({
+                        async: false,
+                        type: 'PUT',
+                        data: Zone,
+                        dataType: 'json',
+                        headers: Headers,
+                        url: "https://localhost:44342/api/dashboard/putzone/" + ZoneId
+                    })
+
+                    console.log(newTitle);
+
+                    titleTag.html(newTitle + ' ');
+
+                    $(this).replaceWith(titleTag);
+                }
+            });
         }
 
         removeZone = function (grid) {
@@ -198,7 +240,6 @@ $(function () {
                     addElement(grid);
                 });
             } else {
-
                 var elements = findElements(ZoneId);
 
                 grid.each(function () {
@@ -228,6 +269,10 @@ $(function () {
 
             $(this).parent().siblings('h4').children('.delete-zone').on('click', function () {
                 removeZone($(this).parent().parent());
+            });
+
+            $(this).parent().siblings('h4').children('.edit-zone').on('click', function () {
+                editZone($(this));
             });
 
             $(this).on('change', function (e, items) {
