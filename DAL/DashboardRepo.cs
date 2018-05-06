@@ -61,7 +61,7 @@ namespace PB.DAL
 
         public void UpdateDashboard(Dashboard dashboard)
         {
-            ctx.Dashboards.Attach(dashboard);
+            dashboard = ctx.Dashboards.Attach(dashboard);
             ctx.Entry(dashboard).State = EntityState.Modified;
             ctx.SaveChanges();
         }
@@ -91,7 +91,7 @@ namespace PB.DAL
 
         public void UpdateZone(Zone zone)
         {
-            ctx.Zones.Attach(zone);
+            zone = ctx.Zones.Attach(zone);
             ctx.Entry(zone).State = EntityState.Modified;
             ctx.SaveChanges();
         }
@@ -129,7 +129,6 @@ namespace PB.DAL
         public void UpdateElement(Element element)
         {
             element = ctx.Elements.Attach(element);
-
             ctx.Entry(element).State = EntityState.Modified;
             ctx.SaveChanges();
         }
