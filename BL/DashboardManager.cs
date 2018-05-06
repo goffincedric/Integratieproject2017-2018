@@ -160,6 +160,8 @@ namespace PB.BL
         public void RemoveZone(int zoneId)
         {
             InitNonExistingRepo();
+            Zone zone = GetZone(zoneId);
+            zone.Dashboard.Zones.Remove(zone);
             DashboardRepo.DeleteZone(zoneId);
             UowManager.Save();
         }
