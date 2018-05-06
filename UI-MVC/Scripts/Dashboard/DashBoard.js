@@ -40,7 +40,7 @@ $(function () {
 
             return ZoneData;
         };
-        
+
         //done
         addElement = function (grid) {
             addingElement = true;
@@ -71,7 +71,7 @@ $(function () {
                 $('.add-zone').remove();
 
                 //zorgen dat pagina niet herladen moet worden
-                var $newdiv = $('<div class="p-10 mB-10 zone-'+ZoneId+'"></div>');
+                var $newdiv = $('<div class="p-10 mB-10 zone-' + ZoneId + '"></div>');
                 $newdiv.append($('<h4 class="bb-2"></h4>'));
                 $newdiv.children('h4').append($('<span class="title">New Zone</span>'));
                 $newdiv.children('h4').append($('<span class="edit-zone"></span>'));
@@ -81,7 +81,7 @@ $(function () {
                 $newdiv.children('h4').append($('<span class="delete-zone"></span>'));
                 $newdiv.children('h4').children('.delete-zone').append($('<i class="ti-trash"></i>'));
                 $newdiv.append($('<div class="DashZone"></div>'));
-                $newdiv.append($('<div class="grid-stack grid-stack-12" id="zone-'+ZoneId+'"></div >'));
+                $newdiv.append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
                 var newZone = $('#mainContent').append($newdiv);
 
                 var addZone = $('#mainContent').append(addZone);
@@ -95,37 +95,44 @@ $(function () {
                 deletezone.on('click', function () {
                     removeZone(grid.parent());
                 });
-                
+
                 addZone = addZone.children('.add-zone').children('div').children('#zone-x');
                 var plusElement = addZone.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
+
+                movable(plusElement, false);
 
                 plusElement.children('.grid-stack-item-content').children('div').children('img').on("click", function () {
                     addElement(addZone);
                 });
             }
-                var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"/><div/>'), 0, 0, 3, 3, true);
-                var X = newElement.data().gsX;
-                var Y = newElement.data().gsY;
+            var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div/><div/>'), 0, 0, 3, 3, true);
+            var X = newElement.data().gsX;
+            var Y = newElement.data().gsY;
 
-                var Element = JSON.parse('{"X" : "' + X + '", "Y" : "' + Y + '", "Width": "3", "Height": "3", "IsDraggable": "true", "ZoneId": "' + ZoneId + '"}');
+            var Element = JSON.parse('{"X" : "' + X + '", "Y" : "' + Y + '", "Width": "3", "Height": "3", "IsDraggable": "true", "ZoneId": "' + ZoneId + '"}');
 
-                var ElementId = $.ajax({
-                    async: false,
-                    type: 'POST',
-                    data: Element,
-                    dataType: 'json',
-                    headers: Headers,
-                    url: "https://localhost:44342/api/dashboard/postelement/" + ZoneId
-                }).responseJSON.ElementId
+            var ElementId = $.ajax({
+                async: false,
+                type: 'POST',
+                data: Element,
+                dataType: 'json',
+                headers: Headers,
+                url: "https://localhost:44342/api/dashboard/postelement/" + ZoneId
+            }).responseJSON.ElementId
 
-                newElement.children('#Element-x').attr('id', 'Element-' + ElementId);
+            newElement.children('#Element-x').attr('id', 'Element-' + ElementId);
 
-                plusElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
+            plusElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
-                plusElement.children('.grid-stack-item-content').children('div').children('img').on("click", function () {
-                    addElement(grid);
-                });
+            movable(plusElement, false);
 
+            plusElement.children('.grid-stack-item-content').children('div').children('img').on("click", function () {
+                addElement(grid);
+            });
+
+            newElement.children('#Element-' + ElementId).children('.delete-element').on('click', function () {
+                deleteElement($(this));
+            });
             addingElement = false;
         }
 
@@ -168,7 +175,7 @@ $(function () {
                 if (e.which == 13) {
                     newTitle = $(this).val();
 
-                    Zone = JSON.parse('{ "Title": "'+ newTitle +'", "ZoneId": "'+ ZoneId +'"}');
+                    Zone = JSON.parse('{ "Title": "' + newTitle + '", "ZoneId": "' + ZoneId + '"}');
 
                     $.ajax({
                         async: false,
@@ -236,6 +243,24 @@ $(function () {
             }
         }
 
+        deleteElement = function (element) {
+            var Element = element.parent();
+            var ElementId = Element.attr('id');
+            ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
+            Element = Element.parent();
+
+            console.log(Element.data('gridstack'));
+
+            $.ajax({
+                async: false,
+                type: 'Delete',
+                headers: Headers,
+                url: "https://localhost:44342/api/dashboard/deleteelement/" + ElementId
+            })
+
+            Element.remove();
+        }
+
         //done
         clearGrid = function (grid) {
             grid.removeAll();
@@ -259,17 +284,19 @@ $(function () {
                 var elements = findElements(ZoneId);
 
                 grid.each(function () {
+
                     var griddata = $(this).data('gridstack');
 
                     //this for now(change later), Gets correct data from database
                     _.each(elements, function (node) {
-                        griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + node.ElementId + '"/><div/>'),
+                        var newElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + node.ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div/><div/>'),
                             node.X, node.Y, node.Width, node.Height);
+                        newElement.children('#Element-' + node.ElementId).children('.delete-element').on('click', function () {
+                            deleteElement($(this));
+                        });
                     }, this);
 
                     var plusElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
-
-                    plusElement.resizable(false);
 
                     plusElement.children('.grid-stack-item-content').children('div').children('img').on("click", function () {
                         addElement(grid);

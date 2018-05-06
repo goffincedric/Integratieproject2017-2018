@@ -2136,6 +2136,11 @@ h3 {
     cursor: pointer;
 }
 
+.delete-element {
+    color: red;
+    cursor: pointer;
+}
+
 
 @media screen and (max-width: 1439px) and (min-width: 992px) {
     .sidebar {
