@@ -395,6 +395,14 @@ namespace PB.BL
             RecordRepo.DeleteRecord(id);
             UowManager.Save();
         }
+
+        public IEnumerable<Record> GetRecordsFromItem(int itemId)
+        {
+            InitNonExistingRepo();
+            Person person = ItemRepo.ReadPerson(itemId);
+            if (person is null) throw new Exception("Item with id (" + itemId + ") is not a person or doesn't exist");
+            return RecordRepo.ReadRecords().Where(r => r.Persons.Contains(person));
+        }
         #endregion
 
         #region Keywords

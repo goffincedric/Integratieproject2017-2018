@@ -22,7 +22,10 @@ using System.IO;
 
 namespace UI_MVC.Controllers
 {
-
+    /// <summary>   
+    /// Controller for everything that has to handle with account or to get an account
+    /// Authorized by all roles
+    /// </summary> 
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     [RequireHttps]
     public class AccountController : Controller
@@ -256,9 +259,12 @@ namespace UI_MVC.Controllers
                 if (editedAccount.file.ContentLength > 0)
                 {
                     _FileName = Path.GetFileName(editedAccount.file.FileName);
-                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), _FileName);
+                 
+                    var username = newProfile.UserName.ToString();
+                    var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
                     editedAccount.file.SaveAs(_path);
-                    newProfile.ProfileIcon = @"~/Content/Images/Users/" + _FileName;
+                    newProfile.ProfileIcon = @"~/Content/Images/Users/" + newName;
                 }
             }
             else
@@ -360,6 +366,11 @@ namespace UI_MVC.Controllers
             return RedirectToAction("UserBeheer", "Account");
         }
 
+        public ViewResult UserSettings()
+        {
+            IEnumerable<Item> Subscriptions = UserManager.GetProfile(User.Identity.GetUserId()).Subscriptions;
+            return View(Subscriptions);
+        }
         #endregion
 
 
@@ -369,12 +380,27 @@ namespace UI_MVC.Controllers
             IEnumerable<Profile> profiles = UserManager.GetProfiles();
             return View(profiles);
         }
+        //public PartialViewResult UserBeheer()
+        //{
+        //    IEnumerable<Profile> profiles = UserManager.GetProfiles()
+        //        //.Where(p => p.Roles.Where(p.Equals(UserManager.GetAllRoles().Where(r => r.Name.Equals("User")));
+        //        //.Where(p => p.Roles.Where(p.Equals(UserManager.GetAllRoles().Where(r => r.Name.Equals("User"), true))));
+        //    return PartialView();
+        //}
 
-        public ViewResult UserSettings()
+
+        public ActionResult VoteToAdmin(string id)
         {
-            IEnumerable<Item> Subscriptions = UserManager.GetProfile(User.Identity.GetUserId()).Subscriptions;
-            return View(Subscriptions);
+            Profile profile = UserManager.GetProfile(id);
+            UserManager.AddToRole(id, "Admin");
+            UserManager.RemoveFromRole(id, "User");
+            
+
+            return View();
         }
+
+        
+
         #region ExternalLogin
         [HttpPost]
         [AllowAnonymous]

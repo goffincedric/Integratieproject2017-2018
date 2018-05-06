@@ -2,6 +2,11 @@
 
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+  #chart {
+    margin: auto;
+  }
+</style>
 
 
 <main class="main-content bgc-grey-100" style="background-color: #f9fafb;">
@@ -91,24 +96,26 @@
               <h6 class="lh-1">Stats Charles Michel</h6>
             </div>
             <div class="layer w-100 p-20">
-              <canvas id="line-chart" height="220"></canvas>
+              <canvas id="evol" height="150"></canvas>
             </div>
-            <div class="layer bdT p-20 w-100">
-              <div class="peers ai-c jc-c gapX-20">
-                <div class="peer"><span class="fsz-def fw-600 mR-10 c-grey-800">10% <i class="fa fa-level-up c-green-500"></i></span> <small class="c-grey-500 fw-600">Sentiment</small></div>
-                <div class="peer fw-600"><span class="fsz-def fw-600 mR-10 c-grey-800">2% <i class="fa fa-level-down c-red-500"></i></span> <small class="c-grey-500 fw-600">Average tweets</small></div>
-                <div class="peer fw-600"><span class="fsz-def fw-600 mR-10 c-grey-800">15% <i class="fa fa-level-up c-green-500"></i></span> <small class="c-grey-500 fw-600">Retweets</small></div>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
 
       <div class="masonry-item col-md-6">
         <div class="bgc-white p-20 bd">
-          <h6 class="c-grey-900">Area Chart</h6>
-          <div class="mT-30">
-            <canvas id="area-chart" height="220"></canvas>
+          <h6 class="c-grey-900">Top trending hashtags</h6>
+          <div id="chart" style="margin: auto">
+            <canvas id="doughnut-chart" height="240"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="masonry-item col-md-6">
+        <div class="bgc-white p-20 bd">
+          <h6 class="c-grey-900">Top trending Mentions</h6>
+          <div id="chart" style="margin: auto">
+            <canvas id="pie-chart" height="250"></canvas>
           </div>
         </div>
       </div>
@@ -117,83 +124,292 @@
         <div class="bgc-white p-20 bd">
           <h6 class="c-grey-900">Bar Chart</h6>
           <div class="mT-30">
-            <canvas id="bar-chart" height="220"></canvas>
+            <canvas style="margin: auto 0" id="bar-chart" height="220"></canvas>
           </div>
+
         </div>
       </div>
 
       @if (!Request.IsAuthenticated)
-      {
+  {
 
-        <div class="hide-content">
-          <div class="outer">
-            <div class="middle">
-              <div class="inner">
-                <h4 class="mb-5 call-to-action-text">
-                  Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data.
-                </h4>
-                <a href="@Url.Action("Login", "Account")" class="btn btn-primary text-uppercase call-to-action-button">start nu</a>
+    <div class="hide-content">
+      <div class="outer">
+        <div class="middle">
+          <div class="inner">
+            <h4 class="mb-5 call-to-action-text">
+              Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data.
+            </h4>
+            <a href="@Url.Action("Login", "Account")" class="btn btn-primary text-uppercase call-to-action-button">start nu</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+}
+else
+{
+    <div class="masonry-item col-12">
+      <div class="bd bgc-white">
+        <div class="peers fxw-nw@lg+ ai-s">
+          <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
+            <div class="layers">
+              <div class="layer w-100 mB-10">
+                <h6 class="lh-1">Sentiment per provincie</h6>
               </div>
+              <div class="layer w-100">
+                <div id="world-map-marker"></div>
+              </div>
+            </div>
+          </div>
+          <div class="peer bdL p-20 w-30p@lg+ w-100p@lg-">
+            <div class="layers h-100">
+              <div class="layer w-100">
+                <h6 class="lh-1">Top persons</h6>
+              </div>
+              @*<div id="myChart" style="height: 100%;width: 100%; min-height: 500px;"></div>*@
+              @*<div class="w-100" style="margin: auto 0;">
+              <ol id="toplist"></ol>
+            </div>*@
+
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
-
-      }
-      else
-      {
-        <div class="masonry-item col-12">
-          <div class="bd bgc-white">
-            <div class="peers fxw-nw@lg+ ai-s">
-              <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
-                <div class="layers">
-                  <div class="layer w-100 mB-10">
-                    <h6 class="lh-1">Sentiment per provincie</h6>
-                  </div>
-                  <div class="layer w-100">
-                    <div id="world-map-marker"></div>
-                  </div>
-                </div>
+    <div class="masonry-item col-12">
+      <div class="bd bgc-white">
+        <div class="peers fxw-nw@lg+ ai-s">
+          <div class="peer peer-greed w-100p@lg+ w-100@lg- p-20">
+            <div class="layers">
+              <div class="layer w-100 mB-10">
+                <h6 class="lh-1">Top tweeting persons</h6>
               </div>
-              <div class="peer bdL p-20 w-30p@lg+ w-100p@lg-">
-                <div class="layers h-100">
-                  <div class="layer w-100">
-                    <h6 class="lh-1">Top persons</h6>
-                  </div>
-                  @*<div id="myChart" style="height: 100%;width: 100%; min-height: 500px;"></div>*@
-                  @*<div class="w-100" style="margin: auto 0;">
-                      <ol id="toplist"></ol>
-                    </div>*@
-
-                </div>
+              <div class="layer w-100">
+                <div id="myChart" style="height: 100%;width: 100%; min-height: 500px;"></div>
               </div>
             </div>
           </div>
+
         </div>
+      </div>
+    </div>
 
-        <div class="masonry-item col-12">
-          <div class="bd bgc-white">
-            <div class="peers fxw-nw@lg+ ai-s">
-              <div class="peer peer-greed w-100p@lg+ w-100@lg- p-20">
-                <div class="layers">
-                  <div class="layer w-100 mB-10">
-                    <h6 class="lh-1">Top tweeting persons</h6>
-                  </div>
-                  <div class="layer w-100">
-                    <div id="myChart" style="height: 100%;width: 100%; min-height: 500px;"></div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>    
-
-      }
+}
     </div>
   </div>
 </main>
 <script src="~/Scripts/index/hide-content.js" defer></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+<script>
+  function drawLineChart() {
+    var persons = "";
+    persons = $.ajax({
+      async: false,
+      type: 'GET',
+      dataType: 'json',
+      url: "https://localhost:44342/api/item/GetMostPopularPersons",
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+    }).responseJSON
+
+
+
+    var can = $('#evol');
+    can.attr('style', 'width: 300px; height: 80px');
+    //can.attr('height', '300px');
+
+    var datagrafiek = {
+      labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
+      datasets: []
+    };
+
+    // var labelslist; 
+
+    var myLineChart = new Chart(can, {
+      type: 'line',
+      data: datagrafiek,
+      //options: {
+      //  responsive: true,
+      //  maintainAspectRatio: true
+      //}
+
+    });
+
+
+    var counter = 0;
+    $.each(persons, function (key, value) {
+      var tweet = "";
+      tweet = $.ajax({
+        async: false,
+        type: 'GET',
+        dataType: 'json',
+        url: "https://localhost:44342/api/item/GetPersonEvolution/" + key,
+        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+      }).responseJSON
+
+
+      var keys = [];
+      keys = Object.keys(tweet);
+
+      var label = [];
+      var values = [];
+
+      var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
+      var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+      var points = ["#512da8", "#1976d2", "#388e3c"];
+
+      for (var i = 0; i < keys.length; i++) {
+        label.push(keys[i]);
+        values.push(tweet[keys[i]] / 10);
+      }
+
+      console.log(label);
+      console.log(values);
+
+
+
+      var myNewDataSet = {
+        label: value,
+        data: values,
+        borderWidth: 2,
+        backgroundColor: backgroundcolors[counter],
+        borderColor: borderColors[counter],
+        pointBackgroundColor: points[counter]
+
+      }
+
+      datagrafiek.datasets.push(myNewDataSet);
+
+      myLineChart.update();
+      counter++;
+    });
+
+
+  }
+
+  drawLineChart();
+
+</script>
+
+<script>
+  function getTopTrending() {
+
+
+    var tmp = "";
+    tmp = $.ajax({
+      async: false,
+      type: 'GET',
+      dataType: 'json',
+      url: "https://localhost:44342/api/item/getMostPopularPerson/",
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+    }).responseJSON
+
+    return tmp;
+  }
+
+
+  var count = "";
+  count = $.ajax({
+    async: false,
+    type: 'GET',
+    dataType: 'json',
+    url: "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + getTopTrending(),
+    headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+  }).responseJSON
+
+  var keys = [];
+  keys = Object.keys(count);
+  var label = [];
+  var values = [];
+
+  for (var i = 0; i < keys.length; i++) {
+    label.push(keys[i]);
+    values.push(count[keys[i]] / 10);
+  }
+
+  var can = $('#doughnut-chart');
+  console.log(can.parent().attr('Style', 'width: 400px; height: 350px'));
+  //can.attr('Style', 'width: 300px; height: 300px');
+
+  new Chart(can, {
+    type: 'doughnut',
+    data: {
+      labels: label,
+      datasets: [
+        {
+          label: "Hashtags",
+          data: values,
+          backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64", "#7BDFF2", "#FDE74C", "#47E5BC", "#DAD6D6", "#EF3E36"]
+        }
+      ]
+    },
+    options: {
+     
+    }
+  });
+  
+
+
+</script>
+
+<script>
+
+  function drawPie(id) {
+
+    var count2 = "";
+    count2 = $.ajax({
+      async: false,
+      type: 'GET',
+      dataType: 'json',
+      url: "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id,
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+    }).responseJSON
+
+    var keys = [];
+    keys = Object.keys(count2);
+    var label = [];
+    var values = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      label.push(keys[i]);
+      values.push(count2[keys[i]] / 10);
+    }
+
+    var can = $('#pie-chart');
+    console.log(can.parent().attr('Style', 'width: 400px; height: 250'));
+    //can.attr('Style', 'width: 300px; height: 300px');
+
+
+
+    new Chart(can, {
+      type: 'pie',
+      data: {
+        labels: label,
+        datasets: [{
+          backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+          data: values
+        }]
+      },
+      options: {
+        
+      }
+    });
+  }
+
+  drawPie(getTopTrending());
+</script>
+
+
+
+
+
+
+
 <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 <script>
   zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";

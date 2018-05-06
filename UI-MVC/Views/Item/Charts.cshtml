@@ -12,9 +12,9 @@
           <option value="" disabled selected>Select your graph type</option>
           <option value="1">Bar Chart</option>
           <option value="2">Line Chart</option>
-          <option value="3">Radar Chart</option>
+          <option value="3" disabled>Radar Chart</option>
           <option value="4" disabled>Pie Chart</option>
-          <option value="5" disabled>Dougnout Chart</option>
+          <option value="5">Dougnout Chart</option>
         </select>
         <input id="itemid" class="form-control" style="width:200px" type="number" placeholder="vul itemid in" disabled />
         <button id="addGrafiek" class="btn btn-primary" type="submit">Add graph</button>
@@ -25,7 +25,7 @@
     <br />
 
     <div id="graphs">
-
+   
     </div>
       
      
@@ -43,7 +43,7 @@
   $("#graphtype").change(function () {
     var e = $("#graphtype");
     var keuze = e.prop('selectedIndex');
-    if (keuze == 2) {
+    if (keuze == 2 || keuze ==5) {
       document.getElementById("itemid").disabled = false;
     }
   });
@@ -59,10 +59,16 @@
       drawBarChart();
     } else if (keuze == 2) {
       $("#graphs").after("<div style=\"margin: 10px\" class=\"masonry-item col-md- 6\"> <div class=\"bgc-white p-20 bd\"> <h6 class=\"c-grey-900\">Line chart</h6> <div class=\"mT-30\" id=\"graph-bar\"> </div></div></div>");
-      
+
       $("#graph-bar").append("<canvas id=\"line-chart\" height=\"220\"></canvas>");
-     var index = $("#itemid").val();
-      drawLineChart(index)
+      var index = $("#itemid").val();
+      drawLineChart();
+    } else if (keuze == 5) {
+      $("#graphs").after("<div style=\"margin: 10px\" class=\"masonry-item col-md- 6\"> <div class=\"bgc-white p-20 bd\"> <h6 class=\"c-grey-900\">Line chart</h6> <div class=\"mT-30\" id=\"graph-bar\"> </div></div></div>");
+
+      $("#graph-bar").append("<canvas id=\"doughnut-chart\" height=\"220\"></canvas>");
+      var index = $("#itemid").val();
+      donutPerson(index);
     }
     
   });
@@ -122,17 +128,100 @@
   }
 
 
-  function drawLineChart(id) {
-    let headers = {
-      "x-api-key": "303d22a4-402b-4d3c-b279-9e81c0480711"
-    }
+  function drawLineChart() {
+    var persons = "";
+    persons = $.ajax({
+      async: false,
+      type: 'GET',
+      dataType: 'json',
+      url: "https://localhost:44342/api/item/GetMostPopularPersons",
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+    }).responseJSON
+
+
+
+    var can = $('#line-chart');
+    can.attr('style', 'width: 300px; height: 200px');
+    //can.attr('height', '300px');
+
+    var datagrafiek = {
+      labels: ["Dag 1", "Dag 2","Dag 3","Dag 4","Dag 5","Dag 6","Dag 7","Dag 8","Dag 9","Dag 10"],
+      datasets: []
+    };
+
+   // var labelslist; 
+ 
+    var myLineChart = new Chart(can, {
+      type: 'line',
+      data: datagrafiek,
+      options: {
+        responsive: true,
+        maintainAspectRatio:true
+      }
+      
+    });
+
+
+    var counter = 0 ;
+    $.each(persons, function (key, value) {
+      var tweet = "";
+      tweet = $.ajax({
+        async: false,
+        type: 'GET',
+        dataType: 'json',
+        url: "https://localhost:44342/api/item/GetPersonEvolution/" + key,
+        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+      }).responseJSON
+      
+     
+      var keys = [];
+      keys = Object.keys(tweet);
+
+      var label = [];
+      var values = [];
+
+      var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)","rgba(3, 169, 244, 0.5)"];
+      var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+      var points = ["#512da8", "#1976d2","#388e3c"];
+
+      for (var i = 0; i < keys.length; i++) {
+        label.push(keys[i]);
+        values.push(tweet[keys[i]] / 10);
+      }
+
+      console.log(label);
+      console.log(values);
+
+   
+
+      var myNewDataSet = {
+        label: value,
+        data: values,
+        borderWidth: 2,
+        backgroundColor: backgroundcolors[counter],
+        borderColor: borderColors[counter],
+        pointBackgroundColor: points[counter]
+
+      }
+
+      datagrafiek.datasets.push(myNewDataSet);
+
+      myLineChart.update();
+      counter++;
+    });
+
+    
+  }
+
+  function donutPerson(id) {
+
     var tmp = "";
     tmp = $.ajax({
       async: false,
       type: 'GET',
       dataType: 'json',
-        url: "https://localhost:44342/api/item/GetPersonEvolution/" + id,
-        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+      url: "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + id,
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
     }).responseJSON
 
     var keys = [];
@@ -145,37 +234,33 @@
       values.push(tmp[keys[i]] / 10);
     }
 
-    console.log(label);
-    console.log(values);
+    var can = $('#doughnut-chart');
+    console.log(can.parent().attr('Style', 'width: 500px; height: 500px'));
+    //can.attr('Style', 'width: 300px; height: 300px');
 
-    var can = $('#line-chart');
-    //can.attr('width', '300px');
-    //can.attr('height', '300px');
-
-    new Chart(can, {
-      type: 'line',
-      data: {
-        labels: label,
-        datasets: [
-          {
-            label: "Polarity",
-            backgroundColor: "rgba(3, 169, 244, 0.5)",
-            borderColor: "#0277bd",
-            data: values
-          }
-        ]
-      },
-      options: {
-        legend: { display: true },
-        responsive: true,
-        maintainAspectRatio: false,
-        title: {
-          display: true,
-          text: 'Politician evolution'
+  new Chart(can, {
+    type: 'doughnut',
+    data: {
+      labels: label,
+      datasets: [
+        {
+          label: "Hashtags",
+          data: values,
+          backgroundColor: ["#ff6384","#36a2eb","#cc65fe","#ffce56","#7DDF64","#7BDFF2","#FDE74C","#47E5BC","#DAD6D6","#EF3E36"]
         }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Predicted world population (millions) in 2050'
       }
-    });
+    }
+  });
   }
+
+
+
 
   ///REM///
 
@@ -197,6 +282,7 @@
   //  }
   //});
 
+  function drawRadarChart() {
     new Chart(document.getElementById("radar-chart"), {
       type: 'radar',
       data: {
@@ -228,27 +314,10 @@
           text: 'Distribution in % of world population'
         }
       }
-  });
+    });
+  }
+    
 
-  //new Chart(document.getElementById("doughnut-chart"), {
-  //  type: 'doughnut',
-  //  data: {
-  //    labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-  //    datasets: [
-  //      {
-  //        label: "Population (millions)",
-  //        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-  //        data: [2478, 5267, 734, 784, 433]
-  //      }
-  //    ]
-  //  },
-  //  options: {
-  //    title: {
-  //      display: true,
-  //      text: 'Predicted world population (millions) in 2050'
-  //    }
-  //  }
-  //});
 
 
   //new Chart(document.getElementById("bubble-chart"), {

@@ -15,6 +15,10 @@ using System.Web.Routing;
 
 namespace UI_MVC.Controllers
 {
+    /// <summary>   
+    /// This controller rules over homepage and page that are an addition to the website or where it was not clear where to put a certain method. 
+    /// Authorization depends on used method 
+    /// </summary
     [RequireHttps]
     [RoutePrefix("{subplatform}")]
     public class HomeController : Controller
