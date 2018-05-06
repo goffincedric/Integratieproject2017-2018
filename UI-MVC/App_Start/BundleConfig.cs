@@ -19,13 +19,12 @@ namespace UI_MVC
 
             bundles.Add(new ScriptBundle("~/bundles/changetheme").Include("~/Scripts/Changetheme.js"));
 
-
             bundles.Add(new ScriptBundle("~/bundles/contact").Include("~/Scripts/contact.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/AccountControl").Include("~/Scripts/AccountControl.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/DashboardControl").Include("~/Scripts/DashboardControl.js"));
-
+            bundles.Add(new ScriptBundle("~/bundles/Dashboard").Include("~/Scripts/Dashboard/DashboardControl.js", "~/Scripts/Dashboard/Dashboard.js"));
+            
             bundles.Add(new StyleBundle("~/Content/bootstrapcss").Include("~/Content/bootstrap.css"));
         }
     }

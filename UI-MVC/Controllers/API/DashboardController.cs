@@ -40,10 +40,11 @@ namespace UI_MVC.Controllers.API
         {
             if (!ModelState.IsValid) return BadRequest();
             if (zone.ZoneId != id) return BadRequest();
-            Zone oldZone = DashboardMgr.GetZone(id);
-            if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
-            if (oldZone == null) return NotFound();
-            DashboardMgr.ChangeZone(zone);
+            Zone newZone = DashboardMgr.GetZone(id);
+            if (!newZone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
+            if (newZone == null) return NotFound();
+            newZone.Title = zone.Title;
+            DashboardMgr.ChangeZone(newZone);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -57,24 +58,27 @@ namespace UI_MVC.Controllers.API
             if (DashboardMgr.GetZone(zone.ZoneId) != null) return Conflict();
 
             Dashboard dashboard = DashboardMgr.GetDashboard(id);
-            if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
+            if (!dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
             if (dashboard == null) return NotFound();
-            if (zone.Elements == null || zone.Elements.Count == 0) DashboardMgr.AddZone(dashboard, zone.Title);
-            else DashboardMgr.AddZone(dashboard, zone.Title, zone.Elements);
+            if (zone.Elements == null || zone.Elements.Count == 0) zone = DashboardMgr.AddZone(dashboard, zone.Title);
+            else zone = DashboardMgr.AddZone(dashboard, zone.Title, zone.Elements);
             
             return Ok(zone); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte zone
         }
 
-        // DELETE: api/dashboard/deletezone
+        // DELETE: api/dashboard/deletezone/zoneId
         [HttpDelete]
-        public IHttpActionResult DeleteZone([FromBody]int? id)
+        public IHttpActionResult DeleteZone(int? id)
         {
             if (id == null) return BadRequest("No Id provided");
-            if (id < 0) return BadRequest("Wrong id has been provided");
+            if (id < 0) return BadRequest("Wrong id has been provided"); 
             Zone zone = DashboardMgr.GetZone((int)id);
             if (zone == null) NotFound();
             if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
+            Dashboard dashboard = DashboardMgr.GetDashboard(zone.DashboardId);
+            dashboard.Zones.Remove(zone);
             DashboardMgr.RemoveZone((int)id);
+
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -137,7 +141,7 @@ namespace UI_MVC.Controllers.API
 
         // DELETE: api/dashboard/deleteelement
         [HttpDelete]
-        public IHttpActionResult DeleteElement([FromBody]int? id)
+        public IHttpActionResult DeleteElement(int? id)
         {
             if (id == null) return BadRequest("No Id provided");
             if (id < 0) return BadRequest("Wrong id has been provided");

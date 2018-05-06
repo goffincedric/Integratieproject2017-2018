@@ -2117,6 +2117,32 @@ h3 {
     margin-bottom: auto;
 }
 
+.add-element {
+    object-fit: contain;
+    height: 120px;
+    width: auto;
+    cursor:pointer;
+    margin-top: 40px;
+}
+
+.delete-zone {
+    float: right;
+    color: red;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.edit-zone {
+    color: blue;
+    cursor: pointer;
+}
+
+.delete-element {
+    color: red;
+    cursor: pointer;
+}
+
+
 @media screen and (max-width: 1439px) and (min-width: 992px) {
     .sidebar {
         width: 70px;

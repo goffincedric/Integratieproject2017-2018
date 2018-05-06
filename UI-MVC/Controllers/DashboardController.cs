@@ -19,11 +19,22 @@ namespace UI_MVC.Controllers
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     public class DashboardController : Controller
     {
-        private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
-        private readonly ItemManager itemMgr = new ItemManager(uow);
-        private readonly DashboardManager dashboardMgr = new DashboardManager(uow);
-        private readonly AccountManager accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
-        private readonly SubplatformManager SubplatformMgr = new SubplatformManager(uow);
+        private readonly UnitOfWorkManager uow;
+        private readonly ItemManager itemMgr;
+        private readonly DashboardManager dashboardMgr;
+        private readonly AccountManager accountMgr;
+        private readonly SubplatformManager SubplatformMgr;
+
+
+        public DashboardController()
+        {
+            uow = new UnitOfWorkManager();
+            itemMgr = new ItemManager(uow);
+            dashboardMgr = new DashboardManager(uow);
+            accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
+            SubplatformMgr = new SubplatformManager(uow);
+        }
+
 
         public ActionResult Dashboard(string subplatform)
         {

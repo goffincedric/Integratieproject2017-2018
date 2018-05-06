@@ -242,6 +242,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DashboardViewModels.cs" />
     <Compile Include="Models\PersonEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\API\Resource\Constants\ApiInfo.Designer.cs">
@@ -270,6 +271,7 @@
     <Content Include="Content\Images\Partijen\pvda.jpg" />
     <Content Include="Content\Images\Partijen\spa.jpg" />
     <Content Include="Content\Images\Partijen\vb.png" />
+    <Content Include="Content\Images\plus-icon.png" />
     <Content Include="Content\Images\Themes\eu.png" />
     <Content Include="Content\Images\Themes\migratie.png" />
     <Content Include="Content\Images\Themes\milieu.png" />
@@ -306,7 +308,8 @@
     <Content Include="Content\Fonts\FontAwesome\fee66e712a8a08eef5805a46892932ad.woff" />
     <Content Include="favicon.ico" />
     <Content Include="Scripts\bundle.js" />
-    <Content Include="Scripts\DashboardControl.js" />
+    <Content Include="Scripts\Dashboard\DashBoard.js" />
+    <Content Include="Scripts\Dashboard\DashboardControl.js" />
     <Content Include="Scripts\grid2\gridstack.jQueryUI.js" />
     <Content Include="Scripts\grid2\gridstack.js" />
     <Content Include="Scripts\AccountControl.js" />
