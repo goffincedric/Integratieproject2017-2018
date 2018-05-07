@@ -61,16 +61,16 @@ namespace UI_CA_Prototype
                 Console.WriteLine("99) Toon de CLI help pagina");
                 Console.WriteLine("0) Afsluiten");
 
-                //try
-                //{
-                DetectMenuAction();
-                //}
-                //catch (Exception e)
-                //{
-                //    Console.WriteLine();
-                //    Console.WriteLine(e.Message);
-                //    Console.WriteLine();
-                //}
+                try
+                {
+                    DetectMenuAction();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine();
+                }
                 Console.WriteLine("\n");
             }
         }
