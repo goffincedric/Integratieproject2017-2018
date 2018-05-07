@@ -1,7 +1,5 @@
 ﻿
 $(document).ready(function () {
-  
-
  let headers = {
       "x-api-key": "303d22a4-402b-4d3c-b279-9e81c0480711"
   }
