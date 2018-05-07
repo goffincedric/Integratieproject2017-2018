@@ -19,6 +19,7 @@ using System.Linq;
 using System.Data.Entity.Validation;
 using PB.DAL.EF;
 using System.IO;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace UI_MVC.Controllers
 {
@@ -377,13 +378,18 @@ namespace UI_MVC.Controllers
 
         public ViewResult UserBeheer()
         {
-            IEnumerable<Profile> profiles = UserManager.GetProfiles();
+          
+
+            IEnumerable<Profile> profiles = UserManager.GetProfiles().Where(p => UserManager.IsInRole(p.Id, "User").Equals(true));
             return View(profiles);
         }
         //public PartialViewResult UserBeheer()
         //{
-        //    IEnumerable<Profile> profiles = UserManager.GetProfiles()
-        //        //.Where(p => p.Roles.Where(p.Equals(UserManager.GetAllRoles().Where(r => r.Name.Equals("User")));
+           
+            
+        //        //.Where(r => r.RoleId == (UserManager.GetAllRoles().ToList().Where(r => r.Name.ToLower().Equals("user")))
+              
+        //       // .Where(p => p.Roles.Where(p.Equals(UserManager.GetAllRoles().Where(r => r.Name.Equals("SuperAdmin")));
         //        //.Where(p => p.Roles.Where(p.Equals(UserManager.GetAllRoles().Where(r => r.Name.Equals("User"), true))));
         //    return PartialView();
         //}
