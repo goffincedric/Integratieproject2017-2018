@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.Owin;
 using PB.BL;
+using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Items;
 using PB.BL.Interfaces;
 using System;
@@ -104,5 +105,19 @@ namespace UI_MVC.Controllers.API
         //public IHttpActionResult Delete(int id)
         //{
         //}
+
+        [HttpGet]
+        public IHttpActionResult GetUserRate()
+        {
+            IEnumerable<Profile> profiles = UserManager.GetProfiles();
+            if (profiles == null) return NotFound();
+            Dictionary<DateTime, int> profileRate = new Dictionary<DateTime, int>();
+
+            profileRate = profiles.GroupBy(r => r.CreatedOn.Date).OrderByDescending(r => r.Key)
+            .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
+            if (profileRate == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(profileRate);
+        }
+
     }
 }

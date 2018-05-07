@@ -286,7 +286,6 @@
     <Content Include="Content\Styling\account\custom.css" />
     <Content Include="Content\Styling\grid2\gridstack-extra.css" />
     <Content Include="Content\Styling\grid2\gridstack.css" />
-    <Content Include="Content\Styling\wizard\bootstrap.min.css" />
     <Content Include="Content\Styling\wizard\material-bootstrap-wizard.css" />
     <Content Include="Scripts\account\custom.js" />
     <Content Include="Scripts\contact.js" />
