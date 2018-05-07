@@ -484,7 +484,7 @@ namespace PB.BL
             List<Record> oldRecords = persons
                 .SelectMany(p => p.Records)
                 .Distinct()
-                .Where(r => r.Date.Date < DateTime.Now.Date.AddDays(-days))
+                .Where(r => r.Date.Date < DateTime.Today.AddDays(-days))
                 .ToList();
 
             // Persist deleted records
