@@ -1,4 +1,4 @@
-﻿@*@Model*@ 
+﻿@*@Model*@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -6,6 +6,11 @@
 
     <link href="~/Content/Styling/grid2/gridstack.css" rel="stylesheet" />
     <link href="~/Content/Styling/grid2/gridstack-extra.css" rel="stylesheet" />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <!-- CSS Files -->
+    <link href="~/Content/Styling/wizard/material-bootstrap-wizard.css" rel="stylesheet" />
     <style type="text/css">
 
         #grid1 {
@@ -32,11 +37,28 @@
         #grid1 .grid-stack-item-content {
             background-color: grey;
         }
+
+        #Wizard{
+            position: fixed;
+            min-height: 100%;
+            max-width: 100%;
+            left: 0;
+            top: 0;
+            z-index: 1;
+            margin: auto;
+            display: none;
+            background-color: rgba(128, 128, 128, .5);
+        }
     </style>
 }
 
 <main class="main-content bgc-grey-100" id="dashboard-@Model.DashboardId">
     <div id="mainContent">
+        <div id="Wizard" class="container">
+            @{
+                Html.RenderAction("_Wizard", "Dashboard");
+            }
+        </div>
         @foreach (var zone in Model.Zones)
         {
             <div class="p-10 mB-10 zone-@zone.ZoneId">
@@ -57,7 +79,7 @@
     </div>
 </main>
 
-
+<!--   Dashboard   -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
 
@@ -65,3 +87,39 @@
 <script src="~/Scripts/grid2/gridstack.jQueryUI.js"></script>
 
 @Scripts.Render("~/bundles/Dashboard")
+
+<!--   Wizard   -->
+<!--   Core JS Files   -->
+<script src="~/Scripts/wizard/bootstrap.min.js" defer></script>
+<script src="~/Scripts/wizard/jquery.bootstrap.js" defer></script>
+<!--  Plugin for the Wizard -->
+<script src="~/Scripts/wizard/material-bootstrap-wizard.js" defer></script>
+<script src="~/Scripts/wizard/jquery.validate.min.js" defer></script>
+
+<script>
+    $(document).ready(function () {
+        var next = 1;
+        $(".add-more").click(function (e) {
+            e.preventDefault();
+            var addto = "#field" + next;
+            var addRemove = "#field" + (next);
+            next = next + 1;
+            var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
+            var newInput = $(newIn);
+            var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
+            var removeButton = $(removeBtn);
+            $(addto).after(newInput);
+            $(addRemove).after(removeButton);
+            $("#field" + next).attr('data-source', $(addto).attr('data-source'));
+            $("#count").val(next);
+
+            $('.remove-me').click(function (e) {
+                e.preventDefault();
+                var fieldNum = this.id.charAt(this.id.length - 1);
+                var fieldID = "#field" + fieldNum;
+                $(this).remove();
+                $(fieldID).remove();
+            });
+        });
+    });
+</script>

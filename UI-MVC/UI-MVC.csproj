@@ -243,7 +243,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\DashboardViewModels.cs" />
     <Compile Include="Models\PersonEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\API\Resource\Constants\ApiInfo.Designer.cs">
@@ -378,10 +377,10 @@
     <Content Include="Views\Account\UserSettings.cshtml" />
     <Content Include="Views\Home\_UrlList.cshtml" />
     <Content Include="Views\Account\_NotificationSetting.cshtml" />
-    <Content Include="Views\Dashboard\Wizard.cshtml" />
     <Content Include="Views\Account\_AdminTable.cshtml" />
     <Content Include="Views\Account\_UserTable.cshtml" />
     <Content Include="Views\Account\_SuperAdminTable.cshtml" />
+    <Content Include="Views\Dashboard\_Wizard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
