@@ -29,18 +29,33 @@
               <td>@Html.DisplayFor(modelItem => item.Organisation.Name)</td>
               <td>@Html.DisplayFor(modelItem => item.Function)</td>
               <td>
+                <div class="row">
+                  @using (Html.BeginForm("DeleteItem", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
+                  {
+                    @Html.AntiForgeryToken()
+                    <button class="btn btn-sm" style="margin-left: 15px">
+                      <a href="javascript:document.getElementById('delete-@item.ItemId').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                        <span style="color: #2196f3" class="fsz-sm">
+                          Delete
+                        </span>
+                      </a>
+                    </button>
+                  }
 
-                @using (Html.BeginForm("DeleteItem", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
-                {
-                  @Html.AntiForgeryToken()
+                  @using (Html.BeginForm("EditPerson", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
+                  {
+                    @Html.AntiForgeryToken()
 
-                  <a href="javascript:document.getElementById('delete-@item.ItemId').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                    <span style="color: #2196f3" class="fsz-sm">
-                      Delete
-                    </span>
-                  </a>
-                }
+                    <button class="btn btn-sm">
+                      <a href="javascript:document.getElementById('delete-@item.ItemId').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                        <span style="color: #2196f3" class="fsz-sm">
+                          Edit
+                        </span>
+                      </a>
+                    </button>
+                  }
 
+                </div>
               </td>
             </tr>
           }

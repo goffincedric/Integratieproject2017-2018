@@ -329,6 +329,24 @@ namespace UI_MVC.Controllers.API
             }
         }
 
+        [HttpGet]
+        public IHttpActionResult GetTrendingWordsCount(int id)
+        {
+
+            if (ItemMgr.GetItem(id) is Person)
+            {
+                IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
+                Dictionary<string, int> words = new Dictionary<string, int>();
+
+                records.SelectMany(r => r.Words).Distinct().OrderByDescending(h => h.Records.Count).Distinct().Take(5).ToList().ForEach(p => words.Add(p.Text, p.Records.Count));
+                return Ok(words);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
 
         [HttpGet]
         public IHttpActionResult GetTrendingUrl(int id)
