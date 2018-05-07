@@ -41,6 +41,22 @@ $(function () {
             return ZoneData;
         };
 
+        deleteElement = function (element, grid) {
+            var Element = element.parent();
+            var ElementId = Element.attr('id');
+            ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
+            Element = Element.parent();
+
+            $.ajax({
+                async: false,
+                type: 'Delete',
+                headers: Headers,
+                url: "https://localhost:44342/api/dashboard/deleteelement/" + ElementId
+            })
+
+            grid.data('gridstack').removeWidget(Element);
+        }
+
         //done
         addElement = function (grid) {
             addingElement = true;
@@ -125,7 +141,17 @@ $(function () {
             });
 
             newElement.children('#Element-' + ElementId).children('.delete-element').on('click', function () {
-                deleteElement($(this));
+                deleteElement($(this), grid);
+            });
+
+            var Wizard = $('#Wizard');
+            Wizard.show();
+            Wizard.children().attr('id', 'Wizard-' + ElementId);
+            $('.btn-cancel').off('click');
+            $('.btn-cancel').on('click', function () {
+                deleteElement(newElement.children('#Element-' + ElementId).children(), grid);
+                Wizard.children().attr('id', '');
+                Wizard.hide();
             });
             addingElement = false;
         }
@@ -196,10 +222,6 @@ $(function () {
             $(grid).remove();
         }
 
-        addZone = function (grid) {
-
-        }
-
         changeElements = function (elements, grid) {
             if (!addingElement) {
                 var ZoneId = grid.attr('id');
@@ -227,22 +249,6 @@ $(function () {
                     }
                 }
             }
-        }
-
-        deleteElement = function (element) {
-            var Element = element.parent();
-            var ElementId = Element.attr('id');
-            ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
-            Element = Element.parent();
-
-            $.ajax({
-                async: false,
-                type: 'Delete',
-                headers: Headers,
-                url: "https://localhost:44342/api/dashboard/deleteelement/" + ElementId
-            })
-
-            Element.remove();
         }
 
         //done
@@ -276,7 +282,7 @@ $(function () {
                         var newElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + node.ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div/><div/>'),
                             node.X, node.Y, node.Width, node.Height);
                         newElement.children('#Element-' + node.ElementId).children('.delete-element').on('click', function () {
-                            deleteElement($(this));
+                            deleteElement($(this), grid);
                         });
                     }, this);
 
