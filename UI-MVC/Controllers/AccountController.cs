@@ -295,7 +295,6 @@ namespace UI_MVC.Controllers
 
         public ActionResult _ResetPassword()
         {
-
             return PartialView();
         }
 

@@ -35,7 +35,7 @@ namespace UI_MVC.Controllers
             SubplatformMgr = new SubplatformManager(uow);
         }
 
-
+        //TODO: Delete zones created in beginning
         public ActionResult Dashboard(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -110,6 +110,11 @@ namespace UI_MVC.Controllers
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             return View();
+        }
+
+        public ActionResult _Wizard()
+        {
+            return PartialView();
         }
     }
 }
