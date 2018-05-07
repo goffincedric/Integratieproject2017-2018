@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace PB.BL
 {
@@ -376,11 +377,11 @@ namespace PB.BL
                 profileAlerts.ForEach(pa =>
                 {
                     StringBuilder sbItem = new StringBuilder(GmailSender.WeeklyReviewListItem);
-                    sbItem.Replace(GmailSender.WeeklyReviewListItemIconSubstring, pa.Alert.Item.IconURL ?? GmailSender.DefaultItemIcon);
+                    sbItem.Replace(GmailSender.WeeklyReviewListItemIconSubstring, "https://integratieproject.azurewebsites.net" + pa.Alert.Item.IconURL.Substring(1) ?? GmailSender.DefaultItemIcon);
                     sbItem.Replace(GmailSender.DefaultItemLinkSubstring, "#");
                     sbItem.Replace(GmailSender.WeeklyReviewListItemNameSubstring, pa.Alert.Item.Name);
                     sbItem.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring, 
-                        pa.Alert.Item.Name + " " + pa.Alert.Event + " " + pa.Alert.Subject + " - " + pa.TimeStamp.Date + "<br>" + pa.Alert.Text
+                        pa.Alert.Item.Name + " " + pa.Alert.Event + " " + pa.Alert.Subject + " - " + pa.TimeStamp.Date.ToShortDateString() + "<br>" + pa.Alert.Text
                     );
                     sb.Append(sbItem.ToString());
                 });
