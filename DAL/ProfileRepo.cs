@@ -78,6 +78,7 @@ namespace PB.DAL
                 .Include(p => p.ProfileAlerts)
                 .Include(p => p.Subscriptions)
                 .Include(p => p.Dashboards)
+                .Include(p=>p.Roles)
                 .AsEnumerable();
         }
 
