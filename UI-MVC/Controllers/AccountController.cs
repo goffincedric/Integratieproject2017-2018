@@ -133,7 +133,7 @@ namespace UI_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon = @"~/Content/Images/Users/user.png" };
+                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon = @"~/Content/Images/Users/user.png", CreatedOn = DateTime.Today};
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
@@ -456,7 +456,8 @@ namespace UI_MVC.Controllers
                 {
                     UserName = name,
                     Email = model.Email,
-                    ProfileIcon = @"~/Content/Images/Users/user.png"
+                    ProfileIcon = @"~/Content/Images/Users/user.png", 
+                    CreatedOn = DateTime.Today
                 };
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>

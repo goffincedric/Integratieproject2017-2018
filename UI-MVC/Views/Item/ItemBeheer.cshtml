@@ -75,13 +75,91 @@
 
       </div>
 
+
+
       <div id="createpartial" style="margin-top:30px"></div>
       <div id="partial"></div>
 
+      <div style="margin: 10px 0" class="masonry-item col-md- 12">
+        <div class="bgc-white p-20 bd">
+          <h6 class="c-grey-900">Users</h6> <div class="mT-30" id="graph-bar">
 
+            <canvas id="user-chart" height="400"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+
+
+  function drawLineChart(id) {
+
+    var test = "";
+    test = $.ajax({
+      async: false,
+      type: 'GET',
+      dataType: 'json',
+      url: "https://localhost:44342/api/account/GetUserRate",
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+
+    }).responseJSON
+
+    var keys = [];
+    keys = Object.keys(test);
+    var label = [];
+    var values = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      label.push(keys[i].substring(0, 10));
+      values.push(test[keys[i]]);
+    }
+
+
+
+    var can = $('#user-chart');
+    //can.attr('width', '300px');
+    //can.attr('height', '300px');
+
+    new Chart(can, {
+      type: 'line',
+      data: {
+        labels: label,
+        datasets: [
+          {
+            label: "",
+            backgroundColor: "rgba(3, 169, 244, 0.5)",
+            borderColor: "#0277bd",
+            data: values
+          }
+        ]
+      },
+      options: {
+        legend: { display: true },
+        responsive: true,
+        maintainAspectRatio: false,
+        title: {
+          display: true,
+          text: 'Account Rate evolution'
+        }, 
+        scales: {
+          yAxes: [{
+            ticks: {
+              min: 0,
+              beginAtZero: true,
+              stepSize: 1 
+            }
+          }]
+        }
+      }
+    });
+  }
+
+  drawLineChart();
+
+</script>
 
 
 
