@@ -351,8 +351,12 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetMostPopularPerson()
         {
 
+            
             Person person = ItemMgr.GetPersons().OrderByDescending(p => p.TrendingScore).FirstOrDefault();
-
+            if(person is null)
+            {
+                return NotFound();
+            }
             return Ok(person.ItemId);
          
         }

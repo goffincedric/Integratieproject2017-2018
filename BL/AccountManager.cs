@@ -173,7 +173,7 @@ namespace PB.BL
             // Create superadmin
             if (userManager.Users.FirstOrDefault(p => p.UserName.Equals("captain")) is null)
             {
-                var user = new Profile { UserName = "captain", Email = "example@example.tld", ProfileIcon = @"~/Content/Images/Users/user.png" };
+                var user = new Profile { UserName = "captain", Email = "example@example.tld", ProfileIcon = @"~/Content/Images/Users/user.png" ,CreatedOn= DateTime.Now};
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
