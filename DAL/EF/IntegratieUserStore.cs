@@ -27,7 +27,7 @@ namespace PB.DAL.EF
 
         public List<IdentityRole> ReadAllRoles()
         {
-            return ctx.Roles.Where(x => !x.Name.Contains("Admin")).ToList();
+            return ctx.Roles.ToList();
         }
 
         public IntegratieDbContext ReadContext()
@@ -39,5 +39,7 @@ namespace PB.DAL.EF
         {
             return ctx.Users.ToList();
         }
+
+        
     }
 }

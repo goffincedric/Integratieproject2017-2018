@@ -20,7 +20,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44338</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -375,8 +376,10 @@
     <Content Include="Views\Item\ItemBeheer.cshtml" />
     <Content Include="Views\Account\UserSettings.cshtml" />
     <Content Include="Views\Home\_UrlList.cshtml" />
-    <Content Include="Views\Account\_AdminAccounts.cshtml" />
     <Content Include="Views\Account\_NotificationSetting.cshtml" />
+    <Content Include="Views\Account\_AdminTable.cshtml" />
+    <Content Include="Views\Account\_UserTable.cshtml" />
+    <Content Include="Views\Account\_SuperAdminTable.cshtml" />
     <Content Include="Views\Dashboard\_Wizard.cshtml" />
   </ItemGroup>
   <ItemGroup>

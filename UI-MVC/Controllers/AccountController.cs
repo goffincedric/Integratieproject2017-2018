@@ -377,34 +377,87 @@ namespace UI_MVC.Controllers
 
         public ViewResult UserBeheer()
         {
-          
 
-            IEnumerable<Profile> profiles = UserManager.GetProfiles().Where(p => UserManager.IsInRole(p.Id, "User").Equals(true));
-            return View(profiles);
+            return View();
+
         }
-        //public PartialViewResult UserBeheer()
-        //{
-           
+
+        public  ActionResult _UserTable()
+        {
+            string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("User")).First().Id;
+            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
+          
             
-        //        //.Where(r => r.RoleId == (UserManager.GetAllRoles().ToList().Where(r => r.Name.ToLower().Equals("user")))
-              
-        //       // .Where(p => p.Roles.Where(p.Equals(UserManager.GetAllRoles().Where(r => r.Name.Equals("SuperAdmin")));
-        //        //.Where(p => p.Roles.Where(p.Equals(UserManager.GetAllRoles().Where(r => r.Name.Equals("User"), true))));
-        //    return PartialView();
-        //}
+            
+            return PartialView(profiles);
+         
+        }
 
 
+        public ActionResult _AdminTable()
+        {
+
+            string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("Admin")).First().Id;
+            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
+
+
+            return PartialView(profiles);
+        }
+
+        public ActionResult _SuperAdminTable()
+        {
+
+            string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("SuperAdmin")).First().Id;
+            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
+
+
+            return PartialView(profiles);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult VoteToAdmin(string id)
         {
-            Profile profile = UserManager.GetProfile(id);
+           
             UserManager.AddToRole(id, "Admin");
             UserManager.RemoveFromRole(id, "User");
             
 
-            return View();
+            return RedirectToAction("UserBeheer","Account");
         }
 
-        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveFromAdmin(string id)
+        {
+            UserManager.AddToRole(id, "User");
+            UserManager.RemoveFromRole(id, "Admin");
+           
+
+
+            return RedirectToAction("UserBeheer", "Account");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MakeSuperAdmin(string id)
+        {
+            UserManager.AddToRole(id, "SuperAdmin");
+            UserManager.RemoveFromRole(id, "Admin");
+
+            return RedirectToAction("UserBeheer", "Account");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveFromSuperAdmin(string id)
+        {
+            UserManager.AddToRole(id, "User");
+            UserManager.RemoveFromRole(id, "SuperAdmin");
+
+            return RedirectToAction("UserBeheer", "Account");
+        }
 
         #region ExternalLogin
         [HttpPost]
