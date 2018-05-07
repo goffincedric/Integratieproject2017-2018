@@ -17,13 +17,62 @@
       </div>
       @Html.Action("_UserTable")
 
-      @Html.Action("_AdminTable")
+      <div class="row" style="margin-top: 10px;">
 
-      @Html.Action("_SuperAdminTable")
+        <div class="col-sm" style="padding:0; margin:0 10px 0 0">
+          <div class="layers bd bgc-white p-20">
+            <div class="layer w-100 mB-10">
+              <h6 class="lh-1">Beheer Admins</h6>
+            </div>
+            <div class="layer w-100">
+              <div class="peers ai-sb fxw-nw">
+                <button type="button" class="btn btn-primary btn-lg btn-block" id="loadAdmin">Beheer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm" style="padding:0; margin:0 0 0 10px">
+          <div class="layers bd bgc-white p-20">
+            <div class="layer w-100 mB-10">
+              <h6 class="lh-1">Beheer SuperAdmins</h6>
+            </div>
+            <div class="layer w-100">
+              <div class="peers ai-sb fxw-nw">
+                <button type="button" class="btn btn-primary btn-lg btn-block" id="loadSuper">Beheer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="partial"></div>
     </div>
-  </div>
 </main>
+
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.2.1/dt-1.10.16/af-2.2.2/b-1.5.1/b-flash-1.5.1/b-html5-1.5.1/kt-2.3.2/r-2.2.1/datatables.min.css" />
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.2.1/dt-1.10.16/af-2.2.2/b-1.5.1/b-flash-1.5.1/b-html5-1.5.1/kt-2.3.2/r-2.2.1/datatables.min.js"></script>
+
+<script>
+
+  $(function () {
+    $("#loadAdmin").click(function () {
+
+      $('#partial').load('@Url.Action("_AdminTable", "Account")');
+
+    });
+  });
+
+  $(function () {
+    $("#loadSuper").click(function () {
+
+       $('#partial').load('@Url.Action("_SuperAdminTable", "Account")');
+
+    });
+  });
+
+
+</script>

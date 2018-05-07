@@ -27,31 +27,31 @@
                 <div class="row">
 
                   @using (Html.BeginForm("DeleteProfileAdmin", "Account", new { userId = item.Id }, FormMethod.Post, new { id = "delete-" + item.Id }))
-  {
-                @Html.AntiForgeryToken()
+                  {
+                    @Html.AntiForgeryToken()
 
-                <button class="btn btn-sm" style="margin-right: 5px">
-                  <a href="javascript:document.getElementById('delete-@item.Id').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                    <span style="color: #2196f3" class="fsz-sm">
-                      Delete
-                    </span>
-                  </a>
-                  </button>
+                    <button class="btn btn-sm" style="margin-right: 5px">
+                      <a href="javascript:document.getElementById('delete-@item.Id').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                        <span style="color: #2196f3" class="fsz-sm">
+                          Delete
+                        </span>
+                      </a>
+                    </button>
                   }
 
 
                   @using (Html.BeginForm("VoteToAdmin", "Account", new { id = item.Id }, FormMethod.Post, new { id = "admin-" + item.Id }))
-  {
-                @Html.AntiForgeryToken()
+                  {
+                    @Html.AntiForgeryToken()
 
-                <button class="btn btn-sm">
-                  <a href="javascript:document.getElementById('admin-@item.Id').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                    <span style="color: #2196f3" class="fsz-sm">
-                      Make Admin
-                    </span>
-                  </a>
-                </button>
-}
+                    <button class="btn btn-sm">
+                      <a href="javascript:document.getElementById('admin-@item.Id').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                        <span style="color: #2196f3" class="fsz-sm">
+                          Make Admin
+                        </span>
+                      </a>
+                    </button>
+                  }
                 </div>
                 @*@Html.ActionLink("EditPerson", "Edit", new { id = item.ItemId }) |
                   @Html.ActionLink("DetailsPerson", "DetailsPerson", new { id = item.ItemId }) |*@
@@ -65,6 +65,7 @@
     </div>
   </div>
 </div>
+
 <script defer>
   $("document").ready(function () {
     $('#tab').DataTable();
