@@ -193,8 +193,19 @@ namespace UI_MVC.Controllers
             return View();
         }
 
+        public ActionResult EditPerson(int id)
+        {
+
+            Person person = itemMgr.GetPerson(id); 
+            return View(person);
+        }
+
+        public ActionResult WeeklyReview()
+        {
+            return View();
+        }
 
 
-       
+
     }
 }

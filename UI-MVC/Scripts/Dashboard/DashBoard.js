@@ -16,6 +16,8 @@ DashData = $.ajax({
 
 $(function () {
     var addingElement = false;
+    var GraphType = -1;
+    var GraphSize;
 
     var options = {
         width: 12,
@@ -154,10 +156,14 @@ $(function () {
                 Wizard.hide();
             });
 
-            $('.btn-finish').off('click');
-            $('.btn-finish').on('click', function () {
+            console.log($('#btn-pie').children('input'));
+            console.log($('#btn-bar').children('input'));
+
+            $('#btn-finish').off('click');
+            $('#btn-finish').on('click', function () {
                 Wizard.hide();
-                drawChart();
+                console.log(GraphType);
+                //drawChart();
             });
             addingElement = false;
         }
@@ -330,9 +336,9 @@ $(function () {
                 case 9: console.log('Map');
                     break;
             }
-        }
+        };
 
-        function getTopTrending() {
+        getTopTrending = function () {
             var tmp = "";
             tmp = $.ajax({
                 async: false,
@@ -343,7 +349,7 @@ $(function () {
             }).responseJSON
 
             return tmp;
-        }
+        };
 
         drawLineChart = function (can) {
             var persons = "";
@@ -410,7 +416,7 @@ $(function () {
                 myLineChart.update();
                 counter++;
             });
-        }
+        };
 
         drawDonut = function (can) {
             var count = "";
@@ -454,7 +460,7 @@ $(function () {
             });
         };
 
-        drawPie = function(id, canvas) {
+        drawPie = function (id, canvas) {
             var count = "";
             count = $.ajax({
                 async: false,
@@ -491,7 +497,7 @@ $(function () {
                     responsive: true
                 }
             });
-        }
+        };
 
         $(".grid-stack").each(function () {
             this.grid = $(this).data('gridstack');

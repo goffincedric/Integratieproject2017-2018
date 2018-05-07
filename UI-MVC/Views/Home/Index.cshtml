@@ -23,6 +23,15 @@
                         <h4 class="mb-3 banner-text">
                             Creeër uw eigen dashboard en bekijk en analyseer live grafieken!
                         </h4>
+                        <br />
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+
+                            <div class="row" style="text-align:center; margin:auto">
+                                1
+                                <a href="@Url.Action("Register", "Account")" class="btn-lg btn-primary" style="text-align:center; margin:auto">Start nu</a>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -122,9 +131,9 @@
 
             <div class="masonry-item col-md-6">
                 <div class="bgc-white p-20 bd">
-                    <h6 class="c-grey-900">Bar Chart</h6>
+                    <h6 class="c-grey-900">Radar</h6>
                     <div class="mT-30">
-                        <canvas style="margin: auto 0" id="bar-chart" height="220"></canvas>
+                        <canvas style="margin: auto 0" id="bar2-chart" height="220"></canvas>
                     </div>
 
                 </div>
@@ -168,10 +177,7 @@
                                     <div class="layer w-100">
                                         <h6 class="lh-1">Top persons</h6>
                                     </div>
-                                    @*<div id="myChart" style="height: 100%;width: 100%; min-height: 500px;"></div>*@
-                                    @*<div class="w-100" style="margin: auto 0;">
-                                          <ol id="toplist"></ol>
-                                        </div>*@
+                                    <canvas style="margin: auto 0" id="radar2-chart" height="220"></canvas>
 
                                 </div>
                             </div>
@@ -207,6 +213,119 @@
 
 
 <script>
+
+
+    function drawRadarChart() {
+        //var radar = "";
+        //radar = $.ajax({
+        //  async: false,
+        //  type: 'GET',
+        //  dataType: 'json',
+        //  url: "https://localhost:44342/api/item/GetTrendingWordsCount/" + getTopTrending(),
+        //  headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+        //}).responseJSON
+        //var keys = [];
+        //keys = Object.keys(radar);
+        //var label = [];
+        //var values = [];
+
+        //for (var i = 0; i < keys.length; i++) {
+        //  label.push(keys[i]);
+        //  values.push(radar[keys[i]]);
+        //}
+
+        var can2 = $('#radar2-chart');
+        //console.log(can.parent().attr('Style', 'width: 400px; height: 350px'));
+        //can.attr('Style', 'width: 300px; height: 300px');
+
+        new Chart(can2, {
+            type: 'radar',
+            data: {
+                labels: ["Test 1", "Test 2", "Test 3", "Test 4", "Test 5"],
+                datasets: [
+                    {
+                        label: "Data 1",
+                        fill: true,
+                        backgroundColor: "rgba(237, 231, 246, 0.5)",
+                        borderColor: "#673ab7",
+                        pointBorderColor: "#fff",
+                        pointBackgroundColor: "#512da8",
+                        data: [8.77, 55.61, 21.69, 6.62, 60.82]
+                    }, {
+                        label: "Data 2",
+                        fill: true,
+                        backgroundColor: "rgba(232, 245, 233, 0.5)",
+                        borderColor: "#2196f3",
+                        pointBorderColor: "#fff",
+                        pointBackgroundColor: "#1976d2",
+                        pointBorderColor: "#fff",
+                        data: [19.48, 54.16, 7.61, 8.06, 4.45]
+                    }
+                ]
+            },
+            options: {
+                responive: true
+            }
+        });
+
+    }
+
+
+    drawRadarChart();
+
+    function drawBarChart() {
+
+        var bar = "";
+        bar = $.ajax({
+            async: false,
+            type: 'GET',
+            dataType: 'json',
+            url: "https://localhost:44342/api/item/getpersonstop/5",
+            headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+
+        }).responseJSON
+
+        var keys = [];
+        keys = Object.keys(bar);
+        var label = [];
+        var values = [];
+
+        for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(bar[keys[i]] / 10);
+        }
+
+        console.log(label);
+        console.log(values);
+
+        var can = $('#bar2-chart');
+        //can.attr('width', '300px');
+        //can.attr('height', '300px');
+
+        new Chart(can, {
+            type: 'bar',
+            data: {
+                labels: label,
+                datasets: [
+                    {
+                        label: "Aantal tweets",
+                        backgroundColor: "#03a9f4",
+                        borderColor: "#rgba(3, 169, 244, 0.5)",
+                        data: values
+                    }
+                ]
+            },
+            options: {
+                legend: { display: true },
+                responsive: true,
+                maintainAspectRatio: false,
+
+            }
+        });
+    }
+
+    drawBarChart();
+
     function drawLineChart() {
         var persons = "";
         persons = $.ajax({
@@ -288,6 +407,8 @@
             myLineChart.update();
             counter++;
         });
+
+
     }
 
 
@@ -299,6 +420,8 @@
 
 <script>
     function getTopTrending() {
+
+
         var tmp = "";
         tmp = $.ajax({
             async: false,
@@ -312,6 +435,7 @@
     }
 
     $(document).ready(function () {
+
 
         var count = "";
         count = $.ajax({
@@ -460,4 +584,3 @@
 
 
     </script>*@
-
