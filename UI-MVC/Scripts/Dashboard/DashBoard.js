@@ -153,6 +153,12 @@ $(function () {
                 Wizard.children().attr('id', '');
                 Wizard.hide();
             });
+
+            $('.btn-finish').off('click');
+            $('.btn-finish').on('click', function () {
+                Wizard.hide();
+                drawChart();
+            });
             addingElement = false;
         }
 
@@ -284,6 +290,12 @@ $(function () {
                         newElement.children('#Element-' + node.ElementId).children('.delete-element').on('click', function () {
                             deleteElement($(this), grid);
                         });
+
+                        console.log(node.GraphType);
+
+                        newElement.children('#Element-' + node.ElementId).append($('<canvas></canvas>')).children('canvas').attr('id', 'pie-chart');
+
+                        drawPie(25, newElement.children('#Element-' + node.ElementId).children('canvas'));
                     }, this);
 
                     var plusElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
@@ -293,6 +305,192 @@ $(function () {
                     });
                 });
             }
+        }
+
+        chooseChart = function (type, can) {
+            switch (type) {
+                case 0: console.log('Bar');
+                    break;
+                case 1: drawLineChart();
+                    break;
+                case 2: drawPie();
+                    break;
+                case 3: console.log('Scattre');
+                    break;
+                case 4: drawDonut();
+                    break;
+                case 5: console.log('WordCloud');
+                    break;
+                case 6: console.log('Radar');
+                    break;
+                case 7: console.log('Area');
+                    break;
+                case 8: console.log('Node');
+                    break;
+                case 9: console.log('Map');
+                    break;
+            }
+        }
+
+        function getTopTrending() {
+            var tmp = "";
+            tmp = $.ajax({
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                url: "https://localhost:44342/api/item/getMostPopularPerson/",
+                headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+            }).responseJSON
+
+            return tmp;
+        }
+
+        drawLineChart = function (can) {
+            var persons = "";
+            persons = $.ajax({
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                url: "https://localhost:44342/api/item/GetMostPopularPersons",
+                headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+            }).responseJSON
+            //can.attr('height', '300px');
+
+            var datagrafiek = {
+                labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
+                datasets: []
+            };
+
+            // var labelslist; 
+
+            var myLineChart = new Chart(can, {
+                type: 'line',
+                data: datagrafiek,
+
+            });
+
+            var counter = 0;
+            $.each(persons, function (key, value) {
+                var tweet = "";
+                tweet = $.ajax({
+                    async: false,
+                    type: 'GET',
+                    dataType: 'json',
+                    url: "https://localhost:44342/api/item/GetPersonEvolution/" + key,
+                    headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+                }).responseJSON
+
+                var keys = [];
+                keys = Object.keys(tweet);
+
+                var label = [];
+                var values = [];
+
+                var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
+                var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+                var points = ["#512da8", "#1976d2", "#388e3c"];
+
+                for (var i = 0; i < keys.length; i++) {
+                    label.push(keys[i]);
+                    values.push(tweet[keys[i]] / 10);
+                }
+
+                var myNewDataSet = {
+                    label: value,
+                    data: values,
+                    borderWidth: 2,
+                    backgroundColor: backgroundcolors[counter],
+                    borderColor: borderColors[counter],
+                    pointBackgroundColor: points[counter]
+
+                }
+
+                datagrafiek.datasets.push(myNewDataSet);
+
+                myLineChart.update();
+                counter++;
+            });
+        }
+
+        drawDonut = function (can) {
+            var count = "";
+            count = $.ajax({
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                url: "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + getTopTrending(),
+                headers: Headers
+            }).responseJSON
+
+            var keys = [];
+            keys = Object.keys(count);
+            var label = [];
+            var values = [];
+
+            for (var i = 0; i < keys.length; i++) {
+                label.push(keys[i]);
+                values.push(count[keys[i]] / 10);
+            }
+
+            //var can = $('#doughnut-chart');
+            //console.log(can.parent().attr('Style', 'width: 400px; height: 350px'));
+            //can.attr('Style', 'width: 300px; height: 300px');
+
+            new Chart(can, {
+                type: 'doughnut',
+                data: {
+                    labels: label,
+                    datasets: [
+                        {
+                            label: "Hashtags",
+                            data: values,
+                            backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64", "#7BDFF2", "#FDE74C", "#47E5BC", "#DAD6D6", "#EF3E36"]
+                        }
+                    ]
+                },
+                options: {
+
+                }
+            });
+        };
+
+        drawPie = function(id, canvas) {
+            var count = "";
+            count = $.ajax({
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                url: "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id,
+                headers: Headers
+            }).responseJSON
+
+            var keys = [];
+            keys = Object.keys(count);
+            var label = [];
+            var values = [];
+
+            for (var i = 0; i < keys.length; i++) {
+                label.push(keys[i]);
+                values.push(count[keys[i]] / 10);
+            }
+
+            var can = $('#pie-chart');
+            //console.log(can.attr('Style', 'height: 50%;'));
+            //can.attr('Style', 'width: 300px; height: 300px');
+
+            new Chart(canvas, {
+                type: 'pie',
+                data: {
+                    labels: label,
+                    datasets: [{
+                        backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                        data: values
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
         }
 
         $(".grid-stack").each(function () {

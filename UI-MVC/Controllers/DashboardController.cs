@@ -49,55 +49,55 @@ namespace UI_MVC.Controllers
                     Profile = user,
                     DashboardType = UserType.USER,
                     Subplatform = Subplatform,
-                    Zones = new List<Zone>
-                    {
-                        new Zone()
-                        {
-                            Title = "Main Trends",
-                            Elements = new List<Element>()
-                            {
-                                new Element()
-                                {
-                                    X = 0,
-                                    Y = 3,
-                                    Width = 5,
-                                    Height = 5,
-                                    Comparison = new Comparison()
-                                },
-                                new Element()
-                                {
-                                    X = 0,
-                                    Y = 0,
-                                    Width = 2,
-                                    Height = 3,
-                                    Comparison = new Comparison()
-                                }
-                            }
-                        },
-                        new Zone()
-                        {
-                            Title = "Personal Trends",
-                            Elements = new List<Element>()
-                            {
-                                new Element()
-                                {
-                                    X = 0,
-                                    Y = 3,
-                                    Width = 6,
-                                    Height = 5,
-                                    Comparison = new Comparison()
-                                },
-                                new Element()
-                                {
-                                    X = 0,
-                                    Y = 0,
-                                    Width = 2,
-                                    Height = 4,
-                                    Comparison = new Comparison()
-                                }
-                            }
-                        }
-                    }
+                    Zones = new List<Zone>()
+                    //{
+                    //    new Zone()
+                    //    {
+                    //        Title = "Main Trends",
+                    //        Elements = new List<Element>()
+                    //        {
+                    //            new Element()
+                    //            {
+                    //                X = 0,
+                    //                Y = 3,
+                    //                Width = 5,
+                    //                Height = 5,
+                    //                Comparison = new Comparison()
+                    //            },
+                    //            new Element()
+                    //            {
+                    //                X = 0,
+                    //                Y = 0,
+                    //                Width = 2,
+                    //                Height = 3,
+                    //                Comparison = new Comparison()
+                    //            }
+                    //        }
+                    //    },
+                    //    new Zone()
+                    //    {
+                    //        Title = "Personal Trends",
+                    //        Elements = new List<Element>()
+                    //        {
+                    //            new Element()
+                    //            {
+                    //                X = 0,
+                    //                Y = 3,
+                    //                Width = 6,
+                    //                Height = 5,
+                    //                Comparison = new Comparison()
+                    //            },
+                    //            new Element()
+                    //            {
+                    //                X = 0,
+                    //                Y = 0,
+                    //                Width = 2,
+                    //                Height = 4,
+                    //                Comparison = new Comparison()
+                    //            }
+                    //        }
+                    //    }
+                    //}
                 };
                 model = dashboardMgr.AddDashboard(model.Subplatform, model.Profile, model.DashboardType, model.Zones);
             };
