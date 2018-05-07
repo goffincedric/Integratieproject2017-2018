@@ -15,6 +15,7 @@
           <option value="3" disabled>Radar Chart</option>
           <option value="4" disabled>Pie Chart</option>
           <option value="5">Dougnout Chart</option>
+         
         </select>
         <input id="itemid" class="form-control" style="width:200px" type="number" placeholder="vul itemid in" disabled />
         <button id="addGrafiek" class="btn btn-primary" type="submit">Add graph</button>
@@ -31,8 +32,7 @@
      
       @*<canvas id="pie-chart" width="800" height="450"></canvas>*@
     <canvas id="radar-chart" width="800" height="600"></canvas>
-    @*<canvas id="doughnut-chart" width="800" height="450"></canvas>
-    <canvas id="bubble-chart" width="800" height="800"></canvas>*@
+   
     </div>
 
 </main>
@@ -317,7 +317,7 @@
     });
   }
     
-
+  drawRadarChart();
 
 
   //new Chart(document.getElementById("bubble-chart"), {
