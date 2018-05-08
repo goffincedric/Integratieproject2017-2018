@@ -194,7 +194,10 @@ namespace PB.BL
             // Records ouder dan huidige dag
             DateTime LastDate = DateTime.Now;
 
-            List<Record> PeriodRecords = records.Where(r => r.Date.Date >= LastDate.AddDays(-period - 1).Date && r.Date.Date <= LastDate.Date).ToList();
+            List<Record> PeriodRecords = records.Where(r =>
+            {
+                return r.Date.Date >= LastDate.AddDays(-period - 1).Date && r.Date.Date <= LastDate.Date;
+            }).ToList();
 
             // alle personen met records
             List<Person> PersonsWithRecords = GetPersonsWithRecord(persons, PeriodRecords);

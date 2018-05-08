@@ -84,6 +84,12 @@ namespace PB.DAL.EF
                 .HasForeignKey(pa => pa.UserId)
                 .WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<Profile>()
+                .HasMany(p => p.WeeklyReviews)
+                .WithRequired(w => w.Profile)
+                .HasForeignKey(w => w.UserId)
+                .WillCascadeOnDelete(true);
+            
             modelBuilder.Entity<Alert>()
                 .HasMany(a => a.ProfileAlerts)
                 .WithRequired(pa => pa.Alert)
