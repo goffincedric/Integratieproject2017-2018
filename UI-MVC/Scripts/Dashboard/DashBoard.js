@@ -294,6 +294,7 @@ $(function () {
                                 headers: Headers,
                                 url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
                             })
+
                             var addZone = $('.add-zone');
 
                             $('.add-zone').remove();
@@ -331,12 +332,11 @@ $(function () {
 
                             grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
-                            
+                            chooseChart(Element.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
                         }
                         var oldElement = $.ajax({
                             async: false,
                             type: 'GET',
-                            dataType: 'json',
                             headers: Headers,
                             url: "https://localhost:44342/api/dashboard/getelement/" + ElementId
                         }).responseJSON
