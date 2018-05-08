@@ -265,6 +265,72 @@ $(function () {
                     ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
 
                     if (ElementId != '+') {
+                        if (ZoneId == 'x') {
+                            var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
+
+                            ZoneId = $.ajax({
+                                async: false,
+                                type: 'POST',
+                                data: Zone,
+                                dataType: 'json',
+                                headers: Headers,
+                                url: "https://localhost:44342/api/dashboard/postzone/" + DashBoardId
+                            }).responseJSON.ZoneId
+
+                            var Element = $.ajax({
+                                async: false,
+                                type: 'GET',
+                                headers: Headers,
+                                url: "https://localhost:44342/api/dashboard/getelement/" + ElementId
+                            }).responseJSON
+
+                            Element.ZoneId = ZoneId;
+
+                            $.ajax({
+                                async: false,
+                                type: 'PUT',
+                                data: Element,
+                                dataType: 'json',
+                                headers: Headers,
+                                url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
+                            })
+                            var addZone = $('.add-zone');
+
+                            $('.add-zone').remove();
+
+                            var $newdiv = $('<div class="p-10 mB-10 zone-' + ZoneId + '"></div>');
+                            $newdiv.append($('<h4 class="bb-2"></h4>'));
+                            $newdiv.children('h4').append($('<span class="title">New Zone</span>'));
+                            $newdiv.children('h4').append($('<span class="edit-zone"></span>'));
+                            $newdiv.children('h4').children('.edit-zone').append($('<i class="ti-pencil"></i>'));
+                            $newdiv.children('h4').append($('<span class="arrow-dashboard"></span>'));
+                            $newdiv.children('h4').children('.arrow-dashboard').append($('<i class="ti-angle-up"></i>'));
+                            $newdiv.children('h4').append($('<span class="delete-zone"></span>'));
+                            $newdiv.children('h4').children('.delete-zone').append($('<i class="ti-trash"></i>'));
+                            $newdiv.append($('<div class="DashZone"></div>'));
+                            $newdiv.append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
+                            var newZone = $('#mainContent').append($newdiv);
+
+                            var addZone = $('#mainContent').append(addZone);
+
+                            $('.grid-stack').gridstack(options);
+
+                            addZone = addZone.children('.add-zone').children('div').children('#zone-x');
+
+                            console.log(addZone);
+
+                            grid = newZone.children('.zone-' + ZoneId).children('#zone-' + ZoneId);
+
+                            addZone.data('gridstack').removeWidget($('#Element-' + ElementId).parent());
+
+                            console.log($('.add-zone').children('div').children('div').children('div'));
+
+                            addZone.data('gridstack').move($('.add-zone').children('div').children('div').children('div'), 0, 0);
+
+                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-'+ElementId+'"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), Element.X, Element.Y, Element.Width, Element.Height, true);
+
+                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
+                        }
                         var oldElement = $.ajax({
                             async: false,
                             type: 'GET',
@@ -528,7 +594,7 @@ $(function () {
                 async: false,
                 type: 'GET',
                 dataType: 'json',
-                url: "https://localhost:44342/api/item/getpersonstop/" + id,
+                url: "https://localhost:44342/api/item/getpersontweet/" + id,
                 headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
 
             }).responseJSON
@@ -540,7 +606,7 @@ $(function () {
 
             for (var i = 0; i < keys.length; i++) {
                 label.push(keys[i]);
-                values.push(bar[keys[i]] / 10);
+                values.push(bar[keys[i]]);
             }
 
             console.log(label);
@@ -565,8 +631,16 @@ $(function () {
                 },
                 options: {
                     legend: { display: true },
+                    
                     responsive: true,
                     maintainAspectRatio: false,
+                    scales: {
+                        xAxes: [
+                            {
+                                display:false
+                            }
+                        ]
+                    }
 
                 }
             });
