@@ -22,7 +22,7 @@
           @foreach (AuthenticationDescription p in loginProviders)
           {
 
-            <button class="btnLoginProviders" type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i></i> @p.AuthenticationType</button>
+            <button class="btnLoginProviders btn-lg" type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i></i> @p.AuthenticationType</button>
 
           }
 

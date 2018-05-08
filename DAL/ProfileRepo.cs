@@ -67,6 +67,7 @@ namespace PB.DAL
                 .Include(p => p.Subscriptions)
                 .Include(p => p.Dashboards)
                 .Include(p => p.WeeklyReviews)
+                .Include(p=>p.Roles)
                 .FirstOrDefault(p => p.Id.Equals(userId));
         }
 
@@ -79,6 +80,7 @@ namespace PB.DAL
                 .Include(p => p.Subscriptions)
                 .Include(p => p.Dashboards)
                 .Include(p => p.WeeklyReviews)
+                .Include(p=>p.Roles)
                 .AsEnumerable();
         }
 

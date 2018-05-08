@@ -19,6 +19,7 @@ using System.Linq;
 using System.Data.Entity.Validation;
 using PB.DAL.EF;
 using System.IO;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace UI_MVC.Controllers
 {
@@ -133,7 +134,7 @@ namespace UI_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon = @"~/Content/Images/Users/user.png" };
+                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon = @"~/Content/Images/Users/user.png", CreatedOn = DateTime.Today};
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
@@ -294,7 +295,6 @@ namespace UI_MVC.Controllers
 
         public ActionResult _ResetPassword()
         {
-
             return PartialView();
         }
 
@@ -377,29 +377,87 @@ namespace UI_MVC.Controllers
 
         public ViewResult UserBeheer()
         {
-            IEnumerable<Profile> profiles = UserManager.GetProfiles();
-            return View(profiles);
+
+            return View();
+
         }
-        //public PartialViewResult UserBeheer()
-        //{
-        //    IEnumerable<Profile> profiles = UserManager.GetProfiles()
-        //        //.Where(p => p.Roles.Where(p.Equals(UserManager.GetAllRoles().Where(r => r.Name.Equals("User")));
-        //        //.Where(p => p.Roles.Where(p.Equals(UserManager.GetAllRoles().Where(r => r.Name.Equals("User"), true))));
-        //    return PartialView();
-        //}
+
+        public  ActionResult _UserTable()
+        {
+            string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("User")).First().Id;
+            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
+          
+            
+            
+            return PartialView(profiles);
+         
+        }
 
 
+        public ActionResult _AdminTable()
+        {
+
+            string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("Admin")).First().Id;
+            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
+
+
+            return PartialView(profiles);
+        }
+
+        public ActionResult _SuperAdminTable()
+        {
+
+            string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("SuperAdmin")).First().Id;
+            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
+
+
+            return PartialView(profiles);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult VoteToAdmin(string id)
         {
-            Profile profile = UserManager.GetProfile(id);
+           
             UserManager.AddToRole(id, "Admin");
             UserManager.RemoveFromRole(id, "User");
             
 
-            return View();
+            return RedirectToAction("UserBeheer","Account");
         }
 
-        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveFromAdmin(string id)
+        {
+            UserManager.AddToRole(id, "User");
+            UserManager.RemoveFromRole(id, "Admin");
+           
+
+
+            return RedirectToAction("UserBeheer", "Account");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MakeSuperAdmin(string id)
+        {
+            UserManager.AddToRole(id, "SuperAdmin");
+            UserManager.RemoveFromRole(id, "Admin");
+
+            return RedirectToAction("UserBeheer", "Account");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveFromSuperAdmin(string id)
+        {
+            UserManager.AddToRole(id, "User");
+            UserManager.RemoveFromRole(id, "SuperAdmin");
+
+            return RedirectToAction("UserBeheer", "Account");
+        }
 
         #region ExternalLogin
         [HttpPost]
@@ -456,7 +514,8 @@ namespace UI_MVC.Controllers
                 {
                     UserName = name,
                     Email = model.Email,
-                    ProfileIcon = @"~/Content/Images/Users/user.png"
+                    ProfileIcon = @"~/Content/Images/Users/user.png", 
+                    CreatedOn = DateTime.Today
                 };
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>

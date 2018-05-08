@@ -39,29 +39,30 @@
             <div class="peer">
               <div class="mobile-toggle sidebar-toggle"><a href="" class="td-n"><i class="ti-arrow-circle-left"></i></a></div>
             </div>
+
           </div>
         </div>
         <ul class="sidebar-menu scrollable pos-r">
           <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Index", "Home")"><span class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span class="title">Homepage</span></a></li>
           <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard", "Dashboard")"><span class="icon-holder"><i class="c-brown-500 ti-book"></i> </span><span class="title">Dashboard</span></a></li>
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Wizard", "Dashboard")"><span class="icon-holder"><i class="c-blue-500 ti-paint-roller"></i> </span><span class="title">Wizard</span></a></li>
           @if (Request.IsAuthenticated)
-  {
-        <li class="nav-item">
-          <a class="sidebar-link" href="@Url.Action("Account", "Account")">
-            <span class="icon-holder">
-              <i class="c-blue-500 ti-face-smile"></i>
-            </span><span class="title">My account</span>
-          </a>
-        </li>
-}
+          {
+            <li class="nav-item"><a class="sidebar-link" href="@Url.Action("WeeklyReview", "Item")"><span class="icon-holder"><i class="c-deep-purple-500 ti-archive"></i> </span><span class="title">Weekly Review</span></a></li>
+
+            <li class="nav-item">
+              <a class="sidebar-link" href="@Url.Action("Account", "Account")">
+                <span class="icon-holder">
+                  <i class="c-blue-500 ti-user"></i>
+                </span><span class="title">My account</span>
+              </a>
+            </li>
+          }
           <li class="nav-item dropdown">
             <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
             <ul class="dropdown-menu">
               <li class="nav-item dropdown"><a class="sidebar-link" href="@Url.Action("Contact", "Home")"><span>Contact</span></a></li>
               <li class="nav-item dropdown"><a href="@Url.Action("FAQ","Home")"><span>FAQ</span></a></li>
-              <li class="nav-item dropdown"><a href="@Url.Action("Charts","Item")"><span>Charts</span></a></li>
-              <li class="nav-item dropdown"><a href="@Url.Action("Charts2","Item")"><span>Charts v2</span></a></li>
+
             </ul>
           </li>
         </ul>
@@ -71,7 +72,7 @@
       <div class="header navbar">
         <div class="header-container">
           @{
-        Html.RenderAction("_Search", "Home");
+            Html.RenderAction("_Search", "Home");
           }
           <ul class="nav-right">
 
@@ -80,117 +81,117 @@
 
 
             @if (Request.IsAuthenticated)
-        {
-          <li class="themes dropdown">
-            <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-paint-bucket"></i></a>
-            <ul class="dropdown-menu">
-              <li class="pX-20 pY-15 bdB"><i class="ti-paint-bucket pR-10"></i> <span class="fsz-sm fw-600 c-grey-900">Themes</span></li>
-              <li>
-                <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm">
-                  <li id="light-mode">
-                    <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "light" })">
-                      <div class="peer peer-greed">
-                        <span><span class="fw-500">Light Mode</span></span>
-                      </div>
-                    </a>
-                  </li>
-                  <li id="dark-mode">
-                    <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "dark" })">
-                      <div class="peer peer-greed">
-                        <span><span class="fw-500">Dark Mode</span></span>
-                      </div>
-                    </a>
-                  </li>
-                  <li id="future-mode">
-                    <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "future" })">
-                      <div class="peer peer-greed">
-                        <span><span class="fw-500">Future Mode</span></span>
-                      </div>
-                    </a>
+            {
+              <li class="themes dropdown">
+                <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-paint-bucket"></i></a>
+                <ul class="dropdown-menu">
+                  <li class="pX-20 pY-15 bdB"><i class="ti-paint-bucket pR-10"></i> <span class="fsz-sm fw-600 c-grey-900">Themes</span></li>
+                  <li>
+                    <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm">
+                      <li id="light-mode">
+                        <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "light" })">
+                          <div class="peer peer-greed">
+                            <span><span class="fw-500">Light Mode</span></span>
+                          </div>
+                        </a>
+                      </li>
+                      <li id="dark-mode">
+                        <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "dark" })">
+                          <div class="peer peer-greed">
+                            <span><span class="fw-500">Dark Mode</span></span>
+                          </div>
+                        </a>
+                      </li>
+                      <li id="future-mode">
+                        <a class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100" href="@Url.Action("ChangeThemeSetting", "Home", new { Theme = "future" })">
+                          <div class="peer peer-greed">
+                            <span><span class="fw-500">Future Mode</span></span>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
                   </li>
                 </ul>
               </li>
-            </ul>
-          </li>
-          <li class="notifications dropdown">
-            @if (!Html.Action("GetNotificationCount", "Account").ToString().Equals("0"))
-        {<span class="counter bgc-red">@Html.Action("GetNotificationCount", "Account")</span>} <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
-            @{
-          Html.RenderAction("_NotificationDropdown", "Account");
-            }
-          </li>
-          <li class="dropdown">
-            <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
-              <div class="peer mR-10">
-
-                <img class="w-2r bdrs-50p" src="@Html.Action("ChangeProfilePic", "Home")" />
-                @*@Html.Action("ChangeProfilePic", "Home")*@
-              </div>
-
-              @if (Request.IsAuthenticated)
-          {
-            @Html.AntiForgeryToken()
-        {
-          <div class="peer">
-            <span style="color: #2196f3" class="fsz-sm">
-              @{ViewBag.Ingelogd = "Hi " + User.Identity.GetUserName();
-              }
-              @ViewBag.Ingelogd
-            </span>
-          </div>
-    }
-  }
-            </a>
-
-            <ul class="dropdown-menu fsz-sm">
-              <li><a href="@Url.Action("Account", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Profile</span></a></li>
-              <li><a href="@Url.Action("UserSettings", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-settings mR-10"></i> <span>Account settings</span></a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="@Url.Action("UserBeheer", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-panel mR-10"></i> <span>Beheer Users</span></a></li>
-              <li><a href="@Url.Action("ItemBeheer", "Item")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Beheer Items</span></a></li>
-              <li><a href="@Url.Action("PlatformSettings", "Home")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-dashboard mR-10"></i> <span>Beheer Platform</span></a></li>
-
-              <li role="separator" class="divider"></li>
-              <li>
-
-                @if (Request.IsAuthenticated)
-            {
-              using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-              {
-                @Html.AntiForgeryToken(){
-              <a href="javascript:document.getElementById('logoutForm').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                <i class="ti-power-off mR-10"></i><span> Logout</span>
-              </a>
-        }
-      }
-    }
-    else
-    {
-      <a href="@Url.Action("Login", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-        <i class="ti-power-off mR-10"></i> <span>Login/Register</span>
-      </a>
-}
+              <li class="notifications dropdown">
+                @if (!Html.Action("GetNotificationCount", "Account").ToString().Equals("0"))
+                {<span class="counter bgc-red">@Html.Action("GetNotificationCount", "Account")</span>} <a href="" class="dropdown-toggle no-after" data-toggle="dropdown"><i class="ti-bell"></i></a>
+                @{
+                  Html.RenderAction("_NotificationDropdown", "Account");
+                }
               </li>
-            </ul>
-          </li>
-    }
-    else
-    {
-      <li class="">
-        <a href="@Url.Action("Login", "Account")" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
-          <div class="peer mR-10">
-            <i class="ti-user"></i>
-          </div>
+              <li class="dropdown">
+                <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
+                  <div class="peer mR-10">
+
+                    <img class="w-2r bdrs-50p" src="@Html.Action("ChangeProfilePic", "Home")" />
+                    @*@Html.Action("ChangeProfilePic", "Home")*@
+                  </div>
+
+                  @if (Request.IsAuthenticated)
+                  {
+                    @Html.AntiForgeryToken()
+                    {
+                      <div class="peer">
+                        <span style="color: #2196f3" class="fsz-sm">
+                          @{ViewBag.Ingelogd = "Hi " + User.Identity.GetUserName();
+                          }
+                          @ViewBag.Ingelogd
+                        </span>
+                      </div>
+                    }
+                  }
+                </a>
+
+                <ul class="dropdown-menu fsz-sm">
+                  <li><a href="@Url.Action("Account", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Profile</span></a></li>
+                  <li><a href="@Url.Action("UserSettings", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-settings mR-10"></i> <span>Account settings</span></a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="@Url.Action("UserBeheer", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-panel mR-10"></i> <span>Beheer Users</span></a></li>
+                  <li><a href="@Url.Action("ItemBeheer", "Item")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Beheer Items</span></a></li>
+                  <li><a href="@Url.Action("PlatformSettings", "Home")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-dashboard mR-10"></i> <span>Beheer Platform</span></a></li>
+
+                  <li role="separator" class="divider"></li>
+                  <li>
+
+                    @if (Request.IsAuthenticated)
+                    {
+                      using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                      {
+                        @Html.AntiForgeryToken(){
+                          <a href="javascript:document.getElementById('logoutForm').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                            <i class="ti-power-off mR-10"></i><span> Logout</span>
+                          </a>
+                        }
+                      }
+                    }
+                    else
+                    {
+                      <a href="@Url.Action("Login", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                        <i class="ti-power-off mR-10"></i> <span>Login/Register</span>
+                      </a>
+                    }
+                  </li>
+                </ul>
+              </li>
+            }
+            else
+            {
+              <li class="">
+                <a href="@Url.Action("Login", "Account")" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
+                  <div class="peer mR-10">
+                    <i class="ti-user"></i>
+                  </div>
 
 
-          <div class="peer">
-            <span style="color: #2196f3" class="fsz-sm">
-              Login/Register
-            </span>
-          </div>
-        </a>
-      </li>
-}
+                  <div class="peer">
+                    <span style="color: #2196f3" class="fsz-sm">
+                      Login/Register
+                    </span>
+                  </div>
+                </a>
+              </li>
+            }
           </ul>
         </div>
       </div>

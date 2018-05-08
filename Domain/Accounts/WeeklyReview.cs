@@ -20,7 +20,6 @@ namespace Domain.Accounts
         public int TopPersonId { get; set; }
         [Required]
         public DateTime TimeGenerated { get; set; }
-        
         [Required]
         public Profile Profile { get; set; }
     }

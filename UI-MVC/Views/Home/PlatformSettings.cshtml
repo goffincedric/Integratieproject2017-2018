@@ -47,10 +47,10 @@
         <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
           <div class="bgc-white p-20 bd" style="min-height:450px;">
             <div class="form-group row">
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <label>Subplatform</label>
               </div>
-              <div class="col-sm-7">
+              <div class="col-sm-6">
                 <select style="margin-bottom: 5%" id="inputState" class="form-control" name="type">
                   <option value="" disabled selected>Select subplatform</option>
                   <option>Politieke barometer</option>
@@ -62,10 +62,10 @@
             </div>
 
             <div class="form-group row">
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <label>Default Theme</label>
               </div>
-              <div class="col-sm-7">
+              <div class="col-sm-6">
                 <select style="margin-bottom: 5%" id="inputState" class="form-control" name="type">
                   <option value="" disabled selected>Select default</option>
                   <option>Light mode</option>
@@ -75,30 +75,27 @@
               </div>
             </div>
             <div class="form-group row">
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <label>Change site logo</label>
               </div>
-              <div class="col-sm-7">
+              <div class="col-sm-6">
 
 
-                @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("UploadSiteLogo", "Subplatform", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                  <div class="row">
-                    <input type="file" class="form-control w-50" name="file" id="file" />
-                    @*@Html.TextBox("file", "", new { type = "file", @class="form-control"}) <br />*@
-
-                    <input type="submit" value="Upload" class="btn btn-primary btn-sm mL-10"/>
-
-                  </div>
+                <div class="fileUpload blue-btn btn width100" style="margin:0;">
+                  <span>Upload a new site logo</span>
+                  <input type="file" class="uploadlogo" name="file" id="file" />
+                </div>
                 }
 
               </div>
             </div>
             <div class="form-group row">
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <label>Change site name</label>
               </div>
-              <div class="col-sm-7">
+              <div class="col-sm-6">
                 <div class="row">
                   <input name="changename" class="form-control  w-50" type="text" />
                   <button type="submit" value="Save" class="btn btn-primary btn-sm mL-10">Save</button>
@@ -107,10 +104,10 @@
             </div>
 
             <div class="form-group row">
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <label>Aantal dagen bijhouden data</label>
               </div>
-              <div class="col-sm-7">
+              <div class="col-sm-6">
                 <div class="row">
                   <input class="form-control  w-50" type="number" />
                   <button type="submit" value="Save" class="btn btn-primary btn-sm mL-10">Save</button>
@@ -119,10 +116,10 @@
             </div>
 
             <div class="form-group row">
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <label># Database sync/dag </label>
               </div>
-              <div class="col-sm-7">
+              <div class="col-sm-6">
                 <div class="row">
                   <input class="form-control  w-50" type="number" />
                   <button type="submit" value="Save" class="btn btn-primary btn-sm mL-10">Save</button>

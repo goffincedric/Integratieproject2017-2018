@@ -160,7 +160,7 @@ namespace PB.BL
             // Create superadmin
             if (userManager.Users.FirstOrDefault(p => p.UserName.Equals("captain")) is null)
             {
-                var user = new Profile { UserName = "captain", Email = "example@example.tld", ProfileIcon = @"~/Content/Images/Users/user.png" };
+                var user = new Profile { UserName = "captain", Email = "example@example.tld", ProfileIcon = @"~/Content/Images/Users/user.png", CreatedOn = DateTime.Now };
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
@@ -377,7 +377,7 @@ namespace PB.BL
 
                 sbBody.Replace(GmailSender.DefaultItemLinkSubstring, "#");
                 sbBody.Replace(GmailSender.WeeklyReviewListItemNameSubstring, person.Name);
-                sbBody.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring, person.Name + " is tijdens de afgelopen week " + person.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count + " aantal keer het onderwerp geweest in iemand zijn/haar tweet.");
+                sbBody.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring, person.Name + " is tijdens de afgelopen week " + person.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-14)).Count + " aantal keer het onderwerp geweest in iemand zijn/haar tweet.");
 
                 sbBody.Replace(GmailSender.WeeklyReviewListSubstring, sb.ToString());
 
@@ -402,7 +402,10 @@ namespace PB.BL
                     TimeGenerated = DateTime.Now
                 };
                 p.WeeklyReviews.Add(weeklyReview);
-                profileAlerts.ForEach(pa => pa.WeeklyReviews.Add(weeklyReview));
+                profileAlerts.ForEach(pa =>
+                {
+                    pa.WeeklyReviews.Add(weeklyReview);
+                });
             });
 
             // Persist changed profiles
@@ -456,7 +459,8 @@ namespace PB.BL
                             UserId = profile.Id,
                             Profile = profile,
                             IsRead = false,
-                            TimeStamp = DateTime.Now
+                            TimeStamp = DateTime.Now,
+                            WeeklyReviews = new List<WeeklyReview>()
                         };
 
                         if (!alert.ProfileAlerts.Contains(profileAlert) && !profile.ProfileAlerts.Contains(profileAlert))

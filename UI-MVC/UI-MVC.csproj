@@ -20,7 +20,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44338</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -242,7 +243,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\DashboardViewModels.cs" />
     <Compile Include="Models\PersonEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\API\Resource\Constants\ApiInfo.Designer.cs">
@@ -285,7 +285,6 @@
     <Content Include="Content\Styling\account\custom.css" />
     <Content Include="Content\Styling\grid2\gridstack-extra.css" />
     <Content Include="Content\Styling\grid2\gridstack.css" />
-    <Content Include="Content\Styling\wizard\bootstrap.min.css" />
     <Content Include="Content\Styling\wizard\material-bootstrap-wizard.css" />
     <Content Include="Scripts\account\custom.js" />
     <Content Include="Scripts\contact.js" />
@@ -371,15 +370,18 @@
     <Content Include="Views\Home\ItemDetail.cshtml" />
     <Content Include="Views\Item\Charts.cshtml" />
     <Content Include="Views\Account\Notifications.cshtml" />
-    <Content Include="Views\Item\Charts2.cshtml" />
     <Content Include="Views\Home\PlatformSettings.cshtml" />
     <Content Include="Views\Account\UserBeheer.cshtml" />
     <Content Include="Views\Item\ItemBeheer.cshtml" />
     <Content Include="Views\Account\UserSettings.cshtml" />
     <Content Include="Views\Home\_UrlList.cshtml" />
-    <Content Include="Views\Account\_AdminAccounts.cshtml" />
     <Content Include="Views\Account\_NotificationSetting.cshtml" />
-    <Content Include="Views\Dashboard\Wizard.cshtml" />
+    <Content Include="Views\Account\_AdminTable.cshtml" />
+    <Content Include="Views\Account\_UserTable.cshtml" />
+    <Content Include="Views\Account\_SuperAdminTable.cshtml" />
+    <Content Include="Views\Dashboard\_Wizard.cshtml" />
+    <Content Include="Views\Item\EditPerson.cshtml" />
+    <Content Include="Views\Item\WeeklyReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
