@@ -20,7 +20,7 @@ namespace UI_MVC.Controllers.API
             ItemMgr = new ItemManager(UowMgr);
         }
 
-        // GET: api/item
+        // GET: api/item/getitem
         [HttpGet]
         public IHttpActionResult GetItem()
         {
@@ -29,7 +29,7 @@ namespace UI_MVC.Controllers.API
             return Ok(items.ToList());
         }
 
-        // GET: api/item/5
+        // GET: api/item/getitem/5
         [HttpGet]
         public IHttpActionResult GetItem(int id)
         {

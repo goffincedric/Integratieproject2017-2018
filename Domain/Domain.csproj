@@ -59,6 +59,7 @@
     <Compile Include="Accounts\Province.cs" />
     <Compile Include="Accounts\UserData.cs" />
     <Compile Include="Accounts\UserSetting.cs" />
+    <Compile Include="Accounts\WeeklyReview.cs" />
     <Compile Include="Dashboards\Comparison.cs" />
     <Compile Include="Dashboards\Dashboard.cs" />
     <Compile Include="Dashboards\UserType.cs" />

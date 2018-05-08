@@ -66,6 +66,7 @@ namespace PB.DAL
                 .Include(p => p.ProfileAlerts)
                 .Include(p => p.Subscriptions)
                 .Include(p => p.Dashboards)
+                .Include(p => p.WeeklyReviews)
                 .FirstOrDefault(p => p.Id.Equals(userId));
         }
 
@@ -77,6 +78,7 @@ namespace PB.DAL
                 .Include(p => p.ProfileAlerts)
                 .Include(p => p.Subscriptions)
                 .Include(p => p.Dashboards)
+                .Include(p => p.WeeklyReviews)
                 .AsEnumerable();
         }
 
@@ -85,6 +87,17 @@ namespace PB.DAL
             profile = ctx.Users.Attach(profile);
 
             ctx.Entry(profile).State = EntityState.Modified;
+            ctx.SaveChanges();
+        }
+
+        public void UpdateProfiles(List<Profile> profiles)
+        {
+            profiles.ForEach(p =>
+            {
+                p = ctx.Users.Attach(p);
+                ctx.Entry(p).State = EntityState.Modified;
+            });
+
             ctx.SaveChanges();
         }
     }

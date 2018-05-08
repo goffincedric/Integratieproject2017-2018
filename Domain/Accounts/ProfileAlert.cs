@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Accounts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,6 +26,8 @@ namespace PB.BL.Domain.Accounts
         public Profile Profile { get; set; }
         [Required]
         public virtual Alert Alert { get; set; }
+
+        public virtual List<WeeklyReview> WeeklyReviews { get; set; }
 
         public string GetTime()
         {
@@ -53,22 +56,6 @@ namespace PB.BL.Domain.Accounts
             }
             return returnString;
         }
-
-        //public string CheckChange()
-        //{
-        //    if (Alert.Description.ToLower().Contains("stijging"))
-        //    {
-        //        return "stijgt in";
-        //    }
-        //    else if (Alert.Description.ToLower().Contains("daling"))
-        //    {
-        //        return "daalt in";
-        //    }
-        //    else
-        //    {
-        //        return "unknown";
-        //    }
-        //}
 
         public override bool Equals(object obj)
         {

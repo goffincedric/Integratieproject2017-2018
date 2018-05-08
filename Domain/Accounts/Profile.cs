@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Domain.Accounts;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
@@ -19,6 +20,7 @@ namespace PB.BL.Domain.Accounts
         public List<ProfileAlert> ProfileAlerts { get; set; }
         public List<Item> Subscriptions { get; set; }
         public List<Subplatform> AdminPlatforms { get; set; }
+        public List<WeeklyReview> WeeklyReviews { get; set; }
         
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<Profile> manager)
         {
