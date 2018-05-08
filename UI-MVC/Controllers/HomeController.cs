@@ -288,25 +288,7 @@ namespace UI_MVC.Controllers
             return RedirectToAction("PlatformSettings", "Home");
         }
 
-        [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase file)
-        {
-            try
-            {
-                if (file.ContentLength > 0)
-                {
-                    string _FileName = Path.GetFileName(file.FileName);
-                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), _FileName);
-                    file.SaveAs(_path);
-                }
-        
-                return RedirectToAction("Index","Home");
-            }
-            catch
-            {
-                return RedirectToAction("Index","Home");
-            }
-        }
+       
 
         public ActionResult _UrlList(int id)
         {

@@ -16,7 +16,6 @@ namespace PB.BL.Domain.Platform
         public bool IsEnabled { get; set; }
         public string Value { get; set; }
         public virtual Subplatform Subplatform { get; set; }
-
         public override bool Equals(object obj)
         {
             return obj is SubplatformSetting setting &&
