@@ -243,6 +243,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\UserSettingViewModel.cs" />
     <Compile Include="Models\PersonEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\API\Resource\Constants\ApiInfo.Designer.cs">
@@ -382,6 +383,7 @@
     <Content Include="Views\Dashboard\_Wizard.cshtml" />
     <Content Include="Views\Item\EditPerson.cshtml" />
     <Content Include="Views\Item\WeeklyReview.cshtml" />
+    <Content Include="Views\Account\_UserSettingDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

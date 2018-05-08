@@ -169,28 +169,32 @@ namespace PB.BL
                         Profile = user,
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
-                        Value = "light"
+                        Value = "light", 
+                        boolValue = false
                     },
                     new UserSetting()
                     {
                         Profile = user,
                         IsEnabled = true,
                         SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
-                        Value=true, //moet nog boolean worden
+                        Value=null, //moet nog boolean worden
+                        boolValue = true
                     },
                     new UserSetting()
                     {
                         Profile = user,
                         IsEnabled = true,
                         SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
-                        Value=true, //moet nog boolean worden
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
                     },
                     new UserSetting()
                     {
                         Profile = user,
                         IsEnabled = true,
                         SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
-                        Value=true, //moet nog boolean worden
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
                     }
                 };
 

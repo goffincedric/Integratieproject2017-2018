@@ -134,7 +134,7 @@ namespace UI_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon = @"~/Content/Images/Users/user.png", CreatedOn = DateTime.Today};
+                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon = @"~/Content/Images/Users/user.png", CreatedOn = DateTime.Today };
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
@@ -143,28 +143,40 @@ namespace UI_MVC.Controllers
                         Profile = user,
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
-                        Value = "light"
+                        Value = "light",
+                        boolValue = false
                     },
-                    new UserSetting()
+                     new UserSetting()
                     {
                         Profile = user,
                         IsEnabled = true,
                         SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
-                        Value=true, //moet nog boolean worden
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
                     },
                     new UserSetting()
                     {
                         Profile = user,
                         IsEnabled = true,
                         SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
-                        Value=true, //moet nog boolean worden
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
                     },
                     new UserSetting()
                     {
                         Profile = user,
                         IsEnabled = true,
                         SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
-                        Value=true, //moet nog boolean worden
+                        Value=null, //moet nog boolean worden
+                        boolValue = true
+                    },
+                      new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
                     }
                 };
 
@@ -253,14 +265,14 @@ namespace UI_MVC.Controllers
         public ActionResult Account(AccountEditModel editedAccount)
         {
             string _FileName = "";
-            Profile newProfile = UserManager.GetProfile(User.Identity.GetUserId()); 
+            Profile newProfile = UserManager.GetProfile(User.Identity.GetUserId());
 
             if (editedAccount.file != null)
             {
                 if (editedAccount.file.ContentLength > 0)
                 {
                     _FileName = Path.GetFileName(editedAccount.file.FileName);
-                 
+
                     var username = newProfile.UserName.ToString();
                     var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
                     string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
@@ -272,7 +284,7 @@ namespace UI_MVC.Controllers
             {
                 newProfile.ProfileIcon = newProfile.ProfileIcon;
             }
-            
+
             newProfile.UserData.LastName = editedAccount.LastName;
             newProfile.UserData.FirstName = editedAccount.FirstName;
             newProfile.Email = editedAccount.Email;
@@ -382,15 +394,15 @@ namespace UI_MVC.Controllers
 
         }
 
-        public  ActionResult _UserTable()
+        public ActionResult _UserTable()
         {
             string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("User")).First().Id;
             IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
-          
-            
-            
+
+
+
             return PartialView(profiles);
-         
+
         }
 
 
@@ -419,12 +431,12 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult VoteToAdmin(string id)
         {
-           
+
             UserManager.AddToRole(id, "Admin");
             UserManager.RemoveFromRole(id, "User");
-            
 
-            return RedirectToAction("UserBeheer","Account");
+
+            return RedirectToAction("UserBeheer", "Account");
         }
 
         [HttpPost]
@@ -433,7 +445,7 @@ namespace UI_MVC.Controllers
         {
             UserManager.AddToRole(id, "User");
             UserManager.RemoveFromRole(id, "Admin");
-           
+
 
 
             return RedirectToAction("UserBeheer", "Account");
@@ -514,7 +526,7 @@ namespace UI_MVC.Controllers
                 {
                     UserName = name,
                     Email = model.Email,
-                    ProfileIcon = @"~/Content/Images/Users/user.png", 
+                    ProfileIcon = @"~/Content/Images/Users/user.png",
                     CreatedOn = DateTime.Today
                 };
                 user.UserData = new UserData() { Profile = user };
@@ -525,28 +537,40 @@ namespace UI_MVC.Controllers
                         Profile = user,
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
-                        Value = "light"
+                        Value = "light",
+                        boolValue = false
                     },
                      new UserSetting()
                     {
                         Profile = user,
                         IsEnabled = true,
                         SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
-                        Value=true, //moet nog boolean worden
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
                     },
                     new UserSetting()
                     {
                         Profile = user,
                         IsEnabled = true,
                         SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
-                        Value=true, //moet nog boolean worden
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
                     },
                     new UserSetting()
                     {
                         Profile = user,
                         IsEnabled = true,
                         SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
-                        Value=true, //moet nog boolean worden
+                        Value=null, //moet nog boolean worden
+                        boolValue = true
+                    },
+                      new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
                     }
                 };
 
@@ -571,6 +595,40 @@ namespace UI_MVC.Controllers
         }
 
         #endregion
+
+        public ActionResult _UserSettingDetails()
+        {
+            IEnumerable<UserSetting> settings = UserManager.GetProfile(User.Identity.GetUserId()).Settings;
+            UserSettingViewModel oldSettings = new UserSettingViewModel()
+            {
+                WANTS_EMAIL_NOTIFICATIONS = settings.ElementAt(0).boolValue,
+                WANTS_ANDROID_NOTIFICATIONS =
+                settings.ElementAt(1).boolValue,
+                WANTS_SITE_NOTIFICATIONS = settings.ElementAt(2).boolValue,
+                WANTS_WEEKLY_REVIEW_VIA_MAIL = settings.ElementAt(4).boolValue
+
+            };
+
+
+            return PartialView(oldSettings);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _UserSettingDetails(UserSettingViewModel newSettings)
+        {
+            IEnumerable<UserSetting> settings = UserManager.GetProfile(User.Identity.GetUserId()).Settings;
+            Profile oldProfile = UserManager.GetProfile(User.Identity.GetUserId());
+            Profile newProfile = null;
+            newProfile = oldProfile; 
+            oldProfile.Settings.ElementAt(0).boolValue = newSettings.WANTS_EMAIL_NOTIFICATIONS;
+            oldProfile.Settings.ElementAt(1).boolValue = newSettings.WANTS_ANDROID_NOTIFICATIONS;
+            oldProfile.Settings.ElementAt(2).boolValue = newSettings.WANTS_SITE_NOTIFICATIONS;
+            oldProfile.Settings.ElementAt(4).boolValue = newSettings.WANTS_WEEKLY_REVIEW_VIA_MAIL;
+            UserManager.ChangeProfile(newProfile);
+
+            return RedirectToAction("UserSettings","Account");
+        }
 
 
         #region Helpers

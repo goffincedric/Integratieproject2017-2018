@@ -13,5 +13,6 @@ namespace UI_MVC.Models
         public string IconURL { get; set; }
         public string SocialMediaLink { get; set; }
         public int? OrganisationId { get; set; }
+        public String Gemeente { get; set; }
     }
 }

@@ -7,7 +7,8 @@
             WANTS_EMAIL_NOTIFICATIONS,
             WANTS_ANDROID_NOTIFICATIONS,
             WANTS_SITE_NOTIFICATIONS,
-            THEME
+            THEME,
+            WANTS_WEEKLY_REVIEW_VIA_MAIL
         }
 
         public enum Platform

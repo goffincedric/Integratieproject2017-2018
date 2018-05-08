@@ -111,7 +111,7 @@ namespace PB.BL
             return organisation;
         }
 
-        public Person AddPerson(string name, string socialMediaLink, string iconUrl, Organisation organisation = null, Function function = null, bool isTrending = false, Subplatform subplatform = null)
+        public Person AddPerson(string name, string socialMediaLink, string iconUrl, Organisation organisation = null, Function function = null, bool isTrending = false, Subplatform subplatform = null, string gemeente = null)
         {
             InitNonExistingRepo();
             Person person = new Person()
@@ -121,6 +121,7 @@ namespace PB.BL
                 IconURL = iconUrl,
                 IsTrending = isTrending,
                 TrendingScore = 0,
+                Gemeente = gemeente,
                 Function = function,
                 Comparisons = new List<Comparison>(),
                 SubscribedProfiles = new List<Profile>(),
