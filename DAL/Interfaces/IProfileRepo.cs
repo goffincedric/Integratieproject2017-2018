@@ -9,6 +9,7 @@ namespace PB.DAL
         Profile CreateProfile(Profile profile);
         Profile ReadProfile(string userId);
         void UpdateProfile(Profile profile);
+        void UpdateProfiles(List<Profile> profiles);
         void DeleteProfile(string userId);
     }
 }

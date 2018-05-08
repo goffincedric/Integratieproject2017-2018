@@ -19,12 +19,12 @@ namespace UI_CA_Prototype
         private static bool WillSeed = false;
         private static OptionSet CLIOptions;
 
-        private static readonly UnitOfWorkManager Uow = new UnitOfWorkManager();
-        private static readonly IAccountManager AccountMgr = new AccountManager(new IntegratieUserStore(Uow.UnitOfWork), Uow);
-        private static readonly IItemManager ItemMgr = new ItemManager(Uow);
-        private static readonly ISubplatformManager SubplatformMgr = new SubplatformManager(Uow);
+        private static UnitOfWorkManager Uow = new UnitOfWorkManager();
+        private static IAccountManager AccountMgr = new AccountManager(new IntegratieUserStore(Uow.UnitOfWork), Uow);
+        private static IItemManager ItemMgr = new ItemManager(Uow);
+        private static ISubplatformManager SubplatformMgr = new SubplatformManager(Uow);
 
-        private static readonly ExtensionMethods ExtensionMethods = new ExtensionMethods();
+        private static ExtensionMethods ExtensionMethods = new ExtensionMethods();
 
         private static bool Stop = false;
         private static Profile SelectedProfile;
@@ -38,6 +38,10 @@ namespace UI_CA_Prototype
             //Menu
             while (!Stop)
             {
+                // Refresh UoW
+                Uow = new UnitOfWorkManager();
+
+                // Show menu
                 Console.WriteLine("=======================================");
                 Console.WriteLine("=== Prototype - Politieke barometer ===");
                 Console.WriteLine("=======================================");
