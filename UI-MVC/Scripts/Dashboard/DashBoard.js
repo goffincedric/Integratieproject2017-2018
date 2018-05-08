@@ -341,6 +341,8 @@ $(function () {
                             url: "https://localhost:44342/api/dashboard/getelement/" + ElementId
                         }).responseJSON
 
+                        var oldZoneId = oldElement.ZoneId;
+
                         var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove + '", "ZoneId": "' + ZoneId + '", "GraphType": "' + oldElement.GraphType + '"}');
 
                         $.ajax({
@@ -351,6 +353,12 @@ $(function () {
                             headers: Headers,
                             url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
                         })
+
+                        if (oldZoneId != ZoneId) {
+                            console.log($('#Element-' + ElementId).children('canvas'));
+
+                            chooseChart(oldElement.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
+                        }
                     }
                 }
             }
