@@ -16,6 +16,8 @@ namespace PB.BL.Domain.Items
         public Function Function { get; set; }
         [DataMember]
         public Organisation Organisation { get; set; }
+        [DataMember]
+        public string Gemeente { get; set; }
         public virtual List<Record> Records { get; set; }
 
         public override bool Equals(object obj)

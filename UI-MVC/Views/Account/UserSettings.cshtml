@@ -14,47 +14,8 @@
       </div>
 
       <div class="row" >
-        <div class="masonry-item col-md-6"  style="margin: 10px 0; padding:0;">
-          <div class="bgc-white p-20 bd" style="height: 330px;">
-            <h3 class="h3">Notification settings</h3>
-            <br />
-            <div class="form-group row">
-              <div class="col-sm-3">
-                <label>Notification on/off</label>
-              </div>
-              <div class="col-sm-7" style="text-align:center">
-                <label class="switch">
-                  <input name="changename" class="form-control" type="checkbox" />
-                  <div class="slider round"></div>
-                  </label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <div class="col-sm-3">
-                <label>Mail Notification on/off</label>
-              </div>
-              <div class="col-sm-7" style="text-align:center">
-                <label class="switch">
-                  <input name="changename" class="form-control" type="checkbox" />
-                  <div class="slider round"></div>
-                </label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <div class="col-sm-3">
-                <label>Android Notification on/off</label>
-              </div>
-              <div class="col-sm-7" style="text-align:center"> 
-                <label class="switch">
-                  <input name="changename" class="form-control" type="checkbox" />
-                  <div class="slider round"></div>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
+       
+        @Html.Action("_UserSettingDetails","Account")
 
 
 
@@ -81,14 +42,16 @@
                     <td>
 
                       @using (Html.BeginForm("RemoveSubscription", "Home", new { Id = item.ItemId }, FormMethod.Post, new { id = "delete" }))
-                      {
-                        @Html.AntiForgeryToken()
+  {
+                    @Html.AntiForgeryToken()
 
-                        <a href="javascript:document.getElementById('delete').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                          <span style="color: #2196f3" class="fsz-sm">
-                            Delete subscription
-                          </span>
-                        </a>
+                    <button class="btn btn-sm">
+                      <a href="javascript:document.getElementById('delete').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                        <span style="color: #2196f3" class="fsz-sm">
+                          Delete subscription
+                        </span>
+                      </a>
+                      </button>
                       }
 
                     </td>
