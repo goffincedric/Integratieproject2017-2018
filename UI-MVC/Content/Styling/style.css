@@ -156,7 +156,10 @@ input[type="checkbox"]:checked + .slider:before {
     }
 
 .btnLoginProviders {
-    margin: 5px 15px 10px 0;
+    margin: 10px 15px 10px 0;
+    padding: 10px;
+    width: 120px;
+    height: 40px;
 }
 
 .resizediv {
