@@ -22,44 +22,44 @@
         <tbody>
           @foreach (var item in Model)
           {
-          <tr>
-            <td>@Html.DisplayFor(modelItem => item.ItemId)</td>
-            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.IconURL)</td>
-            <td>@Html.DisplayFor(modelItem => item.SocialMediaLink)</td>
-            <td>@Html.DisplayFor(modelItem => item.Organisation.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Function.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Gemeente)</td>
-            <td>
-              <div class="row">
-                @using (Html.BeginForm("DeleteItem", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
-      {
-          @Html.AntiForgeryToken()
-          <button class="btn btn-sm" style="margin-left: 15px">
-            <a href="javascript:document.getElementById('delete-@item.ItemId').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-              <span style="color: #2196f3" class="fsz-sm">
-                Delete
-              </span>
-            </a>
-          </button>
-}
+            <tr>
+              <td>@Html.DisplayFor(modelItem => item.ItemId)</td>
+              <td>@Html.DisplayFor(modelItem => item.Name)</td>
+              <td>@Html.DisplayFor(modelItem => item.IconURL)</td>
+              <td>@Html.DisplayFor(modelItem => item.SocialMediaLink)</td>
+              <td>@Html.DisplayFor(modelItem => item.Organisation.Name)</td>
+              <td>@Html.DisplayFor(modelItem => item.Function.Name)</td>
+              <td>@Html.DisplayFor(modelItem => item.Gemeente)</td>
+              <td>
+                <div class="row">
+                  @using (Html.BeginForm("DeleteItem", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
+                  {
+                    @Html.AntiForgeryToken()
+                    <button class="btn btn-sm" style="margin-left: 15px">
+                      <a href="javascript:document.getElementById('delete-@item.ItemId').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                        <span style="color: #2196f3" class="fsz-sm">
+                          Delete
+                        </span>
+                      </a>
+                    </button>
+                  }
 
-                @using (Html.BeginForm("EditPerson", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
-      {
-          @Html.AntiForgeryToken()
+                  @using (Html.BeginForm("EditPerson", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "edit-" + item.ItemId }))
+                  {
+                    @Html.AntiForgeryToken()
 
-          <button class="btn btn-sm">
-            <a href="javascript:document.getElementById('delete-@item.ItemId').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-              <span style="color: #2196f3" class="fsz-sm">
-                Edit
-              </span>
-            </a>
-          </button>
-}
+                    <button class="btn btn-sm">
+                      <a href="javascript:document.getElementById('edit-@item.ItemId').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                        <span style="color: #2196f3" class="fsz-sm">
+                          Edit
+                        </span>
+                      </a>
+                    </button>
+                  }
 
-              </div>
-            </td>
-          </tr>
+                </div>
+              </td>
+            </tr>
           }
         </tbody>
       </table>

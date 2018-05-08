@@ -177,6 +177,23 @@ namespace UI_MVC.Controllers
             }
         }
 
+        public ActionResult EditPerson(int id)
+        {
+            Person item = itemMgr.GetPerson(id);
+            PersonEditModel person = new PersonEditModel()
+            {
+                Name = item.Name,
+                IsTrending = item.IsTrending,
+                IconURL = item.IconURL,
+                SocialMediaLink = item.SocialMediaLink,
+                OrganisationId = item.Organisation.ItemId,
+                Gemeente = item.Gemeente,
+                ItemId = item.ItemId
+
+            };
+            return View(person);
+        }
+
         public ActionResult Charts()
         {
             return View();
@@ -193,12 +210,7 @@ namespace UI_MVC.Controllers
             return View();
         }
 
-        public ActionResult EditPerson(int id)
-        {
-
-            Person person = itemMgr.GetPerson(id); 
-            return View(person);
-        }
+       
 
         public ActionResult WeeklyReview()
         {
