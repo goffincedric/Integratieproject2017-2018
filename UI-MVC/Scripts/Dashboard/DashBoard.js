@@ -16,8 +16,6 @@ DashData = $.ajax({
 
 $(function () {
     var addingElement = false;
-    var GraphType = -1;
-    var GraphSize;
 
     var options = {
         width: 12,
@@ -119,7 +117,7 @@ $(function () {
                     addElement(addZone);
                 });
             }
-            var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div/><div/>'), 0, 0, 3, 3, true);
+            var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), 0, 0, 3, 3, true);
             var X = newElement.data().gsX;
             var Y = newElement.data().gsY;
 
@@ -156,14 +154,31 @@ $(function () {
                 Wizard.hide();
             });
 
-            console.log($('#btn-pie').children('input'));
-            console.log($('#btn-bar').children('input'));
-
-            $('#btn-finish').off('click');
-            $('#btn-finish').on('click', function () {
+            $('.btn-finish').off('click');
+            $('.btn-finish').on('click', function () {
+                var GraphType = 0;
+                $('input:checked').attr('id');
+                switch ($('input:checked').attr('id')){
+                    case 'bar': GraphType = 0;
+                        break;
+                    case 'pie': GraphType = 2;
+                        break;
+                }
                 Wizard.hide();
-                console.log(GraphType);
-                //drawChart();
+
+                //edit later
+                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "'+ GraphType +'"}');
+
+                $.ajax({
+                    async: false,
+                    type: 'PUT',
+                    data: Element,
+                    dataType: 'json',
+                    headers: Headers,
+                    url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
+                })
+
+                chooseChart(GraphType, newElement.children('#Element-' + ElementId).children('canvas'), 25);
             });
             addingElement = false;
         }
@@ -239,16 +254,26 @@ $(function () {
                 var ZoneId = grid.attr('id');
                 ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
                 var count = 0;
+
                 for (var e in elements) {
 
                     var element = elements[e];
+
+                    console.log(element);
 
                     var ElementId = element.el.children('div').attr('id');
                     ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
 
                     if (ElementId != '+') {
+                        var oldElement = $.ajax({
+                            async: false,
+                            type: 'GET',
+                            dataType: 'json',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/dashboard/getelement/" + ElementId
+                        }).responseJSON
 
-                        var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove + '", "ZoneId": "' + ZoneId + '"}');
+                        var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove + '", "ZoneId": "' + ZoneId + '", "GraphType": "' + oldElement.GraphType + '"}');
 
                         $.ajax({
                             async: false,
@@ -297,11 +322,9 @@ $(function () {
                             deleteElement($(this), grid);
                         });
 
-                        console.log(node.GraphType);
-
                         newElement.children('#Element-' + node.ElementId).append($('<canvas></canvas>')).children('canvas').attr('id', 'pie-chart');
 
-                        drawPie(25, newElement.children('#Element-' + node.ElementId).children('canvas'));
+                        chooseChart(node.GraphType, newElement.children('#Element-' + node.ElementId).children('canvas'), 25);
                     }, this);
 
                     var plusElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
@@ -313,13 +336,13 @@ $(function () {
             }
         }
 
-        chooseChart = function (type, can) {
+        chooseChart = function (type, can, id) {
             switch (type) {
-                case 0: console.log('Bar');
+                case 0: drawBarChart(can, id)
                     break;
                 case 1: drawLineChart();
                     break;
-                case 2: drawPie();
+                case 2: drawPie(id, can);
                     break;
                 case 3: console.log('Scattre');
                     break;
@@ -498,6 +521,56 @@ $(function () {
                 }
             });
         };
+
+        drawBarChart = function (can, id) {
+            var bar = "";
+            bar = $.ajax({
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                url: "https://localhost:44342/api/item/getpersonstop/" + id,
+                headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+
+            }).responseJSON
+
+            var keys = [];
+            keys = Object.keys(bar);
+            var label = [];
+            var values = [];
+
+            for (var i = 0; i < keys.length; i++) {
+                label.push(keys[i]);
+                values.push(bar[keys[i]] / 10);
+            }
+
+            console.log(label);
+            console.log(values);
+
+            //var can = $('#bar2-chart');
+            //can.attr('width', '300px');
+            //can.attr('height', '300px');
+
+            new Chart(can, {
+                type: 'bar',
+                data: {
+                    labels: label,
+                    datasets: [
+                        {
+                            label: "Aantal tweets",
+                            backgroundColor: "#03a9f4",
+                            borderColor: "#rgba(3, 169, 244, 0.5)",
+                            data: values
+                        }
+                    ]
+                },
+                options: {
+                    legend: { display: true },
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                }
+            });
+        }
 
         $(".grid-stack").each(function () {
             this.grid = $(this).data('gridstack');

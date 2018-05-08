@@ -93,6 +93,16 @@ namespace UI_MVC.Controllers.API
             return Ok(zone.Elements);
         }
 
+        // GET: api/dashboard/getelement/5
+        [HttpGet]
+        public IHttpActionResult GetElement(int id)
+        {
+            Element element = DashboardMgr.GetElement(id);
+            if (element == null) return StatusCode(HttpStatusCode.NoContent);
+            if (!DashboardMgr.GetDashboard(element.Zone.DashboardId).UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
+            return Ok(element);
+        }
+
         // PUT: api/dashboard/putelement/{elementId}
         [HttpPut]
         public IHttpActionResult PutElement(int id, [FromBody]Element element)
@@ -106,7 +116,7 @@ namespace UI_MVC.Controllers.API
             if (newZone == null) return NotFound();
             if (!newZone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
 
-            if (!(newElement.Height == element.Height && newElement.Width == element.Width && newElement.X == element.X && newElement.Y == element.Y && newElement.ZoneId == element.ZoneId))
+            if (!(newElement.Height == element.Height && newElement.Width == element.Width && newElement.X == element.X && newElement.Y == element.Y && newElement.ZoneId == element.ZoneId && newElement.GraphType == element.GraphType))
             {
                 newElement.Height = element.Height;
                 newElement.Width = element.Width;
@@ -114,6 +124,7 @@ namespace UI_MVC.Controllers.API
                 newElement.Y = element.Y;
                 newElement.ZoneId = element.ZoneId;
                 newElement.Zone = newZone;
+                newElement.GraphType = element.GraphType;
 
                 DashboardMgr.ChangeElement(newElement);
             }
