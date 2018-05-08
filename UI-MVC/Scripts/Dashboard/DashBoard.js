@@ -259,13 +259,13 @@ $(function () {
 
                     var element = elements[e];
 
-                    console.log(element);
-
                     var ElementId = element.el.children('div').attr('id');
                     ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
 
                     if (ElementId != '+') {
                         if (ZoneId == 'x') {
+                            console.log('adding zone');
+                            
                             var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
 
                             ZoneId = $.ajax({
@@ -317,19 +317,21 @@ $(function () {
 
                             addZone = addZone.children('.add-zone').children('div').children('#zone-x');
 
-                            console.log(addZone);
-
                             grid = newZone.children('.zone-' + ZoneId).children('#zone-' + ZoneId);
 
                             addZone.data('gridstack').removeWidget($('#Element-' + ElementId).parent());
 
-                            console.log($('.add-zone').children('div').children('div').children('div'));
+                            grid.on('change', function (e, items) {
+                                changeElements(items, $(this));
+                            });
 
                             addZone.data('gridstack').move($('.add-zone').children('div').children('div').children('div'), 0, 0);
 
                             grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-'+ElementId+'"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), Element.X, Element.Y, Element.Width, Element.Height, true);
 
                             grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
+
+                            
                         }
                         var oldElement = $.ajax({
                             async: false,
@@ -569,7 +571,7 @@ $(function () {
                 values.push(count[keys[i]] / 10);
             }
 
-            var can = $('#pie-chart');
+            //var can = $('#pie-chart');
             //console.log(can.attr('Style', 'height: 50%;'));
             //can.attr('Style', 'width: 300px; height: 300px');
 
@@ -609,8 +611,8 @@ $(function () {
                 values.push(bar[keys[i]]);
             }
 
-            console.log(label);
-            console.log(values);
+            //console.log(label);
+            //console.log(values);
 
             //var can = $('#bar2-chart');
             //can.attr('width', '300px');
@@ -631,9 +633,7 @@ $(function () {
                 },
                 options: {
                     legend: { display: true },
-                    
                     responsive: true,
-                    maintainAspectRatio: false,
                     scales: {
                         xAxes: [
                             {
