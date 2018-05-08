@@ -12,10 +12,9 @@
                     </div>
                     <div class="wizard-navigation">
                         <ul style="line-height:35px">
-                            <li><a href="#location" data-toggle="tab">Type</a></li>
-                            <li><a href="#type" data-toggle="tab">Items</a></li>
+                            <li><a href="#location" data-toggle="tab">Item</a></li>
+                            <li><a href="#type" data-toggle="tab">Type</a></li>
                             <li><a href="#facilities" data-toggle="tab">Styling</a></li>
-                            <li><a href="#description" data-toggle="tab">Positie en Grootte </a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
@@ -26,64 +25,62 @@
                                 </div>
                                 <div class="col-sm-6 col-sm-offset-1">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Aantal te vergelijken items</label>
-                                        <input type="number" class="form-control" id="exampleInputEmail1">
+                                        <label class="control-label">Soort items</label>
+                                        <select style="margin-bottom: 5%" id="inputState" class="form-control" name="type">
+                                            <option disabled="" selected=""></option>
+                                            <option value="1">Persons</option>
+                                            <option value="2">Themes</option>
+                                            <option value="3">Organisations</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Output</label>
-                                        <select name="country" class="form-control">
+                                        <select name="type" class="form-control">
                                             <option disabled="" selected=""></option>
-                                            <option value="Afghanistan"> Tweet evolution</option>
-                                            <option value="Albania"> Positiviteit</option>
-                                            <option value="Algeria"> Trending Mentions </option>
-                                            <option value="American Samoa"> Trending Hashtags</option>
-                                            <option value="Andorra"> Trending Urls</option>
-                                            <option value="Angola"> Retweet </option>
-                                            <option value="Anguilla"> Sentiment analyse</option>
+                                            <option value="1"> Tweet evolution</option>
+                                            <option value="2"> Positiviteit</option>
+                                            <option value="3"> Trending Mentions </option>
+                                            <option value="4"> Trending Hashtags</option>
+                                            <option value="5"> Trending Urls</option>
+                                            <option value="6"> Retweet </option>
+                                            <option value="7"> Sentiment analyse</option>
                                             <option value="...">...</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-sm-offset-1">
                                     <input type="hidden" name="count" value="1" />
-                                    <div class="control-group" id="fields">
-                                        <div class="controls" id="profs">
-                                            <div class="input-append">
-                                                <div id="field" class="row"><input autocomplete="off" class="input form-control" id="field1" name="prof1" type="text" placeholder="Type something" data-items="8" /><button id="b1" class="btn add-more" type="button">+</button></div>
-                                            </div>
-                                        </div>
+                                    <div class="row form-group">
+
+
+                                        <input autocomplete="on" class=" form-control" id="field1" type="text" placeholder="Type name" />
+                                        <button id="b1" class="btn add-more" type="button">+</button>
+
                                     </div>
                                 </div>
-                                @*<div class="col-sm-6 col-sm-offset-1">
-                                      <div class="form-group label-floating">
-                                        <label class="control-label">Item naam</label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1">
-                                      </div>
-                                    </div>*@
                                 <div class="col-sm-6">
                                     <input type="hidden" name="count" value="1" />
-                                    <div class="control-group" id="fields">
-                                        <div class="controls" id="profs">
-                                            <div class="input-append">
-                                                <div id="field" class="row"><input autocomplete="off" class="input form-control" id="field1" name="prof1" type="text" placeholder="Type something" data-items="8" /><button id="b1" class="btn add-more" type="button">+</button></div>
-                                            </div>
-                                        </div>
+                                    <div class="row form-group">
+
+                                        <input autocomplete="off" class="input form-control" id="field1" type="text" placeholder="Type name" /><button id="b1" class="btn add-more" type="button">+</button>
                                     </div>
 
                                 </div>
-
                             </div>
+
                         </div>
+
+
                         <div class="tab-pane" id="type">
                             <h4 class="info-text">Kies je type? </h4>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you want a bar chart.">
-                                                <input checked="checked" id="bar" type="radio" name="type" value="Bar Chart">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have a house.">
+                                                <input id="bar" type="radio" name="type" value="Bar Chart">
                                                 <div class="icon">
                                                     <i class="material-icons">insert_chart</i>
                                                 </div>
@@ -91,7 +88,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
-                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you want a pie chart">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have an appartment">
                                                 <input id="pie" type="radio" name="type" value="PieChart">
                                                 <div class="icon">
                                                     <i class="material-icons">pie_chart</i>
@@ -117,26 +114,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Behoud aspect ration?</label>
-                                        <select class="form-control">
-                                            <option disabled="" selected=""></option>
-                                            <option>Yes</option>
-                                            <option>No </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-sm-offset-1">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Toevoegen in zone?</label>
-                                        <select class="form-control">
-                                            <option disabled="" selected=""></option>
-                                            <option>Zone A</option>
-                                            <option>Zone B </option>
-                                        </select>
-                                    </div>
-                                </div>
+
                                 <div class="col-sm-6">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Positie van de labels</label>
@@ -152,9 +130,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-pane" id="description">
-                            <h4 class="info-text">Bepaal positie en groote </h4>
+
                             <div class="row">
                                 <div class="col-sm-6 col-sm-offset-1">
                                     <div class="form-group label-floating">
@@ -181,6 +157,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     <div class="wizard-footer">
                         <div class="pull-right">

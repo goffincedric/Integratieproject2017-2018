@@ -149,7 +149,7 @@ namespace UI_MVC.Controllers
                         return RedirectToAction("ItemBeheer", "Item");
                 }
                 Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, personEditModel.IconURL, organisation, subplatform: Subplatform);
+                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, personEditModel.IconURL, organisation, null, personEditModel.IsTrending, Subplatform, personEditModel.Gemeente);
                 return RedirectToAction("ItemBeheer", "Item");
             }
             else
