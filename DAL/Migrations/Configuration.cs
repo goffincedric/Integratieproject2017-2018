@@ -353,6 +353,84 @@ namespace PB.DAL.Migrations
             if (ThemesToAdd.Count != 0) ctx.Themes.AddRange(ThemesToAdd);
             #endregion
 
+            #region Pages
+            List<Page> pagesToAdd = new List<Page>()
+            {
+              new Page()
+                {
+                    PageName = "Home",
+                    Title = "Home",
+                    Tags = new List<Tag>()
+                },
+               new Page()
+                {
+                    PageName = "Dashboard",
+                    Title = "Dashboard",
+                    Tags = new List<Tag>()
+                },
+                new Page()
+                {
+                    PageName = "WeeklyReview",
+                    Title = "Weekly Review",
+                    Tags = new List<Tag>()
+                },
+                 new Page()
+                {
+                    PageName = "Account",
+                    Title = "Account",
+                    Tags = new List<Tag>()
+                },
+                  new Page()
+                {
+                    PageName = "FAQ",
+                    Title = "FAQ",
+                    Tags = new List<Tag>()
+                },
+                   new Page()
+                {
+                    PageName = "Contact",
+                    Title = "Contact",
+                    Tags = new List<Tag>()
+                },
+                    new Page()
+                {
+                    PageName = "ItemDetail",
+                    Title = "Item Detail",
+                    Tags = new List<Tag>()
+                },
+                     new Page()
+                {
+                    PageName = "Login",
+                    Title = "Login",
+                    Tags = new List<Tag>()
+                },
+                      new Page()
+                {
+                    PageName = "Register",
+                    Title = "Register",
+                    Tags = new List<Tag>()
+                },
+
+                       new Page()
+                {
+                    PageName = "Notification",
+                    Title = "Notifications",
+                    Tags = new List<Tag>()
+                },
+                        new Page()
+                {
+                    PageName = "UserSettings",
+                    Title = "User Settings",
+                    Tags = new List<Tag>()
+                }
+            };
+            ctx.Pages.ForEachAsync(t =>
+            {
+                Page page = pagesToAdd.FirstOrDefault(p => p.Equals(t));
+                if (page != null) pagesToAdd.Remove(t);
+            }).Wait();
+            if (pagesToAdd.Count != 0) ctx.Pages.AddRange(pagesToAdd);
+            #endregion
             // Save all pending changes
             ctx.SaveChanges();
         }

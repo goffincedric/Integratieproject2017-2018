@@ -18,7 +18,7 @@ namespace PB.BL
 
         public SubplatformManager()
         {
-
+            
         }
 
         public SubplatformManager(IntegratieDbContext context)
@@ -30,6 +30,7 @@ namespace PB.BL
         {
             uowManager = uowMgr;
             SubplatformRepo = new SubplatformRepo(uowMgr.UnitOfWork);
+           
         }
 
         public void InitNonExistingRepo(bool createWithUnitOfWork = false)
@@ -179,13 +180,13 @@ namespace PB.BL
         #endregion
 
         #region Pages
-        public Page AddPage(int subplatformId, string title, string faviconUrl)
+        public Page AddPage(int subplatformId, string pageName, string title)
         {
             InitNonExistingRepo();
             Page page = new Page()
             {
                 Title = title,
-                FaviconURL = faviconUrl,
+                PageName = pageName,
                 Tags = new List<Tag>()
             };
             return AddPage(subplatformId, page);
@@ -202,5 +203,7 @@ namespace PB.BL
             return page;
         }
         #endregion
+
+        
     }
 }
