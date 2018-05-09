@@ -399,10 +399,10 @@ namespace PB.DAL.Migrations
                 }
             };
             ctx.Themes.ForEachAsync(t =>
-                                {
-                                    Theme theme = ThemesToAdd.FirstOrDefault(them => them.Equals(t));
-                                    if (theme != null) ThemesToAdd.Remove(t);
-                                }).Wait();
+                {
+                    Theme theme = ThemesToAdd.FirstOrDefault(them => them.Equals(t));
+                    if (theme != null) ThemesToAdd.Remove(t);
+                }).Wait();
             if (ThemesToAdd.Count != 0) ctx.Themes.AddRange(ThemesToAdd);
             #endregion
 

@@ -286,7 +286,9 @@ namespace UI_MVC.Controllers
                 SubplatformManager subplatformManager = new SubplatformManager(unitOfWorkManager);
                 ItemManager itemManager = new ItemManager(unitOfWorkManager);
                 Subplatform sp = subplatformManager.GetSubplatform(subplatform);
-                itemManager.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(new System.Action(() => ItemManager.IsSyncing = false));
+                itemManager.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(new System.Action(() => {
+                    ItemManager.IsSyncing = false;
+                }));
             }
             return RedirectToAction("PlatformSettings", "Home");
         }
