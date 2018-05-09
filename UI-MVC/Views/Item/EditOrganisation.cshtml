@@ -5,70 +5,106 @@
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>EditOrganisation</h2>
+<main class="main-content bgc-grey-100">
+  <div id="mainContent">
 
-@using (Html.BeginForm("EditPerson", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-  @Html.AntiForgeryToken()
+    @using (Html.BeginForm("EditPerson", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+      @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-  <h4> Beheer @Html.DisplayFor(model=>model.Name)</h4>
-  <hr />
-  @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-  @Html.HiddenFor(model => model.ItemId)
+      <div class="form-horizontal">
+        <h4> Beheer @Html.DisplayFor(model => model.Name)</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ItemId)
 
-  <div class="form-group">
-    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-      @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-      @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-    </div>
-  </div>
+        <div class="form-group">
+          @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+          <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+          </div>
+        </div>
 
-  <div class="form-group">
-    @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-      @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
-      @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
-    </div>
-  </div>
+        <div class="form-group">
+          @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+          <div class="col-md-10">
+            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+          </div>
+        </div>
 
-  <div class="form-group">
-    @Html.LabelFor(model => model.IsTrending, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-      <label class="switch">
-        @Html.EditorFor(model => model.IsTrending)
-        @Html.ValidationMessageFor(model => model.IsTrending, "", new { @class = "text-danger" })
-        <div class="slider round"></div>
-      </label>
-    </div>
-  </div>
+        <div class="form-group">
+          @Html.LabelFor(model => model.IsTrending, htmlAttributes: new { @class = "control-label col-md-2" })
+          <div class="col-md-10">
+            <label class="switch">
+              @Html.EditorFor(model => model.IsTrending)
+              @Html.ValidationMessageFor(model => model.IsTrending, "", new { @class = "text-danger" })
+              <div class="slider round"></div>
+            </label>
+          </div>
+        </div>
 
-  <div class="form-group">
-    <label class="control-label col-md-2">Upload an icon</label>
-    <div class="col-md-10">
-      <div class="fileUpload blue-btn btn w-100">
-        <span>Upload a new icon</span>
-        <input type="file" class="uploadlogo" name="file" id="file" />
+        <div class="form-group">
+          <label class="control-label col-md-2">Upload an icon</label>
+          <div class="col-md-10">
+            <div class="fileUpload blue-btn btn w-100">
+              <span>Upload a new icon</span>
+              <input type="file" class="uploadlogo" name="file" id="file" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          @Html.LabelFor(model => model.SocialMediaLink, htmlAttributes: new { @class = "control-label col-md-2" })
+          <div class="col-md-10">
+            @Html.EditorFor(model => model.SocialMediaLink, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SocialMediaLink, "", new { @class = "text-danger" })
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    }
 
-  <div class="form-group">
-    @Html.LabelFor(model => model.SocialMediaLink, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-      @Html.EditorFor(model => model.SocialMediaLink, new { htmlAttributes = new { @class = "form-control" } })
-      @Html.ValidationMessageFor(model => model.SocialMediaLink, "", new { @class = "text-danger" })
-    </div>
+    <button class="btn btn-sm">
+      @Html.ActionLink("Back", "ItemBeheer", "Item")
+    </button>
   </div>
-  <div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-      <input type="submit" value="Save" class="btn btn-default" />
-    </div>
-  </div>
-</div>
-}
+</main>
+<script>
+  $(document).ready(function ($) {
 
-<div>
-  @Html.ActionLink("Back to List", "Index")
-</div>
+    // Upload btn on change call function
+    $(".uploadlogo").change(function () {
+      var filename = readURL(this);
+      var name = filename.substring(filename.indexOf(".") + 1);
+
+      console.log(name);
+      $(this).parent().children('span').html(filename);
+    });
+
+    // Read File and return value
+    function readURL(input) {
+      var url = input.value;
+
+      var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+      if (input.files && input.files[0] && (
+        ext == "png" || ext == "jpeg" || ext == "jpg" || ext == "gif"
+      )) {
+        var path = $(input).val();
+        var filename = path.replace(/^.*\\/, "");
+        // $('.fileUpload span').html('Uploaded Proof : ' + filename);
+        return "Uploaded file : " + filename;
+      } else {
+        $(input).val("");
+        return "Only image formats are allowed!";
+      }
+    }
+    // Upload btn end
+
+  });
+</script>
