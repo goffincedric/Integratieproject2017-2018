@@ -178,6 +178,18 @@ namespace UI_MVC.Controllers.API
             return Ok(personmap);
         }
 
+
+        //[HttpGet]
+        //public IHttpActionResult GetPersonsTop(int id)
+        //{
+        //    List<Record> recordsP1 = 
+        //    List<Record> recordsP2 = 
+
+        //     persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
+        //    if (persons == null) return StatusCode(HttpStatusCode.NoContent);
+        //    return Ok(personmap);
+        //}
+
         [HttpGet]
         public IHttpActionResult GetPersonsTopJSON(int id)
         {
@@ -259,8 +271,8 @@ namespace UI_MVC.Controllers.API
             if (ItemMgr.GetItem(id) is Person)
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
-                List<string> mentions = new List<string>(); 
-                    records.SelectMany(r => r.Mentions).Distinct().OrderByDescending(m=>m.Records.Count).Take(12).ToList().ForEach(p=> mentions.Add(p.Name));
+                List<string> mentions = new List<string>();
+                records.SelectMany(r => r.Mentions).Distinct().OrderByDescending(m => m.Records.Count).Take(12).ToList().ForEach(p => mentions.Add(p.Name));
                 return Ok(mentions);
             }
             else
@@ -277,8 +289,8 @@ namespace UI_MVC.Controllers.API
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
                 List<string> hashtags = new List<string>();
-                
-                 records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h=>h.Records.Count).Take(12).ToList().ForEach(p=> hashtags.Add(p.HashTag));
+
+                records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h => h.Records.Count).Take(12).ToList().ForEach(p => hashtags.Add(p.HashTag));
                 return Ok(hashtags);
             }
             else
@@ -288,7 +300,7 @@ namespace UI_MVC.Controllers.API
         }
 
 
-      
+
 
 
 
@@ -299,7 +311,7 @@ namespace UI_MVC.Controllers.API
             if (ItemMgr.GetItem(id) is Person)
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
-                Dictionary<string,int> hashtags = new Dictionary<string, int>();
+                Dictionary<string, int> hashtags = new Dictionary<string, int>();
 
                 records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h => h.Records.Count).Distinct().Take(5).ToList().ForEach(p => hashtags.Add(p.HashTag, p.Records.Count));
                 return Ok(hashtags);
@@ -351,7 +363,7 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetTrendingUrl(int id)
         {
-            if(ItemMgr.GetItem(id) is Person)
+            if (ItemMgr.GetItem(id) is Person)
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
                 List<string> urls = new List<string>();
@@ -369,21 +381,21 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetMostPopularPerson()
         {
 
-            
+
             Person person = ItemMgr.GetPersons().OrderByDescending(p => p.TrendingScore).FirstOrDefault();
-            if(person is null)
+            if (person is null)
             {
                 return NotFound();
             }
             return Ok(person.ItemId);
-         
+
         }
 
         [HttpGet]
         public IHttpActionResult GetMostPopularPersons()
         {
-            Dictionary<int,string> ids = new Dictionary<int, string>();
-             ItemMgr.GetPersons().OrderByDescending(p => p.Records.Count).ToList().Take(3).ToList().ForEach(p => ids.Add(p.ItemId,p.Name));
+            Dictionary<int, string> ids = new Dictionary<int, string>();
+            ItemMgr.GetPersons().OrderByDescending(p => p.Records.Count).ToList().Take(3).ToList().ForEach(p => ids.Add(p.ItemId, p.Name));
 
             return Ok(ids);
 
