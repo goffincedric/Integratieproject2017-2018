@@ -242,7 +242,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\OrganisationEditModel.cs" />
     <Compile Include="Models\SubplatformSettingViewModel.cs" />
+    <Compile Include="Models\ThemeEditModel.cs" />
     <Compile Include="Models\UserSettingViewModel.cs" />
     <Compile Include="Models\PersonEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -265,13 +267,13 @@
     <Content Include="Content\Images\Index\banner.jpg" />
     <Content Include="Content\Images\info-icon.png" />
     <Content Include="Content\Images\logo_new.png" />
-    <Content Include="Content\Images\Partijen\cdv.png" />
-    <Content Include="Content\Images\Partijen\groen.jpg" />
-    <Content Include="Content\Images\Partijen\nva.jpg" />
-    <Content Include="Content\Images\Partijen\openvld.png" />
-    <Content Include="Content\Images\Partijen\pvda.jpg" />
-    <Content Include="Content\Images\Partijen\spa.jpg" />
-    <Content Include="Content\Images\Partijen\vb.png" />
+    <Content Include="Content\Images\Organisations\cdv.png" />
+    <Content Include="Content\Images\Organisations\groen.jpg" />
+    <Content Include="Content\Images\Organisations\nva.jpg" />
+    <Content Include="Content\Images\Organisations\openvld.png" />
+    <Content Include="Content\Images\Organisations\pvda.jpg" />
+    <Content Include="Content\Images\Organisations\spa.jpg" />
+    <Content Include="Content\Images\Organisations\vb.png" />
     <Content Include="Content\Images\plus-icon.png" />
     <Content Include="Content\Images\Themes\eu.png" />
     <Content Include="Content\Images\Themes\migratie.png" />
@@ -384,9 +386,14 @@
     <Content Include="Views\Item\EditPerson.cshtml" />
     <Content Include="Views\Item\WeeklyReview.cshtml" />
     <Content Include="Views\Account\_UserSettingDetails.cshtml" />
+    <Content Include="Views\Item\View.cshtml" />
+    <Content Include="Views\Item\EditOrganisation.cshtml" />
+    <Content Include="Views\Item\EditKeyword.cshtml" />
+    <Content Include="Views\Item\EditTheme.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\Persons\" />
     <Folder Include="Content\Images\Site\" />
     <Folder Include="Content\Images\Subplatform\" />
   </ItemGroup>

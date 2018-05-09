@@ -122,7 +122,7 @@ namespace PB.DAL.Migrations
                 {
                     Name = "PVDA",
                     FullName = "Partij van de Arbeid",
-                    IconURL=@"~/Content/Images/Partijen/pvda.jpg",
+                    IconURL=@"~/Content/Images/Organisations/pvda.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -139,7 +139,7 @@ namespace PB.DAL.Migrations
                 {
                     Name = "CD&V",
                     FullName = "Christen-Democratisch en Vlaams",
-                    IconURL=@"~/Content/Images/Partijen/cdv.png",
+                    IconURL=@"~/Content/Images/Organisations/cdv.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -156,7 +156,7 @@ namespace PB.DAL.Migrations
                 {
                     Name =  "SP.A",
                     FullName ="Socialistische Partij Anders",
-                    IconURL=@"~/Content/Images/Partijen/spa.jpg",
+                    IconURL=@"~/Content/Images/Organisations/spa.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -173,7 +173,7 @@ namespace PB.DAL.Migrations
                 {
                     Name = "Open Vld",
                     FullName = "Open Vlaamse Liberalen en Democraten",
-                    IconURL=@"~/Content/Images/Partijen/openvld.png",
+                    IconURL=@"~/Content/Images/Organisations/openvld.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -189,7 +189,7 @@ namespace PB.DAL.Migrations
                 {
                     Name = "Groen",
                     FullName = "Groen",
-                    IconURL=@"~/Content/Images/Partijen/groen.jpg",
+                    IconURL=@"~/Content/Images/Organisations/groen.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -205,7 +205,7 @@ namespace PB.DAL.Migrations
                 {
                     Name = "N-VA",
                     FullName = "Nieuw-Vlaamse Alliantie",
-                    IconURL=@"~/Content/Images/Partijen/nva.jpg",
+                    IconURL=@"~/Content/Images/Organisations/nva.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -221,7 +221,7 @@ namespace PB.DAL.Migrations
                 {
                     Name = "VB",
                     FullName ="Vlaams Belang" ,
-                    IconURL=@"~/Content/Images/Partijen/vb.png",
+                    IconURL=@"~/Content/Images/Organisations/vb.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
                     Records = new List<Record>(),
@@ -240,6 +240,66 @@ namespace PB.DAL.Migrations
                         if (organisation != null) OrganisationsToAdd.Remove(o);
                     }).Wait();
             if (OrganisationsToAdd.Count != 0) ctx.Organisations.AddRange(OrganisationsToAdd);
+            #endregion
+
+            #region Keywords
+            List<Keyword> KeywordsToAdd = new List<Keyword>()
+            {
+                new Keyword()
+                {
+                    Name="Auto",
+                    Items = new List<Item>()
+                },
+                 new Keyword()
+                {
+                    Name="Openbaar Vervoer",
+                           Items = new List<Item>()
+                },
+                  new Keyword()
+                {
+                    Name="File",
+                           Items = new List<Item>()
+                },
+                   new Keyword()
+                {
+                    Name="Milieu",
+                           Items = new List<Item>()
+                },
+                    new Keyword()
+                {
+                    Name="Groene Energie",
+                           Items = new List<Item>()
+                },
+                     new Keyword()
+                {
+                    Name="Kernuitstap",
+                           Items = new List<Item>()
+                },
+                      new Keyword()
+                {
+                    Name="Vlaams",
+                           Items = new List<Item>()
+                },
+
+                new Keyword()
+                {
+                    Name="Links",
+                           Items = new List<Item>()
+                },
+
+                new Keyword()
+                {
+                    Name="Rechts",
+                           Items = new List<Item>()
+                }
+            };
+
+            ctx.Keywords.ForEachAsync(t =>
+                {
+                    Keyword keyword = KeywordsToAdd.FirstOrDefault(keyw => keyw.Equals(t));
+                    if (keyword != null) KeywordsToAdd.Remove(t);
+                }).Wait();
+            if (KeywordsToAdd.Count != 0) ctx.Keywords.AddRange(KeywordsToAdd);
             #endregion
 
             #region Themes
@@ -346,10 +406,10 @@ namespace PB.DAL.Migrations
                 }
             };
             ctx.Themes.ForEachAsync(t =>
-                        {
-                            Theme theme = ThemesToAdd.FirstOrDefault(them => them.Equals(t));
-                            if (theme != null) ThemesToAdd.Remove(t);
-                        }).Wait();
+                                {
+                                    Theme theme = ThemesToAdd.FirstOrDefault(them => them.Equals(t));
+                                    if (theme != null) ThemesToAdd.Remove(t);
+                                }).Wait();
             if (ThemesToAdd.Count != 0) ctx.Themes.AddRange(ThemesToAdd);
             #endregion
 
@@ -425,10 +485,10 @@ namespace PB.DAL.Migrations
                 }
             };
             ctx.Pages.ForEachAsync(t =>
-            {
-                Page page = pagesToAdd.FirstOrDefault(p => p.Equals(t));
-                if (page != null) pagesToAdd.Remove(t);
-            }).Wait();
+                        {
+                            Page page = pagesToAdd.FirstOrDefault(p => p.Equals(t));
+                            if (page != null) pagesToAdd.Remove(t);
+                        }).Wait();
             if (pagesToAdd.Count != 0) ctx.Pages.AddRange(pagesToAdd);
             #endregion
             // Save all pending changes
