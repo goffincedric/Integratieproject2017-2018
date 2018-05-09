@@ -228,7 +228,7 @@ namespace UI_MVC.Controllers
         public ActionResult _NotificationDropdown(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            var model = UserManager.GetProfileAlerts(Subplatform, UserManager.GetProfile(User.Identity.GetUserId()));
+            var model = UserManager.GetProfileAlerts(Subplatform, User.Identity.GetUserId());
             return PartialView(model);
         }
 

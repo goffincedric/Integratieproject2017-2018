@@ -21,6 +21,7 @@ namespace PB.BL.Interfaces
         //void RemoveUserSetting(string username, Setting.Account accountSetting);
 
         List<ProfileAlert> GetProfileAlerts(Subplatform subplatform, Profile profile);
+        List<ProfileAlert> GetProfileAlerts(Subplatform subplatform, string UserId);
 
         Profile AddSubscription(Profile profile, Item item);
         Profile RemoveSubscription(Profile profile, Item item);

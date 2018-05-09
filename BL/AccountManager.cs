@@ -577,6 +577,21 @@ namespace PB.BL
 
             return profileAlerts;
         }
+
+        public List<ProfileAlert> GetProfileAlerts(Subplatform subplatform, string userId)
+        {
+            List<ProfileAlert> profileAlerts = AlertRepo.ReadProfileAlerts(userId).ToList().Where(pa => pa.Alert.Item.SubPlatforms.Contains(subplatform)).ToList();
+
+            profileAlerts.Sort(delegate (ProfileAlert x, ProfileAlert y)
+            {
+                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
+                else if (x.TimeStamp == null) return -1;
+                else if (y.TimeStamp == null) return 1;
+                else return y.TimeStamp.CompareTo(x.TimeStamp);
+            });
+
+            return profileAlerts;
+        }
         #endregion
     }
 }
