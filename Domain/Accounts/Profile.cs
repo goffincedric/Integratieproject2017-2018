@@ -6,13 +6,13 @@ using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PB.BL.Domain.Accounts
 {
-    [DataContract]
+  
     public class Profile : IdentityUser
     {
         public string ProfileIcon { get; set; }

@@ -143,7 +143,7 @@ namespace UI_MVC.Controllers.API
             if (profiles == null) return NotFound();
             Dictionary<DateTime, int> profileRate = new Dictionary<DateTime, int>();
 
-            profileRate = profiles.GroupBy(r => r.CreatedOn.Date).OrderByDescending(r => r.Key)
+            profileRate = profiles.GroupBy(r => r.CreatedOn.Date).OrderBy(r => r.Key)
             .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
             if (profileRate == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(profileRate);

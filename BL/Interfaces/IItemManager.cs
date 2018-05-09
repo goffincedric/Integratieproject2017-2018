@@ -21,6 +21,10 @@ namespace PB.BL.Interfaces
         Theme AddTheme(string themeName, string description, string iconUrl, bool isTrending = false, Subplatform subplatform = null);
         void ChangeItem(Item item);
         void ChangeItems(List<Item> items);
+        void ChangePerson(Person person);
+        void ChangeTheme(Theme theme);
+        void ChangeOrganisation(Organisation organisation);
+        void ChangeKeyword(Keyword keyword); 
         void RemoveItem(int itemId);
         void RemoveItem(int itemId, Subplatform subplatform);
 
@@ -31,6 +35,7 @@ namespace PB.BL.Interfaces
 
         Keyword AddKeyword(string name, List<Item> items = null);
         void RemoveKeyword(int keywordId);
+        Keyword GetKeyword(int id);
 
         IEnumerable<Record> GetRecords();
         Record GetRecord(long id);
