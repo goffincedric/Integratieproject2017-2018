@@ -1,14 +1,14 @@
 ﻿@model UI_MVC.Models.OrganisationEditModel
 
 @{
-  ViewBag.Title = "EditOrganisation";
+  ViewBag.Title = "Edit Organisation";
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
 
-    @using (Html.BeginForm("EditPerson", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("EditOrganisation", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
       @Html.AntiForgeryToken()
 
