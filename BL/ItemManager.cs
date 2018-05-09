@@ -183,6 +183,36 @@ namespace PB.BL
             UowManager.Save();
         }
 
+        public void ChangeKeyword(Keyword keyword)
+        {
+            InitNonExistingRepo();
+            ItemRepo.UpdateKeyword(keyword);
+            UowManager.Save();
+        }
+
+        public void ChangeOrganisation(Organisation organisation)
+        {
+            InitNonExistingRepo();
+            ItemRepo.UpdateOrganisation(organisation);
+            UowManager.Save();
+        }
+
+        public void ChangeTheme(Theme theme)
+        {
+            InitNonExistingRepo();
+            ItemRepo.UpdateTheme(theme);
+            UowManager.Save();
+        }
+
+
+
+        public void ChangePerson(Person person)
+        {
+            InitNonExistingRepo();
+            ItemRepo.UpdatePerson(person);
+            UowManager.Save();
+        }
+
         public Item GetItem(int itemId)
         {
             InitNonExistingRepo();
@@ -226,6 +256,8 @@ namespace PB.BL
             Person item = ItemRepo.ReadPerson(itemId);
             return item;
         }
+
+       
 
         public IEnumerable<Theme> GetThemes()
         {
@@ -410,6 +442,13 @@ namespace PB.BL
         public IEnumerable<Keyword> GetKeywords()
         {
             return ItemRepo.ReadKeywords();
+        }
+
+        public Keyword GetKeyword(int itemId)
+        {
+            InitNonExistingRepo();
+            Keyword keyword = ItemRepo.ReadKeyword(itemId);
+            return keyword;
         }
         #endregion
 

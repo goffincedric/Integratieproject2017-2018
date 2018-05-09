@@ -72,6 +72,7 @@ namespace PB.DAL
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
                 .Include(i => i.Comparisons)
+                .Include(i => i.Organisation)
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
@@ -84,6 +85,7 @@ namespace PB.DAL
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
                 .Include(i => i.Comparisons)
+                .Include(i => i.Organisation)
                 .AsEnumerable();
         }
 
@@ -186,6 +188,33 @@ namespace PB.DAL
             {
                 ctx.Items.Attach(item);
             });
+            ctx.SaveChanges();
+        }
+
+        public void UpdatePerson(Person person)
+        {
+            ctx.Persons.Attach(person);
+            ctx.Entry(person).State = EntityState.Modified;
+            ctx.SaveChanges();
+        }
+
+        public void UpdateKeyword(Keyword keyword)
+        {
+            ctx.Keywords.Attach(keyword);
+            ctx.Entry(keyword).State = EntityState.Modified;
+            ctx.SaveChanges();
+        }
+        public void UpdateTheme(Theme theme)
+        {
+            ctx.Themes.Attach(theme);
+            ctx.Entry(theme).State = EntityState.Modified;
+            ctx.SaveChanges();
+
+        }
+        public void UpdateOrganisation(Organisation organisation)
+        {
+            ctx.Organisations.Attach(organisation);
+            ctx.Entry(organisation).State = EntityState.Modified;
             ctx.SaveChanges();
         }
 

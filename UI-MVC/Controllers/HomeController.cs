@@ -38,7 +38,7 @@ namespace UI_MVC.Controllers
         public ActionResult ChangeProfilePic()
         {
                 Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
-                var image = (profile.ProfileIcon is null) ? VirtualPathUtility.ToAbsolute(@"~/Content/Images/Users/user.png") : VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+                var image = VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
                 return Content(image);
             
         }

@@ -13,6 +13,10 @@ namespace PB.DAL
         void UpdateItem(Item item);
         void UpdateItems(List<Item> items);
         void DeleteItem(int itemId);
+        void UpdatePerson(Person person);
+        void UpdateKeyword(Keyword keyword);
+        void UpdateTheme(Theme theme);
+        void UpdateOrganisation(Organisation organisation);
 
 
         Person ReadPerson(int itemId);

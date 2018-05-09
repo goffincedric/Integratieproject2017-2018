@@ -1,7 +1,9 @@
 ﻿using PB.BL;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
+using PB.BL.Domain.Settings;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using UI_MVC.Models;
@@ -43,12 +45,32 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult OrganisationPartialCreate(string subplatform, Organisation organisation)
+        public ActionResult OrganisationPartialCreate(string subplatform, OrganisationEditModel organisationEditModel)
         {
             if (ModelState.IsValid)
             {
                 Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-                itemMgr.AddOrganisation(organisation.Name, organisation.FullName, organisation.SocialMediaLink, organisation.IconURL, subplatform: Subplatform);
+                var iconUrl = "";
+                string _FileName = "";
+                if (organisationEditModel.file != null)
+                {
+                    if (organisationEditModel.file.ContentLength > 0)
+                    {
+                        _FileName = Path.GetFileName(organisationEditModel.file.FileName);
+
+                        var username = organisationEditModel.Name.ToString();
+                        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Organisations/"), newName);
+                        organisationEditModel.file.SaveAs(_path);
+                        iconUrl = @"~/Content/Images/Organisations/" + newName;
+                    }
+                }
+                else
+                {
+                    iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
+                }
+
+                itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName, organisationEditModel.SocialMediaLink, iconUrl, subplatform: Subplatform);
                 return RedirectToAction("ItemBeheer", "Item");
             }
             else
@@ -72,7 +94,7 @@ namespace UI_MVC.Controllers
             return PartialView();
         }
 
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult KeywordPartialCreate(string subplatform, Keyword keyword)
@@ -106,12 +128,32 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemaPartialCreate(string subplatform, Theme theme)
+        public ActionResult ThemaPartialCreate(string subplatform, ThemeEditModel themeEditModel)
         {
             if (ModelState.IsValid)
             {
                 Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-                itemMgr.AddTheme(theme.Name, theme.Description, theme.IconURL, theme.IsTrending, Subplatform);
+                var iconUrl = "";
+                string _FileName = "";
+                if (themeEditModel.file != null)
+                {
+                    if (themeEditModel.file.ContentLength > 0)
+                    {
+                        _FileName = Path.GetFileName(themeEditModel.file.FileName);
+
+                        var username = themeEditModel.Name.ToString();
+                        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Themes/"), newName);
+                        themeEditModel.file.SaveAs(_path);
+                        iconUrl = @"~/Content/Images/Themes/" + newName;
+                    }
+                }
+                else
+                {
+                    iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
+                }
+
+                itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, themeEditModel.IsTrending, Subplatform);
                 return RedirectToAction("ItemBeheer", "Item");
             }
             else
@@ -141,15 +183,36 @@ namespace UI_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
                 Organisation organisation = null;
                 if (personEditModel.OrganisationId != null && personEditModel.OrganisationId > 1)
                 {
-                     organisation = itemMgr.GetOrganisation((int)personEditModel.OrganisationId);
+                    organisation = itemMgr.GetOrganisation((int)personEditModel.OrganisationId);
                     if (organisation == null)
                         return RedirectToAction("ItemBeheer", "Item");
                 }
-                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, personEditModel.IconURL, organisation, null, personEditModel.IsTrending, Subplatform, personEditModel.Gemeente);
+                var iconUrl = "";
+                string _FileName = "";
+                if (personEditModel.file != null)
+                {
+                    if (personEditModel.file.ContentLength > 0)
+                    {
+                        _FileName = Path.GetFileName(personEditModel.file.FileName);
+
+                        var username = personEditModel.Name.ToString();
+                        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
+                        personEditModel.file.SaveAs(_path);
+                        iconUrl = @"~/Content/Images/Persons/" + newName;
+                    }
+                }
+                else
+                {
+                    iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
+                }
+
+
+                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, iconUrl, organisation, null, personEditModel.IsTrending, Subplatform, personEditModel.Gemeente);
                 return RedirectToAction("ItemBeheer", "Item");
             }
             else
@@ -177,32 +240,235 @@ namespace UI_MVC.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult DeleteKeyword(string subplatform, int id)
+        {
+            try
+            {
+                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+                itemMgr.RemoveKeyword(id);
+
+                return RedirectToAction("ItemBeheer", "Item");
+            }
+            catch
+            {
+                return RedirectToAction("ItemBeheer", "Item");
+            }
+        }
+
+
+        [HttpGet]
         public ActionResult EditPerson(int id)
         {
             Person item = itemMgr.GetPerson(id);
+
             PersonEditModel person = new PersonEditModel()
             {
+
                 Name = item.Name,
                 IsTrending = item.IsTrending,
-                IconURL = item.IconURL,
-                SocialMediaLink = item.SocialMediaLink,
-                OrganisationId = item.Organisation.ItemId,
-                Gemeente = item.Gemeente,
-                ItemId = item.ItemId
 
+                SocialMediaLink = item.SocialMediaLink,
+                Gemeente = item.Gemeente,
+                ItemId = item.ItemId,
             };
+
+            if (item.Organisation is null)
+            {
+
+
+            }
+            else
+            {
+                person.OrganisationId = item.Organisation.ItemId;
+            }
+
+
             return View(person);
         }
 
+        [HttpPost]
+        public ActionResult EditPerson(string subplatform, int id, PersonEditModel personEditModel)
+        {
+
+            if (ModelState.IsValid)
+            {
+                Person person = itemMgr.GetPerson(personEditModel.ItemId);
+                Organisation organisation = null;
+                if (personEditModel.OrganisationId != null && personEditModel.OrganisationId > 1)
+                {
+                    organisation = itemMgr.GetOrganisation((int)personEditModel.OrganisationId);
+                    if (organisation == null)
+                        return RedirectToAction("ItemBeheer", "Item");
+                }
+                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+                var iconUrl = "";
+                string _FileName = "";
+                if (personEditModel.file != null)
+                {
+                    if (personEditModel.file.ContentLength > 0)
+                    {
+                        _FileName = Path.GetFileName(personEditModel.file.FileName);
+
+                        var username = personEditModel.Name.ToString();
+                        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
+                        personEditModel.file.SaveAs(_path);
+                        iconUrl = @"~/Content/Images/Persons/" + newName;
+                        person.IconURL = iconUrl;
+                    }
+                }
+                else
+                {
+                    iconUrl = person.IconURL;
+                }
+
+
+                person.Gemeente = personEditModel.Gemeente;
+                person.IsTrending = personEditModel.IsTrending;
+                person.Organisation = organisation;
+
+                person.SocialMediaLink = personEditModel.SocialMediaLink;
+                person.Name = personEditModel.Name;
+
+                itemMgr.ChangePerson(person);
+                return RedirectToAction("ItemBeheer", "Item");
+
+
+            }
+            return RedirectToAction("ItemBeheer", "Item");
+        }
+
+
+        [HttpGet]
+        public ActionResult EditOrganisation(int id)
+        {
+            Organisation item = itemMgr.GetOrganisation(id);
+
+            OrganisationEditModel organisation = new OrganisationEditModel()
+            {
+
+                Name = item.Name,
+                FullName = item.FullName,
+                IsTrending = item.IsTrending,
+                SocialMediaLink = item.SocialMediaLink,
+                ItemId = item.ItemId
+            };
+
+
+
+            return View(organisation);
+        }
+
+        [HttpPost]
+        public ActionResult EditOrganisation(string subplatform, int id, OrganisationEditModel organisationEditModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Organisation organisation = itemMgr.GetOrganisation(organisationEditModel.ItemId);
+                var iconUrl = "";
+                string _FileName = "";
+                if (organisationEditModel.file != null)
+                {
+                    if (organisationEditModel.file.ContentLength > 0)
+                    {
+                        _FileName = Path.GetFileName(organisationEditModel.file.FileName);
+
+                        var username = organisationEditModel.Name.ToString();
+                        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
+                        organisationEditModel.file.SaveAs(_path);
+                        iconUrl = @"~/Content/Images/Organisation/" + newName;
+                        organisation.IconURL = iconUrl;
+                    }
+                }
+                else
+                {
+                    iconUrl = organisation.IconURL;
+                }
+                organisation.IsTrending = organisationEditModel.IsTrending;
+                organisation.FullName = organisationEditModel.FullName;
+                organisation.SocialMediaLink = organisationEditModel.SocialMediaLink;
+                organisation.Name = organisationEditModel.Name;
+
+                //itemMgr.Change(person);
+                return RedirectToAction("ItemBeheer", "Item");
+            }
+            return RedirectToAction("ItemBeheer", "Item");
+
+        }
+
+       
+
+        [HttpGet]
+        public ActionResult EditTheme(int id)
+        {
+            Theme item = itemMgr.GetTheme(id);
+            ThemeEditModel themeEditModel = new ThemeEditModel()
+            {
+                ItemId = item.ItemId,
+                Name = item.Name,
+                IsTrending = item.IsTrending,
+                Description = item.Description
+            };
+            return View(themeEditModel);
+        }
+
+        [HttpPost]
+        public ActionResult EditTheme(string subplatform, int id, ThemeEditModel themeEditModel)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+               
+                Organisation organisation = itemMgr.GetOrganisation(themeEditModel.ItemId);
+                var iconUrl = "";
+                string _FileName = "";
+                if (themeEditModel.file != null)
+                {
+                    if (themeEditModel.file.ContentLength > 0)
+                    {
+                        _FileName = Path.GetFileName(themeEditModel.file.FileName);
+
+                        var username = themeEditModel.Name.ToString();
+                        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
+                        themeEditModel.file.SaveAs(_path);
+                        iconUrl = @"~/Content/Images/Organisation/" + newName;
+                        organisation.IconURL = iconUrl;
+                    }
+                }
+                else
+                {
+                    iconUrl = organisation.IconURL;
+                }
+                return RedirectToAction("ItemBeheer", "Item");
+            }
+            return RedirectToAction("ItemBeheer", "Item");
+        }
+
+        [HttpGet]
+        public ActionResult EditKeyword( int id)
+        {
+            Keyword keyword = itemMgr.GetKeyword(id);
+
+            return View(keyword);
+        }
+
+
+        [HttpPost]
+        public ActionResult EditKeyword(string subplatform, int id)
+        {
+            Keyword keyword = itemMgr.GetKeyword(id);
+
+            return View(keyword);
+        }
         public ActionResult Charts()
         {
             return View();
         }
 
-        public ActionResult Charts2()
-        {
-            return View();
-        }
 
 
         public ActionResult ItemBeheer()
@@ -210,7 +476,7 @@ namespace UI_MVC.Controllers
             return View();
         }
 
-       
+
 
         public ActionResult WeeklyReview()
         {

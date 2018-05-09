@@ -11,7 +11,9 @@
             <th>@Html.DisplayNameFor(model => model.ItemId)</th>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
             <th>@Html.DisplayNameFor(model => model.Description)</th>
-            <th>CRUD</th>
+            <th>@Html.DisplayNameFor(model => model.IsTrending)</th>
+            <th>@Html.DisplayNameFor(model => model.IconURL)</th>
+            <th>Tools</th>
           </tr>
         </thead>
 
@@ -22,21 +24,26 @@
               <td>@Html.DisplayFor(modelItem => item.ItemId)</td>
               <td>@Html.DisplayFor(modelItem => item.Name)</td>
               <td>@Html.DisplayFor(modelItem => item.Description)</td>
+              <td>@(item.IsTrending ? "Yes" : "No")</td>
+              <th>@Html.DisplayFor(modelItem => item.IconURL)</th>
               <td>
 
-                @using (Html.BeginForm("DeleteItem", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
-                {
-                  @Html.AntiForgeryToken()
-
-                  <a href="javascript:document.getElementById('delete-@item.ItemId').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                    <span style="color: #2196f3" class="fsz-sm">
-                      Delete
-                    </span>
-                  </a>
-                }
-                @*@Html.ActionLink("EditPerson", "Edit", new { id = item.ItemId }) |
-                  @Html.ActionLink("DetailsPerson", "DetailsPerson", new { id = item.ItemId }) |*@
-                @*@Html.ActionLink("Delete", "DeleteOrganisation", "Item", new { id = item.ItemId })*@
+                <div class="row">
+                  @using (Html.BeginForm("DeleteItem", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
+                  {
+                    @Html.AntiForgeryToken()
+                    <button class="btn btn-sm" style="margin-right: 15px">
+                      <a href="javascript:document.getElementById('delete-@item.ItemId').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                        <span style="color: #2196f3" class="fsz-sm">
+                          Delete
+                        </span>
+                      </a>
+                    </button>
+                  }
+                  <button class="btn btn-sm">
+                    @Html.ActionLink("Edit", "EditTheme", new { id = item.ItemId })
+                  </button>
+                </div>
               </td>
 
             </tr>
