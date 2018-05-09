@@ -105,5 +105,22 @@ namespace PB.DAL
             ctx.Entry(alert).State = EntityState.Modified;
             ctx.SaveChanges();
         }
+
+        public IEnumerable<ProfileAlert> ReadProfileAlerts()
+        {
+            return ctx.ProfileAlerts
+                .Include(pa => pa.Alert)
+                .Include(pa => pa.Alert.Item)
+                .AsEnumerable();
+        }
+
+        public IEnumerable<ProfileAlert> ReadProfileAlerts(string userId)
+        {
+            return ctx.ProfileAlerts
+                .Include(pa => pa.Alert)
+                .Include(pa => pa.Alert.Item)
+                .Where(pa => pa.UserId.Equals(userId))
+                .AsEnumerable();
+        }
     }
 }
