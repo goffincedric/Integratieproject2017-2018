@@ -12,20 +12,19 @@ namespace PB.DAL
         void UpdateSubplatform(Subplatform subplatform);
         void DeleteSubplatform(int subplatformId);
 
-        //SubplatformSetting CreateSubplatformSetting();
-        //void UpdateSubplatformSetting(SubplatformSetting subplatformSetting);
+        SubplatformSetting CreateSubplatformSetting(SubplatformSetting subplatformSetting);
+        void UpdateSubplatformSetting(SubplatformSetting subplatformSetting);
 
-        //IEnumerable<Tag> ReadTags();
-        //Subplatform CreateTag(Tag tagId);
-        //Subplatform ReadTag(int tagId);
-        //void UpdateTag(Tag subplatform);
-        //void DeleteTag(int subplatformId);
+        IEnumerable<Page> ReadPages();
+        Page CreatePage(Page page);
+        Page ReadPage(int pageId);
+        void UpdatePage(Page page);
+        void DeletePage(int pageId);
 
-        //IEnumerable<Subplatform> ReadPages();
-        //Subplatform CreatePage(Subplatform subplatform);
-        //Subplatform ReadPage(int subplatformId);
-        //Subplatform ReadPage(string subplatformURL);
-        //void UpdatePage(Subplatform subplatform);
-        //void DeletePage(int subplatformId);
+        IEnumerable<Tag> ReadTags();
+        Tag CreateTag(Tag tag);
+        Tag ReadTag(int tagId);
+        void UpdateTag(Tag tag);
+        void DeleteTag(int tagId);
     }
 }
