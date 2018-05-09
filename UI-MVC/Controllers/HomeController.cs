@@ -210,8 +210,10 @@ namespace UI_MVC.Controllers
             {
                 //int? count          = theme.Records.Count();
                 //ViewBag.Associaties = (count is null) ? 0 : count;
-                int? count            = theme.Records.Count();
-                ViewBag.Associaties   = (count is null) ? 0 : count;
+                
+                //int? count            = theme.Records.Count();
+                //ViewBag.Associaties   = (count is null) ? 0 : count;
+
                 ViewBag.Keywords      = theme.Keywords.ToList();
             }
             ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));

@@ -18,7 +18,7 @@ namespace UI_MVC.Controllers
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     public class ItemController : Controller
     {
-        private UnitOfWorkManager uow;
+        private readonly UnitOfWorkManager uow;
         private readonly ItemManager itemMgr;
         private readonly SubplatformManager SubplatformMgr;
 
@@ -85,7 +85,8 @@ namespace UI_MVC.Controllers
         public ActionResult _KeywordPartialTable(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            IEnumerable<Keyword> keywords = itemMgr.GetKeywords().Where(k => k.Items.FirstOrDefault(i => i.SubPlatforms.Contains(Subplatform)) != null);
+            //IEnumerable<Keyword> keywords = itemMgr.GetKeywords().Where(k => k.Items.FirstOrDefault(i => i.SubPlatforms.Contains(Subplatform)) != null);
+            IEnumerable<Keyword> keywords = itemMgr.GetKeywords();
             return PartialView(keywords);
         }
 

@@ -125,7 +125,6 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Organisations/pvda.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform,
@@ -142,7 +141,6 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Organisations/cdv.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform,
@@ -159,7 +157,6 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Organisations/spa.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform,
@@ -176,7 +173,6 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Organisations/openvld.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -192,7 +188,6 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Organisations/groen.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -208,7 +203,6 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Organisations/nva.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -224,7 +218,6 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Organisations/vb.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -248,7 +241,7 @@ namespace PB.DAL.Migrations
                 new Keyword()
                 {
                     Name="Auto",
-                    Items = new List<Item>()
+                    Items = new List<Item>(),
                 },
                  new Keyword()
                 {
@@ -313,7 +306,6 @@ namespace PB.DAL.Migrations
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
                     Keywords = new List<Keyword>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -327,7 +319,6 @@ namespace PB.DAL.Migrations
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
                     Keywords = new List<Keyword>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -341,7 +332,6 @@ namespace PB.DAL.Migrations
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
                     Keywords = new List<Keyword>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -355,7 +345,6 @@ namespace PB.DAL.Migrations
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
                     Keywords = new List<Keyword>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -369,7 +358,6 @@ namespace PB.DAL.Migrations
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
                     Keywords = new List<Keyword>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -383,7 +371,6 @@ namespace PB.DAL.Migrations
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
                     Keywords = new List<Keyword>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -397,7 +384,6 @@ namespace PB.DAL.Migrations
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
                     Keywords = new List<Keyword>(),
-                    Records = new List<Record>(),
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
