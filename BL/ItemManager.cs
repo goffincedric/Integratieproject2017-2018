@@ -452,12 +452,15 @@ namespace PB.BL
 
         public void SyncDatabase(Subplatform subplatform)
         {
-            // Set IsSyncing field
             SyncDatabaseAsync(subplatform).Wait();
         }
 
         public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
         {
+            // Set IsSyncing flag
+            IsSyncing = true;
+
+
             InitNonExistingRepo();
 
             // Validation

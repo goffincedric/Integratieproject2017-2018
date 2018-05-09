@@ -19,11 +19,11 @@ namespace PB.DAL
         /// Deze methode zorgt ervoor dat alle tot hier toe aangepaste domein objecten
         /// worden gepersisteert naar de databank
         /// </summary>
-        public void CommitChanges()
+        public int CommitChanges()
         {
             try
             {
-                ctx.CommitChanges();
+                return ctx.CommitChanges();
             }
             catch (DbEntityValidationException e)
             {
@@ -38,6 +38,7 @@ namespace PB.DAL
                     }
                 }
             }
+            return -1;
         }
 
         public async Task<int> CommitChangesAsync()

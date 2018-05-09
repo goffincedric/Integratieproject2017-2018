@@ -12,9 +12,9 @@ namespace PB.BL
             get { return uof ?? (uof = new UnitOfWork()); }
         }
 
-        public void Save()
+        public int Save()
         {
-            UnitOfWork.CommitChanges();
+            return UnitOfWork.CommitChanges();
         }
 
         public async Task<int> SaveAsync()

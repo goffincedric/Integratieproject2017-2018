@@ -133,6 +133,7 @@ namespace UI_MVC.Controllers
             ViewBag.TotalThemes = itemMgr.GetThemesCount().ToString();
             ViewBag.TotalKeywords = itemMgr.GetKeywordsCount().ToString();
             ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
+            ViewBag.IsSyncing = ItemManager.IsSyncing;
             return View();
         }
 
