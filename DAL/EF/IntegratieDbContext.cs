@@ -117,6 +117,16 @@ namespace PB.DAL.EF
                 .WithMany(s => s.Items)
                 .Map(m => { m.ToTable("tblSubplatformItem"); });
 
+            modelBuilder.Entity<Theme>()
+                .HasMany(t => t.Persons)
+                .WithMany(p => p.Themes)
+                .Map(m => { m.ToTable("tblPersonThemes"); });
+
+            modelBuilder.Entity<Theme>()
+                .HasMany(t => t.Organisations)
+                .WithMany(o => o.Themes)
+                .Map(m => { m.ToTable("tblOrganisationThemes"); });
+
             modelBuilder.Entity<Record>()
                 .HasMany(r => r.Mentions)
                 .WithMany(m => m.Records)
@@ -142,11 +152,6 @@ namespace PB.DAL.EF
                 .WithMany(r => r.Persons)
                 .Map(m => { m.ToTable("tblPersonRecords"); });
 
-            modelBuilder.Entity<Theme>()
-                .HasMany(i => i.Records)
-                .WithMany(r => r.Themes)
-                .Map(m => { m.ToTable("tblThemeRecords"); });
-
             modelBuilder.Entity<Subplatform>()
                 .HasMany(s => s.Dashboards)
                 .WithRequired(d => d.Subplatform)
@@ -161,6 +166,18 @@ namespace PB.DAL.EF
 
             //modelBuilder.Entity<SubplatformSetting>()
             //    .HasKey(ss => new { ss.SubplatformId, ss.SettingName });
+
+            modelBuilder.Entity<Subplatform>()
+                .HasMany(s => s.Pages)
+                .WithRequired(p => p.Subplatform)
+                .HasForeignKey(p => p.SubplatformId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Page>()
+                .HasMany(p => p.Tags)
+                .WithRequired(t => t.Page)
+                .HasForeignKey(t => t.PageId)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Dashboard>()
                 .HasMany(d => d.Zones)

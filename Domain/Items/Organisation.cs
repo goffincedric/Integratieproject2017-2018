@@ -17,12 +17,12 @@ namespace PB.BL.Domain.Items
     
         [DataMember]
         public List<Person> People { get; set; }
-        public virtual List<Record> Records { get; set; }
+        [DataMember]
+        public List<Theme> Themes { get; set; }
 
         public override bool Equals(object obj)
         {
-            var organisation = obj as Organisation;
-            return organisation != null &&
+            return obj is Organisation organisation &&
                 Name.ToLower().Equals(organisation.Name.ToLower()) &&
                 FullName.ToLower().Equals(organisation.FullName.ToLower());
         }
@@ -37,7 +37,7 @@ namespace PB.BL.Domain.Items
 
         public override string ToString()
         {
-            return Name + " (Id: " + (ItemId) + ") - Aantal records: " + Records.Count;
+            return Name + ": " + FullName + " (Id: " + (ItemId) + ")";
         }
     }
 }
