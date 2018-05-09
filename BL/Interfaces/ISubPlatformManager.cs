@@ -18,6 +18,6 @@ namespace PB.BL.Interfaces
         void AddAdmin(int subplatformId, Profile admin);
         void RemoveAdmin(int subplatformId, Profile admin);
 
-        Page AddPage(int subplatformId, string title, string faviconUrl);
+        Page AddPage(int subplatformId, string pageName, string title);
     }
 }
