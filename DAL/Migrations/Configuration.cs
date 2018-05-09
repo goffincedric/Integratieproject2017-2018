@@ -22,7 +22,7 @@ namespace PB.DAL.Migrations
 
         protected override void Seed(IntegratieDbContext ctx)
         {
-            // TODO: SUPERADMIN SEED
+            // Seed basic data
 
             #region Subplatforms
             //Makes PB subplatform
@@ -132,7 +132,8 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
+                    Comparisons = new List<Comparison>(),
+                    Themes = new List<Theme>()
                 },
                 new Organisation()
                 {
@@ -148,7 +149,8 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
+                    Comparisons = new List<Comparison>(),
+                    Themes = new List<Theme>()
                 },
                 new Organisation()
                 {
@@ -164,7 +166,8 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
+                    Comparisons = new List<Comparison>(),
+                    Themes = new List<Theme>()
                 },
                 new Organisation()
                 {
@@ -179,7 +182,8 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
+                    Comparisons = new List<Comparison>(),
+                    Themes = new List<Theme>()
                 },
                 new Organisation()
                 {
@@ -194,7 +198,8 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
+                    Comparisons = new List<Comparison>(),
+                    Themes = new List<Theme>()
                 },
                 new Organisation()
                 {
@@ -209,7 +214,8 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
+                    Comparisons = new List<Comparison>(),
+                    Themes = new List<Theme>()
                 },
                 new Organisation()
                 {
@@ -224,7 +230,8 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>()
+                    Comparisons = new List<Comparison>(),
+                    Themes = new List<Theme>()
                 }
             };
             ctx.Organisations.ForEachAsync(o =>
@@ -241,49 +248,49 @@ namespace PB.DAL.Migrations
                 new Keyword()
                 {
                     Name="Auto",
-                    Items = new List<Item>(),
+                    Items = new List<Item>()
                 },
-                 new Keyword()
+                new Keyword()
                 {
                     Name="Openbaar Vervoer",
-                           Items = new List<Item>()
+                    Items = new List<Item>()
                 },
-                  new Keyword()
+                new Keyword()
                 {
                     Name="File",
-                           Items = new List<Item>()
+                    Items = new List<Item>()
                 },
-                   new Keyword()
+                new Keyword()
                 {
                     Name="Milieu",
-                           Items = new List<Item>()
+                    Items = new List<Item>()
                 },
-                    new Keyword()
+                new Keyword()
                 {
                     Name="Groene Energie",
-                           Items = new List<Item>()
+                    Items = new List<Item>()
                 },
-                     new Keyword()
+                new Keyword()
                 {
                     Name="Kernuitstap",
-                           Items = new List<Item>()
+                    Items = new List<Item>()
                 },
-                      new Keyword()
+                new Keyword()
                 {
                     Name="Vlaams",
-                           Items = new List<Item>()
+                    Items = new List<Item>()
                 },
 
                 new Keyword()
                 {
                     Name="Links",
-                           Items = new List<Item>()
+                    Items = new List<Item>()
                 },
 
                 new Keyword()
                 {
                     Name="Rechts",
-                           Items = new List<Item>()
+                    Items = new List<Item>()
                 }
             };
 
@@ -402,81 +409,92 @@ namespace PB.DAL.Migrations
             #region Pages
             List<Page> pagesToAdd = new List<Page>()
             {
-              new Page()
+                new Page()
                 {
                     PageName = "Home",
                     Title = "Home",
-                    Tags = new List<Tag>()
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
                 },
-               new Page()
+                new Page()
                 {
                     PageName = "Dashboard",
                     Title = "Dashboard",
-                    Tags = new List<Tag>()
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
                 },
                 new Page()
                 {
                     PageName = "WeeklyReview",
                     Title = "Weekly Review",
-                    Tags = new List<Tag>()
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
                 },
-                 new Page()
+                new Page()
                 {
                     PageName = "Account",
                     Title = "Account",
-                    Tags = new List<Tag>()
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
                 },
-                  new Page()
+                new Page()
                 {
                     PageName = "FAQ",
                     Title = "FAQ",
-                    Tags = new List<Tag>()
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
                 },
-                   new Page()
+                new Page()
                 {
                     PageName = "Contact",
                     Title = "Contact",
-                    Tags = new List<Tag>()
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
                 },
-                    new Page()
+                new Page()
                 {
                     PageName = "ItemDetail",
                     Title = "Item Detail",
-                    Tags = new List<Tag>()
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
                 },
-                     new Page()
+                new Page()
                 {
                     PageName = "Login",
                     Title = "Login",
-                    Tags = new List<Tag>()
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
                 },
-                      new Page()
+                new Page()
                 {
                     PageName = "Register",
                     Title = "Register",
-                    Tags = new List<Tag>()
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
                 },
-
-                       new Page()
+                new Page()
                 {
                     PageName = "Notification",
                     Title = "Notifications",
-                    Tags = new List<Tag>()
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
                 },
-                        new Page()
+                new Page()
                 {
                     PageName = "UserSettings",
                     Title = "User Settings",
-                    Tags = new List<Tag>()
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
                 }
             };
             ctx.Pages.ForEachAsync(t =>
-                        {
-                            Page page = pagesToAdd.FirstOrDefault(p => p.Equals(t));
-                            if (page != null) pagesToAdd.Remove(t);
-                        }).Wait();
+                {
+                    Page page = pagesToAdd.FirstOrDefault(p => p.Equals(t));
+                    if (page != null) pagesToAdd.Remove(t);
+                }).Wait();
             if (pagesToAdd.Count != 0) ctx.Pages.AddRange(pagesToAdd);
             #endregion
+
             // Save all pending changes
             ctx.SaveChanges();
         }
