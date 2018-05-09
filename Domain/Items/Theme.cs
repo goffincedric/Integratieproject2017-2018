@@ -12,7 +12,8 @@ namespace PB.BL.Domain.Items
         [DataMember]
         public string Description { get; set; }
 
-        public virtual List<Record> Records { get; set; }
+        public List<Person> Persons { get; set; }
+        public List<Organisation> Organisations { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -30,7 +31,7 @@ namespace PB.BL.Domain.Items
 
         public override string ToString()
         {
-            return Name + " (Id: " + (ItemId) + ") - Aantal records: " + Records.Count;
+            return Name + ": " + Description + " (Id: " + (ItemId) + ") - Aantal records: ";
         }
     }
 }
