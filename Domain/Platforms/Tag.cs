@@ -10,9 +10,13 @@ namespace PB.BL.Domain.Platform
         [Key]
         public int TagId { get; set; }
         [Required]
-        public string cssName { get; set; }
+        public string CssName { get; set; }
         [Required]
         public string NameObject { get; set; }
         public string Text { get; set; }
+
+        public int PageId { get; set; }
+        [Required]
+        public Page Page { get; set; }
     }
 }
