@@ -44,7 +44,7 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting()
                         {
                             SettingName = Setting.Platform.SOURCE_API_URL,
-                            Value = "http://kdg.textgain.com/query",
+                            Value = "https://kdg.textgain.com/query",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
@@ -102,7 +102,7 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting()
                         {
                             SettingName = Setting.Platform.SOURCE_API_URL,
-                            Value = "http://kdg.textgain.com/query",
+                            Value = "https://kdg.textgain.com/query",
                             IsEnabled = true,
                             Subplatform = testSubplatform
                         }

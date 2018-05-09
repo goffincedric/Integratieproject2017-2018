@@ -4,26 +4,34 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PB.BL.Domain.Accounts
 {
+    [DataContract]
     [Table("tblProfileAlerts")]
     public class ProfileAlert
     {
-
+        [DataMember]
         [Key, Column(Order = 0)]
         public string UserId { get; set; }
+        [DataMember]
         [Key, Column(Order = 1)]
         public int AlertId { get; set; }
+        [DataMember]
         [Required]
         public bool IsRead { get; set; }
+        [DataMember]
         [Required]
         public DateTime TimeStamp { get; set; }
 
+        [DataMember]
         [Required]
         public Profile Profile { get; set; }
+
+        [DataMember]
         [Required]
         public virtual Alert Alert { get; set; }
 

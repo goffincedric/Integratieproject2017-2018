@@ -244,6 +244,7 @@ namespace PB.DAL.EF
 
         public DbSet<UserData> UserData { get; set; }
         public DbSet<UserSetting> UserSettings { get; set; }
+        public DbSet<ProfileAlert> ProfileAlerts { get; set; }
         public DbSet<Alert> Alerts { get; set; }
 
         public DbSet<Comparison> Comparisons { get; set; }
