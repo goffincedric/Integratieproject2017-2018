@@ -186,7 +186,7 @@ namespace UI_MVC.Controllers
             {
                 Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
                 Organisation organisation = null;
-                if (personEditModel.OrganisationId != null && personEditModel.OrganisationId > 1)
+                if (personEditModel.OrganisationId != null && personEditModel.OrganisationId >= 1)
                 {
                     organisation = itemMgr.GetOrganisation((int)personEditModel.OrganisationId);
                     if (organisation == null)
@@ -296,7 +296,7 @@ namespace UI_MVC.Controllers
             {
                 Person person = itemMgr.GetPerson(personEditModel.ItemId);
                 Organisation organisation = null;
-                if (personEditModel.OrganisationId != null && personEditModel.OrganisationId > 1)
+                if (personEditModel.OrganisationId != null && personEditModel.OrganisationId >= 1)
                 {
                     organisation = itemMgr.GetOrganisation((int)personEditModel.OrganisationId);
                     if (organisation == null)
@@ -392,7 +392,8 @@ namespace UI_MVC.Controllers
                 organisation.SocialMediaLink = organisationEditModel.SocialMediaLink;
                 organisation.Name = organisationEditModel.Name;
 
-                //itemMgr.Change(person);
+                itemMgr.ChangeOrganisation(organisation);
+                
                 return RedirectToAction("ItemBeheer", "Item");
             }
             return RedirectToAction("ItemBeheer", "Item");
@@ -423,7 +424,7 @@ namespace UI_MVC.Controllers
             {
 
                
-                Organisation organisation = itemMgr.GetOrganisation(themeEditModel.ItemId);
+                Theme theme = itemMgr.GetTheme(themeEditModel.ItemId);
                 var iconUrl = "";
                 string _FileName = "";
                 if (themeEditModel.file != null)
@@ -434,16 +435,22 @@ namespace UI_MVC.Controllers
 
                         var username = themeEditModel.Name.ToString();
                         var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Themes/"), newName);
                         themeEditModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Organisation/" + newName;
-                        organisation.IconURL = iconUrl;
+                        iconUrl = @"~/Content/Images/Themes/" + newName;
+                        theme.IconURL = iconUrl;
                     }
                 }
                 else
                 {
-                    iconUrl = organisation.IconURL;
+                    iconUrl = theme.IconURL;
                 }
+                theme.IsTrending = themeEditModel.IsTrending;
+                theme.Name = themeEditModel.Name;
+                theme.Description = themeEditModel.Description;
+
+                itemMgr.ChangeTheme(theme);
+
                 return RedirectToAction("ItemBeheer", "Item");
             }
             return RedirectToAction("ItemBeheer", "Item");

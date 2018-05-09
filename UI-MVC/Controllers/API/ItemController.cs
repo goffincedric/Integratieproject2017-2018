@@ -178,6 +178,18 @@ namespace UI_MVC.Controllers.API
             return Ok(personmap);
         }
 
+
+        //[HttpGet]
+        //public IHttpActionResult GetPersonsTop(int id)
+        //{
+        //    List<Record> recordsP1 = 
+        //    List<Record> recordsP2 = 
+
+        //     persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
+        //    if (persons == null) return StatusCode(HttpStatusCode.NoContent);
+        //    return Ok(personmap);
+        //}
+
         [HttpGet]
         public IHttpActionResult GetPersonsTopJSON(int id)
         {

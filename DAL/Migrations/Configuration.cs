@@ -248,7 +248,8 @@ namespace PB.DAL.Migrations
                 new Keyword()
                 {
                     Name="Auto",
-                    Items = new List<Item>()
+                    Items = new List<Item>(), 
+                    
                 },
                 new Keyword()
                 {

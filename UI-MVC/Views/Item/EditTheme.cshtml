@@ -9,7 +9,7 @@
 
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("EditTheme", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
       @Html.AntiForgeryToken()
 
