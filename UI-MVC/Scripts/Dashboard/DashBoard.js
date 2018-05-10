@@ -87,7 +87,7 @@ $(function () {
                 //zorgen dat pagina niet herladen moet worden
                 var $newdiv = $('<div class="p-10 mB-10 zone-' + ZoneId + '"></div>');
                 $newdiv.append($('<h4 class="bb-2"></h4>'));
-                $newdiv.children('h4').append($('<span class="title">New Zone</span>'));
+                $newdiv.children('h4').append($('<span class="title mR-15">New Zone</span>'));
                 $newdiv.children('h4').append($('<span class="edit-zone"></span>'));
                 $newdiv.children('h4').children('.edit-zone').append($('<i class="ti-pencil"></i>'));
                 $newdiv.children('h4').append($('<span class="arrow-dashboard"></span>'));
@@ -106,8 +106,14 @@ $(function () {
 
                 var deletezone = grid.parent().children('h4').children('.delete-zone');
 
+                var editzone = grid.parent().children('h4').children('.edit-zone');
+
                 deletezone.on('click', function () {
                     removeZone(grid.parent());
+                });
+
+                editzone.on('click', function () {
+                    editZone($(this));
                 });
 
                 addZone = addZone.children('.add-zone').children('div').children('#zone-x');
@@ -184,6 +190,8 @@ $(function () {
         }
 
         editZone = function (grid) {
+            console.log(grid);
+
             var ZoneId = grid.parent().parent().attr('class');
 
             ZoneId = ZoneId.substring(ZoneId.indexOf('zone-') + 5, ZoneId.length);
@@ -264,7 +272,6 @@ $(function () {
 
                     if (ElementId != '+') {
                         if (ZoneId == 'x') {
-                            console.log('adding zone');
                             
                             var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
 
@@ -301,7 +308,7 @@ $(function () {
 
                             var $newdiv = $('<div class="p-10 mB-10 zone-' + ZoneId + '"></div>');
                             $newdiv.append($('<h4 class="bb-2"></h4>'));
-                            $newdiv.children('h4').append($('<span class="title">New Zone</span>'));
+                            $newdiv.children('h4').append($('<span class="title mR-15">New Zone</span>'));
                             $newdiv.children('h4').append($('<span class="edit-zone"></span>'));
                             $newdiv.children('h4').children('.edit-zone').append($('<i class="ti-pencil"></i>'));
                             $newdiv.children('h4').append($('<span class="arrow-dashboard"></span>'));
@@ -316,11 +323,27 @@ $(function () {
 
                             $('.grid-stack').gridstack(options);
 
+                            grid.on('change', function (e, items) {
+                                changeElements(items, $(this));
+                            });
+
                             addZone = addZone.children('.add-zone').children('div').children('#zone-x');
 
                             grid = newZone.children('.zone-' + ZoneId).children('#zone-' + ZoneId);
 
                             addZone.data('gridstack').removeWidget($('#Element-' + ElementId).parent());
+
+                            var deletezone = grid.parent().children('h4').children('.delete-zone');
+
+                            var editzone = grid.parent().children('h4').children('.edit-zone');
+
+                            deletezone.on('click', function () {
+                                removeZone(grid.parent());
+                            });
+
+                            editzone.on('click', function () {
+                                editZone($(this));
+                            });
 
                             grid.on('change', function (e, items) {
                                 changeElements(items, $(this));
