@@ -36,6 +36,7 @@ namespace PB.BL.Interfaces
         Keyword AddKeyword(string name, List<Item> items = null);
         IEnumerable<Keyword> GetKeywords();
         IEnumerable<Keyword> GetKeywords(int itemId);
+        Keyword GetKeyword(int keywordId);
         void RemoveKeyword(int keywordId);
 
         IEnumerable<Record> GetRecords();
