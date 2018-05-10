@@ -87,7 +87,7 @@ $(function () {
                 //zorgen dat pagina niet herladen moet worden
                 var $newdiv = $('<div class="p-10 mB-10 zone-' + ZoneId + '"></div>');
                 $newdiv.append($('<h4 class="bb-2"></h4>'));
-                $newdiv.children('h4').append($('<span class="title">New Zone</span>'));
+                $newdiv.children('h4').append($('<span class="title mR-15">New Zone</span>'));
                 $newdiv.children('h4').append($('<span class="edit-zone"></span>'));
                 $newdiv.children('h4').children('.edit-zone').append($('<i class="ti-pencil"></i>'));
                 $newdiv.children('h4').append($('<span class="arrow-dashboard"></span>'));
@@ -106,8 +106,14 @@ $(function () {
 
                 var deletezone = grid.parent().children('h4').children('.delete-zone');
 
+                var editzone = grid.parent().children('h4').children('.edit-zone');
+
                 deletezone.on('click', function () {
                     removeZone(grid.parent());
+                });
+
+                editzone.on('click', function () {
+                    editZone($(this));
                 });
 
                 addZone = addZone.children('.add-zone').children('div').children('#zone-x');
@@ -117,7 +123,7 @@ $(function () {
                     addElement(addZone);
                 });
             }
-            var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div/><div/>'), 0, 0, 3, 3, true);
+            var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), 0, 0, 3, 3, true);
             var X = newElement.data().gsX;
             var Y = newElement.data().gsY;
 
@@ -153,10 +159,39 @@ $(function () {
                 Wizard.children().attr('id', '');
                 Wizard.hide();
             });
+
+            $('.btn-finish').off('click');
+            $('.btn-finish').on('click', function () {
+                var GraphType = 0;
+                $('input:checked').attr('id');
+                switch ($('input:checked').attr('id')){
+                    case 'bar': GraphType = 0;
+                        break;
+                    case 'pie': GraphType = 2;
+                        break;
+                }
+                Wizard.hide();
+
+                //edit later
+                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "'+ GraphType +'"}');
+
+                $.ajax({
+                    async: false,
+                    type: 'PUT',
+                    data: Element,
+                    dataType: 'json',
+                    headers: Headers,
+                    url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
+                })
+
+                chooseChart(GraphType, newElement.children('#Element-' + ElementId).children('canvas'), 25);
+            });
             addingElement = false;
         }
 
         editZone = function (grid) {
+            console.log(grid);
+
             var ZoneId = grid.parent().parent().attr('class');
 
             ZoneId = ZoneId.substring(ZoneId.indexOf('zone-') + 5, ZoneId.length);
@@ -227,6 +262,7 @@ $(function () {
                 var ZoneId = grid.attr('id');
                 ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
                 var count = 0;
+
                 for (var e in elements) {
 
                     var element = elements[e];
@@ -235,8 +271,102 @@ $(function () {
                     ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
 
                     if (ElementId != '+') {
+                        if (ZoneId == 'x') {
+                            
+                            var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
 
-                        var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove + '", "ZoneId": "' + ZoneId + '"}');
+                            ZoneId = $.ajax({
+                                async: false,
+                                type: 'POST',
+                                data: Zone,
+                                dataType: 'json',
+                                headers: Headers,
+                                url: "https://localhost:44342/api/dashboard/postzone/" + DashBoardId
+                            }).responseJSON.ZoneId
+
+                            var Element = $.ajax({
+                                async: false,
+                                type: 'GET',
+                                headers: Headers,
+                                url: "https://localhost:44342/api/dashboard/getelement/" + ElementId
+                            }).responseJSON
+
+                            Element.ZoneId = ZoneId;
+
+                            $.ajax({
+                                async: false,
+                                type: 'PUT',
+                                data: Element,
+                                dataType: 'json',
+                                headers: Headers,
+                                url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
+                            })
+
+                            var addZone = $('.add-zone');
+
+                            $('.add-zone').remove();
+
+                            var $newdiv = $('<div class="p-10 mB-10 zone-' + ZoneId + '"></div>');
+                            $newdiv.append($('<h4 class="bb-2"></h4>'));
+                            $newdiv.children('h4').append($('<span class="title mR-15">New Zone</span>'));
+                            $newdiv.children('h4').append($('<span class="edit-zone"></span>'));
+                            $newdiv.children('h4').children('.edit-zone').append($('<i class="ti-pencil"></i>'));
+                            $newdiv.children('h4').append($('<span class="arrow-dashboard"></span>'));
+                            $newdiv.children('h4').children('.arrow-dashboard').append($('<i class="ti-angle-up"></i>'));
+                            $newdiv.children('h4').append($('<span class="delete-zone"></span>'));
+                            $newdiv.children('h4').children('.delete-zone').append($('<i class="ti-trash"></i>'));
+                            $newdiv.append($('<div class="DashZone"></div>'));
+                            $newdiv.append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
+                            var newZone = $('#mainContent').append($newdiv);
+
+                            var addZone = $('#mainContent').append(addZone);
+
+                            $('.grid-stack').gridstack(options);
+
+                            grid.on('change', function (e, items) {
+                                changeElements(items, $(this));
+                            });
+
+                            addZone = addZone.children('.add-zone').children('div').children('#zone-x');
+
+                            grid = newZone.children('.zone-' + ZoneId).children('#zone-' + ZoneId);
+
+                            addZone.data('gridstack').removeWidget($('#Element-' + ElementId).parent());
+
+                            var deletezone = grid.parent().children('h4').children('.delete-zone');
+
+                            var editzone = grid.parent().children('h4').children('.edit-zone');
+
+                            deletezone.on('click', function () {
+                                removeZone(grid.parent());
+                            });
+
+                            editzone.on('click', function () {
+                                editZone($(this));
+                            });
+
+                            grid.on('change', function (e, items) {
+                                changeElements(items, $(this));
+                            });
+
+                            addZone.data('gridstack').move($('.add-zone').children('div').children('div').children('div'), 0, 0);
+
+                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-'+ElementId+'"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), Element.X, Element.Y, Element.Width, Element.Height, true);
+
+                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
+
+                            chooseChart(Element.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
+                        }
+                        var oldElement = $.ajax({
+                            async: false,
+                            type: 'GET',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/dashboard/getelement/" + ElementId
+                        }).responseJSON
+
+                        var oldZoneId = oldElement.ZoneId;
+
+                        var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove + '", "ZoneId": "' + ZoneId + '", "GraphType": "' + oldElement.GraphType + '"}');
 
                         $.ajax({
                             async: false,
@@ -246,6 +376,12 @@ $(function () {
                             headers: Headers,
                             url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
                         })
+
+                        if (oldZoneId != ZoneId) {
+                            console.log($('#Element-' + ElementId).children('canvas'));
+
+                            chooseChart(oldElement.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
+                        }
                     }
                 }
             }
@@ -284,6 +420,10 @@ $(function () {
                         newElement.children('#Element-' + node.ElementId).children('.delete-element').on('click', function () {
                             deleteElement($(this), grid);
                         });
+
+                        newElement.children('#Element-' + node.ElementId).append($('<canvas></canvas>')).children('canvas').attr('id', 'pie-chart');
+
+                        chooseChart(node.GraphType, newElement.children('#Element-' + node.ElementId).children('canvas'), 25);
                     }, this);
 
                     var plusElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
@@ -293,6 +433,248 @@ $(function () {
                     });
                 });
             }
+        }
+
+        chooseChart = function (type, can, id) {
+            switch (type) {
+                case 0: drawBarChart(can, id)
+                    break;
+                case 1: drawLineChart();
+                    break;
+                case 2: drawPie(id, can);
+                    break;
+                case 3: console.log('Scattre');
+                    break;
+                case 4: drawDonut();
+                    break;
+                case 5: console.log('WordCloud');
+                    break;
+                case 6: console.log('Radar');
+                    break;
+                case 7: console.log('Area');
+                    break;
+                case 8: console.log('Node');
+                    break;
+                case 9: console.log('Map');
+                    break;
+            }
+        };
+
+        getTopTrending = function () {
+            var tmp = "";
+            tmp = $.ajax({
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                url: "https://localhost:44342/api/item/getMostPopularPerson/",
+                headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+            }).responseJSON
+
+            return tmp;
+        };
+
+        drawLineChart = function (can) {
+            var persons = "";
+            persons = $.ajax({
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                url: "https://localhost:44342/api/item/GetMostPopularPersons",
+                headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+            }).responseJSON
+            //can.attr('height', '300px');
+
+            var datagrafiek = {
+                labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
+                datasets: []
+            };
+
+            // var labelslist; 
+
+            var myLineChart = new Chart(can, {
+                type: 'line',
+                data: datagrafiek,
+
+            });
+
+            var counter = 0;
+            $.each(persons, function (key, value) {
+                var tweet = "";
+                tweet = $.ajax({
+                    async: false,
+                    type: 'GET',
+                    dataType: 'json',
+                    url: "https://localhost:44342/api/item/GetPersonEvolution/" + key,
+                    headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+                }).responseJSON
+
+                var keys = [];
+                keys = Object.keys(tweet);
+
+                var label = [];
+                var values = [];
+
+                var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
+                var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+                var points = ["#512da8", "#1976d2", "#388e3c"];
+
+                for (var i = 0; i < keys.length; i++) {
+                    label.push(keys[i]);
+                    values.push(tweet[keys[i]] / 10);
+                }
+
+                var myNewDataSet = {
+                    label: value,
+                    data: values,
+                    borderWidth: 2,
+                    backgroundColor: backgroundcolors[counter],
+                    borderColor: borderColors[counter],
+                    pointBackgroundColor: points[counter]
+
+                }
+
+                datagrafiek.datasets.push(myNewDataSet);
+
+                myLineChart.update();
+                counter++;
+            });
+        };
+
+        drawDonut = function (can) {
+            var count = "";
+            count = $.ajax({
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                url: "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + getTopTrending(),
+                headers: Headers
+            }).responseJSON
+
+            var keys = [];
+            keys = Object.keys(count);
+            var label = [];
+            var values = [];
+
+            for (var i = 0; i < keys.length; i++) {
+                label.push(keys[i]);
+                values.push(count[keys[i]] / 10);
+            }
+
+            //var can = $('#doughnut-chart');
+            //console.log(can.parent().attr('Style', 'width: 400px; height: 350px'));
+            //can.attr('Style', 'width: 300px; height: 300px');
+
+            new Chart(can, {
+                type: 'doughnut',
+                data: {
+                    labels: label,
+                    datasets: [
+                        {
+                            label: "Hashtags",
+                            data: values,
+                            backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64", "#7BDFF2", "#FDE74C", "#47E5BC", "#DAD6D6", "#EF3E36"]
+                        }
+                    ]
+                },
+                options: {
+
+                }
+            });
+        };
+
+        drawPie = function (id, canvas) {
+            var count = "";
+            count = $.ajax({
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                url: "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id,
+                headers: Headers
+            }).responseJSON
+
+            var keys = [];
+            keys = Object.keys(count);
+            var label = [];
+            var values = [];
+
+            for (var i = 0; i < keys.length; i++) {
+                label.push(keys[i]);
+                values.push(count[keys[i]] / 10);
+            }
+
+            //var can = $('#pie-chart');
+            //console.log(can.attr('Style', 'height: 50%;'));
+            //can.attr('Style', 'width: 300px; height: 300px');
+
+            new Chart(canvas, {
+                type: 'pie',
+                data: {
+                    labels: label,
+                    datasets: [{
+                        backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                        data: values
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        };
+
+        drawBarChart = function (can, id) {
+            var bar = "";
+            bar = $.ajax({
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                url: "https://localhost:44342/api/item/getpersontweet/" + id,
+                headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+
+            }).responseJSON
+
+            var keys = [];
+            keys = Object.keys(bar);
+            var label = [];
+            var values = [];
+
+            for (var i = 0; i < keys.length; i++) {
+                label.push(keys[i]);
+                values.push(bar[keys[i]]);
+            }
+
+            //console.log(label);
+            //console.log(values);
+
+            //var can = $('#bar2-chart');
+            //can.attr('width', '300px');
+            //can.attr('height', '300px');
+
+            new Chart(can, {
+                type: 'bar',
+                data: {
+                    labels: label,
+                    datasets: [
+                        {
+                            label: "Aantal tweets",
+                            backgroundColor: "#03a9f4",
+                            borderColor: "#rgba(3, 169, 244, 0.5)",
+                            data: values
+                        }
+                    ]
+                },
+                options: {
+                    legend: { display: true },
+                    responsive: true,
+                    scales: {
+                        xAxes: [
+                            {
+                                display:false
+                            }
+                        ]
+                    }
+
+                }
+            });
         }
 
         $(".grid-stack").each(function () {

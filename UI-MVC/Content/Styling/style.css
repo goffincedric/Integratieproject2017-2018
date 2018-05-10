@@ -2189,6 +2189,9 @@ h3 {
     cursor: pointer;
 }
 
+.grid-stack-item-content {
+    overflow: hidden !important;
+}
 
 @media screen and (max-width: 1439px) and (min-width: 992px) {
     .sidebar {
