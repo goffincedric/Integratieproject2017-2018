@@ -7,6 +7,7 @@ using PB.BL.Domain.Settings;
 using PB.BL.Interfaces;
 using PB.BL.RestClient;
 using PB.DAL;
+using PB.DAL.EF;
 using PB.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,11 @@ namespace PB.BL
         public ItemManager()
         {
 
+        }
+
+        public ItemManager(IntegratieDbContext context)
+        {
+            ItemRepo = new ItemRepo(context);
         }
 
         public ItemManager(UnitOfWorkManager uowMgr)

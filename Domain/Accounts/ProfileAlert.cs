@@ -11,14 +11,15 @@ using System.Threading.Tasks;
 namespace PB.BL.Domain.Accounts
 {
     [DataContract]
-    [Table("tblProfileAlerts")]
+    [Table("tblProfileAlert")]
     public class ProfileAlert
     {
         [DataMember]
-        [Key, Column(Order = 0)]
+        [Key]
+        public int ProfileAlertId { get; set; }
+        [DataMember]
         public string UserId { get; set; }
         [DataMember]
-        [Key, Column(Order = 1)]
         public int AlertId { get; set; }
         [DataMember]
         [Required]
@@ -35,7 +36,7 @@ namespace PB.BL.Domain.Accounts
         [Required]
         public virtual Alert Alert { get; set; }
 
-        public virtual List<WeeklyReview> WeeklyReviews { get; set; }
+        public virtual List<WeeklyReviewProfileAlert> WeeklyReviewsProfileAlerts { get; set; }
 
         public string GetTime()
         {
@@ -67,8 +68,7 @@ namespace PB.BL.Domain.Accounts
 
         public override bool Equals(object obj)
         {
-            var profileAlert = obj as ProfileAlert;
-            return profileAlert != null &&
+            return obj is ProfileAlert profileAlert &&
                 Profile.Id.Equals(profileAlert.Profile.Id) &&
                 Alert.AlertId == profileAlert.Alert.AlertId &&
                 TimeStamp.Date.Equals(profileAlert.TimeStamp.Date) &&

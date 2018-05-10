@@ -316,6 +316,14 @@ namespace PB.BL
         #endregion
 
         #region Alerts
+        public WeeklyReview GetLatestWeeklyReview(string userId)
+        {
+            InitNonExistingRepo();
+            Profile profile = GetProfile(userId);
+            if (profile is null) throw new Exception("Profile with userId (" + userId + ") doesn't exist.");
+            return profile.WeeklyReviews.OrderByDescending(wr => wr.TimeGenerated).FirstOrDefault();
+        }
+
         public Dictionary<Profile, List<ProfileAlert>> SendWeeklyReviews()
         {
             // Get all profiles with at least 1 read profilealert from last week
@@ -338,9 +346,9 @@ namespace PB.BL
 
                 profileAlertsByDate.Values.ToList().ForEach(v =>
                 {
-                    if (v.Count > 1)
+                    if (v.Count > 0)
                     {
-                        profileAlerts.Add(v[random.Next(0, v.Count - 1)]);
+                        profileAlerts.Add(v[random.Next(0, v.Count)]);
                     }
                 });
 
@@ -365,7 +373,8 @@ namespace PB.BL
                 StringBuilder sbBody = new StringBuilder(GmailSender.WeeklyReviewBody);
                 sbBody.Replace(GmailSender.DefaultUsernameSubstring, p.UserData.FirstName ?? p.UserName);
                 StringBuilder sb = new StringBuilder();
-                profileAlerts.OrderByDescending(pa => pa.TimeStamp).ToList().ForEach(pa =>
+                profileAlerts = profileAlerts.OrderByDescending(pa => pa.TimeStamp).ToList();
+                profileAlerts.ForEach(pa =>
                 {
                     StringBuilder sbItem = new StringBuilder(GmailSender.WeeklyReviewListItem);
                     sbItem.Replace(GmailSender.WeeklyReviewListItemIconSubstring, "https://integratieproject.azurewebsites.net" + pa.Alert.Item.IconURL.Substring(1) ?? GmailSender.DefaultItemIcon);
@@ -403,13 +412,21 @@ namespace PB.BL
                 {
                     TopPersonId = person.ItemId,
                     Profile = profileAlerts[0].Profile,
-                    TimeGenerated = DateTime.Now
+                    TimeGenerated = DateTime.Now,
+                    TopPersonText = person.Name + " is tijdens de afgelopen week " + person.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-14)).Count + " aantal keer het onderwerp geweest in iemand zijn/haar tweet.",
+                    WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlert>()
                 };
-                p.WeeklyReviews.Add(weeklyReview);
                 profileAlerts.ForEach(pa =>
                 {
-                    pa.WeeklyReviews.Add(weeklyReview);
+                    WeeklyReviewProfileAlert weeklyReviewProfileAlerts = new WeeklyReviewProfileAlert()
+                    {
+                        ProfileAlert = pa,
+                        WeeklyReview = weeklyReview
+                    };
+                    pa.WeeklyReviewsProfileAlerts.Add(weeklyReviewProfileAlerts);
+                    weeklyReview.WeeklyReviewsProfileAlerts.Add(weeklyReviewProfileAlerts);
                 });
+                p.WeeklyReviews.Add(weeklyReview);
             });
 
             // Persist changed profiles
@@ -464,7 +481,7 @@ namespace PB.BL
                             Profile = profile,
                             IsRead = false,
                             TimeStamp = DateTime.Now,
-                            WeeklyReviews = new List<WeeklyReview>()
+                            WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlert>()
                         };
 
                         if (!alert.ProfileAlerts.Contains(profileAlert) && !profile.ProfileAlerts.Contains(profileAlert))
@@ -538,7 +555,7 @@ namespace PB.BL
                     Profile = profile,
                     IsRead = false,
                     TimeStamp = DateTime.Now,
-                    WeeklyReviews = new List<WeeklyReview>()
+                    WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlert>()
                 };
 
                 if (!a.ProfileAlerts.Contains(profileAlert) && !profile.ProfileAlerts.Contains(profileAlert))
