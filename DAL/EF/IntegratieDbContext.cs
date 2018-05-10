@@ -117,6 +117,16 @@ namespace PB.DAL.EF
                 .WithMany(s => s.Items)
                 .Map(m => { m.ToTable("tblSubplatformItem"); });
 
+            modelBuilder.Entity<Theme>()
+                .HasMany(t => t.Persons)
+                .WithMany(p => p.Themes)
+                .Map(m => { m.ToTable("tblPersonThemes"); });
+
+            modelBuilder.Entity<Theme>()
+                .HasMany(t => t.Organisations)
+                .WithMany(o => o.Themes)
+                .Map(m => { m.ToTable("tblOrganisationThemes"); });
+
             modelBuilder.Entity<Record>()
                 .HasMany(r => r.Mentions)
                 .WithMany(m => m.Records)
@@ -142,11 +152,6 @@ namespace PB.DAL.EF
                 .WithMany(r => r.Persons)
                 .Map(m => { m.ToTable("tblPersonRecords"); });
 
-            modelBuilder.Entity<Theme>()
-                .HasMany(i => i.Records)
-                .WithMany(r => r.Themes)
-                .Map(m => { m.ToTable("tblThemeRecords"); });
-
             modelBuilder.Entity<Subplatform>()
                 .HasMany(s => s.Dashboards)
                 .WithRequired(d => d.Subplatform)
@@ -161,6 +166,18 @@ namespace PB.DAL.EF
 
             //modelBuilder.Entity<SubplatformSetting>()
             //    .HasKey(ss => new { ss.SubplatformId, ss.SettingName });
+
+            modelBuilder.Entity<Subplatform>()
+                .HasMany(s => s.Pages)
+                .WithRequired(p => p.Subplatform)
+                .HasForeignKey(p => p.SubplatformId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Page>()
+                .HasMany(p => p.Tags)
+                .WithRequired(t => t.Page)
+                .HasForeignKey(t => t.PageId)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Dashboard>()
                 .HasMany(d => d.Zones)
@@ -190,7 +207,24 @@ namespace PB.DAL.EF
         public override int SaveChanges()
         {
             if (delaySave) return -1;
-            return base.SaveChanges();
+            try
+            {
+                base.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+            }
+            return -1;
         }
 
         internal int CommitChanges()
@@ -244,6 +278,7 @@ namespace PB.DAL.EF
 
         public DbSet<UserData> UserData { get; set; }
         public DbSet<UserSetting> UserSettings { get; set; }
+        public DbSet<ProfileAlert> ProfileAlerts { get; set; }
         public DbSet<Alert> Alerts { get; set; }
 
         public DbSet<Comparison> Comparisons { get; set; }

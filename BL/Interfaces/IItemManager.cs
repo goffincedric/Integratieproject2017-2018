@@ -21,15 +21,22 @@ namespace PB.BL.Interfaces
         Theme AddTheme(string themeName, string description, string iconUrl, bool isTrending = false, Subplatform subplatform = null);
         void ChangeItem(Item item);
         void ChangeItems(List<Item> items);
+        void ChangePerson(Person person);
+        void ChangeTheme(Theme theme);
+        void ChangeOrganisation(Organisation organisation);
+        void ChangeKeyword(Keyword keyword); 
         void RemoveItem(int itemId);
         void RemoveItem(int itemId, Subplatform subplatform);
 
         IEnumerable<Person> GetPersons();
         IEnumerable<Organisation> GetOrganisations();
         IEnumerable<Theme> GetThemes();
-        IEnumerable<Keyword> GetKeywords();
 
+        
         Keyword AddKeyword(string name, List<Item> items = null);
+        IEnumerable<Keyword> GetKeywords();
+        IEnumerable<Keyword> GetKeywords(int itemId);
+        Keyword GetKeyword(int keywordId);
         void RemoveKeyword(int keywordId);
 
         IEnumerable<Record> GetRecords();

@@ -11,10 +11,11 @@
             <th>@Html.DisplayNameFor(model => model.Name)</th>
             <th>@Html.DisplayNameFor(model => model.IconURL)</th>
             <th>@Html.DisplayNameFor(model => model.SocialMediaLink)</th>
+            <th>@Html.DisplayNameFor(model=> model.IsTrending)</th>
             <th>@Html.DisplayNameFor(model => model.Organisation)</th>
             <th>@Html.DisplayNameFor(model => model.Function)</th>
             <th>@Html.DisplayNameFor(model => model.Gemeente)</th>
-            <th>CRUD</th>
+            <th>Tools</th>
 
           </tr>
         </thead>
@@ -22,11 +23,13 @@
         <tbody>
           @foreach (var item in Model)
           {
+              
           <tr>
             <td>@Html.DisplayFor(modelItem => item.ItemId)</td>
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
             <td>@Html.DisplayFor(modelItem => item.IconURL)</td>
             <td>@Html.DisplayFor(modelItem => item.SocialMediaLink)</td>
+            <td>@(item.IsTrending ? "Yes" : "No")</td>
             <td>@Html.DisplayFor(modelItem => item.Organisation.Name)</td>
             <td>@Html.DisplayFor(modelItem => item.Function.Name)</td>
             <td>@Html.DisplayFor(modelItem => item.Gemeente)</td>
@@ -35,7 +38,7 @@
                 @using (Html.BeginForm("DeleteItem", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
       {
           @Html.AntiForgeryToken()
-          <button class="btn btn-sm" style="margin-left: 15px">
+          <button class="btn btn-sm" style="margin-right: 15px">
             <a href="javascript:document.getElementById('delete-@item.ItemId').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
               <span style="color: #2196f3" class="fsz-sm">
                 Delete
@@ -44,18 +47,12 @@
           </button>
 }
 
-                @using (Html.BeginForm("EditPerson", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
-      {
-          @Html.AntiForgeryToken()
 
-          <button class="btn btn-sm">
-            <a href="javascript:document.getElementById('delete-@item.ItemId').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-              <span style="color: #2196f3" class="fsz-sm">
-                Edit
-              </span>
-            </a>
-          </button>
-}
+
+                <button class="btn btn-sm">
+                  @Html.ActionLink("Edit", "EditPerson", new { id = item.ItemId })
+                </button>
+
 
               </div>
             </td>
@@ -72,4 +69,8 @@
   $("document").ready(function () {
     $('#tab').DataTable();
   });
+</script>
+
+<script>
+
 </script>

@@ -96,7 +96,6 @@ namespace PB.BL
                 SubscribedProfiles = new List<Profile>(),
                 Keywords = new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>(),
-                Records = new List<Record>(),
                 People = new List<Person>()
             };
             if (subplatform != null)
@@ -155,8 +154,7 @@ namespace PB.BL
                 Comparisons = new List<Comparison>(),
                 SubscribedProfiles = new List<Profile>(),
                 Keywords = new List<Keyword>(),
-                SubPlatforms = new List<Subplatform>(),
-                Records = new List<Record>()
+                SubPlatforms = new List<Subplatform>()
             };
             if (subplatform != null)
             {
@@ -180,6 +178,36 @@ namespace PB.BL
         {
             InitNonExistingRepo();
             ItemRepo.UpdateItems(items);
+            UowManager.Save();
+        }
+
+        public void ChangeKeyword(Keyword keyword)
+        {
+            InitNonExistingRepo();
+            ItemRepo.UpdateKeyword(keyword);
+            UowManager.Save();
+        }
+
+        public void ChangeOrganisation(Organisation organisation)
+        {
+            InitNonExistingRepo();
+            ItemRepo.UpdateOrganisation(organisation);
+            UowManager.Save();
+        }
+
+        public void ChangeTheme(Theme theme)
+        {
+            InitNonExistingRepo();
+            ItemRepo.UpdateTheme(theme);
+            UowManager.Save();
+        }
+
+
+
+        public void ChangePerson(Person person)
+        {
+            InitNonExistingRepo();
+            ItemRepo.UpdatePerson(person);
             UowManager.Save();
         }
 
@@ -226,6 +254,8 @@ namespace PB.BL
             Person item = ItemRepo.ReadPerson(itemId);
             return item;
         }
+
+
 
         public IEnumerable<Theme> GetThemes()
         {
@@ -411,16 +441,33 @@ namespace PB.BL
         {
             return ItemRepo.ReadKeywords();
         }
+
+        public IEnumerable<Keyword> GetKeywords(int itemId)
+        {
+            InitNonExistingRepo();
+            IEnumerable<Keyword> keywords = ItemRepo.ReadKeywords().Where(k => k.Items.FindAll(i => i.ItemId == itemId).Count > 0);
+            return keywords;
+        }
+
+        public Keyword GetKeyword(int keywordId)
+        {
+            InitNonExistingRepo();
+            Keyword keyword = ItemRepo.ReadKeyword(keywordId);
+            return keyword;
+        }
         #endregion
 
         public void SyncDatabase(Subplatform subplatform)
         {
-            // Set IsSyncing field
             SyncDatabaseAsync(subplatform).Wait();
         }
 
         public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
         {
+            // Set IsSyncing flag
+            IsSyncing = true;
+
+
             InitNonExistingRepo();
 
             // Validation

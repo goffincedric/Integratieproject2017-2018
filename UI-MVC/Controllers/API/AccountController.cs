@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -95,7 +96,7 @@ namespace UI_MVC.Controllers.API
         {
             Subplatform subplatform = SubplatformMgr.GetSubplatform(subplatformUrl);
             if (subplatform is null) return BadRequest();
-            List<ProfileAlert> profileAlerts = UserManager.GetProfileAlerts(subplatform, UserManager.GetProfile(User.Identity.GetUserName()));
+            List<ProfileAlert> profileAlerts = UserManager.GetProfileAlerts(subplatform, UserManager.GetProfile(RequestContext.Principal.Identity.GetUserId()));
             if (profileAlerts.Count == 0) return NotFound();
             return Ok(profileAlerts);
         }
@@ -142,7 +143,7 @@ namespace UI_MVC.Controllers.API
             if (profiles == null) return NotFound();
             Dictionary<DateTime, int> profileRate = new Dictionary<DateTime, int>();
 
-            profileRate = profiles.GroupBy(r => r.CreatedOn.Date).OrderByDescending(r => r.Key)
+            profileRate = profiles.GroupBy(r => r.CreatedOn.Date).OrderBy(r => r.Key)
             .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
             if (profileRate == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(profileRate);

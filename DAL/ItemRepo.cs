@@ -18,7 +18,6 @@ namespace PB.DAL
         public ItemRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-            //Console.WriteLine("UOW MADE ITEMREPO");
         }
 
         public Item CreateItem(Item item)
@@ -34,7 +33,7 @@ namespace PB.DAL
             ctx.SaveChanges();
             return items;
         }
-
+        
         public void DeleteItem(int itemId)
         {
             Item item = ReadItem(itemId);
@@ -72,6 +71,7 @@ namespace PB.DAL
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
                 .Include(i => i.Comparisons)
+                .Include(i => i.Organisation)
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
@@ -84,13 +84,13 @@ namespace PB.DAL
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
                 .Include(i => i.Comparisons)
+                .Include(i => i.Organisation)
                 .AsEnumerable();
         }
 
         public Organisation ReadOrganisation(int itemId)
         {
             return ctx.Organisations
-                .Include(o => o.Records)
                 .Include(o => o.SubPlatforms)
                 .Include(o => o.People)
                 .Include(o => o.Keywords)
@@ -103,7 +103,6 @@ namespace PB.DAL
         public IEnumerable<Organisation> ReadOrganisations()
         {
             return ctx.Organisations
-                .Include(o => o.Records)
                 .Include(o => o.SubPlatforms)
                 .Include(o => o.People)
                 .Include(o => o.Keywords)
@@ -116,7 +115,6 @@ namespace PB.DAL
         public Theme ReadTheme(int itemId)
         {
             return ctx.Themes
-                .Include(t => t.Records)
                 .Include(t => t.SubPlatforms)
                 .Include(t => t.Keywords)
                 .Include(t => t.SubscribedProfiles)
@@ -128,7 +126,6 @@ namespace PB.DAL
         public IEnumerable<Theme> ReadThemes()
         {
             return ctx.Themes
-                .Include(t => t.Records)
                 .Include(t => t.SubPlatforms)
                 .Include(t => t.Keywords)
                 .Include(t => t.SubscribedProfiles)
@@ -145,6 +142,17 @@ namespace PB.DAL
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
                 .Include(i => i.Comparisons)
+                .Concat(
+                    ctx.Items.OfType<Person>()
+                )
+                .Concat(
+                    ctx.Items
+                    .OfType<Theme>()
+                )
+                .Concat(
+                    ctx.Items
+                    .OfType<Organisation>()
+                )
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
@@ -156,12 +164,14 @@ namespace PB.DAL
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
                 .Include(i => i.Comparisons)
-                .OfType<Person>()
-                .Concat<Item>(
+                .Concat(
+                    ctx.Items.OfType<Person>()
+                )
+                .Concat(
                     ctx.Items
                     .OfType<Theme>()
                 )
-                .Concat<Item>(
+                .Concat(
                     ctx.Items
                     .OfType<Organisation>()
                 )
@@ -186,6 +196,33 @@ namespace PB.DAL
             {
                 ctx.Items.Attach(item);
             });
+            ctx.SaveChanges();
+        }
+
+        public void UpdatePerson(Person person)
+        {
+            ctx.Persons.Attach(person);
+            ctx.Entry(person).State = EntityState.Modified;
+            ctx.SaveChanges();
+        }
+
+        public void UpdateKeyword(Keyword keyword)
+        {
+            ctx.Keywords.Attach(keyword);
+            ctx.Entry(keyword).State = EntityState.Modified;
+            ctx.SaveChanges();
+        }
+        public void UpdateTheme(Theme theme)
+        {
+            ctx.Themes.Attach(theme);
+            ctx.Entry(theme).State = EntityState.Modified;
+            ctx.SaveChanges();
+
+        }
+        public void UpdateOrganisation(Organisation organisation)
+        {
+            ctx.Organisations.Attach(organisation);
+            ctx.Entry(organisation).State = EntityState.Modified;
             ctx.SaveChanges();
         }
 

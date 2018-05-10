@@ -22,15 +22,14 @@ namespace PB.BL.Domain.Platform
         public Style Style { get; set; }
 
         public List<SubplatformSetting> Settings { get; set; }
-        public List<Page> Pages { get; set; }
         public List<Profile> Admins { get; set; }
         public List<Item> Items { get; set; }
         public List<Dashboard> Dashboards { get; set; }
+        public List<Page> Pages { get; set; }
 
         public override bool Equals(object obj)
         {
-            var subplatform = obj as Subplatform;
-            if (subplatform == null) return false;
+            if (!(obj is Subplatform subplatform)) return false;
             if (subplatform.URL.ToLower().Equals(URL.ToLower()) || 
                 subplatform.SubplatformId == SubplatformId) return true;
             return false;

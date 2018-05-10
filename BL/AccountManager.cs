@@ -537,7 +537,8 @@ namespace PB.BL
                     UserId = profile.Id,
                     Profile = profile,
                     IsRead = false,
-                    TimeStamp = DateTime.Now
+                    TimeStamp = DateTime.Now,
+                    WeeklyReviews = new List<WeeklyReview>()
                 };
 
                 if (!a.ProfileAlerts.Contains(profileAlert) && !profile.ProfileAlerts.Contains(profileAlert))
@@ -566,6 +567,21 @@ namespace PB.BL
             List<ProfileAlert> profileAlerts = new List<ProfileAlert>();
 
             profileAlerts.AddRange(profile.ProfileAlerts.FindAll(pa => pa.Alert.Item.SubPlatforms.Contains(subplatform)));
+
+            profileAlerts.Sort(delegate (ProfileAlert x, ProfileAlert y)
+            {
+                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
+                else if (x.TimeStamp == null) return -1;
+                else if (y.TimeStamp == null) return 1;
+                else return y.TimeStamp.CompareTo(x.TimeStamp);
+            });
+
+            return profileAlerts;
+        }
+
+        public List<ProfileAlert> GetProfileAlerts(Subplatform subplatform, string userId)
+        {
+            List<ProfileAlert> profileAlerts = AlertRepo.ReadProfileAlerts(userId).ToList().Where(pa => pa.Alert.Item.SubPlatforms.Contains(subplatform)).ToList();
 
             profileAlerts.Sort(delegate (ProfileAlert x, ProfileAlert y)
             {
