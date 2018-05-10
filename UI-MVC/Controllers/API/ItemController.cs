@@ -260,6 +260,7 @@ namespace UI_MVC.Controllers.API
             List<Record> records = null; 
             if(item is Person person)
             {
+                
                 records.AddRange(person.Records.ToList());
             }
             else if(item is Organisation organisation)
@@ -342,14 +343,12 @@ namespace UI_MVC.Controllers.API
             return NotFound();
         }
 
-<<<<<<< HEAD
+
 
         #endregion
 
 
 
-=======
->>>>>>> master
         [HttpGet]
         public IHttpActionResult GetTrendingHashtagsCount(int id)
         {
