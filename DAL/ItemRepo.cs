@@ -142,6 +142,8 @@ namespace PB.DAL
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
                 .Include(i => i.Comparisons)
+                .OfType<Person>()
+                .Include(p => p.Records)
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
@@ -158,7 +160,7 @@ namespace PB.DAL
                     ctx.Items
                     .OfType<Theme>()
                 )
-                .Concat<Item>(
+                .Concat(
                     ctx.Items
                     .OfType<Organisation>()
                 )

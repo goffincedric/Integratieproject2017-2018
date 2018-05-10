@@ -255,7 +255,7 @@ namespace PB.BL
             return item;
         }
 
-       
+
 
         public IEnumerable<Theme> GetThemes()
         {
@@ -442,10 +442,17 @@ namespace PB.BL
             return ItemRepo.ReadKeywords();
         }
 
-        public Keyword GetKeyword(int itemId)
+        public IEnumerable<Keyword> GetKeywords(int itemId)
         {
             InitNonExistingRepo();
-            Keyword keyword = ItemRepo.ReadKeyword(itemId);
+            IEnumerable<Keyword> keywords = ItemRepo.ReadKeywords().Where(k => k.Items.FindAll(i => i.ItemId == itemId).Count > 0);
+            return keywords;
+        }
+
+        public Keyword GetKeyword(int keywordId)
+        {
+            InitNonExistingRepo();
+            Keyword keyword = ItemRepo.ReadKeyword(keywordId);
             return keyword;
         }
         #endregion
