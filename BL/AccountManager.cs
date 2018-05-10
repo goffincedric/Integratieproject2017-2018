@@ -365,7 +365,8 @@ namespace PB.BL
                 StringBuilder sbBody = new StringBuilder(GmailSender.WeeklyReviewBody);
                 sbBody.Replace(GmailSender.DefaultUsernameSubstring, p.UserData.FirstName ?? p.UserName);
                 StringBuilder sb = new StringBuilder();
-                profileAlerts.OrderByDescending(pa => pa.TimeStamp).ToList().ForEach(pa =>
+                profileAlerts = profileAlerts.OrderByDescending(pa => pa.TimeStamp).ToList();
+                profileAlerts.ForEach(pa =>
                 {
                     StringBuilder sbItem = new StringBuilder(GmailSender.WeeklyReviewListItem);
                     sbItem.Replace(GmailSender.WeeklyReviewListItemIconSubstring, "https://integratieproject.azurewebsites.net" + pa.Alert.Item.IconURL.Substring(1) ?? GmailSender.DefaultItemIcon);
@@ -403,13 +404,20 @@ namespace PB.BL
                 {
                     TopPersonId = person.ItemId,
                     Profile = profileAlerts[0].Profile,
-                    TimeGenerated = DateTime.Now
+                    TimeGenerated = DateTime.Now,
+                    WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlerts>()
                 };
-                p.WeeklyReviews.Add(weeklyReview);
                 profileAlerts.ForEach(pa =>
                 {
-                    pa.WeeklyReviews.Add(weeklyReview);
+                    WeeklyReviewProfileAlerts weeklyReviewProfileAlerts = new WeeklyReviewProfileAlerts()
+                    {
+                        ProfileAlert = pa,
+                        WeeklyReview = weeklyReview
+                    };
+                    pa.WeeklyReviewsProfileAlerts.Add(weeklyReviewProfileAlerts);
+                    weeklyReview.WeeklyReviewsProfileAlerts.Add(weeklyReviewProfileAlerts);
                 });
+                p.WeeklyReviews.Add(weeklyReview);
             });
 
             // Persist changed profiles
@@ -464,7 +472,7 @@ namespace PB.BL
                             Profile = profile,
                             IsRead = false,
                             TimeStamp = DateTime.Now,
-                            WeeklyReviews = new List<WeeklyReview>()
+                            WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlerts>()
                         };
 
                         if (!alert.ProfileAlerts.Contains(profileAlert) && !profile.ProfileAlerts.Contains(profileAlert))
@@ -538,7 +546,7 @@ namespace PB.BL
                     Profile = profile,
                     IsRead = false,
                     TimeStamp = DateTime.Now,
-                    WeeklyReviews = new List<WeeklyReview>()
+                    WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlerts>()
                 };
 
                 if (!a.ProfileAlerts.Contains(profileAlert) && !profile.ProfileAlerts.Contains(profileAlert))

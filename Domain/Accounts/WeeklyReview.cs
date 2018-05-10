@@ -22,5 +22,8 @@ namespace Domain.Accounts
         public DateTime TimeGenerated { get; set; }
         [Required]
         public Profile Profile { get; set; }
+
+        [Required]
+        public List<WeeklyReviewProfileAlerts> WeeklyReviewsProfileAlerts { get; set; }
     }
 }

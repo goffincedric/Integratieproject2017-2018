@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Domain.Accounts;
+using Microsoft.AspNet.Identity.EntityFramework;
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
@@ -89,7 +90,22 @@ namespace PB.DAL.EF
                 .WithRequired(w => w.Profile)
                 .HasForeignKey(w => w.UserId)
                 .WillCascadeOnDelete(true);
-            
+
+            modelBuilder.Entity<WeeklyReview>()
+                .HasMany(wr => wr.WeeklyReviewsProfileAlerts)
+                .WithRequired(wrpa => wrpa.WeeklyReview)
+                .HasForeignKey(wrpa => wrpa.WeeklyReviewId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<WeeklyReviewProfileAlerts>()
+                .HasKey(wrpa => new { wrpa.WeeklyReviewId, wrpa.ProfileAlertId });
+
+            modelBuilder.Entity<ProfileAlert>()
+                .HasMany(pa => pa.WeeklyReviewsProfileAlerts)
+                .WithRequired(wrpa => wrpa.ProfileAlert)
+                .HasForeignKey(wrpa => wrpa.ProfileAlertId)
+                .WillCascadeOnDelete(true);
+
             modelBuilder.Entity<Alert>()
                 .HasMany(a => a.ProfileAlerts)
                 .WithRequired(pa => pa.Alert)
@@ -278,6 +294,7 @@ namespace PB.DAL.EF
 
         public DbSet<UserData> UserData { get; set; }
         public DbSet<UserSetting> UserSettings { get; set; }
+        public DbSet<WeeklyReview> WeeklyReviews { get; set; }
         public DbSet<ProfileAlert> ProfileAlerts { get; set; }
         public DbSet<Alert> Alerts { get; set; }
 
@@ -306,5 +323,6 @@ namespace PB.DAL.EF
         public DbSet<Subplatform> Subplatforms { get; set; }
         public DbSet<SubplatformSetting> SubplatformSettings { get; set; }
         public DbSet<Tag> Tags { get; set; }
+
     }
 }

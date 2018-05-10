@@ -41,7 +41,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -390,6 +390,7 @@
     <Content Include="Views\Item\EditOrganisation.cshtml" />
     <Content Include="Views\Item\EditKeyword.cshtml" />
     <Content Include="Views\Item\EditTheme.cshtml" />
+    <Content Include="Views\Account\WeeklyReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
