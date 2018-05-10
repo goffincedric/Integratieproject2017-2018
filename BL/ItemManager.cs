@@ -96,7 +96,6 @@ namespace PB.BL
                 SubscribedProfiles = new List<Profile>(),
                 Keywords = new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>(),
-                Records = new List<Record>(),
                 People = new List<Person>()
             };
             if (subplatform != null)
@@ -155,8 +154,7 @@ namespace PB.BL
                 Comparisons = new List<Comparison>(),
                 SubscribedProfiles = new List<Profile>(),
                 Keywords = new List<Keyword>(),
-                SubPlatforms = new List<Subplatform>(),
-                Records = new List<Record>()
+                SubPlatforms = new List<Subplatform>()
             };
             if (subplatform != null)
             {
@@ -454,12 +452,15 @@ namespace PB.BL
 
         public void SyncDatabase(Subplatform subplatform)
         {
-            // Set IsSyncing field
             SyncDatabaseAsync(subplatform).Wait();
         }
 
         public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
         {
+            // Set IsSyncing flag
+            IsSyncing = true;
+
+
             InitNonExistingRepo();
 
             // Validation

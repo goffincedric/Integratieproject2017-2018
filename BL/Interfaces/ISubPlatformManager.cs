@@ -14,26 +14,24 @@ namespace PB.BL.Interfaces
         void ChangeSubplatform(Subplatform subplatform);
         void RemoveSubplatform(int subplatformId);
 
-        SubplatformSetting AddSubplatformSetting(Setting.Platform setting, int subplatformId, bool isEnabled, );
-        void ChangeSubplatformSetting(SubplatformSetting subplatformSetting);
+        SubplatformSetting AddSubplatformSetting(Setting.Platform settingName, int subplatformId, string value, bool isEnabled);
+        void ChangeSubplatformSetting(string subplatformURL, SubplatformSetting subplatformSetting);
 
         IEnumerable<Page> GetPages();
         IEnumerable<Page> GetPages(string subplatformUrl);
-        Page AddPage(string subplatformUrl, string pageName, string title);
+        Page AddPage(int subplatformId, string pageName, string title);
         Page GetPage(int pageId);
         void ChangePage(Page page);
         void RemovePage(int pageId);
 
         IEnumerable<Tag> GetTags();
         IEnumerable<Tag> GetTags(int pageId);
-        Page AddTag(int pageId, string cssName, string nameObject, string text);
-        Page GetTag(int tagId);
+        Tag AddTag(int pageId, string cssName, string nameObject, string text);
+        Tag GetTag(int tagId);
         void ChangeTag(Tag tag);
         void RemoveTag(int tagId);
 
         void AddAdmin(int subplatformId, Profile admin);
         void RemoveAdmin(int subplatformId, Profile admin);
-
-        Page AddPage(int subplatformId, string pageName, string title);
     }
 }

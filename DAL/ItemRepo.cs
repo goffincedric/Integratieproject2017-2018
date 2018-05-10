@@ -18,7 +18,6 @@ namespace PB.DAL
         public ItemRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-            //Console.WriteLine("UOW MADE ITEMREPO");
         }
 
         public Item CreateItem(Item item)
@@ -34,7 +33,7 @@ namespace PB.DAL
             ctx.SaveChanges();
             return items;
         }
-
+        
         public void DeleteItem(int itemId)
         {
             Item item = ReadItem(itemId);
@@ -92,7 +91,6 @@ namespace PB.DAL
         public Organisation ReadOrganisation(int itemId)
         {
             return ctx.Organisations
-                .Include(o => o.Records)
                 .Include(o => o.SubPlatforms)
                 .Include(o => o.People)
                 .Include(o => o.Keywords)
@@ -105,7 +103,6 @@ namespace PB.DAL
         public IEnumerable<Organisation> ReadOrganisations()
         {
             return ctx.Organisations
-                .Include(o => o.Records)
                 .Include(o => o.SubPlatforms)
                 .Include(o => o.People)
                 .Include(o => o.Keywords)
@@ -118,7 +115,6 @@ namespace PB.DAL
         public Theme ReadTheme(int itemId)
         {
             return ctx.Themes
-                .Include(t => t.Records)
                 .Include(t => t.SubPlatforms)
                 .Include(t => t.Keywords)
                 .Include(t => t.SubscribedProfiles)
@@ -130,7 +126,6 @@ namespace PB.DAL
         public IEnumerable<Theme> ReadThemes()
         {
             return ctx.Themes
-                .Include(t => t.Records)
                 .Include(t => t.SubPlatforms)
                 .Include(t => t.Keywords)
                 .Include(t => t.SubscribedProfiles)
