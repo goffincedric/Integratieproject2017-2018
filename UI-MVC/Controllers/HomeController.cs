@@ -133,6 +133,7 @@ namespace UI_MVC.Controllers
             ViewBag.TotalThemes = itemMgr.GetThemesCount().ToString();
             ViewBag.TotalKeywords = itemMgr.GetKeywordsCount().ToString();
             ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
+            ViewBag.IsSyncing = ItemManager.IsSyncing;
             return View();
         }
 
@@ -210,8 +211,10 @@ namespace UI_MVC.Controllers
             {
                 //int? count          = theme.Records.Count();
                 //ViewBag.Associaties = (count is null) ? 0 : count;
-                int? count            = theme.Records.Count();
-                ViewBag.Associaties   = (count is null) ? 0 : count;
+                
+                //int? count            = theme.Records.Count();
+                //ViewBag.Associaties   = (count is null) ? 0 : count;
+
                 ViewBag.Keywords      = theme.Keywords.ToList();
             }
             ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));
@@ -283,7 +286,9 @@ namespace UI_MVC.Controllers
                 SubplatformManager subplatformManager = new SubplatformManager(unitOfWorkManager);
                 ItemManager itemManager = new ItemManager(unitOfWorkManager);
                 Subplatform sp = subplatformManager.GetSubplatform(subplatform);
-                itemManager.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(new System.Action(() => ItemManager.IsSyncing = false));
+                itemManager.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(new System.Action(() => {
+                    ItemManager.IsSyncing = false;
+                }));
             }
             return RedirectToAction("PlatformSettings", "Home");
         }
