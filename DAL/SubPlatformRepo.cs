@@ -1,4 +1,5 @@
 ﻿using PB.BL.Domain.Platform;
+using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace PB.DAL
             ctx = uow.Context;
         }
 
+        #region Subplatform
         public Subplatform CreateSubplatform(Subplatform subplatform)
         {
             ctx.Subplatforms.Add(subplatform);
@@ -97,7 +99,9 @@ namespace PB.DAL
             ctx.Entry(subplatform).State = EntityState.Modified;
             ctx.SaveChanges();
         }
+        #endregion
 
+        #region Subplatformsetting
         public SubplatformSetting CreateSubplatformSetting(SubplatformSetting subplatformSetting)
         {
             subplatformSetting = ctx.SubplatformSettings.Add(subplatformSetting);
@@ -121,6 +125,31 @@ namespace PB.DAL
             }
             return subplatformSetting;
         }
+        
+        public IEnumerable<SubplatformSetting> ReadSubplatformSettings()
+        {
+            return ctx.SubplatformSettings
+                .Include(ss => ss.Subplatform)
+                .Include(ss => ss.SettingName)
+                .AsEnumerable();
+        }
+
+        public IEnumerable<SubplatformSetting> ReadSubplatformSettings(string subplatformUrl)
+        {
+            return ctx.SubplatformSettings
+                .Include(ss => ss.Subplatform)
+                .Include(ss => ss.SettingName)
+                .Where(ss => ss.Subplatform.URL.Equals(subplatformUrl))
+                .AsEnumerable();
+        }
+
+        public SubplatformSetting ReadSubplatformSetting(Setting.Platform settingName, int subplatformId)
+        {
+            return ctx.SubplatformSettings
+                .Include(ss => ss.Subplatform)
+                .Include(ss => ss.SettingName)
+                .FirstOrDefault(ss => ss.SettingName.Equals(settingName) && ss.Subplatform.SubplatformId == subplatformId);
+        }
 
         public void UpdateSubplatformSetting(SubplatformSetting subplatformSetting)
         {
@@ -128,12 +157,23 @@ namespace PB.DAL
             ctx.Entry(subplatformSetting).State = EntityState.Modified;
             ctx.SaveChanges();
         }
+        #endregion
 
+        #region Page
         public IEnumerable<Page> ReadPages()
         {
             return ctx.Pages
                 .Include(p => p.Tags)
                 .Include(p => p.Subplatform)
+                .AsEnumerable();
+        }
+        
+        public IEnumerable<Page> ReadPages(string subplatformUrl)
+        {
+            return ctx.Pages
+                .Include(p => p.Tags)
+                .Include(p => p.Subplatform)
+                .Where(p => p.Subplatform.URL.Equals(subplatformUrl))
                 .AsEnumerable();
         }
 
@@ -185,11 +225,21 @@ namespace PB.DAL
                 ctx.SaveChanges();
             }
         }
+        #endregion
 
+        #region Tag
         public IEnumerable<Tag> ReadTags()
         {
             return ctx.Tags
                 .Include(t => t.Page)
+                .AsEnumerable();
+        }
+
+        public IEnumerable<Tag> ReadTags(int pageId)
+        {
+            return ctx.Tags
+                .Include(t => t.Page)
+                .Where(t => t.PageId == pageId)
                 .AsEnumerable();
         }
 
@@ -240,5 +290,6 @@ namespace PB.DAL
                 ctx.SaveChanges();
             }
         }
+        #endregion
     }
 }

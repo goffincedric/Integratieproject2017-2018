@@ -1,13 +1,12 @@
 ﻿@model PB.BL.Domain.Items.Keyword
 
 @{
-  ViewBag.Title = "EditKeyword";
+  ViewBag.Title = "Edit Keyword";
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>EditKeyword</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditKeyword", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
   @Html.AntiForgeryToken()
 

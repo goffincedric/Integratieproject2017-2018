@@ -537,7 +537,8 @@ namespace PB.BL
                     UserId = profile.Id,
                     Profile = profile,
                     IsRead = false,
-                    TimeStamp = DateTime.Now
+                    TimeStamp = DateTime.Now,
+                    WeeklyReviews = new List<WeeklyReview>()
                 };
 
                 if (!a.ProfileAlerts.Contains(profileAlert) && !profile.ProfileAlerts.Contains(profileAlert))

@@ -42,11 +42,6 @@ namespace PB.BL
                     if (uowManager == null)
                     {
                         uowManager = new UnitOfWorkManager();
-                        //Console.WriteLine("UOW MADE IN SUBPLATFORM MANAGER");
-                    }
-                    else
-                    {
-                        //Console.WriteLine("uo bestaat al");
                     }
 
                     SubplatformRepo = new SubplatformRepo(uowManager.UnitOfWork);
@@ -54,13 +49,11 @@ namespace PB.BL
                 else
                 {
                     SubplatformRepo = new SubplatformRepo();
-                    //Console.WriteLine("OLD WAY REPO SUBPLATFORMMGR");
                 }
             }
         }
 
         #region Subplatform
-
         public IEnumerable<Subplatform> GetSubplatforms()
         {
             InitNonExistingRepo();
@@ -161,11 +154,30 @@ namespace PB.BL
         #endregion
 
         #region Subplatformsettings
+        public SubplatformSetting AddSubplatformSetting(Setting.Platform settingName, int subplatformId, string value, bool isEnabled = false)
+        {
+            InitNonExistingRepo();
+            Subplatform subplatform = SubplatformRepo.ReadSubplatform(subplatformId);
+            if (subplatform == null) throw new Exception("Subplatform with id (" + subplatformId + ") doesn't exist"); //Subplatform bestaat niet
+            SubplatformSetting subplatformSetting = new SubplatformSetting()
+            {
+                SettingName = settingName,
+                Subplatform = subplatform,
+                Value = value,
+                IsEnabled = isEnabled
+            };
+
+            subplatformSetting = SubplatformRepo.CreateSubplatformSetting(subplatformSetting);
+            uowManager.Save();
+            return subplatformSetting;
+        }
+
         public void ChangeSubplatformSetting(string subplatformURL, SubplatformSetting setting)
         {
             InitNonExistingRepo();
             Subplatform subplatform = GetSubplatform(subplatformURL);
             if (subplatform == null) throw new Exception("Subplatform with subplatformurl (" + subplatformURL + ") doesn't exist");
+            if (setting.SubplatformId != subplatform.SubplatformId) throw new Exception("Setting doesn't have same subplatform anymore. Settings cannot be removed from subplatforms, only disabled.");
             if (!subplatform.Settings.Contains(setting))
             {
                 subplatform.Settings.Add(setting);
@@ -183,27 +195,104 @@ namespace PB.BL
         public Page AddPage(int subplatformId, string pageName, string title)
         {
             InitNonExistingRepo();
+            Subplatform subplatform = SubplatformRepo.ReadSubplatform(subplatformId);
+            if (subplatform == null) throw new Exception("Subplatform with subplatformId (" + subplatformId + ") doesn't exist");
             Page page = new Page()
             {
                 Title = title,
                 PageName = pageName,
-                Tags = new List<Tag>()
+                Tags = new List<Tag>(),
+                Subplatform = subplatform
             };
-            return AddPage(subplatformId, page);
-        }
-
-        private Page AddPage(int subplatformId, Page page)
-        {
-            InitNonExistingRepo();
-            Subplatform subplatform = SubplatformRepo.ReadSubplatform(subplatformId);
             subplatform.Pages.Add(page);
-
-            SubplatformRepo.UpdateSubplatform(subplatform);
+            page = SubplatformRepo.CreatePage(page);
             uowManager.Save();
             return page;
         }
+
+        public IEnumerable<Page> GetPages()
+        {
+            InitNonExistingRepo();
+            return SubplatformRepo.ReadPages();
+        }
+
+        public IEnumerable<Page> GetPages(string subplatformUrl)
+        {
+            InitNonExistingRepo();
+            return SubplatformRepo.ReadPages(subplatformUrl);
+        }
+
+        public Page GetPage(int pageId)
+        {
+            return SubplatformRepo.ReadPage(pageId);
+        }
+
+        public void ChangePage(Page page)
+        {
+            InitNonExistingRepo();
+            SubplatformRepo.UpdatePage(page);
+            uowManager.Save();
+        }
+
+        public void RemovePage(int pageId)
+        {
+            InitNonExistingRepo();
+            SubplatformRepo.DeletePage(pageId);
+            uowManager.Save();
+        }
         #endregion
 
-        
+        #region Tags
+        public IEnumerable<Tag> GetTags()
+        {
+            InitNonExistingRepo();
+            return SubplatformRepo.ReadTags();
+        }
+
+        public IEnumerable<Tag> GetTags(int pageId)
+        {
+            InitNonExistingRepo();
+            return SubplatformRepo.ReadTags(pageId);
+        }
+
+        public Tag AddTag(int pageId, string cssName, string nameObject, string text)
+        {
+            InitNonExistingRepo();
+            Page page = SubplatformRepo.ReadPage(pageId);
+            if (page == null) throw new Exception("Page with pageId (" + pageId + ") doesn't exist");
+            Tag tag = new Tag()
+            {
+                Page = page,
+                CssName = cssName,
+                NameObject = nameObject,
+                Text = text
+            };
+            page.Tags.Add(tag);
+
+            tag = SubplatformRepo.CreateTag(tag);
+            uowManager.Save();
+            return tag;
+        }
+
+        public Tag GetTag(int tagId)
+        {
+            InitNonExistingRepo();
+            return SubplatformRepo.ReadTag(tagId);
+        }
+
+        public void ChangeTag(Tag tag)
+        {
+            InitNonExistingRepo();
+            SubplatformRepo.UpdateTag(tag);
+            uowManager.Save();
+        }
+
+        public void RemoveTag(int tagId)
+        {
+            InitNonExistingRepo();
+            SubplatformRepo.DeleteTag(tagId);
+            uowManager.Save();
+        }
+        #endregion
     }
 }
