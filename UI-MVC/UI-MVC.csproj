@@ -330,6 +330,7 @@
     <Content Include="Scripts\wizard\jquery.bootstrap.js" />
     <Content Include="Scripts\wizard\jquery.validate.min.js" />
     <Content Include="Scripts\wizard\material-bootstrap-wizard.js" />
+    <Content Include="Scripts\wizard\Wizard.js" />
     <Content Include="Scripts\wordcloud\wordcloud.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

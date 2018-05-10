@@ -161,6 +161,35 @@ $(function () {
                 Wizard.hide();
             });
 
+            $('.btn-next').on('click', function () {
+                switch ($('input:checked').attr('id')) {
+                    case 'person':
+                        console.log($.ajax({
+                            async: false,
+                            type: 'GET',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/item/getperson"
+                        }).responseJSON);
+                        break;
+                    case 'organisation':
+                        console.log($.ajax({
+                            async: false,
+                            type: 'GET',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/item/getorganisation"
+                        }).responseJSON);
+                        break;
+                    case 'theme':
+                        console.log($.ajax({
+                            async: false,
+                            type: 'GET',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/item/gettheme"
+                        }).responseJSON);
+                        break;
+                }
+            })
+
             $('.btn-finish').off('click');
             $('.btn-finish').on('click', function () {
                 var GraphType = 0;

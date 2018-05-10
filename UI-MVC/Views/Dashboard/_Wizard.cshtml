@@ -12,16 +12,45 @@
                     </div>
                     <div class="wizard-navigation">
                         <ul style="line-height:35px">
-                            <li><a href="#location" data-toggle="tab">Item</a></li>
-                            <li><a href="#type" data-toggle="tab">Type</a></li>
-                            <li><a href="#facilities" data-toggle="tab">Styling</a></li>
+                            <li><a href="#location" data-toggle="tab">Onderwerp</a></li>
+                            <li><a href="#type" data-toggle="tab">Grafiek</a></li>
+                            <li><a href="#facilities" data-toggle="tab">Style</a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane" id="location">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <h4 class="info-text">Kies eerst je grafiek type en de hoeveelheid data om te vergelijken</h4>
+                                    <h4 class="info-text">Wilt u een politieker, organisatie of thema visualiseren?</h4>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Deze optie laat u politiekers visualiseren">
+                                                <input id="person" type="radio" name="type" value="BarChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">person</i>
+                                                </div>
+                                                <h6>Politieker</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Deze optie laat u orginisaties visualiseren">
+                                                <input id="organisation" type="radio" name="type" value="PieChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">group</i>
+                                                </div>
+                                                <h6>Organisatie</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Deze optie laat u themas visualiseren">
+                                                <input id="theme" type="radio" name="type" value="PieChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">palette</i>
+                                                </div>
+                                                <h6>Thema</h6>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-sm-6 col-sm-offset-1">
                                     <div class="form-group label-floating">
@@ -53,25 +82,18 @@
                                 <div class="col-sm-6 col-sm-offset-1">
                                     <input type="hidden" name="count" value="1" />
                                     <div class="row form-group">
-
-
                                         <input autocomplete="on" class=" form-control" id="field1" type="text" placeholder="Type name" />
                                         <button id="b1" class="btn add-more" type="button">+</button>
-
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="hidden" name="count" value="1" />
                                     <div class="row form-group">
-
                                         <input autocomplete="off" class="input form-control" id="field1" type="text" placeholder="Type name" /><button id="b1" class="btn add-more" type="button">+</button>
                                     </div>
-
                                 </div>
                             </div>
-
                         </div>
-
 
                         <div class="tab-pane" id="type">
                             <h4 class="info-text">Kies je type? </h4>
