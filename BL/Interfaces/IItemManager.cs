@@ -31,11 +31,12 @@ namespace PB.BL.Interfaces
         IEnumerable<Person> GetPersons();
         IEnumerable<Organisation> GetOrganisations();
         IEnumerable<Theme> GetThemes();
-        IEnumerable<Keyword> GetKeywords();
 
+        
         Keyword AddKeyword(string name, List<Item> items = null);
+        IEnumerable<Keyword> GetKeywords();
+        Keyword GetKeywords(int id);
         void RemoveKeyword(int keywordId);
-        Keyword GetKeyword(int id);
 
         IEnumerable<Record> GetRecords();
         Record GetRecord(long id);
