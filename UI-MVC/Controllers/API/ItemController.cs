@@ -6,13 +6,14 @@ using System.Net;
 using System.Web.Http;
 using Newtonsoft.Json;
 using System;
+using PB.BL.Interfaces;
 
 namespace UI_MVC.Controllers.API
 {
     public class ItemController : ApiController
     {
         private UnitOfWorkManager UowMgr;
-        private readonly ItemManager ItemMgr;
+        private readonly IItemManager ItemMgr;
 
         public ItemController()
         {
@@ -20,6 +21,7 @@ namespace UI_MVC.Controllers.API
             ItemMgr = new ItemManager(UowMgr);
         }
 
+        #region Items
         // GET: api/item/getitem
         [HttpGet]
         public IHttpActionResult GetItem()
@@ -158,6 +160,24 @@ namespace UI_MVC.Controllers.API
             ItemMgr.RemoveItem((int)id);
             return StatusCode(HttpStatusCode.NoContent);
         }
+        #endregion
+
+        #region Keywords
+        public IHttpActionResult GetKeywords()
+        {
+            IEnumerable<Keyword> keywords = ItemMgr.GetKeywords();
+            if (keywords.Count() == 0) return NotFound();
+            return Ok(keywords);
+        }
+
+        public IHttpActionResult GetKeywords(int itemId)
+        {
+            IEnumerable<Keyword> keywords = ItemMgr.GetKeywords(itemId);
+            if (keywords.Count() == 0) return NotFound();
+            return Ok(keywords);
+        }
+        #endregion
+
 
         #region records
 
@@ -182,7 +202,9 @@ namespace UI_MVC.Controllers.API
 
 
 
+
         #region RelatieveStijging
+
 
         [HttpGet]
         public IHttpActionResult GetPersonIncrease()
@@ -227,7 +249,6 @@ namespace UI_MVC.Controllers.API
             {
                 return StatusCode(HttpStatusCode.NoContent);
             }
-
         }
         #endregion
 
@@ -304,16 +325,12 @@ namespace UI_MVC.Controllers.API
                 records.SelectMany(r => r.Mentions).Distinct().OrderByDescending(m => m.Records.Count).Take(12).ToList().ForEach(p => mentions.Add(p.Name));
                 return Ok(mentions);
             }
-            else
-            {
-                return NotFound();
-            }
+            return NotFound();
         }
 
         [HttpGet]
         public IHttpActionResult GetTrendingHashtags(int id)
         {
-
             if (ItemMgr.GetItem(id) is Person)
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
@@ -322,17 +339,17 @@ namespace UI_MVC.Controllers.API
                 records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h => h.Records.Count).Take(12).ToList().ForEach(p => hashtags.Add(p.HashTag));
                 return Ok(hashtags);
             }
-            else
-            {
-                return NotFound();
-            }
+            return NotFound();
         }
 
+<<<<<<< HEAD
 
         #endregion
 
 
 
+=======
+>>>>>>> master
         [HttpGet]
         public IHttpActionResult GetTrendingHashtagsCount(int id)
         {
