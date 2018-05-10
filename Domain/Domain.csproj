@@ -60,7 +60,7 @@
     <Compile Include="Accounts\UserData.cs" />
     <Compile Include="Accounts\UserSetting.cs" />
     <Compile Include="Accounts\WeeklyReview.cs" />
-    <Compile Include="Accounts\WeeklyReviewProfileAlerts.cs" />
+    <Compile Include="Accounts\WeeklyReviewProfileAlert.cs" />
     <Compile Include="Dashboards\Comparison.cs" />
     <Compile Include="Dashboards\Dashboard.cs" />
     <Compile Include="Dashboards\UserType.cs" />

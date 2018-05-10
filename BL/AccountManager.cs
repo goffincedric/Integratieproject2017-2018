@@ -316,6 +316,14 @@ namespace PB.BL
         #endregion
 
         #region Alerts
+        public WeeklyReview GetLatestWeeklyReview(string userId)
+        {
+            InitNonExistingRepo();
+            Profile profile = GetProfile(userId);
+            if (profile is null) throw new Exception("Profile with userId (" + userId + ") doesn't exist.");
+            return profile.WeeklyReviews.OrderByDescending(wr => wr.TimeGenerated).FirstOrDefault();
+        }
+
         public Dictionary<Profile, List<ProfileAlert>> SendWeeklyReviews()
         {
             // Get all profiles with at least 1 read profilealert from last week
@@ -338,9 +346,9 @@ namespace PB.BL
 
                 profileAlertsByDate.Values.ToList().ForEach(v =>
                 {
-                    if (v.Count > 1)
+                    if (v.Count > 0)
                     {
-                        profileAlerts.Add(v[random.Next(0, v.Count - 1)]);
+                        profileAlerts.Add(v[random.Next(0, v.Count)]);
                     }
                 });
 
@@ -405,11 +413,12 @@ namespace PB.BL
                     TopPersonId = person.ItemId,
                     Profile = profileAlerts[0].Profile,
                     TimeGenerated = DateTime.Now,
-                    WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlerts>()
+                    TopPersonText = person.Name + " is tijdens de afgelopen week " + person.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-14)).Count + " aantal keer het onderwerp geweest in iemand zijn/haar tweet.",
+                    WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlert>()
                 };
                 profileAlerts.ForEach(pa =>
                 {
-                    WeeklyReviewProfileAlerts weeklyReviewProfileAlerts = new WeeklyReviewProfileAlerts()
+                    WeeklyReviewProfileAlert weeklyReviewProfileAlerts = new WeeklyReviewProfileAlert()
                     {
                         ProfileAlert = pa,
                         WeeklyReview = weeklyReview
@@ -472,7 +481,7 @@ namespace PB.BL
                             Profile = profile,
                             IsRead = false,
                             TimeStamp = DateTime.Now,
-                            WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlerts>()
+                            WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlert>()
                         };
 
                         if (!alert.ProfileAlerts.Contains(profileAlert) && !profile.ProfileAlerts.Contains(profileAlert))
@@ -546,7 +555,7 @@ namespace PB.BL
                     Profile = profile,
                     IsRead = false,
                     TimeStamp = DateTime.Now,
-                    WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlerts>()
+                    WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlert>()
                 };
 
                 if (!a.ProfileAlerts.Contains(profileAlert) && !profile.ProfileAlerts.Contains(profileAlert))

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace PB.BL.Domain.Accounts
 {
     [DataContract]
-    [Table("tblProfileAlerts")]
+    [Table("tblProfileAlert")]
     public class ProfileAlert
     {
         [DataMember]
@@ -36,7 +36,7 @@ namespace PB.BL.Domain.Accounts
         [Required]
         public virtual Alert Alert { get; set; }
 
-        public virtual List<WeeklyReviewProfileAlerts> WeeklyReviewsProfileAlerts { get; set; }
+        public virtual List<WeeklyReviewProfileAlert> WeeklyReviewsProfileAlerts { get; set; }
 
         public string GetTime()
         {

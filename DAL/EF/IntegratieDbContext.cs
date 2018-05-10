@@ -97,7 +97,7 @@ namespace PB.DAL.EF
                 .HasForeignKey(wrpa => wrpa.WeeklyReviewId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<WeeklyReviewProfileAlerts>()
+            modelBuilder.Entity<WeeklyReviewProfileAlert>()
                 .HasKey(wrpa => new { wrpa.WeeklyReviewId, wrpa.ProfileAlertId });
 
             modelBuilder.Entity<ProfileAlert>()

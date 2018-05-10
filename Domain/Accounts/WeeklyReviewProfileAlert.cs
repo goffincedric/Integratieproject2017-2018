@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Accounts
 {
-    [Table("tblWeeklyReviewProfileAlerts")]
-    public class WeeklyReviewProfileAlerts
+    [Table("tblWeeklyReviewProfileAlert")]
+    public class WeeklyReviewProfileAlert
     {
         public int WeeklyReviewId { get; set; }
         public int ProfileAlertId { get; set; }
