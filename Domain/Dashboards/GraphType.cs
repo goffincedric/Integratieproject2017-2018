@@ -5,6 +5,12 @@
     BAR,
     LINE,
     PIE,
-    HISTOGRAM
+    SCATTRE,
+    DONUT,
+    WORDCLOUD,
+    RADAR,
+    AREA,
+    NODE,
+    MAP
   }
 }

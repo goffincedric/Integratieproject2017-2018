@@ -44,7 +44,7 @@
         </div>
         <ul class="sidebar-menu scrollable pos-r">
           <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Index", "Home")"><span class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span class="title">Homepage</span></a></li>
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard", "Dashboard")"><span class="icon-holder"><i class="c-brown-500 ti-book"></i> </span><span class="title">Dashboard</span></a></li>
+          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard", "Dashboard")"><span class="icon-holder"><i class="c-brown-500 ti-bar-chart"></i> </span><span class="title">Dashboard</span></a></li>
           @if (Request.IsAuthenticated)
           {
             <li class="nav-item"><a class="sidebar-link" href="@Url.Action("WeeklyReview", "Item")"><span class="icon-holder"><i class="c-deep-purple-500 ti-archive"></i> </span><span class="title">Weekly Review</span></a></li>
@@ -153,7 +153,6 @@
 
                   <li role="separator" class="divider"></li>
                   <li>
-
                     @if (Request.IsAuthenticated)
                     {
                       using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
