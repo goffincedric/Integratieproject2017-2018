@@ -12,13 +12,14 @@
                     </div>
                     <div class="wizard-navigation">
                         <ul style="line-height:35px">
-                            <li><a href="#location" data-toggle="tab">Onderwerp</a></li>
-                            <li><a href="#type" data-toggle="tab">Grafiek</a></li>
-                            <li><a href="#facilities" data-toggle="tab">Style</a></li>
+                            <li><a href="#onderwerp" data-toggle="tab">Onderwerp</a></li>
+                            <li><a href="#opties" data-toggle="tab">Opties</a></li>
+                            <li><a href="#grafiek" data-toggle="tab">Grafiek</a></li>
+                            <li><a href="#style" data-toggle="tab">Style</a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
-                        <div class="tab-pane" id="location">
+                        <div class="tab-pane" id="onderwerp">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <h4 class="info-text">Wilt u een politieker, organisatie of thema visualiseren?</h4>
@@ -45,14 +46,21 @@
                                             <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Deze optie laat u themas visualiseren">
                                                 <input id="theme" type="radio" name="type" value="PieChart">
                                                 <div class="icon">
-                                                    <i class="material-icons">palette</i>
+                                                    <i class="material-icons">public</i>
                                                 </div>
                                                 <h6>Thema</h6>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-sm-offset-1">
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="opties">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4 class="info-text">Wilt u een politieker, organisatie of thema visualiseren?</h4>
+                                </div>
+                                @*<div class="col-sm-6 col-sm-offset-1">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Soort items</label>
                                         <select style="margin-bottom: 5%" id="inputState" class="form-control" name="type">
@@ -91,11 +99,10 @@
                                     <div class="row form-group">
                                         <input autocomplete="off" class="input form-control" id="field1" type="text" placeholder="Type name" /><button id="b1" class="btn add-more" type="button">+</button>
                                     </div>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
-
-                        <div class="tab-pane" id="type">
+                        <div class="tab-pane" id="grafiek">
                             <h4 class="info-text">Kies je type? </h4>
                             <div class="row">
                                 <div class="col-sm-12">
@@ -158,7 +165,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="facilities">
+                        <div class="tab-pane" id="style">
                             <h4 class="info-text">Style je element </h4>
                             <div class="row">
                                 <div class="col-sm-6 col-sm-offset-1">
