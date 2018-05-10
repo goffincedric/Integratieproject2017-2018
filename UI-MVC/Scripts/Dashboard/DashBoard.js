@@ -55,7 +55,7 @@ $(function () {
             })
 
             grid.data('gridstack').removeWidget(Element);
-        }
+        };
 
         //done
         addElement = function (grid) {
@@ -122,7 +122,8 @@ $(function () {
                 plusElement.children('.grid-stack-item-content').children('div').children('img').on("click", function () {
                     addElement(addZone);
                 });
-            }
+            };
+
             var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), 0, 0, 3, 3, true);
             var X = newElement.data().gsX;
             var Y = newElement.data().gsY;
@@ -164,7 +165,7 @@ $(function () {
             $('.btn-finish').on('click', function () {
                 var GraphType = 0;
                 $('input:checked').attr('id');
-                switch ($('input:checked').attr('id')){
+                switch ($('input:checked').attr('id')) {
                     case 'bar': GraphType = 0;
                         break;
                     case 'pie': GraphType = 2;
@@ -173,7 +174,7 @@ $(function () {
                 Wizard.hide();
 
                 //edit later
-                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "'+ GraphType +'"}');
+                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '"}');
 
                 $.ajax({
                     async: false,
@@ -187,7 +188,7 @@ $(function () {
                 chooseChart(GraphType, newElement.children('#Element-' + ElementId).children('canvas'), 25);
             });
             addingElement = false;
-        }
+        };
 
         editZone = function (grid) {
             console.log(grid);
@@ -219,7 +220,7 @@ $(function () {
 
                 titleTag.remove();
 
-                input.width(inputwidth +10);
+                input.width(inputwidth + 10);
 
                 if (e.which == 13) {
                     newTitle = $(this).val();
@@ -240,7 +241,7 @@ $(function () {
                     $(this).replaceWith(titleTag);
                 }
             });
-        }
+        };
 
         removeZone = function (grid) {
             var ZoneId = grid.attr('class');
@@ -255,7 +256,7 @@ $(function () {
             })
 
             $(grid).remove();
-        }
+        };
 
         changeElements = function (elements, grid) {
             if (!addingElement) {
@@ -272,7 +273,7 @@ $(function () {
 
                     if (ElementId != '+') {
                         if (ZoneId == 'x') {
-                            
+
                             var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
 
                             ZoneId = $.ajax({
@@ -351,7 +352,7 @@ $(function () {
 
                             addZone.data('gridstack').move($('.add-zone').children('div').children('div').children('div'), 0, 0);
 
-                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-'+ElementId+'"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), Element.X, Element.Y, Element.Width, Element.Height, true);
+                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), Element.X, Element.Y, Element.Width, Element.Height, true);
 
                             grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
@@ -385,7 +386,7 @@ $(function () {
                     }
                 }
             }
-        }
+        };
 
         //done
         clearGrid = function (grid) {
@@ -433,7 +434,7 @@ $(function () {
                     });
                 });
             }
-        }
+        };
 
         chooseChart = function (type, can, id) {
             switch (type) {
@@ -560,10 +561,6 @@ $(function () {
                 values.push(count[keys[i]] / 10);
             }
 
-            //var can = $('#doughnut-chart');
-            //console.log(can.parent().attr('Style', 'width: 400px; height: 350px'));
-            //can.attr('Style', 'width: 300px; height: 300px');
-
             new Chart(can, {
                 type: 'doughnut',
                 data: {
@@ -668,14 +665,14 @@ $(function () {
                     scales: {
                         xAxes: [
                             {
-                                display:false
+                                display: false
                             }
                         ]
                     }
 
                 }
             });
-        }
+        };
 
         $(".grid-stack").each(function () {
             this.grid = $(this).data('gridstack');
