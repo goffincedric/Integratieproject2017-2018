@@ -142,17 +142,6 @@ namespace PB.DAL
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
                 .Include(i => i.Comparisons)
-                .Concat(
-                    ctx.Items.OfType<Person>()
-                )
-                .Concat(
-                    ctx.Items
-                    .OfType<Theme>()
-                )
-                .Concat(
-                    ctx.Items
-                    .OfType<Organisation>()
-                )
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
@@ -164,17 +153,6 @@ namespace PB.DAL
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
                 .Include(i => i.Comparisons)
-                .Concat(
-                    ctx.Items.OfType<Person>()
-                )
-                .Concat(
-                    ctx.Items
-                    .OfType<Theme>()
-                )
-                .Concat(
-                    ctx.Items
-                    .OfType<Organisation>()
-                )
                 .AsEnumerable();
         }
 
