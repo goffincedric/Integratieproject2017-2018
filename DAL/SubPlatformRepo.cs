@@ -25,7 +25,6 @@ namespace PB.DAL
         public SubplatformRepo(UnitOfWork uow)
         {
             ctx = uow.Context;
-             //Console.WriteLine("UOW MADE SUBPLATFORMREPO");
         }
 
         public Subplatform CreateSubplatform(Subplatform subplatform)
@@ -97,6 +96,149 @@ namespace PB.DAL
             ctx.Subplatforms.Attach(subplatform);
             ctx.Entry(subplatform).State = EntityState.Modified;
             ctx.SaveChanges();
+        }
+
+        public SubplatformSetting CreateSubplatformSetting(SubplatformSetting subplatformSetting)
+        {
+            subplatformSetting = ctx.SubplatformSettings.Add(subplatformSetting);
+
+            try
+            {
+                ctx.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+            }
+            return subplatformSetting;
+        }
+
+        public void UpdateSubplatformSetting(SubplatformSetting subplatformSetting)
+        {
+            ctx.SubplatformSettings.Attach(subplatformSetting);
+            ctx.Entry(subplatformSetting).State = EntityState.Modified;
+            ctx.SaveChanges();
+        }
+
+        public IEnumerable<Page> ReadPages()
+        {
+            return ctx.Pages
+                .Include(p => p.Tags)
+                .Include(p => p.Subplatform)
+                .AsEnumerable();
+        }
+
+        public Page ReadPage(int pageId)
+        {
+            return ctx.Pages
+                .Include(p => p.Tags)
+                .Include(p => p.Subplatform)
+                .FirstOrDefault(p => p.PageId == pageId);
+        }
+
+        public Page CreatePage(Page page)
+        {
+            page = ctx.Pages.Add(page);
+
+            try
+            {
+                ctx.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+            }
+            return page;
+        }
+
+        public void UpdatePage(Page page)
+        {
+            ctx.Pages.Attach(page);
+            ctx.Entry(page).State = EntityState.Modified;
+            ctx.SaveChanges();
+        }
+
+        public void DeletePage(int pageId)
+        {
+            Page page = ReadPage(pageId);
+            if (page != null)
+            {
+                ctx.Pages.Remove(page);
+                ctx.SaveChanges();
+            }
+        }
+
+        public IEnumerable<Tag> ReadTags()
+        {
+            return ctx.Tags
+                .Include(t => t.Page)
+                .AsEnumerable();
+        }
+
+        public Tag ReadTag(int tagId)
+        {
+            return ctx.Tags
+                .Include(t => t.Page)
+                .FirstOrDefault(t => t.TagId == tagId);
+        }
+
+        public Tag CreateTag(Tag tag)
+        {
+            tag = ctx.Tags.Add(tag);
+
+            try
+            {
+                ctx.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+            }
+            return tag;
+        }
+
+        public void UpdateTag(Tag tag)
+        {
+            ctx.Tags.Attach(tag);
+            ctx.Entry(tag).State = EntityState.Modified;
+            ctx.SaveChanges();
+        }
+
+        public void DeleteTag(int tagId)
+        {
+            Tag tag = ReadTag(tagId);
+            if (tag != null)
+            {
+                ctx.Tags.Remove(tag);
+                ctx.SaveChanges();
+            }
         }
     }
 }

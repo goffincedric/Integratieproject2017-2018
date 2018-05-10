@@ -19,6 +19,8 @@ namespace PB.BL.Domain.Items
         [DataMember]
         public string Gemeente { get; set; }
         public virtual List<Record> Records { get; set; }
+        public virtual List<Theme> Themes { get; set; }
+
 
         public override bool Equals(object obj)
         {
