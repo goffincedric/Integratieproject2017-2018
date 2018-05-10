@@ -159,6 +159,8 @@ namespace UI_MVC.Controllers.API
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        #region records
+
         [HttpGet]
         public IHttpActionResult GetRecordsFromPerson(int id)
         {
@@ -166,29 +168,6 @@ namespace UI_MVC.Controllers.API
             if (item == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(JsonConvert.SerializeObject(item.Records));
         }
-
-
-        [HttpGet]
-        public IHttpActionResult GetPersonsTop(int id)
-        {
-            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o => o.Records.Count()).Take(id);
-            Dictionary<string, int> personmap = new Dictionary<string, int>();
-            persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
-            if (persons == null) return StatusCode(HttpStatusCode.NoContent);
-            return Ok(personmap);
-        }
-
-
-        //[HttpGet]
-        //public IHttpActionResult GetPersonsTop(int id)
-        //{
-        //    List<Record> recordsP1 = 
-        //    List<Record> recordsP2 = 
-
-        //     persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
-        //    if (persons == null) return StatusCode(HttpStatusCode.NoContent);
-        //    return Ok(personmap);
-        //}
 
         [HttpGet]
         public IHttpActionResult GetPersonsTopJSON(int id)
@@ -199,6 +178,47 @@ namespace UI_MVC.Controllers.API
             if (persons == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(JsonConvert.SerializeObject(personmap));
         }
+
+        [HttpGet]
+        public IHttpActionResult GetPersonsTop(int id)
+        {
+            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o => o.Records.Count()).Take(id);
+            Dictionary<string, int> personmap = new Dictionary<string, int>();
+            persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
+            if (persons == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(personmap);
+        }
+        #endregion
+
+
+
+        #region RelatieveStijging
+
+        [HttpGet]
+        public IHttpActionResult GetPersonIncrease()
+        {
+            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(p => p.Records.Count()).Take(4);
+            Dictionary<string, double> stijgingmap = new Dictionary<string, double>();
+            foreach (Person person in persons)
+            {
+                IEnumerable<Record> records = person.Records.ToList();
+
+                double allDays = records.OrderByDescending(p => p.Date.Date).GroupBy(p => p.Date.Date).ToList().Take(4).Average(p => p.ToList().Count());
+                DateTime last = records.OrderByDescending(p => p.Date).First().Date.Date;
+                double lastDay = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Count();
+                double stijging = 0.0;
+                stijging = Math.Round(((lastDay - allDays) / allDays) * 100, 4);
+
+
+                stijgingmap.Add(person.Name, stijging);
+            }
+
+            if (stijgingmap == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(stijgingmap);
+        }
+        #endregion
+
+        #region SentimentAnalyse
 
         [HttpGet]
         public IHttpActionResult GetPersonEvolution(int id)
@@ -212,8 +232,6 @@ namespace UI_MVC.Controllers.API
                 recordsmap.OrderBy(o => o.Key);
                 if (records == null) return StatusCode(HttpStatusCode.NoContent);
                 return Ok(recordsmap);
-
-
             }
             else
             {
@@ -221,7 +239,36 @@ namespace UI_MVC.Controllers.API
             }
 
         }
+        #endregion
 
+        #region TweetEvolution
+        [HttpGet]
+        public IHttpActionResult GetItemTweet(int id)
+        {
+            Item item = ItemMgr.GetItem(id);
+            IEnumerable<Record> records = null; 
+            if(item is Person)
+            {
+                records = ItemMgr.GetPerson(id).Records;
+            }
+            else if(item is Organisation)
+            {
+                records = ItemMgr.GetOrganisation(id).Records;
+            }
+            else if (item is Theme)
+            {
+                records = ItemMgr.GetTheme(id).Records;
+            }
+                
+             
+            if (records == null) return NotFound();
+            Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
+
+            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
+            .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
+            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(recordsmap);
+        }
         [HttpGet]
         public IHttpActionResult GetPersonTweet(int id)
         {
@@ -235,6 +282,32 @@ namespace UI_MVC.Controllers.API
             return Ok(recordsmap);
         }
 
+        [HttpGet]
+        public IHttpActionResult GetOrganisationTweet(int id)
+        {
+            IEnumerable<Record> records = ItemMgr.GetOrganisation(id).Records;
+            if (records == null) return NotFound();
+            Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
+
+            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
+            .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
+            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(recordsmap);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetThemeTweet(int id)
+        {
+            IEnumerable<Record> records = ItemMgr.GetTheme(id).Records;
+            if (records == null) return NotFound();
+            Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
+
+            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
+            .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
+            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(recordsmap);
+        }
+        #region
 
         [HttpGet]
         public IHttpActionResult GetPersonTweet5(int id)
