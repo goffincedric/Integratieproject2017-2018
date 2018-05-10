@@ -71,8 +71,22 @@ namespace PB.DAL.Migrations
                         },
                         new SubplatformSetting()
                         {
-                            SettingName = Setting.Platform.SITE_ICON_URL,
-                            Value = @"~/Content/Images/logo_new.png",
+                            SettingName = Setting.Platform.SOCIAL_SOURCE,
+                            Value = "Twitter",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                         new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.SOCIAL_SOURCE_URL,
+                            Value = "https://twitter.com",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                         new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.SITE_NAME,
+                            Value = "Politieke Barometer",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         }

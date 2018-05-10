@@ -2,6 +2,7 @@
 using PB.BL;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
+using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
@@ -162,6 +163,86 @@ namespace UI_MVC.Controllers
             //    return RedirectToAction("Account", "Account");
             //}
             return View();
+        }
+
+
+
+        public ActionResult _DeploySubplatform()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult DeploySubplatform(SubplatformViewModel subplatformViewModel)
+        {
+            SubplatformMgr.AddSubplatform(subplatformViewModel.name, subplatformViewModel.url, subplatformViewModel.sourceAPI);
+            return RedirectToAction("PlatformSettings", "Home");
+        }
+
+
+        public ActionResult _SubplatformSetting(string subplatform)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            SubplatformSettingViewModel huidige = new SubplatformSettingViewModel();
+            huidige.APIsource = Subplatform.Settings.ElementAt(1).Value;
+            huidige.recordsBijhouden = Int32.Parse(Subplatform.Settings.ElementAt(0).Value);
+            huidige.SocialSource = Subplatform.Settings.ElementAt(6).Value;
+            huidige.SocialSourceUrl = Subplatform.Settings.ElementAt(7).Value;
+            huidige.SiteName = Subplatform.Settings.ElementAt(3).Value;
+            huidige.Theme = Subplatform.Settings.ElementAt(8).Value;
+            return PartialView(huidige);
+        }
+
+        [HttpPost]
+        public ActionResult SubplatformSetting(string subplatform, SubplatformSettingViewModel subplatformSettingViewModel)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+
+            SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SOCIAL_SOURCE,
+                Value = subplatformSettingViewModel.SocialSource,
+                IsEnabled = true,
+                Subplatform = Subplatform
+            });
+            SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SOCIAL_SOURCE_URL,
+                Value = subplatformSettingViewModel.SocialSourceUrl,
+                IsEnabled = true,
+                Subplatform = Subplatform
+            });
+            SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SITE_NAME,
+                Value = subplatformSettingViewModel.SiteName,
+                IsEnabled = true,
+                Subplatform = Subplatform
+            });
+            SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.DEFAULT_THEME,
+                Value = subplatformSettingViewModel.Theme,
+                IsEnabled = true,
+                Subplatform = Subplatform
+            });
+            SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
+                Value = subplatformSettingViewModel.recordsBijhouden.ToString(),
+                IsEnabled = true,
+                Subplatform = Subplatform
+            });
+            SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SOURCE_API_URL,
+                Value = subplatformSettingViewModel.APIsource,
+                IsEnabled = true,
+                Subplatform = Subplatform
+            });
+
+          
+            return RedirectToAction("PlatformSettings", "Home");
         }
     }
 }

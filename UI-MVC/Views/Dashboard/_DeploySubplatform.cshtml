@@ -1,0 +1,27 @@
+﻿@model UI_MVC.Models.SubplatformViewModel
+
+
+@using (Html.BeginForm("DeploySubplatform", "Dashboard", FormMethod.Post))
+{
+
+  @Html.AntiForgeryToken()
+  <div class="form-group row">
+    <div class="col-sm-4">
+      <label>Deploy new subplatform</label>
+    </div>
+    <div class="col-sm-6">
+
+      <span>Subplatform name</span>
+      @*<input type="text" name="name" class="form-control" id="text" />*@
+      @Html.EditorFor(model=>model.name, new { htmlAttributes = new { @class = "form-control" } })
+      <span>Subplatform url name</span>
+      @*<input type="text" name="name" class="form-control" id="text" />*@
+      @Html.EditorFor(model => model.url, new { htmlAttributes = new { @class = "form-control" } })
+      <span>Subplatform API url</span>
+      @Html.EditorFor(model => model.sourceAPI, new { htmlAttributes = new { @class = "form-control" } })
+      @*<input type="text" name="name" class="form-control" id="text" />*@
+    </div>
+
+    <button btn="Submit" class=" btn btn-lg btn-primary">Deploy now</button>
+  </div>
+}

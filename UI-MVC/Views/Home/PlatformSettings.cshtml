@@ -47,117 +47,50 @@
         <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
           <div class="bgc-white p-20 bd" style="min-height:400px;">
             <h6 style="margin-bottom: 25px" class="h6">Subplatform settings</h6>
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label>Default Theme</label>
-              </div>
-              <div class="col-sm-6">
-                <select style="margin-bottom: 5%" id="inputState" class="form-control" name="type">
-                  <option value="" disabled selected>Select default</option>
-                  <option value="Light">Light mode</option>
-                  <option value="Dark">Dark mode</option>
-                  <option value="Future">Future mode</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label>Change site name</label>
-              </div>
-              <div class="col-sm-6">
-                <div class="row">
-                  <input name="changename" class="form-control  w-50" type="text" />
-                  <button type="submit" value="Save" class="btn btn-primary btn-sm mL-10">Save</button>
-                </div>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label>Aantal dagen bijhouden records</label>
-              </div>
-              <div class="col-sm-6">
 
-
-                <div class="row">
-                  <input class="form-control  w-50" type="number" />
-                  <button type="submit" value="Save" class="btn btn-primary btn-sm mL-10">Save</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label>API Source</label>
-              </div>
-              <div class="col-sm-6">
-
-
-                <div class="row">
-                  <input class="form-control  w-50" type="number" />
-                  <button type="submit" value="Save" class="btn btn-primary btn-sm mL-10">Save</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label>Add social source</label>
-              </div>
-              <div class="col-sm-6">
-
-
-                <div class="row">
-                  <input class="form-control  w-50" type="number" />
-                  <button type="submit" value="Save" class="btn btn-primary btn-sm mL-10">Save</button>
-                </div>
-              </div>
-            </div>
+            @Html.Action("_SubplatformSeeting", "Dashboard")
 
             <div class="form-group row">
               <div class="col-sm-4">
                 <label>Social media sources</label>
               </div>
               <div class="col-sm-6">
-
-
                 <div class="row">
                   <label>Twitter</label>
-                
                 </div>
               </div>
             </div>
-
           </div>
         </div>
 
         <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
-            <div class="bgc-white p-20 bd" style="min-height:400px;">
-                <h6 style="margin-bottom: 25px" class="h6">Sync tools</h6>
-                @using (Html.BeginForm("Syncronize", "Home", FormMethod.Post))
-                {
-                    if (ViewBag.IsSyncing)
-                    {
-                        <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg" disabled>Syncroniseer API</button>
-                        <label>Database is momenteel een sync aan het ondergaan...</label>
-                    }
-                    else
-                    {
-                        <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Syncroniseer API</button>
-                    }
-                }
+          <div class="bgc-white p-20 bd" style="min-height:400px;">
+            <h6 style="margin-bottom: 25px" class="h6">Sync tools</h6>
+            @using (Html.BeginForm("Syncronize", "Home", FormMethod.Post))
+            {
+              if (ViewBag.IsSyncing)
+              {
+                <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg" disabled>Syncroniseer API</button>
+                <label>Database is momenteel een sync aan het ondergaan...</label>
+              }
+              else
+              {
+                <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Syncroniseer API</button>
+              }
+            }
 
-                @using (Html.BeginForm("GenerateAlertsManually", "Home", FormMethod.Post))
-                {
-                    <button type="submit" style="margin: 25px 0 " ; class="btn btn-primary btn-lg">Generate alerts manually</button>
-                }
+            @using (Html.BeginForm("GenerateAlertsManually", "Home", FormMethod.Post))
+            {
+              <button type="submit" style="margin: 25px 0 " ; class="btn btn-primary btn-lg">Generate alerts manually</button>
+            }
 
-                @using (Html.BeginForm("CleanupDB", "Home", FormMethod.Post))
-                {
-                    <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Cleanup DB</button>
+            @using (Html.BeginForm("CleanupDB", "Home", FormMethod.Post))
+            {
+              <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Cleanup DB</button>
 
-                }
+            }
 
-            </div>
+          </div>
         </div>
 
         <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
@@ -210,26 +143,14 @@
           </div>
         </div>
 
-        <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
-          <div class="bgc-white p-20 bd" style="min-height:400px;">
-            <h6 style="margin-bottom: 25px" class="h6">Deploy new subplatform</h6>
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label>Deploy new subplatform</label>
-              </div>
-              <div class="col-sm-6">
 
-                <span>Subplatform name</span>
-                <input type="text" name="name" class="form-control" id="text" />
-                <span>Subplatform url</span>
-                <input type="text" name="name" class="form-control" id="text" />
-
-              </div>
-             
-              <button class=" btn btn-lg btn-primary">Deploy now</button>
+          <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
+            <div class="bgc-white p-20 bd" style="min-height:400px;">
+              <h6 style="margin-bottom: 25px" class="h6">Deploy new subplatform</h6>
+              @Html.Action("_DeploySubplatform","Dashboard")
             </div>
           </div>
-        </div>
+        
 
       </div>
     </div>

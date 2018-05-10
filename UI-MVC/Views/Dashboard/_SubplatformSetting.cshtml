@@ -1,0 +1,85 @@
+﻿@model UI_MVC.Models.SubplatformSettingViewModel
+
+
+@using (Html.BeginForm("SubplatformSetting", "Dashboard", FormMethod.Post))
+{
+
+  <div class="form-group row">
+    <div class="col-sm-4">
+      <label>Default Theme</label>
+    </div>
+    <div class="col-sm-6">
+      @Html.DropDownListFor(model => model.Theme, new SelectList(Enumerable.Empty<SelectList>()), "Kies een default theme...", new { @class = "form-control", @id = "FromJson" })
+      <select style="margin-bottom: 5%" id="inputState" class="form-control" name="type">
+        <option value="" disabled selected>Select default</option>
+        <option value="Light">Light mode</option>
+        <option value="Dark">Dark mode</option>
+        <option value="Future">Future mode</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-4">
+      <label>Change site name</label>
+    </div>
+    <div class="col-sm-6">
+      <div class="row">
+        <input name="changename" class="form-control  w-50" type="text" />
+        @Html.EditorFor(model => model.SiteName, new { htmlAttributes = new { @class = "form-control" } })
+
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-4">
+      <label>Aantal dagen bijhouden records</label>
+    </div>
+    <div class="col-sm-6">
+
+
+      <div class="row">
+        @Html.EditorFor(model => model.recordsBijhouden, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-4">
+      <label>API Source</label>
+    </div>
+    <div class="col-sm-6">
+      <div class="row">
+        @Html.EditorFor(model => model.APIsource, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
+
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-4">
+      <label>Add social source</label>
+    </div>
+    <div class="col-sm-6">
+      @Html.EditorFor(model => model.SocialSource, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
+      @Html.EditorFor(model => model.SocialSourceUrl, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
+    </div>
+  </div>
+
+}
+
+
+  <script>
+
+
+    $("#FromJson").append($("<option></option>").val("Light").html("Light mode"));
+
+    $("#FromJson").append($("<option></option>").val("Dark").html("Dark mode"));
+
+    $("#FromJson").append($("<option></option>").val("Future").html("Future mode"));
+    //$("FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
+
+
+
+
+  </script>
