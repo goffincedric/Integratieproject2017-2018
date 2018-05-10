@@ -179,6 +179,8 @@ namespace UI_MVC.Controllers.API
         #endregion
 
 
+        #region records
+
         [HttpGet]
         public IHttpActionResult GetRecordsFromPerson(int id)
         {
@@ -196,16 +198,39 @@ namespace UI_MVC.Controllers.API
             if (persons == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(personmap);
         }
+        #endregion
+
+
+
+
+        #region RelatieveStijging
+
 
         [HttpGet]
-        public IHttpActionResult GetPersonsTopJSON(int id)
+        public IHttpActionResult GetPersonIncrease()
         {
-            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(o => o.Records.Count()).Take(id);
-            Dictionary<string, int> personmap = new Dictionary<string, int>();
-            persons.ToList().ForEach(p => { personmap.Add(p.Name, p.Records.Count()); });
-            if (persons == null) return StatusCode(HttpStatusCode.NoContent);
-            return Ok(JsonConvert.SerializeObject(personmap));
+            IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(p => p.Records.Count()).Take(4);
+            Dictionary<string, string> stijgingmap = new Dictionary<string, string>();
+            foreach (Person person in persons)
+            {
+                IEnumerable<Record> records = person.Records.ToList();
+
+                double allDays = records.OrderByDescending(p => p.Date.Date).GroupBy(p => p.Date.Date).ToList().Take(4).Average(p => p.ToList().Count());
+                DateTime last = records.OrderByDescending(p => p.Date).First().Date.Date;
+                double lastDay = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Count();
+                string stijging = "";
+                stijging = Math.Round(((lastDay - allDays) / allDays) * 100, 4) + "%";
+
+
+                stijgingmap.Add(person.Name, stijging);
+            }
+
+            if (stijgingmap == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(stijgingmap);
         }
+        #endregion
+
+        #region SentimentAnalyse
 
         [HttpGet]
         public IHttpActionResult GetPersonEvolution(int id)
@@ -225,7 +250,41 @@ namespace UI_MVC.Controllers.API
                 return StatusCode(HttpStatusCode.NoContent);
             }
         }
+        #endregion
 
+        #region TweetEvolution
+        [HttpGet]
+        public IHttpActionResult GetItemTweet(int id)
+        {
+            Item item = ItemMgr.GetItem(id);
+            List<Record> records = null; 
+            if(item is Person person)
+            {
+                
+                records.AddRange(person.Records.ToList());
+            }
+            else if(item is Organisation organisation)
+            {
+                records.AddRange(organisation.People.SelectMany(p => p.Records).Distinct().ToList()); 
+                
+            }
+            else if (item is Theme theme)
+            {
+                records.AddRange(theme.Persons.SelectMany(p => p.Records).Distinct().ToList());
+                records.AddRange(theme.Organisations.SelectMany(p => p.People.SelectMany(r=>r.Records).Distinct().ToList()));
+            }
+
+            records = records.Distinct().ToList(); 
+            if (records == null) return NotFound();
+            Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
+                recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
+                            .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
+            
+           
+            
+            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(recordsmap);
+        }
         [HttpGet]
         public IHttpActionResult GetPersonTweet(int id)
         {
@@ -239,24 +298,12 @@ namespace UI_MVC.Controllers.API
             return Ok(recordsmap);
         }
 
+        #endregion
+
+        #region
 
         [HttpGet]
-        public IHttpActionResult GetPersonTweet5(int id)
-        {
-            IEnumerable<Record> records = ItemMgr.GetPerson(id).Records;
-            if (records == null) return NotFound();
-            Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
-
-            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key).Take(5)
-            .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
-            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
-            return Ok(recordsmap);
-        }
-
-
-
-        [HttpGet]
-        public IHttpActionResult GetPersonAveragePol(int id)
+        public IHttpActionResult GetPersonAverageSentiment(int id)
         {
             IEnumerable<Record> records = ItemMgr.GetPerson(id).Records;
             if (records == null) return NotFound();
@@ -295,6 +342,12 @@ namespace UI_MVC.Controllers.API
             }
             return NotFound();
         }
+
+
+
+        #endregion
+
+
 
         [HttpGet]
         public IHttpActionResult GetTrendingHashtagsCount(int id)
@@ -372,8 +425,6 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetMostPopularPerson()
         {
-
-
             Person person = ItemMgr.GetPersons().OrderByDescending(p => p.TrendingScore).FirstOrDefault();
             if (person is null)
             {
