@@ -144,16 +144,15 @@ namespace PB.DAL
                 .Include(i => i.Comparisons)
                 .Concat(
                     ctx.Items.OfType<Person>()
-                    .Include(p => p.Records))
-                .Concat(
-                    ctx.Items
-                    .OfType<Organisation>()
-                    .Include(o => o.People))
+                )
                 .Concat(
                     ctx.Items
                     .OfType<Theme>()
-                    .Include(t => t.Persons)
-                    .Include(t => t.Organisations))
+                )
+                .Concat(
+                    ctx.Items
+                    .OfType<Organisation>()
+                )
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
