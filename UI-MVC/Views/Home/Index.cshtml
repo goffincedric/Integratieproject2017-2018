@@ -46,12 +46,12 @@
                     <div class="col-md-3">
                         <div class="layers bd bgc-white p-20">
                             <div class="layer w-100 mB-10">
-                                <h6 class="lh-1">Mobiliteit</h6>
+                                <h6 class="lh-1" id="pol0"></h6>
                             </div>
                             <div class="layer w-100">
                                 <div class="peers ai-sb fxw-nw">
                                     <div class="peer peer-greed"><span id="sparklinedash"></span></div>
-                                    <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">+10%</span></div>
+                                    <div class="peer"><span id="poli0" class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500"></span></div>
                                 </div>
                             </div>
                         </div>
@@ -59,12 +59,12 @@
                     <div class="col-md-3">
                         <div class="layers bd bgc-white p-20">
                             <div class="layer w-100 mB-10">
-                                <h6 class="lh-1">Onderwijs</h6>
+                                <h6 class="lh-1" id="pol1"></h6>
                             </div>
                             <div class="layer w-100">
                                 <div class="peers ai-sb fxw-nw">
                                     <div class="peer peer-greed"><span id="sparklinedash2"></span></div>
-                                    <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">-7%</span></div>
+                                    <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500" id="poli1"></span></div>
                                 </div>
                             </div>
                         </div>
@@ -72,12 +72,12 @@
                     <div class="col-md-3">
                         <div class="layers bd bgc-white p-20">
                             <div class="layer w-100 mB-10">
-                                <h6 class="lh-1">NVA</h6>
+                                <h6 class="lh-1" id="pol2"></h6>
                             </div>
                             <div class="layer w-100">
                                 <div class="peers ai-sb fxw-nw">
                                     <div class="peer peer-greed"><span id="sparklinedash3"></span></div>
-                                    <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">+12%</span></div>
+                                    <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500" id="poli2"></span></div>
                                 </div>
                             </div>
                         </div>
@@ -85,12 +85,12 @@
                     <div class="col-md-3">
                         <div class="layers bd bgc-white p-20">
                             <div class="layer w-100 mB-10">
-                                <h6 class="lh-1">SPA</h6>
+                                <h6 class="lh-1" id="pol3"></h6>
                             </div>
                             <div class="layer w-100">
                                 <div class="peers ai-sb fxw-nw">
                                     <div class="peer peer-greed"><span id="sparklinedash4"></span></div>
-                                    <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">-12%</span></div>
+                                    <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500" id="poli3"></span></div>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                 <div class="bd bgc-white">
                     <div class="layers">
                         <div class="layer w-100 pX-20 pT-20">
-                            <h6 class="lh-1">Stats Charles Michel</h6>
+                            <h6 class="lh-1">Sentiment analyse top politici</h6>
                         </div>
                         <div class="layer w-100 p-20">
                             <canvas id="evol" height="150"></canvas>
@@ -213,6 +213,35 @@
 
 
 <script>
+
+    function showIncrease() {
+        var map = "";
+        map = $.ajax({
+            async: false,
+            type: 'GET',
+            dataType: 'json',
+            url: "https://localhost:44342/api/item/GetPersonIncrease",
+            headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+        }).responseJSON
+
+
+        var keys2 = [];
+        keys2 = Object.keys(map);
+        var label2 = [];
+        var values2 = [];
+
+        for (var i = 0; i < keys2.length; i++) {
+            label2.push(keys2[i]);
+            $("#pol" + i).html(keys2[i]);
+            values2.push(map[keys2[i]]);
+            $("#poli" + i).html(map[keys2[i]]);
+        }
+        console.log(label2);
+        console.log(values2);
+    }
+
+    showIncrease();
+
 
 
     function drawRadarChart() {
@@ -542,3 +571,4 @@
     zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
     ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];</script>
 <script src="~/Scripts/wordcloud/wordcloud.js"></script>
+
