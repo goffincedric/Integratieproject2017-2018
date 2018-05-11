@@ -34,6 +34,9 @@ namespace UI_MVC.Controllers.API.Helper_Code.Common
         /// <returns>Return HTTP response Task</returns>   
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            IPrincipal threadPrincipal = Thread.CurrentPrincipal;
+            IPrincipal current = HttpContext.Current.User;
+
             // Initialization
             HttpResponseMessage responseMessage;
 

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -27,10 +28,16 @@ namespace UI_MVC.Controllers.API
         private IntegratieSignInManager _signInManager;
         private readonly SubplatformManager SubplatformMgr;
 
+
         public AccountController()
         {
             uow = new UnitOfWorkManager();
             SubplatformMgr = new SubplatformManager(uow);
+
+
+            IPrincipal threadPrincipal = Thread.CurrentPrincipal;
+            IPrincipal RequestPrincipal = RequestContext.Principal;
+            IPrincipal current = HttpContext.Current.User;
         }
 
         public IntegratieSignInManager SignInManager
@@ -96,7 +103,11 @@ namespace UI_MVC.Controllers.API
         {
             Subplatform subplatform = SubplatformMgr.GetSubplatform(subplatformUrl);
             if (subplatform is null) return BadRequest();
-            List<ProfileAlert> profileAlerts = UserManager.GetProfileAlerts(subplatform, UserManager.GetProfile(RequestContext.Principal.Identity.GetUserId()));
+            IPrincipal threadPrincipal = Thread.CurrentPrincipal;
+            IPrincipal RequestPrincipal = RequestContext.Principal;
+            IPrincipal current = HttpContext.Current.User;
+
+            List<ProfileAlert> profileAlerts = UserManager.GetProfileAlerts(subplatform, UserManager.GetProfile(Thread.CurrentPrincipal.Identity.GetUserId()));
             if (profileAlerts.Count == 0) return NotFound();
             return Ok(profileAlerts);
         }
