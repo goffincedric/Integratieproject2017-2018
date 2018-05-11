@@ -27,8 +27,7 @@ namespace PB.BL.Domain.Accounts
         [DataMember]
         [Required]
         public DateTime TimeStamp { get; set; }
-
-        [DataMember]
+        
         [Required]
         public Profile Profile { get; set; }
 
