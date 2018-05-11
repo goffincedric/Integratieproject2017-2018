@@ -386,7 +386,6 @@
     <Content Include="Views\Account\_SuperAdminTable.cshtml" />
     <Content Include="Views\Dashboard\_Wizard.cshtml" />
     <Content Include="Views\Item\EditPerson.cshtml" />
-    <Content Include="Views\Item\WeeklyReview.cshtml" />
     <Content Include="Views\Account\_UserSettingDetails.cshtml" />
     <Content Include="Views\Item\View.cshtml" />
     <Content Include="Views\Item\EditOrganisation.cshtml" />
@@ -394,6 +393,7 @@
     <Content Include="Views\Item\EditTheme.cshtml" />
     <Content Include="Views\Dashboard\_DeploySubplatform.cshtml" />
     <Content Include="Views\Dashboard\_SubplatformSetting.cshtml" />
+    <Content Include="Views\Account\WeeklyReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

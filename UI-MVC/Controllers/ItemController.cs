@@ -486,12 +486,5 @@ namespace UI_MVC.Controllers
 
 
 
-        public ActionResult WeeklyReview()
-        {
-            return View();
-        }
-
-
-
     }
 }
