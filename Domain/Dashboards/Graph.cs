@@ -3,8 +3,8 @@
 namespace PB.BL.Domain.Dashboards
 {
     [Table("tblGraph")]
-  public class Graph : Element
-  {
-    public GraphType GraphType { get; set; }
-  }
+    public class Graph : Element
+    {
+        public GraphType GraphType { get; set; }
+    }
 }

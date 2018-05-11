@@ -13,6 +13,9 @@ using System;
 using PB.BL.Interfaces;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Owin.Security.OAuth;
+using UI_MVC.Controllers.API;
+using UI_MVC.Controllers.API.Helper_Code;
 
 namespace UI_MVC
 {
@@ -90,6 +93,14 @@ namespace UI_MVC
             });
 
 
+            app.UseOAuthAuthorizationServer(new OAuthAuthorizationServerOptions()
+            {
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/api/account/login"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(5),
+                Provider = new AuthorizationServerProvider()
+            });
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
 
         private static void ApplyRedirect(CookieApplyRedirectContext context)

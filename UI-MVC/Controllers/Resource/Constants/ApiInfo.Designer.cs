@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UI_MVC.Controllers.API.Resource.Constants {
+namespace UI_MVC.Controllers.Resource.Constants {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace UI_MVC.Controllers.API.Resource.Constants {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UI_MVC.Controllers.API.Resource.Constants.ApiInfo", typeof(ApiInfo).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UI_MVC.Controllers.Resource.Constants.ApiInfo", typeof(ApiInfo).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

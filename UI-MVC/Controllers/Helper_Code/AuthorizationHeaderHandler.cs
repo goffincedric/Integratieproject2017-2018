@@ -13,10 +13,10 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using UI_MVC.Controllers.API.Resource.Constants;
 using System.Web;
 using PB.BL.Interfaces;
 using PB.BL.Domain.Accounts;
+using UI_MVC.Controllers.Resource.Constants;
 
 namespace UI_MVC.Controllers.API.Helper_Code.Common
 {
@@ -34,9 +34,6 @@ namespace UI_MVC.Controllers.API.Helper_Code.Common
         /// <returns>Return HTTP response Task</returns>   
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            IPrincipal threadPrincipal = Thread.CurrentPrincipal;
-            IPrincipal current = HttpContext.Current.User;
-
             // Initialization
             HttpResponseMessage responseMessage;
 
@@ -50,7 +47,8 @@ namespace UI_MVC.Controllers.API.Helper_Code.Common
                 if (apiKeyHeaderValue.Equals(ApiInfo.API_KEY_VALUE))
                 {
                     // Return Request
-                    return await base.SendAsync(request, cancellationToken);
+                    Task<HttpResponseMessage> response = base.SendAsync(request, cancellationToken);
+                    return await response;
                 }
             }
             else

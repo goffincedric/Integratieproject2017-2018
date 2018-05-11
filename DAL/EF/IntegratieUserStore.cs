@@ -40,6 +40,9 @@ namespace PB.DAL.EF
             return ctx.Users.ToList();
         }
 
-        
+        public bool IsValidUserId(string userId)
+        {
+            return ctx.Users.FirstOrDefault(p => p.UserName.Equals(userId)) is null;
+        }
     }
 }
