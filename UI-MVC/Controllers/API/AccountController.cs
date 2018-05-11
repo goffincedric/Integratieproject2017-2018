@@ -67,9 +67,6 @@ namespace UI_MVC.Controllers.API
         {
             Subplatform subplatform = SubplatformMgr.GetSubplatform(subplatformUrl);
             if (subplatform is null) return BadRequest();
-            IPrincipal threadPrincipal = Thread.CurrentPrincipal;
-            IPrincipal RequestPrincipal = RequestContext.Principal;
-            IPrincipal current = HttpContext.Current.User;
 
             List<ProfileAlert> profileAlerts = UserManager.GetProfileAlerts(subplatform, UserManager.GetProfile(Thread.CurrentPrincipal.Identity.GetUserId()));
             if (profileAlerts.Count == 0) return NotFound();
