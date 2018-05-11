@@ -184,12 +184,12 @@ namespace UI_MVC.Controllers
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             SubplatformSettingViewModel huidige = new SubplatformSettingViewModel();
-            huidige.APIsource = Subplatform.Settings.ElementAt(1).Value;
-            huidige.recordsBijhouden = Int32.Parse(Subplatform.Settings.ElementAt(0).Value);
-            huidige.SocialSource = Subplatform.Settings.ElementAt(6).Value;
-            huidige.SocialSourceUrl = Subplatform.Settings.ElementAt(7).Value;
-            huidige.SiteName = Subplatform.Settings.ElementAt(3).Value;
-            huidige.Theme = Subplatform.Settings.ElementAt(8).Value;
+            huidige.APIsource = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOURCE_API_URL).Value;
+            huidige.recordsBijhouden = Int32.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DAYS_TO_KEEP_RECORDS).Value);
+            huidige.SocialSource = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOCIAL_SOURCE).Value;
+            huidige.SocialSourceUrl = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOCIAL_SOURCE_URL).Value;
+            huidige.SiteName = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME).Value;
+            huidige.Theme = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME).Value;
             return PartialView(huidige);
         }
 

@@ -189,6 +189,12 @@ namespace PB.BL
             SubplatformRepo.UpdateSubplatform(subplatform);
             uowManager.Save();
         }
+
+        public SubplatformSetting GetSubplatformSetting(int subplatformId, Setting.Platform settingname)
+        {
+            InitNonExistingRepo();
+            return SubplatformRepo.ReadSubplatformSetting(settingname, subplatformId); 
+        }
         #endregion
 
         #region Pages

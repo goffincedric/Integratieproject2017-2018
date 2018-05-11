@@ -17,7 +17,7 @@ namespace PB.DAL.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-           // AutomaticMigrationDataLossAllowed = true;
+           AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(IntegratieDbContext ctx)
@@ -87,6 +87,13 @@ namespace PB.DAL.Migrations
                         {
                             SettingName = Setting.Platform.SITE_NAME,
                             Value = "Politieke Barometer",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                          new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.SITE_ICON_URL,
+                            Value = @"~/Content/Images/Site/logo_new.png",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         }

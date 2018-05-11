@@ -16,6 +16,7 @@ namespace PB.BL.Interfaces
 
         SubplatformSetting AddSubplatformSetting(Setting.Platform settingName, int subplatformId, string value, bool isEnabled);
         void ChangeSubplatformSetting(string subplatformURL, SubplatformSetting subplatformSetting);
+        SubplatformSetting GetSubplatformSetting(int subplatformId, Setting.Platform settingname);
 
         IEnumerable<Page> GetPages();
         IEnumerable<Page> GetPages(string subplatformUrl);

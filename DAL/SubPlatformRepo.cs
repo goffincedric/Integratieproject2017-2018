@@ -146,9 +146,8 @@ namespace PB.DAL
         public SubplatformSetting ReadSubplatformSetting(Setting.Platform settingName, int subplatformId)
         {
             return ctx.SubplatformSettings
-                .Include(ss => ss.Subplatform)
-                .Include(ss => ss.SettingName)
-                .FirstOrDefault(ss => ss.SettingName.Equals(settingName) && ss.Subplatform.SubplatformId == subplatformId);
+                .Include(ss => ss.Subplatform).Include(ss=>ss.SettingName)
+                .FirstOrDefault(ss => ss.Subplatform.SubplatformId == subplatformId && ss.SettingName.ToString().Equals(settingName.ToString()));
         }
 
         public void UpdateSubplatformSetting(SubplatformSetting subplatformSetting)
