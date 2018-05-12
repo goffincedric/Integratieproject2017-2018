@@ -130,7 +130,6 @@ namespace PB.DAL
         {
             return ctx.SubplatformSettings
                 .Include(ss => ss.Subplatform)
-                .Include(ss => ss.SettingName)
                 .AsEnumerable();
         }
 
@@ -138,7 +137,6 @@ namespace PB.DAL
         {
             return ctx.SubplatformSettings
                 .Include(ss => ss.Subplatform)
-                .Include(ss => ss.SettingName)
                 .Where(ss => ss.Subplatform.URL.Equals(subplatformUrl))
                 .AsEnumerable();
         }
@@ -146,7 +144,7 @@ namespace PB.DAL
         public SubplatformSetting ReadSubplatformSetting(Setting.Platform settingName, int subplatformId)
         {
             return ctx.SubplatformSettings
-                .Include(ss => ss.Subplatform).Include(ss=>ss.SettingName)
+                .Include(ss => ss.Subplatform)
                 .FirstOrDefault(ss => ss.Subplatform.SubplatformId == subplatformId && ss.SettingName.ToString().Equals(settingName.ToString()));
         }
 
