@@ -305,7 +305,7 @@ namespace PB.BL
             return SubplatformRepo.ReadTags(pageId);
         }
 
-        public Tag AddTag(int pageId, string cssName, string nameObject, string text)
+        public Tag AddTag(int pageId, string name, string text)
         {
             InitNonExistingRepo();
             Page page = SubplatformRepo.ReadPage(pageId);
@@ -313,8 +313,8 @@ namespace PB.BL
             Tag tag = new Tag()
             {
                 Page = page,
-                CssName = cssName,
-                NameObject = nameObject,
+               
+                Name = name,
                 Text = text
             };
             page.Tags.Add(tag);
