@@ -7,18 +7,21 @@ using PB.BL.Domain.Platform;
 using PB.BL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Protocols.WSTrust;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using UI_MVC.Controllers.API.Helper_Code;
 using UI_MVC.Models;
 
 namespace UI_MVC.Controllers.API
 {
-    
+
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     public class AccountController : ApiController
     {
@@ -26,6 +29,7 @@ namespace UI_MVC.Controllers.API
         private AccountManager _accountMgr;
         private IntegratieSignInManager _signInManager;
         private readonly SubplatformManager SubplatformMgr;
+
 
         public AccountController()
         {
@@ -57,46 +61,14 @@ namespace UI_MVC.Controllers.API
             }
         }
 
-
-        // POST: api/account/login
-        [AllowAnonymous]
-        [HttpPost]
-        public IHttpActionResult Login([FromBody]LoginViewModel loginViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            var result = SignInManager.PasswordSignIn(loginViewModel.Username, loginViewModel.Password, loginViewModel.RememberMe, true);
-
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return Ok();
-                case SignInStatus.LockedOut:
-                    return BadRequest("Locked out");
-                case SignInStatus.Failure:
-                    return BadRequest("Invalid login credentials");
-                default:
-                    return BadRequest("Login failed");
-            }
-        }
-
-
-        // GET: api/Account/get
-        [HttpGet]
-        public string[] Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET: api/account/getalerts
         [HttpGet]
         public IHttpActionResult GetAlerts(string subplatformUrl = "politieke-barometer")
         {
             Subplatform subplatform = SubplatformMgr.GetSubplatform(subplatformUrl);
             if (subplatform is null) return BadRequest();
-            List<ProfileAlert> profileAlerts = UserManager.GetProfileAlerts(subplatform, UserManager.GetProfile(RequestContext.Principal.Identity.GetUserId()));
+
+            List<ProfileAlert> profileAlerts = UserManager.GetProfileAlerts(subplatform, UserManager.GetProfile(Thread.CurrentPrincipal.Identity.GetUserId()));
             if (profileAlerts.Count == 0) return NotFound();
             return Ok(profileAlerts);
         }
@@ -113,7 +85,7 @@ namespace UI_MVC.Controllers.API
             return Ok(profileAlerts);
         }
 
-        
+
 
         //// GET: api/Account/5
         //public IHttpActionResult Get(int id)
