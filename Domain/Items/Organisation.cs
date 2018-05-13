@@ -16,7 +16,7 @@ namespace PB.BL.Domain.Items
         public string SocialMediaLink { get; set; }
     
         [DataMember]
-        public List<Person> People { get; set; }
+        public virtual List<Person> People { get; set; }
         [DataMember]
         public List<Theme> Themes { get; set; }
 

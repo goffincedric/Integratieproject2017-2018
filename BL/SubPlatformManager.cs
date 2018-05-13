@@ -8,6 +8,7 @@ using PB.DAL;
 using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PB.BL
 {
@@ -66,7 +67,7 @@ namespace PB.BL
             Subplatform subplatform = new Subplatform()
             {
                 Name = name,
-                URL = url,
+                URL = url??name.ToLower().Replace(" ", "-"),
                 DateOnline = DateTime.Now,
                 Style = new Style(),
                 Admins = new List<Profile>(),
@@ -76,18 +77,18 @@ namespace PB.BL
                 Dashboards = new List<Dashboard>()
             };
 
-            if (sourceApi != null) subplatform.Settings.Add(new SubplatformSetting()
+            subplatform.Settings.Add(new SubplatformSetting()
             {
                 SettingName = Setting.Platform.SOURCE_API_URL,
                 IsEnabled = true,
-                Value = sourceApi
+                Value = sourceApi?? "https://kdg.textgain.com/query"
             });
 
-            if (siteIconUrl != null) subplatform.Settings.Add(new SubplatformSetting()
+            subplatform.Settings.Add(new SubplatformSetting()
             {
                 SettingName = Setting.Platform.SITE_ICON_URL,
                 IsEnabled = true,
-                Value = siteIconUrl
+                Value = siteIconUrl?? @"~/Content/Images/subplatform-default.png"
             });
 
             subplatform.Settings.Add(new SubplatformSetting()
@@ -132,7 +133,6 @@ namespace PB.BL
                 Value = null,
                 IsEnabled = true
             });
-
 
             subplatform = AddSubplatform(subplatform);
             uowManager.Save();
@@ -216,20 +216,47 @@ namespace PB.BL
             return subplatformSetting;
         }
 
-        public void ChangeSubplatformSetting(string subplatformURL, SubplatformSetting setting)
+        public void ChangeSubplatformSetting(Subplatform subplatform, SubplatformSetting setting)
         {
             InitNonExistingRepo();
-            Subplatform subplatform = GetSubplatform(subplatformURL);
-            if (subplatform == null) throw new Exception("Subplatform with subplatformurl (" + subplatformURL + ") doesn't exist");
-            if (setting.SubplatformId != subplatform.SubplatformId) throw new Exception("Setting doesn't have same subplatform anymore. Settings cannot be removed from subplatforms, only disabled.");
+            if (subplatform == null) throw new Exception("No subplatform has been provided");
+            if (setting.Subplatform.SubplatformId != subplatform.SubplatformId) throw new Exception("Setting doesn't have same subplatform anymore. Settings cannot be removed from subplatforms, only disabled.");
             if (!subplatform.Settings.Contains(setting))
             {
-                subplatform.Settings.Add(setting);
+                if (subplatform.Settings.FirstOrDefault(sstc => sstc.SettingName.Equals(setting.SettingName)) is null)
+                {
+                    subplatform.Settings.Add(setting);
+                }
+                else
+                {
+                    subplatform.Settings[subplatform.Settings.FindIndex(sstc => sstc.SettingName.Equals(setting.SettingName))] = setting;
+                }
             }
-            else
+            SubplatformRepo.UpdateSubplatform(subplatform);
+            uowManager.Save();
+        }
+
+        public void ChangeSubplatformSettings(Subplatform subplatform, List<SubplatformSetting> settings)
+        {
+            InitNonExistingRepo();
+            if (subplatform == null) throw new Exception("No subplatform has been provided");
+
+            settings.ForEach(ss =>
             {
-                subplatform.Settings[subplatform.Settings.IndexOf(setting)] = setting;
-            }
+                if (ss.Subplatform.SubplatformId != subplatform.SubplatformId) throw new Exception("Setting doesn't have same subplatform anymore. Settings cannot be removed from subplatforms, only disabled.");
+                if (!subplatform.Settings.Contains(ss))
+                {
+                    if (subplatform.Settings.FirstOrDefault(sstc => sstc.SettingName.Equals(ss.SettingName)) is null)
+                    {
+                        subplatform.Settings.Add(ss);
+                    }
+                    else
+                    {
+                        subplatform.Settings[subplatform.Settings.FindIndex(sstc => sstc.SettingName.Equals(ss.SettingName))] = ss;
+                    }
+                }
+            });
+
             SubplatformRepo.UpdateSubplatform(subplatform);
             uowManager.Save();
         }
@@ -313,7 +340,6 @@ namespace PB.BL
             Tag tag = new Tag()
             {
                 Page = page,
-               
                 Name = name,
                 Text = text
             };

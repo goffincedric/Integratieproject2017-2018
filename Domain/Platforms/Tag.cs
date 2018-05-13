@@ -16,5 +16,21 @@ namespace PB.BL.Domain.Platform
         public int PageId { get; set; }
         [Required]
         public Page Page { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var tag = obj as Tag;
+            return tag != null &&
+                   Name == tag.Name &&
+                   EqualityComparer<Page>.Default.Equals(Page, tag.Page);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 140442508;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Page>.Default.GetHashCode(Page);
+            return hashCode;
+        }
     }
 }
