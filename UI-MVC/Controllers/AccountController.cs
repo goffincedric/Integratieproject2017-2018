@@ -262,15 +262,23 @@ namespace UI_MVC.Controllers
         public ActionResult WeeklyReview()
         {
             WeeklyReview weeklyReview = UserManager.GetLatestWeeklyReview(User.Identity.GetUserId());
-            Person person = ItemMgr.GetPerson(weeklyReview.TopPersonId);
-            if (person.IconURL is null)
+            if (weeklyReview is null)
             {
-                ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Users/user.png");
+                return View(weeklyReview);
             }
             else
             {
-                ViewBag.Icon = VirtualPathUtility.ToAbsolute(person.IconURL);
+                Person person = ItemMgr.GetPerson(weeklyReview.TopPersonId);
+                if (person.IconURL is null)
+                {
+                    ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Users/user.png");
+                }
+                else
+                {
+                    ViewBag.Icon = VirtualPathUtility.ToAbsolute(person.IconURL);
+                }
             }
+            
             return View(weeklyReview);
         }
         #endregion

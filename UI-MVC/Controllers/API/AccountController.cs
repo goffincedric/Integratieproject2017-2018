@@ -85,6 +85,17 @@ namespace UI_MVC.Controllers.API
             return Ok(profileAlerts);
         }
 
+        [HttpPut]
+        public IHttpActionResult ReadProfileAlert(int? profileAlertId)
+        {
+            if (profileAlertId is null) return BadRequest();
+            ProfileAlert profileAlert = UserManager.GetProfileAlert((int)profileAlertId);
+            if (!profileAlert.UserId.Equals(Thread.CurrentPrincipal.Identity.GetUserId())) return BadRequest();
+            profileAlert.IsRead = true;
+            UserManager.ChangeProfileAlert(profileAlert);
+            return Ok(profileAlert);
+        }
+
 
 
         //// GET: api/Account/5

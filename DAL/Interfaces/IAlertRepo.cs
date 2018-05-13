@@ -16,8 +16,9 @@ namespace PB.DAL.Interfaces
         void UpdateAlert(Alert alert);
         void DeleteAlert(int alertId);
 
-
+        ProfileAlert ReadProfileAlert(int profileAlertId);
         IEnumerable<ProfileAlert> ReadProfileAlerts();
         IEnumerable<ProfileAlert> ReadProfileAlerts(string userId);
+        void UpdateProfileAlert(ProfileAlert profileAlert);
     }
 }

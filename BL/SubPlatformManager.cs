@@ -313,7 +313,6 @@ namespace PB.BL
             Tag tag = new Tag()
             {
                 Page = page,
-               
                 Name = name,
                 Text = text
             };

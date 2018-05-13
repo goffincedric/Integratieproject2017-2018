@@ -44,7 +44,6 @@ namespace PB.BL
             CreateRolesandUsers();
         }
 
-
         #region Init & create
         public void InitNonExistingRepo(bool createWithUnitOfWork = false)
         {
@@ -579,6 +578,12 @@ namespace PB.BL
             return alerts;
         }
 
+        public ProfileAlert GetProfileAlert(int profileAlertId)
+        {
+            InitNonExistingRepo();
+            return AlertRepo.ReadProfileAlert(profileAlertId);
+        }
+
         public List<ProfileAlert> GetProfileAlerts(Subplatform subplatform, Profile profile)
         {
             List<ProfileAlert> profileAlerts = new List<ProfileAlert>();
@@ -609,6 +614,13 @@ namespace PB.BL
             });
 
             return profileAlerts;
+        }
+
+        public void ChangeProfileAlert(ProfileAlert profileAlert)
+        {
+            InitNonExistingRepo();
+            AlertRepo.UpdateProfileAlert(profileAlert);
+            UowManager.Save();
         }
         #endregion
     }

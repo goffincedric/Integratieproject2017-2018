@@ -49,8 +49,11 @@ namespace UI_MVC.Controllers
         [HttpPost]
         public ActionResult DeploySubplatform(SubplatformViewModel subplatformViewModel)
         {
-            SubplatformMgr.AddSubplatform(subplatformViewModel.name, subplatformViewModel.url, subplatformViewModel.sourceAPI);
-            return RedirectToAction("PlatformSettings", "Home");
+            if (ModelState.IsValid)
+            {
+                SubplatformMgr.AddSubplatform(subplatformViewModel.name, subplatformViewModel.url, subplatformViewModel.sourceAPI);
+            }
+            return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
 
