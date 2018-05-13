@@ -256,14 +256,14 @@ namespace UI_MVC.Controllers
         public ActionResult _NotificationDropdown(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            var model = UserManager.GetProfileAlerts(Subplatform, User.Identity.GetUserId());
+            var model = UserManager.GetSiteProfileAlerts(Subplatform, User.Identity.GetUserId());
             return PartialView(model);
         }
 
         public ActionResult Notifications(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            var model = UserManager.GetProfileAlerts(Subplatform, UserManager.GetProfile(User.Identity.GetUserId()));
+            var model = UserManager.GetSiteProfileAlerts(Subplatform, User.Identity.GetUserId());
             return View(model);
         }
 
@@ -273,15 +273,23 @@ namespace UI_MVC.Controllers
         public ActionResult WeeklyReview()
         {
             WeeklyReview weeklyReview = UserManager.GetLatestWeeklyReview(User.Identity.GetUserId());
-            Person person = ItemMgr.GetPerson(weeklyReview.TopPersonId);
-            if (person.IconURL is null)
+            if (weeklyReview is null)
             {
-                ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Users/user.png");
+                return View(weeklyReview);
             }
             else
             {
-                ViewBag.Icon = VirtualPathUtility.ToAbsolute(person.IconURL);
+                Person person = ItemMgr.GetPerson(weeklyReview.TopPersonId);
+                if (person.IconURL is null)
+                {
+                    ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Users/user.png");
+                }
+                else
+                {
+                    ViewBag.Icon = VirtualPathUtility.ToAbsolute(person.IconURL);
+                }
             }
+            
             return View(weeklyReview);
         }
         #endregion

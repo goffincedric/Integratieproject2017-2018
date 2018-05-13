@@ -3,23 +3,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <title>@ViewBag.Title</title>
-  @* Styles *@
-  @Styles.Render("~/Content/bootstrapcss")
-  @Styles.Render("~/Content/Styling/style.css")
-  <link id="ThemeLink" href="@Html.Action("GetThemeSetting","Home")" rel="stylesheet">
-  @Scripts.Render("~/bundles/jquery")
-  @Scripts.Render("~/bundles/bootstrapjs")
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+    @* Styles *@
+    @Styles.Render("~/Content/bootstrapcss")
+    @Styles.Render("~/Content/Styling/style.css")
+    <link id="ThemeLink" href="@Html.Action("GetThemeSetting","Home")" rel="stylesheet">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrapjs")
+    <link rel="icon" href="@Html.Action("GetLogo","Home")" />
 </head>
 <body class="app">
   <div id="loader">
     <div class="spinner"></div>
   </div>
   <div>
-
     <div class="sidebar">
       <div class="sidebar-inner">
         <div class="sidebar-logo">

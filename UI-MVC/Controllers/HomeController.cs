@@ -106,8 +106,11 @@ namespace UI_MVC.Controllers
         [Route("")]
         public ActionResult Index(string subplatform)
         {
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> master
             ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text; 
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
             return View("Index");
@@ -290,7 +293,7 @@ namespace UI_MVC.Controllers
             accountMgr.GenerateAllAlerts(itemMgr.GetItems(), out itemsToUpdate);
             itemMgr.ChangeItems(itemsToUpdate);
 
-            return RedirectToAction("PlatformSettings", "Home");
+            return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
         [HttpPost]
@@ -298,7 +301,7 @@ namespace UI_MVC.Controllers
         {
             Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
             itemMgr.CleanupOldRecords(sp);
-            return RedirectToAction("PlatformSettings", "Home");
+            return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
         [HttpPost]
@@ -318,7 +321,7 @@ namespace UI_MVC.Controllers
                     ItemManager.IsSyncing = false;
                 }));
             }
-            return RedirectToAction("PlatformSettings", "Home");
+            return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
 

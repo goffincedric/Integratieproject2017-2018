@@ -20,8 +20,10 @@ namespace PB.BL.Interfaces
         void ChangeUserSetting(string userId, UserSetting userSetting);
         //void RemoveUserSetting(string username, Setting.Account accountSetting);
 
-        List<ProfileAlert> GetProfileAlerts(Subplatform subplatform, Profile profile);
-        List<ProfileAlert> GetProfileAlerts(Subplatform subplatform, string UserId);
+        ProfileAlert GetProfileAlert(int profileAlertId);
+        List<ProfileAlert> GetSiteProfileAlerts(Subplatform subplatform, string userId);
+        List<ProfileAlert> GetWebAPIProfileAlerts(Subplatform subplatform, string userId);
+        void ChangeProfileAlert(ProfileAlert profileAlert);
 
         Profile AddSubscription(Profile profile, Item item);
         Profile RemoveSubscription(Profile profile, Item item);

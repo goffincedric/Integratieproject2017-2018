@@ -106,6 +106,15 @@ namespace PB.DAL
             ctx.SaveChanges();
         }
 
+        public ProfileAlert ReadProfileAlert(int profileAlertId)
+        {
+            return ctx.ProfileAlerts
+                .Include(pa => pa.Alert)
+                .Include(pa => pa.Alert.Item)
+                .FirstOrDefault(pa => pa.ProfileAlertId == profileAlertId);
+                
+        }
+
         public IEnumerable<ProfileAlert> ReadProfileAlerts()
         {
             return ctx.ProfileAlerts
@@ -121,6 +130,14 @@ namespace PB.DAL
                 .Include(pa => pa.Alert.Item)
                 .Where(pa => pa.UserId.Equals(userId))
                 .AsEnumerable();
+        }
+        
+        public void UpdateProfileAlert(ProfileAlert profileAlert)
+        {
+            profileAlert = ctx.ProfileAlerts.Attach(profileAlert);
+
+            ctx.Entry(profileAlert).State = EntityState.Modified;
+            ctx.SaveChanges();
         }
     }
 }

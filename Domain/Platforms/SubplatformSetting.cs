@@ -16,17 +16,23 @@ namespace PB.BL.Domain.Platform
         public bool IsEnabled { get; set; }
         public string Value { get; set; }
         public virtual Subplatform Subplatform { get; set; }
+
         public override bool Equals(object obj)
         {
-            return obj is SubplatformSetting setting &&
+            var setting = obj as SubplatformSetting;
+            return setting != null &&
                    SettingName == setting.SettingName &&
+                   IsEnabled == setting.IsEnabled &&
+                   Value == setting.Value &&
                    EqualityComparer<Subplatform>.Default.Equals(Subplatform, setting.Subplatform);
         }
 
         public override int GetHashCode()
         {
-            var hashCode = 645998418;
+            var hashCode = -313755654;
             hashCode = hashCode * -1521134295 + SettingName.GetHashCode();
+            hashCode = hashCode * -1521134295 + IsEnabled.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Value);
             hashCode = hashCode * -1521134295 + EqualityComparer<Subplatform>.Default.GetHashCode(Subplatform);
             return hashCode;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,8 +8,9 @@ namespace UI_MVC.Models
 {
     public class SubplatformViewModel
     {
-        public string name { get; set; }
-        public string url { get; set; }
-        public string sourceAPI { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public string SourceAPI { get; set; }
     }
 }

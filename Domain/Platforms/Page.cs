@@ -19,5 +19,20 @@ namespace PB.BL.Domain.Platform
         [Required]
         public Subplatform Subplatform { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            var page = obj as Page;
+            return page != null &&
+                   PageName == page.PageName &&
+                   EqualityComparer<Subplatform>.Default.Equals(Subplatform, page.Subplatform);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -562850145;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PageName);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Subplatform>.Default.GetHashCode(Subplatform);
+            return hashCode;
+        }
     }
 }
