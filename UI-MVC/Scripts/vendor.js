@@ -32583,7 +32583,7 @@
                 s = t.bDeferLoading;
             if (!t.bInitialised) return void setTimeout(function() {
                 ot(t)
-            }, 200);
+            }, 100);
             for (W(t), O(t), R(t, t.aoHeader), R(t, t.aoFooter), ft(t, !0), o.bAutoWidth && _t(t), e = 0, n = a.length; e < n; e++) i = a[e], i.sWidth && (i.nTh.style.width = Mt(i.sWidth));
             Rt(t, null, "preInit", [t]), F(t);
             var l = Wt(t);

@@ -10,7 +10,6 @@
 
 
 <main class="main-content bgc-grey-100" style="background-color: #f9fafb;">
-
   <div class="banner-window">
     <div class="outer">
       <div class="middle">
@@ -26,9 +25,7 @@
             <br />
             @if (!User.Identity.IsAuthenticated)
             {
-
               <div class="row" style="text-align:center; margin:auto">
-                1
                 <a href="@Url.Action("Login", "Account")" class="btn-lg btn-primary" style="text-align:center; margin:auto">Start nu</a>
               </div>
             }
@@ -208,41 +205,72 @@
   </div>
 </main>
 <script src="~/Scripts/index/hide-content.js" defer></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-
+<script src="~/Scripts/charts/Chart.min.js"></script>
+<script src="~/Scripts/wordcloud/zingchart.min.js"></script>
+<script src="~/Scripts/wordcloud/zingchart-wordcloud.min.js"></script>
+<script src="~/Scripts/wordcloud/wordcloud.js"></script>
 
 <script>
 
+  function makeAjaxCall(url, methodType) {
+    var promiseObj = new Promise(function (resolve, reject) {
+      var xhr = new XMLHttpRequest();
+
+      xhr.open(methodType, url, true);
+      xhr.setRequestHeader("x-api-key", "303d22a4-402b-4d3c-b279-9e81c0480711");
+      xhr.send();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            console.log("xhr done successfully");
+            var resp = "";
+            resp = xhr.response;
+            resolve(JSON.parse(resp));
+
+          } else {
+            reject(xhr.status);
+            console.log("xhr failed");
+          }
+        } else {
+          console.log("xhr processing going on");
+        }
+      }
+      console.log("request sent succesfully");
+
+    });
+    return promiseObj;
+  }
+
+
   function showIncrease() {
-    var map = "";
-    map = $.ajax({
-      async: false,
-      type: 'GET',
-      dataType: 'json',
-      url: "https://localhost:44342/api/item/GetPersonIncrease",
-      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseJSON
+   
+
+    var URL = "https://localhost:44342/api/item/GetPersonIncrease";
+    makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+    function process(output) {
+      console.log(output);
 
 
-    var keys2 = [];
-    keys2 = Object.keys(map);
-    var label2 = [];
-    var values2 = [];
+      var keys = [];
+      keys = Object.keys(output);
+      var label = [];
+      var values = [];
 
-    for (var i = 0; i < keys2.length; i++) {
-      label2.push(keys2[i]);
-      $("#pol" + i).html(keys2[i]);
-      values2.push(map[keys2[i]]);
-      $("#poli" + i).html(map[keys2[i]]);
+      for (var i = 0; i < keys.length; i++) {
+        label.push(keys[i]);
+        $("#pol" + i).html(keys[i]);
+        values.push(output[keys[i]]);
+        $("#poli" + i).html(output[keys[i]]);
+      }
     }
-    console.log(label2);
-    console.log(values2);
+
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
   }
 
   showIncrease();
-
-
 
   function drawRadarChart() {
     var can2 = $('#radar2-chart');
@@ -279,327 +307,244 @@
 
   }
 
-  setTimeout(() => {
-    drawRadarChart();
-  }, 2000);
+  drawRadarChart();
 
   function drawBarChart() {
+    
+    var URL = "https://localhost:44342/api/item/getpersonstop/5";
+    makeAjaxCall(URL, "GET").then(process, errorHandler);
 
-
-    function makeAjaxCall(url, methodType) {
-      var promiseObj = new Promise(function (resolve, reject) {
-        var xhr = new XMLHttpRequest();
-
-        xhr.open(methodType, url, true);
-        xhr.setRequestHeader("x-api-key", "303d22a4-402b-4d3c-b279-9e81c0480711");
-        xhr.send();
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-              console.log("xhr done successfully");
-              var resp = "";
-            resp = xhr.response;
-              resolve(resp);
-
-            } else {
-              reject(xhr.status);
-              console.log("xhr failed");
-            }
-          } else {
-            console.log("xhr processing going on");
-          }
-        }
-        console.log("request sent succesfully");
-
-      });
-      return promiseObj;
-    }
-
-  
-
-      var bar = "";
-      var URL = "https://localhost:44342/api/item/getpersonstop/5";
-
-      makeAjaxCall(URL, "GET").then(processRepoListResponse, errorHandler);
-
-
-    function processRepoListResponse(repoList) {
-      console.log("render repo list", repoList);
-    }
-    function errorHandler(statusCode) {
-      console.log("failed with status", status);
-    }
- 
-
-
-
-
-
-
-
-    console.log(bar);
-
-    var keys = [];
-    keys = Object.keys(bar);
-    var label = [];
-    var values = [];
-
-    for (var i = 0; i < keys.length; i++) {
-      label.push(keys[i]);
-      values.push(bar[keys[i]] / 10);
-    }
-
-    console.log(label);
-    console.log(values);
-
-
-    var can = $('#bar2-chart');
-    new Chart(can, {
-      type: 'bar',
-      data: {
-        labels: label,
-        datasets: [
-          {
-            label: "Aantal tweets",
-            backgroundColor: "#03a9f4",
-            borderColor: "#rgba(3, 169, 244, 0.5)",
-            data: values
-          }
-        ]
-      },
-      options: {
-        legend: { display: true },
-        responsive: true,
-        maintainAspectRatio: false,
-
-      }
-    });
-  }
-
-
-  drawBarChart();
-
-
-
-
-  function drawLineChart() {
-    var persons = "";
-    persons = $.ajax({
-      async: false,
-      type: 'GET',
-      dataType: 'json',
-      url: "https://localhost:44342/api/item/GetMostPopularPersons",
-      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseJSON
-
-
-
-    var can = $('#evol');
-    can.attr('style', 'width: 300px; height: 80px');
-    //can.attr('height', '300px');
-
-    var datagrafiek = {
-      labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
-      datasets: []
-    };
-
-    // var labelslist;
-
-    var myLineChart = new Chart(can, {
-      type: 'line',
-      data: datagrafiek,
-      //options: {
-      //  responsive: true,
-      //  maintainAspectRatio: true
-      //}
-
-    });
-
-
-    var counter = 0;
-    $.each(persons, function (key, value) {
-      var tweet = "";
-      tweet = $.ajax({
-        async: false,
-        type: 'GET',
-        dataType: 'json',
-        url: "https://localhost:44342/api/item/GetPersonEvolution/" + key,
-        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-      }).responseJSON
-
+    function process(output) {
+      console.log(output);
 
       var keys = [];
-      keys = Object.keys(tweet);
-
+      keys = Object.keys(output);
       var label = [];
       var values = [];
 
-      var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
-      var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
-      var points = ["#512da8", "#1976d2", "#388e3c"];
-
       for (var i = 0; i < keys.length; i++) {
         label.push(keys[i]);
-        values.push(tweet[keys[i]] / 10);
+
+        values.push(output[keys[i]] / 10);
       }
+
 
       console.log(label);
       console.log(values);
 
 
+      var can = $('#bar2-chart');
+      new Chart(can, {
+        type: 'bar',
+        data: {
+          labels: label,
+          datasets: [
+            {
+              label: "Aantal tweets",
+              backgroundColor: "#03a9f4",
+              borderColor: "rgba(3, 169, 244, 0.5)",
+              data: values
+            }
+          ]
+        },
+        options: {
+          legend: { display: true },
+          responsive: true,
+          maintainAspectRatio: false,
 
-      var myNewDataSet = {
-        label: value,
-        data: values,
-        borderWidth: 2,
-        backgroundColor: backgroundcolors[counter],
-        borderColor: borderColors[counter],
-        pointBackgroundColor: points[counter]
-
-      }
-
-      datagrafiek.datasets.push(myNewDataSet);
-
-      myLineChart.update();
-      counter++;
-    });
-
-
-  }
-
-
-
-
-  setTimeout(() => {
-    drawLineChart();
-  }, 500);
-
-
-
-</script>
-
-<script>
-  function getTopTrending() {
-
-
-    var tmp = "";
-    tmp = $.ajax({
-      async: false,
-      type: 'GET',
-      dataType: 'json',
-      url: "https://localhost:44342/api/item/getMostPopularPerson/",
-      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseJSON
-
-    return tmp;
-  }
-
-
-
-  function getHashtags(id) {
-    var count = "";
-    count = $.ajax({
-      async: false,
-      type: 'GET',
-      dataType: 'json',
-      url: "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + id,
-      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseJSON
-
-    var keys = [];
-    keys = Object.keys(count);
-    var label = [];
-    var values = [];
-
-    for (var i = 0; i < keys.length; i++) {
-      label.push(keys[i]);
-      values.push(count[keys[i]] / 10);
+        }
+      });
     }
 
-    var can = $('#doughnut-chart');
-    console.log(can.parent().attr('Style', 'width: 400px; height: 350px'));
-    //can.attr('Style', 'width: 300px; height: 300px');
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+  }
 
-    new Chart(can, {
-      type: 'doughnut',
-      data: {
-        labels: label,
-        datasets: [
-          {
-            label: "Hashtags",
-            data: values,
-            backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64", "#7BDFF2", "#FDE74C", "#47E5BC", "#DAD6D6", "#EF3E36"]
+  drawBarChart();
+
+  function drawLineChart() {
+
+
+    var URL = "https://localhost:44342/api/item/GetMostPopularPersons";
+    makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+    function process(output) {
+      console.log(output);
+
+      var can = $('#evol');
+      can.attr('style', 'width: 300px; height: 80px');
+
+
+      var datagrafiek = {
+        labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
+        datasets: []
+      };
+
+
+      var myLineChart = new Chart(can, {
+        type: 'line',
+        data: datagrafiek,
+      });
+
+      var counter = 0;
+      $.each(output, function (key, value) {
+        var URL = "https://localhost:44342/api/item/GetPersonEvolution/" + key;
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+        function process(output2) {
+          var keys = [];
+          keys = Object.keys(output2);
+
+          var label = [];
+          var values = [];
+
+          var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
+          var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+          var points = ["#512da8", "#1976d2", "#388e3c"];
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output2[keys[i]] / 10);
           }
-        ]
-      },
-      options: {
 
-      }
-    });
+          console.log(label);
+          console.log(values);
 
-  }
+          var myNewDataSet = {
+            label: value,
+            data: values,
+            borderWidth: 2,
+            backgroundColor: backgroundcolors[counter],
+            borderColor: borderColors[counter],
+            pointBackgroundColor: points[counter]
 
+          }
 
-  setTimeout(() => {
-    getHashtags(getTopTrending());
-  }, 500);
+          datagrafiek.datasets.push(myNewDataSet);
 
+          myLineChart.update();
+          counter++;
+        }
+        });
+    
 
-</script>
-
-<script>
-
-  function drawPie(id) {
-
-    var count2 = "";
-    count2 = $.ajax({
-      async: false,
-      type: 'GET',
-      dataType: 'json',
-      url: "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id,
-      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseJSON
-
-    var keys = [];
-    keys = Object.keys(count2);
-    var label = [];
-    var values = [];
-
-    for (var i = 0; i < keys.length; i++) {
-      label.push(keys[i]);
-      values.push(count2[keys[i]] / 10);
+        function errorHandler(statusCode) {
+          console.log("failed with status", status);
+        }
     }
 
-    var can = $('#pie-chart');
-    console.log(can.parent().attr('Style', 'width: 400px; height: 250'));
-    //can.attr('Style', 'width: 300px; height: 300px');
 
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
 
-
-    new Chart(can, {
-      type: 'pie',
-      data: {
-        labels: label,
-        datasets: [{
-          backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
-          data: values
-        }]
-      },
-      options: {
-
-      }
-    });
   }
 
+  drawLineChart();
 
-  setTimeout(() => {
-    drawPie(getTopTrending());
 
-  }, 500);
+  function TrendingPersonGraphs() {
+    var URL = "https://localhost:44342/api/item/getMostPopularPerson";
+    makeAjaxCall(URL, "GET").then(process, errorHandler);
+    function process(id) {
 
+      function getHashtags(id) {
+        var URL = "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + id;
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+        function process(output) {
+          console.log(output);
+
+          var keys = [];
+          keys = Object.keys(output);
+          var label = [];
+          var values = [];
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output[keys[i]] / 10);
+          }
+
+          var can = $('#doughnut-chart');
+          console.log(can.parent().attr('Style', 'width: 400px; height: 350px'));
+
+
+          new Chart(can, {
+            type: 'doughnut',
+            data: {
+              labels: label,
+              datasets: [
+                {
+                  label: "Hashtags",
+                  data: values,
+                  backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64", "#7BDFF2", "#FDE74C", "#47E5BC", "#DAD6D6", "#EF3E36"]
+                }
+              ]
+            },
+            options: {
+
+            }
+          });
+        }
+        function errorHandler(statusCode) {
+          console.log("failed with status", status);
+        }
+
+      }
+
+      getHashtags(id);
+
+
+      function drawPie(id) {
+        var URL = "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id;
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+        function process(output) {
+          console.log(output);
+
+          var keys = [];
+          keys = Object.keys(output);
+          var label = [];
+          var values = [];
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output[keys[i]] / 10);
+          }
+
+          var can = $('#pie-chart');
+          console.log(can.parent().attr('Style', 'width: 400px; height: 250'));
+
+          new Chart(can, {
+            type: 'pie',
+            data: {
+              labels: label,
+              datasets: [{
+                backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                data: values
+              }]
+            },
+            options: {
+
+            }
+          });
+        }
+        function errorHandler(statusCode) {
+          console.log("failed with status", status);
+        }
+      }
+
+
+      drawPie(id);
+    }
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+  }
+  
+  TrendingPersonGraphs();
 
 </script>
-<script src="~/Scripts/wordcloud/zingchart.min.js"></script>
-<script src="~/Scripts/wordcloud/zingchart-wordcloud.min.js"></script>
-<script src="~/Scripts/wordcloud/wordcloud.js"></script>
+
 

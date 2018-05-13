@@ -586,7 +586,7 @@ webpackJsonp([0], {
         }), r("#sidebar-toggle").click(function (t) {
           t.preventDefault(), setTimeout(function () {
             window.dispatchEvent(window.EVENT)
-          }, 300)
+          }, 100)
         })
       }()
   },
