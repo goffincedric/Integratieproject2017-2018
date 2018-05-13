@@ -18,7 +18,7 @@ namespace PB.BL
 
         public SubplatformManager()
         {
-            
+
         }
 
         public SubplatformManager(IntegratieDbContext context)
@@ -30,7 +30,7 @@ namespace PB.BL
         {
             uowManager = uowMgr;
             SubplatformRepo = new SubplatformRepo(uowMgr.UnitOfWork);
-           
+
         }
 
         public void InitNonExistingRepo(bool createWithUnitOfWork = false)
@@ -89,6 +89,50 @@ namespace PB.BL
                 IsEnabled = true,
                 Value = siteIconUrl
             });
+
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
+                Value = "31",
+                IsEnabled = true
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.DEFAULT_THEME,
+                Value = "Light",
+                IsEnabled = true
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
+                Value = @"~/Content/Images/Users/user.png",
+                IsEnabled = true
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
+                Value = @"~/Content/Images/Users/user.png",
+                IsEnabled = true
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SOCIAL_SOURCE,
+                Value = null,
+                IsEnabled = true
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SITE_NAME,
+                Value = name,
+                IsEnabled = true
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SOCIAL_SOURCE_URL,
+                Value = null,
+                IsEnabled = true
+            });
+
 
             subplatform = AddSubplatform(subplatform);
             uowManager.Save();
@@ -193,7 +237,7 @@ namespace PB.BL
         public SubplatformSetting GetSubplatformSetting(int subplatformId, Setting.Platform settingname)
         {
             InitNonExistingRepo();
-            return SubplatformRepo.ReadSubplatformSetting(settingname, subplatformId); 
+            return SubplatformRepo.ReadSubplatformSetting(settingname, subplatformId);
         }
         #endregion
 

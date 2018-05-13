@@ -86,7 +86,7 @@ namespace PB.DAL.Migrations
                          new SubplatformSetting()
                         {
                             SettingName = Setting.Platform.SITE_NAME,
-                            Value = "Politieke Barometer",
+                            Value = "Barometer",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },

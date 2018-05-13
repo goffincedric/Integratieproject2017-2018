@@ -240,10 +240,12 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\SubplatformController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\OrganisationEditModel.cs" />
     <Compile Include="Models\SubplatformSettingViewModel.cs" />
     <Compile Include="Models\SubplatformViewModel.cs" />
@@ -377,7 +379,7 @@
     <Content Include="Views\Home\ItemDetail.cshtml" />
     <Content Include="Views\Item\Charts.cshtml" />
     <Content Include="Views\Account\Notifications.cshtml" />
-    <Content Include="Views\Home\PlatformSettings.cshtml" />
+    <Content Include="Views\Subplatform\PlatformSettings.cshtml" />
     <Content Include="Views\Account\UserBeheer.cshtml" />
     <Content Include="Views\Item\ItemBeheer.cshtml" />
     <Content Include="Views\Account\UserSettings.cshtml" />
@@ -393,8 +395,8 @@
     <Content Include="Views\Item\EditOrganisation.cshtml" />
     <Content Include="Views\Item\EditKeyword.cshtml" />
     <Content Include="Views\Item\EditTheme.cshtml" />
-    <Content Include="Views\Dashboard\_DeploySubplatform.cshtml" />
-    <Content Include="Views\Dashboard\_SubplatformSetting.cshtml" />
+    <Content Include="Views\Subplatform\_DeploySubplatform.cshtml" />
+    <Content Include="Views\Subplatform\_SubplatformSetting.cshtml" />
     <Content Include="Views\Account\WeeklyReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
