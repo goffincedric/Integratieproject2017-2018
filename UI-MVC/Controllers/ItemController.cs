@@ -16,6 +16,7 @@ namespace UI_MVC.Controllers
     /// </summary
     [RequireHttps]
     [Authorize(Roles = "User,Admin,SuperAdmin")]
+    [OutputCache(Duration = 10, VaryByParam = "none")]
     public class ItemController : Controller
     {
         private readonly UnitOfWorkManager uow;
