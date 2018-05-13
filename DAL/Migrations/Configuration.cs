@@ -17,7 +17,7 @@ namespace PB.DAL.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-           AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(IntegratieDbContext ctx)
