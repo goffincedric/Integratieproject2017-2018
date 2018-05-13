@@ -286,12 +286,58 @@
   function drawBarChart() {
 
 
-    bar = $.ajax({
-      type: 'GET',
-      dataType: 'json',
-      url: "https://localhost:44342/api/item/getpersonstop/5",
-      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseJSON
+    function makeAjaxCall(url, methodType) {
+      var promiseObj = new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(methodType, url, true);
+        xhr.setRequestHeader("x-api-key", "303d22a4-402b-4d3c-b279-9e81c0480711");
+        xhr.send();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              console.log("xhr done successfully");
+              var resp = "";
+            resp = xhr.response;
+              resolve(resp);
+
+            } else {
+              reject(xhr.status);
+              console.log("xhr failed");
+            }
+          } else {
+            console.log("xhr processing going on");
+          }
+        }
+        console.log("request sent succesfully");
+
+      });
+      return promiseObj;
+    }
+
+  
+
+      var bar = "";
+      var URL = "https://localhost:44342/api/item/getpersonstop/5";
+
+      makeAjaxCall(URL, "GET").then(processRepoListResponse, errorHandler);
+
+
+    function processRepoListResponse(repoList) {
+      console.log("render repo list", repoList);
+    }
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+ 
+
+
+
+
+
+
+
+    console.log(bar);
 
     var keys = [];
     keys = Object.keys(bar);
@@ -305,7 +351,7 @@
 
     console.log(label);
     console.log(values);
-    console.log("TEST FUNCTIE");
+
 
     var can = $('#bar2-chart');
     new Chart(can, {
@@ -330,10 +376,9 @@
     });
   }
 
-  setTimeout(() => {
-    console.log("test time out")
-    drawBarChart();
-  }, 500);
+
+  drawBarChart();
+
 
 
 
