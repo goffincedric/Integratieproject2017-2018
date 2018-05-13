@@ -95,9 +95,9 @@ namespace UI_MVC.Controllers
         [Route("")]
         public ActionResult Index(string subplatform)
         {
-          
-            
 
+
+            ViewBag.HeaderText = SubplatformMgr.GetTag("HeaderText").Text; 
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
             return View("Index");
         }

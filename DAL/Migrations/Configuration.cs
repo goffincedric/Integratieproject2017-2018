@@ -435,7 +435,15 @@ namespace PB.DAL.Migrations
                 {
                     PageName = "Home",
                     Title = "Home",
-                    Tags = new List<Tag>(),
+                    Tags = new List<Tag>()
+                    {
+                        new Tag()
+                        {
+                           CssName="Title",
+                           NameObject="HeaderText",
+                           Text="Politieke Barometer"
+                        }
+                    },
                     Subplatform = pbSubplatform
                 },
                 new Page()

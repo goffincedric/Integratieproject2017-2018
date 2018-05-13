@@ -29,6 +29,7 @@ namespace PB.BL.Interfaces
         IEnumerable<Tag> GetTags(int pageId);
         Tag AddTag(int pageId, string cssName, string nameObject, string text);
         Tag GetTag(int tagId);
+        Tag GetTag(string name);
         void ChangeTag(Tag tag);
         void RemoveTag(int tagId);
 

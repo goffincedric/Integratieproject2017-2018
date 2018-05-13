@@ -247,6 +247,13 @@ namespace PB.DAL
                 .FirstOrDefault(t => t.TagId == tagId);
         }
 
+        public Tag ReadTag(string name)
+        {
+            return ctx.Tags
+                .Include(t => t.Page)
+                .FirstOrDefault(t => t.NameObject == name);
+        }
+
         public Tag CreateTag(Tag tag)
         {
             tag = ctx.Tags.Add(tag);

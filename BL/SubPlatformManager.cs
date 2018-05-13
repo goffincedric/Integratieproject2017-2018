@@ -330,6 +330,11 @@ namespace PB.BL
             return SubplatformRepo.ReadTag(tagId);
         }
 
+        public Tag GetTag(string name)
+        {
+            InitNonExistingRepo();
+            return SubplatformRepo.ReadTag(name);
+        }
         public void ChangeTag(Tag tag)
         {
             InitNonExistingRepo();
