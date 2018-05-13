@@ -23,6 +23,8 @@ namespace UI_MVC.Controllers
         private readonly SubplatformManager SubplatformMgr;
 
 
+        // TODO: Items import
+
         public ItemController()
         {
             uow = new UnitOfWorkManager();
