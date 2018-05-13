@@ -251,7 +251,7 @@ namespace PB.DAL
         {
             return ctx.Tags
                 .Include(t => t.Page)
-                .FirstOrDefault(t => t.NameObject == name);
+                .FirstOrDefault(t => t.Name == name);
         }
 
         public Tag CreateTag(Tag tag)

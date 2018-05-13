@@ -438,11 +438,26 @@ namespace PB.DAL.Migrations
                     Tags = new List<Tag>()
                     {
                         new Tag()
-                        {
-                           CssName="Title",
-                           NameObject="HeaderText",
+                        {     
+                           Name="BannerTitle",
                            Text="Politieke Barometer"
+                        },
+                        new Tag()
+                        {
+                            Name="BannerTextSub1",
+                            Text = "Volg uw favoriete politiekers, partijen en thema's en bekijk hoe deze door anderen besproken worden op sociale media."
+                        }, 
+                        new Tag()
+                        {
+                            Name="BannerTextSub2",
+                            Text = "Creeër uw eigen dashboard en bekijk en analyseer live grafieken!"
+                        }, 
+                        new Tag()
+                        {
+                            Name="call-to-action-text",
+                            Text="Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data."
                         }
+
                     },
                     Subplatform = pbSubplatform
                 },
