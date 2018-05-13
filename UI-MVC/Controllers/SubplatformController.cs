@@ -51,7 +51,7 @@ namespace UI_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                SubplatformMgr.AddSubplatform(subplatformViewModel.name, subplatformViewModel.url, subplatformViewModel.sourceAPI);
+                SubplatformMgr.AddSubplatform(subplatformViewModel.Name, subplatformViewModel.Url, subplatformViewModel.SourceAPI);
             }
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
@@ -75,53 +75,57 @@ namespace UI_MVC.Controllers
         [HttpPost]
         public ActionResult SubplatformSetting(string subplatform, SubplatformSettingViewModel subplatformSettingViewModel)
         {
-            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
 
-            SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
+            List<SubplatformSetting> subplatformSettings = new List<SubplatformSetting>()
             {
-                SettingName = Setting.Platform.SOCIAL_SOURCE,
-                Value = subplatformSettingViewModel.SocialSource,
-                IsEnabled = true,
-                Subplatform = Subplatform
-            });
-            SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
-            {
-                SettingName = Setting.Platform.SOCIAL_SOURCE_URL,
-                Value = subplatformSettingViewModel.SocialSourceUrl,
-                IsEnabled = true,
-                Subplatform = Subplatform
-            });
-            SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
-            {
-                SettingName = Setting.Platform.SITE_NAME,
-                Value = subplatformSettingViewModel.SiteName,
-                IsEnabled = true,
-                Subplatform = Subplatform
-            });
-            SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
-            {
-                SettingName = Setting.Platform.DEFAULT_THEME,
-                Value = subplatformSettingViewModel.Theme,
-                IsEnabled = true,
-                Subplatform = Subplatform
-            });
-            SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
-            {
-                SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
-                Value = subplatformSettingViewModel.recordsBijhouden.ToString(),
-                IsEnabled = true,
-                Subplatform = Subplatform
-            });
-            SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
-            {
-                SettingName = Setting.Platform.SOURCE_API_URL,
-                Value = subplatformSettingViewModel.APIsource,
-                IsEnabled = true,
-                Subplatform = Subplatform
-            });
+                new SubplatformSetting()
+                {
+                    SettingName = Setting.Platform.SOCIAL_SOURCE,
+                    Value = subplatformSettingViewModel.SocialSource,
+                    IsEnabled = true,
+                    Subplatform = subplatformToChange
+                },
+                new SubplatformSetting()
+                {
+                    SettingName = Setting.Platform.SOCIAL_SOURCE_URL,
+                    Value = subplatformSettingViewModel.SocialSourceUrl,
+                    IsEnabled = true,
+                    Subplatform = subplatformToChange
+                },
+                new SubplatformSetting()
+                {
+                    SettingName = Setting.Platform.SITE_NAME,
+                    Value = subplatformSettingViewModel.SiteName,
+                    IsEnabled = true,
+                    Subplatform = subplatformToChange
+                },
+                new SubplatformSetting()
+                {
+                    SettingName = Setting.Platform.DEFAULT_THEME,
+                    Value = subplatformSettingViewModel.Theme,
+                    IsEnabled = true,
+                    Subplatform = subplatformToChange
+                },
+                new SubplatformSetting()
+                {
+                    SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
+                    Value = subplatformSettingViewModel.recordsBijhouden.ToString(),
+                    IsEnabled = true,
+                    Subplatform = subplatformToChange
+                },
+                new SubplatformSetting()
+                {
+                    SettingName = Setting.Platform.SOURCE_API_URL,
+                    Value = subplatformSettingViewModel.APIsource,
+                    IsEnabled = true,
+                    Subplatform = subplatformToChange
+                }
+            };
 
+            SubplatformMgr.ChangeSubplatformSettings(subplatformToChange, subplatformSettings);
 
-            return RedirectToAction("PlatformSettings", "Home");
+            return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
         [HttpPost]
@@ -129,7 +133,7 @@ namespace UI_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+                Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
                 var iconUrl = "";
                 string _FileName = "";
                 if (fileViewModel.file != null)
@@ -143,26 +147,22 @@ namespace UI_MVC.Controllers
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
                         fileViewModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Site/" + newName;
-                        SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
+                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting()
                         {
                             SettingName = Setting.Platform.SITE_ICON_URL,
                             Value = iconUrl,
                             IsEnabled = true,
-                            Subplatform = Subplatform
+                            Subplatform = subplatformToChange
                         });
                     }
-                }
-                else
-                {
-                    //do nothing
                 }
 
                 return RedirectToAction("PlatformSettings", "Home");
 
             }
 
+            // Show errors on page
             return RedirectToAction("PlatformSettings", "Home");
-
         }
 
         [HttpPost]
@@ -170,7 +170,7 @@ namespace UI_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+                Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
                 var iconUrl = "";
                 string _FileName = "";
                 if (fileViewModel.file != null)
@@ -184,27 +184,21 @@ namespace UI_MVC.Controllers
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
                         fileViewModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Site/" + newName;
-                        SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
+                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting()
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
                             Value = iconUrl,
                             IsEnabled = true,
-                            Subplatform = Subplatform
+                            Subplatform = subplatformToChange
                         });
                     }
                 }
-                else
-                {
-                    //do nothing
-                }
 
                 return RedirectToAction("PlatformSettings", "Home");
-
             }
 
+            // Show errors on page
             return RedirectToAction("PlatformSettings", "Home");
-        
-
         }
 
         [HttpPost]
@@ -212,7 +206,7 @@ namespace UI_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+                Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
                 var iconUrl = "";
                 string _FileName = "";
                 if (fileViewModel.file != null)
@@ -226,29 +220,21 @@ namespace UI_MVC.Controllers
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
                         fileViewModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Users/" + newName;
-                        SubplatformMgr.ChangeSubplatformSetting(subplatform, new SubplatformSetting()
+                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting()
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
                             Value = iconUrl,
                             IsEnabled = true,
-                            Subplatform = Subplatform
+                            Subplatform = subplatformToChange
                         });
                     }
                 }
-                else
-                {
-                    //do nothing
-                }
 
                 return RedirectToAction("PlatformSettings", "Home");
-
             }
 
+            // Show errors on page
             return RedirectToAction("PlatformSettings", "Home");
-
-
         }
-
-
     }
 }

@@ -68,7 +68,7 @@ namespace UI_MVC.Controllers.API
             Subplatform subplatform = SubplatformMgr.GetSubplatform(subplatformUrl);
             if (subplatform is null) return BadRequest();
 
-            List<ProfileAlert> profileAlerts = UserManager.GetProfileAlerts(subplatform, UserManager.GetProfile(Thread.CurrentPrincipal.Identity.GetUserId()));
+            List<ProfileAlert> profileAlerts = UserManager.GetWebAPIProfileAlerts(subplatform, User.Identity.GetUserId());
             if (profileAlerts.Count == 0) return NotFound();
             return Ok(profileAlerts);
         }
@@ -80,13 +80,13 @@ namespace UI_MVC.Controllers.API
             if (previousDays is null) BadRequest();
             Subplatform subplatform = SubplatformMgr.GetSubplatform(subplatformUrl);
             if (subplatform is null) return BadRequest();
-            List<ProfileAlert> profileAlerts = UserManager.GetProfileAlerts(subplatform, UserManager.GetProfile(User.Identity.GetUserName())).Where(pa => pa.TimeStamp.Date >= DateTime.Today.AddDays(-(int)previousDays)).ToList();
+            List<ProfileAlert> profileAlerts = UserManager.GetWebAPIProfileAlerts(subplatform, User.Identity.GetUserName()).Where(pa => pa.TimeStamp.Date >= DateTime.Today.AddDays(-(int)previousDays)).ToList();
             if (profileAlerts.Count == 0) return NotFound();
             return Ok(profileAlerts);
         }
 
         [HttpPut]
-        public IHttpActionResult ReadProfileAlert(int? profileAlertId)
+        public IHttpActionResult HasReadProfileAlert(int? profileAlertId)
         {
             if (profileAlertId is null) return BadRequest();
             ProfileAlert profileAlert = UserManager.GetProfileAlert((int)profileAlertId);

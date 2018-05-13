@@ -168,7 +168,7 @@ namespace PB.BL
                         Profile = user,
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
-                        Value = "light", 
+                        Value = "light",
                         boolValue = false
                     },
                     new UserSetting()
@@ -192,6 +192,14 @@ namespace PB.BL
                         Profile = user,
                         IsEnabled = true,
                         SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
                         Value=null, //moet nog boolean worden
                         boolValue=true
                     }
@@ -330,8 +338,7 @@ namespace PB.BL
                 .Where(p =>
                     p.Subscriptions.Count > 0 &&
                     p.Email != null &&
-                    p.ProfileAlerts.FindAll(pa =>
-                        pa.TimeStamp.Date >= DateTime.Today.AddDays(-7))
+                    p.ProfileAlerts.FindAll(pa => pa.TimeStamp.Date >= DateTime.Today.AddDays(-7))
                     .Count > 0)
                 .ToList();
 
@@ -584,36 +591,53 @@ namespace PB.BL
             return AlertRepo.ReadProfileAlert(profileAlertId);
         }
 
-        public List<ProfileAlert> GetProfileAlerts(Subplatform subplatform, Profile profile)
+        public List<ProfileAlert> GetSiteProfileAlerts(Subplatform subplatform, string userId)
         {
-            List<ProfileAlert> profileAlerts = new List<ProfileAlert>();
-
-            profileAlerts.AddRange(profile.ProfileAlerts.FindAll(pa => pa.Alert.Item.SubPlatforms.Contains(subplatform)));
-
-            profileAlerts.Sort(delegate (ProfileAlert x, ProfileAlert y)
+            InitNonExistingRepo();
+            Profile profile = ProfileRepo.ReadProfile(userId);
+            bool? settingValue = profile?.Settings.Find(us => us.SettingName.Equals(Setting.Account.WANTS_SITE_NOTIFICATIONS))?.boolValue;
+            if (settingValue.HasValue && settingValue.Value)
             {
-                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
-                else if (x.TimeStamp == null) return -1;
-                else if (y.TimeStamp == null) return 1;
-                else return y.TimeStamp.CompareTo(x.TimeStamp);
-            });
+                List<ProfileAlert> profileAlerts = GetProfileAlerts(subplatform, userId).ToList();
 
-            return profileAlerts;
+                profileAlerts.Sort(delegate (ProfileAlert x, ProfileAlert y)
+                {
+                    if (x.TimeStamp == null && y.TimeStamp == null) return 0;
+                    else if (x.TimeStamp == null) return -1;
+                    else if (y.TimeStamp == null) return 1;
+                    else return y.TimeStamp.CompareTo(x.TimeStamp);
+                });
+
+                return profileAlerts;
+            }
+            return new List<ProfileAlert>();
         }
 
-        public List<ProfileAlert> GetProfileAlerts(Subplatform subplatform, string userId)
+        public List<ProfileAlert> GetWebAPIProfileAlerts(Subplatform subplatform, string userId)
         {
-            List<ProfileAlert> profileAlerts = AlertRepo.ReadProfileAlerts(userId).ToList().Where(pa => pa.Alert.Item.SubPlatforms.Contains(subplatform)).ToList();
-
-            profileAlerts.Sort(delegate (ProfileAlert x, ProfileAlert y)
+            InitNonExistingRepo();
+            Profile profile = ProfileRepo.ReadProfile(userId);
+            bool? settingValue = profile?.Settings.Find(us => us.SettingName.Equals(Setting.Account.WANTS_ANDROID_NOTIFICATIONS))?.boolValue;
+            if (settingValue.HasValue && settingValue.Value)
             {
-                if (x.TimeStamp == null && y.TimeStamp == null) return 0;
-                else if (x.TimeStamp == null) return -1;
-                else if (y.TimeStamp == null) return 1;
-                else return y.TimeStamp.CompareTo(x.TimeStamp);
-            });
+                List<ProfileAlert> profileAlerts = GetProfileAlerts(subplatform, userId).ToList();
 
-            return profileAlerts;
+                profileAlerts.Sort(delegate (ProfileAlert x, ProfileAlert y)
+                {
+                    if (x.TimeStamp == null && y.TimeStamp == null) return 0;
+                    else if (x.TimeStamp == null) return -1;
+                    else if (y.TimeStamp == null) return 1;
+                    else return y.TimeStamp.CompareTo(x.TimeStamp);
+                });
+
+                return profileAlerts;
+            }
+            return new List<ProfileAlert>();
+        }
+
+        private IEnumerable<ProfileAlert> GetProfileAlerts(Subplatform subplatform, string userId)
+        {
+            return AlertRepo.ReadProfileAlerts(userId).ToList().Where(pa => pa.Alert.Item.SubPlatforms.Contains(subplatform));
         }
 
         public void ChangeProfileAlert(ProfileAlert profileAlert)

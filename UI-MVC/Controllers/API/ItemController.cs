@@ -257,16 +257,14 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetItemTweet(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            List<Record> records = null; 
+            List<Record> records = new List<Record>(); 
             if(item is Person person)
             {
-                
                 records.AddRange(person.Records.ToList());
             }
             else if(item is Organisation organisation)
             {
-                records.AddRange(organisation.People.SelectMany(p => p.Records).Distinct().ToList()); 
-                
+                records.AddRange(organisation.People.SelectMany(p => p.Records).Distinct().ToList());
             }
             else if (item is Theme theme)
             {
@@ -279,8 +277,6 @@ namespace UI_MVC.Controllers.API
             Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
                 recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
                             .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
-            
-           
             
             if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
