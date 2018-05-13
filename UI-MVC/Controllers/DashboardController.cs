@@ -2,6 +2,7 @@
 using PB.BL;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
+using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
@@ -119,49 +120,10 @@ namespace UI_MVC.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Upload(AccountEditModel editedAccount)
-        {
-            //string _FileName = "";
-            //Profile newProfile = UserManager.GetProfile(User.Identity.GetUserId());
-
-            //if (editedAccount.file != null)
-            //{
-            //    if (editedAccount.file.ContentLength > 0)
-            //    {
-            //        _FileName = Path.GetFileName(editedAccount.file.FileName);
-
-            //        var username = newProfile.UserName.ToString();
-            //        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-            //        string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
-            //        editedAccount.file.SaveAs(_path);
-            //        newProfile.ProfileIcon = @"~/Content/Images/Users/" + newName;
-            //    }
-            //}
-            //else
-            //{
-            //    newProfile.ProfileIcon = newProfile.ProfileIcon;
-            //}
-
-            //newProfile.UserData.LastName = editedAccount.LastName;
-            //newProfile.UserData.FirstName = editedAccount.FirstName;
-            //newProfile.Email = editedAccount.Email;
-            ////newProfile.UserData.Telephone = editedAccount.Telephone;
-            ////newProfile.UserData.Gender = editedAccount.Gender;
-            //newProfile.UserData.Street = editedAccount.Street;
-            //newProfile.UserData.City = editedAccount.City;
-            //newProfile.UserData.Province = editedAccount.Province;
-            //newProfile.UserData.PostalCode = editedAccount.PostalCode;
+       
 
 
 
-            //if (ModelState.IsValid)
-            //{
-            //    UserManager.ChangeProfile(newProfile);
-            //    return RedirectToAction("Account", "Account");
-            //}
-            return View();
-        }
+       
     }
 }
