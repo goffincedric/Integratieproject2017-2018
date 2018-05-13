@@ -17,7 +17,7 @@ namespace PB.DAL.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-           AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(IntegratieDbContext ctx)
@@ -532,10 +532,10 @@ namespace PB.DAL.Migrations
                     Subplatform = pbSubplatform
                 }
             };
-            ctx.Pages.ForEachAsync(t =>
+            ctx.Pages.ForEachAsync(p =>
                 {
-                    Page page = pagesToAdd.FirstOrDefault(p => p.Equals(t));
-                    if (page != null) pagesToAdd.Remove(t);
+                    Page page = pagesToAdd.FirstOrDefault(pta => pta.Equals(p));
+                    if (page != null) pagesToAdd.Remove(p);
                 }).Wait();
             if (pagesToAdd.Count != 0) ctx.Pages.AddRange(pagesToAdd);
             #endregion
