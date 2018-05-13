@@ -43,14 +43,7 @@ namespace UI_MVC.Controllers
 
         public AccountController()
         {
-
-        }
-
-        public AccountController(AccountManager userManager, IntegratieSignInManager signInManager, ItemManager itemManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-            _itemMgr = itemManager;
+           
         }
 
         public IntegratieSignInManager SignInManager
@@ -100,6 +93,24 @@ namespace UI_MVC.Controllers
                 _itemMgr = value;
             }
         }
+
+        public AccountController(AccountManager userManager, IntegratieSignInManager signInManager, ItemManager itemManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+            _itemMgr = itemManager;
+
+            ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
+            ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
+            ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
+            ViewBag.MyAccount = SubplatformMgr.GetTag("Account").Text;
+            ViewBag.More = SubplatformMgr.GetTag("More").Text;
+            ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
+            ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
+            ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
+        }
+
+      
 
         #region LoginRegister
         [AllowAnonymous]

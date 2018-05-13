@@ -30787,7 +30787,7 @@
         }, l.inherits(l.SVGCanvasElement, l.SVGElement), l.mixin(l.SVGCanvasElement, l.AbstractCanvasElement), l.SVGCanvasElement.prototype.setSize = function(t, e) {
             this.width = t, this.height = e, this.node.setAttribute("width", t), this.node.setAttribute("height", e)
         }, l.SVGCanvasElement.prototype.applyTransformParams = function(t, e, n) {
-            this.scale = t, this.transX = e, this.transY = n, this.rootElement.node.setAttribute("transform", "scale(" + t + ") translate(" + e + ", " + n + ")")
+            
         }, l.SVGShapeElement = function(t, e) {
             l.SVGShapeElement.parentClass.call(this, t, e), l.AbstractShapeElement.apply(this, arguments)
         }, l.inherits(l.SVGShapeElement, l.SVGElement), l.mixin(l.SVGShapeElement, l.AbstractShapeElement), l.SVGShapeElement.prototype.applyAttr = function(t, e) {
@@ -32583,7 +32583,7 @@
                 s = t.bDeferLoading;
             if (!t.bInitialised) return void setTimeout(function() {
                 ot(t)
-            }, 200);
+            }, 100);
             for (W(t), O(t), R(t, t.aoHeader), R(t, t.aoFooter), ft(t, !0), o.bAutoWidth && _t(t), e = 0, n = a.length; e < n; e++) i = a[e], i.sWidth && (i.nTh.style.width = Mt(i.sWidth));
             Rt(t, null, "preInit", [t]), F(t);
             var l = Wt(t);

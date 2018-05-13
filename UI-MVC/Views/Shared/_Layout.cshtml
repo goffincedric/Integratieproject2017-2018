@@ -44,25 +44,25 @@
           </div>
         </div>
         <ul class="sidebar-menu scrollable pos-r">
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Index", "Home")"><span class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span class="title">Homepage</span></a></li>
-          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard", "Dashboard")"><span class="icon-holder"><i class="c-brown-500 ti-bar-chart"></i> </span><span class="title">Dashboard</span></a></li>
+          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Index", "Home")"><span class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span class="title">@ViewBag.Home</span></a></li>
+          <li class="nav-item"><a class="sidebar-link" href="@Url.Action("Dashboard", "Dashboard")"><span class="icon-holder"><i class="c-brown-500 ti-bar-chart"></i> </span><span class="title">@ViewBag.Dashboard</span></a></li>
           @if (Request.IsAuthenticated)
           {
-            <li class="nav-item"><a class="sidebar-link" href="@Url.Action("WeeklyReview", "Account")"><span class="icon-holder"><i class="c-deep-purple-500 ti-archive"></i> </span><span class="title">Weekly Review</span></a></li>
+            <li class="nav-item"><a class="sidebar-link" href="@Url.Action("WeeklyReview", "Account")"><span class="icon-holder"><i class="c-deep-purple-500 ti-archive"></i> </span><span class="title">@ViewBag.WeeklyReview</span></a></li>
 
             <li class="nav-item">
               <a class="sidebar-link" href="@Url.Action("Account", "Account")">
                 <span class="icon-holder">
                   <i class="c-blue-500 ti-user"></i>
-                </span><span class="title">My account</span>
+                </span><span class="title">@ViewBag.MyAccount</span>
               </a>
             </li>
           }
           <li class="nav-item dropdown">
-            <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
+            <a class="dropdown-toggle" href="javascript:void(0);"><span class="icon-holder"><i class="c-teal-500 ti-view-list-alt"></i> </span><span class="title">@ViewBag.More</span> <span class="arrow"><i class="ti-angle-right"></i></span></a>
             <ul class="dropdown-menu">
-              <li class="nav-item dropdown"><a class="sidebar-link" href="@Url.Action("Contact", "Home")"><span>Contact</span></a></li>
-              <li class="nav-item dropdown"><a href="@Url.Action("FAQ","Home")"><span>FAQ</span></a></li>
+              <li class="nav-item dropdown"><a class="sidebar-link" href="@Url.Action("Contact", "Home")"><span>@ViewBag.Contact</span></a></li>
+              <li class="nav-item dropdown"><a href="@Url.Action("FAQ","Home")"><span>@ViewBag.FAQ</span></a></li>
 
             </ul>
           </li>
@@ -126,7 +126,6 @@
                   <div class="peer mR-10">
 
                     <img class="w-2r bdrs-50p" src="@Html.Action("ChangeProfilePic", "Home")" />
-                    @*@Html.Action("ChangeProfilePic", "Home")*@
                   </div>
 
                   @if (Request.IsAuthenticated)
@@ -211,10 +210,10 @@
     <ul style="list-style-type: none;">
       <li style="width:100%; margin-bottom: 10px;">
         <ul style="padding-left:0;">
-          <li style="display:inline; padding:0 2% 0 2%"><a href="@Url.Action("Index","Home")">Home</a></li>
-          <li style="display:inline; padding:0 2%"><a href="@Url.Action("FAQ","Home")">FAQ</a></li>
-          <li style="display:inline; padding:0 2%"><a href="@Url.Action("Contact","Home")">Contact</a></li>
-          <li style="display:inline; padding:0 2%"><a href="@Url.Action("Legal","Home")">Terms of use</a></li>
+          <li style="display:inline; padding:0 2% 0 2%"><a href="@Url.Action("Index","Home")">@ViewBag.Home</a></li>
+          <li style="display:inline; padding:0 2%"><a href="@Url.Action("FAQ","Home")">@ViewBag.FAQ</a></li>
+          <li style="display:inline; padding:0 2%"><a href="@Url.Action("Contact","Home")">@ViewBag.Contact</a></li>
+          <li style="display:inline; padding:0 2%"><a href="@Url.Action("Legal","Home")">@ViewBag.Legal</a></li>
         </ul>
       </li>
 

@@ -27,6 +27,14 @@ namespace UI_MVC.Controllers
             dashboardMgr = new DashboardManager(uow);
             accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
             SubplatformMgr = new SubplatformManager(uow);
+            ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
+            ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
+            ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
+            ViewBag.MyAccount = SubplatformMgr.GetTag("Account").Text;
+            ViewBag.More = SubplatformMgr.GetTag("More").Text;
+            ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
+            ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
+            ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
         }
 
         public ActionResult PlatformSettings()
