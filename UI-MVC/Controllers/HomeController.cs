@@ -106,11 +106,6 @@ namespace UI_MVC.Controllers
         [Route("")]
         public ActionResult Index(string subplatform)
         {
-<<<<<<< HEAD
-
-
-=======
->>>>>>> master
             ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text; 
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
             return View("Index");
