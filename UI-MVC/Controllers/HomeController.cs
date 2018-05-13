@@ -37,10 +37,10 @@ namespace UI_MVC.Controllers
 
         public ActionResult ChangeProfilePic()
         {
-                Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
-                var image = VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
-                return Content(image);
-            
+            Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
+            var image = VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+            return Content(image);
+
         }
 
 
@@ -79,9 +79,25 @@ namespace UI_MVC.Controllers
             return RedirectToAction("Index", "Home", new { subplatform = "politieke-barometer" });
         }
 
+        public ActionResult GetName(string subplatform)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            string name = ViewBag.SiteName = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME).Value;
+            return Content(name);
+        }
+
+        public ActionResult GetLogo(string subplatform)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            string url = ViewBag.Logo = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Value); 
+            return Content(url);
+        }
         [Route("")]
         public ActionResult Index(string subplatform)
         {
+
+
+            ViewBag.HeaderText = SubplatformMgr.GetTag("HeaderText").Text; 
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
             return View("Index");
         }
@@ -125,17 +141,17 @@ namespace UI_MVC.Controllers
             return PartialView(items);
         }
 
-        public ActionResult PlatformSettings()
+        public ActionResult LoadDefaults(string subplatform)
         {
-            ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
-            ViewBag.TotalPersons = itemMgr.GetPersonsCount().ToString();
-            ViewBag.TotalOrganisations = itemMgr.GetOrganisationsCount().ToString();
-            ViewBag.TotalThemes = itemMgr.GetThemesCount().ToString();
-            ViewBag.TotalKeywords = itemMgr.GetKeywordsCount().ToString();
-            ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
-            ViewBag.IsSyncing = ItemManager.IsSyncing;
-            return View();
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            ViewBag.Logo = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Value);
+            ViewBag.SiteName = Content(ViewBag.SiteName = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME).Value);
+            return Content("");
+
+
         }
+
+
 
         public ActionResult GetThemeSetting()
         {
@@ -204,18 +220,18 @@ namespace UI_MVC.Controllers
                 // int? count = organisation.People.Count();
                 //ViewBag.Leden = (count is null) ? 0 : count;
                 int? count = organisation.People.Count();
-                ViewBag.Leden =  (count is null) ? 0 : count ;
+                ViewBag.Leden = (count is null) ? 0 : count;
                 ViewBag.FullName = organisation.FullName;
             }
             if (item is Theme theme)
             {
                 //int? count          = theme.Records.Count();
                 //ViewBag.Associaties = (count is null) ? 0 : count;
-                
+
                 //int? count            = theme.Records.Count();
                 //ViewBag.Associaties   = (count is null) ? 0 : count;
 
-                ViewBag.Keywords      = theme.Keywords.ToList();
+                ViewBag.Keywords = theme.Keywords.ToList();
             }
             ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));
 
@@ -286,14 +302,15 @@ namespace UI_MVC.Controllers
                 SubplatformManager subplatformManager = new SubplatformManager(unitOfWorkManager);
                 ItemManager itemManager = new ItemManager(unitOfWorkManager);
                 Subplatform sp = subplatformManager.GetSubplatform(subplatform);
-                itemManager.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(new System.Action(() => {
+                itemManager.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(new System.Action(() =>
+                {
                     ItemManager.IsSyncing = false;
                 }));
             }
             return RedirectToAction("PlatformSettings", "Home");
         }
 
-       
+
 
         public ActionResult _UrlList(int id)
         {

@@ -30,6 +30,7 @@ namespace PB.DAL
         IEnumerable<Tag> ReadTags(int pageId);
         Tag CreateTag(Tag tag);
         Tag ReadTag(int tagId);
+        Tag ReadTag(string name);
         void UpdateTag(Tag tag);
         void DeleteTag(int tagId);
     }

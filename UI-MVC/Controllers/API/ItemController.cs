@@ -12,7 +12,7 @@ namespace UI_MVC.Controllers.API
 {
     public class ItemController : ApiController
     {
-        private UnitOfWorkManager UowMgr;
+        private readonly UnitOfWorkManager UowMgr;
         private readonly IItemManager ItemMgr;
 
         public ItemController()

@@ -10,17 +10,21 @@ using System.Threading.Tasks;
 
 namespace Domain.Accounts
 {
-    [Table("tblWeeklyAlerts")]
+    [Table("tblWeeklyReview")]
     public class WeeklyReview
     {
         [Key]
         public int WeeklyReviewId { get; set; }
         public string UserId { get; set; }
-        [Required]
         public int TopPersonId { get; set; }
+        [Required]
+        public string TopPersonText { get; set; }
         [Required]
         public DateTime TimeGenerated { get; set; }
         [Required]
         public Profile Profile { get; set; }
+
+        [Required]
+        public virtual List<WeeklyReviewProfileAlert> WeeklyReviewsProfileAlerts { get; set; }
     }
 }

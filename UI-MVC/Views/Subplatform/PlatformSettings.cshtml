@@ -1,0 +1,220 @@
+﻿
+@{
+  ViewBag.Title = "PlatformSettings";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="main-content bgc-grey-100">
+  <div id="mainContent">
+    <div class="container-fluid">
+
+      <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
+        <div class="bgc-white p-20 bd">
+          <h3 class="h3">Platform stats</h3>
+
+          <span style="color: #2196f3" class="fsz-sm">
+            Totaal aantal users: @Html.Label("Totaal aantal users:", (string)ViewBag.TotalUsers)
+          </span>
+          <br />
+
+          <span style="color: #2196f3" class="fsz-sm">
+            Totaal aantal items: @Html.Label("Totaal aantal items", (string)ViewBag.TotalItems)
+          </span>
+          <br />
+          <span style="color: #2196f3" class="fsz-sm">
+            Totaal aantal persons: @Html.Label("Totaal aantal users:", (string)ViewBag.TotalPersons)
+          </span>
+          <br />
+          <span style="color: #2196f3" class="fsz-sm">
+            Totaal aantal organisations: @Html.Label("Totaal aantal organisations", (string)ViewBag.TotalOrganisations)
+          </span>
+          <br />
+          <span style="color: #2196f3" class="fsz-sm">
+            Totaal aantal themes: @Html.Label("Totaal aantal users:", (string)ViewBag.TotalThemes)
+          </span>
+          <br />
+          <span style="color: #2196f3" class="fsz-sm">
+            Totaal aantal keywords: @Html.Label("Totaal aantal keywords", (string)ViewBag.TotalKeywords)
+          </span>
+
+        </div>
+      </div>
+
+      <br />
+      <hr />
+
+      <div class="row">
+        <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
+          <div class="bgc-white p-20 bd" style="min-height:400px;">
+            <h6 style="margin-bottom: 25px" class="h6">Subplatform settings</h6>
+
+            @Html.Action("_SubplatformSetting", "Subplatform")
+
+
+          </div>
+        </div>
+
+        <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
+          <div class="bgc-white p-20 bd" style="min-height:400px;">
+            <h6 style="margin-bottom: 25px" class="h6">Sync tools</h6>
+            @using (Html.BeginForm("Syncronize", "Home", FormMethod.Post))
+            {
+              if (ViewBag.IsSyncing)
+              {
+                <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg" disabled>Syncroniseer API</button>
+                <label>Database is momenteel een sync aan het ondergaan...</label>
+              }
+              else
+              {
+                <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Syncroniseer API</button>
+              }
+            }
+
+            @using (Html.BeginForm("GenerateAlertsManually", "Home", FormMethod.Post))
+            {
+              <button type="submit" style="margin: 25px 0 " ; class="btn btn-primary btn-lg">Generate alerts manually</button>
+            }
+
+            @using (Html.BeginForm("CleanupDB", "Home", FormMethod.Post))
+            {
+              <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Cleanup DB</button>
+
+            }
+
+          </div>
+        </div>
+
+        <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
+          <div class="bgc-white p-20 bd" style="min-height:400px;">
+            <h6 style="margin-bottom: 25px" class="h6">Default images</h6>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label>Change site logo</label>
+              </div>
+              <div class="col-sm-6">
+                @using (Html.BeginForm("UploadSiteLogo", "Subplatform", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                <div class="row">
+                  <div class="col-9" style="padding: 0; margin: 0">
+                    <div class="fileUpload blue-btn btn width100" style="margin:0;">
+                      <span>Upload a new site logo</span>
+                      <input type="file" class="uploadlogo1 uploadlogo" name="file" id="file" />
+
+                    </div>
+
+                  </div>
+                    <div class="col-3" style="padding: 0; margin: 0">
+                      <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
+                    </div>
+                  </div>
+                  }
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label>Change default item icon</label>
+              </div>
+              <div class="col-sm-6">
+                @using (Html.BeginForm("UploadDefaultItemLogo", "Subplatform", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                <div class="row">
+                  <div class="col-9" style="padding: 0; margin: 0">
+                    <div class="fileUpload blue-btn btn width100" style="margin:0;">
+                      <span>Upload a new item icon</span>
+                      <input type="file" class="uploadlogo2 uploadlogo" name="file" id="file" />
+                    </div>
+                  </div>
+                  <div class="col-3" style="padding: 0; margin: 0">
+                    <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
+                  </div>
+                </div>
+                  }
+                </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label>Change default user icon</label>
+              </div>
+              <div class="col-sm-6">
+                @using (Html.BeginForm("UploadDefaultUserLogo", "Subplatform", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                <div class="row">
+                  <div class="col-9" style="padding: 0; margin: 0">
+                    <div class="fileUpload blue-btn btn width100" style="margin:0;">
+                      <span>Upload a new user icon</span>
+                      <input type="file" class="uploadlogo3 uploadlogo" name="file" id="file" />
+                    </div>
+                  </div>
+                  <div class="col-3" style="padding: 0; margin: 0">
+                    <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
+                  </div>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
+          <div class="bgc-white p-20 bd" style="min-height:400px;">
+            <h6 style="margin-bottom: 25px" class="h6">Deploy new subplatform</h6>
+            @Html.Action("_DeploySubplatform", "Subplatform")
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  $(document).ready(function ($) {
+
+    // Upload btn on change call function
+    $(".uploadlogo1").change(function () {
+     var filename = readURL(this);
+      var name = filename.substring(filename.indexOf(".") + 1);
+      $(this).parent().children('span').html( filename);
+    });
+
+     $(".uploadlogo2").change(function () {
+      var filename = readURL(this);
+      var name = filename.substring(filename.indexOf(".") + 1);
+     
+      
+      $(this).parent().children('span').html( filename);
+    });
+
+     $(".uploadlogo3").change(function () {
+      var filename = readURL(this);
+      var name = filename.substring(filename.indexOf(".") + 1);
+     
+      console.log(name);
+      $(this).parent().children('span').html( filename);
+    });
+
+    // Read File and return value
+    function readURL(input) {
+      var url = input.value;
+
+      var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+      if (input.files && input.files[0] && (
+        ext == "png" || ext == "jpeg" || ext == "jpg" || ext == "gif"
+      )) {
+        var path = $(input).val();
+        var filename = path.replace(/^.*\\/, "");
+        // $('.fileUpload span').html('Uploaded Proof : ' + filename);
+        return "Uploaded file : " + filename;
+      } else {
+        $(input).val("");
+        return "Only image formats are allowed!";
+      }
+    }
+    // Upload btn end
+
+  });
+</script>

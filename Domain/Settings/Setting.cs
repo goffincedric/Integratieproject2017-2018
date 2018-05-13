@@ -18,7 +18,10 @@
             SITE_ICON_URL,
             DEFAULT_THEME,
             DEFAULT_NEW_USER_ICON,
-            DEFAULT_NEW_ITEM_ICON
+            DEFAULT_NEW_ITEM_ICON, 
+            SOCIAL_SOURCE,
+            SOCIAL_SOURCE_URL,
+            SITE_NAME
         }
     }
 }

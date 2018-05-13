@@ -20,6 +20,7 @@ using System.Data.Entity.Validation;
 using PB.DAL.EF;
 using System.IO;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Domain.Accounts;
 
 namespace UI_MVC.Controllers
 {
@@ -35,16 +36,18 @@ namespace UI_MVC.Controllers
         private AccountManager _accountMgr;
         private IntegratieSignInManager _signInManager;
         private SubplatformManager _subplatformMgr;
+        private ItemManager _itemMgr;
 
         public AccountController()
         {
 
         }
 
-        public AccountController(AccountManager userManager, IntegratieSignInManager signInManager)
+        public AccountController(AccountManager userManager, IntegratieSignInManager signInManager, ItemManager itemManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _itemMgr = itemManager;
         }
 
         public IntegratieSignInManager SignInManager
@@ -80,6 +83,18 @@ namespace UI_MVC.Controllers
             private set
             {
                 _subplatformMgr = value;
+            }
+        }
+
+        public ItemManager ItemMgr
+        {
+            get
+            {
+                return _itemMgr ?? new ItemManager(HttpContext.GetOwinContext().Get<IntegratieDbContext>()); ;
+            }
+            private set
+            {
+                _itemMgr = value;
             }
         }
 
@@ -132,9 +147,11 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(string subplatform, RegisterViewModel model)
         {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             if (ModelState.IsValid)
             {
-                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon = @"~/Content/Images/Users/user.png", CreatedOn = DateTime.Today };
+                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_NEW_USER_ICON).Value
+                    , CreatedOn = DateTime.Today };
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
@@ -143,7 +160,7 @@ namespace UI_MVC.Controllers
                         Profile = user,
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
-                        Value = "light",
+                        Value = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME).Value,
                         boolValue = false
                     },
                      new UserSetting()
@@ -241,14 +258,32 @@ namespace UI_MVC.Controllers
 
         #endregion
 
-        #region Account
-        public ActionResult Account()
+        #region Alerts
+        public ActionResult WeeklyReview()
         {
+            WeeklyReview weeklyReview = UserManager.GetLatestWeeklyReview(User.Identity.GetUserId());
+            Person person = ItemMgr.GetPerson(weeklyReview.TopPersonId);
+            if (person.IconURL is null)
+            {
+                ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Users/user.png");
+            }
+            else
+            {
+                ViewBag.Icon = VirtualPathUtility.ToAbsolute(person.IconURL);
+            }
+            return View(weeklyReview);
+        }
+        #endregion
+
+        #region Account
+        public ActionResult Account(string subplatform)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             //nog via pk maken
             if (Request.IsAuthenticated)
             {
                 Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
-                ViewBag.ProfileImage = (profile.ProfileIcon is null) ? VirtualPathUtility.ToAbsolute(@"~/Content/Images/Users/user.png") : VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+                ViewBag.ProfileImage = (profile.ProfileIcon is null) ? VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_NEW_USER_ICON).Value) : VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
                 AccountEditModel account = new AccountEditModel(profile);
                 return View(account);
             }
@@ -513,6 +548,7 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(string subplatform, ExternalLoginConfirmationViewModel model, string returnUrl)
         {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             if (ModelState.IsValid)
             {
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -526,7 +562,7 @@ namespace UI_MVC.Controllers
                 {
                     UserName = name,
                     Email = model.Email,
-                    ProfileIcon = @"~/Content/Images/Users/user.png",
+                    ProfileIcon = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_NEW_USER_ICON).Value,
                     CreatedOn = DateTime.Today
                 };
                 user.UserData = new UserData() { Profile = user };
@@ -537,7 +573,7 @@ namespace UI_MVC.Controllers
                         Profile = user,
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
-                        Value = "light",
+                        Value = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME).Value,
                         boolValue = false
                     },
                      new UserSetting()

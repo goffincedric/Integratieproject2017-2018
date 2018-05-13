@@ -17,7 +17,7 @@ namespace PB.DAL.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+           AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(IntegratieDbContext ctx)
@@ -71,8 +71,29 @@ namespace PB.DAL.Migrations
                         },
                         new SubplatformSetting()
                         {
+                            SettingName = Setting.Platform.SOCIAL_SOURCE,
+                            Value = "Twitter",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                         new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.SOCIAL_SOURCE_URL,
+                            Value = "https://twitter.com",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                         new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.SITE_NAME,
+                            Value = "Barometer",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                          new SubplatformSetting()
+                        {
                             SettingName = Setting.Platform.SITE_ICON_URL,
-                            Value = @"~/Content/Images/logo_new.png",
+                            Value = @"~/Content/Images/Site/logo_new.png",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         }
@@ -414,7 +435,30 @@ namespace PB.DAL.Migrations
                 {
                     PageName = "Home",
                     Title = "Home",
-                    Tags = new List<Tag>(),
+                    Tags = new List<Tag>()
+                    {
+                        new Tag()
+                        {     
+                           Name="BannerTitle",
+                           Text="Politieke Barometer"
+                        },
+                        new Tag()
+                        {
+                            Name="BannerTextSub1",
+                            Text = "Volg uw favoriete politiekers, partijen en thema's en bekijk hoe deze door anderen besproken worden op sociale media."
+                        }, 
+                        new Tag()
+                        {
+                            Name="BannerTextSub2",
+                            Text = "Creeër uw eigen dashboard en bekijk en analyseer live grafieken!"
+                        }, 
+                        new Tag()
+                        {
+                            Name="call-to-action-text",
+                            Text="Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data."
+                        }
+
+                    },
                     Subplatform = pbSubplatform
                 },
                 new Page()

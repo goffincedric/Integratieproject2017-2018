@@ -30437,7 +30437,7 @@
             var e = t.requestAnimationFrame || t.webkitRequestAnimationFrame || t.mozRequestAnimationFrame || t.oRequestAnimationFrame || t.msRequestAnimationFrame,
                 n = t.cancelAnimationFrame || t.webkitCancelAnimationFrame || t.mozCancelAnimationFrame || t.oCancelAnimationFrame || t.msCancelAnimationFrame;
             e && n ? (p = function(t, n) {
-                function i() {
+              function i() {
                     r.value = e(i), t()
                 }
                 var r = {

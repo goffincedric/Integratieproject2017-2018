@@ -16,6 +16,7 @@ namespace PB.BL.Interfaces
 
         SubplatformSetting AddSubplatformSetting(Setting.Platform settingName, int subplatformId, string value, bool isEnabled);
         void ChangeSubplatformSetting(string subplatformURL, SubplatformSetting subplatformSetting);
+        SubplatformSetting GetSubplatformSetting(int subplatformId, Setting.Platform settingname);
 
         IEnumerable<Page> GetPages();
         IEnumerable<Page> GetPages(string subplatformUrl);
@@ -26,8 +27,9 @@ namespace PB.BL.Interfaces
 
         IEnumerable<Tag> GetTags();
         IEnumerable<Tag> GetTags(int pageId);
-        Tag AddTag(int pageId, string cssName, string nameObject, string text);
+        Tag AddTag(int pageId,string name, string text);
         Tag GetTag(int tagId);
+        Tag GetTag(string name);
         void ChangeTag(Tag tag);
         void RemoveTag(int tagId);
 

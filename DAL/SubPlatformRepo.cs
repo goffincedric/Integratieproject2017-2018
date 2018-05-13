@@ -130,7 +130,6 @@ namespace PB.DAL
         {
             return ctx.SubplatformSettings
                 .Include(ss => ss.Subplatform)
-                .Include(ss => ss.SettingName)
                 .AsEnumerable();
         }
 
@@ -138,7 +137,6 @@ namespace PB.DAL
         {
             return ctx.SubplatformSettings
                 .Include(ss => ss.Subplatform)
-                .Include(ss => ss.SettingName)
                 .Where(ss => ss.Subplatform.URL.Equals(subplatformUrl))
                 .AsEnumerable();
         }
@@ -147,8 +145,7 @@ namespace PB.DAL
         {
             return ctx.SubplatformSettings
                 .Include(ss => ss.Subplatform)
-                .Include(ss => ss.SettingName)
-                .FirstOrDefault(ss => ss.SettingName.Equals(settingName) && ss.Subplatform.SubplatformId == subplatformId);
+                .FirstOrDefault(ss => ss.Subplatform.SubplatformId == subplatformId && ss.SettingName.ToString().Equals(settingName.ToString()));
         }
 
         public void UpdateSubplatformSetting(SubplatformSetting subplatformSetting)
@@ -248,6 +245,13 @@ namespace PB.DAL
             return ctx.Tags
                 .Include(t => t.Page)
                 .FirstOrDefault(t => t.TagId == tagId);
+        }
+
+        public Tag ReadTag(string name)
+        {
+            return ctx.Tags
+                .Include(t => t.Page)
+                .FirstOrDefault(t => t.Name == name);
         }
 
         public Tag CreateTag(Tag tag)

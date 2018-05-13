@@ -18,7 +18,7 @@ namespace PB.BL
 
         public SubplatformManager()
         {
-            
+
         }
 
         public SubplatformManager(IntegratieDbContext context)
@@ -30,7 +30,7 @@ namespace PB.BL
         {
             uowManager = uowMgr;
             SubplatformRepo = new SubplatformRepo(uowMgr.UnitOfWork);
-           
+
         }
 
         public void InitNonExistingRepo(bool createWithUnitOfWork = false)
@@ -89,6 +89,50 @@ namespace PB.BL
                 IsEnabled = true,
                 Value = siteIconUrl
             });
+
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
+                Value = "31",
+                IsEnabled = true
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.DEFAULT_THEME,
+                Value = "Light",
+                IsEnabled = true
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
+                Value = @"~/Content/Images/Users/user.png",
+                IsEnabled = true
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
+                Value = @"~/Content/Images/Users/user.png",
+                IsEnabled = true
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SOCIAL_SOURCE,
+                Value = null,
+                IsEnabled = true
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SITE_NAME,
+                Value = name,
+                IsEnabled = true
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SOCIAL_SOURCE_URL,
+                Value = null,
+                IsEnabled = true
+            });
+
 
             subplatform = AddSubplatform(subplatform);
             uowManager.Save();
@@ -189,6 +233,12 @@ namespace PB.BL
             SubplatformRepo.UpdateSubplatform(subplatform);
             uowManager.Save();
         }
+
+        public SubplatformSetting GetSubplatformSetting(int subplatformId, Setting.Platform settingname)
+        {
+            InitNonExistingRepo();
+            return SubplatformRepo.ReadSubplatformSetting(settingname, subplatformId);
+        }
         #endregion
 
         #region Pages
@@ -255,7 +305,7 @@ namespace PB.BL
             return SubplatformRepo.ReadTags(pageId);
         }
 
-        public Tag AddTag(int pageId, string cssName, string nameObject, string text)
+        public Tag AddTag(int pageId, string name, string text)
         {
             InitNonExistingRepo();
             Page page = SubplatformRepo.ReadPage(pageId);
@@ -263,8 +313,8 @@ namespace PB.BL
             Tag tag = new Tag()
             {
                 Page = page,
-                CssName = cssName,
-                NameObject = nameObject,
+               
+                Name = name,
                 Text = text
             };
             page.Tags.Add(tag);
@@ -280,6 +330,11 @@ namespace PB.BL
             return SubplatformRepo.ReadTag(tagId);
         }
 
+        public Tag GetTag(string name)
+        {
+            InitNonExistingRepo();
+            return SubplatformRepo.ReadTag(name);
+        }
         public void ChangeTag(Tag tag)
         {
             InitNonExistingRepo();

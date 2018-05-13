@@ -20,7 +20,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44338</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -231,24 +232,28 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\AccountController.cs" />
-    <Compile Include="Controllers\API\Helper_Code\AuthorizationHeaderHandler.cs" />
+    <Compile Include="Controllers\API\Helper_Code\AuthorizationServerProvider.cs" />
+    <Compile Include="Controllers\Helper_Code\AuthorizationHeaderHandler.cs" />
     <Compile Include="Controllers\API\ItemController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\API\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\SubplatformController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\OrganisationEditModel.cs" />
     <Compile Include="Models\SubplatformSettingViewModel.cs" />
+    <Compile Include="Models\SubplatformViewModel.cs" />
     <Compile Include="Models\ThemeEditModel.cs" />
     <Compile Include="Models\UserSettingViewModel.cs" />
     <Compile Include="Models\PersonEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\API\Resource\Constants\ApiInfo.Designer.cs">
+    <Compile Include="Controllers\Resource\Constants\ApiInfo.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ApiInfo.resx</DependentUpon>
@@ -275,6 +280,7 @@
     <Content Include="Content\Images\Organisations\spa.jpg" />
     <Content Include="Content\Images\Organisations\vb.png" />
     <Content Include="Content\Images\plus-icon.png" />
+    <Content Include="Content\Images\Site\logo_new.png" />
     <Content Include="Content\Images\Themes\eu.png" />
     <Content Include="Content\Images\Themes\migratie.png" />
     <Content Include="Content\Images\Themes\milieu.png" />
@@ -374,7 +380,7 @@
     <Content Include="Views\Home\ItemDetail.cshtml" />
     <Content Include="Views\Item\Charts.cshtml" />
     <Content Include="Views\Account\Notifications.cshtml" />
-    <Content Include="Views\Home\PlatformSettings.cshtml" />
+    <Content Include="Views\Subplatform\PlatformSettings.cshtml" />
     <Content Include="Views\Account\UserBeheer.cshtml" />
     <Content Include="Views\Item\ItemBeheer.cshtml" />
     <Content Include="Views\Account\UserSettings.cshtml" />
@@ -385,17 +391,18 @@
     <Content Include="Views\Account\_SuperAdminTable.cshtml" />
     <Content Include="Views\Dashboard\_Wizard.cshtml" />
     <Content Include="Views\Item\EditPerson.cshtml" />
-    <Content Include="Views\Item\WeeklyReview.cshtml" />
     <Content Include="Views\Account\_UserSettingDetails.cshtml" />
     <Content Include="Views\Item\View.cshtml" />
     <Content Include="Views\Item\EditOrganisation.cshtml" />
     <Content Include="Views\Item\EditKeyword.cshtml" />
     <Content Include="Views\Item\EditTheme.cshtml" />
+    <Content Include="Views\Subplatform\_DeploySubplatform.cshtml" />
+    <Content Include="Views\Subplatform\_SubplatformSetting.cshtml" />
+    <Content Include="Views\Account\WeeklyReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Persons\" />
-    <Folder Include="Content\Images\Site\" />
     <Folder Include="Content\Images\Subplatform\" />
   </ItemGroup>
   <ItemGroup>
@@ -421,7 +428,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controllers\API\Resource\Constants\ApiInfo.resx">
+    <EmbeddedResource Include="Controllers\Resource\Constants\ApiInfo.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ApiInfo.Designer.cs</LastGenOutput>
     </EmbeddedResource>
