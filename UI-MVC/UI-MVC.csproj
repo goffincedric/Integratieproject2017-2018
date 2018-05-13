@@ -337,6 +337,8 @@
     <Content Include="Scripts\wizard\jquery.validate.min.js" />
     <Content Include="Scripts\wizard\material-bootstrap-wizard.js" />
     <Content Include="Scripts\wordcloud\wordcloud.js" />
+    <Content Include="Scripts\wordcloud\zingchart-wordcloud.min.js" />
+    <Content Include="Scripts\wordcloud\zingchart.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -398,6 +400,9 @@
     <Content Include="Views\Subplatform\_DeploySubplatform.cshtml" />
     <Content Include="Views\Subplatform\_SubplatformSetting.cshtml" />
     <Content Include="Views\Account\WeeklyReview.cshtml" />
+    <Content Include="Views\Subplatform\_ChangeHomePage.cshtml" />
+    <Content Include="Views\Subplatform\_ChangeMenu.cshtml" />
+    <Content Include="Views\Item\ChartsWizard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

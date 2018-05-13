@@ -30,7 +30,14 @@ namespace UI_MVC.Controllers
 
         public HomeController()
         {
-
+            ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
+            ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
+            ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
+            ViewBag.MyAccount = SubplatformMgr.GetTag("Account").Text;
+            ViewBag.More = SubplatformMgr.GetTag("More").Text;
+            ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
+            ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
+            ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
         }
 
         #region profile
@@ -82,22 +89,26 @@ namespace UI_MVC.Controllers
         public ActionResult GetName(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            string name = ViewBag.SiteName = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME).Value;
+            string name = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME).Value;
+            
+
             return Content(name);
         }
 
         public ActionResult GetLogo(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            string url = ViewBag.Logo = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Value); 
+            string url = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Value); 
             return Content(url);
         }
+
+        
         [Route("")]
         public ActionResult Index(string subplatform)
         {
 
 
-            ViewBag.HeaderText = SubplatformMgr.GetTag("HeaderText").Text; 
+            ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text; 
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
             return View("Index");
         }
@@ -163,11 +174,11 @@ namespace UI_MVC.Controllers
 
                 switch (userSetting.Value)
                 {
-                    case "light": theme = "LightMode"; break;
-                    case "dark": theme = "DarkMode"; break;
-                    case "future": theme = "FutureMode"; break;
+                    case "Light": theme = "LightMode"; break;
+                    case "Dark": theme = "DarkMode"; break;
+                    case "Future": theme = "FutureMode"; break;
                 }
-                return Content($"/Content/Theme/{theme}.css");
+                return Content("/Content/Theme/"+theme+".css");
             }
             return Content("/Content/Theme/LightMode.css");
         }

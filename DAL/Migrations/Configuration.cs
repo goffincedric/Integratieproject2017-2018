@@ -17,7 +17,7 @@ namespace PB.DAL.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-           AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(IntegratieDbContext ctx)
@@ -269,8 +269,8 @@ namespace PB.DAL.Migrations
                 new Keyword()
                 {
                     Name="Auto",
-                    Items = new List<Item>(), 
-                    
+                    Items = new List<Item>(),
+
                 },
                 new Keyword()
                 {
@@ -438,7 +438,7 @@ namespace PB.DAL.Migrations
                     Tags = new List<Tag>()
                     {
                         new Tag()
-                        {     
+                        {
                            Name="BannerTitle",
                            Text="Politieke Barometer"
                         },
@@ -446,12 +446,12 @@ namespace PB.DAL.Migrations
                         {
                             Name="BannerTextSub1",
                             Text = "Volg uw favoriete politiekers, partijen en thema's en bekijk hoe deze door anderen besproken worden op sociale media."
-                        }, 
+                        },
                         new Tag()
                         {
                             Name="BannerTextSub2",
                             Text = "Creeër uw eigen dashboard en bekijk en analyseer live grafieken!"
-                        }, 
+                        },
                         new Tag()
                         {
                             Name="call-to-action-text",
@@ -529,6 +529,56 @@ namespace PB.DAL.Migrations
                     PageName = "UserSettings",
                     Title = "User Settings",
                     Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
+                },
+                new Page()
+                {
+                    PageName = "Menu",
+                    Title = "Menu",
+                    Tags = new List<Tag>(){
+                          new Tag()
+                        {
+                            Name="Home",
+                            Text="Home"
+                        },
+                          new Tag()
+                        {
+                            Name="Dashboard",
+                            Text="Dashboard"
+                        },
+                          new Tag()
+                        {
+                            Name="Weekly_Review",
+                            Text="Weekly Review"
+                        },
+                          new Tag()
+                        {
+                            Name="Account",
+                            Text="My Account"
+                        },
+                           new Tag()
+                        {
+                            Name="More",
+                            Text="More"
+                        },
+                            new Tag()
+                        {
+                            Name="FAQ",
+                            Text="FAQ"
+                        },
+                             new Tag()
+                        {
+                            Name="Contact",
+                            Text="Contact"
+                        },
+                            new Tag()
+                            {
+                                Name="Legal",
+                                Text="Terms of use"
+                              }
+
+                    }
+                    ,
                     Subplatform = pbSubplatform
                 }
             };

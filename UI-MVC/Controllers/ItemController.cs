@@ -28,6 +28,14 @@ namespace UI_MVC.Controllers
             uow = new UnitOfWorkManager();
             itemMgr = new ItemManager(uow);
             SubplatformMgr = new SubplatformManager(uow);
+            ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
+            ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
+            ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
+            ViewBag.MyAccount = SubplatformMgr.GetTag("Account").Text;
+            ViewBag.More = SubplatformMgr.GetTag("More").Text;
+            ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
+            ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
+            ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
         }
 
         #region organisation
@@ -483,6 +491,14 @@ namespace UI_MVC.Controllers
         {
             return View();
         }
+
+
+
+        public ActionResult ChartsWizard()
+        {
+            return View();
+        }
+
 
 
 

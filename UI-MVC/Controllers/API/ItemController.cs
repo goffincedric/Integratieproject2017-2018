@@ -219,7 +219,7 @@ namespace UI_MVC.Controllers.API
                 DateTime last = records.OrderByDescending(p => p.Date).First().Date.Date;
                 double lastDay = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Count();
                 string stijging = "";
-                stijging = Math.Round(((lastDay - allDays) / allDays) * 100, 4) + "%";
+                stijging = Math.Round(((lastDay - allDays) / allDays) * 100, 2) + "%";
 
 
                 stijgingmap.Add(person.Name, stijging);

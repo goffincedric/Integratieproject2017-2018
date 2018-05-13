@@ -1,0 +1,77 @@
+﻿
+@{
+  ViewBag.Title = "ChartsWizard";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<main class="main-content bgc-grey-100">
+  <div id="mainContent">
+    <div class="col-12">
+
+      <div col="col-3">
+        <select style="width:200px;" id="outputtype" class="form-control" name="type">
+          <option value="" disabled selected>Select your output type</option>
+          <option value="Tweet">Tweet evolution</option>
+          <option value="Sentiment">Sentiment analyse</option>
+          <option value="Radar">Hashtag</option>
+          <option value="mention">Mentions</option>
+          <option value="words">Words</option>
+          <option value="trending">Top trending</option>
+        </select>
+      </div>
+
+      <div col="col-3">
+        <select style="width:200px;" id="graphtype" class="form-control" name="type">
+          <option value="" disabled selected>Select your graph type</option>
+          <option value="Bar">Bar Chart</option>
+          <option value="Line">Line Chart</option>
+          <option value="Radar">Radar Chart</option>
+          <option value="Pie">Pie Chart</option>
+          <option value="Donut">Dougnout Chart</option>
+          <option value="wordcloud">Wordcloud</option>
+        </select>
+      </div>
+      
+      <div class="col-3">
+        <button id="addGrafiek" class="btn btn-primary" type="submit">Add graph</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<script>
+  tmp = $.ajax({
+    async: false,
+    type: 'GET',
+    dataType: 'json',
+    url: "https://localhost:44342/api/item/getpersons",
+    headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+
+  }).responseJSON
+
+  var keys = [];
+  keys = Object.keys(tmp);
+  var label = [];
+  var values = [];
+
+  for (var i = 0; i < keys.length; i++) {
+    label.push(keys[i]);
+    values.push(tmp[keys[i]] / 10);
+  }
+
+  console.log(label);
+  console.log(values);
+
+  $.getJSON("tmp", function (data) {
+    $.each(data.aaData, function (i, data) {
+      var div_data = "<option value=" + data.value + ">" + data.text + "</option>";
+      alert(div_data);
+      $(div_data).appendTo('#ch_user1');
+
+    });
+  });
+
+</script>
