@@ -12,6 +12,7 @@ namespace UI_MVC.Models
         public bool IsTrending { get; set; }
         public string Description { get; set; }
         public int KeywordId { get; set; }
+        
         public HttpPostedFileBase file { get; set; }
     }
 }

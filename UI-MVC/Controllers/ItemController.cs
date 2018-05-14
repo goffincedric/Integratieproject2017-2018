@@ -1,4 +1,5 @@
-﻿using PB.BL;
+﻿using Newtonsoft.Json;
+using PB.BL;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
@@ -457,6 +458,9 @@ namespace UI_MVC.Controllers
                 theme.IsTrending = themeEditModel.IsTrending;
                 theme.Name = themeEditModel.Name;
                 theme.Description = themeEditModel.Description;
+                Keyword keyword = itemMgr.GetKeyword(themeEditModel.KeywordId);
+         
+                theme.Keywords.Add(keyword);
 
                 itemMgr.ChangeTheme(theme);
 
@@ -507,11 +511,7 @@ namespace UI_MVC.Controllers
             return PartialView(keywords);
         }
 
-        public ActionResult DeleteKeywordFromTheme(int id)
-        {
-            return View();
-        }
-
+       
 
     }
 }

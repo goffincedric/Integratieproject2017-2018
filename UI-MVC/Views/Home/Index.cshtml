@@ -2,6 +2,12 @@
 
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+
 <style>
   #chart {
     margin: auto;
@@ -12,51 +18,49 @@
 
 
 
-.loader{
-  border-radius: 100%;
-  margin: auto 0;
-
-}
-
-.loader-6 span{
-  display: inline-block;
-  width: 5px;
-  height: 20px;
-  background-color: #3498db;
-}
-
-.loader-6 span:nth-child(1){
-  animation: grow 1s ease-in-out infinite;
-}
-
-.loader-6 span:nth-child(2){
-  animation: grow 1s ease-in-out 0.15s infinite;
-}
-
-.loader-6 span:nth-child(3){
-  animation: grow 1s ease-in-out 0.30s infinite;
-}
-
-.loader-6 span:nth-child(4){
-  animation: grow 1s ease-in-out 0.45s infinite;
-}
-
-@@keyframes grow{
-  0%, 100%{
-    -webkit-transform: scaleY(1);
-    -ms-transform: scaleY(1);
-    -o-transform: scaleY(1);
-    transform: scaleY(1);
+  .loader {
+    border-radius: 100%;
+    margin: auto 0;
   }
 
-  50%{
-    -webkit-transform: scaleY(1.8);
-    -ms-transform: scaleY(1.8);
-    -o-transform: scaleY(1.8);
-    transform: scaleY(1.8);
+  .loader-6 span {
+    display: inline-block;
+    width: 5px;
+    height: 20px;
+    background-color: #3498db;
   }
-}
 
+    .loader-6 span:nth-child(1) {
+      animation: grow 1s ease-in-out infinite;
+    }
+
+    .loader-6 span:nth-child(2) {
+      animation: grow 1s ease-in-out 0.15s infinite;
+    }
+
+    .loader-6 span:nth-child(3) {
+      animation: grow 1s ease-in-out 0.30s infinite;
+    }
+
+    .loader-6 span:nth-child(4) {
+      animation: grow 1s ease-in-out 0.45s infinite;
+    }
+
+  @@keyframes grow {
+    0%, 100% {
+      -webkit-transform: scaleY(1);
+      -ms-transform: scaleY(1);
+      -o-transform: scaleY(1);
+      transform: scaleY(1);
+    }
+
+    50% {
+      -webkit-transform: scaleY(1.8);
+      -ms-transform: scaleY(1.8);
+      -o-transform: scaleY(1.8);
+      transform: scaleY(1.8);
+    }
+  }
 </style>
 
 
@@ -150,11 +154,17 @@
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
-              <h6 class="c-grey-900">Sentiment analyse top politici</h6>
+              <div class="row">
+                <h6 class="c-grey-900">Sentiment analyse top politici</h6>
+               <a id="dl" download="Canvas.png"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+                <i style="top: 30px; right: 50px;opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i> 
+              </div>
+
+
             </div>
             <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table;">
 
-              <div class="loader loader-6"  id="loader-1" style="display:table-cell; vertical-align:middle; text-align:center">
+              <div class="loader loader-6" id="loader-1" style="display:table-cell; vertical-align:middle; text-align:center">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -162,22 +172,25 @@
               </div>
               <canvas id="evol" height="100" style="display:none"></canvas>
             </div>
-      
+
           </div>
-              
-            </div>
-          </div>
-   
-   
+
+        </div>
+      </div>
+
+
 
       <div class="masonry-item col-md-6">
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending hashtags</h6>
+
+              <a id="dl2" download="Canvas.png"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
             </div>
             <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
-              <div class="loader loader-6"  id="loader-2" style="display:table-cell; vertical-align:middle; text-align:center">
+              <div class="loader loader-6" id="loader-2" style="display:table-cell; vertical-align:middle; text-align:center">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -195,9 +208,11 @@
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending Mentions</h6>
-              </div>
+              <a id="dl3" download="Canvas.png"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
+            </div>
             <div class="layer w-100 p-20" style="min-height:350px;max-height:350px;display:table;">
-              <div class="loader loader-6"  id="loader-3" style="display:table-cell; vertical-align:middle; text-align:center">
+              <div class="loader loader-6" id="loader-3" style="display:table-cell; vertical-align:middle; text-align:center">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -205,16 +220,18 @@
               </div>
               <canvas id="pie-chart" height="100" style="display:none"></canvas>
             </div>
-            </div>
           </div>
         </div>
-     
+      </div>
+
 
       <div class="masonry-item col-md-6">
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top persons</h6>
+              <a id="dl4" download="Canvas.png"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px;  opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i>
             </div>
             <div class="layer w-100 p-20" style="min-height:350px; max-height:350px; display:table;">
               <div class="loader loader-6" style="display:table-cell; vertical-align:middle; text-align:center" id="loader-4">
@@ -226,78 +243,78 @@
               <canvas id="bar2-chart" height="100" style="display:none"></canvas>
             </div>
           </div>
-          </div>
         </div>
-     
+      </div>
+
 
 
       @if (!Request.IsAuthenticated)
-  {
+      {
 
-    <div class="hide-content">
-      <div class="outer">
-        <div class="middle">
-          <div class="inner">
-            <h4 class="mb-5 call-to-action-text">
-              Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data.
-            </h4>
-            <a href="@Url.Action("Login", "Account")" class="btn btn-primary text-uppercase call-to-action-button">start nu</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-}
-else
-{
-    <div class="masonry-item col-12">
-      <div class="bd bgc-white">
-        <div class="peers fxw-nw@lg+ ai-s">
-          <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
-            <div class="layers">
-              <div class="layer w-100 mB-10">
-                <h6 class="lh-1">Sentiment per provincie</h6>
-              </div>
-              <div class="layer w-100">
-                <div id="world-map-marker"></div>
+        <div class="hide-content">
+          <div class="outer">
+            <div class="middle">
+              <div class="inner">
+                <h4 class="mb-5 call-to-action-text">
+                  Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data.
+                </h4>
+                <a href="@Url.Action("Login", "Account")" class="btn btn-primary text-uppercase call-to-action-button">start nu</a>
               </div>
             </div>
           </div>
-          <div class="peer bdL p-20 w-30p@lg+ w-100p@lg-">
-            <div class="layers h-100">
-              <div class="layer w-100">
-                <h6 class="lh-1">Radar Test</h6>
+        </div>
+
+
+      }
+      else
+      {
+        <div class="masonry-item col-12">
+          <div class="bd bgc-white">
+            <div class="peers fxw-nw@lg+ ai-s">
+              <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
+                <div class="layers">
+                  <div class="layer w-100 mB-10">
+                    <h6 class="lh-1">Sentiment per provincie</h6>
+                  </div>
+                  <div class="layer w-100">
+                    <div id="world-map-marker"></div>
+                  </div>
+                </div>
               </div>
-              <canvas style="margin: auto 0" id="radar2-chart" height="220"></canvas>
+              <div class="peer bdL p-20 w-30p@lg+ w-100p@lg-">
+                <div class="layers h-100">
+                  <div class="layer w-100">
+                    <h6 class="lh-1">Radar Test</h6>
+                  </div>
+                  <canvas style="margin: auto 0" id="radar2-chart" height="220"></canvas>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="masonry-item col-12">
+          <div class="bd bgc-white">
+            <div class="peers fxw-nw@lg+ ai-s">
+              <div class="peer peer-greed w-100p@lg+ w-100@lg- p-20">
+                <div class="layers">
+                  <div class="layer w-100 mB-10">
+                    <h6 class="lh-1">Top tweeting persons</h6>
+                  </div>
+                  <div class="layer w-100">
+                    <div id="myChart" style="height: 100%;width: 100%; min-height: 500px;"></div>
+                  </div>
+                </div>
+              </div>
 
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="masonry-item col-12">
-      <div class="bd bgc-white">
-        <div class="peers fxw-nw@lg+ ai-s">
-          <div class="peer peer-greed w-100p@lg+ w-100@lg- p-20">
-            <div class="layers">
-              <div class="layer w-100 mB-10">
-                <h6 class="lh-1">Top tweeting persons</h6>
-              </div>
-              <div class="layer w-100">
-                <div id="myChart" style="height: 100%;width: 100%; min-height: 500px;"></div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
+      }
     </div>
-
-}
-    </div>
-      </div>
+  </div>
 </main>
 <script src="~/Scripts/index/hide-content.js" defer></script>
 <script src="~/Scripts/charts/Chart.min.js"></script>
@@ -306,6 +323,23 @@ else
 <script src="~/Scripts/wordcloud/wordcloud.js"></script>
 
 <script>
+
+
+  var canvas = document.getElementById("evol");
+
+    function dlCanvas() {
+      var dt = canvas.toDataURL('image/png');
+      this.href = dt.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+      dt        = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
+
+      this.href = dt;
+  };
+
+
+  document.getElementById("dl").addEventListener('click', dlCanvas(), false);
+  document.getElementById("dl2").addEventListener('click', dlCanvas($("#doughnut-chart")), false);
+  document.getElementById("dl3").addEventListener('click', dlCanvas($("#pie-chart")), false);
+  document.getElementById("dl4").addEventListener('click', dlCanvas($("#bar2-chart")), false);
 
   function makeAjaxCall(url, methodType) {
     var promiseObj = new Promise(function (resolve, reject) {
@@ -337,12 +371,12 @@ else
   }
 
 
-  
+
 
 
 
   function showIncrease() {
-   
+
 
     var URL = "https://localhost:44342/api/item/GetPersonIncrease";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
@@ -409,11 +443,11 @@ else
   drawRadarChart();
 
   function drawBarChart() {
-    
+
     var URL = "https://localhost:44342/api/item/getpersonstop/5";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
     var can = $('#bar2-chart');
-  
+
     function process(output) {
       console.log(output);
 
@@ -432,8 +466,8 @@ else
       console.log(label);
       console.log(values);
 
-    
-    
+
+
       new Chart(can, {
         type: 'bar',
         data: {
@@ -449,7 +483,7 @@ else
         },
         options: {
           legend: { display: true },
-          responsive:true
+          responsive: true
         }
       });
       $("#loader-4").hide();
@@ -462,7 +496,7 @@ else
     }
   }
 
- 
+
   drawBarChart();
 
   function drawLineChart() {
@@ -475,7 +509,7 @@ else
       console.log(output);
 
       var can = $('#evol');
-   
+
 
 
       var datagrafiek = {
@@ -483,8 +517,8 @@ else
         datasets: []
       };
 
-     
-  var myLineChart=  new Chart(can, {
+
+      var myLineChart = new Chart(can, {
         type: 'line',
         data: datagrafiek,
         options: {
@@ -496,8 +530,8 @@ else
                 // minimum will be 0, unless there is a lower value.
                 // OR //
                 beginAtZero: false,
-            
-               
+
+
                 // minimum value will be 0.
               }
             }]
@@ -542,18 +576,18 @@ else
           }
 
           datagrafiek.datasets.push(myNewDataSet);
-          
+
           myLineChart.update();
           counter++;
         }
-        });
-    
+      });
 
-        function errorHandler(statusCode) {
-          console.log("failed with status", status);
+
+      function errorHandler(statusCode) {
+        console.log("failed with status", status);
       }
 
-      
+
     }
 
 
@@ -591,9 +625,9 @@ else
           }
 
           var can = $('#doughnut-chart');
-     
-        
-          
+
+
+
           new Chart(can, {
             type: 'doughnut',
             data: {
@@ -607,7 +641,7 @@ else
               responsive: true
             }
           });
-       
+
           $("#loader-2").hide();
           can.show();
         }
@@ -615,8 +649,8 @@ else
           console.log("failed with status", status);
         }
 
-       
-        
+
+
       }
 
       getHashtags(id);
@@ -640,8 +674,8 @@ else
           }
 
           var can = $('#pie-chart');
-         // can.parent().attr('Style', 'width: 400px; height: 250');
-        
+          // can.parent().attr('Style', 'width: 400px; height: 250');
+
 
           new Chart(can, {
             type: 'pie',
@@ -653,35 +687,37 @@ else
               }]
             },
             options: {
-              responsive:true
+              responsive: true
             }
           });
 
           $("#loader-3").hide();
           can.show();
-         
+
         }
         function errorHandler(statusCode) {
           console.log("failed with status", status);
         }
-      
-      }
- 
 
-   
-          drawPie(id);
-    
-    
+      }
+
+
+
+      drawPie(id);
+
+
     }
     function errorHandler(statusCode) {
       console.log("failed with status", status);
     }
   }
-  
+
   TrendingPersonGraphs();
 
-  
-  
+
+
+
+
 </script>
 
 
