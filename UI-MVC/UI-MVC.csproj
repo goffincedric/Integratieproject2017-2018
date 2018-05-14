@@ -283,6 +283,7 @@
     <Content Include="Content\Images\Organisations\vb.png" />
     <Content Include="Content\Images\plus-icon.png" />
     <Content Include="Content\Images\Site\logo_new.png" />
+    <Content Include="Content\Images\subplatform-default.png" />
     <Content Include="Content\Images\Themes\eu.png" />
     <Content Include="Content\Images\Themes\migratie.png" />
     <Content Include="Content\Images\Themes\milieu.png" />
@@ -328,6 +329,7 @@
     <Content Include="Scripts\index\hide-content.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Content\Export\Users.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\changetheme.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -407,6 +409,7 @@
     <Content Include="Views\Subplatform\_ChangeHomePage.cshtml" />
     <Content Include="Views\Subplatform\_ChangeMenu.cshtml" />
     <Content Include="Views\Item\ChartsWizard.cshtml" />
+    <Content Include="Views\Item\_ShowKeywordOfTheme.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

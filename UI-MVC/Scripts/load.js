@@ -2,5 +2,5 @@
   const loader = document.getElementById('loader');
   setTimeout(() => {
     loader.classList.add('fadeOut');
-  }, 1);
+  }, 1500);
 });

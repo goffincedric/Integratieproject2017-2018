@@ -667,7 +667,7 @@ namespace PB.DAL.Migrations
             };
             ctx.Themes.ForEachAsync(t =>
                 {
-                    Theme theme = ThemesToAdd.FirstOrDefault(them => them.Equals(t));
+                    Theme theme = ThemesToAdd.FirstOrDefault(them => them.Name.ToLower().Equals(t.Name.ToLower()));
                     if (theme != null) ThemesToAdd.Remove(t);
                     else
                     {

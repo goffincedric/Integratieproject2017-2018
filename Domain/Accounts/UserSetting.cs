@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 namespace PB.BL.Domain.Accounts
 {
     [Table("tblUserSetting")]
+
     public class UserSetting
     {
         [Key, Column(Order = 0)]

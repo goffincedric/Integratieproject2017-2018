@@ -213,6 +213,62 @@ namespace PB.BL
                 }
             }
 
+            if (userManager.Users.FirstOrDefault(p => p.UserName.Equals("admin")) is null)
+            {
+                var user2 = new Profile { UserName = "admin", Email = "admin@example.tld", ProfileIcon = @"~/Content/Images/Users/user.png", CreatedOn = DateTime.Now };
+                user2.UserData = new UserData() { Profile = user2 };
+                user2.Settings = new List<UserSetting>
+                {
+                    new UserSetting()
+                    {
+                        Profile = user2,
+                        IsEnabled = true,
+                        SettingName = Setting.Account.THEME,
+                        Value = "light",
+                        boolValue = false
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user2,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
+                        Value=null, //moet nog boolean worden
+                        boolValue = true
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user2,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user2,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user2,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
+                    }
+                };
+
+                var result = userManager.CreateAsync(user2, "Disney2018").Result;
+                if (result.Succeeded)
+                {
+                    //Assign Role to user
+                    userManager.AddToRoleAsync(user2.Id, "Admin");
+                }
+            }
+
         }
         #endregion
 
