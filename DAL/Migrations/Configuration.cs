@@ -318,7 +318,7 @@ namespace PB.DAL.Migrations
 
             ctx.Keywords.ForEachAsync(t =>
                 {
-                    Keyword keyword = KeywordsToAdd.FirstOrDefault(keyw => keyw.Equals(t));
+                    Keyword keyword = KeywordsToAdd.FirstOrDefault(keyw => keyw.Name.ToLower().Equals(t.Name.ToLower()));
                     if (keyword != null) KeywordsToAdd.Remove(t);
                 }).Wait();
             if (KeywordsToAdd.Count != 0) ctx.Keywords.AddRange(KeywordsToAdd);
@@ -422,7 +422,7 @@ namespace PB.DAL.Migrations
             };
             ctx.Themes.ForEachAsync(t =>
                 {
-                    Theme theme = ThemesToAdd.FirstOrDefault(them => them.Equals(t));
+                    Theme theme = ThemesToAdd.FirstOrDefault(them => them.Name.ToLower().Equals(t.Name.ToLower()));
                     if (theme != null) ThemesToAdd.Remove(t);
                 }).Wait();
             if (ThemesToAdd.Count != 0) ctx.Themes.AddRange(ThemesToAdd);

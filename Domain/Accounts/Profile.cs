@@ -6,17 +6,21 @@ using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using System;
 using System.Collections.Generic;
-
+using System.Runtime.Serialization;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PB.BL.Domain.Accounts
 {
-  
+    [DataContract]
+   
     public class Profile : IdentityUser
     {
+        [DataMember]
         public string ProfileIcon { get; set; }
+        [DataMember]
         public DateTime CreatedOn { get; set; }
+        [DataMember]
         public UserData UserData { get; set; }
         public List<UserSetting> Settings { get; set; }
         public List<Dashboard> Dashboards { get; set; }

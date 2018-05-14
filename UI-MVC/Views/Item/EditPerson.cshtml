@@ -106,13 +106,17 @@
 
 
   for (var i = 0; i < tmp.length; i++) {
-    let id = @Html.Raw(Model.OrganisationId);
-      console.log(id);
-    if (i === (id-1) ) {
-      $("#FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name).prop('selected',true));
-    } else {
+    let id = "@Html.Raw(Model.OrganisationId)";
+    if (id == "" || id == null) {
       $("#FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
+    } else {
+      if (i === (id - 1)) {
+        $("#FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name).prop('selected', true));
+      } else {
+        $("#FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
+      }
     }
+ 
 
     //$("FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
 

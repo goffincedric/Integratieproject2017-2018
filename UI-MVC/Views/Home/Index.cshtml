@@ -13,38 +13,31 @@
 
 
 .loader{
-  width: 100px;
-  height: 100%;
   border-radius: 100%;
   margin: auto 0;
+
 }
 
-
-
-#loader-6{
-  
-}
-
-#loader-6 span{
+.loader-6 span{
   display: inline-block;
   width: 5px;
   height: 20px;
   background-color: #3498db;
 }
 
-#loader-6 span:nth-child(1){
+.loader-6 span:nth-child(1){
   animation: grow 1s ease-in-out infinite;
 }
 
-#loader-6 span:nth-child(2){
+.loader-6 span:nth-child(2){
   animation: grow 1s ease-in-out 0.15s infinite;
 }
 
-#loader-6 span:nth-child(3){
+.loader-6 span:nth-child(3){
   animation: grow 1s ease-in-out 0.30s infinite;
 }
 
-#loader-6 span:nth-child(4){
+.loader-6 span:nth-child(4){
   animation: grow 1s ease-in-out 0.45s infinite;
 }
 
@@ -159,13 +152,23 @@
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Sentiment analyse top politici</h6>
             </div>
-            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px">
-              <canvas id="evol" height="100"></canvas>
-            </div>
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table;">
 
+              <div class="loader loader-6"  id="loader-1" style="display:table-cell; vertical-align:middle; text-align:center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <canvas id="evol" height="100" style="display:none"></canvas>
+            </div>
+      
           </div>
-        </div>
-      </div>
+              
+            </div>
+          </div>
+   
+   
 
       <div class="masonry-item col-md-6">
         <div class="bd bgc-white">
@@ -173,15 +176,15 @@
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending hashtags</h6>
             </div>
-            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; ">
-              <div class="loader" style="margin: auto" id="loader-6">
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
+              <div class="loader loader-6"  id="loader-2" style="display:table-cell; vertical-align:middle; text-align:center">
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
               </div>
 
-              <canvas id="doughnut-chart" height="100"></canvas>
+              <canvas id="doughnut-chart" height="100" style="display:none"></canvas>
             </div>
           </div>
         </div>
@@ -193,9 +196,15 @@
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending Mentions</h6>
               </div>
-              <div class="layer w-100 p-20" style="min-height:350px;max-height:350px;">
-                <canvas id="pie-chart" height="100"></canvas>
+            <div class="layer w-100 p-20" style="min-height:350px;max-height:350px;display:table;">
+              <div class="loader loader-6"  id="loader-3" style="display:table-cell; vertical-align:middle; text-align:center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
               </div>
+              <canvas id="pie-chart" height="100" style="display:none"></canvas>
+            </div>
             </div>
           </div>
         </div>
@@ -207,8 +216,14 @@
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top persons</h6>
             </div>
-            <div class="layer w-100 p-20" style="min-height:350px; max-height:350px"> 
-              <canvas id="bar2-chart" height="100"></canvas>
+            <div class="layer w-100 p-20" style="min-height:350px; max-height:350px; display:table;">
+              <div class="loader loader-6" style="display:table-cell; vertical-align:middle; text-align:center" id="loader-4">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <canvas id="bar2-chart" height="100" style="display:none"></canvas>
             </div>
           </div>
           </div>
@@ -321,22 +336,6 @@ else
     return promiseObj;
   }
 
-  //  var datagrafiekValues = {
-
-  //    datasets: [],
-  //    labels: []
-  //  };
-
-  //  var can = $('#doughnut-chart');
-  //  hashtags = new Chart(can, {
-  //    type: 'doughnut',
-  //    data: datagrafiekValues,
-  //    options: {
-  //      responsive: true
-
-  //    }
-  //});
-  //hashtags.update();
 
   
 
@@ -413,7 +412,8 @@ else
     
     var URL = "https://localhost:44342/api/item/getpersonstop/5";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
-
+    var can = $('#bar2-chart');
+  
     function process(output) {
       console.log(output);
 
@@ -432,8 +432,8 @@ else
       console.log(label);
       console.log(values);
 
-
-      var can = $('#bar2-chart');
+    
+    
       new Chart(can, {
         type: 'bar',
         data: {
@@ -452,13 +452,17 @@ else
           responsive:true
         }
       });
+      $("#loader-4").hide();
+      can.show();
     }
+
 
     function errorHandler(statusCode) {
       console.log("failed with status", status);
     }
   }
 
+ 
   drawBarChart();
 
   function drawLineChart() {
@@ -479,8 +483,8 @@ else
         datasets: []
       };
 
-
-      var myLineChart = new Chart(can, {
+     
+  var myLineChart=  new Chart(can, {
         type: 'line',
         data: datagrafiek,
         options: {
@@ -500,6 +504,8 @@ else
           }
         }
       });
+      $("#loader-1").hide();
+      can.show();
 
       var counter = 0;
       $.each(output, function (key, value) {
@@ -545,7 +551,9 @@ else
 
         function errorHandler(statusCode) {
           console.log("failed with status", status);
-        }
+      }
+
+      
     }
 
 
@@ -585,7 +593,7 @@ else
           var can = $('#doughnut-chart');
      
         
-
+          
           new Chart(can, {
             type: 'doughnut',
             data: {
@@ -599,12 +607,16 @@ else
               responsive: true
             }
           });
-          
+       
+          $("#loader-2").hide();
+          can.show();
         }
         function errorHandler(statusCode) {
           console.log("failed with status", status);
         }
 
+       
+        
       }
 
       getHashtags(id);
@@ -644,24 +656,21 @@ else
               responsive:true
             }
           });
-      
+
+          $("#loader-3").hide();
+          can.show();
+         
         }
         function errorHandler(statusCode) {
           console.log("failed with status", status);
         }
+      
       }
+ 
 
-      setTimeout(function () {
-        $("#loader-6").hide();
-
-        setTimeout(function () {
+   
           drawPie(id);
-        }, 500);
-       
-        
-        
-       
-      }, 5000);
+    
     
     }
     function errorHandler(statusCode) {

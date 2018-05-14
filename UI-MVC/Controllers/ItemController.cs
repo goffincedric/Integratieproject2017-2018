@@ -503,6 +503,16 @@ namespace UI_MVC.Controllers
         }
 
 
+        public ActionResult _ShowKeywordOfTheme(int id)
+        {
+            IEnumerable<Keyword> keywords = itemMgr.GetTheme(id).Keywords.ToList();
+            return PartialView(keywords);
+        }
+
+        public ActionResult DeleteKeywordFromTheme(int id)
+        {
+            return View();
+        }
 
 
     }
