@@ -131,6 +131,27 @@ namespace UI_MVC.Controllers
                     Value = subplatformSettingViewModel.APIsource,
                     IsEnabled = true,
                     Subplatform = subplatformToChange
+                },
+                new SubplatformSetting()
+                {
+                    SettingName = Setting.Platform.SEED_INTERVAL_HOURS,
+                    Value = "24",
+                    IsEnabled = true,
+                    Subplatform = subplatformToChange
+                },
+                new SubplatformSetting()
+                {
+                    SettingName = Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS,
+                    Value = "24",
+                    IsEnabled = true,
+                    Subplatform = subplatformToChange
+                },
+                new SubplatformSetting()
+                {
+                    SettingName = Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS,
+                    Value = "7",
+                    IsEnabled = true,
+                    Subplatform = subplatformToChange
                 }
             };
 

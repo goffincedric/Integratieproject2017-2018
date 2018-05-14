@@ -22,7 +22,7 @@ namespace PB.BL
         private IRecordRepo RecordRepo;
         private IAlertRepo AlertRepo;
 
-        public static bool IsSyncing;
+        public volatile static bool IsSyncing;
 
         private UnitOfWorkManager UowManager;
 
@@ -492,11 +492,18 @@ namespace PB.BL
                 API_URL = subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.SOURCE_API_URL).Value
             };
 
+            // Add themes and keywords to dictionary
+            Dictionary<string, string[]> ThemesAndKeywords = new Dictionary<string, string[]>();
+            ItemRepo.ReadThemes().Where(k => k.SubPlatforms.Contains(subplatform)).ToList().ForEach(t =>
+            {
+                ThemesAndKeywords.Add(t.Name, t.Keywords.Select(k => k.Name).ToArray());
+            });
+
             // Call API with request
             List<JClass> requestedRecords = new List<JClass>();
             try
             {
-                requestedRecords.AddRange(restClient.RequestRecords(since: DateTime.Now.AddDays(-int.Parse(subplatform.Settings.First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value))));
+                requestedRecords.AddRange(restClient.RequestRecords(since: DateTime.Now.AddDays(-int.Parse(subplatform.Settings.First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value)), themes: ThemesAndKeywords));
             }
             catch (Exception e)
             {
@@ -560,6 +567,8 @@ namespace PB.BL
             List<Record> newRecords = new List<Record>();
             List<Person> oldPersons = ItemRepo.ReadPersons().ToList();
             List<Person> newPersons = new List<Person>();
+            List<Theme> oldThemes = ItemRepo.ReadThemes().ToList();
+            List<Theme> newThemes = new List<Theme>();
 
             foreach (var el in data)
             {
@@ -601,7 +610,10 @@ namespace PB.BL
                                 Comparisons = new List<Comparison>(),
                                 Keywords = new List<Keyword>(),
                                 SubPlatforms = el.Subplatforms,
-                                SubscribedProfiles = new List<Profile>()
+                                SubscribedProfiles = new List<Profile>(),
+                                Themes = new List<Theme>(),
+                                Alerts = new List<Alert>(),
+                                TrendingScore = 0
                             };
                             oldPersons.Add(personCheck);
                             newPersons.Add(personCheck);
@@ -613,11 +625,46 @@ namespace PB.BL
                                 if (!personCheck.SubPlatforms.Contains(sp)) personCheck.SubPlatforms.Add(sp);
                             });
                         }
+
+                        foreach (var theme in el.Themes)
+                        {
+                            Theme themeCheck = oldThemes.FirstOrDefault(t => t.Name.ToLower().Equals(theme.ToLower()));
+                            if (themeCheck == null)
+                            {
+                                themeCheck = new Theme()
+                                {
+                                    Name = theme,
+                                    IsTrending = false,
+                                    IconURL = @"~/Content/Images/default-theme.png",
+                                    Comparisons = new List<Comparison>(),
+                                    Keywords = new List<Keyword>(),
+                                    Records = new List<Record>(),
+                                    SubPlatforms = el.Subplatforms,
+                                    SubscribedProfiles = new List<Profile>(),
+                                    Persons = new List<Person>(),
+                                    Organisations = new List<Organisation>(),
+                                    Alerts = new List<Alert>()
+                                };
+                                oldThemes.Add(themeCheck);
+                                newThemes.Add(themeCheck);
+                            }
+                            else
+                            {
+                                el.Subplatforms.ForEach(sp =>
+                                {
+                                    if (!themeCheck.SubPlatforms.Contains(sp)) themeCheck.SubPlatforms.Add(sp);
+                                });
+                            }
+                            record.Themes.Add(themeCheck);
+                            themeCheck.Records.Add(record);
+
+                            personCheck.Themes.Add(themeCheck);
+                            themeCheck.Persons.Add(personCheck);
+                        }
                         record.Persons.Add(personCheck);
                         personCheck.Records.Add(record);
                     }
-
-
+                    
                     foreach (var m in el.Mentions)
                     {
                         Mention mentionCheck = allMentions.Find(me => me.Name.Equals(m));
@@ -632,8 +679,7 @@ namespace PB.BL
                             allMentions.Add(mention);
                         }
                     }
-
-
+                    
                     foreach (var w in el.Words)
                     {
                         Word wordCheck = allWords.Find(wo => wo.Text.Equals(w));
@@ -648,8 +694,7 @@ namespace PB.BL
                             allWords.Add(word);
                         }
                     }
-
-
+                    
                     foreach (var h in el.Hashtags)
                     {
                         Hashtag hashtagCheck = allHashtags.Find(ha => ha.HashTag.Equals(h));
@@ -664,8 +709,7 @@ namespace PB.BL
                             allHashtags.Add(tag);
                         }
                     }
-
-
+                    
                     foreach (var u in el.URLs)
                     {
                         Url urlCheck = allUrls.Find(url => url.Link.Equals(u));

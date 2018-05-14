@@ -125,6 +125,7 @@ namespace PB.DAL
                 .Include(t => t.SubscribedProfiles)
                 .Include(t => t.Comparisons)
                 .Include(t => t.Alerts)
+                .Include(t => t.Records)
                 .FirstOrDefault(t => t.ItemId == itemId);
         }
 
@@ -136,6 +137,7 @@ namespace PB.DAL
                 .Include(t => t.SubscribedProfiles)
                 .Include(t => t.Comparisons)
                 .Include(t => t.Alerts)
+                .Include(t => t.Records)
                 .AsEnumerable();
         }
 
