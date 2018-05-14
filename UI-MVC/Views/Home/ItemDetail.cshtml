@@ -98,12 +98,12 @@
         <div class="col-sm" style="padding:0; margin:0">
           <div class="layers bd bgc-white p-20">
             <div class="layer w-100 mB-10">
-              <h6 class="lh-1">Populariteit</h6>
+              <h6 class="lh-1">Activiteit</h6>
             </div>
             <div class="layer w-100">
               <div class="peers ai-sb fxw-nw">
                 <div class="peer peer-greed"><span id="sparklinedash4"></span></div>
-                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">+10%</span></div>
+                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500" id="output1"></span></div>
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@
             <div class="layer w-100">
               <div class="peers ai-sb fxw-nw">
                 <div class="peer peer-greed"><span id="sparklinedash"></span></div>
-                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">+3%</span></div>
+                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500" id="output2"></span></div>
               </div>
             </div>
           </div>
@@ -127,12 +127,12 @@
         <div class="col-sm" style="padding:0; margin:0">
           <div class="layers bd bgc-white p-20">
             <div class="layer w-100 mB-10">
-              <h6 class="lh-1">Activiteit</h6>
+              <h6 class="lh-1">Retweet</h6>
             </div>
             <div class="layer w-100">
               <div class="peers ai-sb fxw-nw">
                 <div class="peer peer-greed"><span id="sparklinedash2"></span></div>
-                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">-7%</span></div>
+                <div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500" id="output3"></span></div>
               </div>
             </div>
           </div>
@@ -198,9 +198,72 @@
 
 </main>
 
+<script src="~/Scripts/charts/Chart.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://nodebox.live/api/v1/ndbx.js"></script>
+
+<script>
+  function makeAjaxCall(url, methodType) {
+    var promiseObj = new Promise(function (resolve, reject) {
+      var xhr = new XMLHttpRequest();
+
+      xhr.open(methodType, url, true);
+      xhr.setRequestHeader("x-api-key", "303d22a4-402b-4d3c-b279-9e81c0480711");
+      xhr.send();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            console.log("xhr done successfully");
+            var resp = "";
+            resp = xhr.response;
+            resolve(JSON.parse(resp));
+
+          } else {
+            reject(xhr.status);
+            console.log("xhr failed");
+          }
+        } else {
+          console.log("xhr processing going on");
+        }
+      }
+      console.log("request sent succesfully");
+
+    });
+    return promiseObj;
+  }
+
+
+
+
+
+
+  function showDetails() {
+
+
+    var URL = "https://localhost:44342/api/item/GetItemDetails/" + @Html.Raw(Model.ItemId);
+    makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+    function process(output) {
+      console.log(output);
+
+
+      var keys = [];
+      keys = Object.keys(output);
+     
+
+      for (var i = 1; i < keys.length+1; i++) {
+       
+        $("#output" + i).html(output[keys[i-1]]);
+      }
+    }
+
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+  }
+
+  showDetails();
+</script>
 @if (Model is PB.BL.Domain.Items.Person)
 {
   <script defer>

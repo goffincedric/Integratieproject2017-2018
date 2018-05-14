@@ -47,6 +47,17 @@
         </div>
 
         <div class="form-group">
+          <label class="control-label col-md-2">Add new keyword to theme</label>
+          @*@Html.LabelFor("Add new keyword", htmlAttributes: new { @class = "control-label col-md-2" })*@
+          <div class="col-md-10">
+
+            @Html.DropDownListFor(model => model.KeywordId, new SelectList(Enumerable.Empty<SelectList>()), "Kies een keyword", new { @class = "form-control", @id = "FromJson" })
+
+            @Html.ValidationMessageFor(model => model.KeywordId, "", new { @class = "text-danger" })
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="control-label col-md-2">Upload an icon</label>
           <div class="col-md-10">
             <div class="fileUpload blue-btn btn w-100">
@@ -62,9 +73,41 @@
           </div>
         </div>
       </div>
+
+      @Html.Action("_ShowKeywordOfTheme", "item", new { id = Model.ItemId })
     }
-    <button class="btn btn-sm">
-      @Html.ActionLink("Back", "ItemBeheer", "Item")
-    </button>
+    @*<button class="btn btn-sm">
+        @Html.ActionLink("Back", "ItemBeheer", "Item")
+      </button>*@
   </div>
 </main>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#IsHot").change();
+    });
+</script>
+<script>
+  var tmp = "";
+
+  tmp = $.ajax({
+    async: false,
+    type: 'GET',
+    dataType: 'json',
+    headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
+    url: "https://localhost:44342/api/item/GetKeywordsNotInTheme/"+ "@Model.ItemId"
+  }).responseJSON;
+
+
+
+  for (var i = 0; i < tmp.length; i++) {
+
+      $("#FromJson").append($("<option></option>").val(tmp[i].KeywordId).html(tmp[i].Name));
+    }
+
+    //$("FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
+
+  
+
+
+</script>

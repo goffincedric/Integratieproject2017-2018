@@ -8,57 +8,64 @@
 
     @Html.AntiForgeryToken()
   <form>
+    <div class="row">
+      <div class="col-6">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+          @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+          <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+          </div>
+        </div>
+        <div class="form-group">
+          @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+          <div class="col-md-10">
+            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+          </div>
+        </div>
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-      @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-      </div>
-    </div>
-    <div class="form-group">
-      @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
-      </div>
-    </div>
-
-    <div class="form-group">
-      @Html.LabelFor(model => model.IsTrending, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @*<div class="checkbox">*@
-        <label class="switch">
-          @Html.CheckBoxFor(model => model.IsTrending, new { @class = "form-control" })
-          <div class="slider round"></div>
-        </label>
-        @Html.ValidationMessageFor(model => model.IsTrending, "", new { @class = "text-danger", @id = "IsHot" })
-        @*</div>*@
-      </div>
-    </div>
-
-    <div class="form-group">
-      @Html.LabelFor(model => model.SocialMediaLink, htmlAttributes: new { @class = "control-label col-md-2" })
-      <div class="col-md-10">
-        @Html.EditorFor(model => model.SocialMediaLink, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.SocialMediaLink, "", new { @class = "text-danger" })
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="control-label col-md-2">Upload an icon</label>
-      <div class="col-md-10">
-        <div class="fileUpload blue-btn btn w-100">
-          <span>Upload a new icon</span>
-          <input type="file" class="uploadlogo" name="file" id="file" />
+        <div class="form-group">
+          @Html.LabelFor(model => model.IsTrending, htmlAttributes: new { @class = "control-label col-md-2" })
+          <div class="col-md-10">
+            @*<div class="checkbox">*@
+            <label class="switch">
+              @Html.CheckBoxFor(model => model.IsTrending, new { @class = "form-control" })
+              <div class="slider round"></div>
+            </label>
+            @Html.ValidationMessageFor(model => model.IsTrending, "", new { @class = "text-danger", @id = "IsHot" })
+            @*</div>*@
+          </div>
         </div>
       </div>
+
+      <div class="col-6">
+        <div class="form-group">
+          @Html.LabelFor(model => model.SocialMediaLink, htmlAttributes: new { @class = "control-label col-md-2" })
+          <div class="col-md-10">
+            @Html.EditorFor(model => model.SocialMediaLink, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SocialMediaLink, "", new { @class = "text-danger" })
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-2">Upload an icon</label>
+          <div class="col-md-10">
+            <div class="fileUpload blue-btn btn w-100">
+              <span>Upload a new icon</span>
+              <input type="file" class="uploadlogo" name="file" id="file" />
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
+   
     <div class="form-group">
       <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Create" class="btn btn-default" />
+        <input type="submit" value="Create" class="btn btn-lg btn-secondary" />
       </div>
     </div>
   </form>

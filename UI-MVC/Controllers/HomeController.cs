@@ -1,4 +1,5 @@
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using PB.BL;
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Items;
@@ -10,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -91,7 +93,7 @@ namespace UI_MVC.Controllers
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             string name = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME).Value;
-            
+
 
             return Content(name);
         }
@@ -99,15 +101,15 @@ namespace UI_MVC.Controllers
         public ActionResult GetLogo(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            string url = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Value); 
+            string url = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Value);
             return Content(url);
         }
 
-        
+
         [Route("")]
         public ActionResult Index(string subplatform)
         {
-            ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text; 
+            ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text;
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
             return View("Index");
         }
@@ -177,7 +179,8 @@ namespace UI_MVC.Controllers
                     case "Dark": theme = "DarkMode"; break;
                     case "Future": theme = "FutureMode"; break;
                 }
-                return Content("/Content/Theme/"+theme+".css");
+                return Content(@"/Content/Theme/" + theme + @".css");
+                //TODO: FIX ERROR 
             }
             return Content("/Content/Theme/LightMode.css");
         }
@@ -330,5 +333,7 @@ namespace UI_MVC.Controllers
 
             return PartialView(urls);
         }
+
+       
     }
 }
