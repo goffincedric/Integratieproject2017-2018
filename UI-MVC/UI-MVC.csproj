@@ -411,6 +411,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Persons\" />
     <Folder Include="Content\Images\Subplatform\" />
+    <Folder Include="Subplatforms\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
