@@ -29,7 +29,7 @@ namespace PB.BL.Interfaces
         Profile RemoveSubscription(Profile profile, Item item);
 
         Dictionary<Profile, List<ProfileAlert>> SendWeeklyReviews();
-        List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems, out List<Item> itemsToUpdate);
+        List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems);
         List<Alert> GenerateProfileAlerts(Profile profile);
 
         int GetUserCount();
