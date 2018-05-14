@@ -444,7 +444,7 @@ namespace PB.BL
         }
         
         // TODO: Async maken
-        public List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems, out List<Item> itemsToUpdate)
+        public List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems)
         {
             InitNonExistingRepo();
 
@@ -452,7 +452,7 @@ namespace PB.BL
             List<Alert> alerts = new List<Alert>();
 
             // Update trending items
-            itemsToUpdate = Trendspotter.CheckTrendingItems(allItems.ToList(), 10, ref alerts);
+            List<Item> itemsToUpdate = Trendspotter.CheckTrendingItems(allItems.ToList(), 10, ref alerts);
 
             // Get all profiles with subscriptions
             List<Profile> Profiles = ProfileRepo.ReadProfiles().Where(p => p.Subscriptions.Count > 0).ToList();
