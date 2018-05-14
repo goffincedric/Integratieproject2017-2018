@@ -296,6 +296,7 @@
     <Content Include="Content\Styling\grid2\gridstack.css" />
     <Content Include="Content\Styling\wizard\material-bootstrap-wizard.css" />
     <Content Include="Scripts\account\custom.js" />
+    <Content Include="Scripts\charts\Chart.min.js" />
     <Content Include="Scripts\contact.js" />
     <Content Include="Content\Styling\style.css" />
     <Content Include="Content\Styling\contact.css" />
@@ -338,6 +339,8 @@
     <Content Include="Scripts\wizard\material-bootstrap-wizard.js" />
     <Content Include="Scripts\wizard\Wizard.js" />
     <Content Include="Scripts\wordcloud\wordcloud.js" />
+    <Content Include="Scripts\wordcloud\zingchart-wordcloud.min.js" />
+    <Content Include="Scripts\wordcloud\zingchart.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -399,6 +402,9 @@
     <Content Include="Views\Subplatform\_DeploySubplatform.cshtml" />
     <Content Include="Views\Subplatform\_SubplatformSetting.cshtml" />
     <Content Include="Views\Account\WeeklyReview.cshtml" />
+    <Content Include="Views\Subplatform\_ChangeHomePage.cshtml" />
+    <Content Include="Views\Subplatform\_ChangeMenu.cshtml" />
+    <Content Include="Views\Item\ChartsWizard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
