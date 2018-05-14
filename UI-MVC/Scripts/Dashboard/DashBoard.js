@@ -161,33 +161,42 @@ $(function () {
                 Wizard.hide();
             });
 
+            var data = null
+            var onderwerp = null
+
             $('.btn-next').on('click', function () {
                 switch ($('input:checked').attr('id')) {
                     case 'person':
-                        console.log($.ajax({
+                        data = $.ajax({
                             async: false,
                             type: 'GET',
                             headers: Headers,
                             url: "https://localhost:44342/api/item/getperson"
-                        }).responseJSON);
+                        }).responseJSON;
+                        onderwerp = 'politiekers';
                         break;
                     case 'organisation':
-                        console.log($.ajax({
+                        data = $.ajax({
                             async: false,
                             type: 'GET',
                             headers: Headers,
                             url: "https://localhost:44342/api/item/getorganisation"
-                        }).responseJSON);
+                        }).responseJSON;
+                        onderwerp = 'organisaties';
                         break;
                     case 'theme':
-                        console.log($.ajax({
+                        data = $.ajax({
                             async: false,
                             type: 'GET',
                             headers: Headers,
                             url: "https://localhost:44342/api/item/gettheme"
-                        }).responseJSON);
+                        }).responseJSON;
+                        onderwerp = 'thema\'s';
                         break;
                 }
+                console.log($('#soort'))
+                $('#soort').text(onderwerp);
+                console.log(data);
             })
 
             $('.btn-finish').off('click');
