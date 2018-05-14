@@ -21,7 +21,10 @@
             DEFAULT_NEW_ITEM_ICON, 
             SOCIAL_SOURCE,
             SOCIAL_SOURCE_URL,
-            SITE_NAME
+            SITE_NAME,
+            SEED_INTERVAL_HOURS,
+            ALERT_GENERATION_INTERVAL_HOURS,
+            SEND_WEEKLY_REVIEWS_INTERVAL_HOURS
         }
     }
 }
