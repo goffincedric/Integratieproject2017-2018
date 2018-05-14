@@ -205,11 +205,11 @@ namespace PB.BL
                     }
                 };
 
-                var result = userManager.CreateAsync(user, "FliesAway").Result;
+                var result = userManager.Create(user, "FliesAway");
                 if (result.Succeeded)
                 {
                     //Assign Role to user
-                    userManager.AddToRoleAsync(user.Id, "SuperAdmin");
+                    userManager.AddToRole(user.Id, "SuperAdmin");
                 }
             }
 
@@ -261,11 +261,11 @@ namespace PB.BL
                     }
                 };
 
-                var result = userManager.CreateAsync(user2, "Disney2018").Result;
+                var result = userManager.Create(user2, "Disney2018");
                 if (result.Succeeded)
                 {
                     //Assign Role to user
-                    userManager.AddToRoleAsync(user2.Id, "Admin");
+                    userManager.AddToRole(user2.Id, "Admin");
                 }
             }
 

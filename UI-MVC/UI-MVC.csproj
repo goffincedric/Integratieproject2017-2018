@@ -270,6 +270,7 @@
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
     <Content Include="Content\Images\bg.jpg" />
+    <Content Include="Content\Images\default-theme.png" />
     <Content Include="Content\Images\faqbg.jpg" />
     <Content Include="Content\Images\Index\banner.jpg" />
     <Content Include="Content\Images\info-icon.png" />
@@ -283,7 +284,7 @@
     <Content Include="Content\Images\Organisations\vb.png" />
     <Content Include="Content\Images\plus-icon.png" />
     <Content Include="Content\Images\Site\logo_new.png" />
-    <Content Include="Content\Images\subplatform-default.png" />
+    <Content Include="Content\Images\default-subplatform.png" />
     <Content Include="Content\Images\Themes\eu.png" />
     <Content Include="Content\Images\Themes\migratie.png" />
     <Content Include="Content\Images\Themes\milieu.png" />

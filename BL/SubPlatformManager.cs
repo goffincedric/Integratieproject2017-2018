@@ -88,7 +88,7 @@ namespace PB.BL
             {
                 SettingName = Setting.Platform.SITE_ICON_URL,
                 IsEnabled = true,
-                Value = siteIconUrl ?? @"~/Content/Images/subplatform-default.png",
+                Value = siteIconUrl ?? @"~/Content/Images/default-subplatform.png",
                 Subplatform = subplatform
             });
 

@@ -315,6 +315,7 @@ namespace UI_MVC.Controllers
                 SubplatformManager subplatformManager = new SubplatformManager(unitOfWorkManager);
                 ItemManager itemManager = new ItemManager(unitOfWorkManager);
                 Subplatform sp = subplatformManager.GetSubplatform(subplatform);
+                // TODO: Tasking met JobManager
                 itemManager.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(new System.Action(() =>
                 {
                     ItemManager.IsSyncing = false;

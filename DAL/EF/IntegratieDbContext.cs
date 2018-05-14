@@ -144,6 +144,11 @@ namespace PB.DAL.EF
                 .Map(m => { m.ToTable("tblOrganisationThemes"); });
 
             modelBuilder.Entity<Record>()
+                .HasMany(r => r.Themes)
+                .WithMany(t => t.Records)
+                .Map(m => { m.ToTable("tblThemeRecords"); });
+
+            modelBuilder.Entity<Record>()
                 .HasMany(r => r.Mentions)
                 .WithMany(m => m.Records)
                 .Map(m => { m.ToTable("tblRecordMention"); });
