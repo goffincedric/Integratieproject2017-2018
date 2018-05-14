@@ -232,9 +232,7 @@ namespace UI_MVC.Controllers
             }
         }
         #endregion
-
-
-
+        
         [HttpPost]
         public ActionResult DeleteItem(string subplatform, int id)
         {

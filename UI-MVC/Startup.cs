@@ -22,7 +22,7 @@ namespace UI_MVC
         {
             ConfigureAuth(app);
 
-            #region Background Task Syncing
+            #region Background task scheduling
             UnitOfWorkManager uowMgr = new UnitOfWorkManager();
             SubplatformManager subplatformMgr = new SubplatformManager(uowMgr);
             ItemManager itemMgr = new ItemManager(uowMgr);
@@ -32,9 +32,19 @@ namespace UI_MVC
             DateTime endDate = DateTime.Today.AddDays(1).AddHours(2);
             Subplatforms.ForEach(s =>
             {
+                string weeklyReviewsInterval = s.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS))?.Value;
                 string seedInterval = s.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.SEED_INTERVAL_HOURS))?.Value;
                 string alertGenerationInterval = s.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS))?.Value;
-                string weeklyReviewsInterval = s.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_HOURS))?.Value;
+                if (!(weeklyReviewsInterval is null))
+                {
+                    JobManager.AddJob(() =>
+                    {
+                        accountMgr.GenerateAllAlerts(s.Items);
+                    },
+                    (schedule) => schedule
+                    .ToRunOnceAt(2, new Random().Next(0, 10))
+                    .AndEvery(int.Parse(weeklyReviewsInterval)).Hours());
+                }
                 if (!(seedInterval is null))
                 {
                     JobManager.AddJob(() =>
@@ -43,7 +53,7 @@ namespace UI_MVC
                         itemMgr.SyncDatabase(s);
                     },
                     (schedule) => schedule
-                    .ToRunOnceAt(2, new Random().Next(0, 10))
+                    .ToRunOnceAt(2, new Random().Next(20, 30))
                     .AndEvery(int.Parse(seedInterval)).Hours());
                 }
                 if (!(alertGenerationInterval is null))
@@ -53,22 +63,10 @@ namespace UI_MVC
                         accountMgr.GenerateAllAlerts(s.Items);
                     },
                     (schedule) => schedule
-                    .ToRunOnceAt(2, new Random().Next(11, 20))
+                    .ToRunOnceAt(2, new Random().Next(50, 60))
                     .AndEvery(int.Parse(alertGenerationInterval)).Hours());
                 }
-                if (!(weeklyReviewsInterval is null))
-                {
-                    JobManager.AddJob(() =>
-                    {
-                        accountMgr.GenerateAllAlerts(s.Items);
-                    },
-                    (schedule) => schedule
-                    .ToRunOnceAt(2, new Random().Next(21, 30))
-                    .AndEvery(int.Parse(weeklyReviewsInterval)).Hours());
-                }
             });
-
-            // TODO: INITIALIZE (TASKS NAAR REGISTRY ZETTEN + REGISTRY INITIALISEN) https://github.com/fluentscheduler/FluentScheduler
             #endregion
         }
     }

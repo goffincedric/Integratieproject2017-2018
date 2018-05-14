@@ -96,6 +96,27 @@ namespace PB.DAL.Migrations
                             Value = @"~/Content/Images/Site/logo_new.png",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
+                        },
+                          new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.SEED_INTERVAL_HOURS,
+                            Value = "24",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                          new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS,
+                            Value = "24",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                          new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS,
+                            Value = "24",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
                         }
                     },
                     Admins = new List<Profile>(),
@@ -269,8 +290,7 @@ namespace PB.DAL.Migrations
                 new Keyword()
                 {
                     Name="Auto",
-                    Items = new List<Item>(),
-
+                    Items = new List<Item>()
                 },
                 new Keyword()
                 {
@@ -302,26 +322,107 @@ namespace PB.DAL.Migrations
                     Name="Vlaams",
                     Items = new List<Item>()
                 },
-
                 new Keyword()
                 {
                     Name="Links",
                     Items = new List<Item>()
                 },
-
                 new Keyword()
                 {
                     Name="Rechts",
                     Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Illegaal",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Moslim",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Syrië",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Oorlog",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Christenen",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Religie",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Economie",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Politiek",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Corrupt",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Amerika",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Privacy",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="GDPR",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Geld",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Hervorming",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Wet",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Jeugd",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Internet",
+                    Items = new List<Item>()
+                },
+                new Keyword()
+                {
+                    Name="Technologie",
+                    Items = new List<Item>()
                 }
             };
-
-            ctx.Keywords.ForEachAsync(t =>
-                {
-                    Keyword keyword = KeywordsToAdd.FirstOrDefault(keyw => keyw.Equals(t));
-                    if (keyword != null) KeywordsToAdd.Remove(t);
-                }).Wait();
-            if (KeywordsToAdd.Count != 0) ctx.Keywords.AddRange(KeywordsToAdd);
             #endregion
 
             #region Themes
@@ -334,7 +435,25 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Themes/migratie.png",
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
-                    Keywords = new List<Keyword>(),
+                    Keywords = new List<Keyword>()
+                    {
+                        KeywordsToAdd[7],
+                        KeywordsToAdd[8],
+                        KeywordsToAdd[9],
+                        KeywordsToAdd[10],
+                        KeywordsToAdd[13],
+                        KeywordsToAdd[14],
+                        KeywordsToAdd[11],
+                        KeywordsToAdd[12],
+                        KeywordsToAdd[15],
+                        KeywordsToAdd[16],
+                        KeywordsToAdd[17],
+                        KeywordsToAdd[21],
+                        KeywordsToAdd[22],
+                        KeywordsToAdd[23],
+                        KeywordsToAdd[24],
+                        KeywordsToAdd[25]
+                    },
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -347,7 +466,25 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Themes/onderwijs.png",
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
-                    Keywords = new List<Keyword>(),
+                    Keywords = new List<Keyword>()
+                    {
+                        KeywordsToAdd[6],
+                        KeywordsToAdd[7],
+                        KeywordsToAdd[8],
+                        KeywordsToAdd[9],
+                        KeywordsToAdd[10],
+                        KeywordsToAdd[13],
+                        KeywordsToAdd[14],
+                        KeywordsToAdd[11],
+                        KeywordsToAdd[15],
+                        KeywordsToAdd[16],
+                        KeywordsToAdd[18],
+                        KeywordsToAdd[19],
+                        KeywordsToAdd[23],
+                        KeywordsToAdd[24],
+                        KeywordsToAdd[25],
+                        KeywordsToAdd[26]
+                    },
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -360,7 +497,26 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Themes/veiligheid.png",
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
-                    Keywords = new List<Keyword>(),
+                    Keywords = new List<Keyword>()
+                    {
+                        KeywordsToAdd[5],
+                        KeywordsToAdd[6],
+                        KeywordsToAdd[7],
+                        KeywordsToAdd[8],
+                        KeywordsToAdd[9],
+                        KeywordsToAdd[10],
+                        KeywordsToAdd[13],
+                        KeywordsToAdd[14],
+                        KeywordsToAdd[12],
+                        KeywordsToAdd[16],
+                        KeywordsToAdd[17],
+                        KeywordsToAdd[18],
+                        KeywordsToAdd[19],
+                        KeywordsToAdd[23],
+                        KeywordsToAdd[24],
+                        KeywordsToAdd[25],
+                        KeywordsToAdd[26]
+                    },
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -373,7 +529,19 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Themes/zorg.png",
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
-                    Keywords = new List<Keyword>(),
+                    Keywords = new List<Keyword>()
+                    {
+                        KeywordsToAdd[6],
+                        KeywordsToAdd[7],
+                        KeywordsToAdd[8],
+                        KeywordsToAdd[14],
+                        KeywordsToAdd[15],
+                        KeywordsToAdd[16],
+                        KeywordsToAdd[18],
+                        KeywordsToAdd[21],
+                        KeywordsToAdd[22],
+                        KeywordsToAdd[24]
+                    },
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -386,7 +554,31 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Themes/eu.png",
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
-                    Keywords = new List<Keyword>(),
+                    Keywords = new List<Keyword>()
+                    {
+                        KeywordsToAdd[3],
+                        KeywordsToAdd[4],
+                        KeywordsToAdd[5],
+                        KeywordsToAdd[7],
+                        KeywordsToAdd[8],
+                        KeywordsToAdd[9],
+                        KeywordsToAdd[10],
+                        KeywordsToAdd[13],
+                        KeywordsToAdd[14],
+                        KeywordsToAdd[11],
+                        KeywordsToAdd[15],
+                        KeywordsToAdd[16],
+                        KeywordsToAdd[17],
+                        KeywordsToAdd[18],
+                        KeywordsToAdd[19],
+                        KeywordsToAdd[20],
+                        KeywordsToAdd[21],
+                        KeywordsToAdd[22],
+                        KeywordsToAdd[23],
+                        KeywordsToAdd[24],
+                        KeywordsToAdd[25],
+                        KeywordsToAdd[26]
+                    },
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -399,7 +591,23 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Themes/eu.png",
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
-                    Keywords = new List<Keyword>(),
+                    Keywords = new List<Keyword>()
+                    {
+                        KeywordsToAdd[0],
+                        KeywordsToAdd[1],
+                        KeywordsToAdd[2],
+                        KeywordsToAdd[3],
+                        KeywordsToAdd[4],
+                        KeywordsToAdd[5],
+                        KeywordsToAdd[7],
+                        KeywordsToAdd[8],
+                        KeywordsToAdd[15],
+                        KeywordsToAdd[16],
+                        KeywordsToAdd[18],
+                        KeywordsToAdd[21],
+                        KeywordsToAdd[23],
+                        KeywordsToAdd[24]
+                    },
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
@@ -412,22 +620,64 @@ namespace PB.DAL.Migrations
                     IconURL=@"~/Content/Images/Themes/mobiliteit.png",
                     Alerts = new List<Alert>(),
                     Comparisons = new List<Comparison>(),
-                    Keywords = new List<Keyword>(),
+                    Keywords = new List<Keyword>()
+                    {
+                        KeywordsToAdd[0],
+                        KeywordsToAdd[1],
+                        KeywordsToAdd[2],
+                        KeywordsToAdd[3],
+                        KeywordsToAdd[4],
+                        KeywordsToAdd[15],
+                        KeywordsToAdd[16],
+                        KeywordsToAdd[21],
+                        KeywordsToAdd[22],
+                        KeywordsToAdd[23],
+                        KeywordsToAdd[24]
+                    },
                     SubPlatforms = new List<Subplatform>()
                     {
                         pbSubplatform
                     },
                     SubscribedProfiles = new List<Profile>()
+                },
+                new Theme()
+                {
+                    Name = "Energie",
+                    IconURL=@"~/Content/Images/Themes/energie.png",
+                    Alerts = new List<Alert>(),
+                    Comparisons = new List<Comparison>(),
+                    Keywords = new List<Keyword>()
+                    {
+                        KeywordsToAdd[0],
+                        KeywordsToAdd[3],
+                        KeywordsToAdd[4],
+                        KeywordsToAdd[5],
+                        KeywordsToAdd[6],
+                        KeywordsToAdd[7],
+                        KeywordsToAdd[8],
+                        KeywordsToAdd[15],
+                        KeywordsToAdd[16],
+                        KeywordsToAdd[18],
+                        KeywordsToAdd[21],
+                        KeywordsToAdd[22],
+                        KeywordsToAdd[23],
+                        KeywordsToAdd[26]
+                    }
                 }
             };
             ctx.Themes.ForEachAsync(t =>
                 {
                     Theme theme = ThemesToAdd.FirstOrDefault(them => them.Equals(t));
                     if (theme != null) ThemesToAdd.Remove(t);
+                    else
+                    {
+                        t.Keywords.ForEach(k => k.Items.Add(t));
+                    }
                 }).Wait();
+
             if (ThemesToAdd.Count != 0) ctx.Themes.AddRange(ThemesToAdd);
             #endregion
-
+            
             #region Pages
             List<Page> pagesToAdd = new List<Page>()
             {

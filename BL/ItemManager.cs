@@ -22,7 +22,7 @@ namespace PB.BL
         private IRecordRepo RecordRepo;
         private IAlertRepo AlertRepo;
 
-        public static bool IsSyncing;
+        public volatile static bool IsSyncing;
 
         private UnitOfWorkManager UowManager;
 

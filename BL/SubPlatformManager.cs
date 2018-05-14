@@ -67,7 +67,7 @@ namespace PB.BL
             Subplatform subplatform = new Subplatform()
             {
                 Name = name,
-                URL = url??name.ToLower().Replace(" ", "-"),
+                URL = url ?? name.ToLower().Replace(" ", "-"),
                 DateOnline = DateTime.Now,
                 Style = new Style(),
                 Admins = new List<Profile>(),
@@ -76,63 +76,93 @@ namespace PB.BL
                 Settings = new List<SubplatformSetting>(),
                 Dashboards = new List<Dashboard>()
             };
-
             subplatform.Settings.Add(new SubplatformSetting()
             {
                 SettingName = Setting.Platform.SOURCE_API_URL,
                 IsEnabled = true,
-                Value = sourceApi?? "https://kdg.textgain.com/query"
+                Value = sourceApi ?? "https://kdg.textgain.com/query",
+                Subplatform = subplatform
             });
 
             subplatform.Settings.Add(new SubplatformSetting()
             {
                 SettingName = Setting.Platform.SITE_ICON_URL,
                 IsEnabled = true,
-                Value = siteIconUrl?? @"~/Content/Images/subplatform-default.png"
+                Value = siteIconUrl ?? @"~/Content/Images/subplatform-default.png",
+                Subplatform = subplatform
             });
 
             subplatform.Settings.Add(new SubplatformSetting()
             {
                 SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
                 Value = "31",
-                IsEnabled = true
+                IsEnabled = true,
+                Subplatform = subplatform
             });
             subplatform.Settings.Add(new SubplatformSetting()
             {
                 SettingName = Setting.Platform.DEFAULT_THEME,
                 Value = "Light",
-                IsEnabled = true
+                IsEnabled = true,
+                Subplatform = subplatform
             });
             subplatform.Settings.Add(new SubplatformSetting()
             {
                 SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
                 Value = @"~/Content/Images/Users/user.png",
-                IsEnabled = true
+                IsEnabled = true,
+                Subplatform = subplatform
             });
             subplatform.Settings.Add(new SubplatformSetting()
             {
                 SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
                 Value = @"~/Content/Images/Users/user.png",
-                IsEnabled = true
+                IsEnabled = true,
+                Subplatform = subplatform
             });
             subplatform.Settings.Add(new SubplatformSetting()
             {
                 SettingName = Setting.Platform.SOCIAL_SOURCE,
                 Value = null,
-                IsEnabled = true
+                IsEnabled = true,
+                Subplatform = subplatform
             });
             subplatform.Settings.Add(new SubplatformSetting()
             {
                 SettingName = Setting.Platform.SITE_NAME,
                 Value = name,
-                IsEnabled = true
+                IsEnabled = true,
+                Subplatform = subplatform
             });
             subplatform.Settings.Add(new SubplatformSetting()
             {
                 SettingName = Setting.Platform.SOCIAL_SOURCE_URL,
                 Value = null,
-                IsEnabled = true
+                IsEnabled = true,
+                Subplatform = subplatform
             });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SEED_INTERVAL_HOURS,
+                Value = "24",
+                IsEnabled = true,
+                Subplatform = subplatform
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS,
+                Value = "24",
+                IsEnabled = true,
+                Subplatform = subplatform
+            });
+            subplatform.Settings.Add(new SubplatformSetting()
+            {
+                SettingName = Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS,
+                Value = "24",
+                IsEnabled = true,
+                Subplatform = subplatform
+            });
+
 
             subplatform = AddSubplatform(subplatform);
             uowManager.Save();
