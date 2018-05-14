@@ -8,6 +8,64 @@
   }
 </style>
 
+<style>
+
+
+
+.loader{
+  width: 100px;
+  height: 100%;
+  border-radius: 100%;
+  margin: auto 0;
+}
+
+
+
+#loader-6{
+  
+}
+
+#loader-6 span{
+  display: inline-block;
+  width: 5px;
+  height: 20px;
+  background-color: #3498db;
+}
+
+#loader-6 span:nth-child(1){
+  animation: grow 1s ease-in-out infinite;
+}
+
+#loader-6 span:nth-child(2){
+  animation: grow 1s ease-in-out 0.15s infinite;
+}
+
+#loader-6 span:nth-child(3){
+  animation: grow 1s ease-in-out 0.30s infinite;
+}
+
+#loader-6 span:nth-child(4){
+  animation: grow 1s ease-in-out 0.45s infinite;
+}
+
+@@keyframes grow{
+  0%, 100%{
+    -webkit-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -o-transform: scaleY(1);
+    transform: scaleY(1);
+  }
+
+  50%{
+    -webkit-transform: scaleY(1.8);
+    -ms-transform: scaleY(1.8);
+    -o-transform: scaleY(1.8);
+    transform: scaleY(1.8);
+  }
+}
+
+</style>
+
 
 <main class="main-content bgc-grey-100" style="background-color: #f9fafb;">
   <div class="banner-window">
@@ -99,10 +157,10 @@
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
-              <h6 class="lh-1">Sentiment analyse top politici</h6>
+              <h6 class="c-grey-900">Sentiment analyse top politici</h6>
             </div>
-            <div class="layer w-100 p-20">
-              <canvas id="evol" height="150"></canvas>
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px">
+              <canvas id="evol" height="100"></canvas>
             </div>
 
           </div>
@@ -115,7 +173,14 @@
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending hashtags</h6>
             </div>
-            <div class="layer w-100 p-20">
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; ">
+              <div class="loader" style="margin: auto" id="loader-6">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
               <canvas id="doughnut-chart" height="100"></canvas>
             </div>
           </div>
@@ -128,7 +193,7 @@
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending Mentions</h6>
               </div>
-              <div class="layer w-100 p-20">
+              <div class="layer w-100 p-20" style="min-height:350px;max-height:350px;">
                 <canvas id="pie-chart" height="100"></canvas>
               </div>
             </div>
@@ -142,7 +207,7 @@
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top persons</h6>
             </div>
-            <div class="layer w-100 p-20">
+            <div class="layer w-100 p-20" style="min-height:350px; max-height:350px"> 
               <canvas id="bar2-chart" height="100"></canvas>
             </div>
           </div>
@@ -256,6 +321,26 @@ else
     return promiseObj;
   }
 
+  //  var datagrafiekValues = {
+
+  //    datasets: [],
+  //    labels: []
+  //  };
+
+  //  var can = $('#doughnut-chart');
+  //  hashtags = new Chart(can, {
+  //    type: 'doughnut',
+  //    data: datagrafiekValues,
+  //    options: {
+  //      responsive: true
+
+  //    }
+  //});
+  //hashtags.update();
+
+  
+
+
 
   function showIncrease() {
    
@@ -364,8 +449,7 @@ else
         },
         options: {
           legend: { display: true },
-      
-
+          responsive:true
         }
       });
     }
@@ -398,7 +482,23 @@ else
 
       var myLineChart = new Chart(can, {
         type: 'line',
-        data: datagrafiek
+        data: datagrafiek,
+        options: {
+          responsive: true,
+          scales: {
+            yAxes: [{
+              display: true,
+              ticks: {
+                // minimum will be 0, unless there is a lower value.
+                // OR //
+                beginAtZero: false,
+            
+               
+                // minimum value will be 0.
+              }
+            }]
+          }
+        }
       });
 
       var counter = 0;
@@ -436,7 +536,7 @@ else
           }
 
           datagrafiek.datasets.push(myNewDataSet);
-
+          
           myLineChart.update();
           counter++;
         }
@@ -456,6 +556,8 @@ else
   }
 
   drawLineChart();
+
+
 
 
   function TrendingPersonGraphs() {
@@ -481,28 +583,23 @@ else
           }
 
           var can = $('#doughnut-chart');
-       
-          //can.parent().attr('Style', 'width: 400px; height: 250');
+     
+        
 
           new Chart(can, {
             type: 'doughnut',
             data: {
               labels: label,
-              datasets: [
-                {
-                  label: "Hashtags",
-                  data: values,
-                  backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64", "#7BDFF2", "#FDE74C", "#47E5BC", "#DAD6D6", "#EF3E36"]
-                }
-              ]
+              datasets: [{
+                backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                data: values
+              }]
             },
             options: {
-             
-
+              responsive: true
             }
           });
-          can.width = can.parent().clientWidth;
-          can.height = can.parent().clientHeight;
+          
         }
         function errorHandler(statusCode) {
           console.log("failed with status", status);
@@ -547,16 +644,25 @@ else
               responsive:true
             }
           });
-          can.width = can.parent().clientWidth;
-          can.height = can.parent().clientHeight;
+      
         }
         function errorHandler(statusCode) {
           console.log("failed with status", status);
         }
       }
 
+      setTimeout(function () {
+        $("#loader-6").hide();
 
-      drawPie(id);
+        setTimeout(function () {
+          drawPie(id);
+        }, 500);
+       
+        
+        
+       
+      }, 5000);
+    
     }
     function errorHandler(statusCode) {
       console.log("failed with status", status);
