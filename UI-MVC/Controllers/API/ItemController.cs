@@ -650,10 +650,18 @@ namespace UI_MVC.Controllers.API
         }
 
         [HttpGet]
-        public IHttpActionResult GetMostPopularPersons()
+        public IHttpActionResult GetMostPopularPersons(int? id)
         {
             Dictionary<int, string> ids = new Dictionary<int, string>();
-            ItemMgr.GetPersons().OrderByDescending(p => p.Records.Count).ToList().Take(3).ToList().ForEach(p => ids.Add(p.ItemId, p.Name));
+            List<Person> Persons = ItemMgr.GetPersons().ToList();
+            if (Persons.Max(p => p.TrendingScore == 0))
+            {
+                Persons.OrderByDescending(p => p.Records.Count).Take(id ?? 3).ToList().ForEach(p => ids.Add(p.ItemId, p.Name));
+            }
+            else
+            {
+                Persons.OrderByDescending(p => p.TrendingScore).Take(id ?? 3).ToList().ForEach(p => ids.Add(p.ItemId, p.Name));
+            }
 
             if (ids is null || ids.Count() == 0) return NotFound();
             return Ok(ids);

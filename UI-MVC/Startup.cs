@@ -35,6 +35,8 @@ namespace UI_MVC
                 string weeklyReviewsInterval = s.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS))?.Value;
                 string seedInterval = s.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.SEED_INTERVAL_HOURS))?.Value;
                 string alertGenerationInterval = s.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS))?.Value;
+                
+                DateTime dateToSendWeeklyReview = DateTime.Today.AddDays(7 - (int)DateTime.Today.DayOfWeek);
                 if (!(weeklyReviewsInterval is null))
                 {
                     JobManager.AddJob(() =>
@@ -63,7 +65,7 @@ namespace UI_MVC
                         accountMgr.GenerateAllAlerts(s.Items);
                     },
                     (schedule) => schedule
-                    .ToRunOnceAt(2, new Random().Next(50, 60))
+                    .ToRunOnceAt(dateToSendWeeklyReview.AddHours(2).AddMinutes(new Random().Next(50, 60)))
                     .AndEvery(int.Parse(alertGenerationInterval)).Hours());
                 }
             });

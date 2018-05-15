@@ -178,7 +178,7 @@ namespace PB.BL
             return DashboardRepo.ReadElement(elementId);
         }
 
-        public Element AddElement(Zone zone, Comparison comparison, int x, int y, int width, int height, bool isDraggable = true)
+        public Element AddElement(Zone zone, Comparison comparison, int x, int y, int width, int height, bool isDraggable = true, bool isFinished = false)
         {
             InitNonExistingRepo();
             Element element = new Element()
@@ -189,7 +189,8 @@ namespace PB.BL
                 Y = y,
                 Width = width,
                 Height = height,
-                IsDraggable = isDraggable
+                IsDraggable = isDraggable,
+                IsFinished = isFinished
             };
             zone.Elements.Add(element);
 
