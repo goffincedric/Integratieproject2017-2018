@@ -359,7 +359,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Blank.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Account.cshtml" />
@@ -372,7 +371,6 @@
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\Home\Legal.cshtml" />
-    <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Item\_OrganisationPartialTable.cshtml" />
     <Content Include="Views\Item\_ThemaPartialTable.cshtml" />
     <Content Include="Views\Item\_OrganisationPartialCreate.cshtml" />

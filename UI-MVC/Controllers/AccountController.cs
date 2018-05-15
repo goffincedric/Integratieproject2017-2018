@@ -40,9 +40,6 @@ namespace UI_MVC.Controllers
         private readonly SubplatformManager SubplatformMgr = new SubplatformManager(uow);
         private ItemManager _itemMgr;
 
-
-        // TODO: Account export
-
         public AccountController()
         {
             ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
@@ -79,8 +76,6 @@ namespace UI_MVC.Controllers
             }
         }
 
-       
-
         public ItemManager ItemMgr
         {
             get
@@ -98,12 +93,9 @@ namespace UI_MVC.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
             _itemMgr = itemManager;
-            
-
-          
         }
 
-      
+
 
         #region LoginRegister
         [AllowAnonymous]
@@ -157,8 +149,14 @@ namespace UI_MVC.Controllers
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             if (ModelState.IsValid)
             {
-                var user = new Profile { UserName = model.Username, Email = model.Email, ProfileIcon = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_NEW_USER_ICON).Value
-                    , CreatedOn = DateTime.Today };
+                var user = new Profile
+                {
+                    UserName = model.Username,
+                    Email = model.Email,
+                    ProfileIcon = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_NEW_USER_ICON).Value
+                    ,
+                    CreatedOn = DateTime.Today
+                };
                 user.UserData = new UserData() { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
@@ -285,7 +283,7 @@ namespace UI_MVC.Controllers
                     ViewBag.Icon = VirtualPathUtility.ToAbsolute(person.IconURL);
                 }
             }
-            
+
             return View(weeklyReview);
         }
         #endregion
@@ -435,57 +433,40 @@ namespace UI_MVC.Controllers
         }
         #endregion
 
-
-
+        #region UserBeheer
         public ViewResult UserBeheer()
         {
-
             return View();
-
         }
 
         public ActionResult _UserTable()
         {
             string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("User")).First().Id;
             IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
-
-
-
             return PartialView(profiles);
-
         }
 
 
         public ActionResult _AdminTable()
         {
-
             string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("Admin")).First().Id;
             IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
-
-
             return PartialView(profiles);
         }
 
         public ActionResult _SuperAdminTable()
         {
-
             string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("SuperAdmin")).First().Id;
             IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
-
-
             return PartialView(profiles);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult VoteToAdmin(string id)
         {
-
             UserManager.AddToRole(id, "Admin");
             UserManager.RemoveFromRole(id, "User");
-
-
             return RedirectToAction("UserBeheer", "Account");
         }
 
@@ -495,9 +476,6 @@ namespace UI_MVC.Controllers
         {
             UserManager.AddToRole(id, "User");
             UserManager.RemoveFromRole(id, "Admin");
-
-
-
             return RedirectToAction("UserBeheer", "Account");
         }
 
@@ -507,7 +485,6 @@ namespace UI_MVC.Controllers
         {
             UserManager.AddToRole(id, "SuperAdmin");
             UserManager.RemoveFromRole(id, "Admin");
-
             return RedirectToAction("UserBeheer", "Account");
         }
 
@@ -517,9 +494,39 @@ namespace UI_MVC.Controllers
         {
             UserManager.AddToRole(id, "User");
             UserManager.RemoveFromRole(id, "SuperAdmin");
-
             return RedirectToAction("UserBeheer", "Account");
         }
+
+        public ActionResult _UserSettingDetails()
+        {
+            IEnumerable<UserSetting> settings = UserManager.GetProfile(User.Identity.GetUserId()).Settings;
+            UserSettingViewModel oldSettings = new UserSettingViewModel()
+            {
+                WANTS_EMAIL_NOTIFICATIONS = settings.ElementAt(0).boolValue,
+                WANTS_ANDROID_NOTIFICATIONS =
+                settings.ElementAt(1).boolValue,
+                WANTS_SITE_NOTIFICATIONS = settings.ElementAt(2).boolValue,
+                WANTS_WEEKLY_REVIEW_VIA_MAIL = settings.ElementAt(4).boolValue
+            };
+            return PartialView(oldSettings);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _UserSettingDetails(UserSettingViewModel newSettings)
+        {
+            IEnumerable<UserSetting> settings = UserManager.GetProfile(User.Identity.GetUserId()).Settings;
+            Profile oldProfile = UserManager.GetProfile(User.Identity.GetUserId());
+            Profile newProfile = null;
+            newProfile = oldProfile;
+            oldProfile.Settings.ElementAt(0).boolValue = newSettings.WANTS_EMAIL_NOTIFICATIONS;
+            oldProfile.Settings.ElementAt(1).boolValue = newSettings.WANTS_ANDROID_NOTIFICATIONS;
+            oldProfile.Settings.ElementAt(2).boolValue = newSettings.WANTS_SITE_NOTIFICATIONS;
+            oldProfile.Settings.ElementAt(4).boolValue = newSettings.WANTS_WEEKLY_REVIEW_VIA_MAIL;
+            UserManager.ChangeProfile(newProfile);
+            return RedirectToAction("UserSettings", "Account");
+        }
+        #endregion
 
         #region ExternalLogin
         [HttpPost]
@@ -647,40 +654,7 @@ namespace UI_MVC.Controllers
 
         #endregion
 
-        public ActionResult _UserSettingDetails()
-        {
-            IEnumerable<UserSetting> settings = UserManager.GetProfile(User.Identity.GetUserId()).Settings;
-            UserSettingViewModel oldSettings = new UserSettingViewModel()
-            {
-                WANTS_EMAIL_NOTIFICATIONS = settings.ElementAt(0).boolValue,
-                WANTS_ANDROID_NOTIFICATIONS =
-                settings.ElementAt(1).boolValue,
-                WANTS_SITE_NOTIFICATIONS = settings.ElementAt(2).boolValue,
-                WANTS_WEEKLY_REVIEW_VIA_MAIL = settings.ElementAt(4).boolValue
-
-            };
-
-
-            return PartialView(oldSettings);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult _UserSettingDetails(UserSettingViewModel newSettings)
-        {
-            IEnumerable<UserSetting> settings = UserManager.GetProfile(User.Identity.GetUserId()).Settings;
-            Profile oldProfile = UserManager.GetProfile(User.Identity.GetUserId());
-            Profile newProfile = null;
-            newProfile = oldProfile; 
-            oldProfile.Settings.ElementAt(0).boolValue = newSettings.WANTS_EMAIL_NOTIFICATIONS;
-            oldProfile.Settings.ElementAt(1).boolValue = newSettings.WANTS_ANDROID_NOTIFICATIONS;
-            oldProfile.Settings.ElementAt(2).boolValue = newSettings.WANTS_SITE_NOTIFICATIONS;
-            oldProfile.Settings.ElementAt(4).boolValue = newSettings.WANTS_WEEKLY_REVIEW_VIA_MAIL;
-            UserManager.ChangeProfile(newProfile);
-
-            return RedirectToAction("UserSettings","Account");
-        }
-
+        #region Export
         [HttpPost]
         public JsonResult Export()
         {
@@ -689,16 +663,16 @@ namespace UI_MVC.Controllers
             string json = JsonConvert.SerializeObject(profiles, Formatting.Indented);
             string _path = Path.Combine(Server.MapPath("~/Content/Export/"), "Users.json");
             System.IO.File.WriteAllText(_path, json);
-            //return the Excel file name
             return Json(new { fileName = "Users.json", errorMessage = "" });
         }
 
         [HttpGet]
-        public ActionResult ExportUsers(string file) { 
-         string fullPath = Path.Combine(Server.MapPath("~/Content/Export/"), file);
+        public ActionResult ExportUsers(string file)
+        {
+            string fullPath = Path.Combine(Server.MapPath("~/Content/Export/"), file);
             return File(fullPath, "application/", file);
-
         }
+        #endregion
 
         #region Helpers
         private IAuthenticationManager AuthenticationManager

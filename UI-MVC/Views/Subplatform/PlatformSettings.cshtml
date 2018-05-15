@@ -62,7 +62,7 @@
 
               <div class="col-6">
 
-                @using (Html.BeginForm("Syncronize", "Home", FormMethod.Post))
+                @using (Html.BeginForm("Syncronize", "Subplatform", FormMethod.Post))
                 {
                   if (ViewBag.IsSyncing)
                   {
@@ -75,12 +75,12 @@
                   }
                 }
 
-                @using (Html.BeginForm("GenerateAlertsManually", "Home", FormMethod.Post))
+                @using (Html.BeginForm("GenerateAlertsManually", "Subplatform", FormMethod.Post))
                 {
                   <button type="submit" style="margin: 25px 0 " ; class="btn btn-primary btn-lg">Generate alerts manually</button>
                 }
 
-                @using (Html.BeginForm("CleanupDB", "Home", FormMethod.Post))
+                @using (Html.BeginForm("CleanupDB", "Subplatform", FormMethod.Post))
                 {
                   <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Cleanup DB</button>
 

@@ -9,12 +9,13 @@ using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System.IO;
+using PB.BL.Domain.Items;
 
 namespace UI_MVC.Controllers
 {
     [RequireHttps]
     [Authorize(Roles = "User,Admin,SuperAdmin")]
-    [OutputCache(Duration = 10, VaryByParam = "none")]
+    [OutputCache(Duration = 3600, VaryByParam = "none")]
     public class SubplatformController : Controller
     {
         private readonly UnitOfWorkManager uow;
@@ -40,6 +41,8 @@ namespace UI_MVC.Controllers
             ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
         }
 
+
+        #region SubplatformSettings
         public ActionResult PlatformSettings()
         {
             ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
@@ -51,22 +54,6 @@ namespace UI_MVC.Controllers
             ViewBag.IsSyncing = ItemManager.IsSyncing;
             return View();
         }
-
-        public ActionResult _DeploySubplatform()
-        {
-            return PartialView();
-        }
-
-        [HttpPost]
-        public ActionResult DeploySubplatform(SubplatformViewModel subplatformViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                SubplatformMgr.AddSubplatform(subplatformViewModel.Name, subplatformViewModel.Url, subplatformViewModel.SourceAPI);
-            }
-            return RedirectToAction("PlatformSettings", "Subplatform");
-        }
-
 
         public ActionResult _SubplatformSetting(string subplatform)
         {
@@ -83,11 +70,11 @@ namespace UI_MVC.Controllers
             return PartialView(huidige);
         }
 
+
         [HttpPost]
         public ActionResult SubplatformSetting(string subplatform, SubplatformSettingViewModel subplatformSettingViewModel)
         {
             Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
-
             List<SubplatformSetting> subplatformSettings = new List<SubplatformSetting>()
             {
                 new SubplatformSetting()
@@ -154,130 +141,18 @@ namespace UI_MVC.Controllers
                     Subplatform = subplatformToChange
                 }
             };
-
             SubplatformMgr.ChangeSubplatformSettings(subplatformToChange, subplatformSettings);
-
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
-        [HttpPost]
-        public ActionResult UploadSiteLogo(string subplatform, FileViewModel fileViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
-                var iconUrl = "";
-                string _FileName = "";
-                if (fileViewModel.file != null)
-                {
-                    if (fileViewModel.file.ContentLength > 0)
-                    {
-                        _FileName = Path.GetFileName(fileViewModel.file.FileName);
-
-                        var name = "Site_Logo";
-                        var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
-                        fileViewModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Site/" + newName;
-                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting()
-                        {
-                            SettingName = Setting.Platform.SITE_ICON_URL,
-                            Value = iconUrl,
-                            IsEnabled = true,
-                            Subplatform = subplatformToChange
-                        });
-                    }
-                }
-
-                return RedirectToAction("PlatformSettings", "Home");
-
-            }
-
-            // Show errors on page
-            return RedirectToAction("PlatformSettings", "Home");
-        }
-
-        [HttpPost]
-        public ActionResult UploadDefaultItemLogo(string subplatform, FileViewModel fileViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
-                var iconUrl = "";
-                string _FileName = "";
-                if (fileViewModel.file != null)
-                {
-                    if (fileViewModel.file.ContentLength > 0)
-                    {
-                        _FileName = Path.GetFileName(fileViewModel.file.FileName);
-
-                        var name = "Default_Item_Logo";
-                        var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
-                        fileViewModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Site/" + newName;
-                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting()
-                        {
-                            SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
-                            Value = iconUrl,
-                            IsEnabled = true,
-                            Subplatform = subplatformToChange
-                        });
-                    }
-                }
-
-                return RedirectToAction("PlatformSettings", "Home");
-            }
-
-            // Show errors on page
-            return RedirectToAction("PlatformSettings", "Home");
-        }
-
-        [HttpPost]
-        public ActionResult UploadDefaultUserLogo(string subplatform, FileViewModel fileViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
-                var iconUrl = "";
-                string _FileName = "";
-                if (fileViewModel.file != null)
-                {
-                    if (fileViewModel.file.ContentLength > 0)
-                    {
-                        _FileName = Path.GetFileName(fileViewModel.file.FileName);
-
-                        var name = "Default_Item_Logo";
-                        var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
-                        fileViewModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Users/" + newName;
-                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting()
-                        {
-                            SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
-                            Value = iconUrl,
-                            IsEnabled = true,
-                            Subplatform = subplatformToChange
-                        });
-                    }
-                }
-
-                return RedirectToAction("PlatformSettings", "Home");
-            }
-
-            // Show errors on page
-            return RedirectToAction("PlatformSettings", "Home");
-        }
 
         public ActionResult _SeedIntervals(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             SeedIntervals huidige = new SeedIntervals
             {
-               SEED_INTERVAL_HOURS = Int32.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SEED_INTERVAL_HOURS).Value),
-
+                SEED_INTERVAL_HOURS = Int32.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SEED_INTERVAL_HOURS).Value),
                 SEND_WEEKLY_REVIEWS_INTERVAL_DAYS = Int32.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS).Value),
-
                 ALERT_GENERATION_INTERVAL_HOURS = Int32.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS).Value)
             };
             return PartialView(huidige);
@@ -287,7 +162,6 @@ namespace UI_MVC.Controllers
         public ActionResult SeedIntervals(string subplatform, SeedIntervals intervals)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-           
             List<SubplatformSetting> subplatformSettings = new List<SubplatformSetting>()
             {
                 new SubplatformSetting()
@@ -311,11 +185,169 @@ namespace UI_MVC.Controllers
                     IsEnabled = true,
                     Subplatform = Subplatform
                 },
-               
+
             };
 
             SubplatformMgr.ChangeSubplatformSettings(Subplatform, subplatformSettings);
-            return RedirectToAction("PlatformSettings","Subplatform");
+            return RedirectToAction("PlatformSettings", "Subplatform");
         }
+        #endregion
+
+        #region DeploySubplatform
+        public ActionResult _DeploySubplatform()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult DeploySubplatform(SubplatformViewModel subplatformViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                SubplatformMgr.AddSubplatform(subplatformViewModel.Name, subplatformViewModel.Url, subplatformViewModel.SourceAPI);
+            }
+            return RedirectToAction("PlatformSettings", "Subplatform");
+        }
+        #endregion
+
+        #region Uploads
+        [HttpPost]
+        public ActionResult UploadSiteLogo(string subplatform, FileViewModel fileViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
+                var iconUrl = "";
+                string _FileName = "";
+                if (fileViewModel.file != null)
+                {
+                    if (fileViewModel.file.ContentLength > 0)
+                    {
+                        _FileName = Path.GetFileName(fileViewModel.file.FileName);
+                        var name = "Site_Logo";
+                        var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
+                        fileViewModel.file.SaveAs(_path);
+                        iconUrl = @"~/Content/Images/Site/" + newName;
+                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.SITE_ICON_URL,
+                            Value = iconUrl,
+                            IsEnabled = true,
+                            Subplatform = subplatformToChange
+                        });
+                    }
+                }
+                return RedirectToAction("PlatformSettings", "Home");
+            }
+            return RedirectToAction("PlatformSettings", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult UploadDefaultItemLogo(string subplatform, FileViewModel fileViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
+                var iconUrl = "";
+                string _FileName = "";
+                if (fileViewModel.file != null)
+                {
+                    if (fileViewModel.file.ContentLength > 0)
+                    {
+                        _FileName = Path.GetFileName(fileViewModel.file.FileName);
+                        var name = "Default_Item_Logo";
+                        var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
+                        fileViewModel.file.SaveAs(_path);
+                        iconUrl = @"~/Content/Images/Site/" + newName;
+                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
+                            Value = iconUrl,
+                            IsEnabled = true,
+                            Subplatform = subplatformToChange
+                        });
+                    }
+                }
+
+                return RedirectToAction("PlatformSettings", "Home");
+            }
+            return RedirectToAction("PlatformSettings", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult UploadDefaultUserLogo(string subplatform, FileViewModel fileViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
+                var iconUrl = "";
+                string _FileName = "";
+                if (fileViewModel.file != null)
+                {
+                    if (fileViewModel.file.ContentLength > 0)
+                    {
+                        _FileName = Path.GetFileName(fileViewModel.file.FileName);
+                        var name = "Default_Item_Logo";
+                        var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
+                        fileViewModel.file.SaveAs(_path);
+                        iconUrl = @"~/Content/Images/Users/" + newName;
+                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting()
+                        {
+                            SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
+                            Value = iconUrl,
+                            IsEnabled = true,
+                            Subplatform = subplatformToChange
+                        });
+                    }
+                }
+
+                return RedirectToAction("PlatformSettings", "Home");
+            }
+
+            return RedirectToAction("PlatformSettings", "Home");
+        }
+        #endregion
+
+        #region AdminSubplatformTools
+        [HttpPost]
+        public ActionResult GenerateAlertsManually()
+        {
+            List<Item> itemsToUpdate = new List<Item>();
+            accountMgr.GenerateAllAlerts(itemMgr.GetItems());
+            itemMgr.ChangeItems(itemsToUpdate);
+            return RedirectToAction("PlatformSettings", "Subplatform");
+        }
+
+        [HttpPost]
+        public ActionResult CleanupDB(string subplatform)
+        {
+            Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
+            itemMgr.CleanupOldRecords(sp);
+            return RedirectToAction("PlatformSettings", "Subplatform");
+        }
+
+        [HttpPost]
+        public ActionResult Syncronize(string subplatform)
+        {
+            if (!ItemManager.IsSyncing)
+            {
+                // Set IsSyncing field
+                ItemManager.IsSyncing = true;
+                UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
+                SubplatformManager subplatformManager = new SubplatformManager(unitOfWorkManager);
+                ItemManager itemManager = new ItemManager(unitOfWorkManager);
+                Subplatform sp = subplatformManager.GetSubplatform(subplatform);
+                // TODO: Tasking met JobManager
+                itemManager.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(new System.Action(() =>
+                {
+                    ItemManager.IsSyncing = false;
+                }));
+            }
+            return RedirectToAction("PlatformSettings", "Subplatform");
+        }
+        #endregion
     }
 }
