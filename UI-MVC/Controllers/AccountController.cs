@@ -21,6 +21,7 @@ using PB.DAL.EF;
 using System.IO;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Domain.Accounts;
+using Newtonsoft.Json;
 
 namespace UI_MVC.Controllers
 {
@@ -30,12 +31,13 @@ namespace UI_MVC.Controllers
     /// </summary> 
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     [RequireHttps]
+    [OutputCache(Duration = 10, VaryByParam = "none")]
     public class AccountController : Controller
     {
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private AccountManager _accountMgr;
         private IntegratieSignInManager _signInManager;
-        private SubplatformManager _subplatformMgr;
+        private readonly SubplatformManager SubplatformMgr = new SubplatformManager(uow);
         private ItemManager _itemMgr;
 
 
@@ -43,7 +45,14 @@ namespace UI_MVC.Controllers
 
         public AccountController()
         {
-           
+            ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
+            ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
+            ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
+            ViewBag.MyAccount = SubplatformMgr.GetTag("Account").Text;
+            ViewBag.More = SubplatformMgr.GetTag("More").Text;
+            ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
+            ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
+            ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
         }
 
         public IntegratieSignInManager SignInManager
@@ -70,17 +79,7 @@ namespace UI_MVC.Controllers
             }
         }
 
-        public SubplatformManager SubplatformMgr
-        {
-            get
-            {
-                return _subplatformMgr ?? new SubplatformManager(HttpContext.GetOwinContext().Get<IntegratieDbContext>()); ;
-            }
-            private set
-            {
-                _subplatformMgr = value;
-            }
-        }
+       
 
         public ItemManager ItemMgr
         {
@@ -99,15 +98,9 @@ namespace UI_MVC.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
             _itemMgr = itemManager;
+            
 
-            ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
-            ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
-            ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
-            ViewBag.MyAccount = SubplatformMgr.GetTag("Account").Text;
-            ViewBag.More = SubplatformMgr.GetTag("More").Text;
-            ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
-            ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
-            ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
+          
         }
 
       
@@ -688,6 +681,24 @@ namespace UI_MVC.Controllers
             return RedirectToAction("UserSettings","Account");
         }
 
+        [HttpPost]
+        public JsonResult Export()
+        {
+            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList();
+            var serializerSettings = new JsonSerializerSettings();
+            string json = JsonConvert.SerializeObject(profiles, Formatting.Indented);
+            string _path = Path.Combine(Server.MapPath("~/Content/Export/"), "Users.json");
+            System.IO.File.WriteAllText(_path, json);
+            //return the Excel file name
+            return Json(new { fileName = "Users.json", errorMessage = "" });
+        }
+
+        [HttpGet]
+        public ActionResult ExportUsers(string file) { 
+         string fullPath = Path.Combine(Server.MapPath("~/Content/Export/"), file);
+            return File(fullPath, "application/", file);
+
+        }
 
         #region Helpers
         private IAuthenticationManager AuthenticationManager
@@ -747,5 +758,7 @@ namespace UI_MVC.Controllers
 
 
         #endregion
+
+
     }
 }

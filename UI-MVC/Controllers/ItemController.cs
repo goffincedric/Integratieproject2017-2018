@@ -1,4 +1,5 @@
-﻿using PB.BL;
+﻿using Newtonsoft.Json;
+using PB.BL;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
@@ -16,6 +17,7 @@ namespace UI_MVC.Controllers
     /// </summary
     [RequireHttps]
     [Authorize(Roles = "User,Admin,SuperAdmin")]
+    [OutputCache(Duration = 10, VaryByParam = "none")]
     public class ItemController : Controller
     {
         private readonly UnitOfWorkManager uow;
@@ -232,9 +234,7 @@ namespace UI_MVC.Controllers
             }
         }
         #endregion
-
-
-
+        
         [HttpPost]
         public ActionResult DeleteItem(string subplatform, int id)
         {
@@ -458,6 +458,9 @@ namespace UI_MVC.Controllers
                 theme.IsTrending = themeEditModel.IsTrending;
                 theme.Name = themeEditModel.Name;
                 theme.Description = themeEditModel.Description;
+                Keyword keyword = itemMgr.GetKeyword(themeEditModel.KeywordId);
+         
+                theme.Keywords.Add(keyword);
 
                 itemMgr.ChangeTheme(theme);
 
@@ -502,7 +505,13 @@ namespace UI_MVC.Controllers
         }
 
 
+        public ActionResult _ShowKeywordOfTheme(int id)
+        {
+            IEnumerable<Keyword> keywords = itemMgr.GetTheme(id).Keywords.ToList();
+            return PartialView(keywords);
+        }
 
+       
 
     }
 }

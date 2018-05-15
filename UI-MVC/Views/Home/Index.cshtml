@@ -2,9 +2,64 @@
 
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+
 <style>
   #chart {
     margin: auto;
+  }
+</style>
+
+<style>
+
+
+
+  .loader {
+    border-radius: 100%;
+    margin: auto 0;
+  }
+
+  .loader-6 span {
+    display: inline-block;
+    width: 5px;
+    height: 20px;
+    background-color: #3498db;
+  }
+
+    .loader-6 span:nth-child(1) {
+      animation: grow 1s ease-in-out infinite;
+    }
+
+    .loader-6 span:nth-child(2) {
+      animation: grow 1s ease-in-out 0.15s infinite;
+    }
+
+    .loader-6 span:nth-child(3) {
+      animation: grow 1s ease-in-out 0.30s infinite;
+    }
+
+    .loader-6 span:nth-child(4) {
+      animation: grow 1s ease-in-out 0.45s infinite;
+    }
+
+  @@keyframes grow {
+    0%, 100% {
+      -webkit-transform: scaleY(1);
+      -ms-transform: scaleY(1);
+      -o-transform: scaleY(1);
+      transform: scaleY(1);
+    }
+
+    50% {
+      -webkit-transform: scaleY(1.8);
+      -ms-transform: scaleY(1.8);
+      -o-transform: scaleY(1.8);
+      transform: scaleY(1.8);
+    }
   }
 </style>
 
@@ -99,42 +154,94 @@
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
-              <h6 class="lh-1">Sentiment analyse top politici</h6>
+             
+                <h6 class="c-grey-900">Sentiment analyse top politici</h6>
+                 <a id="download" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+                <i style="top: 30px; right: 50px;opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i> 
+           </div>
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table;">
+              <div class="loader loader-6" id="loader-1" style="display:table-cell; vertical-align:middle; text-align:center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <canvas id="evol" height="100" style="display:none"></canvas>
             </div>
-            <div class="layer w-100 p-20">
-              <canvas id="evol" height="150"></canvas>
+
+          </div>
             </div>
+        </div>
+     
 
+
+      <div class="masonry-item col-md-6">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Top trending hashtags</h6>
+
+              <a id="dl2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
+              <div class="loader loader-6" id="loader-2" style="display:table-cell; vertical-align:middle; text-align:center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <canvas id="doughnut-chart" height="100" style="display:none"></canvas>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="masonry-item col-md-6">
-        <div class="bgc-white p-20 bd">
-          <h6 class="c-grey-900">Top trending hashtags</h6>
-          <div id="chart" style="margin: auto">
-            <canvas id="doughnut-chart" height="240"></canvas>
-          </div>
-        </div>
-      </div>
-      <div class="masonry-item col-md-6">
-        <div class="bgc-white p-20 bd">
-          <h6 class="c-grey-900">Top trending Mentions</h6>
-          <div id="chart" style="margin: auto">
-            <canvas id="pie-chart" height="250"></canvas>
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Top trending Mentions</h6>
+              <a id="dl3" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height:350px;max-height:350px;display:table;">
+              <div class="loader loader-6" id="loader-3" style="display:table-cell; vertical-align:middle; text-align:center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <canvas id="pie-chart" height="100" style="display:none"></canvas>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="masonry-item col-md-6">
-        <div class="bgc-white p-20 bd">
-          <h6 class="c-grey-900">Top persons</h6>
-          <div class="mT-30">
-            <canvas style="margin: auto 0" id="bar2-chart" height="220"></canvas>
-          </div>
 
+      <div class="masonry-item col-md-6">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Top persons</h6>
+              <a id="dl4" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px;  opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height:350px; max-height:350px; display:table;">
+              <div class="loader loader-6" style="display:table-cell; vertical-align:middle; text-align:center" id="loader-4">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <canvas id="bar2-chart" height="100" style="display:none"></canvas>
+            </div>
+          </div>
         </div>
       </div>
+
+
 
       @if (!Request.IsAuthenticated)
       {
@@ -212,6 +319,24 @@
 
 <script>
 
+
+  var canvas = document.getElementById("dougnut-chart");
+
+
+  function dlCanvas() {
+ 
+    var image = document.getElementById("evol").toDataURL("image/png")
+      .replace("image/jpg", "image/octet-stream");
+    download.setAttribute("href", image);
+ 
+  };
+
+
+  $("#download").on('click', function () {
+    dlCanvas();
+  });
+
+
   function makeAjaxCall(url, methodType) {
     var promiseObj = new Promise(function (resolve, reject) {
       var xhr = new XMLHttpRequest();
@@ -242,8 +367,12 @@
   }
 
 
+
+
+
+
   function showIncrease() {
-   
+
 
     var URL = "https://localhost:44342/api/item/GetPersonIncrease";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
@@ -310,9 +439,10 @@
   drawRadarChart();
 
   function drawBarChart() {
-    
+
     var URL = "https://localhost:44342/api/item/getpersonstop/5";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
+    var can = $('#bar2-chart');
 
     function process(output) {
       console.log(output);
@@ -333,7 +463,7 @@
       console.log(values);
 
 
-      var can = $('#bar2-chart');
+
       new Chart(can, {
         type: 'bar',
         data: {
@@ -349,17 +479,19 @@
         },
         options: {
           legend: { display: true },
-          responsive: true,
-          maintainAspectRatio: false,
-
+          responsive: true
         }
       });
+      $("#loader-4").hide();
+      can.show();
     }
+
 
     function errorHandler(statusCode) {
       console.log("failed with status", status);
     }
   }
+
 
   drawBarChart();
 
@@ -373,7 +505,7 @@
       console.log(output);
 
       var can = $('#evol');
-      can.attr('style', 'width: 300px; height: 80px');
+
 
 
       var datagrafiek = {
@@ -385,7 +517,25 @@
       var myLineChart = new Chart(can, {
         type: 'line',
         data: datagrafiek,
+        options: {
+          responsive: true,
+          scales: {
+            yAxes: [{
+              display: true,
+              ticks: {
+                // minimum will be 0, unless there is a lower value.
+                // OR //
+                beginAtZero: false,
+
+
+                // minimum value will be 0.
+              }
+            }]
+          }
+        }
       });
+      $("#loader-1").hide();
+      can.show();
 
       var counter = 0;
       $.each(output, function (key, value) {
@@ -426,12 +576,14 @@
           myLineChart.update();
           counter++;
         }
-        });
-    
+      });
 
-        function errorHandler(statusCode) {
-          console.log("failed with status", status);
-        }
+
+      function errorHandler(statusCode) {
+        console.log("failed with status", status);
+      }
+
+
     }
 
 
@@ -442,6 +594,8 @@
   }
 
   drawLineChart();
+
+
 
 
   function TrendingPersonGraphs() {
@@ -467,29 +621,31 @@
           }
 
           var can = $('#doughnut-chart');
-          console.log(can.parent().attr('Style', 'width: 400px; height: 350px'));
+
 
 
           new Chart(can, {
             type: 'doughnut',
             data: {
               labels: label,
-              datasets: [
-                {
-                  label: "Hashtags",
-                  data: values,
-                  backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64", "#7BDFF2", "#FDE74C", "#47E5BC", "#DAD6D6", "#EF3E36"]
-                }
-              ]
+              datasets: [{
+                backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                data: values
+              }]
             },
             options: {
-
+              responsive: true
             }
           });
+
+          $("#loader-2").hide();
+          can.show();
         }
         function errorHandler(statusCode) {
           console.log("failed with status", status);
         }
+
+
 
       }
 
@@ -514,7 +670,8 @@
           }
 
           var can = $('#pie-chart');
-          console.log(can.parent().attr('Style', 'width: 400px; height: 250'));
+          // can.parent().attr('Style', 'width: 400px; height: 250');
+
 
           new Chart(can, {
             type: 'pie',
@@ -526,24 +683,36 @@
               }]
             },
             options: {
-
+              responsive: true
             }
           });
+
+          $("#loader-3").hide();
+          can.show();
+
         }
         function errorHandler(statusCode) {
           console.log("failed with status", status);
         }
+
       }
 
 
+
       drawPie(id);
+
+
     }
     function errorHandler(statusCode) {
       console.log("failed with status", status);
     }
   }
-  
+
   TrendingPersonGraphs();
+
+
+
+
 
 </script>
 

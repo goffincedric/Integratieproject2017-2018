@@ -205,11 +205,67 @@ namespace PB.BL
                     }
                 };
 
-                var result = userManager.CreateAsync(user, "FliesAway").Result;
+                var result = userManager.Create(user, "FliesAway");
                 if (result.Succeeded)
                 {
                     //Assign Role to user
-                    userManager.AddToRoleAsync(user.Id, "SuperAdmin");
+                    userManager.AddToRole(user.Id, "SuperAdmin");
+                }
+            }
+
+            if (userManager.Users.FirstOrDefault(p => p.UserName.Equals("admin")) is null)
+            {
+                var user2 = new Profile { UserName = "admin", Email = "admin@example.tld", ProfileIcon = @"~/Content/Images/Users/user.png", CreatedOn = DateTime.Now };
+                user2.UserData = new UserData() { Profile = user2 };
+                user2.Settings = new List<UserSetting>
+                {
+                    new UserSetting()
+                    {
+                        Profile = user2,
+                        IsEnabled = true,
+                        SettingName = Setting.Account.THEME,
+                        Value = "light",
+                        boolValue = false
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user2,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
+                        Value=null, //moet nog boolean worden
+                        boolValue = true
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user2,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user2,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
+                    },
+                    new UserSetting()
+                    {
+                        Profile = user2,
+                        IsEnabled = true,
+                        SettingName =Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
+                        Value=null, //moet nog boolean worden
+                        boolValue=true
+                    }
+                };
+
+                var result = userManager.Create(user2, "Disney2018");
+                if (result.Succeeded)
+                {
+                    //Assign Role to user
+                    userManager.AddToRole(user2.Id, "Admin");
                 }
             }
 
