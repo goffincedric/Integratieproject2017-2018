@@ -274,11 +274,9 @@
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
     <Content Include="Content\Images\bg.jpg" />
-    <Content Include="Content\Images\default-theme.png" />
     <Content Include="Content\Images\faqbg.jpg" />
     <Content Include="Content\Images\Index\banner.jpg" />
     <Content Include="Content\Images\info-icon.png" />
-    <Content Include="Content\Images\logo_new.png" />
     <Content Include="Content\Images\Organisations\cdv.png" />
     <Content Include="Content\Images\Organisations\groen.jpg" />
     <Content Include="Content\Images\Organisations\nva.jpg" />
@@ -298,9 +296,7 @@
     <Content Include="Content\Images\Themes\veiligheid.png" />
     <Content Include="Content\Images\Themes\zorg.png" />
     <Content Include="Content\Images\Users\user.png" />
-    <Content Include="Content\Images\Profile-pic.png" />
     <Content Include="Content\Images\question-mark.png" />
-    <Content Include="Content\Styling\account\custom.css" />
     <Content Include="Content\Styling\grid2\gridstack-extra.css" />
     <Content Include="Content\Styling\grid2\gridstack.css" />
     <Content Include="Content\Styling\wizard\material-bootstrap-wizard.css" />

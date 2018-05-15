@@ -22,6 +22,7 @@ namespace PB.BL.Domain.Accounts
         public DateTime CreatedOn { get; set; }
         [DataMember]
         public UserData UserData { get; set; }
+        [DataMember]
         public List<UserSetting> Settings { get; set; }
         public List<Dashboard> Dashboards { get; set; }
         public List<ProfileAlert> ProfileAlerts { get; set; }

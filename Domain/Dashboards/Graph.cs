@@ -5,6 +5,6 @@ namespace PB.BL.Domain.Dashboards
     [Table("tblGraph")]
     public class Graph : Element
     {
-        public GraphType GraphType { get; set; }
+        public new GraphType GraphType { get; set; }
     }
 }
