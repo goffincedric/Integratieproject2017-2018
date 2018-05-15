@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PB.BL.Domain.Items;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PB.BL.Domain.Dashboards
@@ -22,6 +24,7 @@ namespace PB.BL.Domain.Dashboards
 
         public int ZoneId { get; set; }
         public Zone Zone { get; set; }
-        public Comparison Comparison { get; set; }
+        public List<Item> Items { get; set; }
+        //public List<Comparison> Comparison { get; set; }
     }
 }

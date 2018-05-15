@@ -75,7 +75,7 @@ namespace PB.DAL
                 .Include(i => i.SubscribedProfiles)
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
-                .Include(i => i.Comparisons)
+                .Include(i => i.Elements)
                 .Include(i => i.Organisation)
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
@@ -88,7 +88,7 @@ namespace PB.DAL
                 .Include(i => i.SubscribedProfiles)
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
-                .Include(i => i.Comparisons)
+                .Include(i => i.Elements)
                 .Include(i => i.Organisation)
                 .AsEnumerable();
         }
@@ -100,7 +100,7 @@ namespace PB.DAL
                 .Include(o => o.People)
                 .Include(o => o.Keywords)
                 .Include(o => o.SubscribedProfiles)
-                .Include(o => o.Comparisons)
+                .Include(o => o.Elements)
                 .Include(o => o.Alerts)
                 .FirstOrDefault(o => o.ItemId == itemId);
         }
@@ -112,7 +112,7 @@ namespace PB.DAL
                 .Include(o => o.People)
                 .Include(o => o.Keywords)
                 .Include(o => o.SubscribedProfiles)
-                .Include(o => o.Comparisons)
+                .Include(o => o.Elements)
                 .Include(o => o.Alerts)
                 .AsEnumerable();
         }
@@ -123,7 +123,7 @@ namespace PB.DAL
                 .Include(t => t.SubPlatforms)
                 .Include(t => t.Keywords)
                 .Include(t => t.SubscribedProfiles)
-                .Include(t => t.Comparisons)
+                .Include(t => t.Elements)
                 .Include(t => t.Alerts)
                 .Include(t => t.Records)
                 .FirstOrDefault(t => t.ItemId == itemId);
@@ -135,7 +135,7 @@ namespace PB.DAL
                 .Include(t => t.SubPlatforms)
                 .Include(t => t.Keywords)
                 .Include(t => t.SubscribedProfiles)
-                .Include(t => t.Comparisons)
+                .Include(t => t.Elements)
                 .Include(t => t.Alerts)
                 .Include(t => t.Records)
                 .AsEnumerable();
@@ -148,7 +148,7 @@ namespace PB.DAL
                 .Include(i => i.SubscribedProfiles)
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
-                .Include(i => i.Comparisons)
+                .Include(i => i.Elements)
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
@@ -159,7 +159,7 @@ namespace PB.DAL
                 .Include(i => i.SubscribedProfiles)
                 .Include(i => i.Keywords)
                 .Include(i => i.Alerts)
-                .Include(i => i.Comparisons)
+                .Include(i => i.Elements)
                 .AsEnumerable();
         }
 

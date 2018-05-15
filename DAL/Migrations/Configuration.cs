@@ -174,7 +174,7 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 },
                 new Organisation()
@@ -191,7 +191,7 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 },
                 new Organisation()
@@ -208,7 +208,7 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 },
                 new Organisation()
@@ -224,7 +224,7 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 },
                 new Organisation()
@@ -240,7 +240,7 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 },
                 new Organisation()
@@ -256,7 +256,7 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 },
                 new Organisation()
@@ -272,7 +272,7 @@ namespace PB.DAL.Migrations
                     },
                     SubscribedProfiles = new List<Profile>(),
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 }
             };
@@ -434,7 +434,7 @@ namespace PB.DAL.Migrations
                     Name = "Migratie",
                     IconURL=@"~/Content/Images/Themes/migratie.png",
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Keywords = new List<Keyword>()
                     {
                         KeywordsToAdd[7],
@@ -465,7 +465,7 @@ namespace PB.DAL.Migrations
                     Name = "Onderwijs",
                     IconURL=@"~/Content/Images/Themes/onderwijs.png",
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Keywords = new List<Keyword>()
                     {
                         KeywordsToAdd[6],
@@ -496,7 +496,7 @@ namespace PB.DAL.Migrations
                     Name = "Veiligheid",
                     IconURL=@"~/Content/Images/Themes/veiligheid.png",
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Keywords = new List<Keyword>()
                     {
                         KeywordsToAdd[5],
@@ -528,7 +528,7 @@ namespace PB.DAL.Migrations
                     Name = "Zorg",
                     IconURL=@"~/Content/Images/Themes/zorg.png",
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Keywords = new List<Keyword>()
                     {
                         KeywordsToAdd[6],
@@ -553,7 +553,7 @@ namespace PB.DAL.Migrations
                     Name = "Europa",
                     IconURL=@"~/Content/Images/Themes/eu.png",
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Keywords = new List<Keyword>()
                     {
                         KeywordsToAdd[3],
@@ -590,7 +590,7 @@ namespace PB.DAL.Migrations
                     Name = "Milieu",
                     IconURL=@"~/Content/Images/Themes/eu.png",
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Keywords = new List<Keyword>()
                     {
                         KeywordsToAdd[0],
@@ -619,7 +619,7 @@ namespace PB.DAL.Migrations
                     Name="Mobiliteit",
                     IconURL=@"~/Content/Images/Themes/mobiliteit.png",
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Keywords = new List<Keyword>()
                     {
                         KeywordsToAdd[0],
@@ -645,7 +645,7 @@ namespace PB.DAL.Migrations
                     Name = "Energie",
                     IconURL=@"~/Content/Images/Themes/energie.png",
                     Alerts = new List<Alert>(),
-                    Comparisons = new List<Comparison>(),
+                    Elements = new List<Element>(),
                     Keywords = new List<Keyword>()
                     {
                         KeywordsToAdd[0],
