@@ -1,19 +1,12 @@
-﻿
-@using UI_MVC.Models
-@model UI_MVC.Models.ExternalLoginConfirmationViewModel
+﻿@model UI_MVC.Models.ExternalLoginConfirmationViewModel
 @{
   ViewBag.Title = "Register";
-}
-
-@{
-  Layout = null;
 }
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-  <title>Register</title>
   <style>
 
     #loader {
@@ -71,7 +64,6 @@
       @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
       {
         @Html.AntiForgeryToken()
-
         <h4>Association Form</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -87,15 +79,12 @@
             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
           </div>
         </div>
-
         <div class="form-group">
           <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Register" />
           </div>
         </div>
       }
-
-
     </div>
   </div>
   @Scripts.Render("~/bundles/bootstrapjs")

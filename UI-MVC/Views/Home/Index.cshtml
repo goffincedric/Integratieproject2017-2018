@@ -3,19 +3,12 @@
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
-
 <style>
   #chart {
     margin: auto;
   }
 </style>
-
-
-
 
 <main class="main-content bgc-grey-100" style="background-color: #f9fafb;">
   <div class="banner-window">
@@ -42,7 +35,6 @@
       </div>
     </div>
   </div>
-
   <div id="mainContent">
     <div class="row gap-20 masonry pos-r">
       <div class="masonry-sizer col-md-6"></div>
@@ -102,16 +94,14 @@
           </div>
         </div>
       </div>
-
       <div class="masonry-item col-md-6">
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
-             
-                <h6 class="c-grey-900">Sentiment analyse top politici</h6>
-                 <a id="download1" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
-                <i style="top: 30px; right: 50px;opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i> 
-           </div>
+              <h6 class="c-grey-900">Sentiment analyse top politici</h6>
+              <a id="download1" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px;opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i>
+            </div>
             <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table;">
               <div class="loader loader-6" id="loader-1" style="display:table-cell; vertical-align:middle; text-align:center">
                 <span></span>
@@ -121,19 +111,14 @@
               </div>
               <canvas id="evol" height="100" style="display:none"></canvas>
             </div>
-
           </div>
-            </div>
         </div>
-     
-
-
+      </div>
       <div class="masonry-item col-md-6">
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending hashtags</h6>
-
               <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
               <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
             </div>
@@ -144,13 +129,11 @@
                 <span></span>
                 <span></span>
               </div>
-
               <canvas id="doughnut-chart" height="100" style="display:none"></canvas>
             </div>
           </div>
         </div>
       </div>
-
       <div class="masonry-item col-md-6">
         <div class="bd bgc-white">
           <div class="layers">
@@ -171,8 +154,6 @@
           </div>
         </div>
       </div>
-
-
       <div class="masonry-item col-md-6">
         <div class="bd bgc-white">
           <div class="layers">
@@ -193,12 +174,8 @@
           </div>
         </div>
       </div>
-
-
-
       @if (!Request.IsAuthenticated)
       {
-
         <div class="hide-content">
           <div class="outer">
             <div class="middle">
@@ -211,8 +188,6 @@
             </div>
           </div>
         </div>
-
-
       }
       else
       {
@@ -222,7 +197,6 @@
               <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
                 <div class="layers">
                   <div class="layer w-100 mB-10">
-                   
                   </div>
                   <div class="layer w-100 p-20">
                     <div id="world-map-marker"></div>
@@ -243,7 +217,6 @@
             </div>
           </div>
         </div>
-
         <div class="masonry-item col-12">
           <div class="bd bgc-white">
             <div class="peers fxw-nw@lg+ ai-s">
@@ -259,33 +232,25 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
-
       }
     </div>
   </div>
 </main>
 <script src="~/Scripts/Index/hide-content.js" defer></script>
 <script src="~/Scripts/Charts/Chart.min.js"></script>
-<script src="~/Scripts/wordcloud/zingchart.min.js"></script>
-<script src="~/Scripts/wordcloud/zingchart-wordcloud.min.js"></script>
-<script src="~/Scripts/wordcloud/wordcloud.js"></script>
+<script src="~/Scripts/Wordcloud/zingchart.min.js"></script>
+<script src="~/Scripts/Wordcloud/zingchart-wordcloud.min.js"></script>
+<script src="~/Scripts/Wordcloud/wordcloud.js"></script>
 
 <script>
-
-
-
-
-
-
   $("#download1").on('click', function () {
     var image = document.getElementById("evol").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
     download1.setAttribute("href", image);
-  
+
   });
 
   $("#download2").on('click', function () {
@@ -322,7 +287,6 @@
   function makeAjaxCall(url, methodType) {
     var promiseObj = new Promise(function (resolve, reject) {
       var xhr = new XMLHttpRequest();
-
       xhr.open(methodType, url, true);
       xhr.setRequestHeader("x-api-key", "303d22a4-402b-4d3c-b279-9e81c0480711");
       xhr.send();
@@ -348,21 +312,11 @@
     return promiseObj;
   }
 
-
-
-
-
-
   function showIncrease() {
-
-
     var URL = "https://localhost:44342/api/item/GetPersonIncrease";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
 
     function process(output) {
-      console.log(output);
-
-
       var keys = [];
       keys = Object.keys(output);
       var label = [];
@@ -439,13 +393,6 @@
 
         values.push(output[keys[i]] / 10);
       }
-
-
-      console.log(label);
-      console.log(values);
-
-
-
       new Chart(can, {
         type: 'bar',
         data: {
@@ -478,23 +425,15 @@
   drawBarChart();
 
   function drawLineChart() {
-
-
     var URL = "https://localhost:44342/api/item/GetMostPopularPersons/3";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
 
     function process(output) {
-      console.log(output);
-
       var can = $('#evol');
-
-
-
       var datagrafiek = {
         labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
         datasets: []
       };
-
 
       var myLineChart = new Chart(can, {
         type: 'line',
@@ -540,9 +479,6 @@
             values.push(output2[keys[i]] / 10);
           }
 
-          console.log(label);
-          console.log(values);
-
           var myNewDataSet = {
             label: value,
             data: values,
@@ -577,9 +513,6 @@
 
   drawLineChart();
 
-
-
-
   function TrendingPersonGraphs() {
     var URL = "https://localhost:44342/api/item/getMostPopularPerson";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
@@ -590,7 +523,6 @@
         makeAjaxCall(URL, "GET").then(process, errorHandler);
 
         function process(output) {
-          console.log(output);
 
           var keys = [];
           keys = Object.keys(output);
@@ -626,20 +558,15 @@
         function errorHandler(statusCode) {
           console.log("failed with status", status);
         }
-
-
-
       }
 
       getHashtags(id);
-
 
       function drawPie(id) {
         var URL = "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id;
         makeAjaxCall(URL, "GET").then(process, errorHandler);
 
         function process(output) {
-          console.log(output);
 
           var keys = [];
           keys = Object.keys(output);
@@ -679,11 +606,7 @@
 
       }
 
-
-
       drawPie(id);
-
-
     }
     function errorHandler(statusCode) {
       console.log("failed with status", status);
@@ -691,11 +614,6 @@
   }
 
   TrendingPersonGraphs();
-
-
-
-
-
 </script>
 
 

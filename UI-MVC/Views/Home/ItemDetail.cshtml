@@ -14,17 +14,13 @@
 
 <main class="main-content bgc-grey-100">
   <div id="mainContent" class="container-fluid">
-
     <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
       <div class="bgc-white p-20 bd">
-
-
         <div class="container-fluid">
           <div class="row">
             <div class="col-3">
               <img style="width: 200px; height: auto;position: absolute; margin: auto;top: 0;left: 0;right: 0;bottom: 0;" src="@ViewBag.Icon" alt="logo" />
             </div>
-
             <div class="col-9">
               <div class="h-75 w-100">
                 <div class="row" style="margin:0; text-align:center;">
@@ -42,12 +38,10 @@
                   }
                   else if (Model is PB.BL.Domain.Items.Organisation)
                   {
-
                     <ul style="list-style-type:none; width:100%; text-align:center;">
                       <li style="display:inline-block;"><h5 class="h5">@ViewBag.Leden Leden</h5></li>
                       <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
                       <li style="display:inline-block;"><h5 class="h5">@ViewBag.FullName</h5></li>
-
                     </ul>
 
                   }
@@ -56,13 +50,10 @@
                     <ul style="list-style-type:none; width:100%; text-align:center;">
                       <li style="display:inline-block;"><h5 class="h5">@ViewBag.Associaties Associaties</h5></li>
                     </ul>
-
                   }
                 </div>
-
               </div>
               <div class="h-25 w-100 d-inline-block">
-
                 @if (ViewBag.Subscribed)
                 {
                   using (Html.BeginForm("RemoveSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
@@ -72,8 +63,6 @@
                   }
                 }
                 else
-
-
                 {
                   using (Html.BeginForm("AddSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
                   {
@@ -84,16 +73,10 @@
                 }
               </div>
             </div>
-
-
           </div>
         </div>
       </div>
-
-
-
       <div class="row" style="margin-top: 10px;">
-
         <div class="col-sm" style="padding:0; margin:0">
           <div class="layers bd bgc-white p-20">
             <div class="layer w-100 mB-10">
@@ -107,7 +90,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-sm">
           <div class="layers bd bgc-white p-20">
             <div class="layer w-100 mB-10">
@@ -121,8 +103,6 @@
             </div>
           </div>
         </div>
-
-
         <div class="col-sm" style="padding:0; margin:0">
           <div class="layers bd bgc-white p-20">
             <div class="layer w-100 mB-10">
@@ -136,17 +116,12 @@
             </div>
           </div>
         </div>
-
       </div>
-
-
-
       <div class="masonry-item col-md-12" style="margin: 10px 0;padding:0;">
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Tweets</h6>
-
               <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 30px; position:absolute;"></i></a>
               <i style="top: 30px; right: 60px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
             </div>
@@ -157,32 +132,12 @@
                 <span></span>
                 <span></span>
               </div>
-
               <canvas id="line-chart2" height="80" style="display:none"></canvas>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    @*<div style="margin: 10px 0" class="masonry-item col-md-12">
-        <div class="bgc-white p-20 bd">
-          <h6 class="c-grey-900">Tweets</h6>
-          <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
-          <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
-          <div class="mT-30" id="graph-bar" style="display:table; ">
-            <div class="loader loader-6" id="loader-0" style="display:table-cell; vertical-align:middle; text-align:center">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <canvas id="line-chart2" height="400" style="display:none"></canvas>
-          </div>
-        </div>
-      </div>*@
-
-
     @if (Model is PB.BL.Domain.Items.Organisation || Model is PB.BL.Domain.Items.Theme)
     {
       <div class="row">
@@ -191,7 +146,6 @@
             <div class="layers">
               <div class="layer w-100 pX-20 pT-20">
                 <h6 class="c-grey-900">Geslacht compare</h6>
-
                 <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 30px; position:absolute;"></i></a>
                 <i style="top: 30px; right: 60px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
               </div>
@@ -202,20 +156,16 @@
                   <span></span>
                   <span></span>
                 </div>
-
-
                 <canvas id="age-chart" height="100" style="display:none"></canvas>
               </div>
             </div>
           </div>
         </div>
-
         <div class="masonry-item col-md-6" style="margin:10px 0;padding-left:15px; padding-right: 0;">
           <div class="bd bgc-white">
             <div class="layers">
               <div class="layer w-100 pX-20 pT-20">
                 <h6 class="c-grey-900">Leeftijd compare</h6>
-
                 <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 30px; position:absolute;"></i></a>
                 <i style="top: 30px; right: 60px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
               </div>
@@ -226,22 +176,18 @@
                   <span></span>
                   <span></span>
                 </div>
-
                 <canvas id="gender-chart" height="100" style="display:none"></canvas>
               </div>
             </div>
           </div>
         </div>
-
       </div>
-
       <div class="row">
         <div class="masonry-item col-md-6" style="margin:10px 0;padding-left:0; padding-right: 15px;">
           <div class="bd bgc-white">
             <div class="layers">
               <div class="layer w-100 pX-20 pT-20">
                 <h6 class="c-grey-900">Hashtags compare</h6>
-
                 <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 30px; position:absolute;"></i></a>
                 <i style="top: 30px; right: 60px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
               </div>
@@ -252,19 +198,16 @@
                   <span></span>
                   <span></span>
                 </div>
-
                 <canvas id="hashtag-chart" height="100" style="display:none"></canvas>
               </div>
             </div>
           </div>
         </div>
-
         <div class="masonry-item col-md-6" style="margin:10px 0;padding-left:15px; padding-right: 0;">
           <div class="bd bgc-white">
             <div class="layers">
               <div class="layer w-100 pX-20 pT-20">
                 <h6 class="c-grey-900">Mentions compare</h6>
-
                 <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 30px; position:absolute;"></i></a>
                 <i style="top: 30px; right: 60px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
               </div>
@@ -275,7 +218,6 @@
                   <span></span>
                   <span></span>
                 </div>
-
                 <canvas id="mentions-chart" height="100" style="display:none"></canvas>
               </div>
             </div>
@@ -283,8 +225,6 @@
         </div>
       </div>
     }
-
-
     @if (Model is PB.BL.Domain.Items.Person)
     {
       <div class="row">
@@ -295,13 +235,9 @@
             <div id="mentions" class="row">
               <div id="mention1" class="col-6 colom-6-center"></div>
               <div id="mention2" class="col-6 colom-6-center"></div>
-              @*<div id="mention1" class="col-4 colom-4-center"></div>
-                <div id="mention2" class="col-4 colom-4-center"></div>
-                <div id="mention3" class="col-4 colom-4-center"></div>*@
             </div>
           </div>
         </div>
-
         <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
           <div class="bgc-white p-20 bd">
             <h1 class="h3" style="text-align: center">Top Hashtags</h1>
@@ -309,9 +245,6 @@
             <div id="hashtags" class="row">
               <div id="hashtag1" class="col-6 colom-6-center"></div>
               <div id="hashtag2" class="col-6 colom-6-center"></div>
-              @*<div id="hashtag1" class="col-4 colom-4-center"></div>
-                <div id="hashtag2" class="col-4 colom-4-center"></div>
-                <div id="hashtag3" class="col-4 colom-4-center"></div>*@
             </div>
           </div>
         </div>
@@ -324,8 +257,6 @@
           </div>
         </div>
       </div>
-
-
     }
 
     <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
@@ -335,22 +266,15 @@
         </div>
       </div>
     </div>
-
   </div>
-
-
-
 </main>
 
 <script src="~/Scripts/Charts/Chart.min.js"></script>
-
 <script src="https://nodebox.live/api/v1/ndbx.js"></script>
-
 <script>
   function makeAjaxCall(url, methodType) {
     var promiseObj = new Promise(function (resolve, reject) {
       var xhr = new XMLHttpRequest();
-
       xhr.open(methodType, url, true);
       xhr.setRequestHeader("x-api-key", "303d22a4-402b-4d3c-b279-9e81c0480711");
       xhr.send();
@@ -376,25 +300,13 @@
     return promiseObj;
   }
 
-
-
-
-
-
   function showDetails() {
-
-
     var URL = "https://localhost:44342/api/item/GetItemDetails/" + @Html.Raw(Model.ItemId);
     makeAjaxCall(URL, "GET").then(process, errorHandler);
-
     function process(output) {
-      console.log(output);
-
-
+ 
       var keys = [];
       keys = Object.keys(output);
-
-
       for (var i = 1; i < keys.length+1; i++) {
 
         $("#output" + i).html(output[keys[i-1]]);
@@ -426,12 +338,8 @@
             label.push(keys[i].substring(0, 10));
             values.push(output[keys[i]]);
           }
-          console.log(label);
-          console.log(values);
           var can = $('#age-chart');
-          //can.attr('width', '300px');
-          //can.attr('height', '300px');
-
+   
           new Chart(can, {
             type: 'doughnut',
             data:
