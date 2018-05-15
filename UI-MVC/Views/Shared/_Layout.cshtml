@@ -14,7 +14,6 @@
   @Scripts.Render("~/bundles/bootstrapjs")
   <link rel="icon" href="@Html.Action("GetLogo","Home")" />
   <link href="~/Content/fa.css" rel="stylesheet" />
-
 </head>
 <body class="app">
   <div id="loader">
@@ -34,7 +33,7 @@
                     </div>
                   </div>
                   <div class="peer peer-greed">
-                    <h5 class="lh-1 mB-0 logo-text">@Html.Action("GetName","Home")</h5>
+                    <h5 class="lh-1 mB-0 logo-text">@Html.Action("GetName", "Home")</h5>
                   </div>
                 </div>
               </a>
@@ -42,7 +41,6 @@
             <div class="peer">
               <div class="mobile-toggle sidebar-toggle"><a href="" class="td-n"><i class="ti-arrow-circle-left"></i></a></div>
             </div>
-
           </div>
         </div>
         <ul class="sidebar-menu scrollable pos-r">
@@ -65,7 +63,6 @@
             <ul class="dropdown-menu">
               <li class="nav-item dropdown"><a class="sidebar-link" href="@Url.Action("Contact", "Home")"><span>@ViewBag.Contact</span></a></li>
               <li class="nav-item dropdown"><a href="@Url.Action("FAQ","Home")"><span>@ViewBag.FAQ</span></a></li>
-
             </ul>
           </li>
         </ul>
@@ -78,11 +75,6 @@
             Html.RenderAction("_Search", "Home");
           }
           <ul class="nav-right">
-
-
-
-
-
             @if (Request.IsAuthenticated)
             {
               <li class="themes dropdown">
@@ -126,7 +118,6 @@
               <li class="dropdown">
                 <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
                   <div class="peer mR-10">
-
                     <img class="w-2r bdrs-50p" src="@Html.Action("ChangeProfilePic", "Home")" />
                   </div>
 
@@ -152,7 +143,6 @@
                   <li><a href="@Url.Action("UserBeheer", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-panel mR-10"></i> <span>Beheer Users</span></a></li>
                   <li><a href="@Url.Action("ItemBeheer", "Item")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i> <span>Beheer Items</span></a></li>
                   <li><a href="@Url.Action("PlatformSettings", "Subplatform")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-dashboard mR-10"></i> <span>Beheer Platform</span></a></li>
-
                   <li role="separator" class="divider"></li>
                   <li>
                     @if (Request.IsAuthenticated)
@@ -183,8 +173,6 @@
                   <div class="peer mR-10">
                     <i class="ti-user"></i>
                   </div>
-
-
                   <div class="peer">
                     <span style="color: #2196f3" class="fsz-sm">
                       Login/Register
@@ -196,15 +184,9 @@
           </ul>
         </div>
       </div>
-
-
-
-
       @RenderSection("styles", false)
       @RenderBody()
       @Scripts.Render("~/bundles/adminator")
-
-
     </div>
   </div>
 
@@ -218,11 +200,8 @@
           <li style="display:inline; padding:0 2%"><a href="@Url.Action("Legal","Home")">@ViewBag.Legal</a></li>
         </ul>
       </li>
-
       <li><span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span></li>
-
     </ul>
-
   </footer>
 </body>
 </html>
