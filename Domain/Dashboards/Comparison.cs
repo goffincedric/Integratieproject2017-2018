@@ -11,9 +11,8 @@ namespace PB.BL.Domain.Dashboards
         [Key]
         public int ComparisonId { get; set; }
         public static readonly int MAX_COMPARISONS = 10;
-        public UserType Type { get; set; }
 
-        public List<Item> Items { get; set; }
-        public List<Element> Elements { get; set; }
+        public virtual Item Item { get; set; }
+        public virtual Element Element { get; set; }
     }
 }
