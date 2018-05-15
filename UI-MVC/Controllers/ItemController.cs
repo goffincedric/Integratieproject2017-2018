@@ -165,8 +165,8 @@ namespace UI_MVC.Controllers
                 {
                     iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
                 }
-
-                itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, themeEditModel.IsTrending, Subplatform);
+                Keyword keyword = itemMgr.GetKeyword(themeEditModel.KeywordId);
+                Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, new List<Keyword>{ keyword }, themeEditModel.IsTrending, Subplatform);
                 return RedirectToAction("ItemBeheer", "Item");
             }
             else
@@ -234,7 +234,7 @@ namespace UI_MVC.Controllers
             }
         }
         #endregion
-        
+
         [HttpPost]
         public ActionResult DeleteItem(string subplatform, int id)
         {
@@ -403,14 +403,14 @@ namespace UI_MVC.Controllers
                 organisation.Name = organisationEditModel.Name;
 
                 itemMgr.ChangeOrganisation(organisation);
-                
+
                 return RedirectToAction("ItemBeheer", "Item");
             }
             return RedirectToAction("ItemBeheer", "Item");
 
         }
 
-       
+
 
         [HttpGet]
         public ActionResult EditTheme(int id)
@@ -433,7 +433,7 @@ namespace UI_MVC.Controllers
             if (ModelState.IsValid)
             {
 
-               
+
                 Theme theme = itemMgr.GetTheme(themeEditModel.ItemId);
                 var iconUrl = "";
                 string _FileName = "";
@@ -459,7 +459,7 @@ namespace UI_MVC.Controllers
                 theme.Name = themeEditModel.Name;
                 theme.Description = themeEditModel.Description;
                 Keyword keyword = itemMgr.GetKeyword(themeEditModel.KeywordId);
-         
+
                 theme.Keywords.Add(keyword);
 
                 itemMgr.ChangeTheme(theme);
@@ -470,7 +470,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditKeyword( int id)
+        public ActionResult EditKeyword(int id)
         {
             Keyword keyword = itemMgr.GetKeyword(id);
 
@@ -511,7 +511,7 @@ namespace UI_MVC.Controllers
             return PartialView(keywords);
         }
 
-       
+
 
     }
 }

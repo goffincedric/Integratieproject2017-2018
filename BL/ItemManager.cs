@@ -147,7 +147,7 @@ namespace PB.BL
             return person;
         }
 
-        public Theme AddTheme(string name, string description, string iconUrl, bool isTrending = false, Subplatform subplatform = null)
+        public Theme AddTheme(string name, string description, string iconUrl, List<Keyword> keywords = null, bool isTrending = false, Subplatform subplatform = null)
         {
             InitNonExistingRepo();
             Theme theme = new Theme()
@@ -159,7 +159,7 @@ namespace PB.BL
                 Alerts = new List<Alert>(),
                 Comparisons = new List<Comparison>(),
                 SubscribedProfiles = new List<Profile>(),
-                Keywords = new List<Keyword>(),
+                Keywords = keywords??new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>()
             };
             if (subplatform != null)
@@ -168,6 +168,14 @@ namespace PB.BL
                 subplatform.Items.Add(theme);
             }
 
+            if(keywords != null)
+            {
+                keywords.ForEach(k =>
+                {
+                    if (k.Items == null) k.Items = new List<Item>();
+                    k.Items.Add(theme);
+                });
+            }
             theme = ItemRepo.CreateTheme(theme);
             UowManager.Save();
             return theme;

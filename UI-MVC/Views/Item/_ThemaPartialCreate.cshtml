@@ -52,32 +52,18 @@
         </div>
 
 
-        <div class="col-6">
-          <div class="form-group">
-            <label class="control-label col-md-2">Add keywords</label>
-            <div class="col-md-10">
-              <div class="row w-100">
-                <select id="FromJson" class="form-control">
-                  <option disabled>Kies...</option>
-                </select>
-                <button id="add" class="btn btn-primary btn-sm">Add</button>
+        <div class="form-group">
+          <label class="control-label col-md-4">Add first keyword (for more edit theme)</label>
+       
+          <div class="col-md-10">
 
-              </div>
-            </div>
+            @Html.DropDownListFor(model => model.KeywordId, new SelectList(Enumerable.Empty<SelectList>()), "Kies een keyword", new { @class = "form-control", @id = "FromJson" })
+
+            @Html.ValidationMessageFor(model => model.KeywordId, "", new { @class = "text-danger" })
           </div>
         </div>
 
-        <div class="col-6">
-          <div class="form-group">
-            <label class="control-label col-md-2">Toegevoegde keywords</label>
-            <div class="col-md-12">
-              <div class="row">
-                <div id="keywordslist"> </div>
-              </div>
 
-            </div>
-          </div>
-        </div>
       </div>
     
 
@@ -94,11 +80,7 @@
 
   <script>
 
-    $("#add").click(function () {
-     var text = $("#FromJson").text;
-      $("#keywordslist").append('<p>' + text + '</p>');
-      //$('#FromJson option:eq(0)').prop('selected', 'selected')​​​;​
-    });
+
  
 
     var tmp = "";

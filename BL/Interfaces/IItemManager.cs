@@ -18,7 +18,7 @@ namespace PB.BL.Interfaces
         IEnumerable<Item> AddItems(List<Item> items);
         Person AddPerson(string name, string socialMediaLink, string iconUrl, Organisation organisation = null, Function function = null, bool isTrending = false, Subplatform subplatform = null, string Gemeente = null);
         Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, string iconUrl = null, bool isTrending = false, Subplatform subplatform = null);
-        Theme AddTheme(string themeName, string description, string iconUrl, bool isTrending = false, Subplatform subplatform = null);
+        Theme AddTheme(string themeName, string description, string iconUrl, List<Keyword> keywords = null, bool isTrending = false, Subplatform subplatform = null);
         void ChangeItem(Item item);
         void ChangeItems(List<Item> items);
         void ChangePerson(Person person);

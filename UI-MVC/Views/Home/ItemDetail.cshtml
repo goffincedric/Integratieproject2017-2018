@@ -32,57 +32,56 @@
                 </div>
                 <div class="row">
                   @if (Model is PB.BL.Domain.Items.Person)
-                  {
-                    <ul style="list-style-type:none; width:100%; text-align:center;">
-                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Vermeldingen Vermeldingen</h5></li>
-                      <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
-                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Partij</h5></li>
+              {
+                <ul style="list-style-type:none; width:100%; text-align:center;">
+                  <li style="display:inline-block;"><h5 class="h5">@ViewBag.Vermeldingen Vermeldingen</h5></li>
+                  <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
+                  <li style="display:inline-block;"><h5 class="h5">@ViewBag.Partij</h5></li>
 
-                    </ul>
-                  }
-                  else if (Model is PB.BL.Domain.Items.Organisation)
-                  {
+                </ul>
+          }
+          else if (Model is PB.BL.Domain.Items.Organisation)
+          {
 
-                    <ul style="list-style-type:none; width:100%; text-align:center;">
-                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Leden Leden</h5></li>
-                      <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
-                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.FullName</h5></li>
+            <ul style="list-style-type:none; width:100%; text-align:center;">
+              <li style="display:inline-block;"><h5 class="h5">@ViewBag.Leden Leden</h5></li>
+              <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
+              <li style="display:inline-block;"><h5 class="h5">@ViewBag.FullName</h5></li>
 
-                    </ul>
+            </ul>
 
-                  }
-                  else
-                  {
-                    <ul style="list-style-type:none; width:100%; text-align:center;">
-                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Associaties Associaties</h5></li>
-                      <li style="display:inline-block;"> <h5 class="h5">-</h5> </li>
-                      <li style="display:inline-block;"><h5 class="h5">@ViewBag.Keywords</h5></li>
+      }
+      else if (Model is PB.BL.Domain.Items.Theme)
+      {
+        <ul style="list-style-type:none; width:100%; text-align:center;">
+          <li style="display:inline-block;"><h5 class="h5">@ViewBag.Associaties Associaties</h5></li>
+        </ul>
 
-                    </ul>
-
-                  }
+  }
                 </div>
 
               </div>
               <div class="h-25 w-100 d-inline-block">
 
                 @if (ViewBag.Subscribed)
-                {
-                  using (Html.BeginForm("RemoveSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
-                  {
-                    @Html.AntiForgeryToken()
-                    <button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
-                  }
-                }
-                else
-                {
-                  using (Html.BeginForm("AddSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
-                  {
-                    @Html.AntiForgeryToken()
-                    <button type="submit" value="Subscribe me!" class="btn btn-outline-primary btn-lg btn-block">Subcribe!</button>
-                  }
+            {
+              using (Html.BeginForm("RemoveSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
+              {
+                @Html.AntiForgeryToken()
+                <button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
+          }
+        }
+        else
 
-                }
+
+        {
+          using (Html.BeginForm("AddSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
+          {
+            @Html.AntiForgeryToken()
+            <button type="submit" value="Subscribe me!" class="btn btn-outline-primary btn-lg btn-block">Subcribe!</button>
+      }
+
+    }
               </div>
             </div>
 
@@ -142,10 +141,148 @@
 
 
 
-      <div id="graphs">
+      <div class="masonry-item col-md-12" style="margin: 10px 0;padding:0;">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Tweets</h6>
+
+              <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
+              <div class="loader loader-6" id="loader-1" style="display:table-cell; vertical-align:middle; text-align:center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <canvas id="line-chart2" height="80" style="display:none"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      @*<div style="margin: 10px 0" class="masonry-item col-md-12">
+        <div class="bgc-white p-20 bd">
+          <h6 class="c-grey-900">Tweets</h6>
+          <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+          <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
+          <div class="mT-30" id="graph-bar" style="display:table; ">
+            <div class="loader loader-6" id="loader-0" style="display:table-cell; vertical-align:middle; text-align:center">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <canvas id="line-chart2" height="400" style="display:none"></canvas>
+          </div>
+        </div>
+      </div>*@
+
+
+      @if (Model is PB.BL.Domain.Items.Organisation || Model is PB.BL.Domain.Items.Theme)
+      {
+    <div class="row">
+      <div class="masonry-item col-md-6" style="margin:10px 0; padding-right:15px; padding-left:0;">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Geslacht compare</h6>
+
+              <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
+              <div class="loader loader-6" id="loader-2" style="display:table-cell; vertical-align:middle; text-align:center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+
+              <canvas id="age-chart" height="100" style="display:none"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="masonry-item col-md-6" style="margin:10px 0;padding-left:15px; padding-right: 0;">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Leeftijd compare</h6>
+
+              <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
+              <div class="loader loader-6" id="loader-3" style="display:table-cell; vertical-align:middle; text-align:center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <canvas id="gender-chart" height="100" style="display:none"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
 
       </div>
 
+      <div class="row">
+      <div class="masonry-item col-md-6" style="margin:10px 0;padding-left:15px; padding-right: 0;">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Hashtags compare</h6>
+
+              <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
+              <div class="loader loader-6" id="loader-3" style="display:table-cell; vertical-align:middle; text-align:center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <canvas id="hashtag-chart" height="100" style="display:none"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="masonry-item col-md-6" style="margin:10px 0;padding-left:15px; padding-right: 0;">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Mentions compare</h6>
+
+              <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
+              <div class="loader loader-6" id="loader-3" style="display:table-cell; vertical-align:middle; text-align:center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <canvas id="mentions-chart" height="100" style="display:none"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      }
 
 
       @if (Model is PB.BL.Domain.Items.Person)
@@ -191,9 +328,11 @@
           </div>
         </div>
       }
-    </div>
-  </div>
 
+
+
+    </div>
+  
 
 
 </main>
@@ -249,10 +388,10 @@
 
       var keys = [];
       keys = Object.keys(output);
-     
+
 
       for (var i = 1; i < keys.length+1; i++) {
-       
+
         $("#output" + i).html(output[keys[i-1]]);
       }
     }
@@ -264,6 +403,201 @@
 
   showDetails();
 </script>
+
+@if (Model is PB.BL.Domain.Items.Organisation || Model is PB.BL.Domain.Items.Theme)
+{
+  <script>
+
+      function Age() {
+        var URL = "https://localhost:44342/api/item/GetGender/" + @Html.Raw(Model.ItemId);
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+        function process(output) {
+          var keys = [];
+          keys = Object.keys(output);
+          var label = [];
+          var values = [];
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i].substring(0, 10));
+            values.push(output[keys[i]]);
+          }
+          console.log(label);
+          console.log(values);
+          var can = $('#age-chart');
+          //can.attr('width', '300px');
+          //can.attr('height', '300px');
+
+          new Chart(can, {
+            type: 'doughnut',
+            data:
+              {
+                labels: label,
+                datasets: [
+                  {
+                    backgroundColor: ["#36a2eb", "#ffce56", "#7DDF64"],
+                    data: values
+                  }
+                ]
+              },
+            options:
+              {
+                responsive: true
+              }
+          });
+          $("#loader-2").hide();
+          can.show();
+        }
+
+        function errorHandler(statusCode) {
+          console.log("failed with status", status);
+        }
+    }
+
+    Age();
+
+    function Geslacht() {
+      var URL = "https://localhost:44342/api/item/GetAges/" + @Html.Raw(Model.ItemId);
+      makeAjaxCall(URL, "GET").then(process, errorHandler);
+      function process(output) {
+        var keys = [];
+        keys = Object.keys(output);
+        var label = [];
+        var values = [];
+
+        for (var i = 0; i < keys.length; i++) {
+          label.push(keys[i].substring(0, 10));
+          values.push(output[keys[i]]);
+        }
+
+        var can = $('#gender-chart');
+
+        console.log(label);
+        console.log(values);
+        new Chart(can, {
+          type: 'pie',
+          data:
+            {
+              labels: label,
+              datasets: [
+                {
+                  backgroundColor: ["#36a2eb", "#ffce56", "#7DDF64"],
+                  data: values
+                }
+              ]
+            },
+          options:
+            {
+              responsive: true
+            }
+        });
+        $("#loader-3").hide();
+        can.show();
+      }
+
+      function errorHandler(statusCode) {
+        console.log("failed with status", status);
+      }
+    }
+
+    Geslacht();
+
+
+    function Hashtags() {
+      var URL = "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + @Html.Raw(Model.ItemId);
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+        function process(output) {
+          var keys = [];
+          keys = Object.keys(output);
+          var label = [];
+          var values = [];
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i].substring(0, 10));
+            values.push(output[keys[i]]);
+          }
+          console.log(label);
+          console.log(values);
+          var can = $('#hashtag-chart');
+          //can.attr('width', '300px');
+          //can.attr('height', '300px');
+
+          new Chart(can, {
+            type: 'bar',
+            data:
+              {
+                labels: label,
+                datasets: [
+                  {
+                    backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                    data: values
+                  }
+                ]
+              },
+            options:
+              {
+                responsive: true
+              }
+          });
+          $("#loader-2").hide();
+          can.show();
+        }
+
+        function errorHandler(statusCode) {
+          console.log("failed with status", status);
+        }
+    }
+
+    Hashtags();
+
+    function Mentions() {
+      var URL = "https://localhost:44342/api/item/GetTrendingMentionsCount/" + @Html.Raw(Model.ItemId);
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+        function process(output) {
+          var keys = [];
+          keys = Object.keys(output);
+          var label = [];
+          var values = [];
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i].substring(0, 10));
+            values.push(output[keys[i]]);
+          }
+          console.log(label);
+          console.log(values);
+          var can = $('#mentions-chart');
+          //can.attr('width', '300px');
+          //can.attr('height', '300px');
+
+          new Chart(can, {
+            type: 'horizontalBar',
+            data:
+              {
+                labels: label,
+                datasets: [
+                  {
+                    backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                    data: values
+                  }
+                ]
+              },
+            options:
+              {
+                responsive: true
+              }
+          });
+          $("#loader-2").hide();
+          can.show();
+        }
+
+        function errorHandler(statusCode) {
+          console.log("failed with status", status);
+        }
+    }
+
+    Mentions();
+  </script>
+}
+
 @if (Model is PB.BL.Domain.Items.Person)
 {
   <script defer>
@@ -295,71 +629,6 @@
     $.each(array, function (data, realdata) {
       $("#urls").append('<i style="margin-right:10px" class="fas fa-link"></i>'+"<a href=" + realdata + ">" + realdata.substring(1, (realdata.length - 1)) + "</a><br/>");
     });
-
-
-
-  //$("#graphs").after("<div style=\"margin: 10px 0\" class=\"masonry-item col-md- 12\"> <div class=\"bgc-white p-20 bd\"> <h6 class=\"c-grey-900\">Line chart</h6> <div class=\"mT-30\" id=\"graph-bar\"> </div></div></div>");
-
-  //$("#graph-bar").append("<canvas id=\"line-chart2\" height=\"400\"></canvas>");
-
-  //    drawLineChart(personid)
-
-
-
-
-  //function drawLineChart(id) {
-
-  //  var test = "";
-  //    test = $.ajax({
-  //    async: false,
-  //    type: 'GET',
-  //    dataType: 'json',
-  //        url: "https://localhost:44342/api/item/GetPersonTweet/" + id,
-  //        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-
-  //  }).responseJSON
-
-  //  var keys = [];
-  //  keys = Object.keys(test);
-  //  var label = [];
-  //  var values = [];
-
-  //  for (var i = 0; i < keys.length; i++) {
-  //    label.push(keys[i].substring(0,10));
-  //    values.push(test[keys[i]] / 10);
-  //  }
-
-
-
-  //  var can = $('#line-chart2');
-  //  //can.attr('width', '300px');
-  //  //can.attr('height', '300px');
-
-  //  new Chart(can, {
-  //    type: 'line',
-  //    data: {
-  //      labels: label,
-  //      datasets: [
-  //        {
-  //          label:"",
-  //          backgroundColor: "rgba(3, 169, 244, 0.5)",
-  //          borderColor: "#0277bd",
-  //          data: values
-  //        }
-  //      ]
-  //    },
-  //    options: {
-  //      legend: { display: true },
-  //      responsive: true,
-  //      maintainAspectRatio: false,
-  //      title: {
-  //        display: true,
-  //        text: 'Tweet evolution'
-  //      }
-  //    }
-  //  });
-  //}
-
 
   </script>
 
@@ -467,71 +736,63 @@
 
 
 
-  <script>
-       var itemId= @Html.Raw(Model.ItemId);
-      $("#graphs").after("<div style=\"margin: 10px 0\" class=\"masonry-item col-md- 12\"> <div class=\"bgc-white p-20 bd\"> <h6 class=\"c-grey-900\">Line chart</h6> <div class=\"mT-30\" id=\"graph-bar\"> </div></div></div>");
-
-      $("#graph-bar").append("<canvas id=\"line-chart2\" height=\"400\"></canvas>");
-
-      drawLineChart(itemId)
-   
-
-            function drawLineChart(id) {
-
-              var test = "";
-              test = $.ajax({
-                async: false,
-          type: 'GET',
-          dataType: 'json',
-          url: "https://localhost:44342/api/item/GetItemTweet/" + id,
-          headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-
-        }).responseJSON
-
-        var keys = [];
-        keys = Object.keys(test);
-        var label = [];
-        var values = [];
-
-        for (var i = 0; i < keys.length; i++) {
-          label.push(keys[i].substring(0, 10));
-          values.push(test[keys[i]] / 10);
-        }
+<script>
 
 
+            function drawLineChart() {
 
-      var can = $('#line-chart2');
-        //can.attr('width', '300px');
-        //can.attr('height', '300px');
+              var URL = "https://localhost:44342/api/item/GetItemTweet/" + @Html.Raw(Model.ItemId);
+              makeAjaxCall(URL, "GET").then(process, errorHandler);
 
-        new Chart(can, {
-        type: 'line',
-          data:
-        {
-          labels: label,
-              datasets: [
-                {
-            label: "",
-                  backgroundColor: "rgba(3, 169, 244, 0.5)",
-                  borderColor: "#0277bd",
-                  data: values
+              function process(output) {
+                var keys = [];
+                keys = Object.keys(output);
+                var label = [];
+                var values = [];
+
+                for (var i = 0; i < keys.length; i++) {
+                  label.push(keys[i].substring(0, 10));
+                  values.push(output[keys[i]] / 10);
                 }
-              ]
-            },
-          options:
-        {
-          legend: { display: true },
-              responsive: true,
-              maintainAspectRatio: false,
-              title:
-          {
-            display: true,
-                  text: 'Tweet evolution'
-                }
-        }
-      });
-      }
-  </script>
+
+
+
+                var can = $('#line-chart2');
+              
+
+                new Chart(can, {
+                  type: 'line',
+                  data:
+                    {
+                      labels: label,
+                      datasets: [
+                        {
+                          labels: "Tweets"
+                          backgroundColor: "rgba(3, 169, 244, 0.5)",
+                          borderColor: "#0277bd",
+                          data: values
+                        }
+                      ]
+                    },
+                  options:
+                    {
+                      legend: { display: true },
+                      responsive: true,
+                    }
+                });
+                $("#loader-1").hide();
+                can.show();
+              }
+
+              function errorHandler(statusCode) {
+                console.log("failed with status", status);
+              }
+
+
+    }
+
+        drawLineChart();
+</script>
 
 
 

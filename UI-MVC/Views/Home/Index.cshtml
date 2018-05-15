@@ -14,54 +14,7 @@
   }
 </style>
 
-<style>
 
-
-
-  .loader {
-    border-radius: 100%;
-    margin: auto 0;
-  }
-
-  .loader-6 span {
-    display: inline-block;
-    width: 5px;
-    height: 20px;
-    background-color: #3498db;
-  }
-
-    .loader-6 span:nth-child(1) {
-      animation: grow 1s ease-in-out infinite;
-    }
-
-    .loader-6 span:nth-child(2) {
-      animation: grow 1s ease-in-out 0.15s infinite;
-    }
-
-    .loader-6 span:nth-child(3) {
-      animation: grow 1s ease-in-out 0.30s infinite;
-    }
-
-    .loader-6 span:nth-child(4) {
-      animation: grow 1s ease-in-out 0.45s infinite;
-    }
-
-  @@keyframes grow {
-    0%, 100% {
-      -webkit-transform: scaleY(1);
-      -ms-transform: scaleY(1);
-      -o-transform: scaleY(1);
-      transform: scaleY(1);
-    }
-
-    50% {
-      -webkit-transform: scaleY(1.8);
-      -ms-transform: scaleY(1.8);
-      -o-transform: scaleY(1.8);
-      transform: scaleY(1.8);
-    }
-  }
-</style>
 
 
 <main class="main-content bgc-grey-100" style="background-color: #f9fafb;">
@@ -156,7 +109,7 @@
             <div class="layer w-100 pX-20 pT-20">
              
                 <h6 class="c-grey-900">Sentiment analyse top politici</h6>
-                 <a id="download" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+                 <a id="download1" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
                 <i style="top: 30px; right: 50px;opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i> 
            </div>
             <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table;">
@@ -181,7 +134,7 @@
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending hashtags</h6>
 
-              <a id="dl2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
               <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
             </div>
             <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
@@ -203,7 +156,7 @@
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending Mentions</h6>
-              <a id="dl3" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <a id="download3" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
               <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
             </div>
             <div class="layer w-100 p-20" style="min-height:350px;max-height:350px;display:table;">
@@ -225,7 +178,7 @@
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top persons</h6>
-              <a id="dl4" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <a id="download4" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
               <i style="top: 30px; right: 50px;  opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i>
             </div>
             <div class="layer w-100 p-20" style="min-height:350px; max-height:350px; display:table;">
@@ -269,9 +222,9 @@
               <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
                 <div class="layers">
                   <div class="layer w-100 mB-10">
-                    <h6 class="lh-1">Sentiment per provincie</h6>
+                   
                   </div>
-                  <div class="layer w-100">
+                  <div class="layer w-100 p-20">
                     <div id="world-map-marker"></div>
                   </div>
                 </div>
@@ -280,6 +233,8 @@
                 <div class="layers h-100">
                   <div class="layer w-100">
                     <h6 class="lh-1">Radar Test</h6>
+                    <a id="download6" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+                    <i style="top: 30px; right: 50px;  opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i>
                   </div>
                   <canvas style="margin: auto 0" id="radar2-chart" height="220"></canvas>
 
@@ -296,6 +251,8 @@
                 <div class="layers">
                   <div class="layer w-100 mB-10">
                     <h6 class="lh-1">Top tweeting persons</h6>
+                    <a id="download7" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+                    <i style="top: 30px; right: 50px;  opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i>
                   </div>
                   <div class="layer w-100">
                     <div id="myChart" style="height: 100%;width: 100%; min-height: 500px;"></div>
@@ -320,22 +277,47 @@
 <script>
 
 
-  var canvas = document.getElementById("dougnut-chart");
 
 
-  function dlCanvas() {
- 
-    var image = document.getElementById("evol").toDataURL("image/png")
+
+
+  $("#download1").on('click', function () {
+    var image = document.getElementById("evol").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
-    download.setAttribute("href", image);
- 
-  };
-
-
-  $("#download").on('click', function () {
-    dlCanvas();
+    download1.setAttribute("href", image);
+  
   });
 
+  $("#download2").on('click', function () {
+    var image = document.getElementById("#doughnut-chart").toDataURL("image/jpg")
+      .replace("image/jpg", "image/octet-stream");
+    download2.setAttribute("href", image);
+
+  });
+  $("#download3").on('click', function () {
+    var image = document.getElementById("pie-chart").toDataURL("image/jpg")
+      .replace("image/jpg", "image/octet-stream");
+    download3.setAttribute("href", image);
+
+  });
+  $("#download4").on('click', function () {
+    var image = document.getElementById("bar2-chart").toDataURL("image/jpg")
+      .replace("image/jpg", "image/octet-stream");
+    download4.setAttribute("href", image);
+
+  });
+  $("#download6").on('click', function () {
+    var image = document.getElementById("radar2-chart").toDataURL("image/jpg")
+      .replace("image/jpg", "image/octet-stream");
+    download4.setAttribute("href", image);
+
+  });
+  $("#download7").on('click', function () {
+    var image = document.getElementById("myChart").toDataURL("image/jpg")
+      .replace("image/jpg", "image/octet-stream");
+    download4.setAttribute("href", image);
+
+  });
 
   function makeAjaxCall(url, methodType) {
     var promiseObj = new Promise(function (resolve, reject) {
