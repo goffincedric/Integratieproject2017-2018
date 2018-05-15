@@ -474,8 +474,17 @@ namespace UI_MVC.Controllers.API
                 IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
                 records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
             }
-            
-            records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h => h.Records.Count).Distinct().Take(5).ToList().ForEach(p => hashtags.Add(p.HashTag, p.Records.Count));
+
+            records.SelectMany(r =>
+            {
+                return r.Hashtags;
+            }).Distinct().OrderByDescending(h =>
+            {
+                return h.Records.Count;
+            }).Distinct().Take(5).ToList().ForEach(p =>
+            {
+                hashtags.Add(p.HashTag, p.Records.Count);
+            });
 
             if (hashtags is null || hashtags.Count() == 0) return NotFound();
             return Ok(hashtags);
@@ -506,7 +515,7 @@ namespace UI_MVC.Controllers.API
 
             records.SelectMany(r =>
             {
-               return r.Mentions;
+                return r.Mentions;
             }).Distinct().OrderByDescending(h =>
             {
                 return h.Records.Count();
