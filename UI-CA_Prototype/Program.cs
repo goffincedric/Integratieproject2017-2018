@@ -119,7 +119,8 @@ namespace UI_CA_Prototype
                         Seed();
                         break;
                     case 9:
-                        AccountMgr.GenerateProfileAlerts(SelectedProfile);
+                        List<Item> itemsToUpdate = new List<Item>();
+                        AccountMgr.GenerateAllAlerts(SelectedProfile.Subscriptions);
                         break;
                     case 10:
                         ExtensionMethods.ShowRecords(ItemMgr.GetRecords());
@@ -239,9 +240,8 @@ namespace UI_CA_Prototype
                 Console.WriteLine("=========================");
                 Console.WriteLine("==== Generate Alerts ====");
                 Console.WriteLine("=========================");
-                List<Item> itemsToUpdate = new List<Item>();
-                AccountMgr.GenerateAllAlerts(ItemMgr.GetItems(), out itemsToUpdate);
-                ItemMgr.ChangeItems(itemsToUpdate);
+                AccountMgr.GenerateAllAlerts(ItemMgr.GetItems());
+                //ItemMgr.ChangeItems(itemsToUpdate); // Niet nodig door GenerateAllALerts savechanges
                 Console.WriteLine(" ");
             }
 

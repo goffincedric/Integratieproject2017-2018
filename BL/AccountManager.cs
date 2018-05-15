@@ -386,7 +386,8 @@ namespace PB.BL
             if (profile is null) throw new Exception("Profile with userId (" + userId + ") doesn't exist.");
             return profile.WeeklyReviews.OrderByDescending(wr => wr.TimeGenerated).FirstOrDefault();
         }
-
+        
+        // TODO: Async maken
         public Dictionary<Profile, List<ProfileAlert>> SendWeeklyReviews()
         {
             // Get all profiles with at least 1 read profilealert from last week
@@ -497,8 +498,9 @@ namespace PB.BL
 
             return AlertsPerProfile;
         }
-
-        public List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems, out List<Item> itemsToUpdate)
+        
+        // TODO: Async maken
+        public List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems)
         {
             InitNonExistingRepo();
 
@@ -506,7 +508,7 @@ namespace PB.BL
             List<Alert> alerts = new List<Alert>();
 
             // Update trending items
-            itemsToUpdate = Trendspotter.CheckTrendingItems(allItems.ToList(), 10, ref alerts);
+            List<Item> itemsToUpdate = Trendspotter.CheckTrendingItems(allItems.ToList(), 10, ref alerts);
 
             // Get all profiles with subscriptions
             List<Profile> Profiles = ProfileRepo.ReadProfiles().Where(p => p.Subscriptions.Count > 0).ToList();

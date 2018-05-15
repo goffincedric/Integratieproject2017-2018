@@ -289,7 +289,7 @@ namespace UI_MVC.Controllers
         public ActionResult GenerateAlertsManually()
         {
             List<Item> itemsToUpdate = new List<Item>();
-            accountMgr.GenerateAllAlerts(itemMgr.GetItems(), out itemsToUpdate);
+            accountMgr.GenerateAllAlerts(itemMgr.GetItems());
             itemMgr.ChangeItems(itemsToUpdate);
 
             return RedirectToAction("PlatformSettings", "Subplatform");
