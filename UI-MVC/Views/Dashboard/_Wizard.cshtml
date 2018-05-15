@@ -61,46 +61,12 @@
                                 <div class="col-sm-12">
                                     <h4 class="info-text">Selecteer hier welke <span id="soort"></span> u wilt visualiseren.</h4>
                                 </div>
-                                @*<div class="col-sm-6 col-sm-offset-1">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Soort items</label>
-                                            <select style="margin-bottom: 5%" id="inputState" class="form-control" name="type">
-                                                <option disabled="" selected=""></option>
-                                                <option value="1">Persons</option>
-                                                <option value="2">Themes</option>
-                                                <option value="3">Organisations</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Output</label>
-                                            <select name="type" class="form-control">
-                                                <option disabled="" selected=""></option>
-                                                <option value="1"> Tweet evolution</option>
-                                                <option value="2"> Positiviteit</option>
-                                                <option value="3"> Trending Mentions </option>
-                                                <option value="4"> Trending Hashtags</option>
-                                                <option value="5"> Trending Urls</option>
-                                                <option value="6"> Retweet </option>
-                                                <option value="7"> Sentiment analyse</option>
-                                                <option value="...">...</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-sm-offset-1">
-                                        <input type="hidden" name="count" value="1" />
-                                        <div class="row form-group">
-                                            <input autocomplete="on" class=" form-control" id="field1" type="text" placeholder="Type name" />
-                                            <button id="b1" class="btn add-more" type="button">+</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="hidden" name="count" value="1" />
-                                        <div class="row form-group">
-                                            <input autocomplete="off" class="input form-control" id="field1" type="text" placeholder="Type name" /><button id="b1" class="btn add-more" type="button">+</button>
-                                        </div>
-                                    </div>*@
+                                <div class="col-sm-12">
+                                    <select id="locality-dropdown"></select>
+                                </div>
+                                <div class="row">
+                                    <input type='button' id="add-soort" class='btn btn-add btn-fill btn-primary btn-wd' name='add' value='Add' style="background-color: #00bcd4">
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane" id="data">
@@ -109,7 +75,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Output</label>
-                                        <select name="type" class="form-control">
+                                        <select id="output" name="type" class="form-control">
                                             <option disabled="" selected=""></option>
                                             <option value="1"> Tweet evolution</option>
                                             <option value="2"> Positiviteit</option>
@@ -125,7 +91,7 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="grafiek">
-                            <h4 class="info-text">Kies je type? </h4>
+                            <h4 class="info-text">Kies het soort grafiek u wilt toevoegen?</h4>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="row">

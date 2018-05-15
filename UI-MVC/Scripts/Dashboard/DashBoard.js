@@ -70,7 +70,7 @@ $(function () {
 
             grid.data('gridstack').removeWidget(removeElement);
 
-            if (ZoneId == 'x') {
+            if (ZoneId === 'x') {
                 var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
 
                 ZoneId = $.ajax({
@@ -98,7 +98,7 @@ $(function () {
                 $newdiv.append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
                 var newZone = $('#mainContent').append($newdiv);
 
-                var addZone = $('#mainContent').append(addZone);
+                addZone = $('#mainContent').append(addZone);
 
                 $('.grid-stack').gridstack(options);
 
@@ -161,42 +161,79 @@ $(function () {
                 Wizard.hide();
             });
 
-            var data = null
-            var onderwerp = null
+            var data = null;
+            var onderwerp = null;
+            var datasoort = null;
+            var output = null;
 
             $('.btn-next').on('click', function () {
                 switch ($('input:checked').attr('id')) {
                     case 'person':
+                        datasoort = null;
                         data = $.ajax({
                             async: false,
                             type: 'GET',
                             headers: Headers,
                             url: "https://localhost:44342/api/item/getperson"
                         }).responseJSON;
-                        onderwerp = 'politiekers';
+                        onderwerp = 'politieker';
                         break;
                     case 'organisation':
+                        datasoort = null;
                         data = $.ajax({
                             async: false,
                             type: 'GET',
                             headers: Headers,
                             url: "https://localhost:44342/api/item/getorganisation"
                         }).responseJSON;
-                        onderwerp = 'organisaties';
+                        onderwerp = 'organisatie';
                         break;
                     case 'theme':
+                        datasoort = null;
                         data = $.ajax({
                             async: false,
                             type: 'GET',
                             headers: Headers,
                             url: "https://localhost:44342/api/item/gettheme"
                         }).responseJSON;
-                        onderwerp = 'thema\'s';
+                        onderwerp = 'thema';
                         break;
                 }
-                console.log($('#soort'))
-                $('#soort').text(onderwerp);
-                console.log(data);
+
+                $('#soort').text(onderwerp + 's');
+
+                let dropdown = $('#locality-dropdown');
+
+                datasoort = {
+                    items: []
+                };
+
+                $('#output').off('change');
+                $('#output').on('change', function () {
+                    output = $('#output option:selected').text();
+                    console.log(output);
+                });
+                $('#add-soort').off('click');
+                $('#add-soort').on('click', function () {
+                    datasoort.items.push($.ajax({
+                        async: false,
+                        type: 'GET',
+                        headers: Headers,
+                        url: "https://localhost:44342/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
+                    }).responseJSON);
+                    console.log(datasoort.items);
+                });
+
+                dropdown.empty();
+
+                dropdown.append('<option selected="true" disabled>selecteer een '+onderwerp+'</option>');
+                dropdown.prop('selectedIndex', 0);
+
+                // Populate dropdown with list of data
+
+                $.each(data, function (key, entry) {
+                    dropdown.append($('<option></option>').attr('value', entry.ItemId).text(entry.Name));
+                });
             })
 
             $('.btn-finish').off('click');
@@ -260,7 +297,7 @@ $(function () {
 
                 input.width(inputwidth + 10);
 
-                if (e.which == 13) {
+                if (e.which === 13) {
                     newTitle = $(this).val();
 
                     Zone = JSON.parse('{ "Title": "' + newTitle + '", "ZoneId": "' + ZoneId + '"}');
@@ -309,8 +346,8 @@ $(function () {
                     var ElementId = element.el.children('div').attr('id');
                     ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
 
-                    if (ElementId != '+') {
-                        if (ZoneId == 'x') {
+                    if (ElementId !== '+') {
+                        if (ZoneId === 'x') {
 
                             var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
 
@@ -358,7 +395,7 @@ $(function () {
                             $newdiv.append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
                             var newZone = $('#mainContent').append($newdiv);
 
-                            var addZone = $('#mainContent').append(addZone);
+                            addZone = $('#mainContent').append(addZone);
 
                             $('.grid-stack').gridstack(options);
 
@@ -405,7 +442,7 @@ $(function () {
 
                         var oldZoneId = oldElement.ZoneId;
 
-                        var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove + '", "ZoneId": "' + ZoneId + '", "GraphType": "' + oldElement.GraphType + '"}');
+                        Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove + '", "ZoneId": "' + ZoneId + '", "GraphType": "' + oldElement.GraphType + '"}');
 
                         $.ajax({
                             async: false,
@@ -416,7 +453,7 @@ $(function () {
                             url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
                         })
 
-                        if (oldZoneId != ZoneId) {
+                        if (oldZoneId !== ZoneId) {
                             console.log($('#Element-' + ElementId).children('canvas'));
 
                             chooseChart(oldElement.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
@@ -437,7 +474,7 @@ $(function () {
             clearGrid(grid.data('gridstack'));
             var ZoneId = grid.attr('id');
             ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
-            if (ZoneId == 'x') {
+            if (ZoneId === 'x') {
                 var plusElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
                 plusElement.resizable(false);
