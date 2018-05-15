@@ -7,17 +7,14 @@
 
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
-
     @using (Html.BeginForm("EditOrganisation", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
       @Html.AntiForgeryToken()
-
       <div class="form-horizontal">
         <h4> Beheer @Html.DisplayFor(model => model.Name)</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ItemId)
-
         <div class="form-group">
           @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
           <div class="col-md-10">
@@ -25,7 +22,6 @@
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
           </div>
         </div>
-
         <div class="form-group">
           @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
           <div class="col-md-10">
@@ -33,7 +29,6 @@
             @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
           </div>
         </div>
-
         <div class="form-group">
           @Html.LabelFor(model => model.IsTrending, htmlAttributes: new { @class = "control-label col-md-2" })
           <div class="col-md-10">
@@ -44,7 +39,6 @@
             </label>
           </div>
         </div>
-
         <div class="form-group">
           <label class="control-label col-md-2">Upload an icon</label>
           <div class="col-md-10">
@@ -54,7 +48,6 @@
             </div>
           </div>
         </div>
-
         <div class="form-group">
           @Html.LabelFor(model => model.SocialMediaLink, htmlAttributes: new { @class = "control-label col-md-2" })
           <div class="col-md-10">
@@ -69,7 +62,6 @@
         </div>
       </div>
     }
-
     <button class="btn btn-sm">
       @Html.ActionLink("Back", "ItemBeheer", "Item")
     </button>
