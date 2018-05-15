@@ -7,15 +7,10 @@
     <div class="dropdownSearch">
       <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
       <div id="myDropdown" class="dropdown-content">
-
-
-
         @foreach (var x in Model)
         {
           <a id="itemref" href='@Url.Action("ItemDetail", "Home", new {id = x.ItemId})'>@x.Name</a>
         }
-
-
       </div>
     </div>
   </li>

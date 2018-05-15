@@ -12,82 +12,99 @@
                     </div>
                     <div class="wizard-navigation">
                         <ul style="line-height:35px">
-                            <li><a href="#location" data-toggle="tab">Item</a></li>
-                            <li><a href="#type" data-toggle="tab">Type</a></li>
-                            <li><a href="#facilities" data-toggle="tab">Styling</a></li>
+                            <li><a href="#onderwerp" data-toggle="tab">Onderwerp</a></li>
+                            <li><a href="#opties" data-toggle="tab">Opties</a></li>
+                            <li><a href="#data" data-toggle="tab">Data</a></li>
+                            <li><a href="#grafiek" data-toggle="tab">Grafiek</a></li>
+                            <li><a href="#style" data-toggle="tab">Style</a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
-                        <div class="tab-pane" id="location">
+                        <div class="tab-pane" id="onderwerp">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <h4 class="info-text">Kies eerst je grafiek type en de hoeveelheid data om te vergelijken</h4>
-                                </div>
-                                <div class="col-sm-6 col-sm-offset-1">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Soort items</label>
-                                        <select style="margin-bottom: 5%" id="inputState" class="form-control" name="type">
-                                            <option disabled="" selected=""></option>
-                                            <option value="1">Persons</option>
-                                            <option value="2">Themes</option>
-                                            <option value="3">Organisations</option>
-                                        </select>
+                                    <h4 class="info-text">Wilt u politiekers, organisaties of thema's visualiseren?</h4>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Deze optie laat u politiekers visualiseren">
+                                                <input id="person" type="radio" name="type" value="BarChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">person</i>
+                                                </div>
+                                                <h6>Politiekers</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Deze optie laat u orginisaties visualiseren">
+                                                <input id="organisation" type="radio" name="type" value="PieChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">group</i>
+                                                </div>
+                                                <h6>Organisaties</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Deze optie laat u themas visualiseren">
+                                                <input id="theme" type="radio" name="type" value="PieChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">public</i>
+                                                </div>
+                                                <h6>Thema's</h6>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="opties">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4 class="info-text">Selecteer hier welke <span id="soort"></span> u wilt visualiseren.</h4>
+                                </div>
+                                <div class="col-sm-12">
+                                    <select id="locality-dropdown"></select>
+                                </div>
+                                <div class="row">
+                                    <input type='button' id="add-soort" class='btn btn-add btn-fill btn-primary btn-wd' name='add' value='Add' style="background-color: #00bcd4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="data">
+                            <h4 class="info-text">Welke data wilt u visualiseren?</h4>
+                            <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Output</label>
-                                        <select name="type" class="form-control">
+                                        <select id="output" name="type" class="form-control">
                                             <option disabled="" selected=""></option>
                                             <option value="1"> Tweet evolution</option>
                                             <option value="2"> Positiviteit</option>
                                             <option value="3"> Trending Mentions </option>
                                             <option value="4"> Trending Hashtags</option>
                                             <option value="5"> Trending Urls</option>
-                                            <option value="6"> Retweet </option>
+                                            <option value="6"> Retweets </option>
                                             <option value="7"> Sentiment analyse</option>
                                             <option value="...">...</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-sm-offset-1">
-                                    <input type="hidden" name="count" value="1" />
-                                    <div class="row form-group">
-
-
-                                        <input autocomplete="on" class=" form-control" id="field1" type="text" placeholder="Type name" />
-                                        <button id="b1" class="btn add-more" type="button">+</button>
-
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <input type="hidden" name="count" value="1" />
-                                    <div class="row form-group">
-
-                                        <input autocomplete="off" class="input form-control" id="field1" type="text" placeholder="Type name" /><button id="b1" class="btn add-more" type="button">+</button>
-                                    </div>
-
-                                </div>
                             </div>
-
                         </div>
-
-
-                        <div class="tab-pane" id="type">
-                            <h4 class="info-text">Kies je type? </h4>
+                        <div class="tab-pane" id="grafiek">
+                            <h4 class="info-text">Kies het soort grafiek u wilt toevoegen?</h4>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
                                             <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have a house.">
-                                                <input id="bar" type="radio" name="type" value="Bar Chart">
+                                                <input id="bar" type="radio" name="type" value="BarChart">
                                                 <div class="icon">
                                                     <i class="material-icons">insert_chart</i>
                                                 </div>
                                                 <h6>Bar Chart</h6>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
                                             <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have an appartment">
                                                 <input id="pie" type="radio" name="type" value="PieChart">
                                                 <div class="icon">
@@ -96,11 +113,47 @@
                                                 <h6>Piechart</h6>
                                             </div>
                                         </div>
+                                        <div class="col-sm-4">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have an appartment">
+                                                <input id="line" type="radio" name="type" value="PieChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">show_chart</i>
+                                                </div>
+                                                <h6>Linechart</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have an appartment">
+                                                <input id="donut" type="radio" name="type" value="PieChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">donut_small</i>
+                                                </div>
+                                                <h6>Donutchart</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have an appartment">
+                                                <input id="radar" type="radio" name="type" value="PieChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">track_changes</i>
+                                                </div>
+                                                <h6>Radarchart</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have an appartment">
+                                                <input id="word" type="radio" name="type" value="PieChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">cloud</i>
+                                                </div>
+                                                <h6>WordCloud</h6>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="facilities">
+                        <div class="tab-pane" id="style">
                             <h4 class="info-text">Style je element </h4>
                             <div class="row">
                                 <div class="col-sm-6 col-sm-offset-1">
