@@ -304,7 +304,7 @@
     var URL = "https://localhost:44342/api/item/GetItemDetails/" + @Html.Raw(Model.ItemId);
     makeAjaxCall(URL, "GET").then(process, errorHandler);
     function process(output) {
- 
+
       var keys = [];
       keys = Object.keys(output);
       for (var i = 1; i < keys.length+1; i++) {
@@ -324,7 +324,6 @@
 @if (Model is PB.BL.Domain.Items.Organisation || Model is PB.BL.Domain.Items.Theme)
 {
   <script>
-
       function Age() {
         var URL = "https://localhost:44342/api/item/GetGender/" + @Html.Raw(Model.ItemId);
         makeAjaxCall(URL, "GET").then(process, errorHandler);
@@ -339,7 +338,7 @@
             values.push(output[keys[i]]);
           }
           var can = $('#age-chart');
-   
+
           new Chart(can, {
             type: 'doughnut',
             data:
@@ -383,9 +382,6 @@
         }
 
         var can = $('#gender-chart');
-
-        console.log(label);
-        console.log(values);
         new Chart(can, {
           type: 'pie',
           data:
@@ -428,12 +424,8 @@
             label.push(keys[i].substring(0, 10));
             values.push(output[keys[i]]);
           }
-          console.log(label);
-          console.log(values);
-          var can = $('#hashtag-chart');
-          //can.attr('width', '300px');
-          //can.attr('height', '300px');
 
+          var can = $('#hashtag-chart');
           new Chart(can, {
             type: 'bar',
             data:
@@ -478,11 +470,7 @@
             label.push(keys[i].substring(0, 10));
             values.push(output[keys[i]]);
           }
-          console.log(label);
-          console.log(values);
           var can = $('#mentions-chart');
-          //can.attr('width', '300px');
-          //can.attr('height', '300px');
 
           new Chart(can, {
             type: 'horizontalBar',
@@ -560,8 +548,6 @@
         headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
       }).responseText;
 
-
-
       var array = urls.split(',');
       function shuffle(a) {
         for (let i = a.length - 1; i > 0; i--) {
@@ -584,12 +570,6 @@
 
 @if (Model is PB.BL.Domain.Items.Person)
 {
-  <script defer>
-
-
-
-  </script>
-
   <script>
 
   var itemid = @Html.Raw(Model.ItemId);
@@ -627,8 +607,6 @@
       }
         });
 
-
-
   </script>
 
   <script>
@@ -642,14 +620,12 @@
       url: "https://localhost:44342/api/item/GetTrendingHashtags/" + personid,
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
     }).responseJSON;
-    console.log(hashtags);
 
     var counter = 0;
 
     $.each(hashtags, function (data, realdata) {
       counter++;
       var name = 'https://twitter.com/search?q=%23' + realdata + '&src=tyah&lang=nl';
-      console.log(name);
       if (counter <= 4) {
         $("#hashtag1").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
       } else if (counter <= 8) {
@@ -657,32 +633,18 @@
       } else {
         $("#hashtag3").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
       }
-
-
     });
 
   </script>
 
   <script>
     function mentionlist() {
-
-
       var URL = "https://localhost:44342/api/item/GetTrendingMentions/" + @Html.Raw(Model.ItemId);
       makeAjaxCall(URL, "GET").then(process, errorHandler);
-      //var personid= @Html.Raw(Model.ItemId);
-      //var mentions = "";
-      //mentions = $.ajax({
-      //  async: false,
-      //  type: 'GET',
-      //  dataType: 'json',
-      //  url: "https://localhost:44342/api/item/GetTrendingMentions/" + personid,
-      //  headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-      //}).responseJSON;
       function process(output) {
         var counter2 = 0;
         $.each(output, function (data, realdata) {
           var name = 'https://twitter.com/' + realdata;
-          //$("#mentions").append('<div class="row"><i style="margin-right:10px" class="fas fa-at"></i><h6>' + realdata + '</h6></br></div>');
           counter2++;
           if (counter2 <= 4) {
             $("#mention1").append('<i style="margin-right:10px" class="fas fa-at"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
@@ -691,8 +653,6 @@
           } else {
             $("#mention3").append('<i style="margin-right:10px" class="fas fa-at"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
           }
-
-
         });
       }
 
@@ -705,11 +665,7 @@
   </script>
 }
 
-
-
 <script>
-
-
     function drawLineChart() {
 
         var URL = "https://localhost:44342/api/item/GetItemTweet/" + @Html.Raw(Model.ItemId);
@@ -725,12 +681,7 @@
                   label.push(keys[i].substring(0, 10));
                   values.push(output[keys[i]] / 10);
                 }
-
-
-
                 var can = $('#line-chart2');
-
-
                 new Chart(can, {
                   type: 'line',
                   data:

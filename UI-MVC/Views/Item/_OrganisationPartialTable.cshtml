@@ -14,10 +14,8 @@
             <th>@Html.DisplayNameFor(model => model.IconURL)</th>
             <th>@Html.DisplayNameFor(model => model.IsTrending)</th>
             <th>Tools</th>
-
           </tr>
         </thead>
-
         <tbody>
           @foreach (var item in Model)
           {
@@ -30,7 +28,6 @@
               <td>@(item.IsTrending ? "Yes" : "No")</td>
               <td>
                 <div class="row">
-
                   @using (Html.BeginForm("DeleteItem", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
                   {
                     @Html.AntiForgeryToken()
@@ -54,10 +51,6 @@
     </div>
   </div>
 </div>
-
-
-
-
 <script defer>
   $("document").ready(function () {
 
