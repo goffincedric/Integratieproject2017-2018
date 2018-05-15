@@ -268,5 +268,54 @@ namespace UI_MVC.Controllers
             // Show errors on page
             return RedirectToAction("PlatformSettings", "Home");
         }
+
+        public ActionResult _SeedIntervals(string subplatform)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            SeedIntervals huidige = new SeedIntervals
+            {
+               SEED_INTERVAL_HOURS = Int32.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SEED_INTERVAL_HOURS).Value),
+
+                SEND_WEEKLY_REVIEWS_INTERVAL_DAYS = Int32.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS).Value),
+
+                ALERT_GENERATION_INTERVAL_HOURS = Int32.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS).Value)
+            };
+            return PartialView(huidige);
+        }
+
+        [HttpPost]
+        public ActionResult SeedIntervals(string subplatform, SeedIntervals intervals)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+           
+            List<SubplatformSetting> subplatformSettings = new List<SubplatformSetting>()
+            {
+                new SubplatformSetting()
+                {
+                    SettingName = Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS,
+                    Value = intervals.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS.ToString(),
+                    IsEnabled = true,
+                    Subplatform = Subplatform
+                },
+                new SubplatformSetting()
+                {
+                    SettingName = Setting.Platform.SEED_INTERVAL_HOURS,
+                    Value = intervals.SEED_INTERVAL_HOURS.ToString(),
+                    IsEnabled = true,
+                    Subplatform = Subplatform
+                },
+                new SubplatformSetting()
+                {
+                    SettingName = Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS,
+                    Value = intervals.ALERT_GENERATION_INTERVAL_HOURS.ToString(),
+                    IsEnabled = true,
+                    Subplatform = Subplatform
+                },
+               
+            };
+
+            SubplatformMgr.ChangeSubplatformSettings(Subplatform, subplatformSettings);
+            return RedirectToAction("PlatformSettings","Subplatform");
+        }
     }
 }

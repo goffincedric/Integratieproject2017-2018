@@ -296,8 +296,8 @@
               <div id="mention1" class="col-6 colom-6-center"></div>
               <div id="mention2" class="col-6 colom-6-center"></div>
               @*<div id="mention1" class="col-4 colom-4-center"></div>
-          <div id="mention2" class="col-4 colom-4-center"></div>
-          <div id="mention3" class="col-4 colom-4-center"></div>*@
+                <div id="mention2" class="col-4 colom-4-center"></div>
+                <div id="mention3" class="col-4 colom-4-center"></div>*@
             </div>
           </div>
         </div>
@@ -310,8 +310,8 @@
               <div id="hashtag1" class="col-6 colom-6-center"></div>
               <div id="hashtag2" class="col-6 colom-6-center"></div>
               @*<div id="hashtag1" class="col-4 colom-4-center"></div>
-              <div id="hashtag2" class="col-4 colom-4-center"></div>
-              <div id="hashtag3" class="col-4 colom-4-center"></div>*@
+                <div id="hashtag2" class="col-4 colom-4-center"></div>
+                <div id="hashtag3" class="col-4 colom-4-center"></div>*@
             </div>
           </div>
         </div>
@@ -320,7 +320,7 @@
       <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
           <h6 class="c-grey-900">Sentiment analyse</h6> <div class="mT-30" style="text-align:center">
-            <canvas width="800" height="200" id="mycanvas"></canvas>
+            <canvas width="1000" height="200" id="mycanvas"></canvas>
           </div>
         </div>
       </div>
@@ -756,31 +756,44 @@
   </script>
 
   <script>
-    var personid= @Html.Raw(Model.ItemId);
-    var mentions = "";
-    mentions = $.ajax({
-      async: false,
-      type: 'GET',
-      dataType: 'json',
-      url: "https://localhost:44342/api/item/GetTrendingMentions/" + personid,
-      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseJSON;
+    function mentionlist() {
 
-    var counter2 = 0;
-    $.each(mentions, function (data, realdata) {
-      var name = 'https://twitter.com/' + realdata;
-      //$("#mentions").append('<div class="row"><i style="margin-right:10px" class="fas fa-at"></i><h6>' + realdata + '</h6></br></div>');
-      counter2++;
-      if (counter2 <= 4) {
-        $("#mention1").append('<i style="margin-right:10px" class="fas fa-at"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
-      } else if (counter2 <= 8) {
-        $("#mention2").append('<i style="margin-right:10px" class="fas fa-at"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
-      } else {
-        $("#mention3").append('<i style="margin-right:10px" class="fas fa-at"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+
+      var URL = "https://localhost:44342/api/item/GetTrendingMentions/" + @Html.Raw(Model.ItemId);
+      makeAjaxCall(URL, "GET").then(process, errorHandler);
+      //var personid= @Html.Raw(Model.ItemId);
+      //var mentions = "";
+      //mentions = $.ajax({
+      //  async: false,
+      //  type: 'GET',
+      //  dataType: 'json',
+      //  url: "https://localhost:44342/api/item/GetTrendingMentions/" + personid,
+      //  headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+      //}).responseJSON;
+      function process(output) {
+        var counter2 = 0;
+        $.each(output, function (data, realdata) {
+          var name = 'https://twitter.com/' + realdata;
+          //$("#mentions").append('<div class="row"><i style="margin-right:10px" class="fas fa-at"></i><h6>' + realdata + '</h6></br></div>');
+          counter2++;
+          if (counter2 <= 4) {
+            $("#mention1").append('<i style="margin-right:10px" class="fas fa-at"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+          } else if (counter2 <= 8) {
+            $("#mention2").append('<i style="margin-right:10px" class="fas fa-at"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+          } else {
+            $("#mention3").append('<i style="margin-right:10px" class="fas fa-at"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+          }
+
+
+        });
       }
 
+      function errorHandler(statusCode) {
+        console.log("failed with status", status);
+      }
 
-    });
+    }
+    mentionlist();
   </script>
 }
 
@@ -789,12 +802,12 @@
 <script>
 
 
-            function drawLineChart() {
+    function drawLineChart() {
 
-              var URL = "https://localhost:44342/api/item/GetItemTweet/" + @Html.Raw(Model.ItemId);
-              makeAjaxCall(URL, "GET").then(process, errorHandler);
+        var URL = "https://localhost:44342/api/item/GetItemTweet/" + @Html.Raw(Model.ItemId);
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
 
-              function process(output) {
+       function process(output) {
                 var keys = [];
                 keys = Object.keys(output);
                 var label = [];
@@ -817,7 +830,7 @@
                       labels: label,
                       datasets: [
                         {
-                          labels: "Tweets",
+                          label: "Tweets",
                           backgroundColor: "rgba(3, 169, 244, 0.5)",
                           borderColor: "#0277bd",
                           data: values
@@ -834,14 +847,14 @@
                 can.show();
               }
 
-              function errorHandler(statusCode) {
+        function errorHandler(statusCode) {
                 console.log("failed with status", status);
               }
 
 
     }
 
-        drawLineChart();
+       drawLineChart();
 </script>
 
 

@@ -55,31 +55,43 @@
         </div>
 
         <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
+
           <div class="bgc-white p-20 bd" style="min-height:450px;">
             <h6 style="margin-bottom: 25px" class="h6">Sync tools</h6>
-            @using (Html.BeginForm("Syncronize", "Home", FormMethod.Post))
-      {
-        if (ViewBag.IsSyncing)
-        {
-          <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg" disabled>Syncroniseer API</button>
-          <label>Database is momenteel een sync aan het ondergaan...</label>
-  }
-  else
-  {
-      <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Syncroniseer API</button>
-}
-}
+            <div class="row">
 
-            @using (Html.BeginForm("GenerateAlertsManually", "Home", FormMethod.Post))
-      {
-        <button type="submit" style="margin: 25px 0 " ; class="btn btn-primary btn-lg">Generate alerts manually</button>
-}
+              <div class="col-6">
 
-            @using (Html.BeginForm("CleanupDB", "Home", FormMethod.Post))
-      {
-        <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Cleanup DB</button>
+                @using (Html.BeginForm("Syncronize", "Home", FormMethod.Post))
+                {
+                  if (ViewBag.IsSyncing)
+                  {
+                    <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg" disabled>Syncroniseer API</button>
+                    <label>Database is momenteel een sync aan het ondergaan...</label>
+                  }
+                  else
+                  {
+                    <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Syncroniseer API</button>
+                  }
+                }
 
-}
+                @using (Html.BeginForm("GenerateAlertsManually", "Home", FormMethod.Post))
+                {
+                  <button type="submit" style="margin: 25px 0 " ; class="btn btn-primary btn-lg">Generate alerts manually</button>
+                }
+
+                @using (Html.BeginForm("CleanupDB", "Home", FormMethod.Post))
+                {
+                  <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Cleanup DB</button>
+
+                }
+
+              </div>
+              <div class="col-6">
+
+                @Html.Action("_SeedIntervals", "Subplatform")
+              </div>
+            </div>
 
           </div>
         </div>
@@ -93,21 +105,21 @@
               </div>
               <div class="col-sm-6">
                 @using (Html.BeginForm("UploadSiteLogo", "Subplatform", FormMethod.Post, new { enctype = "multipart/form-data" }))
-          {
-            <div class="row">
-              <div class="col-9" style="padding: 0; margin: 0">
-                <div class="fileUpload blue-btn btn width100" style="margin:0;">
-                  <span>Upload a new site logo</span>
-                  <input type="file" class="uploadlogo1 uploadlogo" name="file" id="file" />
+                {
+                  <div class="row">
+                    <div class="col-9" style="padding: 0; margin: 0">
+                      <div class="fileUpload blue-btn btn width100" style="margin:0;">
+                        <span>Upload a new site logo</span>
+                        <input type="file" class="uploadlogo1 uploadlogo" name="file" id="file" />
 
-                </div>
+                      </div>
 
-              </div>
-              <div class="col-3" style="padding: 0; margin: 0">
-                <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
-              </div>
-            </div>
-    }
+                    </div>
+                    <div class="col-3" style="padding: 0; margin: 0">
+                      <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
+                    </div>
+                  </div>
+                }
               </div>
             </div>
 
@@ -117,19 +129,19 @@
               </div>
               <div class="col-sm-6">
                 @using (Html.BeginForm("UploadDefaultItemLogo", "Subplatform", FormMethod.Post, new { enctype = "multipart/form-data" }))
-          {
-            <div class="row">
-              <div class="col-9" style="padding: 0; margin: 0">
-                <div class="fileUpload blue-btn btn width100" style="margin:0;">
-                  <span>Upload a new item icon</span>
-                  <input type="file" class="uploadlogo2 uploadlogo" name="file" id="file" />
-                </div>
-              </div>
-              <div class="col-3" style="padding: 0; margin: 0">
-                <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
-              </div>
-            </div>
-    }
+                {
+                  <div class="row">
+                    <div class="col-9" style="padding: 0; margin: 0">
+                      <div class="fileUpload blue-btn btn width100" style="margin:0;">
+                        <span>Upload a new item icon</span>
+                        <input type="file" class="uploadlogo2 uploadlogo" name="file" id="file" />
+                      </div>
+                    </div>
+                    <div class="col-3" style="padding: 0; margin: 0">
+                      <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
+                    </div>
+                  </div>
+                }
               </div>
             </div>
 
@@ -139,19 +151,19 @@
               </div>
               <div class="col-sm-6">
                 @using (Html.BeginForm("UploadDefaultUserLogo", "Subplatform", FormMethod.Post, new { enctype = "multipart/form-data" }))
-          {
-            <div class="row">
-              <div class="col-9" style="padding: 0; margin: 0">
-                <div class="fileUpload blue-btn btn width100" style="margin:0;">
-                  <span>Upload a new user icon</span>
-                  <input type="file" class="uploadlogo3 uploadlogo" name="file" id="file" />
-                </div>
-              </div>
-              <div class="col-3" style="padding: 0; margin: 0">
-                <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
-              </div>
-            </div>
-    }
+                {
+                  <div class="row">
+                    <div class="col-9" style="padding: 0; margin: 0">
+                      <div class="fileUpload blue-btn btn width100" style="margin:0;">
+                        <span>Upload a new user icon</span>
+                        <input type="file" class="uploadlogo3 uploadlogo" name="file" id="file" />
+                      </div>
+                    </div>
+                    <div class="col-3" style="padding: 0; margin: 0">
+                      <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
+                    </div>
+                  </div>
+                }
               </div>
             </div>
           </div>
@@ -189,25 +201,25 @@
 
     // Upload btn on change call function
     $(".uploadlogo1").change(function () {
-     var filename = readURL(this);
-      var name = filename.substring(filename.indexOf(".") + 1);
-      $(this).parent().children('span').html( filename);
-    });
-
-     $(".uploadlogo2").change(function () {
       var filename = readURL(this);
       var name = filename.substring(filename.indexOf(".") + 1);
-     
-      
-      $(this).parent().children('span').html( filename);
+      $(this).parent().children('span').html(filename);
     });
 
-     $(".uploadlogo3").change(function () {
+    $(".uploadlogo2").change(function () {
       var filename = readURL(this);
       var name = filename.substring(filename.indexOf(".") + 1);
-     
+
+
+      $(this).parent().children('span').html(filename);
+    });
+
+    $(".uploadlogo3").change(function () {
+      var filename = readURL(this);
+      var name = filename.substring(filename.indexOf(".") + 1);
+
       console.log(name);
-      $(this).parent().children('span').html( filename);
+      $(this).parent().children('span').html(filename);
     });
 
     // Read File and return value
