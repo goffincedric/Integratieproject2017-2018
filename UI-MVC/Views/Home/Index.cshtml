@@ -498,7 +498,7 @@
   function drawLineChart() {
 
 
-    var URL = "https://localhost:44342/api/item/GetMostPopularPersons";
+    var URL = "https://localhost:44342/api/item/GetMostPopularPersons/3";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
 
     function process(output) {
