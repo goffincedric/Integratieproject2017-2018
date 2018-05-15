@@ -154,16 +154,12 @@
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
-              <div class="row">
+             
                 <h6 class="c-grey-900">Sentiment analyse top politici</h6>
-               <a id="dl" download="Canvas.png"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+                 <a id="download" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
                 <i style="top: 30px; right: 50px;opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i> 
-              </div>
-
-
-            </div>
+           </div>
             <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table;">
-
               <div class="loader loader-6" id="loader-1" style="display:table-cell; vertical-align:middle; text-align:center">
                 <span></span>
                 <span></span>
@@ -174,10 +170,9 @@
             </div>
 
           </div>
-
+            </div>
         </div>
-      </div>
-
+     
 
 
       <div class="masonry-item col-md-6">
@@ -186,7 +181,7 @@
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending hashtags</h6>
 
-              <a id="dl2" download="Canvas.png"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <a id="dl2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
               <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
             </div>
             <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
@@ -208,7 +203,7 @@
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending Mentions</h6>
-              <a id="dl3" download="Canvas.png"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <a id="dl3" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
               <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
             </div>
             <div class="layer w-100 p-20" style="min-height:350px;max-height:350px;display:table;">
@@ -230,7 +225,7 @@
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top persons</h6>
-              <a id="dl4" download="Canvas.png"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <a id="dl4" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
               <i style="top: 30px; right: 50px;  opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i>
             </div>
             <div class="layer w-100 p-20" style="min-height:350px; max-height:350px; display:table;">
@@ -325,21 +320,22 @@
 <script>
 
 
-  var canvas = document.getElementById("evol");
+  var canvas = document.getElementById("dougnut-chart");
 
-    function dlCanvas() {
-      var dt = canvas.toDataURL('image/png');
-      this.href = dt.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-      dt        = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
 
-      this.href = dt;
+  function dlCanvas() {
+ 
+    var image = document.getElementById("evol").toDataURL("image/png")
+      .replace("image/jpg", "image/octet-stream");
+    download.setAttribute("href", image);
+ 
   };
 
 
-  document.getElementById("dl").addEventListener('click', dlCanvas(), false);
-  document.getElementById("dl2").addEventListener('click', dlCanvas($("#doughnut-chart")), false);
-  document.getElementById("dl3").addEventListener('click', dlCanvas($("#pie-chart")), false);
-  document.getElementById("dl4").addEventListener('click', dlCanvas($("#bar2-chart")), false);
+  $("#download").on('click', function () {
+    dlCanvas();
+  });
+
 
   function makeAjaxCall(url, methodType) {
     var promiseObj = new Promise(function (resolve, reject) {
