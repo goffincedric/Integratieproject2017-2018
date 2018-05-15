@@ -1,5 +1,5 @@
 ﻿<div class="row">
-    <div class="col-sm-6 col-sm-offset-2" style="margin:auto">
+    <div class="col-sm-8 col-sm-offset-2" style="margin:auto">
         <!--      Wizard container        -->
         <div class="wizard-container">
             <div class="card wizard-card" data-color="blue" id="wizard">
@@ -62,10 +62,16 @@
                                     <h4 class="info-text">Selecteer hier welke <span id="soort"></span> u wilt visualiseren.</h4>
                                 </div>
                                 <div class="col-sm-12">
-                                    <select id="locality-dropdown"></select>
+                                    <div class="row justify-content-md-center">
+                                        <div class="col-sm-12">
+                                            <h5 class="info-text">Zoek een item die u wilt toevoegen</h5>
+                                        </div>
+                                        <select class="form-control" id="locality-dropdown"></select>
+                                    </div>
                                 </div>
-                                <div class="row">
-                                    <input type='button' id="add-soort" class='btn btn-add btn-fill btn-primary btn-wd' name='add' value='Add' style="background-color: #00bcd4">
+                                <div class="col-sm-12">
+                                    <div id="cardholder" class="row">
+                                    </div>
                                 </div>
                             </div>
                         </div>
