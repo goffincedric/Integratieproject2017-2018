@@ -96,29 +96,6 @@ namespace UI_MVC.Controllers.API
             return Ok(profileAlert);
         }
 
-
-
-        //// GET: api/Account/5
-        //public IHttpActionResult Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST: api/Account
-        //public IHttpActionResult Post([FromBody]string value)
-        //{
-        //}
-
-        //// PUT: api/Account/5
-        //public IHttpActionResult Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE: api/Account/5
-        //public IHttpActionResult Delete(int id)
-        //{
-        //}
-
         [HttpGet]
         public IHttpActionResult GetUserRate()
         {

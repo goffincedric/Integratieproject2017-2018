@@ -268,7 +268,6 @@
   <ItemGroup>
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fa.css" />
     <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\404.png" />
@@ -297,14 +296,14 @@
     <Content Include="Content\Images\Themes\zorg.png" />
     <Content Include="Content\Images\Users\user.png" />
     <Content Include="Content\Images\question-mark.png" />
-    <Content Include="Content\Styling\grid2\gridstack-extra.css" />
-    <Content Include="Content\Styling\grid2\gridstack.css" />
-    <Content Include="Content\Styling\wizard\material-bootstrap-wizard.css" />
+    <Content Include="Content\Styling\Grid\gridstack-extra.css" />
+    <Content Include="Content\Styling\Grid\gridstack.css" />
+    <Content Include="Content\Styling\Wizard\material-bootstrap-wizard.css" />
     <Content Include="Scripts\account\custom.js" />
     <Content Include="Scripts\charts\Chart.min.js" />
     <Content Include="Scripts\contact.js" />
-    <Content Include="Content\Styling\style.css" />
-    <Content Include="Content\Styling\contact.css" />
+    <Content Include="Content\Styling\Style.css" />
+    <Content Include="Content\Styling\Contact.css" />
     <Content Include="Content\Styling\FAQ.css" />
     <Content Include="Content\Theme\DarkMode.css" />
     <Content Include="Content\Theme\FutureMode.css" />
