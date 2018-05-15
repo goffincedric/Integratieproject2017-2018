@@ -23,7 +23,7 @@ namespace PB.BL.Interfaces
 
         IEnumerable<Element> GetElements();
         Element GetElement(int elementId);
-        Element AddElement(Zone zone, Comparison comparison, int x, int y, int width, int height, bool isDraggable, bool isFinished);
+        Element AddElement(Zone zone, int x, int y, int width, int height, bool isDraggable, bool isFinished);
         void ChangeElement(Element element);
         void RemoveElement(int elementId);
     }

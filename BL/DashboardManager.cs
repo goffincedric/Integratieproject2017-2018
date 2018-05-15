@@ -178,13 +178,12 @@ namespace PB.BL
             return DashboardRepo.ReadElement(elementId);
         }
 
-        public Element AddElement(Zone zone, Comparison comparison, int x, int y, int width, int height, bool isDraggable = true, bool isFinished = false)
+        public Element AddElement(Zone zone, int x, int y, int width, int height, bool isDraggable = true, bool isFinished = false)
         {
             InitNonExistingRepo();
             Element element = new Element()
             {
                 Zone = zone,
-                Comparison = comparison,
                 X = x,
                 Y = y,
                 Width = width,

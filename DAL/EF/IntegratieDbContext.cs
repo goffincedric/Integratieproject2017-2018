@@ -119,11 +119,6 @@ namespace PB.DAL.EF
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Item>()
-                .HasMany(t => t.Comparisons)
-                .WithMany(t => t.Items)
-                .Map(m => { m.ToTable("tblComparisonItem"); });
-
-            modelBuilder.Entity<Item>()
                 .HasMany(t => t.Keywords)
                 .WithMany(t => t.Items)
                 .Map(m => { m.ToTable("tblKeywordItem"); });
@@ -211,11 +206,6 @@ namespace PB.DAL.EF
                 .WithRequired(e => e.Zone)
                 .HasForeignKey(e => e.ZoneId)
                 .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<Comparison>()
-                .HasMany(c => c.Elements)
-                .WithOptional(e => e.Comparison)
-                .WillCascadeOnDelete(true);        // FOREIGN KEY?
 
             //identity tables
             modelBuilder.Entity<Profile>().ToTable("tblProfile");

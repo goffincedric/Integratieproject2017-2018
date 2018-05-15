@@ -111,7 +111,6 @@ namespace UI_MVC.Controllers.API
             if (element.ElementId != id) return BadRequest();
             Element newElement = DashboardMgr.GetElement(id);
             if (newElement == null) return NotFound();
-            element.Comparison = newElement.Comparison;
             Zone newZone = DashboardMgr.GetZone(element.ZoneId);
             if (newZone == null) return NotFound();
             if (!newZone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
@@ -144,7 +143,7 @@ namespace UI_MVC.Controllers.API
             element.Zone = zone;
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            element = DashboardMgr.AddElement(zone, element.Comparison, element.X, element.Y, element.Width, element.Height, element.IsDraggable);
+            element = DashboardMgr.AddElement(zone, element.X, element.Y, element.Width, element.Height, element.IsDraggable);
             zone.Elements.Add(element);
 
             return Ok(element); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte element
