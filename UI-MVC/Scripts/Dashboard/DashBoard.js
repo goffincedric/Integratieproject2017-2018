@@ -55,7 +55,7 @@ $(function () {
             })
 
             grid.data('gridstack').removeWidget(Element);
-        }
+        };
 
         //done
         addElement = function (grid) {
@@ -70,7 +70,7 @@ $(function () {
 
             grid.data('gridstack').removeWidget(removeElement);
 
-            if (ZoneId == 'x') {
+            if (ZoneId === 'x') {
                 var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
 
                 ZoneId = $.ajax({
@@ -98,7 +98,7 @@ $(function () {
                 $newdiv.append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
                 var newZone = $('#mainContent').append($newdiv);
 
-                var addZone = $('#mainContent').append(addZone);
+                addZone = $('#mainContent').append(addZone);
 
                 $('.grid-stack').gridstack(options);
 
@@ -122,7 +122,8 @@ $(function () {
                 plusElement.children('.grid-stack-item-content').children('div').children('img').on("click", function () {
                     addElement(addZone);
                 });
-            }
+            };
+
             var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), 0, 0, 3, 3, true);
             var X = newElement.data().gsX;
             var Y = newElement.data().gsY;
@@ -160,11 +161,86 @@ $(function () {
                 Wizard.hide();
             });
 
+            var data = null;
+            var onderwerp = null;
+            var datasoort = null;
+            var output = null;
+
+            $('.btn-next').on('click', function () {
+                switch ($('input:checked').attr('id')) {
+                    case 'person':
+                        datasoort = null;
+                        data = $.ajax({
+                            async: false,
+                            type: 'GET',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/item/getperson"
+                        }).responseJSON;
+                        onderwerp = 'politieker';
+                        break;
+                    case 'organisation':
+                        datasoort = null;
+                        data = $.ajax({
+                            async: false,
+                            type: 'GET',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/item/getorganisation"
+                        }).responseJSON;
+                        onderwerp = 'organisatie';
+                        break;
+                    case 'theme':
+                        datasoort = null;
+                        data = $.ajax({
+                            async: false,
+                            type: 'GET',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/item/gettheme"
+                        }).responseJSON;
+                        onderwerp = 'thema';
+                        break;
+                }
+
+                $('#soort').text(onderwerp + 's');
+
+                let dropdown = $('#locality-dropdown');
+
+                datasoort = {
+                    items: []
+                };
+
+                $('#output').off('change');
+                $('#output').on('change', function () {
+                    output = $('#output option:selected').text();
+                    console.log(output);
+                });
+                $('#add-soort').off('click');
+                $('#add-soort').on('click', function () {
+                    datasoort.items.push($.ajax({
+                        async: false,
+                        type: 'GET',
+                        headers: Headers,
+                        url: "https://localhost:44342/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
+                    }).responseJSON);
+                    console.log(datasoort.items);
+                });
+
+                dropdown.empty();
+
+                dropdown.append('<option selected="true" disabled>selecteer een '+onderwerp+'</option>');
+                dropdown.prop('selectedIndex', 0);
+
+                // Populate dropdown with list of data
+
+                $.each(data, function (key, entry) {
+                    dropdown.append($('<option></option>').attr('value', entry.ItemId).text(entry.Name));
+                });
+            })
+
             $('.btn-finish').off('click');
             $('.btn-finish').on('click', function () {
                 var GraphType = 0;
                 $('input:checked').attr('id');
-                switch ($('input:checked').attr('id')){
+                switch ($('input:checked').attr('id')) {
                     case 'bar': GraphType = 0;
                         break;
                     case 'pie': GraphType = 2;
@@ -173,7 +249,7 @@ $(function () {
                 Wizard.hide();
 
                 //edit later
-                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "'+ GraphType +'"}');
+                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '"}');
 
                 $.ajax({
                     async: false,
@@ -187,7 +263,7 @@ $(function () {
                 chooseChart(GraphType, newElement.children('#Element-' + ElementId).children('canvas'), 25);
             });
             addingElement = false;
-        }
+        };
 
         editZone = function (grid) {
             console.log(grid);
@@ -219,9 +295,9 @@ $(function () {
 
                 titleTag.remove();
 
-                input.width(inputwidth +10);
+                input.width(inputwidth + 10);
 
-                if (e.which == 13) {
+                if (e.which === 13) {
                     newTitle = $(this).val();
 
                     Zone = JSON.parse('{ "Title": "' + newTitle + '", "ZoneId": "' + ZoneId + '"}');
@@ -240,7 +316,7 @@ $(function () {
                     $(this).replaceWith(titleTag);
                 }
             });
-        }
+        };
 
         removeZone = function (grid) {
             var ZoneId = grid.attr('class');
@@ -255,7 +331,7 @@ $(function () {
             })
 
             $(grid).remove();
-        }
+        };
 
         changeElements = function (elements, grid) {
             if (!addingElement) {
@@ -270,9 +346,9 @@ $(function () {
                     var ElementId = element.el.children('div').attr('id');
                     ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
 
-                    if (ElementId != '+') {
-                        if (ZoneId == 'x') {
-                            
+                    if (ElementId !== '+') {
+                        if (ZoneId === 'x') {
+
                             var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
 
                             ZoneId = $.ajax({
@@ -319,7 +395,7 @@ $(function () {
                             $newdiv.append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
                             var newZone = $('#mainContent').append($newdiv);
 
-                            var addZone = $('#mainContent').append(addZone);
+                            addZone = $('#mainContent').append(addZone);
 
                             $('.grid-stack').gridstack(options);
 
@@ -351,7 +427,7 @@ $(function () {
 
                             addZone.data('gridstack').move($('.add-zone').children('div').children('div').children('div'), 0, 0);
 
-                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-'+ElementId+'"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), Element.X, Element.Y, Element.Width, Element.Height, true);
+                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), Element.X, Element.Y, Element.Width, Element.Height, true);
 
                             grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
@@ -366,7 +442,7 @@ $(function () {
 
                         var oldZoneId = oldElement.ZoneId;
 
-                        var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove + '", "ZoneId": "' + ZoneId + '", "GraphType": "' + oldElement.GraphType + '"}');
+                        Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove + '", "ZoneId": "' + ZoneId + '", "GraphType": "' + oldElement.GraphType + '"}');
 
                         $.ajax({
                             async: false,
@@ -377,7 +453,7 @@ $(function () {
                             url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
                         })
 
-                        if (oldZoneId != ZoneId) {
+                        if (oldZoneId !== ZoneId) {
                             console.log($('#Element-' + ElementId).children('canvas'));
 
                             chooseChart(oldElement.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
@@ -385,7 +461,7 @@ $(function () {
                     }
                 }
             }
-        }
+        };
 
         //done
         clearGrid = function (grid) {
@@ -398,7 +474,7 @@ $(function () {
             clearGrid(grid.data('gridstack'));
             var ZoneId = grid.attr('id');
             ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
-            if (ZoneId == 'x') {
+            if (ZoneId === 'x') {
                 var plusElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
                 plusElement.resizable(false);
@@ -433,7 +509,7 @@ $(function () {
                     });
                 });
             }
-        }
+        };
 
         chooseChart = function (type, can, id) {
             switch (type) {
@@ -560,10 +636,6 @@ $(function () {
                 values.push(count[keys[i]] / 10);
             }
 
-            //var can = $('#doughnut-chart');
-            //console.log(can.parent().attr('Style', 'width: 400px; height: 350px'));
-            //can.attr('Style', 'width: 300px; height: 300px');
-
             new Chart(can, {
                 type: 'doughnut',
                 data: {
@@ -668,14 +740,14 @@ $(function () {
                     scales: {
                         xAxes: [
                             {
-                                display:false
+                                display: false
                             }
                         ]
                     }
 
                 }
             });
-        }
+        };
 
         $(".grid-stack").each(function () {
             this.grid = $(this).data('gridstack');

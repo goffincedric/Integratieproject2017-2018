@@ -266,6 +266,7 @@
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fa.css" />
     <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
@@ -343,6 +344,7 @@
     <Content Include="Scripts\wizard\jquery.bootstrap.js" />
     <Content Include="Scripts\wizard\jquery.validate.min.js" />
     <Content Include="Scripts\wizard\material-bootstrap-wizard.js" />
+    <Content Include="Scripts\wizard\Wizard.js" />
     <Content Include="Scripts\wordcloud\wordcloud.js" />
     <Content Include="Scripts\wordcloud\zingchart-wordcloud.min.js" />
     <Content Include="Scripts\wordcloud\zingchart.min.js" />

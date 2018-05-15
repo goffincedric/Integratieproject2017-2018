@@ -38,7 +38,7 @@
             background-color: grey;
         }
 
-        #Wizard{
+        #Wizard {
             position: fixed;
             min-height: 100%;
             max-width: 100%;
@@ -95,7 +95,7 @@
 <!--  Plugin for the Wizard -->
 <script src="~/Scripts/wizard/material-bootstrap-wizard.js" defer></script>
 <script src="~/Scripts/wizard/jquery.validate.min.js" defer></script>
-
+<!--  Chartjs -->
 <script src="~/Scripts/charts/Chart.min.js"></script>
 
 <script>
@@ -128,48 +128,48 @@
 
 <script>
 
-  function drawPie(id) {
+    function drawPie(id) {
 
-    var count2 = "";
-    count2 = $.ajax({
-      async: false,
-      type: 'GET',
-      dataType: 'json',
-      url: "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id,
-      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseJSON
+        var count2 = "";
+        count2 = $.ajax({
+            async: false,
+            type: 'GET',
+            dataType: 'json',
+            url: "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id,
+            headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
+        }).responseJSON
 
-    var keys = [];
-    keys = Object.keys(count2);
-    var label = [];
-    var values = [];
+        var keys = [];
+        keys = Object.keys(count2);
+        var label = [];
+        var values = [];
 
-    for (var i = 0; i < keys.length; i++) {
-      label.push(keys[i]);
-      values.push(count2[keys[i]] / 10);
+        for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(count2[keys[i]] / 10);
+        }
+
+        var can = $('#pie-chart');
+        console.log(can.parent().attr('Style', 'width: 400px; height: 250'));
+        //can.attr('Style', 'width: 300px; height: 300px');
+
+        new Chart(can, {
+            type: 'pie',
+            data: {
+                labels: label,
+                datasets: [{
+                    backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                    data: values
+                }]
+            },
+            options: {
+
+            }
+        });
     }
 
-    var can = $('#pie-chart');
-    console.log(can.parent().attr('Style', 'width: 400px; height: 250'));
-    //can.attr('Style', 'width: 300px; height: 300px');
-
-    new Chart(can, {
-      type: 'pie',
-      data: {
-        labels: label,
-        datasets: [{
-          backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
-          data: values
-        }]
-      },
-      options: {
-
-      }
+    $(document).ready(function () {
+        drawPie(getTopTrending());
     });
-  }
-
-  $(document).ready(function () {
-    drawPie(getTopTrending());
-  });
 
 </script>

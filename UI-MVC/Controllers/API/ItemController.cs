@@ -279,54 +279,62 @@ namespace UI_MVC.Controllers.API
 
             }
 
-            double allDays = records.OrderByDescending(p => p.Date.Date).GroupBy(p => p.Date.Date).ToList().Take(4).Average(p => p.ToList().Count());
-            DateTime last = records.OrderByDescending(p => p.Date).First().Date.Date;
-            double lastDay = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Count();
-            string stijging = "";
-            stijging = Math.Round(((lastDay - allDays) / allDays) * 100, 2).ToString();
-            if (Double.Parse(stijging) < 0)
+            if (records is null || records.Count() == 0)
             {
-                stijging = stijging + "%";
+                return StatusCode(HttpStatusCode.NoContent);
             }
             else
             {
-                stijging = "+" + stijging + "%";
+
+
+                double allDays = records.OrderByDescending(p => p.Date.Date).GroupBy(p => p.Date.Date).ToList().Take(4).Average(p => p.ToList().Count());
+                DateTime last = records.OrderByDescending(p => p.Date).First().Date.Date;
+                double lastDay = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Count();
+                string stijging = "";
+                stijging = Math.Round(((lastDay - allDays) / allDays) * 100, 2).ToString();
+                if (Double.Parse(stijging) < 0)
+                {
+                    stijging = stijging + "%";
+                }
+                else
+                {
+                    stijging = "+" + stijging + "%";
+                }
+
+                details.Add("Activiteit", stijging);
+
+                double allDays2 = records.OrderByDescending(p => p.Date.Date).ToList().Take(4).Average((p => p.Sentiment.Objectivity * p.Sentiment.Polarity));
+
+                double lastDay2 = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Average((p => p.Sentiment.Objectivity * p.Sentiment.Polarity));
+                string stijging2 = "";
+                stijging2 = Math.Round(((lastDay2 - allDays2) / allDays2) * 100, 2).ToString();
+                if (Double.Parse(stijging2) < 0)
+                {
+                    stijging2 = stijging2 + "%";
+                }
+                else
+                {
+                    stijging2 = "+" + stijging2 + "%";
+                }
+
+                details.Add("Positiviteit", stijging2);
+
+                double allDays3 = records.OrderByDescending(p => p.Date.Date).Take(10).Where(p => p.Retweet.Equals(true)).Count();
+
+                double lastDay3 = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Where(p => p.Retweet.Equals(true)).Count();
+                string stijging3 = "";
+                stijging3 = Math.Round(((lastDay3 - allDays3) / allDays3) * 100, 2).ToString();
+                if (Double.Parse(stijging3) < 0)
+                {
+                    stijging3 = stijging3 + "%";
+                }
+                else
+                {
+                    stijging3 = "+" + stijging3 + "%";
+                }
+                details.Add("Retweet", stijging3);
             }
-
-            details.Add("Activiteit", stijging);
-
-            double allDays2 = records.OrderByDescending(p => p.Date.Date).ToList().Take(4).Average((p => p.Sentiment.Objectivity * p.Sentiment.Polarity));
-
-            double lastDay2 = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Average((p => p.Sentiment.Objectivity * p.Sentiment.Polarity));
-            string stijging2 = "";
-            stijging2 = Math.Round(((lastDay2 - allDays2) / allDays2) * 100, 2).ToString();
-            if (Double.Parse(stijging2) < 0)
-            {
-                stijging2 = stijging2 + "%";
-            }
-            else
-            {
-                stijging2 = "+" + stijging2 + "%";
-            }
-
-            details.Add("Positiviteit", stijging2);
-
-            double allDays3 = records.OrderByDescending(p => p.Date.Date).Take(10).Where(p => p.Retweet.Equals(true)).Count();
-
-            double lastDay3 = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Where(p => p.Retweet.Equals(true)).Count();
-            string stijging3 = "";
-            stijging3 = Math.Round(((lastDay3 - allDays3) / allDays3) * 100, 2).ToString();
-            if (Double.Parse(stijging3) < 0)
-            {
-                stijging3 = stijging3 + "%";
-            }
-            else
-            {
-                stijging3 = "+" + stijging3 + "%";
-            }
-            details.Add("Retweet", stijging3);
-
-            if (details.Count() == 0) return StatusCode(HttpStatusCode.NotFound);
+            if (details.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(details);
         }
         #endregion
@@ -501,6 +509,64 @@ namespace UI_MVC.Controllers.API
             }
         }
 
+        [HttpGet]
+        public IHttpActionResult GetAges(int id)
+        {
+            Item item = ItemMgr.GetItem(id);
+            IEnumerable<Record> records = null;
+            Dictionary<string, int> ages = new Dictionary<string, int>();
+            if (item is Person person)
+            {
+                 records= person.Records;
+               
+
+               
+            }else if(item is Organisation organisation)
+            {
+                records = organisation.People.SelectMany(p => p.Records).ToList();
+
+            }
+            else if(item is Theme theme)
+            {
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
+                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+            }
+            else
+            {
+                return NotFound();
+            }
+            records.GroupBy(p => p.RecordProfile.Age).ToList().ForEach(p => ages.Add(p.ToList().First().RecordProfile.Age, p.ToList().Count()));
+            return Ok(ages);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetGender(int id)
+        {
+            Item item = ItemMgr.GetItem(id);
+            IEnumerable<Record> records = null;
+            Dictionary<string, int> ages = new Dictionary<string, int>();
+            if (item is Person person)
+            {
+                records = person.Records;
+
+            }
+            else if (item is Organisation organisation)
+            {
+                records = organisation.People.SelectMany(p => p.Records).ToList();
+
+            }
+            else if (item is Theme theme)
+            {
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
+                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+            }
+            else
+            {
+                return NotFound();
+            }
+            records.GroupBy(p => p.RecordProfile.Gender).ToList().ForEach(p => ages.Add(p.ToList().First().RecordProfile.Gender, p.ToList().Count()));
+            return Ok(ages);
+        }
 
         [HttpGet]
         public IHttpActionResult GetTrendingUrl(int id)

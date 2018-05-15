@@ -1,9 +1,6 @@
 ﻿@model UI_MVC.Models.ThemeEditModel
 
 
-
-
-
 <div class="bgc-white p-20 bd">
   <h4 class="fw-300 c-grey-900 mB-40">Create new theme</h4>
   @using (Html.BeginForm("ThemaPartialCreate", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -35,16 +32,6 @@
             @*</div>*@
           </div>
         </div>
-      </div>
-      <div class="col-6">
-        <div class="form-group">
-          @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-          <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-          </div>
-        </div>
-
         <div class="form-group">
           <label class="control-label col-md-2">Upload an icon</label>
           <div class="col-md-10">
@@ -55,10 +42,43 @@
           </div>
         </div>
       </div>
+      <div class="col-6">
+        <div class="form-group">
+          @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+          <div class="col-md-10">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+          </div>
+        </div>
 
-    </div>
-    
 
+        <div class="col-6">
+          <div class="form-group">
+            <label class="control-label col-md-2">Add keywords</label>
+            <div class="col-md-10">
+              <div class="row w-100">
+                <select id="FromJson" class="form-control">
+                  <option disabled>Kies...</option>
+                </select>
+                <button id="add" class="btn btn-primary btn-sm">Add</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="form-group">
+            <label class="control-label col-md-2">Toegevoegde keywords</label>
+            <div class="col-md-12">
+              <div class="row">
+                <div id="keywordslist"> </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
     
 
     <div class="form-group">
@@ -71,7 +91,37 @@
 }
   </div>
 
+
   <script>
+
+    $("#add").click(function () {
+     var text = $("#FromJson").text;
+      $("#keywordslist").append('<p>' + text + '</p>');
+      //$('#FromJson option:eq(0)').prop('selected', 'selected')​​​;​
+    });
+ 
+
+    var tmp = "";
+
+  tmp = $.ajax({
+    async: false,
+    type: 'GET',
+    dataType: 'json',
+    headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
+    url: "https://localhost:44342/api/item/GetKeywords"
+  }).responseJSON;
+
+
+
+  for (var i = 0; i < tmp.length; i++) {
+
+      $("#FromJson").append($("<option></option>").val(tmp[i].KeywordId).html(tmp[i].Name));
+    }
+
+    //$("FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
+
+  
+
     $(document).ready(function () {
       $("#IsHot").change(function () {
         if ($("#IsHot").is(":checked")) {
