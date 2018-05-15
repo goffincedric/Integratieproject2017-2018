@@ -28,7 +28,7 @@ namespace PB.BL.Domain.Items
 
         public virtual List<Subplatform> SubPlatforms { get; set; }
         public List<Keyword> Keywords { get; set; }
-        public List<Comparison> Comparisons { get; set; }
+        public List<Element> Elements { get; set; }
         public List<Profile> SubscribedProfiles { get; set; }
         public List<Alert> Alerts { get; set; }
     }
