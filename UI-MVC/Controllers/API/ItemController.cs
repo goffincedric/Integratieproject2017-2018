@@ -428,7 +428,7 @@ namespace UI_MVC.Controllers.API
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
                 List<string> mentions = new List<string>();
-                records.SelectMany(r => r.Mentions).Distinct().OrderByDescending(m => m.Records.Count).Take(12).ToList().ForEach(p => mentions.Add(p.Name));
+                records.SelectMany(r => r.Mentions).Distinct().OrderByDescending(m => m.Records.Count).Take(8).ToList().ForEach(p => mentions.Add(p.Name));
                 return Ok(mentions);
             }
             return NotFound();
@@ -442,7 +442,7 @@ namespace UI_MVC.Controllers.API
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
                 List<string> hashtags = new List<string>();
 
-                records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h => h.Records.Count).Take(12).ToList().ForEach(p => hashtags.Add(p.HashTag));
+                records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h => h.Records.Count).Take(8).ToList().ForEach(p => hashtags.Add(p.HashTag));
                 return Ok(hashtags);
             }
             return NotFound();
@@ -623,18 +623,33 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetTrendingUrl(int id)
         {
-            if (ItemMgr.GetItem(id) is Person)
+            Item item = ItemMgr.GetItem(id);
+            IEnumerable<Record> records = null;
+            List<string> urls = new List<string>();
+
+            if (item is Person person)
             {
-                IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
-                List<string> urls = new List<string>();
+                records = person.Records;
+
+            }
+            else if (item is Organisation organisation)
+            {
+                records = organisation.People.SelectMany(p => p.Records).ToList();
+
+            }
+            else if (item is Theme theme)
+            {
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
+                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+            }
+            
+               
+
                 records.SelectMany(r => r.URLs).Distinct().ToList().ForEach(p => urls.Add(p.Link));
                 urls.Distinct();
+            if (urls is null || urls.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
                 return Ok(urls);
-            }
-            else
-            {
-                return NotFound();
-            }
+         
         }
 
         [HttpGet]

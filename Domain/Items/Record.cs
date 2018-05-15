@@ -22,7 +22,8 @@ namespace PB.BL.Domain.Items
 
         public virtual List<Hashtag> Hashtags { get; set; }
         public virtual List<Mention> Mentions { get; set; }
-        public List<Url> URLs { get; set; }
+
+        public virtual List<Url> URLs { get; set; }
         public List<Theme> Themes { get; set; }
         public List<Person> Persons { get; set; }
         public virtual List<Word> Words { get; set; }
