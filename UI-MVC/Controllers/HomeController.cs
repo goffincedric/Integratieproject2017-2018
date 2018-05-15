@@ -1,5 +1,4 @@
 using Microsoft.AspNet.Identity;
-using Newtonsoft.Json;
 using PB.BL;
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Items;
@@ -7,11 +6,8 @@ using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Routing;
 

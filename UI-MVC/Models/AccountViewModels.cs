@@ -44,13 +44,6 @@ namespace UI_MVC.Models
         public bool RememberMe { get; set; }
     }
 
-    public class ForgotViewModel
-    {
-        [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-    }
-
     public class LoginViewModel
     {
 
@@ -124,10 +117,6 @@ namespace UI_MVC.Models
     {
         public List<Alert> Alerts { get; set; }
 
-        //public AlertsViewModel(Profile profile)
-        //{
-        //    Alerts = profile.Alerts;
-        //}
     }
 
     public class AccountEditModel
@@ -136,19 +125,15 @@ namespace UI_MVC.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
-
         [Required]
         [Display(Name = "Username")]
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        //public string Telephone { get; set; }
         public string Street { get; set; }
         public string PostalCode { get; set; }
         public string City { get; set; }
-        //public string BirthDate { get; set; }
         public Province Province { get; set; }
-        //public Gender Gender { get; set; }
         public HttpPostedFileBase file { get; set; }
 
         public AccountEditModel()
@@ -162,14 +147,10 @@ namespace UI_MVC.Models
             UserName = profile.UserName;
             FirstName = profile.UserData.FirstName;
             LastName = profile.UserData.LastName;
-            //Telephone = profile.UserData.Telephone;
             Street = profile.UserData.Street;
             PostalCode = profile.UserData.PostalCode;
             City = profile.UserData.City;
-            //BirthDate = profile.UserData.BirthDate.Date.ToString("dd/MM/yyyy");
             Province = profile.UserData.Province;
-            //Gender = profile.UserData.Gender;
-
         }
 
         public Profile GetProfile()
@@ -180,13 +161,11 @@ namespace UI_MVC.Models
                 {
                     LastName = LastName,
                     FirstName = FirstName,
-                    //Telephone = Telephone,
-                    //Gender = Gender,
                     Street = Street,
                     City = City,
                     Province = Province,
                     PostalCode = PostalCode,
-                    //BirthDate = DateTime.ParseExact(BirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)
+
                 },
                 Email = Email
             };

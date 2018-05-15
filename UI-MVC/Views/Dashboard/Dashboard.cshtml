@@ -7,45 +7,45 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
 @section styles{
-    <style type="text/css">
-      #grid1 {
-        <!-- border: 3px solid black; -->
-        padding: 3px;
-        margin-bottom: 10px;
-      }
+  <style type="text/css">
+    #grid1 {
+      <!-- border: 3px solid black; -->
+      padding: 3px;
+      margin-bottom: 10px;
+    }
 
-      #grid2 {
-        <!-- border: 3px solid red; -->
-        margin-top: 5px;
-      }
+    #grid2 {
+      <!-- border: 3px solid red; -->
+      margin-top: 5px;
+    }
 
-      .grid-stack-item-content {
-        color: #2c3e50;
-        text-align: center;
-        background-color: #18bc9c;
-      }
+    .grid-stack-item-content {
+      color: #2c3e50;
+      text-align: center;
+      background-color: #18bc9c;
+    }
 
-      #grid2 .grid-stack-item-content {
-        background-color: grey;
-      }
+    #grid2 .grid-stack-item-content {
+      background-color: grey;
+    }
 
-      #grid1 .grid-stack-item-content {
-        background-color: grey;
-      }
+    #grid1 .grid-stack-item-content {
+      background-color: grey;
+    }
 
-      #Wizard {
-        position: fixed;
-        min-height: 100%;
-        max-width: 100%;
-        left: 0;
-        top: 0;
-        z-index: 1;
-        margin: auto;
-        display: none;
-        background-color: rgba(128, 128, 128, .5);
-      }
-    </style>
-  }
+    #Wizard {
+      position: fixed;
+      min-height: 100%;
+      max-width: 100%;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      margin: auto;
+      display: none;
+      background-color: rgba(128, 128, 128, .5);
+    }
+  </style>
+}
 
 <main class="main-content bgc-grey-100" id="dashboard-@Model.DashboardId">
   <div id="mainContent">
@@ -75,23 +75,23 @@
 </main>
 
 <!--   Dashboard   -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
+<script src="~/Scripts/Dashboard/jquery-ui.js"></script>
+<script src="~/Scripts/Dashboard/lodash.min.js"></script>
 
-<script src="~/Scripts/grid2/gridstack.js"></script>
-<script src="~/Scripts/grid2/gridstack.jQueryUI.js"></script>
+<script src="~/Scripts/Grid/gridstack.js"></script>
+<script src="~/Scripts/Grid/gridstack.jQueryUI.js"></script>
 
 @Scripts.Render("~/bundles/Dashboard")
 
 <!--   Wizard   -->
 <!--   Core JS Files   -->
-<script src="~/Scripts/wizard/bootstrap.min.js" defer></script>
-<script src="~/Scripts/wizard/jquery.bootstrap.js" defer></script>
+<script src="~/Scripts/Wizard/bootstrap.min.js" defer></script>
+<script src="~/Scripts/Wizard/jquery.bootstrap.js" defer></script>
 <!--  Plugin for the Wizard -->
-<script src="~/Scripts/wizard/material-bootstrap-wizard.js" defer></script>
-<script src="~/Scripts/wizard/jquery.validate.min.js" defer></script>
+<script src="~/Scripts/Wizard/material-bootstrap-wizard.js" defer></script>
+<script src="~/Scripts/Wizard/jquery.validate.min.js" defer></script>
 <!--  Chartjs -->
-<script src="~/Scripts/charts/Chart.min.js"></script>
+<script src="~/Scripts/Charts/Chart.min.js"></script>
 
 <script>
   $(document).ready(function () {
@@ -124,7 +124,6 @@
 <script>
 
   function drawPie(id) {
-
     var count2 = "";
     count2 = $.ajax({
       async: false,
@@ -143,11 +142,8 @@
       label.push(keys[i]);
       values.push(count2[keys[i]] / 10);
     }
-
     var can = $('#pie-chart');
     console.log(can.parent().attr('Style', 'width: 400px; height: 250'));
-    //can.attr('Style', 'width: 300px; height: 300px');
-
     new Chart(can, {
       type: 'pie',
       data: {

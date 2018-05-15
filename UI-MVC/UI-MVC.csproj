@@ -323,6 +323,8 @@
     <Content Include="Scripts\bundle.js" />
     <Content Include="Scripts\Dashboard\DashBoard.js" />
     <Content Include="Scripts\Dashboard\DashboardControl.js" />
+    <Content Include="Scripts\Dashboard\jquery-ui.js" />
+    <Content Include="Scripts\Dashboard\lodash.min.js" />
     <Content Include="Scripts\grid2\gridstack.jQueryUI.js" />
     <Content Include="Scripts\grid2\gridstack.js" />
     <Content Include="Scripts\AccountControl.js" />
@@ -412,7 +414,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Persons\" />
     <Folder Include="Content\Images\Subplatform\" />
-    <Folder Include="Subplatforms\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

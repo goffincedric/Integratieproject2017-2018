@@ -2,14 +2,10 @@
 using PB.BL;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
-using PB.BL.Domain.Settings;
 using PB.DAL.EF;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
 {
