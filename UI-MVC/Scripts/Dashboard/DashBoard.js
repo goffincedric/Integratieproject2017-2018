@@ -30,6 +30,21 @@ $(function () {
     $('.grid-stack').gridstack(options);
 
     new function () {
+        function getRotationDegrees(obj) {
+            var matrix = obj.css("-webkit-transform") ||
+                obj.css("-moz-transform") ||
+                obj.css("-ms-transform") ||
+                obj.css("-o-transform") ||
+                obj.css("transform");
+            if (matrix !== 'none') {
+                var values = matrix.split('(')[1].split(')')[0].split(',');
+                var a = values[0];
+                var b = values[1];
+                var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            } else { angle = 0; }
+            return angle < 0 ? angle + 360 : angle;
+        }
+
         //done
         findElements = function (id) {
             var ZoneData = $.ajax({
@@ -210,6 +225,7 @@ $(function () {
                 };
 
                 var cardnumber = 1;
+                $('#locality-dropdown').off('change');
                 $('#locality-dropdown').on('change', function () {
                     if (cardnumber <= 5) {
                         $('#cardholder').append($('<div id="card' + cardnumber + '" class="col-sm-2-5 pX-5">' +
@@ -428,7 +444,7 @@ $(function () {
                             $newdiv.children('h4').append($('<span class="delete-zone"></span>'));
                             $newdiv.children('h4').children('.delete-zone').append($('<i class="ti-trash"></i>'));
                             $newdiv.append($('<div class="DashZone"></div>'));
-                            $newdiv.append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
+                            $newdiv.children('.DashZone').append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
                             var newZone = $('#mainContent').append($newdiv);
 
                             addZone = $('#mainContent').append(addZone);
@@ -441,16 +457,29 @@ $(function () {
 
                             addZone = addZone.children('.add-zone').children('div').children('#zone-x');
 
-                            grid = newZone.children('.zone-' + ZoneId).children('#zone-' + ZoneId);
+                            grid = newZone.children('.zone-' + ZoneId).children('.DashZone').children('#zone-' + ZoneId);
 
                             addZone.data('gridstack').removeWidget($('#Element-' + ElementId).parent());
 
-                            var deletezone = grid.parent().children('h4').children('.delete-zone');
+                            console.log(grid);
 
-                            var editzone = grid.parent().children('h4').children('.edit-zone');
+                            var deletezone = grid.parent().parent().children('h4').children('.delete-zone');
+
+                            var editzone = grid.parent().parent().children('h4').children('.edit-zone');
+
+                            var hidezone = grid.parent().parent().children('h4').children('.arrow-dashboard');
+
+                            console.log(hidezone);
+
+                            hidezone.on('click', function () {
+                                console.log($(this).parent().parent());
+                                $(this).parent().parent().children(".DashZone").toggle(300);
+                                rotation = getRotationDegrees($(this)) + 180;
+                                $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
+                            });
 
                             deletezone.on('click', function () {
-                                removeZone(grid.parent());
+                                removeZone(grid.parent().parent());
                             });
 
                             editzone.on('click', function () {
