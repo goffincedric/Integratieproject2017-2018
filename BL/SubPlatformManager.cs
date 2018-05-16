@@ -334,6 +334,12 @@ namespace PB.BL
             return SubplatformRepo.ReadPage(pageId);
         }
 
+
+        public Page GetPage(string name)
+        {
+            return SubplatformRepo.ReadPage(name);
+        }
+
         public void ChangePage(Page page)
         {
             InitNonExistingRepo();
