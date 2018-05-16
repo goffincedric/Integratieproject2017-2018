@@ -112,21 +112,35 @@ $(function () {
                 $newdiv.children('h4').append($('<span class="delete-zone"></span>'));
                 $newdiv.children('h4').children('.delete-zone').append($('<i class="ti-trash"></i>'));
                 $newdiv.append($('<div class="DashZone"></div>'));
-                $newdiv.append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
+                $newdiv.children('.DashZone').append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
                 var newZone = $('#mainContent').append($newdiv);
 
                 addZone = $('#mainContent').append(addZone);
 
                 $('.grid-stack').gridstack(options);
 
-                grid = newZone.children('.zone-' + ZoneId).children('#zone-' + ZoneId);
+                grid = newZone.children('.zone-' + ZoneId).children('.DashZone').children('#zone-' + ZoneId);
 
-                var deletezone = grid.parent().children('h4').children('.delete-zone');
+                var hidezone = grid.parent().parent().children('h4').children('.arrow-dashboard');
 
-                var editzone = grid.parent().children('h4').children('.edit-zone');
+                addZone.children('.add-zone').children('h4').children('.arrow-dashboard').on('click', function () {
+                    $(this).parent().parent().children(".DashZone").toggle(300);
+                    rotation = getRotationDegrees($(this)) + 180;
+                    $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
+                });
+
+                var deletezone = grid.parent().parent().children('h4').children('.delete-zone');
+
+                var editzone = grid.parent().parent().children('h4').children('.edit-zone');
+
+                hidezone.on('click', function () {
+                    $(this).parent().parent().children(".DashZone").toggle(300);
+                    rotation = getRotationDegrees($(this)) + 180;
+                    $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
+                });
 
                 deletezone.on('click', function () {
-                    removeZone(grid.parent());
+                    removeZone(grid.parent().parent());
                 });
 
                 editzone.on('click', function () {
@@ -487,6 +501,13 @@ $(function () {
 
                             addZone = $('#mainContent').append(addZone);
 
+
+                            addZone.children('.add-zone').children('h4').children('.arrow-dashboard').on('click', function () {
+                                $(this).parent().parent().children(".DashZone").toggle(300);
+                                rotation = getRotationDegrees($(this)) + 180;
+                                $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
+                            });
+
                             $('.grid-stack').gridstack(options);
 
                             grid.on('change', function (e, items) {
@@ -506,8 +527,6 @@ $(function () {
                             var editzone = grid.parent().parent().children('h4').children('.edit-zone');
 
                             var hidezone = grid.parent().parent().children('h4').children('.arrow-dashboard');
-
-                            console.log(hidezone);
 
                             hidezone.on('click', function () {
                                 console.log($(this).parent().parent());
