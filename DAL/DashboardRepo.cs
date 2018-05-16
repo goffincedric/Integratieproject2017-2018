@@ -114,7 +114,6 @@ namespace PB.DAL
         {
             return ctx.Elements
                 .Include(e => e.Zone)
-                .Include(e => e.Comparison)
                 .AsEnumerable();
         }
 
@@ -122,7 +121,6 @@ namespace PB.DAL
         {
             return ctx.Elements
                 .Include(e => e.Zone)
-                .Include(e => e.Comparison)
                 .FirstOrDefault(e => e.ElementId == elementId);
         }
 
