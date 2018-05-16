@@ -320,6 +320,10 @@ $(function () {
         editZone = function (grid) {
             console.log(grid);
 
+            grid.off('click');
+
+            grid.children('.ti-pencil').attr('class', 'ti-check');
+
             var ZoneId = grid.parent().parent().attr('class');
 
             ZoneId = ZoneId.substring(ZoneId.indexOf('zone-') + 5, ZoneId.length);
@@ -335,6 +339,33 @@ $(function () {
             grid.siblings('input').focus();
 
             grid.siblings('input').val(oldTitle);
+
+            grid.on('click', function () {
+                var input = grid.siblings('input');
+                newTitle = input.val();
+
+                Zone = JSON.parse('{ "Title": "' + newTitle + '", "ZoneId": "' + ZoneId + '"}');
+
+                $.ajax({
+                    async: false,
+                    type: 'PUT',
+                    data: Zone,
+                    dataType: 'json',
+                    headers: Headers,
+                    url: "https://localhost:44342/api/dashboard/putzone/" + ZoneId
+                })
+
+                titleTag.html(newTitle);
+
+                input.replaceWith(titleTag);
+
+                grid.children('.ti-check').attr('class', 'ti-pencil');
+
+                grid.off('click');
+                grid.on('click', function () {
+                    editZone(grid);
+                })
+            })
 
             grid.siblings('input').keypress(function (e) {
                 var input = $(this);
@@ -366,6 +397,13 @@ $(function () {
                     titleTag.html(newTitle);
 
                     $(this).replaceWith(titleTag);
+
+                    grid.children('.ti-check').attr('class', 'ti-pencil');
+
+                    grid.off('click');
+                    grid.on('click', function () {
+                        editZone(grid);
+                    })
                 }
             });
         };
