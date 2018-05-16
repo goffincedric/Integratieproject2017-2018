@@ -345,6 +345,14 @@ namespace UI_MVC.Controllers
             }
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
+
+        [HttpPost]
+        public ActionResult SendWeeklyReviews(string subplatform)
+        {
+            Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
+            return RedirectToAction("PlatformSettings", "Subplatform");
+
+        }
         #endregion
 
         public ActionResult _ChangeHomePage(string subplatform)

@@ -73,6 +73,12 @@
                   <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Cleanup DB</button>
 
                 }
+
+                @using (Html.BeginForm("SendWeeklyReviews", "Subplatform", FormMethod.Post))
+                {
+                  <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Send Weekly Reviews</button>
+
+                }
               </div>
               <div class="col-6">
                 @Html.Action("_SeedIntervals", "Subplatform")
