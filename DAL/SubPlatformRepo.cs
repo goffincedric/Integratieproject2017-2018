@@ -182,6 +182,14 @@ namespace PB.DAL
                 .FirstOrDefault(p => p.PageId == pageId);
         }
 
+        public Page ReadPage(string name)
+        {
+            return ctx.Pages
+                .Include(p => p.Tags)
+                .Include(p => p.Subplatform)
+                .FirstOrDefault(p => p.PageName == name);
+        }
+
         public Page CreatePage(Page page)
         {
             page = ctx.Pages.Add(page);
