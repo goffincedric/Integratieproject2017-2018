@@ -704,9 +704,10 @@ namespace PB.BL
 
             foreach (var el in data)
             {
-                if (oldPersons.FirstOrDefault(p => p.Name.ToLower() == el.Full_name.ToLower()) == null)
+                Person personCheck = oldPersons.FirstOrDefault(p => p.Name.ToLower() == el.Full_name.ToLower());
+                if (personCheck == null)
                 {
-                    Person person = new Person()
+                    personCheck = new Person()
                     {
                         ItemId = el.Id,
                         Name = el.Full_name,
@@ -736,45 +737,63 @@ namespace PB.BL
                         Records = new List<Record>(),
                         Themes = new List<Theme>()
                     };
-                    subplatform.Items.Add(person);
+                    subplatform.Items.Add(personCheck);
+                    newPersons.Add(personCheck);
+                }
+                else
+                {
+                    personCheck.Name = el.Full_name;
+                    if (!personCheck.SubPlatforms.Contains(subplatform)) personCheck.SubPlatforms.Add(subplatform);
+                    personCheck.FirstName = el.First_name;
+                    personCheck.LastName = el.Last_name;
+                    personCheck.Level = el.Level;
+                    personCheck.SocialMediaLink = el.Site;
+                    personCheck.Site = el.Site;
+                    personCheck.TwitterName = el.Twitter;
+                    personCheck.Position = el.Position;
+                    personCheck.District = el.District;
+                    personCheck.Gemeente = el.Town;
+                    personCheck.Postalcode = el.Postalcode;
+                    personCheck.Gender = el.Gender;
+                    personCheck.DateOfBirth = el.DateOfBirth;
+                }
 
-                    // Organisation
-                    Organisation organisationCheck = oldOrganisations.FirstOrDefault(o => o.Name.ToLower().Equals(el.Organistion.ToLower()) || o.FullName.ToLower().Equals(el.Organistion.ToLower()));
-                    if (organisationCheck == null)
+                // Organisation
+                Organisation organisationCheck = oldOrganisations.FirstOrDefault(o => o.Name.ToLower().Equals(el.Organistion.ToLower()) || o.FullName.ToLower().Equals(el.Organistion.ToLower()));
+                if (organisationCheck == null)
+                {
+                    organisationCheck = new Organisation()
                     {
-                        organisationCheck = new Organisation()
-                        {
-                            Name = el.Organistion,
-                            IsTrending = false,
-                            IconURL = subplatform.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
-                            SubPlatforms = new List<Subplatform>()
+                        Name = el.Organistion,
+                        IsTrending = false,
+                        IconURL = subplatform.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
+                        SubPlatforms = new List<Subplatform>()
                             {
                                 subplatform
                             },
-                            Keywords = new List<Keyword>(),
-                            Elements = new List<Element>(),
-                            SubscribedProfiles = new List<Profile>(),
-                            Alerts = new List<Alert>(),
-                            FullName = el.Organistion,
-                            People = new List<Person>()
+                        Keywords = new List<Keyword>(),
+                        Elements = new List<Element>(),
+                        SubscribedProfiles = new List<Profile>(),
+                        Alerts = new List<Alert>(),
+                        FullName = el.Organistion,
+                        People = new List<Person>()
                             {
-                                person
+                                personCheck
                             },
-                            Themes = new List<Theme>()
-                        };
-                        person.Organisation = organisationCheck;
+                        Themes = new List<Theme>()
+                    };
+                    personCheck.Organisation = organisationCheck;
 
-                        oldOrganisations.Add(organisationCheck);
-                        newOrganisations.Add(organisationCheck);
-                    }
-                    else
-                    {
-                        person.Organisation = organisationCheck;
-                        organisationCheck.People.Add(person);
+                    oldOrganisations.Add(organisationCheck);
+                    newOrganisations.Add(organisationCheck);
+                }
+                else
+                {
+                    personCheck.Organisation = organisationCheck;
+                    organisationCheck.People.Add(personCheck);
 
-                        if (!organisationCheck.SubPlatforms.Contains(subplatform)) organisationCheck.SubPlatforms.Add(subplatform);
-                        subplatform.Items.Add(organisationCheck);
-                    }
+                    if (!organisationCheck.SubPlatforms.Contains(subplatform)) organisationCheck.SubPlatforms.Add(subplatform);
+                    subplatform.Items.Add(organisationCheck);
                 }
             }
 

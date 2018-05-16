@@ -94,7 +94,6 @@ namespace PB.BL
                     }
                 });
                 organisation.IsTrending = true;
-                items[items.FindIndex(i => i.ItemId == organisation.ItemId)] = organisation;
 
                 if (!organisation.Equals(oldTrendingOrganisation))
                 {
@@ -108,8 +107,9 @@ namespace PB.BL
                         ProfileAlerts = new List<ProfileAlert>()
                     };
                     organisation.Alerts.Add(alert);
-
                     alerts.Add(alert);
+                    
+                    items.Add(organisation);
                 }
             }
 
