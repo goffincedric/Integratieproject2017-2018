@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Web;
 
 namespace UI_MVC.Models
@@ -15,6 +12,7 @@ namespace UI_MVC.Models
         public string FullName { get; set; }
         public string SocialMediaLink { get; set; }
         public bool IsTrending { get; set; }
+        public int? ThemeId { get; set; }
         public HttpPostedFileBase file { get; set; }
     }
 }
