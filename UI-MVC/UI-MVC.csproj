@@ -407,6 +407,8 @@
     <Content Include="Views\Subplatform\_ChangeMenu.cshtml" />
     <Content Include="Views\Item\_ShowKeywordOfTheme.cshtml" />
     <Content Include="Views\Subplatform\_SeedIntervals.cshtml" />
+    <Content Include="Views\Item\_ShowThemesOfOrganisation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

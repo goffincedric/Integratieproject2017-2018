@@ -86,7 +86,7 @@ namespace PB.BL
             return ItemRepo.CreateItem(item);
         }
 
-        public Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, string iconUrl = null, bool isTrending = false, Subplatform subplatform = null)
+        public Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, List<Theme> themes = null, string iconUrl = null, bool isTrending = false, Subplatform subplatform = null)
         {
             InitNonExistingRepo();
 
@@ -102,13 +102,15 @@ namespace PB.BL
                 SubscribedProfiles = new List<Profile>(),
                 Keywords = new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>(),
-                People = new List<Person>()
+                People = new List<Person>(),
+                Themes = themes??new List<Theme>()
             };
             if (subplatform != null)
             {
                 organisation.SubPlatforms.Add(subplatform);
                 subplatform.Items.Add(organisation);
             }
+            
 
             organisation = ItemRepo.CreateOrganisation(organisation);
             UowManager.Save();

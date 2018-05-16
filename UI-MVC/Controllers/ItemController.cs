@@ -77,13 +77,36 @@ namespace UI_MVC.Controllers
                     iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
                 }
 
-                itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName, organisationEditModel.SocialMediaLink, iconUrl, subplatform: Subplatform);
+                Theme theme = null;
+
+                if (organisationEditModel.ThemeId != null)
+                {
+                    theme = itemMgr.GetTheme((int)organisationEditModel.ThemeId);
+                    itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName, organisationEditModel.SocialMediaLink, new List<Theme> { theme }, iconUrl, subplatform: Subplatform);
+                }
+                else
+                {
+                    itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName, organisationEditModel.SocialMediaLink, null, iconUrl, subplatform: Subplatform);
+                }
+                
+
+             
+                
+
+
+
                 return RedirectToAction("ItemBeheer", "Item");
             }
 
             return RedirectToAction("ItemBeheer", "Item");
 
 
+        }
+
+        public ActionResult _ShowThemesOfOrganisation(int id)
+        {
+            IEnumerable<Theme> theme = itemMgr.GetOrganisation(id).Themes.ToList();
+            return PartialView(theme);
         }
 
         [HttpGet]
@@ -241,8 +264,17 @@ namespace UI_MVC.Controllers
                 {
                     iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
                 }
-                Keyword keyword = itemMgr.GetKeyword(themeEditModel.KeywordId);
-                Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, new List<Keyword> { keyword }, themeEditModel.IsTrending, Subplatform);
+                if(themeEditModel.KeywordId is null)
+                {
+                    Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, new List<Keyword>(), themeEditModel.IsTrending, Subplatform);
+                }
+                else
+                {
+                    Keyword keyword = itemMgr.GetKeyword((int)themeEditModel.KeywordId);
+                    Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, new List<Keyword> { keyword }, themeEditModel.IsTrending, Subplatform);
+                }
+                
+                
                 return RedirectToAction("ItemBeheer", "Item");
             }
             return RedirectToAction("ItemBeheer", "Item");
@@ -291,7 +323,7 @@ namespace UI_MVC.Controllers
                 theme.IsTrending = themeEditModel.IsTrending;
                 theme.Name = themeEditModel.Name;
                 theme.Description = themeEditModel.Description;
-                Keyword keyword = itemMgr.GetKeyword(themeEditModel.KeywordId);
+                Keyword keyword = itemMgr.GetKeyword((int)themeEditModel.KeywordId);
                 theme.Keywords.Add(keyword);
                 itemMgr.ChangeTheme(theme);
                 return RedirectToAction("ItemBeheer", "Item");

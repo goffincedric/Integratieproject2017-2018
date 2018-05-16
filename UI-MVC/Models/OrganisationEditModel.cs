@@ -12,6 +12,7 @@ namespace UI_MVC.Models
         public string FullName { get; set; }
         public string SocialMediaLink { get; set; }
         public bool IsTrending { get; set; }
+        public int? ThemeId { get; set; }
         public HttpPostedFileBase file { get; set; }
     }
 }

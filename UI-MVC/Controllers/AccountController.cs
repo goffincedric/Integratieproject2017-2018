@@ -560,7 +560,6 @@ namespace UI_MVC.Controllers
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

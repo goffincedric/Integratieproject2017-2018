@@ -76,6 +76,23 @@ namespace UI_MVC.Controllers.API
             return Ok(organisation);
         }
 
+        public IHttpActionResult GetThemesNotInOrganisation(int id)
+        {
+            IEnumerable<Theme> themes = ItemMgr.GetOrganisation(id).Themes.ToList();
+            IEnumerable<Theme> themesAll = null;
+            if (themes is null || themes.Count() < 1)
+            {
+                themesAll = ItemMgr.GetThemes().ToList();
+            }
+            else
+            {
+                themesAll = ItemMgr.GetThemes().ToList().Except(themes);
+            }
+
+            if (themesAll is null || themesAll.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(themesAll);
+        }
+
         // GET: api/item/gettheme
         [HttpGet]
         public IHttpActionResult GetTheme()
@@ -118,7 +135,7 @@ namespace UI_MVC.Controllers.API
             if (organisation == null) return BadRequest();
             if (!ModelState.IsValid) return BadRequest(ModelState);
             if (ItemMgr.GetItem(organisation.ItemId) != null) return Conflict();
-            organisation = ItemMgr.AddOrganisation(organisation.Name, organisation.FullName, organisation.SocialMediaLink, organisation.IconURL);
+            organisation = ItemMgr.AddOrganisation(organisation.Name, organisation.FullName, organisation.SocialMediaLink, null, organisation.IconURL);
 
             return Ok(organisation); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte item
         }

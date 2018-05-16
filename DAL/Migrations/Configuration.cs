@@ -671,7 +671,10 @@ namespace PB.DAL.Migrations
                     if (theme != null) ThemesToAdd.Remove(t);
                     else
                     {
-                        t.Keywords.ForEach(k => k.Items.Add(t));
+                  
+                            t.Keywords.ForEach(k => k.Items.Add(t));
+                        
+                      
                     }
                 }).Wait();
 
