@@ -520,8 +520,10 @@ namespace PB.BL
             List<Theme> oldThemes = ItemRepo.ReadThemes().ToList();
             List<Theme> newThemes = new List<Theme>();
 
+            int counter = 0;
             foreach (var el in data)
             {
+                counter++;
                 if (oldRecords.FirstOrDefault(r => r.Tweet_Id == el.Id) == null)
                 {
                     Record record = new Record()
@@ -549,6 +551,7 @@ namespace PB.BL
                     foreach (var person in el.Persons)
                     {
                         Person personCheck = oldPersons.FirstOrDefault(p => p.Name.ToLower().Equals(person.ToLower()));
+
                         if (personCheck == null)
                         {
                             personCheck = new Person()
@@ -700,7 +703,7 @@ namespace PB.BL
 
             foreach (var el in data)
             {
-                if (oldPersons.FirstOrDefault(p => p.ItemId == el.Id) == null)
+                if (oldPersons.FirstOrDefault(p => p.Name.ToLower() == el.Full_name.ToLower()) == null)
                 {
                     Person person = new Person()
                     {
@@ -735,7 +738,7 @@ namespace PB.BL
                     subplatform.Items.Add(person);
 
                     // Organisation
-                    Organisation organisationCheck = oldOrganisations.FirstOrDefault(o => o.Name.ToLower().Equals(el.Organistion.ToLower()));
+                    Organisation organisationCheck = oldOrganisations.FirstOrDefault(o => o.Name.ToLower().Equals(el.Organistion.ToLower()) || o.FullName.ToLower().Equals(el.Organistion.ToLower()));
                     if (organisationCheck == null)
                     {
                         organisationCheck = new Organisation()
@@ -780,15 +783,16 @@ namespace PB.BL
 
         public void SyncDatabase(Subplatform subplatform)
         {
-            SyncDatabaseAsync(subplatform).Wait();
+            // Set IsSyncing flag
+            IsSyncing = true;
+            SyncDatabaseAsync(subplatform).GetAwaiter().GetResult();
+
+            // Set IsSyncing flag
+            IsSyncing = false;
         }
 
         public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
         {
-            // Set IsSyncing flag
-            IsSyncing = true;
-
-
             InitNonExistingRepo();
 
             // Validation
