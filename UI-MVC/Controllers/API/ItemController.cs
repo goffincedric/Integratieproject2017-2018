@@ -494,7 +494,6 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetTrendingWordsCount(int id)
         {
-
             if (ItemMgr.GetItem(id) is Person)
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
@@ -518,10 +517,8 @@ namespace UI_MVC.Controllers.API
             if (item is Person person)
             {
                  records= person.Records;
-               
-
-               
-            }else if(item is Organisation organisation)
+            }
+            else if(item is Organisation organisation)
             {
                 records = organisation.People.SelectMany(p => p.Records).ToList();
 
