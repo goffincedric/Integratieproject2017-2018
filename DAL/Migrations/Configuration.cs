@@ -114,7 +114,7 @@ namespace PB.DAL.Migrations
                           new SubplatformSetting()
                         {
                             SettingName = Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS,
-                            Value = "24",
+                            Value = "7",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         }
@@ -277,10 +277,10 @@ namespace PB.DAL.Migrations
                 }
             };
             ctx.Organisations.ForEachAsync(o =>
-                    {
-                        Organisation organisation = OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
-                        if (organisation != null) OrganisationsToAdd.Remove(o);
-                    }).Wait();
+            {
+                Organisation organisation = OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
+                if (organisation != null) OrganisationsToAdd.Remove(o);
+            }).Wait();
             if (OrganisationsToAdd.Count != 0) ctx.Organisations.AddRange(OrganisationsToAdd);
             #endregion
 
@@ -666,21 +666,21 @@ namespace PB.DAL.Migrations
                 }
             };
             ctx.Themes.ForEachAsync(t =>
+            {
+                Theme theme = ThemesToAdd.FirstOrDefault(them => them.Name.ToLower().Equals(t.Name.ToLower()));
+                if (theme != null) ThemesToAdd.Remove(t);
+                else
                 {
-                    Theme theme = ThemesToAdd.FirstOrDefault(them => them.Name.ToLower().Equals(t.Name.ToLower()));
-                    if (theme != null) ThemesToAdd.Remove(t);
-                    else
-                    {
-                  
-                            t.Keywords.ForEach(k => k.Items.Add(t));
-                        
-                      
-                    }
-                }).Wait();
+
+                    t.Keywords.ForEach(k => k.Items.Add(t));
+
+
+                }
+            }).Wait();
 
             if (ThemesToAdd.Count != 0) ctx.Themes.AddRange(ThemesToAdd);
             #endregion
-            
+
             #region Pages
             List<Page> pagesToAdd = new List<Page>()
             {
@@ -836,10 +836,10 @@ namespace PB.DAL.Migrations
                 }
             };
             ctx.Pages.ForEachAsync(p =>
-                {
-                    Page page = pagesToAdd.FirstOrDefault(pta => pta.Equals(p));
-                    if (page != null) pagesToAdd.Remove(p);
-                }).Wait();
+            {
+                Page page = pagesToAdd.FirstOrDefault(pta => pta.Equals(p));
+                if (page != null) pagesToAdd.Remove(p);
+            }).Wait();
             if (pagesToAdd.Count != 0) ctx.Pages.AddRange(pagesToAdd);
             #endregion
 

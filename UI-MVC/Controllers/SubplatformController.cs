@@ -349,7 +349,7 @@ namespace UI_MVC.Controllers
         [HttpPost]
         public ActionResult SendWeeklyReviews(string subplatform)
         {
-            Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
+            accountMgr.SendWeeklyReviews();
             return RedirectToAction("PlatformSettings", "Subplatform");
 
         }

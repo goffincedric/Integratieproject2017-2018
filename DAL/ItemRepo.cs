@@ -70,26 +70,28 @@ namespace PB.DAL
         public Person ReadPerson(int itemId)
         {
             return ctx.Persons
-                .Include(i => i.Records)
-                .Include(i => i.SubPlatforms)
-                .Include(i => i.SubscribedProfiles)
-                .Include(i => i.Keywords)
-                .Include(i => i.Alerts)
-                .Include(i => i.Elements)
-                .Include(i => i.Organisation)
+                .Include(p => p.Records)
+                .Include(p => p.SubPlatforms)
+                .Include(p => p.SubscribedProfiles)
+                .Include(p => p.Keywords)
+                .Include(p => p.Alerts)
+                .Include(p => p.Elements)
+                .Include(p => p.Organisation)
+                .Include(p => p.Themes)
                 .FirstOrDefault(p => p.ItemId == itemId);
         }
 
         public IEnumerable<Person> ReadPersons()
         {
             return ctx.Persons
-                .Include(i => i.Records)
-                .Include(i => i.SubPlatforms)
-                .Include(i => i.SubscribedProfiles)
-                .Include(i => i.Keywords)
-                .Include(i => i.Alerts)
-                .Include(i => i.Elements)
-                .Include(i => i.Organisation)
+                .Include(p => p.Records)
+                .Include(p => p.SubPlatforms)
+                .Include(p => p.SubscribedProfiles)
+                .Include(p => p.Keywords)
+                .Include(p => p.Alerts)
+                .Include(p => p.Elements)
+                .Include(p => p.Organisation)
+                .Include(p => p.Themes)
                 .AsEnumerable();
         }
 

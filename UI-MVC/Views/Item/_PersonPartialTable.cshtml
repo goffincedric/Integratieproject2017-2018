@@ -13,7 +13,7 @@
             <th>@Html.DisplayNameFor(model => model.SocialMediaLink)</th>
             <th>@Html.DisplayNameFor(model => model.IsTrending)</th>
             <th>@Html.DisplayNameFor(model => model.Organisation)</th>
-            <th>@Html.DisplayNameFor(model => model.Function)</th>
+            <th>@Html.DisplayNameFor(model => model.Position)</th>
             <th>@Html.DisplayNameFor(model => model.Gemeente)</th>
             <th>Tools</th>
           </tr>
@@ -28,7 +28,7 @@
               <td>@Html.DisplayFor(modelItem => item.SocialMediaLink)</td>
               <td>@(item.IsTrending ? "Yes" : "No")</td>
               <td>@Html.DisplayFor(modelItem => item.Organisation.Name)</td>
-              <td>@Html.DisplayFor(modelItem => item.Function.Name)</td>
+              <td>@Html.DisplayFor(modelItem => item.Position)</td>
               <td>@Html.DisplayFor(modelItem => item.Gemeente)</td>
               <td>
                 <div class="row">

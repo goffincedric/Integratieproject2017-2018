@@ -1,4 +1,4 @@
-﻿namespace PB.BL.Domain.Accounts
+﻿namespace PB.BL.Domain.Items
 {
     public enum Gender
     {

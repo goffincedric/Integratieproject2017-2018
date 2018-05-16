@@ -121,7 +121,7 @@ namespace UI_MVC.Controllers.API
             if (!ModelState.IsValid) return BadRequest(ModelState);
             if (ItemMgr.GetItem(person.ItemId) != null) return Conflict();
             //Organisation organisation = ItemMgr.GetOrganisation(person.Organisation);
-            person = ItemMgr.AddPerson(person.Name, person.SocialMediaLink, person.IconURL, person.Organisation, person.Function);
+            person = ItemMgr.AddPerson(person.Name, person.SocialMediaLink, person.IconURL, person.IsTrending, person.FirstName, person.LastName, person.Level, person.Site, person.TwitterName, person.Position, person.District, person.Gemeente, person.Postalcode, person.Gender, person.Organisation, null, person.DateOfBirth);
 
             return Ok(person); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte item
         }

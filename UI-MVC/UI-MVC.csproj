@@ -20,8 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44338</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -236,9 +235,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\AccountController.cs" />
     <Compile Include="Controllers\API\Helper_Code\AuthorizationServerProvider.cs" />
+    <Compile Include="Controllers\API\ItemController.cs" />
     <Compile Include="Controllers\API\SubplatformController.cs" />
     <Compile Include="Controllers\Helper_Code\AuthorizationHeaderHandler.cs" />
-    <Compile Include="Controllers\API\ItemController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\API\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
