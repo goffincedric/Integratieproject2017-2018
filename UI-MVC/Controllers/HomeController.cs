@@ -19,7 +19,6 @@ namespace UI_MVC.Controllers
     /// </summary
     [RequireHttps]
     [RoutePrefix("{subplatform}")]
-    [OutputCache(Duration = 10, VaryByParam = "none")]
     public class HomeController : Controller
     {
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();

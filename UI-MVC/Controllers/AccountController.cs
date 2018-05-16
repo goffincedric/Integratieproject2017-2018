@@ -27,7 +27,6 @@ namespace UI_MVC.Controllers
     /// </summary> 
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     [RequireHttps]
-    [OutputCache(Duration = 10, VaryByParam = "none")]
     public class AccountController : Controller
     {
         private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();

@@ -15,7 +15,6 @@ namespace UI_MVC.Controllers
     /// </summary
     [RequireHttps]
     [Authorize(Roles = "User,Admin,SuperAdmin")]
-    [OutputCache(Duration = 3600, VaryByParam = "none")]
     public class DashboardController : Controller
     {
         private readonly UnitOfWorkManager uow;
