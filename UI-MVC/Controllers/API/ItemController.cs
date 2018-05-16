@@ -240,8 +240,7 @@ namespace UI_MVC.Controllers.API
         {
             IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(p => p.Records.Count()).Take(4);
             Dictionary<string, string> stijgingmap = new Dictionary<string, string>();
-            if (persons is null)
-            {
+           
                 foreach (Person person in persons)
                 {
                     IEnumerable<Record> records = person.Records.ToList();
@@ -261,7 +260,7 @@ namespace UI_MVC.Controllers.API
 
                     stijgingmap.Add(person.Name, stijging);
                 }
-            }
+            
 
             if (stijgingmap == null || stijgingmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(stijgingmap);
@@ -586,7 +585,7 @@ namespace UI_MVC.Controllers.API
                 records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
             }
 
-            records.SelectMany(r => r.URLs).Distinct().ToList().ForEach(p => urls.Add(p.Link));
+            records.SelectMany(r => r.URLs).Distinct().Take(6).ToList().ForEach(p => urls.Add(p.Link));
             urls.Distinct();
             if (urls is null || urls.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(urls);

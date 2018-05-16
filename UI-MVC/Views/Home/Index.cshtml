@@ -322,12 +322,15 @@
       var label = [];
       var values = [];
 
+      
       for (var i = 0; i < keys.length; i++) {
         label.push(keys[i]);
         $("#pol" + i).html(keys[i]);
         values.push(output[keys[i]]);
         $("#poli" + i).html(output[keys[i]]);
       }
+      console.log(label);
+      console.log(values);
     }
 
     function errorHandler(statusCode) {

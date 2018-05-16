@@ -138,50 +138,51 @@
         </div>
       </div>
     </div>
-    @if (Model is PB.BL.Domain.Items.Organisation || Model is PB.BL.Domain.Items.Theme)
-    {
-      <div class="row">
-        <div class="masonry-item col-md-6" style="margin:10px 0; padding-right:15px; padding-left:0;">
-          <div class="bd bgc-white">
-            <div class="layers">
-              <div class="layer w-100 pX-20 pT-20">
-                <h6 class="c-grey-900">Geslacht compare</h6>
-                <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 30px; position:absolute;"></i></a>
-                <i style="top: 30px; right: 60px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
-              </div>
-              <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
-                <div class="loader loader-6" id="loader-2" style="display:table-cell; vertical-align:middle; text-align:center">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-                <canvas id="age-chart" height="100" style="display:none"></canvas>
-              </div>
+
+    <div class="row">
+      <div class="masonry-item col-md-6" style="margin:10px 0; padding-right:15px; padding-left:0;">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Geslacht compare</h6>
+              <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 30px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 60px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
             </div>
-          </div>
-        </div>
-        <div class="masonry-item col-md-6" style="margin:10px 0;padding-left:15px; padding-right: 0;">
-          <div class="bd bgc-white">
-            <div class="layers">
-              <div class="layer w-100 pX-20 pT-20">
-                <h6 class="c-grey-900">Leeftijd compare</h6>
-                <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 30px; position:absolute;"></i></a>
-                <i style="top: 30px; right: 60px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
+              <div class="loader loader-6" id="loader-2" style="display:table-cell; vertical-align:middle; text-align:center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
               </div>
-              <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
-                <div class="loader loader-6" id="loader-3" style="display:table-cell; vertical-align:middle; text-align:center">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-                <canvas id="gender-chart" height="100" style="display:none"></canvas>
-              </div>
+              <canvas id="age-chart" height="100" style="display:none"></canvas>
             </div>
           </div>
         </div>
       </div>
+      <div class="masonry-item col-md-6" style="margin:10px 0;padding-left:15px; padding-right: 0;">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Leeftijd compare</h6>
+              <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 30px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 60px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
+              <div class="loader loader-6" id="loader-3" style="display:table-cell; vertical-align:middle; text-align:center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <canvas id="gender-chart" height="100" style="display:none"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    @if (Model is PB.BL.Domain.Items.Organisation || Model is PB.BL.Domain.Items.Theme)
+    {
       <div class="row">
         <div class="masonry-item col-md-6" style="margin:10px 0;padding-left:0; padding-right: 15px;">
           <div class="bd bgc-white">
@@ -228,21 +229,33 @@
     @if (Model is PB.BL.Domain.Items.Person)
     {
       <div class="row">
-        <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
-          <div class="bgc-white p-20 bd">
-            <h1 class="h3" style="text-align: center">Top mentions</h1>
+        <div style="margin: 10px 0;padding:0; " class="masonry-item col-md-6">
+          <div class="bgc-white p-20 bd" style="min-height:180px;">
+            <h1 class="h3" style="text-align: center;">Top mentions</h1>
             <br />
-            <div id="mentions" class="row">
+            <div class="loader loader-6" id="loader-6" style="margin-left:50%;">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div id="mentions" style="display:none;" class="row">
               <div id="mention1" class="col-6 colom-6-center"></div>
               <div id="mention2" class="col-6 colom-6-center"></div>
             </div>
           </div>
         </div>
         <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-6">
-          <div class="bgc-white p-20 bd">
+          <div class="bgc-white p-20 bd" style="min-height:180px;">
             <h1 class="h3" style="text-align: center">Top Hashtags</h1>
             <br />
-            <div id="hashtags" class="row">
+            <div class="loader loader-6" id="loader-7" style="margin-left:50%;">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div id="hashtags" style="display:none" class="row">
               <div id="hashtag1" class="col-6 colom-6-center"></div>
               <div id="hashtag2" class="col-6 colom-6-center"></div>
             </div>
@@ -319,12 +332,8 @@
   }
 
   showDetails();
-</script>
 
-@if (Model is PB.BL.Domain.Items.Organisation || Model is PB.BL.Domain.Items.Theme)
-{
-  <script>
-      function Age() {
+  function Age() {
         var URL = "https://localhost:44342/api/item/GetGender/" + @Html.Raw(Model.ItemId);
         makeAjaxCall(URL, "GET").then(process, errorHandler);
         function process(output) {
@@ -408,7 +417,47 @@
       }
     }
 
-    Geslacht();
+  Geslacht();
+
+    function urls() {
+   
+
+      var URL = "https://localhost:44342/api/item/GetTrendingUrl/" + @Html.Raw(Model.ItemId);
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+      function process(output) {
+        console.log(output);
+        //var array = output.split(',');
+        //function shuffle(a) {
+        //  for (let i = a.length - 1; i > 0; i--) {
+        //    const j = Math.floor(Math.random() * (i + 1));
+        //    [a[i], a[j]] = [a[j], a[i]];
+        //  }
+        //  return a;
+        //}
+        //array = shuffle(array);
+        //array = array.slice(0, 5);
+
+
+        $.each(output, function (data, realdata) {
+          $("#urls").append('<i style="margin-right:10px" class="fas fa-link"></i>' + "<a href=" + realdata + ">" + realdata + "</a><br/>");
+        });
+      }
+
+      function errorHandler(statusCode) {
+        console.log("failed with status", status);
+      }
+
+
+      
+    }
+
+    urls();
+</script>
+
+@if (Model is PB.BL.Domain.Items.Organisation || Model is PB.BL.Domain.Items.Theme)
+{
+  <script>
+
 
 
     function Hashtags() {
@@ -503,70 +552,10 @@
 
     Mentions();
 
-    function urls() {
-      var personid = @Html.Raw(Model.ItemId);
-      var urls = "";
-      urls = $.ajax({
-        async: false,
-        type: 'GET',
-        dataType: 'json',
-        url: "https://localhost:44342/api/item/GetTrendingUrl/" + personid,
-        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-      }).responseText;
-
-
-
-      var array = urls.split(',');
-      function shuffle(a) {
-        for (let i = a.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
-      }
-      array = shuffle(array);
-      array = array.slice(0, 5);
-
-
-      $.each(array, function (data, realdata) {
-        $("#urls").append('<i style="margin-right:10px" class="fas fa-link"></i>' + "<a href=" + realdata + ">" + realdata.substring(1, (realdata.length - 1)) + "</a><br/>");
-      });
-    }
-
-    urls();
+  
   </script>
 }
-<script>
-   function urls() {
-      var personid = @Html.Raw(Model.ItemId);
-      var urls = "";
-      urls = $.ajax({
-        async: false,
-        type: 'GET',
-        dataType: 'json',
-        url: "https://localhost:44342/api/item/GetTrendingUrl/" + personid,
-        headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-      }).responseText;
 
-      var array = urls.split(',');
-      function shuffle(a) {
-        for (let i = a.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
-      }
-      array = shuffle(array);
-      array = array.slice(0, 5);
-
-
-      $.each(array, function (data, realdata) {
-        $("#urls").append('<i style="margin-right:10px" class="fas fa-link"></i>' + "<a href=" + realdata + ">" + realdata.substring(1, (realdata.length - 1)) + "</a><br/>");
-      });
-    }
-
-    urls();
-</script>
 
 @if (Model is PB.BL.Domain.Items.Person)
 {
@@ -610,30 +599,36 @@
   </script>
 
   <script>
-    var personid= @Html.Raw(Model.ItemId);
-    var hashtags = "";
 
-    hashtags = $.ajax({
-      async: false,
-      type: 'GET',
-      dataType: 'json',
-      url: "https://localhost:44342/api/item/GetTrendingHashtags/" + personid,
-      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseJSON;
 
-    var counter = 0;
+    function Hashtags() {
+      var URL = "https://localhost:44342/api/item/GetTrendingHashtags/" + @Html.Raw(Model.ItemId);
+      makeAjaxCall(URL, "GET").then(process, errorHandler);
+      function process(output) {
+        var counter = 0;
 
-    $.each(hashtags, function (data, realdata) {
-      counter++;
-      var name = 'https://twitter.com/search?q=%23' + realdata + '&src=tyah&lang=nl';
-      if (counter <= 4) {
-        $("#hashtag1").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
-      } else if (counter <= 8) {
-        $("#hashtag2").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
-      } else {
-        $("#hashtag3").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+        $.each(output, function (data, realdata) {
+          counter++;
+          var name = 'https://twitter.com/search?q=%23' + realdata + '&src=tyah&lang=nl';
+          if (counter <= 4) {
+            $("#hashtag1").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+          } else if (counter <= 8) {
+            $("#hashtag2").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+          } else {
+            $("#hashtag3").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
+          }
+        });
+        $("#loader-7").hide();
+        $("#hashtags").show();
       }
-    });
+      function errorHandler(statusCode) {
+        console.log("failed with status", status);
+      }
+
+    }
+    Hashtags();
+
+
 
   </script>
 
@@ -654,6 +649,8 @@
             $("#mention3").append('<i style="margin-right:10px" class="fas fa-at"></i>' + "<a href=" + name + ">" + realdata + '</a><br/>');
           }
         });
+        $("#loader-6").hide();
+        $("#mentions").show();
       }
 
       function errorHandler(statusCode) {
