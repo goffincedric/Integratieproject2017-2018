@@ -266,7 +266,13 @@
       <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
           <h6 class="c-grey-900">Sentiment analyse</h6> <div class="mT-30" style="text-align:center">
-            <canvas width="1000" height="200" id="mycanvas"></canvas>
+            <div class="loader loader-6" id="loader-9" style="margin-left:25%;">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <canvas width="1000" height="200" style="display:none" id="mycanvas"></canvas>
           </div>
         </div>
       </div>
@@ -420,23 +426,12 @@
   Geslacht();
 
     function urls() {
-   
+
 
       var URL = "https://localhost:44342/api/item/GetTrendingUrl/" + @Html.Raw(Model.ItemId);
         makeAjaxCall(URL, "GET").then(process, errorHandler);
       function process(output) {
         console.log(output);
-        //var array = output.split(',');
-        //function shuffle(a) {
-        //  for (let i = a.length - 1; i > 0; i--) {
-        //    const j = Math.floor(Math.random() * (i + 1));
-        //    [a[i], a[j]] = [a[j], a[i]];
-        //  }
-        //  return a;
-        //}
-        //array = shuffle(array);
-        //array = array.slice(0, 5);
-
 
         $.each(output, function (data, realdata) {
           $("#urls").append('<i style="margin-right:10px" class="fas fa-link"></i>' + "<a href=" + realdata + ">" + realdata + "</a><br/>");
@@ -448,7 +443,7 @@
       }
 
 
-      
+
     }
 
     urls();
@@ -552,52 +547,62 @@
 
     Mentions();
 
-  
+    function drawLineChart() {
+
+        var URL = "https://localhost:44342/api/item/GetItemTweet/" + @Html.Raw(Model.ItemId);
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+       function process(output) {
+                var keys = [];
+                keys = Object.keys(output);
+                var label = [];
+                var values = [];
+
+                for (var i = 0; i < keys.length; i++) {
+                  label.push(keys[i].substring(0, 10));
+                  values.push(output[keys[i]] / 10);
+                }
+                var can = $('#line-chart2');
+                new Chart(can, {
+                  type: 'line',
+                  data:
+                    {
+                      labels: label,
+                      datasets: [
+                        {
+                          label: "Tweets",
+                          backgroundColor: "rgba(3, 169, 244, 0.5)",
+                          borderColor: "#0277bd",
+                          data: values
+                        }
+                      ]
+                    },
+                  options:
+                    {
+                      legend: { display: true },
+                      responsive: true,
+                    }
+                });
+                $("#loader-1").hide();
+                can.show();
+              }
+
+        function errorHandler(statusCode) {
+                console.log("failed with status", status);
+              }
+
+
+    }
+
+       drawLineChart();
+
+
   </script>
 }
 
 
 @if (Model is PB.BL.Domain.Items.Person)
 {
-  <script>
-
-  var itemid = @Html.Raw(Model.ItemId);
-
-  var tmp = "";
-    tmp = $.ajax({
-      async: false,
-      type: 'GET',
-      dataType: 'json',
-      url: "https://localhost:44342/api/item/getrecordsfromperson/" + itemid,
-      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-    }).responseJSON;
-
-
-  var options = {
-    userId: 'ThomasVerhoeven',
-    projectId: 'sparkline',
-    functionId:'main',
-      canvasId: 'mycanvas'
-  };
-
-
-
-  ndbx.embed(options,
-    function(err, player) {
-      if (err) {
-        console.log('Load error:', err);
-      } else {
-        window.player = player;
-
-          player.setValue('datareader', 'v', tmp);
-        player.start();
-        player.stop(); //anders infinite loop
-
-      }
-        });
-
-  </script>
-
   <script>
 
 
@@ -660,58 +665,53 @@
     }
     mentionlist();
   </script>
-}
+
+
 
 <script>
-    function drawLineChart() {
+    function drawNodeBox() {
 
-        var URL = "https://localhost:44342/api/item/GetItemTweet/" + @Html.Raw(Model.ItemId);
+
+      var URL = "https://localhost:44342/api/item/getrecordsfromperson/" + @Html.Raw(Model.ItemId);
         makeAjaxCall(URL, "GET").then(process, errorHandler);
-
-       function process(output) {
-                var keys = [];
-                keys = Object.keys(output);
-                var label = [];
-                var values = [];
-
-                for (var i = 0; i < keys.length; i++) {
-                  label.push(keys[i].substring(0, 10));
-                  values.push(output[keys[i]] / 10);
-                }
-                var can = $('#line-chart2');
-                new Chart(can, {
-                  type: 'line',
-                  data:
-                    {
-                      labels: label,
-                      datasets: [
-                        {
-                          label: "Tweets",
-                          backgroundColor: "rgba(3, 169, 244, 0.5)",
-                          borderColor: "#0277bd",
-                          data: values
-                        }
-                      ]
-                    },
-                  options:
-                    {
-                      legend: { display: true },
-                      responsive: true,
-                    }
-                });
-                $("#loader-1").hide();
-                can.show();
-              }
-
-        function errorHandler(statusCode) {
-                console.log("failed with status", status);
-              }
+    function process(output) {
+      var itemid = @Html.Raw(Model.ItemId);
 
 
+      var options = {
+        userId: 'ThomasVerhoeven',
+        projectId: 'sparkline',
+        functionId: 'main',
+        canvasId: 'mycanvas'
+      };
+
+
+
+      ndbx.embed(options,
+        function (err, player) {
+          if (err) {
+            console.log('Load error:', err);
+          } else {
+            window.player = player;
+
+            player.setValue('datareader', 'v', output);
+            player.start();
+            player.stop(); //anders infinite loop
+
+          }
+        });
+
+      $("#loader-9").hide();
+      $("#mycanvas").show();
     }
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+    }
+    drawNodeBox();
 
-       drawLineChart();
 </script>
+}
 
 
 

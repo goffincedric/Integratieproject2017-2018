@@ -36,6 +36,11 @@ namespace UI_MVC.Controllers
             ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
             ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
             ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
+
+            ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text;
+            ViewBag.BannerSub1 = SubplatformMgr.GetTag("BannerTextSub1").Text;
+            ViewBag.BannerSub2 = SubplatformMgr.GetTag("BannerTextSub2").Text;
+            ViewBag.CallToAction = SubplatformMgr.GetTag("call-to-action-text").Text;
         }
 
         #region Load

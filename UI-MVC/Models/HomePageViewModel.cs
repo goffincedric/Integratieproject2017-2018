@@ -1,4 +1,6 @@
-﻿namespace UI_MVC.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace UI_MVC.Models
 {
     public class HomePageViewModel
     {
@@ -10,8 +12,5 @@
         public string BannerTextSub2 { get; set; }
 
         public string Call_to_action { get; set; }
-
-       
-
     }
 }

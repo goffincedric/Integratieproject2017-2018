@@ -346,5 +346,44 @@ namespace UI_MVC.Controllers
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
         #endregion
+
+        public ActionResult _ChangeHomePage(string subplatform)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+
+            HomePageViewModel homePageViewModel = new HomePageViewModel()
+            {
+                BannerTitle = SubplatformMgr.GetTag("BannerTitle").Text,
+                BannerTextSub1 = SubplatformMgr.GetTag("BannerTextSub1").Text,
+                BannerTextSub2 = SubplatformMgr.GetTag("BannerTextSub2").Text,
+                Call_to_action = SubplatformMgr.GetTag("call-to-action-text").Text
+
+            };
+
+            return PartialView(homePageViewModel);
+
+        }
+
+        [HttpPost]
+        public ActionResult _ChangeHomePage(HomePageViewModel homePageViewModel)
+        {
+            Tag BannerTitle = SubplatformMgr.GetTag("BannerTitle");
+            Tag BannerTextSub1 = SubplatformMgr.GetTag("BannerTextSub1");
+            Tag BannerTextSub2 = SubplatformMgr.GetTag("BannerTextSub2"); 
+            Tag Call_to_action = SubplatformMgr.GetTag("call-to-action-text");
+
+            BannerTitle.Text = homePageViewModel.BannerTitle;
+            BannerTextSub1.Text = homePageViewModel.BannerTextSub1;
+            BannerTextSub2.Text = homePageViewModel.BannerTextSub2;
+            Call_to_action.Text = homePageViewModel.Call_to_action;
+
+            
+            SubplatformMgr.ChangeTag(BannerTitle);
+            SubplatformMgr.ChangeTag(BannerTextSub1);
+            SubplatformMgr.ChangeTag(BannerTextSub2);
+            SubplatformMgr.ChangeTag(Call_to_action);
+            return RedirectToAction("PlatformSettings", "Subplatform");
+
+        }
     }
 }
