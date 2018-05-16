@@ -23,6 +23,7 @@ namespace PB.DAL
         IEnumerable<Page> ReadPages(string subplatformUrl);
         Page CreatePage(Page page);
         Page ReadPage(int pageId);
+        Page ReadPage(string name);
         void UpdatePage(Page page);
         void DeletePage(int pageId);
 
