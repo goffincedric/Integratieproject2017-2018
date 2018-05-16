@@ -3,7 +3,6 @@
 
 @using (Html.BeginForm("SubplatformSetting", "Subplatform", FormMethod.Post))
 {
-
   <div class="form-group row">
     <div class="col-sm-4">
       <label>Default Theme</label>
@@ -18,9 +17,7 @@
     </div>
     <div class="col-sm-6">
       <div class="row">
-   
         @Html.EditorFor(model => model.SiteName, new { htmlAttributes = new { @class = "form-control" } })
-
       </div>
     </div>
   </div>
@@ -30,9 +27,7 @@
     </div>
     <div class="col-sm-6">
       <div class="row">
-
         @Html.EditorFor(model => model.recordsBijhouden, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
-
       </div>
     </div>
   </div>
@@ -44,7 +39,6 @@
     <div class="col-sm-6">
       <div class="row">
         @Html.EditorFor(model => model.APIsource, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
-
       </div>
     </div>
   </div>
@@ -59,28 +53,16 @@
       @Html.EditorFor(model => model.SocialSourceUrl, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
     </div>
   </div>
-
   <button type="submit" class="btn btn-lg btn-primary">Deploy new settings</button>
-
 }
-
-
-  <script>
-
+<script>
 
     $("#FromJson").append($("<option></option>").val("Light").html("Light mode"));
 
     $("#FromJson").append($("<option></option>").val("Dark").html("Dark mode"));
 
     $("#FromJson").append($("<option></option>").val("Future").html("Future mode"));
-    //$("FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
 
-
-
-
-  </script>
-
-  <script>
      $('FromJson>option:eq("@Html.Raw(Model.Theme)")').prop('selected', true);
 
-  </script>
+</script>

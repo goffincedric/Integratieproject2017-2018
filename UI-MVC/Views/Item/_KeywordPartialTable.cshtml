@@ -12,7 +12,6 @@
             <th>Tools</th>
           </tr>
         </thead>
-
         <tbody>
           @foreach (var item in Model)
           {
@@ -20,7 +19,6 @@
               <td>@Html.DisplayFor(modelItem => item.KeywordId)</td>
               <td>@Html.DisplayFor(modelItem => item.Name)</td>
               <td>@Html.DisplayFor(modelItem => item.Items)</td>
-
               <td>
                 <div class="row">
                   @using (Html.BeginForm("DeleteKeyword", "Item", new { id = item.KeywordId }, FormMethod.Post, new { id = "delete-" + item.KeywordId }))
@@ -34,14 +32,9 @@
                       </a>
                     </button>
                   }
-
-
-
                   <button class="btn btn-sm">
                     @Html.ActionLink("Edit", "EditKeyword", new { id = item.KeywordId })
                   </button>
-
-
                 </div>
               </td>
             </tr>
@@ -51,8 +44,6 @@
     </div>
   </div>
 </div>
-
-
 <script defer>
   $("document").ready(function () {
     $('#tab').DataTable();

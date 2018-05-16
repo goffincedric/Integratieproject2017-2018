@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 
 namespace UI_MVC.Models
@@ -10,7 +8,6 @@ namespace UI_MVC.Models
         public int ItemId { get; set; }
         public string Name { get; set; }
         public bool IsTrending { get; set; }
-       // public string IconURL { get; set; }
         public string SocialMediaLink { get; set; }
         public int? OrganisationId { get; set; }
         public String Gemeente { get; set; }

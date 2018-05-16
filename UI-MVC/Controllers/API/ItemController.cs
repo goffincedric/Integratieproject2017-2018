@@ -213,6 +213,7 @@ namespace UI_MVC.Controllers.API
         #endregion
 
         #region Records
+
         [HttpGet]
         public IHttpActionResult GetRecordsFromPerson(int id)
         {
@@ -233,11 +234,13 @@ namespace UI_MVC.Controllers.API
         #endregion
 
         #region RelatieveStijging
+
         [HttpGet]
         public IHttpActionResult GetPersonIncrease()
         {
             IEnumerable<Person> persons = ItemMgr.GetPersons().OrderByDescending(p => p.Records.Count()).Take(4);
             Dictionary<string, string> stijgingmap = new Dictionary<string, string>();
+
             foreach (Person person in persons)
             {
                 IEnumerable<Record> records = person.Records.ToList();
@@ -257,6 +260,7 @@ namespace UI_MVC.Controllers.API
 
                 stijgingmap.Add(person.Name, stijging);
             }
+
 
             if (stijgingmap == null || stijgingmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(stijgingmap);
@@ -348,6 +352,7 @@ namespace UI_MVC.Controllers.API
         #endregion
 
         #region SentimentAnalyse
+
         [HttpGet]
         public IHttpActionResult GetPersonEvolution(int id)
         {
@@ -495,170 +500,10 @@ namespace UI_MVC.Controllers.API
         }
 
         [HttpGet]
-        public IHttpActionResult GetTrendingHashtagsCount(int id)
-        {
-            Item item = ItemMgr.GetItem(id);
-            IEnumerable<Record> records = null;
-            Dictionary<string, int> hashtags = new Dictionary<string, int>();
-            if (item is Person person)
-            {
-                records = person.Records;
-            }
-            else if (item is Organisation organisation)
-            {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
-            }
-            else if (item is Theme theme)
-            {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
-            }
-
-            records.SelectMany(r =>
-            {
-                return r.Hashtags;
-            }).Distinct().OrderByDescending(h =>
-            {
-                return h.Records.Count;
-            }).Distinct().Take(5).ToList().ForEach(p =>
-            {
-                hashtags.Add(p.HashTag, p.Records.Count);
-            });
-
-            if (hashtags is null || hashtags.Count() == 0) return NotFound();
-            return Ok(hashtags);
-        }
-        #endregion
-
-        #region Words
-        [HttpGet]
-        public IHttpActionResult GetTrendingWordsCount(int id)
+        public IHttpActionResult GetRadar()
         {
 
-            Item item = ItemMgr.GetItem(id);
 
-            IEnumerable<Record> records = null;
-            Dictionary<string, int> words = new Dictionary<string, int>();
-            if (item is Person person)
-            {
-                records = person.Records;
-            }
-            else if (item is Organisation organisation)
-            {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
-            }
-            else if (item is Theme theme)
-            {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
-            }
-
-            records.SelectMany(r => r.Words).Distinct().OrderByDescending(h => h.Records.Count).Distinct().Take(5).ToList().ForEach(p => words.Add(p.Text, p.Records.Count));
-            return Ok(words);
-        }
-        #endregion
-
-        #region Urls
-        [HttpGet]
-        public IHttpActionResult GetTrendingUrl(int id)
-        {
-            Item item = ItemMgr.GetItem(id);
-            IEnumerable<Record> records = null;
-            List<string> urls = new List<string>();
-
-            if (item is Person person)
-            {
-                records = person.Records;
-            }
-            else if (item is Organisation organisation)
-            {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
-            }
-            else if (item is Theme theme)
-            {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
-            }
-
-            records.SelectMany(r => r.URLs).Distinct().ToList().ForEach(p => urls.Add(p.Link));
-            urls.Distinct();
-            if (urls is null || urls.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
-            return Ok(urls);
-
-        }
-        #endregion
-
-
-        [HttpGet]
-        public IHttpActionResult GetAges(int id)
-        {
-            Item item = ItemMgr.GetItem(id);
-            IEnumerable<Record> records = null;
-            Dictionary<string, int> ages = new Dictionary<string, int>();
-            if (item is Person person)
-            {
-                records = person.Records;
-            }
-            else if (item is Organisation organisation)
-            {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
-            }
-            else if (item is Theme theme)
-            {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
-            }
-            else
-            {
-                return NotFound();
-            }
-            records.GroupBy(p => p.RecordProfile.Age).ToList().ForEach(p => ages.Add(p.ToList().First().RecordProfile.Age, p.ToList().Count()));
-            return Ok(ages);
-        }
-
-        [HttpGet]
-        public IHttpActionResult GetGender(int id)
-        {
-            Item item = ItemMgr.GetItem(id);
-            IEnumerable<Record> records = null;
-            Dictionary<string, int> ages = new Dictionary<string, int>();
-            if (item is Person person)
-            {
-                records = person.Records;
-            }
-            else if (item is Organisation organisation)
-            {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
-            }
-            else if (item is Theme theme)
-            {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
-            }
-            else
-            {
-                return NotFound();
-            }
-            records.GroupBy(p => p.RecordProfile.Gender).ToList().ForEach(p => ages.Add(p.ToList().First().RecordProfile.Gender, p.ToList().Count()));
-            return Ok(ages);
-        }
-
-        #region Popularity
-
-        [HttpGet]
-        public IHttpActionResult GetMostPopularPerson()
-        {
-            Person person = ItemMgr.GetPersons().OrderByDescending(p => p.TrendingScore).FirstOrDefault();
-            if (person is null)
-            {
-                return NotFound();
-            }
-            return Ok(person.ItemId);
-        }
-
-        [HttpGet]
-        public IHttpActionResult GetMostPopularPersons(int? id)
-        {
             Dictionary<int, string> ids = new Dictionary<int, string>();
             List<Person> Persons = ItemMgr.GetPersons().ToList();
             if (Persons is null || Persons.Count() == 0)
@@ -669,19 +514,229 @@ namespace UI_MVC.Controllers.API
             {
                 if (Persons.Max(p => p.TrendingScore == 0))
                 {
-                    Persons.OrderByDescending(p => p.Records.Count).Take(id ?? 3).ToList().ForEach(p => ids.Add(p.ItemId, p.Name));
-                }
-                else
-                {
-                    Persons.OrderByDescending(p => p.TrendingScore).Take(id ?? 3).ToList().ForEach(p => ids.Add(p.ItemId, p.Name));
+                    Persons.OrderByDescending(p => p.Records.Count).Take(3).ToList().ForEach(p => ids.Add(p.ItemId, p.Name));
                 }
             }
 
+            List<string> hashtags = new List<string>();
 
-            if (ids is null || ids.Count() == 0) return NotFound();
-            return Ok(ids);
+             Persons.SelectMany(p=>p.Records).SelectMany(p=>p.Hashtags).Distinct().Take(5).ToList().ForEach(p=> hashtags.Add(p.HashTag.ToLower()));
+            hashtags.Distinct();
+            Dictionary<string, Dictionary<string, int>> hashtagcount; 
+
+            //foreach (var tag in hashtags)
+            //{
+            //    Dictionary<string, int> hashtagcount = null;
+            //    List<string> tags = new List<string>();
+            //    Persons.ForEach(p => p.Records.SelectMany(h => h.Hashtags).ToList().ForEach(r => tags.Add(r.HashTag.ToLower())));
+            //    foreach( var persontag in tags)
+            //    {
+            //        if (persontag.Equals(tags))
+            //        {
+            //            hashtagcount.Add(persontag, )
+            //            int count = Persons.ForEach(p => p.Records.SelectMany(h => h.Hashtags).Where(s => s.HashTag.Equals(persontag)).ToList().Count();
+            //        }
+            //    }
+            //}
+           
+               
+            
+            
+            //Persons.ForEach(p=> hashtagcount.Add(p.Name, p.Records.SelectMany(p=>p.Hashtags)))
+             
+             //records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h => h.Records.Count).Take(8).ToList().ForEach(p => hashtags.Add(p.HashTag));
+            return Ok(hashtags);
         }
-        #endregion
+      
+
+    [HttpGet]
+    public IHttpActionResult GetTrendingHashtagsCount(int id)
+    {
+        Item item = ItemMgr.GetItem(id);
+        IEnumerable<Record> records = null;
+        Dictionary<string, int> hashtags = new Dictionary<string, int>();
+        if (item is Person person)
+        {
+            records = person.Records;
+        }
+        else if (item is Organisation organisation)
+        {
+            records = organisation.People.SelectMany(p => p.Records).ToList();
+        }
+        else if (item is Theme theme)
+        {
+            IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
+            records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+        }
+
+        records.SelectMany(r =>
+        {
+            return r.Hashtags;
+        }).Distinct().OrderByDescending(h =>
+        {
+            return h.Records.Count;
+        }).Distinct().Take(5).ToList().ForEach(p =>
+        {
+            hashtags.Add(p.HashTag, p.Records.Count);
+        });
+
+        if (hashtags is null || hashtags.Count() == 0) return NotFound();
+        return Ok(hashtags);
+    }
+    #endregion
+
+    #region Words
+    [HttpGet]
+    public IHttpActionResult GetTrendingWordsCount(int id)
+    {
+
+        Item item = ItemMgr.GetItem(id);
+
+        IEnumerable<Record> records = null;
+        Dictionary<string, int> words = new Dictionary<string, int>();
+        if (item is Person person)
+        {
+            records = person.Records;
+        }
+        else if (item is Organisation organisation)
+        {
+            records = organisation.People.SelectMany(p => p.Records).ToList();
+        }
+        else if (item is Theme theme)
+        {
+            IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
+            records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+        }
+
+        records.SelectMany(r => r.Words).Distinct().OrderByDescending(h => h.Records.Count).Distinct().Take(5).ToList().ForEach(p => words.Add(p.Text, p.Records.Count));
+        return Ok(words);
+    }
+    #endregion
+
+    #region Urls
+    [HttpGet]
+    public IHttpActionResult GetTrendingUrl(int id)
+    {
+        Item item = ItemMgr.GetItem(id);
+        IEnumerable<Record> records = null;
+        List<string> urls = new List<string>();
+
+        if (item is Person person)
+        {
+            records = person.Records;
+        }
+        else if (item is Organisation organisation)
+        {
+            records = organisation.People.SelectMany(p => p.Records).ToList();
+        }
+        else if (item is Theme theme)
+        {
+            IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
+            records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+        }
+
+        records.SelectMany(r => r.URLs).Distinct().Take(6).ToList().ForEach(p => urls.Add(p.Link));
+        urls.Distinct();
+        if (urls is null || urls.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+        return Ok(urls);
 
     }
+    #endregion
+
+
+    [HttpGet]
+    public IHttpActionResult GetAges(int id)
+    {
+        Item item = ItemMgr.GetItem(id);
+        IEnumerable<Record> records = null;
+        Dictionary<string, int> ages = new Dictionary<string, int>();
+        if (item is Person person)
+        {
+            records = person.Records;
+        }
+        else if (item is Organisation organisation)
+        {
+            records = organisation.People.SelectMany(p => p.Records).ToList();
+        }
+        else if (item is Theme theme)
+        {
+            IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
+            records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+        }
+        else
+        {
+            return NotFound();
+        }
+        records.GroupBy(p => p.RecordProfile.Age).ToList().ForEach(p => ages.Add(p.ToList().First().RecordProfile.Age, p.ToList().Count()));
+        return Ok(ages);
+    }
+
+    [HttpGet]
+    public IHttpActionResult GetGender(int id)
+    {
+        Item item = ItemMgr.GetItem(id);
+        IEnumerable<Record> records = null;
+        Dictionary<string, int> ages = new Dictionary<string, int>();
+        if (item is Person person)
+        {
+            records = person.Records;
+        }
+        else if (item is Organisation organisation)
+        {
+            records = organisation.People.SelectMany(p => p.Records).ToList();
+        }
+        else if (item is Theme theme)
+        {
+            IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records)).ToList();
+            records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+        }
+        else
+        {
+            return NotFound();
+        }
+        records.GroupBy(p => p.RecordProfile.Gender).ToList().ForEach(p => ages.Add(p.ToList().First().RecordProfile.Gender, p.ToList().Count()));
+        return Ok(ages);
+    }
+
+    #region Popularity
+
+    [HttpGet]
+    public IHttpActionResult GetMostPopularPerson()
+    {
+        Person person = ItemMgr.GetPersons().OrderByDescending(p => p.TrendingScore).FirstOrDefault();
+        if (person is null)
+        {
+            return NotFound();
+        }
+        return Ok(person.ItemId);
+    }
+
+    [HttpGet]
+    public IHttpActionResult GetMostPopularPersons(int? id)
+    {
+        Dictionary<int, string> ids = new Dictionary<int, string>();
+        List<Person> Persons = ItemMgr.GetPersons().ToList();
+        if (Persons is null || Persons.Count() == 0)
+        {
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        else
+        {
+            if (Persons.Max(p => p.TrendingScore == 0))
+            {
+                Persons.OrderByDescending(p => p.Records.Count).Take(id ?? 3).ToList().ForEach(p => ids.Add(p.ItemId, p.Name));
+            }
+            else
+            {
+                Persons.OrderByDescending(p => p.TrendingScore).Take(id ?? 3).ToList().ForEach(p => ids.Add(p.ItemId, p.Name));
+            }
+        }
+
+
+        if (ids is null || ids.Count() == 0) return NotFound();
+        return Ok(ids);
+    }
+    #endregion
+
+}
 }

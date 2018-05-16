@@ -16,7 +16,6 @@ namespace UI_MVC.Controllers
     /// </summary
     [RequireHttps]
     [Authorize(Roles = "User,Admin,SuperAdmin")]
-    [OutputCache(Duration = 3600, VaryByParam = "none")]
     public class ItemController : Controller
     {
         private readonly UnitOfWorkManager uow;
@@ -88,10 +87,10 @@ namespace UI_MVC.Controllers
                 {
                     itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName, organisationEditModel.SocialMediaLink, null, iconUrl, subplatform: Subplatform);
                 }
+                
 
-
-
-
+             
+                
 
 
 
@@ -264,7 +263,7 @@ namespace UI_MVC.Controllers
                 {
                     iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
                 }
-                if (themeEditModel.KeywordId is null)
+                if(themeEditModel.KeywordId is null)
                 {
                     Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, new List<Keyword>(), themeEditModel.IsTrending, Subplatform);
                 }
@@ -273,8 +272,8 @@ namespace UI_MVC.Controllers
                     Keyword keyword = itemMgr.GetKeyword((int)themeEditModel.KeywordId);
                     Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, new List<Keyword> { keyword }, themeEditModel.IsTrending, Subplatform);
                 }
-
-
+                
+                
                 return RedirectToAction("ItemBeheer", "Item");
             }
             return RedirectToAction("ItemBeheer", "Item");
@@ -378,7 +377,8 @@ namespace UI_MVC.Controllers
                     iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
                 }
 
-                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, iconUrl, personEditModel.IsTrending, null, null, null, null, null, null, null, personEditModel.Gemeente, null, organisation: organisation, subplatform: Subplatform, dateOfBirth: null);
+                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, iconUrl, personEditModel.IsTrending, null, null, null, null, null, null, null, personEditModel.Gemeente, null, null, organisation, Subplatform, null);
+                
                 return RedirectToAction("ItemBeheer", "Item");
             }
             return RedirectToAction("ItemBeheer", "Item");

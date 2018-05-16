@@ -113,13 +113,14 @@ namespace PB.BL
             }
 
 
+
             organisation = ItemRepo.CreateOrganisation(organisation);
             UowManager.Save();
 
             return organisation;
         }
 
-        public Person AddPerson(string name, string socialMediaLink, string iconUrl, bool isTrending = false, string firstName = null, string lastName = null, string level = null, string site = null, string twitterName = null, string position = null, string district = null, string gemeente = null, string postalCode = null, Gender gender = Gender.OTHERS, Organisation organisation = null, Subplatform subplatform = null, DateTime? dateOfBirth = null)
+        public Person AddPerson(string name, string socialMediaLink, string iconUrl, bool isTrending = false, string firstName = null, string lastName = null, string level = null, string site = null, string twitterName = null, string position = null, string district = null, string gemeente = null, string postalCode = null, Gender? gender = null, Organisation organisation = null, Subplatform subplatform = null, DateTime? dateOfBirth = null)
         {
             InitNonExistingRepo();
             Person person = new Person()
@@ -138,7 +139,7 @@ namespace PB.BL
                 District = district,
                 Gemeente = gemeente,
                 Postalcode = position,
-                Gender = gender,
+                Gender = gender ?? Gender.OTHERS,
                 Organisation = organisation,
                 SubPlatforms = (subplatform is null) ? new List<Subplatform>() : new List<Subplatform>() { subplatform },
                 DateOfBirth = dateOfBirth ?? new DateTime(1970, 01, 01),

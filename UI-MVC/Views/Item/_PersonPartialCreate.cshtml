@@ -1,15 +1,12 @@
 ﻿@model UI_MVC.Models.PersonEditModel
 
 <div class="bgc-white p-20 bd">
-
   <h4 class="fw-300 c-grey-900 mB-40">Create new person</h4>
   @using (Html.BeginForm("PersonPartialCreate", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
   {
-
     @Html.AntiForgeryToken()
     <form id="form" method="post">
       <div class="row">
-
         <div class="col-6">
           @Html.ValidationSummary(true, "", new { @class = "text-danger" })
           <div class="form-group">
@@ -22,7 +19,6 @@
           <div class="form-group">
             @Html.LabelFor(model => model.OrganisationId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-
               @Html.DropDownListFor(model => model.OrganisationId, new SelectList(Enumerable.Empty<SelectList>()), "Kies een partij", new { @class = "form-control", @id = "FromJson" })
 
               @Html.ValidationMessageFor(model => model.OrganisationId, "", new { @class = "text-danger" })
@@ -31,13 +27,11 @@
           <div class="form-group">
             @Html.LabelFor(model => model.IsTrending, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-              @*<div class="checkbox">*@
               <label class="switch">
                 @Html.CheckBoxFor(model => model.IsTrending, new { @class = "form-control" })
                 <div class="slider round"></div>
               </label>
               @Html.ValidationMessageFor(model => model.IsTrending, "", new { @class = "text-danger", @id = "IsHot" })
-              @*</div>*@
             </div>
           </div>
         </div>
@@ -49,7 +43,6 @@
               @Html.ValidationMessageFor(model => model.SocialMediaLink, "", new { @class = "text-danger" })
             </div>
           </div>
-
           <div class="form-group">
             @Html.LabelFor(model => model.Gemeente, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -57,7 +50,6 @@
               @Html.ValidationMessageFor(model => model.Gemeente, "", new { @class = "text-danger" })
             </div>
           </div>
-
           <div class="form-group">
             <label class="control-label col-md-2">Upload an icon</label>
             <div class="col-md-10">
@@ -68,12 +60,7 @@
             </div>
           </div>
         </div>
-
-
       </div>
-    
-      
-
       <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
           <input id="submit" type="submit" value="Create" class="btn btn-lg btn-secondary" />
@@ -81,36 +68,14 @@
       </div>
     </form>
   }
-
   <div>
   </div>
 </div>
-
-
 <script type="text/javascript">
   $(document).ready(function () {
     $("#IsHot").change();
   });
 </script>
-@*<script>
-
-    $('#form').submit(function (e) {
-      e.preventDefault();
-      $.ajax({
-        async: false,
-        url: 'https://localhost:44342/api/person',
-        type: 'POST',
-        dataType: 'JSON',
-        header: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
-        data: $('#form').serialize(),
-        contentType: 'application/json; charset=utf-8'
-      });
-    });
-
-
-
-
-  </script>*@
 <script>
   var tmp = "";
 
@@ -121,18 +86,10 @@
     headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
     url: "https://localhost:44342/api/item/GetOrganisation"
   }).responseJSON;
-
-
-
   for (var i = 0; i < tmp.length; i++) {
     $("#FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
-    //$("FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
-
   }
-
-
 </script>
-
 <script>
   $(document).ready(function ($) {
 

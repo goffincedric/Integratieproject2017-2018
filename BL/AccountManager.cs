@@ -168,7 +168,7 @@ namespace PB.BL
                         Profile = user,
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
-                        Value = "light",
+                        Value = "Light",
                         boolValue = false
                     },
                     new UserSetting()
@@ -224,7 +224,7 @@ namespace PB.BL
                         Profile = user2,
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
-                        Value = "light",
+                        Value = "Light",
                         boolValue = false
                     },
                     new UserSetting()

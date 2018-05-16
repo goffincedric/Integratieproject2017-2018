@@ -20,7 +20,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44338</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -235,6 +236,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\AccountController.cs" />
     <Compile Include="Controllers\API\Helper_Code\AuthorizationServerProvider.cs" />
+    <Compile Include="Controllers\API\SubplatformController.cs" />
     <Compile Include="Controllers\Helper_Code\AuthorizationHeaderHandler.cs" />
     <Compile Include="Controllers\API\ItemController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -248,7 +250,9 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FileViewModel.cs" />
+    <Compile Include="Models\HomePageViewModel.cs" />
     <Compile Include="Models\OrganisationEditModel.cs" />
+    <Compile Include="Models\SeedIntervals.cs" />
     <Compile Include="Models\SubplatformSettingViewModel.cs" />
     <Compile Include="Models\SubplatformViewModel.cs" />
     <Compile Include="Models\ThemeEditModel.cs" />
@@ -265,17 +269,15 @@
   <ItemGroup>
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\datatables.min.css" />
     <Content Include="Content\fa.css" />
     <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
     <Content Include="Content\Images\bg.jpg" />
-    <Content Include="Content\Images\default-theme.png" />
     <Content Include="Content\Images\faqbg.jpg" />
     <Content Include="Content\Images\Index\banner.jpg" />
     <Content Include="Content\Images\info-icon.png" />
-    <Content Include="Content\Images\logo_new.png" />
     <Content Include="Content\Images\Organisations\cdv.png" />
     <Content Include="Content\Images\Organisations\groen.jpg" />
     <Content Include="Content\Images\Organisations\nva.jpg" />
@@ -295,17 +297,14 @@
     <Content Include="Content\Images\Themes\veiligheid.png" />
     <Content Include="Content\Images\Themes\zorg.png" />
     <Content Include="Content\Images\Users\user.png" />
-    <Content Include="Content\Images\Profile-pic.png" />
     <Content Include="Content\Images\question-mark.png" />
-    <Content Include="Content\Styling\account\custom.css" />
-    <Content Include="Content\Styling\grid2\gridstack-extra.css" />
-    <Content Include="Content\Styling\grid2\gridstack.css" />
-    <Content Include="Content\Styling\wizard\material-bootstrap-wizard.css" />
-    <Content Include="Scripts\account\custom.js" />
-    <Content Include="Scripts\charts\Chart.min.js" />
+    <Content Include="Content\Styling\Grid\gridstack-extra.css" />
+    <Content Include="Content\Styling\Grid\gridstack.css" />
+    <Content Include="Content\Styling\Wizard\material-bootstrap-wizard.css" />
+    <Content Include="Scripts\Charts\Chart.min.js" />
     <Content Include="Scripts\contact.js" />
-    <Content Include="Content\Styling\style.css" />
-    <Content Include="Content\Styling\contact.css" />
+    <Content Include="Content\Styling\Style.css" />
+    <Content Include="Content\Styling\Contact.css" />
     <Content Include="Content\Styling\FAQ.css" />
     <Content Include="Content\Theme\DarkMode.css" />
     <Content Include="Content\Theme\FutureMode.css" />
@@ -325,10 +324,13 @@
     <Content Include="Scripts\bundle.js" />
     <Content Include="Scripts\Dashboard\DashBoard.js" />
     <Content Include="Scripts\Dashboard\DashboardControl.js" />
-    <Content Include="Scripts\grid2\gridstack.jQueryUI.js" />
-    <Content Include="Scripts\grid2\gridstack.js" />
+    <Content Include="Scripts\Dashboard\jquery-ui.js" />
+    <Content Include="Scripts\Dashboard\lodash.min.js" />
+    <Content Include="Scripts\datatables.min.js" />
+    <Content Include="Scripts\Grid\gridstack.jQueryUI.js" />
+    <Content Include="Scripts\Grid\gridstack.js" />
     <Content Include="Scripts\AccountControl.js" />
-    <Content Include="Scripts\index\hide-content.js" />
+    <Content Include="Scripts\Index\hide-content.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Content\Export\Users.json" />
@@ -340,14 +342,14 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\load.js" />
     <Content Include="Scripts\vendor.js" />
-    <Content Include="Scripts\wizard\bootstrap.min.js" />
-    <Content Include="Scripts\wizard\jquery.bootstrap.js" />
-    <Content Include="Scripts\wizard\jquery.validate.min.js" />
-    <Content Include="Scripts\wizard\material-bootstrap-wizard.js" />
-    <Content Include="Scripts\wizard\Wizard.js" />
-    <Content Include="Scripts\wordcloud\wordcloud.js" />
-    <Content Include="Scripts\wordcloud\zingchart-wordcloud.min.js" />
-    <Content Include="Scripts\wordcloud\zingchart.min.js" />
+    <Content Include="Scripts\Wizard\bootstrap.min.js" />
+    <Content Include="Scripts\Wizard\jquery.bootstrap.js" />
+    <Content Include="Scripts\Wizard\jquery.validate.min.js" />
+    <Content Include="Scripts\Wizard\material-bootstrap-wizard.js" />
+    <Content Include="Scripts\Wizard\Wizard.js" />
+    <Content Include="Scripts\WordCloud\wordcloud.js" />
+    <Content Include="Scripts\WordCloud\zingchart-wordcloud.min.js" />
+    <Content Include="Scripts\WordCloud\zingchart.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -358,10 +360,8 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Blank.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Account.cshtml" />
@@ -371,10 +371,8 @@
     <Content Include="Views\Error\BadRequest.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\Home\Legal.cshtml" />
-    <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Item\_OrganisationPartialTable.cshtml" />
     <Content Include="Views\Item\_ThemaPartialTable.cshtml" />
     <Content Include="Views\Item\_OrganisationPartialCreate.cshtml" />
@@ -388,13 +386,11 @@
     <Content Include="Views\Account\_DeleteProfile.cshtml" />
     <Content Include="Views\Account\_NotificationDropdown.cshtml" />
     <Content Include="Views\Home\ItemDetail.cshtml" />
-    <Content Include="Views\Item\Charts.cshtml" />
     <Content Include="Views\Account\Notifications.cshtml" />
     <Content Include="Views\Subplatform\PlatformSettings.cshtml" />
     <Content Include="Views\Account\UserBeheer.cshtml" />
     <Content Include="Views\Item\ItemBeheer.cshtml" />
     <Content Include="Views\Account\UserSettings.cshtml" />
-    <Content Include="Views\Home\_UrlList.cshtml" />
     <Content Include="Views\Account\_NotificationSetting.cshtml" />
     <Content Include="Views\Account\_AdminTable.cshtml" />
     <Content Include="Views\Account\_UserTable.cshtml" />
@@ -402,7 +398,6 @@
     <Content Include="Views\Dashboard\_Wizard.cshtml" />
     <Content Include="Views\Item\EditPerson.cshtml" />
     <Content Include="Views\Account\_UserSettingDetails.cshtml" />
-    <Content Include="Views\Item\View.cshtml" />
     <Content Include="Views\Item\EditOrganisation.cshtml" />
     <Content Include="Views\Item\EditKeyword.cshtml" />
     <Content Include="Views\Item\EditTheme.cshtml" />
@@ -411,14 +406,15 @@
     <Content Include="Views\Account\WeeklyReview.cshtml" />
     <Content Include="Views\Subplatform\_ChangeHomePage.cshtml" />
     <Content Include="Views\Subplatform\_ChangeMenu.cshtml" />
-    <Content Include="Views\Item\ChartsWizard.cshtml" />
     <Content Include="Views\Item\_ShowKeywordOfTheme.cshtml" />
+    <Content Include="Views\Subplatform\_SeedIntervals.cshtml" />
+    <Content Include="Views\Item\_ShowThemesOfOrganisation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Persons\" />
     <Folder Include="Content\Images\Subplatform\" />
-    <Folder Include="Subplatforms\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
