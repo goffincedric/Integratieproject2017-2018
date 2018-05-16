@@ -14,7 +14,7 @@ namespace PB.BL.Domain.Items
         public string SocialMediaLink { get; set; }
         [DataMember]
         public Function Function { get; set; }
-        //[DataMember]
+        [DataMember]
         public Organisation Organisation { get; set; }
         [DataMember]
         public string Gemeente { get; set; }

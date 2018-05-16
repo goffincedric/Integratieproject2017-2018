@@ -14,18 +14,7 @@
       </div>
     </div>
   </li>
-
-
 </ul>
-
-
-<script defer>
-  @*$("#itemref").click(function () {
-    window.location.href = '@Url.Action("ItemDetail","Item")/' + $("#itemref").text;
-    console.log("click on a");
-  });*@
-</script>
-
 <script type="text/javascript">
   
   var div = document.getElementById("myDropdown");
@@ -36,7 +25,6 @@
 
   function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
-
   }
 
   function filterFunction() {
@@ -53,7 +41,6 @@
       } else {
         a[i].style.display = "none";
       }
-
     }
     if (!filter) {
       for (i = 0; i < a.length; i++) {

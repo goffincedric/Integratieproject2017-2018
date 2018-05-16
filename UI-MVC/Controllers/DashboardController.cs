@@ -2,14 +2,10 @@
 using PB.BL;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
-using PB.BL.Domain.Settings;
 using PB.DAL.EF;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
 {
@@ -19,7 +15,6 @@ namespace UI_MVC.Controllers
     /// </summary
     [RequireHttps]
     [Authorize(Roles = "User,Admin,SuperAdmin")]
-    [OutputCache(Duration = 10, VaryByParam = "none")]
     public class DashboardController : Controller
     {
         private readonly UnitOfWorkManager uow;
@@ -46,6 +41,7 @@ namespace UI_MVC.Controllers
             ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
         }
 
+        #region Dashboard
         public ActionResult Dashboard(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -63,11 +59,11 @@ namespace UI_MVC.Controllers
                 };
                 model = dashboardMgr.AddDashboard(model.Subplatform, model.Profile, model.DashboardType, model.Zones);
             };
-
             return View(model);
         }
-
-
+        #endregion
+        
+        #region Wizard
         public ActionResult Wizard(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -78,12 +74,7 @@ namespace UI_MVC.Controllers
         {
             return PartialView();
         }
-
-
-       
-
-
-
-       
+        #endregion
+                                                
     }
 }

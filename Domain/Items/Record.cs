@@ -20,12 +20,13 @@ namespace PB.BL.Domain.Items
         public RecordProfile RecordProfile { get; set; }
         public Sentiment Sentiment { get; set; }
 
-        public List<Hashtag> Hashtags { get; set; }
-        public List<Mention> Mentions { get; set; }
-        public List<Url> URLs { get; set; }
+        public virtual List<Hashtag> Hashtags { get; set; }
+        public virtual List<Mention> Mentions { get; set; }
+
+        public virtual List<Url> URLs { get; set; }
         public List<Theme> Themes { get; set; }
         public List<Person> Persons { get; set; }
-        public List<Word> Words { get; set; }
+        public virtual List<Word> Words { get; set; }
 
         public override string ToString()
         {

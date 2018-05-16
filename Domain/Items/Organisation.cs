@@ -17,8 +17,8 @@ namespace PB.BL.Domain.Items
     
         [DataMember]
         public virtual List<Person> People { get; set; }
-        [DataMember]
-        public List<Theme> Themes { get; set; }
+        //[DataMember]
+        public virtual List<Theme> Themes { get; set; }
 
         public override bool Equals(object obj)
         {
