@@ -24,8 +24,10 @@ namespace UI_MVC
 
             // API Config
             GlobalConfiguration.Configuration.MessageHandlers.Add(new AuthorizationHeaderHandler());
-            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.Re‌​ferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.Re‌​ferenceLoopHandling =
+                ReferenceLoopHandling.Ignore;
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.NullValueHandling =
+                NullValueHandling.Ignore;
         }
     }
 }

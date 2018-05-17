@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Domain.Accounts;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -12,11 +16,6 @@ using PB.BL.Senders;
 using PB.DAL;
 using PB.DAL.EF;
 using PB.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
 
 namespace PB.BL
 {
@@ -24,10 +23,10 @@ namespace PB.BL
     //data to store, it also handles some logic and settings
     public class AccountManager : UserManager<Profile>, IAccountManager
     {
-        private UnitOfWorkManager UowManager;
-        private IntegratieUserStore store;
-        private IProfileRepo ProfileRepo;
         private IAlertRepo AlertRepo;
+        private IProfileRepo ProfileRepo;
+        private readonly IntegratieUserStore store;
+        private UnitOfWorkManager UowManager;
 
         public AccountManager(IntegratieUserStore store) : base(store)
         {
@@ -45,21 +44,13 @@ namespace PB.BL
         }
 
         #region Init & create
+
         public void InitNonExistingRepo(bool createWithUnitOfWork = false)
         {
             if (ProfileRepo == null)
-            {
                 if (createWithUnitOfWork)
                 {
-                    if (UowManager == null)
-                    {
-                        UowManager = new UnitOfWorkManager();
-                        //Console.WriteLine("UOW MADE IN ACCOUNT MANAGER for profile repo");
-                    }
-                    else
-                    {
-                        //Console.WriteLine("uo bestaat al");
-                    }
+                    if (UowManager == null) UowManager = new UnitOfWorkManager();
 
                     ProfileRepo = new ProfileRepo(UowManager.UnitOfWork);
                     AlertRepo = new AlertRepo(UowManager.UnitOfWork);
@@ -70,7 +61,6 @@ namespace PB.BL
                     AlertRepo = new AlertRepo();
                     //Console.WriteLine("OLD WAY REPO ACCOUNTMGR");
                 }
-            }
         }
 
         public static AccountManager Create(IdentityFactoryOptions<AccountManager> options, IOwinContext context)
@@ -113,12 +103,10 @@ namespace PB.BL
 
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
-            {
-                manager.UserTokenProvider = new DataProtectorTokenProvider<Profile>(dataProtectionProvider.Create("ASP.NET Identity"));
-            }
+                manager.UserTokenProvider =
+                    new DataProtectorTokenProvider<Profile>(dataProtectionProvider.Create("ASP.NET Identity"));
 
             return manager;
-
         }
 
         public List<IdentityRole> GetAllRoles()
@@ -136,34 +124,38 @@ namespace PB.BL
             if (!roleManager.RoleExists("SuperAdmin"))
             {
                 //Create SuperAdmin role
-                var role = new IdentityRole { Name = "SuperAdmin" };
+                var role = new IdentityRole {Name = "SuperAdmin"};
                 roleManager.Create(role);
-
             }
 
             //Create Admin role
             if (!roleManager.RoleExists("Admin"))
             {
-                var role = new IdentityRole { Name = "Admin" };
+                var role = new IdentityRole {Name = "Admin"};
                 roleManager.Create(role);
-
             }
+
             //Create User role   
             if (!roleManager.RoleExists("User"))
             {
-                var role = new IdentityRole { Name = "User" };
+                var role = new IdentityRole {Name = "User"};
                 roleManager.Create(role);
-
             }
 
             // Create superadmin
             if (userManager.Users.FirstOrDefault(p => p.UserName.Equals("captain")) is null)
             {
-                var user = new Profile { UserName = "captain", Email = "example@example.tld", ProfileIcon = @"~/Content/Images/Users/user.png", CreatedOn = DateTime.Now };
-                user.UserData = new UserData() { Profile = user };
+                var user = new Profile
+                {
+                    UserName = "captain",
+                    Email = "example@example.tld",
+                    ProfileIcon = @"~/Content/Images/Users/user.png",
+                    CreatedOn = DateTime.Now
+                };
+                user.UserData = new UserData {Profile = user};
                 user.Settings = new List<UserSetting>
                 {
-                    new UserSetting()
+                    new UserSetting
                     {
                         Profile = user,
                         IsEnabled = true,
@@ -171,55 +163,57 @@ namespace PB.BL
                         Value = "Light",
                         boolValue = false
                     },
-                    new UserSetting()
+                    new UserSetting
                     {
                         Profile = user,
                         IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
-                        Value=null, //moet nog boolean worden
+                        SettingName = Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
+                        Value = null, //moet nog boolean worden
                         boolValue = true
                     },
-                    new UserSetting()
+                    new UserSetting
                     {
                         Profile = user,
                         IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
-                        Value=null, //moet nog boolean worden
-                        boolValue=true
+                        SettingName = Setting.Account.WANTS_SITE_NOTIFICATIONS,
+                        Value = null, //moet nog boolean worden
+                        boolValue = true
                     },
-                    new UserSetting()
+                    new UserSetting
                     {
                         Profile = user,
                         IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
-                        Value=null, //moet nog boolean worden
-                        boolValue=true
+                        SettingName = Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
+                        Value = null, //moet nog boolean worden
+                        boolValue = true
                     },
-                    new UserSetting()
+                    new UserSetting
                     {
                         Profile = user,
                         IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
-                        Value=null, //moet nog boolean worden
-                        boolValue=true
+                        SettingName = Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
+                        Value = null, //moet nog boolean worden
+                        boolValue = true
                     }
                 };
 
                 var result = userManager.Create(user, "FliesAway");
-                if (result.Succeeded)
-                {
-                    //Assign Role to user
-                    userManager.AddToRole(user.Id, "SuperAdmin");
-                }
+                if (result.Succeeded) userManager.AddToRole(user.Id, "SuperAdmin");
             }
 
             if (userManager.Users.FirstOrDefault(p => p.UserName.Equals("admin")) is null)
             {
-                var user2 = new Profile { UserName = "admin", Email = "admin@example.tld", ProfileIcon = @"~/Content/Images/Users/user.png", CreatedOn = DateTime.Now };
-                user2.UserData = new UserData() { Profile = user2 };
+                var user2 = new Profile
+                {
+                    UserName = "admin",
+                    Email = "admin@example.tld",
+                    ProfileIcon = @"~/Content/Images/Users/user.png",
+                    CreatedOn = DateTime.Now
+                };
+                user2.UserData = new UserData {Profile = user2};
                 user2.Settings = new List<UserSetting>
                 {
-                    new UserSetting()
+                    new UserSetting
                     {
                         Profile = user2,
                         IsEnabled = true,
@@ -227,52 +221,49 @@ namespace PB.BL
                         Value = "Light",
                         boolValue = false
                     },
-                    new UserSetting()
+                    new UserSetting
                     {
                         Profile = user2,
                         IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
-                        Value=null, //moet nog boolean worden
+                        SettingName = Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
+                        Value = null, //moet nog boolean worden
                         boolValue = true
                     },
-                    new UserSetting()
+                    new UserSetting
                     {
                         Profile = user2,
                         IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
-                        Value=null, //moet nog boolean worden
-                        boolValue=true
+                        SettingName = Setting.Account.WANTS_SITE_NOTIFICATIONS,
+                        Value = null, //moet nog boolean worden
+                        boolValue = true
                     },
-                    new UserSetting()
+                    new UserSetting
                     {
                         Profile = user2,
                         IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
-                        Value=null, //moet nog boolean worden
-                        boolValue=true
+                        SettingName = Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
+                        Value = null, //moet nog boolean worden
+                        boolValue = true
                     },
-                    new UserSetting()
+                    new UserSetting
                     {
                         Profile = user2,
                         IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
-                        Value=null, //moet nog boolean worden
-                        boolValue=true
+                        SettingName = Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
+                        Value = null, //moet nog boolean worden
+                        boolValue = true
                     }
                 };
 
                 var result = userManager.Create(user2, "Disney2018");
-                if (result.Succeeded)
-                {
-                    //Assign Role to user
-                    userManager.AddToRole(user2.Id, "Admin");
-                }
+                if (result.Succeeded) userManager.AddToRole(user2.Id, "Admin");
             }
-
         }
+
         #endregion
 
         #region Profile
+
         public void ChangeProfile(Profile profile)
         {
             InitNonExistingRepo();
@@ -309,14 +300,16 @@ namespace PB.BL
         {
             return ProfileRepo.ReadProfiles().Count();
         }
+
         #endregion
 
         #region ProfileSettings
+
         public Profile AddUserSetting(string userId, Setting.Account settingName, string value)
         {
             InitNonExistingRepo();
             Profile profile = GetProfile(userId);
-            profile.Settings.Add(new UserSetting()
+            profile.Settings.Add(new UserSetting
             {
                 Profile = profile,
                 SettingName = settingName,
@@ -331,7 +324,10 @@ namespace PB.BL
         {
             InitNonExistingRepo();
             Profile profile = GetProfile(userId);
-            profile.Settings[profile.Settings.FindIndex(s => s.SettingName.Equals(userSetting.SettingName) && s.Profile.Id.Equals(userSetting.Profile.Id))] = userSetting;
+            profile.Settings[
+                    profile.Settings.FindIndex(s =>
+                        s.SettingName.Equals(userSetting.SettingName) && s.Profile.Id.Equals(userSetting.Profile.Id))] =
+                userSetting;
 
             ChangeProfile(profile);
             UowManager.Save();
@@ -348,9 +344,11 @@ namespace PB.BL
             InitNonExistingRepo();
             return GetProfile(userId).Settings.FirstOrDefault(s => s.SettingName.Equals(accountSetting));
         }
+
         #endregion
 
         #region Subscriptions
+
         public Profile AddSubscription(Profile profile, Item item)
         {
             InitNonExistingRepo();
@@ -376,9 +374,11 @@ namespace PB.BL
 
             return profile;
         }
+
         #endregion
 
         #region Alerts
+
         public WeeklyReview GetLatestWeeklyReview(string userId)
         {
             InitNonExistingRepo();
@@ -386,7 +386,7 @@ namespace PB.BL
             if (profile is null) throw new Exception("Profile with userId (" + userId + ") doesn't exist.");
             return profile.WeeklyReviews.OrderByDescending(wr => wr.TimeGenerated).FirstOrDefault();
         }
-        
+
         // TODO: Async maken
         public Dictionary<Profile, List<ProfileAlert>> SendWeeklyReviews()
         {
@@ -396,7 +396,7 @@ namespace PB.BL
                     p.Subscriptions.Count > 0 &&
                     p.Email != null &&
                     p.ProfileAlerts.FindAll(pa => pa.TimeStamp.Date >= DateTime.Today.AddDays(-7))
-                    .Count > 0)
+                        .Count > 0)
                 .ToList();
 
             // Pick 1 random alert from each day
@@ -404,15 +404,13 @@ namespace PB.BL
             Random random = new Random();
             allProfiles.ForEach(p =>
             {
-                Dictionary<DateTime, List<ProfileAlert>> profileAlertsByDate = p.ProfileAlerts.GroupBy(pa => pa.TimeStamp.Date).ToDictionary(kv => kv.Key, kv => kv.ToList());
+                Dictionary<DateTime, List<ProfileAlert>> profileAlertsByDate = p.ProfileAlerts
+                    .GroupBy(pa => pa.TimeStamp.Date).ToDictionary(kv => kv.Key, kv => kv.ToList());
                 List<ProfileAlert> profileAlerts = new List<ProfileAlert>();
 
                 profileAlertsByDate.Values.ToList().ForEach(v =>
                 {
-                    if (v.Count > 0)
-                    {
-                        profileAlerts.Add(v[random.Next(0, v.Count)]);
-                    }
+                    if (v.Count > 0) profileAlerts.Add(v[random.Next(0, v.Count)]);
                 });
 
                 AlertsPerProfile.Add(p, profileAlerts);
@@ -440,20 +438,28 @@ namespace PB.BL
                 profileAlerts.ForEach(pa =>
                 {
                     StringBuilder sbItem = new StringBuilder(GmailSender.WeeklyReviewListItem);
-                    sbItem.Replace(GmailSender.WeeklyReviewListItemIconSubstring, "https://integratieproject.azurewebsites.net" + pa.Alert.Item.IconURL.Substring(1) ?? GmailSender.DefaultItemIcon);
+                    sbItem.Replace(GmailSender.WeeklyReviewListItemIconSubstring,
+                        "https://integratieproject.azurewebsites.net" + pa.Alert.Item.IconURL.Substring(1) ??
+                        GmailSender.DefaultItemIcon);
                     sbItem.Replace(GmailSender.DefaultItemLinkSubstring, "#");
                     sbItem.Replace(GmailSender.WeeklyReviewListItemNameSubstring, pa.Alert.Item.Name);
                     sbItem.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring,
-                        pa.Alert.Item.Name + " " + pa.Alert.Event + " " + pa.Alert.Subject + " - " + pa.TimeStamp.Date.ToShortDateString() + "<br>" + pa.Alert.Text + "."
+                        pa.Alert.Item.Name + " " + pa.Alert.Event + " " + pa.Alert.Subject + " - " +
+                        pa.TimeStamp.Date.ToShortDateString() + "<br>" + pa.Alert.Text + "."
                     );
                     sb.Append(sbItem.ToString());
                 });
-                List<Person> persons = p.Subscriptions.Where(i => i is Person).Select(i => (Person)i).ToList();
-                Person person = persons.First(pe => pe.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count == persons.Max(ps => ps.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count));
+                List<Person> persons = p.Subscriptions.Where(i => i is Person).Select(i => (Person) i).ToList();
+                Person person = persons.First(pe =>
+                    pe.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count == persons.Max(ps =>
+                        ps.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count));
 
                 sbBody.Replace(GmailSender.DefaultItemLinkSubstring, "#");
                 sbBody.Replace(GmailSender.WeeklyReviewListItemNameSubstring, person.Name);
-                sbBody.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring, person.Name + " is tijdens de afgelopen week " + person.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-14)).Count + " aantal keer het onderwerp geweest in iemand zijn/haar tweet.");
+                sbBody.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring,
+                    person.Name + " is tijdens de afgelopen week " +
+                    person.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-14)).Count +
+                    " aantal keer het onderwerp geweest in iemand zijn/haar tweet.");
 
                 sbBody.Replace(GmailSender.WeeklyReviewListSubstring, sb.ToString());
 
@@ -467,21 +473,20 @@ namespace PB.BL
                 sender.Send();
 
                 // Make WeeklyReview and persist
-                if (p.WeeklyReviews == null)
-                {
-                    p.WeeklyReviews = new List<WeeklyReview>();
-                }
-                WeeklyReview weeklyReview = new WeeklyReview()
+                if (p.WeeklyReviews == null) p.WeeklyReviews = new List<WeeklyReview>();
+                WeeklyReview weeklyReview = new WeeklyReview
                 {
                     TopPersonId = person.ItemId,
                     Profile = profileAlerts[0].Profile,
                     TimeGenerated = DateTime.Now,
-                    TopPersonText = person.Name + " is tijdens de afgelopen week " + person.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-14)).Count + " aantal keer het onderwerp geweest in iemand zijn/haar tweet.",
+                    TopPersonText = person.Name + " is tijdens de afgelopen week " +
+                                    person.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-14)).Count +
+                                    " aantal keer het onderwerp geweest in iemand zijn/haar tweet.",
                     WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlert>()
                 };
                 profileAlerts.ForEach(pa =>
                 {
-                    WeeklyReviewProfileAlert weeklyReviewProfileAlerts = new WeeklyReviewProfileAlert()
+                    WeeklyReviewProfileAlert weeklyReviewProfileAlerts = new WeeklyReviewProfileAlert
                     {
                         ProfileAlert = pa,
                         WeeklyReview = weeklyReview
@@ -498,7 +503,7 @@ namespace PB.BL
 
             return AlertsPerProfile;
         }
-        
+
         // TODO: Async maken
         public List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems)
         {
@@ -537,7 +542,7 @@ namespace PB.BL
                 {
                     if (profile.Subscriptions.Contains(alert.Item))
                     {
-                        ProfileAlert profileAlert = new ProfileAlert()
+                        ProfileAlert profileAlert = new ProfileAlert
                         {
                             AlertId = alert.AlertId,
                             Alert = alert,
@@ -548,7 +553,8 @@ namespace PB.BL
                             WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlert>()
                         };
 
-                        if (!alert.ProfileAlerts.Contains(profileAlert) && !profile.ProfileAlerts.Contains(profileAlert))
+                        if (!alert.ProfileAlerts.Contains(profileAlert) &&
+                            !profile.ProfileAlerts.Contains(profileAlert))
                         {
                             changed = true;
                             alert.ProfileAlerts.Add(profileAlert);
@@ -574,12 +580,15 @@ namespace PB.BL
         {
             InitNonExistingRepo();
             //Alle items uit profile subscriptions halen
-            if (profile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
-            if (profile.Subscriptions == null || profile.Subscriptions.Count == 0) throw new Exception("U heeft nog geen subscriptions toegevoegd aan uw account, gelieve er eerst enkele te kiezen");
+            if (profile == null)
+                throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
+            if (profile.Subscriptions == null || profile.Subscriptions.Count == 0)
+                throw new Exception(
+                    "U heeft nog geen subscriptions toegevoegd aan uw account, gelieve er eerst enkele te kiezen");
             List<Item> subscribedItems = profile.Subscriptions;
 
             //Items opdelen in Subklasses [Person, Organisation, Theme]
-            List<Person> people = subscribedItems.Where(i => i is Person).ToList().Select(i => (Person)i).ToList();
+            List<Person> people = subscribedItems.Where(i => i is Person).ToList().Select(i => (Person) i).ToList();
             List<Organisation> organisations = new List<Organisation>(); // Alerts op organisaties;
             List<Theme> themes = new List<Theme>(); // Alerts op thema's
 
@@ -611,7 +620,7 @@ namespace PB.BL
             Console.WriteLine("========= NIEUWE ALERTS ========");
             alerts.ForEach(a =>
             {
-                ProfileAlert profileAlert = new ProfileAlert()
+                ProfileAlert profileAlert = new ProfileAlert
                 {
                     AlertId = a.AlertId,
                     Alert = a,
@@ -653,21 +662,23 @@ namespace PB.BL
         {
             InitNonExistingRepo();
             Profile profile = ProfileRepo.ReadProfile(userId);
-            bool? settingValue = profile?.Settings.Find(us => us.SettingName.Equals(Setting.Account.WANTS_SITE_NOTIFICATIONS))?.boolValue;
+            bool? settingValue = profile?.Settings
+                .Find(us => us.SettingName.Equals(Setting.Account.WANTS_SITE_NOTIFICATIONS))?.boolValue;
             if (settingValue.HasValue && settingValue.Value)
             {
                 List<ProfileAlert> profileAlerts = GetProfileAlerts(subplatform, userId).ToList();
 
-                profileAlerts.Sort(delegate (ProfileAlert x, ProfileAlert y)
+                profileAlerts.Sort(delegate(ProfileAlert x, ProfileAlert y)
                 {
                     if (x.TimeStamp == null && y.TimeStamp == null) return 0;
-                    else if (x.TimeStamp == null) return -1;
-                    else if (y.TimeStamp == null) return 1;
-                    else return y.TimeStamp.CompareTo(x.TimeStamp);
+                    if (x.TimeStamp == null) return -1;
+                    if (y.TimeStamp == null) return 1;
+                    return y.TimeStamp.CompareTo(x.TimeStamp);
                 });
 
                 return profileAlerts;
             }
+
             return new List<ProfileAlert>();
         }
 
@@ -675,27 +686,30 @@ namespace PB.BL
         {
             InitNonExistingRepo();
             Profile profile = ProfileRepo.ReadProfile(userId);
-            bool? settingValue = profile?.Settings.Find(us => us.SettingName.Equals(Setting.Account.WANTS_ANDROID_NOTIFICATIONS))?.boolValue;
+            bool? settingValue = profile?.Settings
+                .Find(us => us.SettingName.Equals(Setting.Account.WANTS_ANDROID_NOTIFICATIONS))?.boolValue;
             if (settingValue.HasValue && settingValue.Value)
             {
                 List<ProfileAlert> profileAlerts = GetProfileAlerts(subplatform, userId).ToList();
 
-                profileAlerts.Sort(delegate (ProfileAlert x, ProfileAlert y)
+                profileAlerts.Sort(delegate(ProfileAlert x, ProfileAlert y)
                 {
                     if (x.TimeStamp == null && y.TimeStamp == null) return 0;
-                    else if (x.TimeStamp == null) return -1;
-                    else if (y.TimeStamp == null) return 1;
-                    else return y.TimeStamp.CompareTo(x.TimeStamp);
+                    if (x.TimeStamp == null) return -1;
+                    if (y.TimeStamp == null) return 1;
+                    return y.TimeStamp.CompareTo(x.TimeStamp);
                 });
 
                 return profileAlerts;
             }
+
             return new List<ProfileAlert>();
         }
 
         private IEnumerable<ProfileAlert> GetProfileAlerts(Subplatform subplatform, string userId)
         {
-            return AlertRepo.ReadProfileAlerts(userId).ToList().Where(pa => pa.Alert.Item.SubPlatforms.Contains(subplatform));
+            return AlertRepo.ReadProfileAlerts(userId).ToList()
+                .Where(pa => pa.Alert.Item.SubPlatforms.Contains(subplatform));
         }
 
         public void ChangeProfileAlert(ProfileAlert profileAlert)
@@ -704,6 +718,7 @@ namespace PB.BL
             AlertRepo.UpdateProfileAlert(profileAlert);
             UowManager.Save();
         }
+
         #endregion
     }
 }

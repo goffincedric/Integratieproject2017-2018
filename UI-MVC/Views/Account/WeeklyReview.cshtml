@@ -16,7 +16,9 @@
         <div class="bgc-white form-group bd col-md-12 pY-20">
           <a href="@Url.Action("Faq", "Home")">
             <div class="row">
-              <div class="col-md-1"><img class="w-3r bdrs-50p alert-img" src="~/Content/Images/info-icon.png" alt=""></div>
+              <div class="col-md-1">
+                <img class="w-3r bdrs-50p alert-img" src="~/Content/Images/info-icon.png" alt="">
+              </div>
               <div class="col-md-11 alert-text">
                 <span class="fsz-xl">
                   U heeft nog geen weekly review!
@@ -39,21 +41,25 @@
       <div class="row">
         <div class="bgc-white form-group bd col-md-12">
           <div class="row">
-            <div class="col-md-1"><img class="m-10 w-3r bdrs-50p alert-img" src="@ViewBag.Icon" alt=""></div>
+            <div class="col-md-1">
+              <img class="m-10 w-3r bdrs-50p alert-img" src="@ViewBag.Icon" alt="">
+            </div>
             <div class="col-md-11 alert-text">
               <span class="fsz-xl">@Model.TopPersonText</span>
             </div>
           </div>
         </div>
       </div>
-      <hr />
+      <hr/>
       foreach (var wr in Model.WeeklyReviewsProfileAlerts)
       {
         <div class="row">
           <div class="bgc-white form-group bd col-md-12">
-            <a href="@Url.Action("ClickNotification", "Account", new { id = wr.ProfileAlert.AlertId })">
+            <a href="@Url.Action("ClickNotification", "Account", new {id = wr.ProfileAlert.AlertId})">
               <div class="row">
-                <div class="col-md-1"><img class="m-10 w-3r bdrs-50p alert-img" src="@VirtualPathUtility.ToAbsolute(wr.ProfileAlert.Alert.Item.IconURL)" alt=""></div>
+                <div class="col-md-1">
+                  <img class="m-10 w-3r bdrs-50p alert-img" src="@VirtualPathUtility.ToAbsolute(wr.ProfileAlert.Alert.Item.IconURL)" alt="">
+                </div>
                 <div class="col-md-11 alert-text">
                   <span class="fsz-xl">@wr.ProfileAlert.Alert.Text</span>
                   <p class="m-0">@wr.ProfileAlert.TimeStamp</p>

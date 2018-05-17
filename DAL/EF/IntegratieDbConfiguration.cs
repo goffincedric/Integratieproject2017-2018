@@ -1,11 +1,15 @@
-﻿namespace PB.DAL.EF
+﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.SqlServer;
+
+namespace PB.DAL.EF
 {
-    internal class IntegratieDbConfiguration : System.Data.Entity.DbConfiguration
+    internal class IntegratieDbConfiguration : DbConfiguration
     {
         public IntegratieDbConfiguration()
         {
-            SetDefaultConnectionFactory(new System.Data.Entity.Infrastructure.SqlConnectionFactory());
-            SetProviderServices("System.Data.SqlClient", System.Data.Entity.SqlServer.SqlProviderServices.Instance);
+            SetDefaultConnectionFactory(new SqlConnectionFactory());
+            SetProviderServices("System.Data.SqlClient", SqlProviderServices.Instance);
             SetDatabaseInitializer(new IntegratieDbInitializer());
         }
     }

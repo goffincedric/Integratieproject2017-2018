@@ -9,24 +9,22 @@ namespace PB.BL.Domain.Items
     [Table("tblOrganisation")]
     public class Organisation : Item
     {
-        [Required]
-        [DataMember]
-        public string FullName { get; set; }
-        [DataMember]
-        public string SocialMediaLink { get; set; }
-    
-        [DataMember]
-        public virtual List<Person> People { get; set; }
+        [Required] [DataMember] public string FullName { get; set; }
+
+        [DataMember] public string SocialMediaLink { get; set; }
+
+        [DataMember] public virtual List<Person> People { get; set; }
+
         //[DataMember]
         public virtual List<Theme> Themes { get; set; }
 
         public override bool Equals(object obj)
         {
             return obj is Organisation organisation &&
-                Name.ToLower().Equals(organisation.Name.ToLower()) &&
-                FullName.ToLower().Equals(organisation.FullName.ToLower());
+                   Name.ToLower().Equals(organisation.Name.ToLower()) &&
+                   FullName.ToLower().Equals(organisation.FullName.ToLower());
         }
-        
+
         public override int GetHashCode()
         {
             var hashCode = -792337166;
@@ -37,7 +35,7 @@ namespace PB.BL.Domain.Items
 
         public override string ToString()
         {
-            return Name + ": " + FullName + " (Id: " + (ItemId) + ")";
+            return Name + ": " + FullName + " (Id: " + ItemId + ")";
         }
     }
 }

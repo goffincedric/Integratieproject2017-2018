@@ -7,15 +7,15 @@ namespace PB.BL.Domain.Platform
     [Table("tblTag")]
     public class Tag
     {
-        [Key]
-        public int TagId { get; set; }
-        [Required]
-        public string Name { get; set; }
+        [Key] public int TagId { get; set; }
+
+        [Required] public string Name { get; set; }
+
         public string Text { get; set; }
 
         public int PageId { get; set; }
-        [Required]
-        public Page Page { get; set; }
+
+        [Required] public Page Page { get; set; }
 
         public override bool Equals(object obj)
         {

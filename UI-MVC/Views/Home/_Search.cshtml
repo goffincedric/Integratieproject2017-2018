@@ -1,8 +1,16 @@
 ﻿@model IEnumerable<PB.BL.Domain.Items.Item>
 
 <ul class="nav-left">
-  <li><a id="sidebar-toggle" class="sidebar-toggle" href="javascript:void(0);"><i class="ti-menu"></i></a></li>
-  <li class="search-box"><a class="search-toggle no-pdd-right" href="javascript:void(0);"><i class="search-icon ti-search pdd-right-10"></i> <i class="search-icon-close ti-close pdd-right-10"></i></a></li>
+  <li>
+    <a id="sidebar-toggle" class="sidebar-toggle" href="javascript:void(0);">
+      <i class="ti-menu"></i>
+    </a>
+  </li>
+  <li class="search-box">
+    <a class="search-toggle no-pdd-right" href="javascript:void(0);">
+      <i class="search-icon ti-search pdd-right-10"></i> <i class="search-icon-close ti-close pdd-right-10"></i>
+    </a>
+  </li>
   <li class="search-input" onclick="myFunction()">
     <div class="dropdownSearch">
       <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
@@ -16,7 +24,7 @@
   </li>
 </ul>
 <script type="text/javascript">
-  
+
   var div = document.getElementById("myDropdown");
   var a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {

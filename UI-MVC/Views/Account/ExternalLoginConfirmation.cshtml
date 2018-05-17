@@ -26,10 +26,10 @@
       z-index: 90000
     }
 
-      #loader.fadeOut {
-        opacity: 0;
-        visibility: hidden
-      }
+    #loader.fadeOut {
+      opacity: 0;
+      visibility: hidden
+    }
 
     .spinner {
       width: 40px;
@@ -48,57 +48,63 @@
 
 </head>
 <body class="app">
-  <div id="loader">
-    <div class="spinner"></div>
-  </div>
-  <script>
-    window.addEventListener('load', () => {
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+<script>
+  window.addEventListener('load',
+    () => {
       const loader = document.getElementById('loader');
       setTimeout(() => {
-        loader.classList.add('fadeOut');
-      }, 300);
+          loader.classList.add('fadeOut');
+        },
+        300);
     });
-  </script>
-  <div class="peers ai-s fxw-nw h-100vh">
-    <div class="d-n@sm- peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv" style="background-image:url(@Url.Content("~/Content/Images/bg.jpg"))">
-      <div class="pos-a centerXY">
-        <div class="bgc-white bdrs-50p pos-r" style="width:120px;height:120px"><a href="@Url.Action("Index", "Home")"><img class="pos-a centerXY" src="@Url.Content("~/Content/Images/logo_new.png")" alt=""></a></div>
+</script>
+<div class="peers ai-s fxw-nw h-100vh">
+  <div class="d-n@sm- peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv" style="background-image: url(@Url.Content("~/Content/Images/bg.jpg"))">
+    <div class="pos-a centerXY">
+      <div class="bgc-white bdrs-50p pos-r" style="width: 120px; height: 120px">
+        <a href="@Url.Action("Index", "Home")">
+          <img class="pos-a centerXY" src="@Url.Content("~/Content/Images/logo_new.png")" alt="">
+        </a>
       </div>
     </div>
-    <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style="min-width:320px">
-      <h4 class="fw-300 c-grey-900 mB-40">Login</h4>
-      @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-      {
-        @Html.AntiForgeryToken()
-
-        <h4>Association Form</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <p class="text-info">
-          You've successfully authenticated with <strong>@ViewBag.LoginProvider</strong>.
-          Please enter an email for this site below and click the Register button to finish
-          logging in.
-        </p>
-        <div class="form-group">
-          @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-          <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-          </div>
-        </div>
-      }
-
-
-    </div>
   </div>
-  @Scripts.Render("~/bundles/bootstrapjs")
-  @Scripts.Render("~/bundles/jquery")
-  @Scripts.Render("~/bundles/adminator")
+  <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style="min-width: 320px">
+    <h4 class="fw-300 c-grey-900 mB-40">Login</h4>
+    @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+    {
+      @Html.AntiForgeryToken()
+
+      <h4>Association Form</h4>
+      <hr/>
+      @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+      <p class="text-info">
+        You've successfully authenticated with <strong>@ViewBag.LoginProvider</strong>.
+        Please enter an email for this site below and click the Register button to finish
+        logging in.
+      </p>
+      <div class="form-group">
+        @Html.LabelFor(m => m.Email, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+          @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
+          @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger"})
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+          <input type="submit" class="btn btn-default" value="Register"/>
+        </div>
+      </div>
+    }
+
+
+  </div>
+</div>
+@Scripts.Render("~/bundles/bootstrapjs")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/adminator")
 </body>
 </html>

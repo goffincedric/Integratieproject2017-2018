@@ -4,7 +4,6 @@ namespace UI_MVC.Models
 {
     public class HomePageViewModel
     {
-
         public string BannerTitle { get; set; }
 
         public string BannerTextSub1 { get; set; }

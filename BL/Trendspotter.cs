@@ -1,8 +1,8 @@
-﻿using PB.BL.Domain.Accounts;
-using PB.BL.Domain.Items;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PB.BL.Domain.Accounts;
+using PB.BL.Domain.Items;
 
 namespace PB.BL
 {
@@ -13,8 +13,10 @@ namespace PB.BL
             List<Alert> AllAlerts = new List<Alert>();
 
             // Items opdelen in Subklasses [Person, Organisation, Theme]
-            List<Person> Persons = Subscriptions.Where(i => i is Person).Select(i => (Person)i).ToList();
-            List<Organisation> Organisations = Subscriptions.Where(i => i is Organisation).Select(i => (Organisation)i).ToList(); // Alerts op organisaties;
+            List<Person> Persons = Subscriptions.Where(i => i is Person).Select(i => (Person) i).ToList();
+            List<Organisation> Organisations =
+                Subscriptions.Where(i => i is Organisation).Select(i => (Organisation) i)
+                    .ToList(); // Alerts op organisaties;
             List<Theme> Themes = new List<Theme>(); // Alerts op thema's
 
             //Records uit people halen
@@ -32,19 +34,18 @@ namespace PB.BL
         public static List<Item> CheckTrendingItems(List<Item> items, int topAmount, ref List<Alert> alerts)
         {
             // Calc average subscribed profiles per person
-            int averageSubscriptions = (int)Math.Ceiling(items.Where(i => i is Person).Average(i => i.SubscribedProfiles.Count));
+            int averageSubscriptions =
+                (int) Math.Ceiling(items.Where(i => i is Person).Average(i => i.SubscribedProfiles.Count));
 
             // Get previous trending organisation, later needed
-            Organisation oldTrendingOrganisation = (Organisation)items.FirstOrDefault(i => i is Organisation && i.IsTrending);
+            Organisation oldTrendingOrganisation =
+                (Organisation) items.FirstOrDefault(i => i is Organisation && i.IsTrending);
 
             // Reset trending scores and status
             items.ForEach(i =>
             {
                 i.IsTrending = false;
-                if (i is Person person)
-                {
-                    person.TrendingScore = 0;
-                }
+                if (i is Person person) person.TrendingScore = 0;
             });
 
             /* People */
@@ -53,14 +54,15 @@ namespace PB.BL
             {
                 if (i is Person person)
                 {
-                    person.TrendingScore = person.Records.Count + (person.SubscribedProfiles.Count * averageSubscriptions * 50);
+                    person.TrendingScore =
+                        person.Records.Count + person.SubscribedProfiles.Count * averageSubscriptions * 50;
                     items[items.IndexOf(person)] = person;
                     hotPeople.Add(person);
                 }
             });
             items
                 .Where(i => i is Person)
-                .Select(i => (Person)i)
+                .Select(i => (Person) i)
                 .OrderByDescending(p => p.TrendingScore)
                 .Take(10)
                 .ToList().ForEach(p =>
@@ -80,27 +82,27 @@ namespace PB.BL
             {
                 // calculate max amount of hot people per organisation & filter
                 int max = organisations.Values.Max();
-                organisations = organisations.
-                    Where(kv => kv.Value == max)
+                organisations = organisations.Where(kv => kv.Value == max)
                     .ToDictionary(kv => kv.Key, kv => kv.Value);
 
                 // Get organisation based on sum of trendingscore of hot people from organisation
                 Organisation organisation = organisations.First().Key;
                 organisations.Keys.ToList().ForEach(o =>
                 {
-                    if (o.People.Sum(p => p.TrendingScore) >= organisation.People.Where(p => p.IsTrending).Sum(p => p.TrendingScore))
-                    {
-                        organisation = o;
-                    }
+                    if (o.People.Sum(p => p.TrendingScore) >=
+                        organisation.People.Where(p => p.IsTrending).Sum(p => p.TrendingScore)) organisation = o;
                 });
                 organisation.IsTrending = true;
 
                 if (!organisation.Equals(oldTrendingOrganisation))
                 {
-                    Alert alert = new Alert()
+                    Alert alert = new Alert
                     {
                         Description = organisation + " is de top trending organisatie",
-                        Text = organisation.Name + " is de nieuwe top trending organisatie" + ((oldTrendingOrganisation != null) ? ". Vorige top trending organisatie: " + oldTrendingOrganisation.Name : ""),
+                        Text = organisation.Name + " is de nieuwe top trending organisatie" +
+                               (oldTrendingOrganisation != null
+                                   ? ". Vorige top trending organisatie: " + oldTrendingOrganisation.Name
+                                   : ""),
                         Event = "is top trending",
                         Subject = "organisatie",
                         Item = organisation,
@@ -108,7 +110,7 @@ namespace PB.BL
                     };
                     organisation.Alerts.Add(alert);
                     alerts.Add(alert);
-                    
+
                     items.Add(organisation);
                 }
             }
@@ -116,7 +118,7 @@ namespace PB.BL
             /* Themes */
             // TODO
 
-           
+
             return items;
         }
 
@@ -127,8 +129,10 @@ namespace PB.BL
             // Records ouder dan huidige dag
             DateTime lastDate = DateTime.Now;
 
-            List<Record> oldRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date <= lastDate.Date.AddDays(-1)).ToList();
-            List<Record> newRecords = records.Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date <= lastDate.Date).ToList();
+            List<Record> oldRecords = records.Where(r =>
+                r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date <= lastDate.Date.AddDays(-1)).ToList();
+            List<Record> newRecords = records
+                .Where(r => r.Date.Date >= lastDate.AddDays(-period).Date && r.Date.Date <= lastDate.Date).ToList();
 
             //Alle recordpersonen die records hebben van de afgelopen 14 dagen toevoegen aan lijst
             List<Person> RecordPersons = GetPersonsWithRecord(persons, newRecords);
@@ -159,8 +163,7 @@ namespace PB.BL
                 if (verschil == 0) return;
 
                 if (verschil <= -0.25)
-                {
-                    alerts.Add(new Alert()
+                    alerts.Add(new Alert
                     {
                         Description = "Daling populariteit " + k.Name,
                         Text = k.Name + " is minder populair vergeleken met de laatste 2 weken",
@@ -169,10 +172,8 @@ namespace PB.BL
                         Item = k,
                         ProfileAlerts = new List<ProfileAlert>()
                     });
-                }
                 else if (verschil >= 0.25)
-                {
-                    alerts.Add(new Alert()
+                    alerts.Add(new Alert
                     {
                         Description = "Stijging populariteit " + k.Name,
                         Text = k.Name + " heeft meer populariteit gekregen vergeleken met de laatste 2 weken",
@@ -181,7 +182,6 @@ namespace PB.BL
                         Item = k,
                         ProfileAlerts = new List<ProfileAlert>()
                     });
-                }
             });
 
             return alerts;
@@ -203,7 +203,8 @@ namespace PB.BL
             List<Person> PersonsWithRecords = GetPersonsWithRecord(persons, PeriodRecords);
 
             // alle records per persoon
-            Dictionary<Person, List<Record>> PersonRecords = GetGroupRecordsPerPerson(PersonsWithRecords, PeriodRecords);
+            Dictionary<Person, List<Record>>
+                PersonRecords = GetGroupRecordsPerPerson(PersonsWithRecords, PeriodRecords);
 
             // gemiddeld sentiment per persoon per datum
             Console.WriteLine("=============AVERAGE=============");
@@ -222,29 +223,27 @@ namespace PB.BL
                 if (average == 0) return;
 
                 if (average <= -0.35)
-                {
-                    alerts.Add(new Alert()
+                    alerts.Add(new Alert
                     {
                         Description = "Negatieve reacties op " + k.Name,
-                        Text = k.Name + " heeft gemiddeld meer negatieve reacties gekregen de laatste " + period + " dagen",
+                        Text = k.Name + " heeft gemiddeld meer negatieve reacties gekregen de laatste " + period +
+                               " dagen",
                         Event = "kreeg negatievere",
                         Subject = "reacties",
                         Item = k,
                         ProfileAlerts = new List<ProfileAlert>()
                     });
-                }
                 else if (average >= 0.35)
-                {
-                    alerts.Add(new Alert()
+                    alerts.Add(new Alert
                     {
                         Description = "Positieve reacties op " + k.Name,
-                        Text = k.Name + " heeft gemiddeld meer positieve reacties gekregen de laatste " + period + " dagen",
+                        Text = k.Name + " heeft gemiddeld meer positieve reacties gekregen de laatste " + period +
+                               " dagen",
                         Event = "kreeg positievere",
                         Subject = "reacties",
                         Item = k,
                         ProfileAlerts = new List<ProfileAlert>()
                     });
-                }
             });
 
             return alerts;
@@ -256,17 +255,14 @@ namespace PB.BL
             records.ForEach(r =>
             {
                 foreach (Person person in r.Persons)
-                {
                     if (!RecordPersons.Contains(person) && subscriptions.Contains(person))
-                    {
                         RecordPersons.Add(person);
-                    }
-                }
             });
             return RecordPersons;
         }
 
-        private static Dictionary<Person, List<Record>> GetGroupRecordsPerPerson(List<Person> persons, List<Record> periodRecords)
+        private static Dictionary<Person, List<Record>> GetGroupRecordsPerPerson(List<Person> persons,
+            List<Record> periodRecords)
         {
             Dictionary<Person, List<Record>> groupedOld = new Dictionary<Person, List<Record>>();
 
@@ -275,16 +271,18 @@ namespace PB.BL
                 if (!groupedOld.Keys.Contains(rp))
                 {
                     List<Record> records = periodRecords.Where(r => r.Persons.Contains(rp)).ToList();
-                    groupedOld.Add(rp, (records.Count != 0) ? records : new List<Record>());
+                    groupedOld.Add(rp, records.Count != 0 ? records : new List<Record>());
                 }
             });
 
             return groupedOld;
         }
 
-        private static Dictionary<Person, Dictionary<DateTime, List<Record>>> GetGroupedByDate(Dictionary<Person, List<Record>> groupedPerson)
+        private static Dictionary<Person, Dictionary<DateTime, List<Record>>> GetGroupedByDate(
+            Dictionary<Person, List<Record>> groupedPerson)
         {
-            Dictionary<Person, Dictionary<DateTime, List<Record>>> GroupedDate = new Dictionary<Person, Dictionary<DateTime, List<Record>>>();
+            Dictionary<Person, Dictionary<DateTime, List<Record>>> GroupedDate =
+                new Dictionary<Person, Dictionary<DateTime, List<Record>>>();
 
             groupedPerson.Keys.ToList().ForEach(rp =>
             {
@@ -295,9 +293,8 @@ namespace PB.BL
                     groupedPerson.TryGetValue(rp, out var rpRecords);
 
                     if (rpRecords.Count != 0)
-                    {
-                        rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d => valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
-                    }
+                        rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d =>
+                            valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
 
                     GroupedDate.Add(rp, valueDict);
                 }
@@ -306,7 +303,8 @@ namespace PB.BL
             return GroupedDate;
         }
 
-        private static Dictionary<Person, double> GetAverageTweets(Dictionary<Person, List<Record>> groupedPerson, double period)
+        private static Dictionary<Person, double> GetAverageTweets(Dictionary<Person, List<Record>> groupedPerson,
+            double period)
         {
             Dictionary<Person, double> AverageTweets = new Dictionary<Person, double>();
 
@@ -317,12 +315,13 @@ namespace PB.BL
                 groupedPerson.TryGetValue(rp, out var rpRecords);
 
                 if (rpRecords.Count != 0)
-                {
-                    rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d => valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
-                }
+                    rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d =>
+                        valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
 
                 AverageTweets.Add(rp, CalcAverageTweets(valueDict, period));
-                Console.WriteLine(rp.ToString() + " - " + CalcAverageTweets(valueDict, period)); // period -1 omdat periode is uitgezonderd vandaag
+                Console.WriteLine(rp.ToString() + " - " +
+                                  CalcAverageTweets(valueDict,
+                                      period)); // period -1 omdat periode is uitgezonderd vandaag
             });
 
             return AverageTweets;
@@ -341,7 +340,8 @@ namespace PB.BL
             return aantal.Average() / period * aantal.Count;
         }
 
-        private static Dictionary<Person, double> GetAverageTweetPolarity(Dictionary<Person, List<Record>> groupedPerson, double period)
+        private static Dictionary<Person, double> GetAverageTweetPolarity(
+            Dictionary<Person, List<Record>> groupedPerson, double period)
         {
             Dictionary<Person, double> AverageTweets = new Dictionary<Person, double>();
 
@@ -352,12 +352,13 @@ namespace PB.BL
                 groupedPerson.TryGetValue(rp, out var rpRecords);
 
                 if (rpRecords.Count != 0)
-                {
-                    rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d => valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
-                }
+                    rpRecords.Select(r => r.Date.Date).Distinct().ToList().ForEach(d =>
+                        valueDict.Add(d, rpRecords.Where(r => r.Date.Date.Equals(d)).ToList()));
 
                 AverageTweets.Add(rp, CalcAverageTweetPolarity(valueDict, period));
-                Console.WriteLine(rp.ToString() + " - " + CalcAverageTweetPolarity(valueDict, period)); // period -1 omdat periode is uitgezonderd vandaag
+                Console.WriteLine(rp.ToString() + " - " +
+                                  CalcAverageTweetPolarity(valueDict,
+                                      period)); // period -1 omdat periode is uitgezonderd vandaag
             });
 
             return AverageTweets;
