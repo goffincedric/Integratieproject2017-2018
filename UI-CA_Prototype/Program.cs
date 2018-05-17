@@ -137,12 +137,10 @@ namespace UI_CA_Prototype
                         AccountMgr.GenerateAllAlerts(SelectedProfile.Subscriptions);
                         break;
                     case 10:
-                        if (SelectedSubplatform == null)
-                            throw new Exception(
-                                "U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
-                        List<Item> persons = ItemMgr.JPersonToRecord(
-                            JsonConvert.DeserializeObject<List<JPerson>>(
-                                File.ReadAllText(@"politiciJSON\politici.json")), SelectedSubplatform);
+
+                        if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
+                        List<Item> persons = ItemMgr.JPersonToRecord(File.ReadAllText(@"politiciJSON\politici.json"), SelectedSubplatform);
+
                         ItemMgr.AddItems(persons);
                         break;
                     case 11:
