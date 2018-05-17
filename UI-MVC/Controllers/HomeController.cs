@@ -21,13 +21,18 @@ namespace UI_MVC.Controllers
     [RoutePrefix("{subplatform}")]
     public class HomeController : Controller
     {
-        private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
-        private readonly AccountManager accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
-        private readonly ItemManager itemMgr = new ItemManager(uow);
-        private readonly SubplatformManager SubplatformMgr = new SubplatformManager(uow);
+        private readonly UnitOfWorkManager uow = new UnitOfWorkManager();
+        private readonly ItemManager itemMgr;
+        private readonly AccountManager accountMgr;
+        private readonly SubplatformManager SubplatformMgr;
+
 
         public HomeController()
         {
+            itemMgr = new ItemManager(uow);
+            accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
+            SubplatformMgr = new SubplatformManager(uow);
+
             ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
             ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
             ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
