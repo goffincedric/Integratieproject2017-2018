@@ -199,100 +199,166 @@ $(function () {
             var output = null;
 
             $('.btn-next').on('click', function () {
-                switch ($('input:checked').attr('id')) {
-                    case 'person':
-                        //datasoort = null;
-                        data = $.ajax({
-                            async: false,
-                            type: 'GET',
-                            headers: Headers,
-                            url: "https://localhost:44342/api/item/getperson"
-                        }).responseJSON;
-                        onderwerp = 'politieker';
+                switch ($(this).attr('id')) {
+                    case "next-1":
+                        switch ($('input:checked').attr('id')) {
+                            case 'person':
+                                //datasoort = null;
+                                data = $.ajax({
+                                    async: false,
+                                    type: 'GET',
+                                    headers: Headers,
+                                    url: "https://localhost:44342/api/item/getperson"
+                                }).responseJSON;
+                                onderwerp = 'politieker';
+                                break;
+                            case 'organisation':
+                                //datasoort = null;
+                                data = $.ajax({
+                                    async: false,
+                                    type: 'GET',
+                                    headers: Headers,
+                                    url: "https://localhost:44342/api/item/getorganisation"
+                                }).responseJSON;
+                                onderwerp = 'organisatie';
+                                break;
+                            case 'theme':
+                                //datasoort = null;
+                                data = $.ajax({
+                                    async: false,
+                                    type: 'GET',
+                                    headers: Headers,
+                                    url: "https://localhost:44342/api/item/gettheme"
+                                }).responseJSON;
+                                onderwerp = 'thema';
+                                break;
+                        }
+                        $('#soort').text(onderwerp + 's');
+                        var dropdown = $('#locality-dropdown');
+
+                        itemData = {
+                            items: []
+                        };
+
+                        $('#output').off('change');
+                        $('#output').on('change', function () {
+                            output = $('#output option:selected').text();
+                        });
+
+                        dropdown.empty();
+
+                        dropdown.append('<option selected="true" disabled>selecteer een ' + onderwerp + '</option>');
+                        dropdown.prop('selectedIndex', 0);
+
+                        // Populate dropdown with list of data
+                        $.each(data, function (key, entry) {
+                            dropdown.append($('<option></option>').attr('value', entry.ItemId).text(entry.Name));
+                        });
+
+                        var cardnumber = 1;
+                        $('#locality-dropdown').off('change');
+                        $('#locality-dropdown').on('change', function () {
+                            if (cardnumber <= 5) {
+                                $('#cardholder').append($('<div id="card' + cardnumber + '" class="col-sm-2-5 pX-5">' +
+                                    '<h5 class= "info-text" > Voeg hier toe!</h5>' +
+                                    '<div class="card">' +
+                                    '<img src="/Content/Images/plus-icon.png" alt="Avatar" style="width:100%">' +
+                                    '<div class="container">' +
+                                    '<h4><b class="itemId">#</b></h4>' +
+                                    '<p class="itemName">Architect & Engineer</p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>'));
+                                $('#card' + cardnumber).children('.card').children('img').on('click', function () {
+                                    var item = ($.ajax({
+                                        async: false,
+                                        type: 'GET',
+                                        headers: Headers,
+                                        url: "https://localhost:44342/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
+                                    }).responseJSON);
+                                    $(this).attr('src', (item.IconURL).substring(1, item.IconURL.length));
+                                    $(this).siblings('.container').children('h4').children('.itemId').text(item.ItemId);
+                                    $(this).siblings('.container').children('.itemName').text(item.Name);
+                                })
+                                cardnumber++;
+                            }
+                        });
+                        $(this).attr('id', 'next-2');
                         break;
-                    case 'organisation':
-                        //datasoort = null;
-                        data = $.ajax({
-                            async: false,
-                            type: 'GET',
-                            headers: Headers,
-                            url: "https://localhost:44342/api/item/getorganisation"
-                        }).responseJSON;
-                        onderwerp = 'organisatie';
+                    case "next-2":
+                        $(this).attr('id', 'next-3');
                         break;
-                    case 'theme':
-                        //datasoort = null;
-                        data = $.ajax({
-                            async: false,
-                            type: 'GET',
-                            headers: Headers,
-                            url: "https://localhost:44342/api/item/gettheme"
-                        }).responseJSON;
-                        onderwerp = 'thema';
+                    case "next-3":
+                        //console.log($('input:checked').attr('id'));
+                        switch ($('input:checked').attr('id')) {
+                            case 'mention': console.log('mention');
+                                $('#bar').parent().parent().show();
+                                $('#pie').parent().parent().show();
+                                $('#donut').parent().parent().show();
+                                $('#word').parent().parent().show();
+                                $('#line').parent().parent().hide();
+                                $('#map').parent().parent().hide();
+                                break;
+                            case 'hashtag': console.log('hashtag');
+                                $('#bar').parent().parent().show();
+                                $('#pie').parent().parent().show();
+                                $('#donut').parent().parent().show();
+                                $('#word').parent().parent().show();
+                                $('#line').parent().parent().hide();
+                                $('#map').parent().parent().hide();
+                                break;
+                            case 'evolution': console.log('evolution');
+                                $('#bar').parent().parent().show();
+                                $('#pie').parent().parent().hide();
+                                $('#donut').parent().parent().hide();
+                                $('#word').parent().parent().hide();
+                                $('#line').parent().parent().show();
+                                $('#map').parent().parent().hide();
+                                break;
+                            case 'sentiment': console.log('sentiment');
+                                $('#bar').parent().parent().show();
+                                $('#pie').parent().parent().hide();
+                                $('#donut').parent().parent().hide();
+                                $('#word').parent().parent().hide();
+                                $('#line').parent().parent().show();
+                                $('#map').parent().parent().hide();
+                                break;
+                            case 'age': console.log('age');
+                                $('#bar').parent().parent().show();
+                                $('#pie').parent().parent().show();
+                                $('#donut').parent().parent().show();
+                                $('#word').parent().parent().show();
+                                $('#line').parent().parent().hide();
+                                $('#map').parent().parent().hide();
+                                break;
+                            case 'gender': console.log('gender');
+                                $('#bar').parent().parent().show();
+                                $('#pie').parent().parent().show();
+                                $('#donut').parent().parent().show();
+                                $('#word').parent().parent().show();
+                                $('#line').parent().parent().hide();
+                                $('#map').parent().parent().hide();
+                                break;
+                            case 'words': console.log('words');
+                                $('#bar').parent().parent().show();
+                                $('#pie').parent().parent().show();
+                                $('#donut').parent().parent().show();
+                                $('#word').parent().parent().show();
+                                $('#line').parent().parent().hide();
+                                $('#map').parent().parent().hide();
+                                break;
+                            case 'location': console.log('location');
+                                $('#bar').parent().parent().show();
+                                $('#pie').parent().parent().show();
+                                $('#donut').parent().parent().show();
+                                $('#word').parent().parent().show();
+                                $('#line').parent().parent().hide();
+                                $('#map').parent().parent().show();
+                                break;
+                        }
+                        $(this).attr('id', 'next-4');
                         break;
                 }
-
-                $('#soort').text(onderwerp + 's');
-
-                let dropdown = $('#locality-dropdown');
-
-                itemData = {
-                    items: []
-                };
-
-                var cardnumber = 1;
-                $('#locality-dropdown').off('change');
-                $('#locality-dropdown').on('change', function () {
-                    if (cardnumber <= 5) {
-                        $('#cardholder').append($('<div id="card' + cardnumber + '" class="col-sm-2-5 pX-5">' +
-                            '<h5 class= "info-text" > Voeg hier toe!</h5>' +
-                            '<div class="card">' +
-                            '<img src="/Content/Images/plus-icon.png" alt="Avatar" style="width:100%">' +
-                            '<div class="container">' +
-                            '<h4><b class="itemId">#</b></h4>' +
-                            '<p class="itemName">Architect & Engineer</p>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>'));
-                        $('#card' + cardnumber).children('.card').children('img').on('click', function () {
-                            var item = ($.ajax({
-                                async: false,
-                                type: 'GET',
-                                headers: Headers,
-                                url: "https://localhost:44342/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
-                            }).responseJSON);
-                            $(this).attr('src', (item.IconURL).substring(1, item.IconURL.length));
-                            $(this).siblings('.container').children('h4').children('.itemId').text(item.ItemId);
-                            $(this).siblings('.container').children('.itemName').text(item.Name);
-                        })
-                        cardnumber++;
-                    }
-                })
-                
-                $('#output').off('change');
-                $('#output').on('change', function () {
-                    output = $('#output option:selected').text();
-                });
-                //$('#add-soort').off('click');
-                //$('#add-soort').on('click', function () {
-                //    itemData.items.push($.ajax({
-                //        async: false,
-                //        type: 'GET',
-                //        headers: Headers,
-                //        url: "https://localhost:44342/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
-                //    }).responseJSON);
-                //    $('#itemInfo').text(itemData.items);
-                //});
-
-                dropdown.empty();
-
-                dropdown.append('<option selected="true" disabled>selecteer een '+onderwerp+'</option>');
-                dropdown.prop('selectedIndex', 0);
-
-                // Populate dropdown with list of data
-                $.each(data, function (key, entry) {
-                    dropdown.append($('<option></option>').attr('value', entry.ItemId).text(entry.Name));
-                });
             })
 
             $('.btn-finish').off('click');
@@ -312,7 +378,7 @@ $(function () {
 
                 var itemsJSON = JSON.stringify(items);
 
-                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '", "Items": '+itemsJSON+'}');
+                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '", "Items": ' + itemsJSON + '}');
 
                 $.ajax({
                     async: false,
@@ -601,11 +667,11 @@ $(function () {
                 itemId = $(this).children('.card').children('.container').children('h4').children('.itemId').text();
 
                 items.push($.ajax({
-                        async: false,
-                        type: 'GET',
-                        headers: Headers,
-                        url: "https://localhost:44342/api/item/getitem/" + itemId
-                    }).responseJSON);
+                    async: false,
+                    type: 'GET',
+                    headers: Headers,
+                    url: "https://localhost:44342/api/item/getitem/" + itemId
+                }).responseJSON);
             })
             return items;
         }
