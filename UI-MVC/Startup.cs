@@ -44,7 +44,7 @@ namespace UI_MVC
                         accountMgr.GenerateAllAlerts(s.Items);
                     },
                     (schedule) => schedule
-                    .ToRunOnceAt(2, new Random().Next(0, 10))
+                    .ToRunOnceAt(dateToSendWeeklyReview.AddMinutes(new Random().Next(50, 60)))
                     .AndEvery(int.Parse(weeklyReviewsInterval)).Hours());
                 }
                 if (!(seedInterval is null))
@@ -55,7 +55,7 @@ namespace UI_MVC
                         itemMgr.SyncDatabase(s);
                     },
                     (schedule) => schedule
-                    .ToRunOnceAt(2, new Random().Next(20, 30))
+                    .ToRunOnceAt(1, 0)
                     .AndEvery(int.Parse(seedInterval)).Hours());
                 }
                 if (!(alertGenerationInterval is null))
@@ -65,7 +65,7 @@ namespace UI_MVC
                         accountMgr.GenerateAllAlerts(s.Items);
                     },
                     (schedule) => schedule
-                    .ToRunOnceAt(dateToSendWeeklyReview.AddHours(2).AddMinutes(new Random().Next(50, 60)))
+                    .ToRunOnceAt(6, 0)
                     .AndEvery(int.Parse(alertGenerationInterval)).Hours());
                 }
             });

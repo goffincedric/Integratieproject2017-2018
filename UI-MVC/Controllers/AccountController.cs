@@ -29,14 +29,16 @@ namespace UI_MVC.Controllers
     [RequireHttps]
     public class AccountController : Controller
     {
-        private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
+        private readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private AccountManager _accountMgr;
         private IntegratieSignInManager _signInManager;
-        private readonly SubplatformManager SubplatformMgr = new SubplatformManager(uow);
+        private readonly SubplatformManager SubplatformMgr;
         private ItemManager _itemMgr;
 
         public AccountController()
         {
+            SubplatformMgr = new SubplatformManager(uow);
+
             ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
             ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
             ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
