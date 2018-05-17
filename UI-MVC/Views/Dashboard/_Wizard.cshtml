@@ -47,7 +47,7 @@
                                             <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Deze optie laat u themas visualiseren">
                                                 <input id="theme" type="radio" name="type" value="PieChart">
                                                 <div class="icon">
-                                                    <i class="material-icons">public</i>
+                                                    <i class="ti-comments"></i>
                                                 </div>
                                                 <h6>Thema's</h6>
                                             </div>
@@ -78,20 +78,80 @@
                         <div class="tab-pane" id="data">
                             <h4 class="info-text">Welke data wilt u visualiseren?</h4>
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Output</label>
-                                        <select id="output" name="type" class="form-control">
-                                            <option disabled="" selected=""></option>
-                                            <option value="1"> Tweet evolution</option>
-                                            <option value="2"> Positiviteit</option>
-                                            <option value="3"> Trending Mentions </option>
-                                            <option value="4"> Trending Hashtags</option>
-                                            <option value="5"> Trending Urls</option>
-                                            <option value="6"> Retweets </option>
-                                            <option value="7"> Sentiment analyse</option>
-                                            <option value="...">...</option>
-                                        </select>
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have a house.">
+                                                <input id="bar" type="radio" name="type" value="BarChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">alternate_email</i>
+                                                </div>
+                                                <h6>Mentions</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have a house.">
+                                                <input id="bar" type="radio" name="type" value="BarChart">
+                                                <div class="icon">
+                                                    <i class="fas fa-hashtag"></i>
+                                                </div>
+                                                <h6>Hashtags</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have a house.">
+                                                <input id="bar" type="radio" name="type" value="BarChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">trending_up</i>
+                                                </div>
+                                                <h6>Evolutie</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have a house.">
+                                                <input id="bar" type="radio" name="type" value="BarChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">thumbs_up_down</i>
+                                                </div>
+                                                <h6>Sentiment</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have a house.">
+                                                <input id="bar" type="radio" name="type" value="BarChart">
+                                                <div class="icon">
+                                                    <i class="material-icons">cake</i>
+                                                </div>
+                                                <h6>Leeftijd</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have a house.">
+                                                <input id="bar" type="radio" name="type" value="BarChart">
+                                                <div class="icon">
+                                                    <i class="fas fa-venus-mars"></i>
+                                                </div>
+                                                <h6>Geslacht</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have a house.">
+                                                <input id="bar" type="radio" name="type" value="BarChart">
+                                                <div class="icon">
+                                                    <i class="fas fa-font"></i>
+                                                </div>
+                                                <h6>Woorden</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have a house.">
+                                                <input id="bar" type="radio" name="type" value="BarChart">
+                                                <div class="icon">
+                                                    <i class="far fa-compass"></i>
+                                                </div>
+                                                <h6>Locatie</h6>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -141,9 +201,9 @@
                                             <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have an appartment">
                                                 <input id="radar" type="radio" name="type" value="PieChart">
                                                 <div class="icon">
-                                                    <i class="material-icons">track_changes</i>
+                                                    <i class="material-icons">map</i>
                                                 </div>
-                                                <h6>Radarchart</h6>
+                                                <h6>Map</h6>
                                             </div>
                                         </div>
                                         <div class="col-sm-4">

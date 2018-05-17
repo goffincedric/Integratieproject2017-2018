@@ -76,6 +76,8 @@ $(function () {
 
         //done
         addElement = function (grid) {
+            console.log(grid);
+
             addingElement = true;
 
             var addZone = $('.add-zone');
@@ -270,7 +272,6 @@ $(function () {
                 $('#output').off('change');
                 $('#output').on('change', function () {
                     output = $('#output option:selected').text();
-                    console.log(output);
                 });
                 //$('#add-soort').off('click');
                 //$('#add-soort').on('click', function () {
@@ -289,7 +290,6 @@ $(function () {
                 dropdown.prop('selectedIndex', 0);
 
                 // Populate dropdown with list of data
-
                 $.each(data, function (key, entry) {
                     dropdown.append($('<option></option>').attr('value', entry.ItemId).text(entry.Name));
                 });
@@ -308,12 +308,9 @@ $(function () {
                 Wizard.hide();
 
                 //edit later
-
                 var items = getItems($('#cardholder'));
 
                 var itemsJSON = JSON.stringify(items);
-
-                console.log(itemsJSON);
 
                 var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '", "Items": '+itemsJSON+'}');
 
@@ -332,8 +329,6 @@ $(function () {
         };
 
         editZone = function (grid) {
-            console.log(grid);
-
             grid.off('click');
 
             grid.children('.ti-pencil').attr('class', 'ti-check');
@@ -452,7 +447,6 @@ $(function () {
 
                     if (ElementId !== '+') {
                         if (ZoneId === 'x') {
-
                             var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
 
                             ZoneId = $.ajax({
@@ -520,8 +514,6 @@ $(function () {
 
                             addZone.data('gridstack').removeWidget($('#Element-' + ElementId).parent());
 
-                            console.log(grid);
-
                             var deletezone = grid.parent().parent().children('h4').children('.delete-zone');
 
                             var editzone = grid.parent().parent().children('h4').children('.edit-zone');
@@ -529,7 +521,6 @@ $(function () {
                             var hidezone = grid.parent().parent().children('h4').children('.arrow-dashboard');
 
                             hidezone.on('click', function () {
-                                console.log($(this).parent().parent());
                                 $(this).parent().parent().children(".DashZone").toggle(300);
                                 rotation = getRotationDegrees($(this)) + 180;
                                 $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
@@ -553,6 +544,21 @@ $(function () {
 
                             grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
+                            //addelement = $(grid + ":nth-child(1)");
+                            //console.log(addelement);
+
+                            //addelement.on('click', function () {
+                            //    console.log('adding element');
+                            //});
+
+                            console.log(addZone.children().children()/*.children().children('img')*/);
+
+                            addZone.children().children('#Element-+').children().children('img').on('click', function () {
+                                console.log(grid);
+                                console.log(addZone);
+                                addElement(addZone);
+                            });
+
                             chooseChart(Element.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
                         }
                         var oldElement = $.ajax({
@@ -561,8 +567,6 @@ $(function () {
                             headers: Headers,
                             url: "https://localhost:44342/api/dashboard/getelement/" + ElementId
                         }).responseJSON
-
-                        console.log(oldElement);
 
                         var oldZoneId = oldElement.ZoneId;
 
@@ -578,8 +582,6 @@ $(function () {
                         })
 
                         if (oldZoneId !== ZoneId) {
-                            console.log($('#Element-' + ElementId).children('canvas'));
-
                             chooseChart(oldElement.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
                         }
                     }
