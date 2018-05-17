@@ -23,6 +23,7 @@ namespace PB.BL.Interfaces
         IEnumerable<Page> GetPages(string subplatformUrl);
         Page AddPage(int subplatformId, string pageName, string title);
         Page GetPage(int pageId);
+        Page GetPage(string name);
         void ChangePage(Page page);
         void RemovePage(int pageId);
 

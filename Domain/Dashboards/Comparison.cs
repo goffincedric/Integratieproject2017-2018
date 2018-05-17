@@ -10,8 +10,6 @@ namespace PB.BL.Domain.Dashboards
     {
         [Key]
         public int ComparisonId { get; set; }
-        //public static readonly int MAX_COMPARISONS = 10;
-
         public virtual Item Item { get; set; }
         public virtual Element Element { get; set; }
     }

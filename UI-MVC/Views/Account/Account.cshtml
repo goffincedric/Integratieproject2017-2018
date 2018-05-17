@@ -4,7 +4,6 @@
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
     <div class="container-fluid">
@@ -13,7 +12,6 @@
       </div>
       <div class="bgc-white p-10 bd mB-10">
         <h4 class="bb-2">Basic Profile<span class="arrow-account"><i class="ti-angle-up"></i></span></h4>
-
         @using (Html.BeginForm("Account", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
           @Html.AntiForgeryToken()
@@ -28,7 +26,6 @@
                     <input type="file" class="uploadlogo" name="file" id="file" />
                   </div>
                 </div>
-               
                 <div class="form-row">
                   <label for="inputEmail4">Email</label>
                   @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })
@@ -53,12 +50,11 @@
                     </div>
                   </div>
                 </div>
-
               </div>
               <div class="form-group col-md-6" style="margin-bottom:75px">
                 <div class="h-50"></div>
                 <div class="h-50">
-                 
+
                   <div class="form-row">
                     <label for="inputAddress">Straat en huisnummer</label>
                     @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat + huisnummer" } })
@@ -85,18 +81,14 @@
                     </div>
                   </div>
                 </div>
-
-                
               </div>
             </div>
             <div class="form-row col-md-12">
               <button type="submit" class="btn btn-primary">Opslaan</button>
             </div>
-            
           </form>
         }
       </div>
-
       @{
         Html.RenderAction("_ResetPassword", "Account");
       }
@@ -104,10 +96,10 @@
       @{
         Html.RenderAction("_DeleteProfile", "Account");
       }
-
     </div>
   </div>
 </main>
+
 @Scripts.Render("~/bundles/AccountControl")
 <script>
   $(document).ready(function ($) {
@@ -115,30 +107,27 @@
     // Upload btn on change call function
     $(".uploadlogo").change(function () {
       var filename = readURL(this);
-      var name = filename.substring(filename.indexOf(".") + 1); 
+      var name = filename.substring(filename.indexOf(".") + 1);
       var username = "@Model.UserName.ToString()";
       console.log(name);
       $(this).parent().children('span').html( username + "." + name);
     });
 
-    // Read File and return value  
+    // Read File and return value
     function readURL(input) {
       var url = input.value;
-     
+
       var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
       if (input.files && input.files[0] && (
-        ext == "png" || ext == "jpeg" || ext == "jpg" || ext == "gif" 
+        ext == "png" || ext == "jpeg" || ext == "jpg" || ext == "gif"
       )) {
         var path = $(input).val();
         var filename = path.replace(/^.*\\/, "");
-        // $('.fileUpload span').html('Uploaded Proof : ' + filename);
         return "Uploaded file : " + filename;
       } else {
         $(input).val("");
         return "Only image formats are allowed!";
       }
     }
-    // Upload btn end
-
-  });
+      });
 </script>

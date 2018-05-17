@@ -2,22 +2,15 @@
 using Microsoft.AspNet.Identity.Owin;
 using PB.BL;
 using PB.BL.Domain.Accounts;
-using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using PB.BL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Protocols.WSTrust;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Security.Principal;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using UI_MVC.Controllers.API.Helper_Code;
-using UI_MVC.Models;
 
 namespace UI_MVC.Controllers.API
 {
@@ -95,29 +88,6 @@ namespace UI_MVC.Controllers.API
             UserManager.ChangeProfileAlert(profileAlert);
             return Ok(profileAlert);
         }
-
-
-
-        //// GET: api/Account/5
-        //public IHttpActionResult Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST: api/Account
-        //public IHttpActionResult Post([FromBody]string value)
-        //{
-        //}
-
-        //// PUT: api/Account/5
-        //public IHttpActionResult Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE: api/Account/5
-        //public IHttpActionResult Delete(int id)
-        //{
-        //}
 
         [HttpGet]
         public IHttpActionResult GetUserRate()

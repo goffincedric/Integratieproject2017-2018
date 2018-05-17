@@ -1,3 +1,4 @@
+using Domain.JSONConversion;
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
@@ -86,7 +87,7 @@ namespace PB.BL
             return ItemRepo.CreateItem(item);
         }
 
-        public Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, string iconUrl = null, bool isTrending = false, Subplatform subplatform = null)
+        public Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, List<Theme> themes = null, string iconUrl = null, bool isTrending = false, Subplatform subplatform = null)
         {
             InitNonExistingRepo();
 
@@ -102,7 +103,8 @@ namespace PB.BL
                 SubscribedProfiles = new List<Profile>(),
                 Keywords = new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>(),
-                People = new List<Person>()
+                People = new List<Person>(),
+                Themes = themes ?? new List<Theme>()
             };
             if (subplatform != null)
             {
@@ -110,13 +112,15 @@ namespace PB.BL
                 subplatform.Items.Add(organisation);
             }
 
+
+
             organisation = ItemRepo.CreateOrganisation(organisation);
             UowManager.Save();
 
             return organisation;
         }
 
-        public Person AddPerson(string name, string socialMediaLink, string iconUrl, Organisation organisation = null, Function function = null, bool isTrending = false, Subplatform subplatform = null, string gemeente = null)
+        public Person AddPerson(string name, string socialMediaLink, string iconUrl, bool isTrending = false, string firstName = null, string lastName = null, string level = null, string site = null, string twitterName = null, string position = null, string district = null, string gemeente = null, string postalCode = null, Gender? gender = null, Organisation organisation = null, Subplatform subplatform = null, DateTime? dateOfBirth = null)
         {
             InitNonExistingRepo();
             Person person = new Person()
@@ -124,17 +128,26 @@ namespace PB.BL
                 Name = name,
                 SocialMediaLink = socialMediaLink,
                 IconURL = iconUrl,
-                IsTrending = isTrending,
                 TrendingScore = 0,
+                IsTrending = isTrending,
+                FirstName = firstName,
+                LastName = lastName,
+                Level = level,
+                Site = site,
+                TwitterName = twitterName,
+                Position = position,
+                District = district,
                 Gemeente = gemeente,
-                Function = function,
+                Postalcode = position,
+                Gender = gender ?? Gender.OTHERS,
+                Organisation = organisation,
+                SubPlatforms = (subplatform is null) ? new List<Subplatform>() : new List<Subplatform>() { subplatform },
+                DateOfBirth = dateOfBirth ?? new DateTime(1970, 01, 01),
                 Elements = new List<Element>(),
                 SubscribedProfiles = new List<Profile>(),
                 Alerts = new List<Alert>(),
                 Keywords = new List<Keyword>(),
-                SubPlatforms = new List<Subplatform>(),
-                Records = new List<Record>(),
-                Organisation = organisation
+                Records = new List<Record>()
             };
             if (subplatform != null)
             {
@@ -147,7 +160,7 @@ namespace PB.BL
             return person;
         }
 
-        public Theme AddTheme(string name, string description, string iconUrl, bool isTrending = false, Subplatform subplatform = null)
+        public Theme AddTheme(string name, string description, string iconUrl, List<Keyword> keywords = null, bool isTrending = false, Subplatform subplatform = null)
         {
             InitNonExistingRepo();
             Theme theme = new Theme()
@@ -159,7 +172,7 @@ namespace PB.BL
                 Alerts = new List<Alert>(),
                 Elements = new List<Element>(),
                 SubscribedProfiles = new List<Profile>(),
-                Keywords = new List<Keyword>(),
+                Keywords = keywords ?? new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>()
             };
             if (subplatform != null)
@@ -168,6 +181,14 @@ namespace PB.BL
                 subplatform.Items.Add(theme);
             }
 
+            if (keywords != null)
+            {
+                keywords.ForEach(k =>
+                {
+                    if (k.Items == null) k.Items = new List<Item>();
+                    k.Items.Add(theme);
+                });
+            }
             theme = ItemRepo.CreateTheme(theme);
             UowManager.Save();
             return theme;
@@ -187,13 +208,6 @@ namespace PB.BL
             UowManager.Save();
         }
 
-        public void ChangeKeyword(Keyword keyword)
-        {
-            InitNonExistingRepo();
-            ItemRepo.UpdateKeyword(keyword);
-            UowManager.Save();
-        }
-
         public void ChangeOrganisation(Organisation organisation)
         {
             InitNonExistingRepo();
@@ -207,8 +221,6 @@ namespace PB.BL
             ItemRepo.UpdateTheme(theme);
             UowManager.Save();
         }
-
-
 
         public void ChangePerson(Person person)
         {
@@ -261,8 +273,6 @@ namespace PB.BL
             return item;
         }
 
-
-
         public IEnumerable<Theme> GetThemes()
         {
             InitNonExistingRepo();
@@ -297,32 +307,24 @@ namespace PB.BL
             }
         }
 
-        public void RemoveKeyword(int keywordId)
+        public int GetItemsCount()
         {
-            InitNonExistingRepo();
-
-            Keyword keyword = ItemRepo.ReadKeyword(keywordId);
-            keyword.Items.ForEach(i => i.Keywords.Remove(keyword));
-            ItemRepo.DeleteKeyword(keywordId);
-
-            UowManager.Save();
+            return ItemRepo.ReadItems().Count();
         }
 
-        public Keyword AddKeyword(string name, List<Item> items = null)
+        public int GetPersonsCount()
         {
-            Keyword keyword = new Keyword()
-            {
-                Name = name,
-                Items = items ?? new List<Item>()
-            };
-            if (items != null)
-            {
-                items.ForEach(i => i.Keywords.Add(keyword));
-            }
+            return ItemRepo.ReadPersons().Count();
+        }
 
-            keyword = ItemRepo.CreateKeyword(keyword);
-            UowManager.Save();
-            return keyword;
+        public int GetOrganisationsCount()
+        {
+            return ItemRepo.ReadOrganisations().Count();
+        }
+
+        public int GetThemesCount()
+        {
+            return ItemRepo.ReadThemes().Count();
         }
 
         public int GetNumberOfMentions(Record record)
@@ -461,19 +463,356 @@ namespace PB.BL
             Keyword keyword = ItemRepo.ReadKeyword(keywordId);
             return keyword;
         }
+
+        public void ChangeKeyword(Keyword keyword)
+        {
+            InitNonExistingRepo();
+            ItemRepo.UpdateKeyword(keyword);
+            UowManager.Save();
+        }
+
+        public void RemoveKeyword(int keywordId)
+        {
+            InitNonExistingRepo();
+
+            Keyword keyword = ItemRepo.ReadKeyword(keywordId);
+            keyword.Items.ForEach(i => i.Keywords.Remove(keyword));
+            ItemRepo.DeleteKeyword(keywordId);
+
+            UowManager.Save();
+        }
+
+        public Keyword AddKeyword(string name, List<Item> items = null)
+        {
+            Keyword keyword = new Keyword()
+            {
+                Name = name,
+                Items = items ?? new List<Item>()
+            };
+            if (items != null)
+            {
+                items.ForEach(i => i.Keywords.Add(keyword));
+            }
+
+            keyword = ItemRepo.CreateKeyword(keyword);
+            UowManager.Save();
+            return keyword;
+        }
+
+        public int GetKeywordsCount()
+        {
+            return ItemRepo.ReadKeywords().Count();
+        }
+        #endregion
+
+        #region JsonConversions
+        public List<Record> JClassToRecord(List<JClass> data)
+        {
+            InitNonExistingRepo();
+            List<Mention> allMentions = RecordRepo.ReadMentions().ToList();
+            List<Word> allWords = RecordRepo.ReadWords().ToList();
+            List<Hashtag> allHashtags = RecordRepo.ReadHashTags().ToList();
+            List<Url> allUrls = RecordRepo.ReadUrls().ToList();
+
+            List<Record> oldRecords = RecordRepo.ReadRecords().ToList();
+            List<Record> newRecords = new List<Record>();
+            List<Person> oldPersons = ItemRepo.ReadPersons().ToList();
+            List<Person> newPersons = new List<Person>();
+            List<Theme> oldThemes = ItemRepo.ReadThemes().ToList();
+            List<Theme> newThemes = new List<Theme>();
+
+            int counter = 0;
+            foreach (var el in data)
+            {
+                counter++;
+                if (oldRecords.FirstOrDefault(r => r.Tweet_Id == el.Id) == null)
+                {
+                    Record record = new Record()
+                    {
+                        Tweet_Id = el.Id,
+                        RecordProfile = el.Profile,
+                        Words = new List<Word>(),
+                        Sentiment = (el.Sentiment.Count != 0) ? new Sentiment(el.Sentiment[0], el.Sentiment[1]) : new Sentiment(0, 0),
+                        Source = el.Source,
+                        Hashtags = new List<Hashtag>(),
+                        Mentions = new List<Mention>(),
+                        URLs = new List<Url>(),
+                        Themes = new List<Theme>(),
+                        Persons = new List<Person>(),
+                        Date = el.Date,
+                        Retweet = el.Retweet
+                    };
+
+                    if (el.Geo != null)
+                    {
+                        record.Longitude = el.Geo[0];
+                        record.Latitude = el.Geo[1];
+                    }
+
+                    foreach (var person in el.Persons)
+                    {
+                        Person personCheck = oldPersons.FirstOrDefault(p => p.Name.ToLower().Equals(person.ToLower()));
+
+                        if (personCheck == null)
+                        {
+                            personCheck = new Person()
+                            {
+                                Name = person,
+                                IsTrending = false,
+                                IconURL = @"~/Content/Images/Users/user.png",
+                                Records = new List<Record>(),
+                                Elements = new List<Element>(),
+                                Keywords = new List<Keyword>(),
+                                SubPlatforms = el.Subplatforms,
+                                SubscribedProfiles = new List<Profile>(),
+                                Themes = new List<Theme>(),
+                                Alerts = new List<Alert>(),
+                                TrendingScore = 0
+                            };
+                            oldPersons.Add(personCheck);
+                            newPersons.Add(personCheck);
+                        }
+                        else
+                        {
+                            el.Subplatforms.ForEach(sp =>
+                            {
+                                if (!personCheck.SubPlatforms.Contains(sp)) personCheck.SubPlatforms.Add(sp);
+                            });
+                        }
+
+                        foreach (var theme in el.Themes)
+                        {
+                            Theme themeCheck = oldThemes.FirstOrDefault(t => t.Name.ToLower().Equals(theme.ToLower()));
+                            if (themeCheck == null)
+                            {
+                                themeCheck = new Theme()
+                                {
+                                    Name = theme,
+                                    IsTrending = false,
+                                    IconURL = @"~/Content/Images/default-theme.png",
+                                    Elements = new List<Element>(),
+                                    Keywords = new List<Keyword>(),
+                                    Records = new List<Record>(),
+                                    SubPlatforms = el.Subplatforms,
+                                    SubscribedProfiles = new List<Profile>(),
+                                    Persons = new List<Person>(),
+                                    Organisations = new List<Organisation>(),
+                                    Alerts = new List<Alert>()
+                                };
+                                oldThemes.Add(themeCheck);
+                                newThemes.Add(themeCheck);
+                            }
+                            else
+                            {
+                                el.Subplatforms.ForEach(sp =>
+                                {
+                                    if (!themeCheck.SubPlatforms.Contains(sp)) themeCheck.SubPlatforms.Add(sp);
+                                });
+                            }
+                            record.Themes.Add(themeCheck);
+                            themeCheck.Records.Add(record);
+
+                            personCheck.Themes.Add(themeCheck);
+                            themeCheck.Persons.Add(personCheck);
+                        }
+                        record.Persons.Add(personCheck);
+                        personCheck.Records.Add(record);
+                    }
+
+                    foreach (var m in el.Mentions)
+                    {
+                        Mention mentionCheck = allMentions.Find(me => me.Name.Equals(m));
+                        if (mentionCheck != null)
+                        {
+                            record.Mentions.Add(mentionCheck);
+                        }
+                        else
+                        {
+                            Mention mention = new Mention(m);
+                            record.Mentions.Add(mention);
+                            allMentions.Add(mention);
+                        }
+                    }
+
+                    foreach (var w in el.Words)
+                    {
+                        Word wordCheck = allWords.Find(wo => wo.Text.Equals(w));
+                        if (wordCheck != null)
+                        {
+                            record.Words.Add(wordCheck);
+                        }
+                        else
+                        {
+                            Word word = new Word(w);
+                            record.Words.Add(word);
+                            allWords.Add(word);
+                        }
+                    }
+
+                    foreach (var h in el.Hashtags)
+                    {
+                        Hashtag hashtagCheck = allHashtags.Find(ha => ha.HashTag.Equals(h));
+                        if (hashtagCheck != null)
+                        {
+                            record.Hashtags.Add(hashtagCheck);
+                        }
+                        else
+                        {
+                            Hashtag tag = new Hashtag(h);
+                            record.Hashtags.Add(tag);
+                            allHashtags.Add(tag);
+                        }
+                    }
+
+                    foreach (var u in el.URLs)
+                    {
+                        Url urlCheck = allUrls.Find(url => url.Link.Equals(u));
+                        if (urlCheck != null)
+                        {
+                            record.URLs.Add(urlCheck);
+                        }
+                        else
+                        {
+                            Url url = new Url(u);
+                            record.URLs.Add(url);
+                            allUrls.Add(url);
+                        }
+                    }
+
+                    if (newRecords.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
+                    {
+                        newRecords[newRecords.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
+                    }
+                    else
+                    {
+                        newRecords.Add(record);
+                    }
+                }
+            }
+
+            return newRecords;
+        }
+
+        public List<Item> JPersonToRecord(List<JPerson> data, Subplatform subplatform)
+        {
+            InitNonExistingRepo();
+            List<Person> oldPersons = ItemRepo.ReadPersons().ToList();
+            List<Item> newPersons = new List<Item>();
+
+            List<Organisation> oldOrganisations = ItemRepo.ReadOrganisations().ToList();
+            List<Organisation> newOrganisations = new List<Organisation>();
+
+            foreach (var el in data)
+            {
+                Person personCheck = oldPersons.FirstOrDefault(p => p.Name.ToLower() == el.Full_name.ToLower());
+                if (personCheck == null)
+                {
+                    personCheck = new Person()
+                    {
+                        ItemId = el.Id,
+                        Name = el.Full_name,
+                        IsTrending = false,
+                        IconURL = subplatform.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
+                        SubPlatforms = new List<Subplatform>()
+                        {
+                            subplatform
+                        },
+                        Keywords = new List<Keyword>(),
+                        Elements = new List<Element>(),
+                        SubscribedProfiles = new List<Profile>(),
+                        Alerts = new List<Alert>(),
+                        TrendingScore = 0,
+                        FirstName = el.First_name,
+                        LastName = el.Last_name,
+                        Level = el.Level,
+                        SocialMediaLink = el.Facebook,
+                        Site = el.Site,
+                        TwitterName = el.Twitter,
+                        Position = el.Position,
+                        District = el.District,
+                        Gemeente = el.Town,
+                        Postalcode = el.Postalcode,
+                        Gender = el.Gender,
+                        DateOfBirth = el.DateOfBirth,
+                        Records = new List<Record>(),
+                        Themes = new List<Theme>()
+                    };
+                    subplatform.Items.Add(personCheck);
+                    newPersons.Add(personCheck);
+                }
+                else
+                {
+                    personCheck.Name = el.Full_name;
+                    if (!personCheck.SubPlatforms.Contains(subplatform)) personCheck.SubPlatforms.Add(subplatform);
+                    personCheck.FirstName = el.First_name;
+                    personCheck.LastName = el.Last_name;
+                    personCheck.Level = el.Level;
+                    personCheck.SocialMediaLink = el.Site;
+                    personCheck.Site = el.Site;
+                    personCheck.TwitterName = el.Twitter;
+                    personCheck.Position = el.Position;
+                    personCheck.District = el.District;
+                    personCheck.Gemeente = el.Town;
+                    personCheck.Postalcode = el.Postalcode;
+                    personCheck.Gender = el.Gender;
+                    personCheck.DateOfBirth = el.DateOfBirth;
+                }
+
+                // Organisation
+                Organisation organisationCheck = oldOrganisations.FirstOrDefault(o => o.Name.ToLower().Equals(el.Organistion.ToLower()) || o.FullName.ToLower().Equals(el.Organistion.ToLower()));
+                if (organisationCheck == null)
+                {
+                    organisationCheck = new Organisation()
+                    {
+                        Name = el.Organistion,
+                        IsTrending = false,
+                        IconURL = subplatform.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
+                        SubPlatforms = new List<Subplatform>()
+                            {
+                                subplatform
+                            },
+                        Keywords = new List<Keyword>(),
+                        Elements = new List<Element>(),
+                        SubscribedProfiles = new List<Profile>(),
+                        Alerts = new List<Alert>(),
+                        FullName = el.Organistion,
+                        People = new List<Person>()
+                            {
+                                personCheck
+                            },
+                        Themes = new List<Theme>()
+                    };
+                    personCheck.Organisation = organisationCheck;
+
+                    oldOrganisations.Add(organisationCheck);
+                    newOrganisations.Add(organisationCheck);
+                }
+                else
+                {
+                    personCheck.Organisation = organisationCheck;
+                    organisationCheck.People.Add(personCheck);
+
+                    if (!organisationCheck.SubPlatforms.Contains(subplatform)) organisationCheck.SubPlatforms.Add(subplatform);
+                    subplatform.Items.Add(organisationCheck);
+                }
+            }
+
+            return newPersons;
+        }
         #endregion
 
         public void SyncDatabase(Subplatform subplatform)
         {
-            SyncDatabaseAsync(subplatform).Wait();
+            // Set IsSyncing flag
+            IsSyncing = true;
+            SyncDatabaseAsync(subplatform).GetAwaiter().GetResult();
+
+            // Set IsSyncing flag
+            IsSyncing = false;
         }
 
         public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
         {
-            // Set IsSyncing flag
-            IsSyncing = true;
-
-
             InitNonExistingRepo();
 
             // Validation
@@ -553,216 +892,6 @@ namespace PB.BL
 
             // Save pending changes
             UowManager.Save();
-        }
-
-        public List<Record> JClassToRecord(List<JClass> data)
-        {
-            InitNonExistingRepo();
-            List<Mention> allMentions = RecordRepo.ReadMentions().ToList();
-            List<Word> allWords = RecordRepo.ReadWords().ToList();
-            List<Hashtag> allHashtags = RecordRepo.ReadHashTags().ToList();
-            List<Url> allUrls = RecordRepo.ReadUrls().ToList();
-
-            List<Record> oldRecords = RecordRepo.ReadRecords().ToList();
-            List<Record> newRecords = new List<Record>();
-            List<Person> oldPersons = ItemRepo.ReadPersons().ToList();
-            List<Person> newPersons = new List<Person>();
-            List<Theme> oldThemes = ItemRepo.ReadThemes().ToList();
-            List<Theme> newThemes = new List<Theme>();
-
-            foreach (var el in data)
-            {
-                if (oldRecords.FirstOrDefault(r => r.Tweet_Id == el.Id) == null)
-                {
-                    Record record = new Record()
-                    {
-                        Tweet_Id = el.Id,
-                        RecordProfile = el.Profile,
-                        Words = new List<Word>(),
-                        Sentiment = (el.Sentiment.Count != 0) ? new Sentiment(el.Sentiment[0], el.Sentiment[1]) : new Sentiment(0, 0),
-                        Source = el.Source,
-                        Hashtags = new List<Hashtag>(),
-                        Mentions = new List<Mention>(),
-                        URLs = new List<Url>(),
-                        Themes = new List<Theme>(),
-                        Persons = new List<Person>(),
-                        Date = el.Date,
-                        Retweet = el.Retweet
-                    };
-
-                    if (el.Geo != null)
-                    {
-                        record.Longitude = el.Geo[0];
-                        record.Latitude = el.Geo[1];
-                    }
-
-                    foreach (var person in el.Persons)
-                    {
-                        Person personCheck = oldPersons.FirstOrDefault(p => p.Name.ToLower().Equals(person.ToLower()));
-                        if (personCheck == null)
-                        {
-                            personCheck = new Person()
-                            {
-                                Name = person,
-                                IsTrending = false,
-                                IconURL = @"~/Content/Images/Users/user.png",
-                                Records = new List<Record>(),
-                                Elements = new List<Element>(),
-                                Keywords = new List<Keyword>(),
-                                SubPlatforms = el.Subplatforms,
-                                SubscribedProfiles = new List<Profile>(),
-                                Themes = new List<Theme>(),
-                                Alerts = new List<Alert>(),
-                                TrendingScore = 0
-                            };
-                            oldPersons.Add(personCheck);
-                            newPersons.Add(personCheck);
-                        }
-                        else
-                        {
-                            el.Subplatforms.ForEach(sp =>
-                            {
-                                if (!personCheck.SubPlatforms.Contains(sp)) personCheck.SubPlatforms.Add(sp);
-                            });
-                        }
-
-                        foreach (var theme in el.Themes)
-                        {
-                            Theme themeCheck = oldThemes.FirstOrDefault(t => t.Name.ToLower().Equals(theme.ToLower()));
-                            if (themeCheck == null)
-                            {
-                                themeCheck = new Theme()
-                                {
-                                    Name = theme,
-                                    IsTrending = false,
-                                    IconURL = @"~/Content/Images/default-theme.png",
-                                    Elements = new List<Element>(),
-                                    Keywords = new List<Keyword>(),
-                                    Records = new List<Record>(),
-                                    SubPlatforms = el.Subplatforms,
-                                    SubscribedProfiles = new List<Profile>(),
-                                    Persons = new List<Person>(),
-                                    Organisations = new List<Organisation>(),
-                                    Alerts = new List<Alert>()
-                                };
-                                oldThemes.Add(themeCheck);
-                                newThemes.Add(themeCheck);
-                            }
-                            else
-                            {
-                                el.Subplatforms.ForEach(sp =>
-                                {
-                                    if (!themeCheck.SubPlatforms.Contains(sp)) themeCheck.SubPlatforms.Add(sp);
-                                });
-                            }
-                            record.Themes.Add(themeCheck);
-                            themeCheck.Records.Add(record);
-
-                            personCheck.Themes.Add(themeCheck);
-                            themeCheck.Persons.Add(personCheck);
-                        }
-                        record.Persons.Add(personCheck);
-                        personCheck.Records.Add(record);
-                    }
-                    
-                    foreach (var m in el.Mentions)
-                    {
-                        Mention mentionCheck = allMentions.Find(me => me.Name.Equals(m));
-                        if (mentionCheck != null)
-                        {
-                            record.Mentions.Add(mentionCheck);
-                        }
-                        else
-                        {
-                            Mention mention = new Mention(m);
-                            record.Mentions.Add(mention);
-                            allMentions.Add(mention);
-                        }
-                    }
-                    
-                    foreach (var w in el.Words)
-                    {
-                        Word wordCheck = allWords.Find(wo => wo.Text.Equals(w));
-                        if (wordCheck != null)
-                        {
-                            record.Words.Add(wordCheck);
-                        }
-                        else
-                        {
-                            Word word = new Word(w);
-                            record.Words.Add(word);
-                            allWords.Add(word);
-                        }
-                    }
-                    
-                    foreach (var h in el.Hashtags)
-                    {
-                        Hashtag hashtagCheck = allHashtags.Find(ha => ha.HashTag.Equals(h));
-                        if (hashtagCheck != null)
-                        {
-                            record.Hashtags.Add(hashtagCheck);
-                        }
-                        else
-                        {
-                            Hashtag tag = new Hashtag(h);
-                            record.Hashtags.Add(tag);
-                            allHashtags.Add(tag);
-                        }
-                    }
-                    
-                    foreach (var u in el.URLs)
-                    {
-                        Url urlCheck = allUrls.Find(url => url.Link.Equals(u));
-                        if (urlCheck != null)
-                        {
-                            record.URLs.Add(urlCheck);
-                        }
-                        else
-                        {
-                            Url url = new Url(u);
-                            record.URLs.Add(url);
-                            allUrls.Add(url);
-                        }
-                    }
-
-                    if (newRecords.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
-                    {
-                        newRecords[newRecords.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
-                    }
-                    else
-                    {
-                        newRecords.Add(record);
-                    }
-                }
-            }
-
-            return newRecords;
-        }
-
-
-        public int GetKeywordsCount()
-        {
-            return ItemRepo.ReadKeywords().Count();
-        }
-
-        public int GetThemesCount()
-        {
-            return ItemRepo.ReadThemes().Count();
-        }
-
-        public int GetPersonsCount()
-        {
-            return ItemRepo.ReadPersons().Count();
-        }
-
-        public int GetOrganisationsCount()
-        {
-            return ItemRepo.ReadOrganisations().Count();
-        }
-
-        public int GetItemsCount()
-        {
-            return ItemRepo.ReadItems().Count();
         }
     }
 }

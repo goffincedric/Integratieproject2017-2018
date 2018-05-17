@@ -5,8 +5,6 @@
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
     <div class="container-fluid">
@@ -20,10 +18,7 @@
           <h1 class="h5" style="text-align: center">Import/Export Tools</h1>
           <div class="row">
             <div class="col-6" style="text-align:center">
-
-    
-        <button id="export" class="btn btn-lg btn-primary" enabled>Export Users</button>
-
+              <button id="export" class="btn btn-lg btn-primary" enabled>Export Users</button>
             </div>
             <div class="col-6" style="text-align:center">
               <button class="btn btn-lg btn-primary" disabled>Import users</button>
@@ -32,9 +27,7 @@
         </div>
       </div>
       @Html.Action("_UserTable")
-
       <div class="row" style="margin-top: 10px;">
-
         <div class="col-sm" style="padding:0; margin:0 10px 0 0">
           <div class="layers bd bgc-white p-20">
             <div class="layer w-100 mB-10">
@@ -47,7 +40,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-sm" style="padding:0; margin:0 0 0 10px">
           <div class="layers bd bgc-white p-20">
             <div class="layer w-100 mB-10">
@@ -60,17 +52,12 @@
             </div>
           </div>
         </div>
-
       </div>
-
       <div id="partial"></div>
-
-
       <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
           <h6 class="c-grey-900">Users</h6>
           <div class="mT-30" id="graph-bar">
-
             <canvas id="user-chart" height="400"></canvas>
           </div>
         </div>
@@ -80,13 +67,10 @@
 
 </main>
 
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.2.1/dt-1.10.16/af-2.2.2/b-1.5.1/b-flash-1.5.1/b-html5-1.5.1/kt-2.3.2/r-2.2.1/datatables.min.css" />
-
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.2.1/dt-1.10.16/af-2.2.2/b-1.5.1/b-flash-1.5.1/b-html5-1.5.1/kt-2.3.2/r-2.2.1/datatables.min.js"></script>
+<link href="~/Content/datatables.min.css" rel="stylesheet" />
+<script src="~/Scripts/datatables.min.js"></script>
 <script src="~/Scripts/charts/Chart.min.js"></script>
 <script>
-
   $("#export").click(function () {
   $.ajax({
     type: "POST",
@@ -94,20 +78,16 @@
     contentType: "application/json; charset=utf-8",
     dataType: "json",
 }).done(function (data) {
-    //console.log(data.result);
-   
-
     //get the file name for download
     if (data.fileName != "") {
         //use window.location.href for redirect to download action for download the file
-        window.location.href = "@Url.RouteUrl(new 
+        window.location.href = "@Url.RouteUrl(new
             { Controller = "Account", Action = "ExportUsers"})/?file=" + data.fileName;
     }
 });
   });
 
   function drawLineChart(id) {
-
     var test = "";
     test = $.ajax({
       async: false,
@@ -127,13 +107,7 @@
       label.push(keys[i].substring(0, 10));
       values.push(test[keys[i]]);
     }
-
-
-
     var can = $('#user-chart');
-    //can.attr('width', '300px');
-    //can.attr('height', '300px');
-
     new Chart(can, {
       type: 'line',
       data: {
@@ -169,12 +143,10 @@
   }
 
   drawLineChart();
-
 </script>
 
 
 <script>
-
   $(function () {
     $("#loadAdmin").click(function () {
 
@@ -190,6 +162,4 @@
 
     });
   });
-
-
 </script>

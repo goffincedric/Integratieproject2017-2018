@@ -3,66 +3,12 @@
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
-
 <style>
   #chart {
     margin: auto;
   }
 </style>
-
-<style>
-
-
-
-  .loader {
-    border-radius: 100%;
-    margin: auto 0;
-  }
-
-  .loader-6 span {
-    display: inline-block;
-    width: 5px;
-    height: 20px;
-    background-color: #3498db;
-  }
-
-    .loader-6 span:nth-child(1) {
-      animation: grow 1s ease-in-out infinite;
-    }
-
-    .loader-6 span:nth-child(2) {
-      animation: grow 1s ease-in-out 0.15s infinite;
-    }
-
-    .loader-6 span:nth-child(3) {
-      animation: grow 1s ease-in-out 0.30s infinite;
-    }
-
-    .loader-6 span:nth-child(4) {
-      animation: grow 1s ease-in-out 0.45s infinite;
-    }
-
-  @@keyframes grow {
-    0%, 100% {
-      -webkit-transform: scaleY(1);
-      -ms-transform: scaleY(1);
-      -o-transform: scaleY(1);
-      transform: scaleY(1);
-    }
-
-    50% {
-      -webkit-transform: scaleY(1.8);
-      -ms-transform: scaleY(1.8);
-      -o-transform: scaleY(1.8);
-      transform: scaleY(1.8);
-    }
-  }
-</style>
-
 
 <main class="main-content bgc-grey-100" style="background-color: #f9fafb;">
   <div class="banner-window">
@@ -72,10 +18,10 @@
           <div class="col-xl-10 mx-auto">
             <h1 class="mb-5 banner-text">@ViewBag.HeaderText</h1>
             <h4 class="mb-4 banner-text">
-              Volg uw favoriete politiekers, partijen en thema's en bekijk hoe deze door anderen besproken worden op sociale media.
+              @ViewBag.BannerSub1
             </h4>
             <h4 class="mb-3 banner-text">
-              Creeër uw eigen dashboard en bekijk en analyseer live grafieken!
+              @ViewBag.BannerSub2
             </h4>
             <br />
             @if (!User.Identity.IsAuthenticated)
@@ -89,7 +35,6 @@
       </div>
     </div>
   </div>
-
   <div id="mainContent">
     <div class="row gap-20 masonry pos-r">
       <div class="masonry-sizer col-md-6"></div>
@@ -149,16 +94,14 @@
           </div>
         </div>
       </div>
-
       <div class="masonry-item col-md-6">
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
-             
-                <h6 class="c-grey-900">Sentiment analyse top politici</h6>
-                 <a id="download" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
-                <i style="top: 30px; right: 50px;opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i> 
-           </div>
+              <h6 class="c-grey-900">Sentiment analyse top politici</h6>
+              <a id="download1" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <i style="top: 30px; right: 50px;opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i>
+            </div>
             <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table;">
               <div class="loader loader-6" id="loader-1" style="display:table-cell; vertical-align:middle; text-align:center">
                 <span></span>
@@ -168,20 +111,15 @@
               </div>
               <canvas id="evol" height="100" style="display:none"></canvas>
             </div>
-
           </div>
-            </div>
         </div>
-     
-
-
+      </div>
       <div class="masonry-item col-md-6">
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending hashtags</h6>
-
-              <a id="dl2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <a id="download2" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
               <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
             </div>
             <div class="layer w-100 p-20" style="min-height:350px;  max-height:350px; display:table; ">
@@ -191,19 +129,17 @@
                 <span></span>
                 <span></span>
               </div>
-
               <canvas id="doughnut-chart" height="100" style="display:none"></canvas>
             </div>
           </div>
         </div>
       </div>
-
       <div class="masonry-item col-md-6">
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top trending Mentions</h6>
-              <a id="dl3" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <a id="download3" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
               <i style="top: 30px; right: 50px; position:absolute;  opacity:0.6;" class="fas fa-thumbtack"></i>
             </div>
             <div class="layer w-100 p-20" style="min-height:350px;max-height:350px;display:table;">
@@ -218,14 +154,12 @@
           </div>
         </div>
       </div>
-
-
       <div class="masonry-item col-md-6">
         <div class="bd bgc-white">
           <div class="layers">
             <div class="layer w-100 pX-20 pT-20">
               <h6 class="c-grey-900">Top persons</h6>
-              <a id="dl4" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+              <a id="download4" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
               <i style="top: 30px; right: 50px;  opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i>
             </div>
             <div class="layer w-100 p-20" style="min-height:350px; max-height:350px; display:table;">
@@ -240,26 +174,20 @@
           </div>
         </div>
       </div>
-
-
-
       @if (!Request.IsAuthenticated)
       {
-
         <div class="hide-content">
           <div class="outer">
             <div class="middle">
               <div class="inner">
                 <h4 class="mb-5 call-to-action-text">
-                  Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data.
+                  @ViewBag.CallToAction
                 </h4>
-                <a href="@Url.Action("Login", "Account")" class="btn btn-primary text-uppercase call-to-action-button">start nu</a>
+                <a href="@Url.Action("Login", "Account")" class="btn btn-primary text-uppercase call-to-action-button">Start nu</a>
               </div>
             </div>
           </div>
         </div>
-
-
       }
       else
       {
@@ -269,9 +197,8 @@
               <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
                 <div class="layers">
                   <div class="layer w-100 mB-10">
-                    <h6 class="lh-1">Sentiment per provincie</h6>
                   </div>
-                  <div class="layer w-100">
+                  <div class="layer w-100 p-20">
                     <div id="world-map-marker"></div>
                   </div>
                 </div>
@@ -280,6 +207,8 @@
                 <div class="layers h-100">
                   <div class="layer w-100">
                     <h6 class="lh-1">Radar Test</h6>
+                    <a id="download6" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+                    <i style="top: 30px; right: 50px;  opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i>
                   </div>
                   <canvas style="margin: auto 0" id="radar2-chart" height="220"></canvas>
 
@@ -288,7 +217,6 @@
             </div>
           </div>
         </div>
-
         <div class="masonry-item col-12">
           <div class="bd bgc-white">
             <div class="peers fxw-nw@lg+ ai-s">
@@ -296,51 +224,69 @@
                 <div class="layers">
                   <div class="layer w-100 mB-10">
                     <h6 class="lh-1">Top tweeting persons</h6>
+                    <a id="download7" download="Canvas.jpg"><i class="fas fa-download" style="top:28px; opacity:0.6; right: 20px; position:absolute;"></i></a>
+                    <i style="top: 30px; right: 50px;  opacity:0.6; position:absolute;" class="fas fa-thumbtack"></i>
                   </div>
                   <div class="layer w-100">
                     <div id="myChart" style="height: 100%;width: 100%; min-height: 500px;"></div>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
-
       }
     </div>
   </div>
 </main>
-<script src="~/Scripts/index/hide-content.js" defer></script>
-<script src="~/Scripts/charts/Chart.min.js"></script>
-<script src="~/Scripts/wordcloud/zingchart.min.js"></script>
-<script src="~/Scripts/wordcloud/zingchart-wordcloud.min.js"></script>
-<script src="~/Scripts/wordcloud/wordcloud.js"></script>
+<script src="~/Scripts/Index/hide-content.js" defer></script>
+<script src="~/Scripts/Charts/Chart.min.js"></script>
+<script src="~/Scripts/Wordcloud/zingchart.min.js"></script>
+<script src="~/Scripts/Wordcloud/zingchart-wordcloud.min.js"></script>
+<script src="~/Scripts/Wordcloud/wordcloud.js"></script>
 
 <script>
-
-
-  var canvas = document.getElementById("dougnut-chart");
-
-
-  function dlCanvas() {
- 
-    var image = document.getElementById("evol").toDataURL("image/png")
+  $("#download1").on('click', function () {
+    var image = document.getElementById("evol").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
-    download.setAttribute("href", image);
- 
-  };
+    download1.setAttribute("href", image);
 
-
-  $("#download").on('click', function () {
-    dlCanvas();
   });
 
+  $("#download2").on('click', function () {
+    var image = document.getElementById("#doughnut-chart").toDataURL("image/jpg")
+      .replace("image/jpg", "image/octet-stream");
+    download2.setAttribute("href", image);
+
+  });
+  $("#download3").on('click', function () {
+    var image = document.getElementById("pie-chart").toDataURL("image/jpg")
+      .replace("image/jpg", "image/octet-stream");
+    download3.setAttribute("href", image);
+
+  });
+  $("#download4").on('click', function () {
+    var image = document.getElementById("bar2-chart").toDataURL("image/jpg")
+      .replace("image/jpg", "image/octet-stream");
+    download4.setAttribute("href", image);
+
+  });
+  $("#download6").on('click', function () {
+    var image = document.getElementById("radar2-chart").toDataURL("image/jpg")
+      .replace("image/jpg", "image/octet-stream");
+    download4.setAttribute("href", image);
+
+  });
+  $("#download7").on('click', function () {
+    var image = document.getElementById("myChart").toDataURL("image/jpg")
+      .replace("image/jpg", "image/octet-stream");
+    download4.setAttribute("href", image);
+
+  });
 
   function makeAjaxCall(url, methodType) {
     var promiseObj = new Promise(function (resolve, reject) {
       var xhr = new XMLHttpRequest();
-
       xhr.open(methodType, url, true);
       xhr.setRequestHeader("x-api-key", "303d22a4-402b-4d3c-b279-9e81c0480711");
       xhr.send();
@@ -366,32 +312,25 @@
     return promiseObj;
   }
 
-
-
-
-
-
   function showIncrease() {
-
-
     var URL = "https://localhost:44342/api/item/GetPersonIncrease";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
 
     function process(output) {
-      console.log(output);
-
-
       var keys = [];
       keys = Object.keys(output);
       var label = [];
       var values = [];
 
+      
       for (var i = 0; i < keys.length; i++) {
         label.push(keys[i]);
         $("#pol" + i).html(keys[i]);
         values.push(output[keys[i]]);
         $("#poli" + i).html(output[keys[i]]);
       }
+      console.log(label);
+      console.log(values);
     }
 
     function errorHandler(statusCode) {
@@ -457,13 +396,6 @@
 
         values.push(output[keys[i]] / 10);
       }
-
-
-      console.log(label);
-      console.log(values);
-
-
-
       new Chart(can, {
         type: 'bar',
         data: {
@@ -496,23 +428,15 @@
   drawBarChart();
 
   function drawLineChart() {
-
-
     var URL = "https://localhost:44342/api/item/GetMostPopularPersons/3";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
 
     function process(output) {
-      console.log(output);
-
       var can = $('#evol');
-
-
-
       var datagrafiek = {
         labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
         datasets: []
       };
-
 
       var myLineChart = new Chart(can, {
         type: 'line',
@@ -558,9 +482,6 @@
             values.push(output2[keys[i]] / 10);
           }
 
-          console.log(label);
-          console.log(values);
-
           var myNewDataSet = {
             label: value,
             data: values,
@@ -595,9 +516,6 @@
 
   drawLineChart();
 
-
-
-
   function TrendingPersonGraphs() {
     var URL = "https://localhost:44342/api/item/getMostPopularPerson";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
@@ -608,7 +526,6 @@
         makeAjaxCall(URL, "GET").then(process, errorHandler);
 
         function process(output) {
-          console.log(output);
 
           var keys = [];
           keys = Object.keys(output);
@@ -644,20 +561,15 @@
         function errorHandler(statusCode) {
           console.log("failed with status", status);
         }
-
-
-
       }
 
       getHashtags(id);
-
 
       function drawPie(id) {
         var URL = "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id;
         makeAjaxCall(URL, "GET").then(process, errorHandler);
 
         function process(output) {
-          console.log(output);
 
           var keys = [];
           keys = Object.keys(output);
@@ -697,11 +609,7 @@
 
       }
 
-
-
       drawPie(id);
-
-
     }
     function errorHandler(statusCode) {
       console.log("failed with status", status);
@@ -709,11 +617,6 @@
   }
 
   TrendingPersonGraphs();
-
-
-
-
-
 </script>
 
 

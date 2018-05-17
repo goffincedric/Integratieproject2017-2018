@@ -1,7 +1,6 @@
 ﻿@model UI_MVC.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
 
-
 @{
   var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
   if (!loginProviders.Any())
@@ -21,12 +20,8 @@
         <div class="btn-toolbar">
           @foreach (AuthenticationDescription p in loginProviders)
           {
-
             <button class="btnLoginProviders btn btn-lg" type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i></i> @p.AuthenticationType</button>
-
           }
-
-
         </div>
       </div>
     }
@@ -35,7 +30,6 @@
 
 @Scripts.Render("~/bundles/jquery")
 <script>
-
   $(".btn-toolbar button:nth-child(1)").addClass("btn btn-social btn-sm btn-google");
   $("button:nth-child(2)").addClass("btn btn-social btn-sm btn-facebook");
   $("button:nth-child(3)").addClass("btn btn-social btn-sm btn-twitter");

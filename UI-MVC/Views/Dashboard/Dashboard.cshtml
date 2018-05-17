@@ -1,26 +1,24 @@
-﻿@*@Model*@
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@Styles.Render("~/Content/dashboardcss")
+<!--     Fonts and icons     -->
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+
 @section styles{
-
-    <link href="~/Content/Styling/grid2/gridstack.css" rel="stylesheet" />
-    <link href="~/Content/Styling/grid2/gridstack-extra.css" rel="stylesheet" />
-    <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
-    <!-- CSS Files -->
-    <link href="~/Content/Styling/wizard/material-bootstrap-wizard.css" rel="stylesheet" />
     <style type="text/css">
-
         #grid1 {
-            <!-- border: 3px solid black; -->
+            <!--
+            border: 3px solid black; -->
             padding: 3px;
             margin-bottom: 10px;
         }
 
         #grid2 {
-            <!-- border: 3px solid red; -->
+            <!--
+            border: 3px solid red; -->
             margin-top: 5px;
         }
 
@@ -62,7 +60,18 @@
         @foreach (var zone in Model.Zones)
         {
             <div class="p-10 mB-10 zone-@zone.ZoneId">
-                <h4 class="bb-2"><span class="title mR-15">@zone.Title</span><span class="edit-zone"><i class="ti-pencil"></i></span><span class="arrow-dashboard"><i class="ti-angle-up"></i></span><span class="delete-zone"><i class="ti-trash"></i></span></h4>
+                <h4 class="bb-2">
+                    <span class="title mR-15">@zone.Title</span>
+                    <span class="edit-zone">
+                        <i class="ti-pencil"></i>
+                    </span>
+                    <span class="arrow-dashboard">
+                        <i class="ti-angle-up"></i>
+                    </span>
+                    <span class="delete-zone">
+                        <i class="ti-trash"></i>
+                    </span>
+                </h4>
                 <div class="DashZone">
                     <div class="grid-stack grid-stack-12" id="zone-@zone.ZoneId">
                     </div>
@@ -70,7 +79,12 @@
             </div>
         }
         <div class="p-10 mB-10 add-zone">
-            <h4 class="bb-2"><span class="title">Create New Zone</span><span class="arrow-dashboard"><i class="ti-angle-up"></i></span></h4>
+            <h4 class="bb-2">
+                <span class="title">Create New Zone</span>
+                <span class="arrow-dashboard">
+                    <i class="ti-angle-up"></i>
+                </span>
+            </h4>
             <div class="DashZone">
                 <div class="grid-stack grid-stack-12" id="zone-x">
                 </div>
@@ -80,23 +94,23 @@
 </main>
 
 <!--   Dashboard   -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
+<script src="~/Scripts/Dashboard/jquery-ui.js"></script>
+<script src="~/Scripts/Dashboard/lodash.min.js"></script>
 
-<script src="~/Scripts/grid2/gridstack.js"></script>
-<script src="~/Scripts/grid2/gridstack.jQueryUI.js"></script>
+<script src="~/Scripts/Grid/gridstack.js"></script>
+<script src="~/Scripts/Grid/gridstack.jQueryUI.js"></script>
 
 @Scripts.Render("~/bundles/Dashboard")
 
 <!--   Wizard   -->
 <!--   Core JS Files   -->
-<script src="~/Scripts/wizard/bootstrap.min.js" defer></script>
-<script src="~/Scripts/wizard/jquery.bootstrap.js" defer></script>
+<script src="~/Scripts/Wizard/bootstrap.min.js" defer></script>
+<script src="~/Scripts/Wizard/jquery.bootstrap.js" defer></script>
 <!--  Plugin for the Wizard -->
-<script src="~/Scripts/wizard/material-bootstrap-wizard.js" defer></script>
-<script src="~/Scripts/wizard/jquery.validate.min.js" defer></script>
+<script src="~/Scripts/Wizard/material-bootstrap-wizard.js" defer></script>
+<script src="~/Scripts/Wizard/jquery.validate.min.js" defer></script>
 <!--  Chartjs -->
-<script src="~/Scripts/charts/Chart.min.js"></script>
+<script src="~/Scripts/Charts/Chart.min.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -106,9 +120,15 @@
             var addto = "#field" + next;
             var addRemove = "#field" + (next);
             next = next + 1;
-            var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
+            var newIn = '<input autocomplete="off" class="input form-control" id="field' +
+                next +
+                '" name="field' +
+                next +
+                '" type="text">';
             var newInput = $(newIn);
-            var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
+            var removeBtn = '<button id="remove' +
+                (next - 1) +
+                '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
             var removeButton = $(removeBtn);
             $(addto).after(newInput);
             $(addRemove).after(removeButton);
@@ -129,7 +149,6 @@
 <script>
 
     function drawPie(id) {
-
         var count2 = "";
         count2 = $.ajax({
             async: false,
@@ -148,24 +167,23 @@
             label.push(keys[i]);
             values.push(count2[keys[i]] / 10);
         }
-
         var can = $('#pie-chart');
         console.log(can.parent().attr('Style', 'width: 400px; height: 250'));
-        //can.attr('Style', 'width: 300px; height: 300px');
-
-        new Chart(can, {
-            type: 'pie',
-            data: {
-                labels: label,
-                datasets: [{
-                    backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
-                    data: values
-                }]
-            },
-            options: {
-
-            }
-        });
+        new Chart(can,
+            {
+                type: 'pie',
+                data: {
+                    labels: label,
+                    datasets: [
+                        {
+                            backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                            data: values
+                        }
+                    ]
+                },
+                options: {
+                }
+            });
     }
 
     $(document).ready(function () {

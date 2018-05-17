@@ -1,4 +1,6 @@
-﻿using Mono.Options;
+﻿using Domain.JSONConversion;
+using Mono.Options;
+using Newtonsoft.Json;
 using PB.BL;
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
@@ -10,7 +12,9 @@ using PB.BL.Interfaces;
 using PB.DAL.EF;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Web;
 
 namespace UI_CA_Prototype
 {
@@ -57,10 +61,11 @@ namespace UI_CA_Prototype
                 Console.WriteLine("7) Verwijder oude records uit database");
                 Console.WriteLine("8) Voeg API data toe");
                 Console.WriteLine("9) Voeg alerts to aan selected profile");
+                Console.WriteLine("10) Laad politici in via json");
                 Console.WriteLine("---------------- Info -----------------");
-                Console.WriteLine("10) Toon alle records");
-                Console.WriteLine("11) Toon alle persons");
-                Console.WriteLine("12) Toon subscribed items van geselecteerd profiel");
+                Console.WriteLine("11) Toon alle records");
+                Console.WriteLine("12) Toon alle persons");
+                Console.WriteLine("13) Toon subscribed items van geselecteerd profiel");
                 Console.WriteLine("-------------- Commands ---------------");
                 Console.WriteLine("99) Toon de CLI help pagina");
                 Console.WriteLine("0) Afsluiten");
@@ -85,7 +90,7 @@ namespace UI_CA_Prototype
             do
             {
                 Console.Write("Keuze: ");
-               int.TryParse(Console.ReadLine(), out int keuze);
+                int.TryParse(Console.ReadLine(), out int keuze);
                 Console.WriteLine("\n");
 
                 switch (keuze)
@@ -123,12 +128,17 @@ namespace UI_CA_Prototype
                         AccountMgr.GenerateAllAlerts(SelectedProfile.Subscriptions);
                         break;
                     case 10:
-                        ExtensionMethods.ShowRecords(ItemMgr.GetRecords());
+                        if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
+                        List<Item> persons = ItemMgr.JPersonToRecord(JsonConvert.DeserializeObject<List<JPerson>>(File.ReadAllText(@"politiciJSON\politici.json")), SelectedSubplatform);
+                        ItemMgr.AddItems(persons);
                         break;
                     case 11:
-                        ExtensionMethods.ShowPersons(ItemMgr.GetPersons());
+                        ExtensionMethods.ShowRecords(ItemMgr.GetRecords());
                         break;
                     case 12:
+                        ExtensionMethods.ShowPersons(ItemMgr.GetPersons());
+                        break;
+                    case 13:
                         ExtensionMethods.ShowSubScribedItems(SelectedProfile);
                         break;
                     case 99:

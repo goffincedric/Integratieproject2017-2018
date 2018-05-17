@@ -1,71 +1,68 @@
 ﻿@model Domain.Accounts.WeeklyReview
 
 @{
-    ViewBag.Title = "WeeklyReview";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+  ViewBag.Title = "WeeklyReview";
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <main class="main-content bgc-grey-100">
-    <div id="mainContent" class="container-fluid">
-        @if (Model is null)
-        {
-            <div class="bgc-white p-10 bd mB-10">
-                <h3>Weekly review</h3>
-            </div>
+  <div id="mainContent" class="container-fluid">
+    @if (Model is null)
+    {
+      <div class="bgc-white p-10 bd mB-10">
+        <h3>Weekly review</h3>
+      </div>
+      <div class="row">
+        <div class="bgc-white form-group bd col-md-12 pY-20">
+          <a href="@Url.Action("Faq", "Home")">
             <div class="row">
-                <div class="bgc-white form-group bd col-md-12 pY-20">
-                    <a href="@Url.Action("Faq", "Home")">
-                        <div class="row">
-                            <div class="col-md-1"><img class="w-3r bdrs-50p alert-img" src="~/Content/Images/info-icon.png" alt=""></div>
-                            <div class="col-md-11 alert-text">
-                                <span class="fsz-xl">
-                                    U heeft nog geen weekly review!
-                                </span>
-                                <p class="m-0">
-                                    Dit kan zijn omdat u nog niet gesubscribed bent op een item, omdat u nog geen notifications gelezen heeft, of omdat een nieuwe gebruiker bent en hierom nog geen automatische weekly review gekregen heeft.
-                                </p>
-                                <p class="m-0">U kunt op deze box klikken om verder te gaan naar de faq-pagina waar u meer info vindt over subscriben!</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+              <div class="col-md-1"><img class="w-3r bdrs-50p alert-img" src="~/Content/Images/info-icon.png" alt=""></div>
+              <div class="col-md-11 alert-text">
+                <span class="fsz-xl">
+                  U heeft nog geen weekly review!
+                </span>
+                <p class="m-0">
+                  Dit kan zijn omdat u nog niet gesubscribed bent op een item, omdat u nog geen notifications gelezen heeft, of omdat een nieuwe gebruiker bent en hierom nog geen automatische weekly review gekregen heeft.
+                </p>
+                <p class="m-0">U kunt op deze box klikken om verder te gaan naar de faq-pagina waar u meer info vindt over subscriben!</p>
+              </div>
             </div>
-        }
-        else
-        {
-
-            <div class="bgc-white p-10 bd mB-10">
-                <h3>Weekly review - @Model.TimeGenerated.ToShortDateString()</h3>
+          </a>
+        </div>
+      </div>
+    }
+    else
+    {
+      <div class="bgc-white p-10 bd mB-10">
+        <h3>Weekly review - @Model.TimeGenerated.ToShortDateString()</h3>
+      </div>
+      <div class="row">
+        <div class="bgc-white form-group bd col-md-12">
+          <div class="row">
+            <div class="col-md-1"><img class="m-10 w-3r bdrs-50p alert-img" src="@ViewBag.Icon" alt=""></div>
+            <div class="col-md-11 alert-text">
+              <span class="fsz-xl">@Model.TopPersonText</span>
             </div>
-            <div class="row">
-                <div class="bgc-white form-group bd col-md-12">
-                    @*<a href="@Url.Action("ClickNotification", "Account", new { id = Model.AlertId })">*@
-                    <div class="row">
-                        <div class="col-md-1"><img class="m-10 w-3r bdrs-50p alert-img" src="@ViewBag.Icon" alt=""></div>
-                        <div class="col-md-11 alert-text">
-                            <span class="fsz-xl">@Model.TopPersonText</span>
-                        </div>
-                    </div>
-                    @*</a>*@
+          </div>
+        </div>
+      </div>
+      <hr />
+      foreach (var wr in Model.WeeklyReviewsProfileAlerts)
+      {
+        <div class="row">
+          <div class="bgc-white form-group bd col-md-12">
+            <a href="@Url.Action("ClickNotification", "Account", new { id = wr.ProfileAlert.AlertId })">
+              <div class="row">
+                <div class="col-md-1"><img class="m-10 w-3r bdrs-50p alert-img" src="@VirtualPathUtility.ToAbsolute(wr.ProfileAlert.Alert.Item.IconURL)" alt=""></div>
+                <div class="col-md-11 alert-text">
+                  <span class="fsz-xl">@wr.ProfileAlert.Alert.Text</span>
+                  <p class="m-0">@wr.ProfileAlert.TimeStamp</p>
                 </div>
-            </div>
-            <hr />
-            foreach (var wr in Model.WeeklyReviewsProfileAlerts)
-            {
-                <div class="row">
-                    <div class="bgc-white form-group bd col-md-12">
-                        <a href="@Url.Action("ClickNotification", "Account", new { id = wr.ProfileAlert.AlertId })">
-                            <div class="row">
-                                <div class="col-md-1"><img class="m-10 w-3r bdrs-50p alert-img" src="@VirtualPathUtility.ToAbsolute(wr.ProfileAlert.Alert.Item.IconURL)" alt=""></div>
-                                <div class="col-md-11 alert-text">
-                                    <span class="fsz-xl">@wr.ProfileAlert.Alert.Text</span>
-                                    <p class="m-0">@wr.ProfileAlert.TimeStamp</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            }
-        }
-    </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      }
+    }
+  </div>
 </main>
