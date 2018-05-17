@@ -42,6 +42,82 @@ $(function() {
 
       return ZoneData;
     };
+<<<<<<< HEAD
+=======
+    $('.grid-stack').gridstack(options);
+
+    new function () {
+        function getRotationDegrees(obj) {
+            var matrix = obj.css("-webkit-transform") ||
+                obj.css("-moz-transform") ||
+                obj.css("-ms-transform") ||
+                obj.css("-o-transform") ||
+                obj.css("transform");
+            if (matrix !== 'none') {
+                var values = matrix.split('(')[1].split(')')[0].split(',');
+                var a = values[0];
+                var b = values[1];
+                var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            } else { angle = 0; }
+            return angle < 0 ? angle + 360 : angle;
+        }
+
+        //done
+        findElements = function (id) {
+            var ZoneData = $.ajax({
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                headers: Headers,
+                url: "https://localhost:44342/api/dashboard/getzoneelements/" + id
+            }).responseJSON;
+
+            return ZoneData;
+        };
+
+        deleteElement = function (element, grid) {
+            var Element = element.parent();
+            var ElementId = Element.attr('id');
+            ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
+            Element = Element.parent();
+
+            $.ajax({
+                async: false,
+                type: 'Delete',
+                headers: Headers,
+                url: "https://localhost:44342/api/dashboard/deleteelement/" + ElementId
+            })
+
+            grid.data('gridstack').removeWidget(Element);
+        };
+
+        //done
+        addElement = function (grid) {
+            console.log(grid);
+
+            addingElement = true;
+
+            var addZone = $('.add-zone');
+            var ZoneId = grid.attr('id');
+
+            ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
+
+            var removeElement = grid.children()[grid.children().length - 1];
+
+            grid.data('gridstack').removeWidget(removeElement);
+
+            if (ZoneId === 'x') {
+                var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
+
+                ZoneId = $.ajax({
+                    async: false,
+                    type: 'POST',
+                    data: Zone,
+                    dataType: 'json',
+                    headers: Headers,
+                    url: "https://localhost:44342/api/dashboard/postzone/" + DashBoardId
+                }).responseJSON.ZoneId
+>>>>>>> master
 
     deleteElement = function(element, grid) {
       var Element = element.parent();
@@ -49,6 +125,7 @@ $(function() {
       ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
       Element = Element.parent();
 
+<<<<<<< HEAD
       $.ajax({
         async: false,
         type: 'Delete',
@@ -58,6 +135,67 @@ $(function() {
 
       grid.data('gridstack').removeWidget(Element);
     };
+=======
+                //zorgen dat pagina niet herladen moet worden
+                var $newdiv = $('<div class="p-10 mB-10 zone-' + ZoneId + '"></div>');
+                $newdiv.append($('<h4 class="bb-2"></h4>'));
+                $newdiv.children('h4').append($('<span class="title mR-15">New Zone</span>'));
+                $newdiv.children('h4').append($('<span class="edit-zone"></span>'));
+                $newdiv.children('h4').children('.edit-zone').append($('<i class="ti-pencil"></i>'));
+                $newdiv.children('h4').append($('<span class="arrow-dashboard"></span>'));
+                $newdiv.children('h4').children('.arrow-dashboard').append($('<i class="ti-angle-up"></i>'));
+                $newdiv.children('h4').append($('<span class="delete-zone"></span>'));
+                $newdiv.children('h4').children('.delete-zone').append($('<i class="ti-trash"></i>'));
+                $newdiv.append($('<div class="DashZone"></div>'));
+                $newdiv.children('.DashZone').append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
+                var newZone = $('#mainContent').append($newdiv);
+
+                addZone = $('#mainContent').append(addZone);
+
+                $('.grid-stack').gridstack(options);
+
+                grid = newZone.children('.zone-' + ZoneId).children('.DashZone').children('#zone-' + ZoneId);
+
+                var hidezone = grid.parent().parent().children('h4').children('.arrow-dashboard');
+
+                addZone.children('.add-zone').children('h4').children('.arrow-dashboard').on('click', function () {
+                    $(this).parent().parent().children(".DashZone").toggle(300);
+                    rotation = getRotationDegrees($(this)) + 180;
+                    $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
+                });
+
+                var deletezone = grid.parent().parent().children('h4').children('.delete-zone');
+
+                var editzone = grid.parent().parent().children('h4').children('.edit-zone');
+
+                hidezone.on('click', function () {
+                    $(this).parent().parent().children(".DashZone").toggle(300);
+                    rotation = getRotationDegrees($(this)) + 180;
+                    $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
+                });
+
+                deletezone.on('click', function () {
+                    removeZone(grid.parent().parent());
+                });
+
+                editzone.on('click', function () {
+                    editZone($(this));
+                });
+
+                addZone = addZone.children('.add-zone').children('div').children('#zone-x');
+                var plusElement = addZone.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
+
+                plusElement.children('.grid-stack-item-content').children('div').children('img').on("click", function () {
+                    addElement(addZone);
+                });
+            };
+
+            var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), 0, 0, 3, 3, true);
+            var X = newElement.data().gsX;
+            var Y = newElement.data().gsY;
+
+            var Element = JSON.parse('{"X" : "' + X + '", "Y" : "' + Y + '", "Width": "3", "Height": "3", "IsDraggable": "true", "ZoneId": "' + ZoneId + '"}');
+>>>>>>> master
 
     //done
     addElement = function(grid) {
@@ -363,16 +501,135 @@ $(function() {
       addingElement = false;
     };
 
+<<<<<<< HEAD
     editZone = function(grid) {
       console.log(grid);
 
       var ZoneId = grid.parent().parent().attr('class');
 
       ZoneId = ZoneId.substring(ZoneId.indexOf('zone-') + 5, ZoneId.length);
+=======
+            var data = null;
+            var onderwerp = null;
+            var output = null;
+
+            $('.btn-next').on('click', function () {
+                switch ($('input:checked').attr('id')) {
+                    case 'person':
+                        //datasoort = null;
+                        data = $.ajax({
+                            async: false,
+                            type: 'GET',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/item/getperson"
+                        }).responseJSON;
+                        onderwerp = 'politieker';
+                        break;
+                    case 'organisation':
+                        //datasoort = null;
+                        data = $.ajax({
+                            async: false,
+                            type: 'GET',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/item/getorganisation"
+                        }).responseJSON;
+                        onderwerp = 'organisatie';
+                        break;
+                    case 'theme':
+                        //datasoort = null;
+                        data = $.ajax({
+                            async: false,
+                            type: 'GET',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/item/gettheme"
+                        }).responseJSON;
+                        onderwerp = 'thema';
+                        break;
+                }
+
+                $('#soort').text(onderwerp + 's');
+
+                let dropdown = $('#locality-dropdown');
+
+                itemData = {
+                    items: []
+                };
+
+                var cardnumber = 1;
+                $('#locality-dropdown').off('change');
+                $('#locality-dropdown').on('change', function () {
+                    if (cardnumber <= 5) {
+                        $('#cardholder').append($('<div id="card' + cardnumber + '" class="col-sm-2-5 pX-5">' +
+                            '<h5 class= "info-text" > Voeg hier toe!</h5>' +
+                            '<div class="card">' +
+                            '<img src="/Content/Images/plus-icon.png" alt="Avatar" style="width:100%">' +
+                            '<div class="container">' +
+                            '<h4><b class="itemId">#</b></h4>' +
+                            '<p class="itemName">Architect & Engineer</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'));
+                        $('#card' + cardnumber).children('.card').children('img').on('click', function () {
+                            var item = ($.ajax({
+                                async: false,
+                                type: 'GET',
+                                headers: Headers,
+                                url: "https://localhost:44342/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
+                            }).responseJSON);
+                            $(this).attr('src', (item.IconURL).substring(1, item.IconURL.length));
+                            $(this).siblings('.container').children('h4').children('.itemId').text(item.ItemId);
+                            $(this).siblings('.container').children('.itemName').text(item.Name);
+                        })
+                        cardnumber++;
+                    }
+                })
+                
+                $('#output').off('change');
+                $('#output').on('change', function () {
+                    output = $('#output option:selected').text();
+                });
+                //$('#add-soort').off('click');
+                //$('#add-soort').on('click', function () {
+                //    itemData.items.push($.ajax({
+                //        async: false,
+                //        type: 'GET',
+                //        headers: Headers,
+                //        url: "https://localhost:44342/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
+                //    }).responseJSON);
+                //    $('#itemInfo').text(itemData.items);
+                //});
+
+                dropdown.empty();
+
+                dropdown.append('<option selected="true" disabled>selecteer een '+onderwerp+'</option>');
+                dropdown.prop('selectedIndex', 0);
+
+                // Populate dropdown with list of data
+                $.each(data, function (key, entry) {
+                    dropdown.append($('<option></option>').attr('value', entry.ItemId).text(entry.Name));
+                });
+            })
+
+            $('.btn-finish').off('click');
+            $('.btn-finish').on('click', function () {
+                var GraphType = 0;
+                $('input:checked').attr('id');
+                switch ($('input:checked').attr('id')) {
+                    case 'bar': GraphType = 0;
+                        break;
+                    case 'pie': GraphType = 2;
+                        break;
+                }
+                Wizard.hide();
+
+                //edit later
+                var items = getItems($('#cardholder'));
+>>>>>>> master
 
       titleTag = grid.siblings('.title');
       oldTitle = titleTag.html();
 
+<<<<<<< HEAD
       titleWidth = titleTag.width();
       titleHeight = titleTag.height();
 
@@ -381,13 +638,23 @@ $(function() {
         'px; height:' +
         titleHeight +
         'px;font-weight: bold; margin-right: 15px; max-width: 600px;">'));
+=======
+                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '", "Items": '+itemsJSON+'}');
+>>>>>>> master
 
       grid.siblings('input').focus();
 
       grid.siblings('input').val(oldTitle);
 
+<<<<<<< HEAD
       grid.siblings('input').keypress(function(e) {
         var input = $(this);
+=======
+        editZone = function (grid) {
+            grid.off('click');
+
+            grid.children('.ti-pencil').attr('class', 'ti-check');
+>>>>>>> master
 
         titleTag.html($(this).val());
 
@@ -404,6 +671,7 @@ $(function() {
 
           Zone = JSON.parse('{ "Title": "' + newTitle + '", "ZoneId": "' + ZoneId + '"}');
 
+<<<<<<< HEAD
           $.ajax({
             async: false,
             type: 'PUT',
@@ -412,6 +680,37 @@ $(function() {
             headers: Headers,
             url: "https://localhost:44342/api/dashboard/putzone/" + ZoneId
           })
+=======
+            grid.on('click', function () {
+                var input = grid.siblings('input');
+                newTitle = input.val();
+
+                Zone = JSON.parse('{ "Title": "' + newTitle + '", "ZoneId": "' + ZoneId + '"}');
+
+                $.ajax({
+                    async: false,
+                    type: 'PUT',
+                    data: Zone,
+                    dataType: 'json',
+                    headers: Headers,
+                    url: "https://localhost:44342/api/dashboard/putzone/" + ZoneId
+                })
+
+                titleTag.html(newTitle);
+
+                input.replaceWith(titleTag);
+
+                grid.children('.ti-check').attr('class', 'ti-pencil');
+
+                grid.off('click');
+                grid.on('click', function () {
+                    editZone(grid);
+                })
+            })
+
+            grid.siblings('input').keypress(function (e) {
+                var input = $(this);
+>>>>>>> master
 
           titleTag.html(newTitle);
 
@@ -445,8 +744,22 @@ $(function() {
 
           var element = elements[e];
 
+<<<<<<< HEAD
           var ElementId = element.el.children('div').attr('id');
           ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
+=======
+                    $(this).replaceWith(titleTag);
+
+                    grid.children('.ti-check').attr('class', 'ti-pencil');
+
+                    grid.off('click');
+                    grid.on('click', function () {
+                        editZone(grid);
+                    })
+                }
+            });
+        };
+>>>>>>> master
 
           if (ElementId !== '+') {
             if (ZoneId === 'x') {
@@ -459,6 +772,7 @@ $(function() {
                 data: Zone,
                 dataType: 'json',
                 headers: Headers,
+<<<<<<< HEAD
                 url: "https://localhost:44342/api/dashboard/postzone/" + DashBoardId
               }).responseJSON.ZoneId
 
@@ -479,6 +793,170 @@ $(function() {
                 headers: Headers,
                 url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
               })
+=======
+                url: "https://localhost:44342/api/dashboard/deletezone/" + ZoneId
+            })
+
+            $(grid).remove();
+        };
+
+        changeElements = function (elements, grid) {
+            if (!addingElement) {
+                var ZoneId = grid.attr('id');
+                ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
+                var count = 0;
+
+                for (var e in elements) {
+
+                    var element = elements[e];
+
+                    var ElementId = element.el.children('div').attr('id');
+                    ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
+
+                    if (ElementId !== '+') {
+                        if (ZoneId === 'x') {
+                            var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
+
+                            ZoneId = $.ajax({
+                                async: false,
+                                type: 'POST',
+                                data: Zone,
+                                dataType: 'json',
+                                headers: Headers,
+                                url: "https://localhost:44342/api/dashboard/postzone/" + DashBoardId
+                            }).responseJSON.ZoneId
+
+                            var Element = $.ajax({
+                                async: false,
+                                type: 'GET',
+                                headers: Headers,
+                                url: "https://localhost:44342/api/dashboard/getelement/" + ElementId
+                            }).responseJSON
+
+                            Element.ZoneId = ZoneId;
+
+                            $.ajax({
+                                async: false,
+                                type: 'PUT',
+                                data: Element,
+                                dataType: 'json',
+                                headers: Headers,
+                                url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
+                            })
+
+                            var addZone = $('.add-zone');
+
+                            $('.add-zone').remove();
+
+                            var $newdiv = $('<div class="p-10 mB-10 zone-' + ZoneId + '"></div>');
+                            $newdiv.append($('<h4 class="bb-2"></h4>'));
+                            $newdiv.children('h4').append($('<span class="title mR-15">New Zone</span>'));
+                            $newdiv.children('h4').append($('<span class="edit-zone"></span>'));
+                            $newdiv.children('h4').children('.edit-zone').append($('<i class="ti-pencil"></i>'));
+                            $newdiv.children('h4').append($('<span class="arrow-dashboard"></span>'));
+                            $newdiv.children('h4').children('.arrow-dashboard').append($('<i class="ti-angle-up"></i>'));
+                            $newdiv.children('h4').append($('<span class="delete-zone"></span>'));
+                            $newdiv.children('h4').children('.delete-zone').append($('<i class="ti-trash"></i>'));
+                            $newdiv.append($('<div class="DashZone"></div>'));
+                            $newdiv.children('.DashZone').append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
+                            var newZone = $('#mainContent').append($newdiv);
+
+                            addZone = $('#mainContent').append(addZone);
+
+
+                            addZone.children('.add-zone').children('h4').children('.arrow-dashboard').on('click', function () {
+                                $(this).parent().parent().children(".DashZone").toggle(300);
+                                rotation = getRotationDegrees($(this)) + 180;
+                                $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
+                            });
+
+                            $('.grid-stack').gridstack(options);
+
+                            grid.on('change', function (e, items) {
+                                changeElements(items, $(this));
+                            });
+
+                            addZone = addZone.children('.add-zone').children('div').children('#zone-x');
+
+                            grid = newZone.children('.zone-' + ZoneId).children('.DashZone').children('#zone-' + ZoneId);
+
+                            addZone.data('gridstack').removeWidget($('#Element-' + ElementId).parent());
+
+                            var deletezone = grid.parent().parent().children('h4').children('.delete-zone');
+
+                            var editzone = grid.parent().parent().children('h4').children('.edit-zone');
+
+                            var hidezone = grid.parent().parent().children('h4').children('.arrow-dashboard');
+
+                            hidezone.on('click', function () {
+                                $(this).parent().parent().children(".DashZone").toggle(300);
+                                rotation = getRotationDegrees($(this)) + 180;
+                                $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
+                            });
+
+                            deletezone.on('click', function () {
+                                removeZone(grid.parent().parent());
+                            });
+
+                            editzone.on('click', function () {
+                                editZone($(this));
+                            });
+
+                            grid.on('change', function (e, items) {
+                                changeElements(items, $(this));
+                            });
+
+                            addZone.data('gridstack').move($('.add-zone').children('div').children('div').children('div'), 0, 0);
+
+                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas></canvas><div/><div/>'), Element.X, Element.Y, Element.Width, Element.Height, true);
+
+                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
+
+                            //addelement = $(grid + ":nth-child(1)");
+                            //console.log(addelement);
+
+                            //addelement.on('click', function () {
+                            //    console.log('adding element');
+                            //});
+
+                            console.log(addZone.children().children()/*.children().children('img')*/);
+
+                            addZone.children().children('#Element-+').children().children('img').on('click', function () {
+                                console.log(grid);
+                                console.log(addZone);
+                                addElement(addZone);
+                            });
+
+                            chooseChart(Element.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
+                        }
+                        var oldElement = $.ajax({
+                            async: false,
+                            type: 'GET',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/dashboard/getelement/" + ElementId
+                        }).responseJSON
+
+                        var oldZoneId = oldElement.ZoneId;
+
+                        Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove + '", "ZoneId": "' + ZoneId + '", "GraphType": "' + oldElement.GraphType + '"}');
+
+                        $.ajax({
+                            async: false,
+                            type: 'PUT',
+                            data: Element,
+                            dataType: 'json',
+                            headers: Headers,
+                            url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
+                        })
+
+                        if (oldZoneId !== ZoneId) {
+                            chooseChart(oldElement.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
+                        }
+                    }
+                }
+            }
+        };
+>>>>>>> master
 
               var addZone = $('.add-zone');
 
