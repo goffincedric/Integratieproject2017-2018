@@ -287,6 +287,7 @@ $(function () {
                         break;
                     case "next-2":
                         $(this).attr('id', 'next-3');
+                        $('#previous-1').attr('id', 'previous-2');
                         break;
                     case "next-3":
                         //console.log($('input:checked').attr('id'));
@@ -357,9 +358,32 @@ $(function () {
                                 break;
                         }
                         $(this).attr('id', 'next-4');
+                        $('#previous-2').attr('id', 'previous-3');
                         break;
-                }
-            })
+                    case "next-4":
+                        $('#previous-3').attr('id', 'previous-4');
+                        break;
+                };
+            });
+
+            $('.btn-previous').on('click', function () {
+                switch ($(this).attr('id')) {
+                    case 'previous-1':
+                        $('#next-2').attr('id', 'next-1');
+                        break;
+                    case 'previous-2':
+                        $(this).attr('id', 'previous-1');
+                        $('#next-3').attr('id', 'next-2');
+                        break;
+                    case 'previous-3':
+                        $(this).attr('id', 'previous-2');
+                        $('#next-4').attr('id', 'next-3');
+                        break;
+                    case 'previous-4':
+                        $(this).attr('id', 'previous-3');
+                        break;
+                };
+            });
 
             $('.btn-finish').off('click');
             $('.btn-finish').on('click', function () {
