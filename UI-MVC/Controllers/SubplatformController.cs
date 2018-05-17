@@ -1,13 +1,12 @@
-﻿using PB.BL;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Web.Mvc;
-using UI_MVC.Models;
+using PB.BL;
+using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.DAL.EF;
-using System.IO;
-using PB.BL.Domain.Items;
+using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
 {
@@ -15,11 +14,11 @@ namespace UI_MVC.Controllers
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     public class SubplatformController : Controller
     {
-        private readonly UnitOfWorkManager uow;
-        private readonly SubplatformManager SubplatformMgr;
-        private readonly ItemManager itemMgr;
-        private readonly DashboardManager dashboardMgr;
         private readonly AccountManager accountMgr;
+        private readonly DashboardManager dashboardMgr;
+        private readonly ItemManager itemMgr;
+        private readonly SubplatformManager SubplatformMgr;
+        private readonly UnitOfWorkManager uow;
 
         public SubplatformController()
         {
@@ -38,8 +37,45 @@ namespace UI_MVC.Controllers
             ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
         }
 
+        public ActionResult _ChangeHomePage(string subplatform)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+
+            HomePageViewModel homePageViewModel = new HomePageViewModel
+            {
+                BannerTitle = SubplatformMgr.GetTag("BannerTitle").Text,
+                BannerTextSub1 = SubplatformMgr.GetTag("BannerTextSub1").Text,
+                BannerTextSub2 = SubplatformMgr.GetTag("BannerTextSub2").Text,
+                Call_to_action = SubplatformMgr.GetTag("call-to-action-text").Text
+            };
+
+            return PartialView(homePageViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult _ChangeHomePage(HomePageViewModel homePageViewModel)
+        {
+            Tag BannerTitle = SubplatformMgr.GetTag("BannerTitle");
+            Tag BannerTextSub1 = SubplatformMgr.GetTag("BannerTextSub1");
+            Tag BannerTextSub2 = SubplatformMgr.GetTag("BannerTextSub2");
+            Tag Call_to_action = SubplatformMgr.GetTag("call-to-action-text");
+
+            BannerTitle.Text = homePageViewModel.BannerTitle;
+            BannerTextSub1.Text = homePageViewModel.BannerTextSub1;
+            BannerTextSub2.Text = homePageViewModel.BannerTextSub2;
+            Call_to_action.Text = homePageViewModel.Call_to_action;
+
+
+            SubplatformMgr.ChangeTag(BannerTitle);
+            SubplatformMgr.ChangeTag(BannerTextSub1);
+            SubplatformMgr.ChangeTag(BannerTextSub2);
+            SubplatformMgr.ChangeTag(Call_to_action);
+            return RedirectToAction("PlatformSettings", "Subplatform");
+        }
+
 
         #region SubplatformSettings
+
         public ActionResult PlatformSettings()
         {
             ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
@@ -57,80 +93,89 @@ namespace UI_MVC.Controllers
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             SubplatformSettingViewModel huidige = new SubplatformSettingViewModel
             {
-                APIsource = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOURCE_API_URL)?.Value,
-                recordsBijhouden = Int32.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DAYS_TO_KEEP_RECORDS)?.Value),
-                SocialSource = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOCIAL_SOURCE)?.Value,
-                SocialSourceUrl = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOCIAL_SOURCE_URL)?.Value,
-                SiteName = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME)?.Value,
-                Theme = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME)?.Value
+                APIsource = SubplatformMgr
+                    .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOURCE_API_URL)?.Value,
+                recordsBijhouden = int.Parse(SubplatformMgr
+                    .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DAYS_TO_KEEP_RECORDS)?.Value),
+                SocialSource =
+                    SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOCIAL_SOURCE)
+                        ?.Value,
+                SocialSourceUrl =
+                    SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOCIAL_SOURCE_URL)
+                        ?.Value,
+                SiteName = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME)
+                    ?.Value,
+                Theme = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME)
+                    ?.Value
             };
             return PartialView(huidige);
         }
 
 
         [HttpPost]
-        public ActionResult SubplatformSetting(string subplatform, SubplatformSettingViewModel subplatformSettingViewModel)
+        public ActionResult SubplatformSetting(string subplatform,
+            SubplatformSettingViewModel subplatformSettingViewModel)
         {
             Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
-            List<SubplatformSetting> subplatformSettings = new List<SubplatformSetting>()
+            List<SubplatformSetting> subplatformSettings = new List<SubplatformSetting>
             {
-                new SubplatformSetting()
+                new SubplatformSetting
                 {
                     SettingName = Setting.Platform.SOCIAL_SOURCE,
                     Value = subplatformSettingViewModel.SocialSource,
                     IsEnabled = true,
                     Subplatform = subplatformToChange
                 },
-                new SubplatformSetting()
+                new SubplatformSetting
                 {
                     SettingName = Setting.Platform.SOCIAL_SOURCE_URL,
                     Value = subplatformSettingViewModel.SocialSourceUrl,
                     IsEnabled = true,
                     Subplatform = subplatformToChange
                 },
-                new SubplatformSetting()
+                new SubplatformSetting
                 {
                     SettingName = Setting.Platform.SITE_NAME,
                     Value = subplatformSettingViewModel.SiteName,
                     IsEnabled = true,
                     Subplatform = subplatformToChange
                 },
-                new SubplatformSetting()
+                new SubplatformSetting
                 {
                     SettingName = Setting.Platform.DEFAULT_THEME,
                     Value = subplatformSettingViewModel.Theme,
                     IsEnabled = true,
                     Subplatform = subplatformToChange
                 },
-                new SubplatformSetting()
+                new SubplatformSetting
                 {
                     SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
                     Value = subplatformSettingViewModel.recordsBijhouden.ToString(),
                     IsEnabled = true,
                     Subplatform = subplatformToChange
                 },
-                new SubplatformSetting()
+                new SubplatformSetting
                 {
                     SettingName = Setting.Platform.SOURCE_API_URL,
                     Value = subplatformSettingViewModel.APIsource,
                     IsEnabled = true,
                     Subplatform = subplatformToChange
                 },
-                new SubplatformSetting()
+                new SubplatformSetting
                 {
                     SettingName = Setting.Platform.SEED_INTERVAL_HOURS,
                     Value = "24",
                     IsEnabled = true,
                     Subplatform = subplatformToChange
                 },
-                new SubplatformSetting()
+                new SubplatformSetting
                 {
                     SettingName = Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS,
                     Value = "24",
                     IsEnabled = true,
                     Subplatform = subplatformToChange
                 },
-                new SubplatformSetting()
+                new SubplatformSetting
                 {
                     SettingName = Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS,
                     Value = "7",
@@ -148,9 +193,14 @@ namespace UI_MVC.Controllers
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             SeedIntervals huidige = new SeedIntervals
             {
-                SEED_INTERVAL_HOURS = Int32.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SEED_INTERVAL_HOURS).Value),
-                SEND_WEEKLY_REVIEWS_INTERVAL_DAYS = Int32.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS).Value),
-                ALERT_GENERATION_INTERVAL_HOURS = Int32.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS).Value)
+                SEED_INTERVAL_HOURS = int.Parse(SubplatformMgr
+                    .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SEED_INTERVAL_HOURS).Value),
+                SEND_WEEKLY_REVIEWS_INTERVAL_DAYS = int.Parse(SubplatformMgr
+                    .GetSubplatformSetting(Subplatform.SubplatformId,
+                        Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS).Value),
+                ALERT_GENERATION_INTERVAL_HOURS = int.Parse(SubplatformMgr
+                    .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS)
+                    .Value)
             };
             return PartialView(huidige);
         }
@@ -159,38 +209,39 @@ namespace UI_MVC.Controllers
         public ActionResult SeedIntervals(string subplatform, SeedIntervals intervals)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            List<SubplatformSetting> subplatformSettings = new List<SubplatformSetting>()
+            List<SubplatformSetting> subplatformSettings = new List<SubplatformSetting>
             {
-                new SubplatformSetting()
+                new SubplatformSetting
                 {
                     SettingName = Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS,
                     Value = intervals.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS.ToString(),
                     IsEnabled = true,
                     Subplatform = Subplatform
                 },
-                new SubplatformSetting()
+                new SubplatformSetting
                 {
                     SettingName = Setting.Platform.SEED_INTERVAL_HOURS,
                     Value = intervals.SEED_INTERVAL_HOURS.ToString(),
                     IsEnabled = true,
                     Subplatform = Subplatform
                 },
-                new SubplatformSetting()
+                new SubplatformSetting
                 {
                     SettingName = Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS,
                     Value = intervals.ALERT_GENERATION_INTERVAL_HOURS.ToString(),
                     IsEnabled = true,
                     Subplatform = Subplatform
-                },
-
+                }
             };
 
             SubplatformMgr.ChangeSubplatformSettings(Subplatform, subplatformSettings);
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
+
         #endregion
 
         #region DeploySubplatform
+
         public ActionResult _DeploySubplatform()
         {
             return PartialView();
@@ -200,14 +251,15 @@ namespace UI_MVC.Controllers
         public ActionResult DeploySubplatform(SubplatformViewModel subplatformViewModel)
         {
             if (ModelState.IsValid)
-            {
-                SubplatformMgr.AddSubplatform(subplatformViewModel.Name, subplatformViewModel.Url, subplatformViewModel.SourceAPI);
-            }
+                SubplatformMgr.AddSubplatform(subplatformViewModel.Name, subplatformViewModel.Url,
+                    subplatformViewModel.SourceAPI);
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
+
         #endregion
 
         #region Uploads
+
         [HttpPost]
         public ActionResult UploadSiteLogo(string subplatform, FileViewModel fileViewModel)
         {
@@ -217,7 +269,6 @@ namespace UI_MVC.Controllers
                 var iconUrl = "";
                 string _FileName = "";
                 if (fileViewModel.file != null)
-                {
                     if (fileViewModel.file.ContentLength > 0)
                     {
                         _FileName = Path.GetFileName(fileViewModel.file.FileName);
@@ -226,7 +277,7 @@ namespace UI_MVC.Controllers
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
                         fileViewModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Site/" + newName;
-                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting()
+                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SITE_ICON_URL,
                             Value = iconUrl,
@@ -234,9 +285,10 @@ namespace UI_MVC.Controllers
                             Subplatform = subplatformToChange
                         });
                     }
-                }
+
                 return RedirectToAction("PlatformSettings", "Home");
             }
+
             return RedirectToAction("PlatformSettings", "Home");
         }
 
@@ -249,7 +301,6 @@ namespace UI_MVC.Controllers
                 var iconUrl = "";
                 string _FileName = "";
                 if (fileViewModel.file != null)
-                {
                     if (fileViewModel.file.ContentLength > 0)
                     {
                         _FileName = Path.GetFileName(fileViewModel.file.FileName);
@@ -258,7 +309,7 @@ namespace UI_MVC.Controllers
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
                         fileViewModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Site/" + newName;
-                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting()
+                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
                             Value = iconUrl,
@@ -266,10 +317,10 @@ namespace UI_MVC.Controllers
                             Subplatform = subplatformToChange
                         });
                     }
-                }
 
                 return RedirectToAction("PlatformSettings", "Home");
             }
+
             return RedirectToAction("PlatformSettings", "Home");
         }
 
@@ -282,7 +333,6 @@ namespace UI_MVC.Controllers
                 var iconUrl = "";
                 string _FileName = "";
                 if (fileViewModel.file != null)
-                {
                     if (fileViewModel.file.ContentLength > 0)
                     {
                         _FileName = Path.GetFileName(fileViewModel.file.FileName);
@@ -291,7 +341,7 @@ namespace UI_MVC.Controllers
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
                         fileViewModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Users/" + newName;
-                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting()
+                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
                             Value = iconUrl,
@@ -299,16 +349,17 @@ namespace UI_MVC.Controllers
                             Subplatform = subplatformToChange
                         });
                     }
-                }
 
                 return RedirectToAction("PlatformSettings", "Home");
             }
 
             return RedirectToAction("PlatformSettings", "Home");
         }
+
         #endregion
 
         #region AdminSubplatformTools
+
         [HttpPost]
         public ActionResult GenerateAlertsManually()
         {
@@ -338,11 +389,9 @@ namespace UI_MVC.Controllers
                 ItemManager itemManager = new ItemManager(unitOfWorkManager);
                 Subplatform sp = subplatformManager.GetSubplatform(subplatform);
                 // TODO: Tasking met JobManager
-                itemManager.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(new System.Action(() =>
-                {
-                    ItemManager.IsSyncing = false;
-                }));
+                itemManager.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(() => { ItemManager.IsSyncing = false; });
             }
+
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
@@ -351,47 +400,8 @@ namespace UI_MVC.Controllers
         {
             accountMgr.SendWeeklyReviews();
             return RedirectToAction("PlatformSettings", "Subplatform");
-
         }
+
         #endregion
-
-        public ActionResult _ChangeHomePage(string subplatform)
-        {
-            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-
-            HomePageViewModel homePageViewModel = new HomePageViewModel()
-            {
-                BannerTitle = SubplatformMgr.GetTag("BannerTitle").Text,
-                BannerTextSub1 = SubplatformMgr.GetTag("BannerTextSub1").Text,
-                BannerTextSub2 = SubplatformMgr.GetTag("BannerTextSub2").Text,
-                Call_to_action = SubplatformMgr.GetTag("call-to-action-text").Text
-
-            };
-
-            return PartialView(homePageViewModel);
-
-        }
-
-        [HttpPost]
-        public ActionResult _ChangeHomePage(HomePageViewModel homePageViewModel)
-        {
-            Tag BannerTitle = SubplatformMgr.GetTag("BannerTitle");
-            Tag BannerTextSub1 = SubplatformMgr.GetTag("BannerTextSub1");
-            Tag BannerTextSub2 = SubplatformMgr.GetTag("BannerTextSub2"); 
-            Tag Call_to_action = SubplatformMgr.GetTag("call-to-action-text");
-
-            BannerTitle.Text = homePageViewModel.BannerTitle;
-            BannerTextSub1.Text = homePageViewModel.BannerTextSub1;
-            BannerTextSub2.Text = homePageViewModel.BannerTextSub2;
-            Call_to_action.Text = homePageViewModel.Call_to_action;
-
-            
-            SubplatformMgr.ChangeTag(BannerTitle);
-            SubplatformMgr.ChangeTag(BannerTextSub1);
-            SubplatformMgr.ChangeTag(BannerTextSub2);
-            SubplatformMgr.ChangeTag(Call_to_action);
-            return RedirectToAction("PlatformSettings", "Subplatform");
-
-        }
     }
 }

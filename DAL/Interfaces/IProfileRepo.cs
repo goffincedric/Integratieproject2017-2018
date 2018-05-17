@@ -1,5 +1,5 @@
-﻿using PB.BL.Domain.Accounts;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PB.BL.Domain.Accounts;
 
 namespace PB.DAL
 {

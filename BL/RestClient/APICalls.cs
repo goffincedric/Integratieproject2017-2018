@@ -1,15 +1,14 @@
-﻿using Newtonsoft.Json;
-using PB.BL.Domain.JSONConversion;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using Newtonsoft.Json;
+using PB.BL.Domain.JSONConversion;
 
 namespace PB.BL.RestClient
 {
     public class APICalls
     {
-        public string API_URL { get; set; }
         // HttpClient http = new HttpClient()
         // HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:POORT/api/course");
         // request.Headers.Add("Accept", "application/json");
@@ -25,10 +24,12 @@ namespace PB.BL.RestClient
 
         public APICalls(string api_url)
         {
-
         }
 
-        public List<JClass> RequestRecords(string name = null, DateTime? since = null, DateTime? until = null, Dictionary<string, string[]> themes = null)
+        public string API_URL { get; set; }
+
+        public List<JClass> RequestRecords(string name = null, DateTime? since = null, DateTime? until = null,
+            Dictionary<string, string[]> themes = null)
         {
             APIQuery apiQuery = null;
             if (!(name == null && since == null && until == null && themes == null))
@@ -97,8 +98,12 @@ namespace PB.BL.RestClient
                     //String omzetten naar JClass-objecten
                     requestedRecords = JsonConvert.DeserializeObject<List<JClass>>(responseContentAsString);
                 }
-                else throw new Exception("ERROR: " + response.StatusCode);
+                else
+                {
+                    throw new Exception("ERROR: " + response.StatusCode);
+                }
             }
+
             return requestedRecords;
         }
     }

@@ -1,14 +1,17 @@
-﻿using PB.BL.Domain.Accounts;
+﻿using System.Collections.Generic;
+using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
-using System.Collections.Generic;
 
 namespace PB.BL.Interfaces
 {
     public interface IDashboardManager
     {
         IEnumerable<Dashboard> GetDashboards();
-        Dashboard AddDashboard(Subplatform subplatform, Profile profile, UserType dashboardType = UserType.HOME, List<Zone> zones = null);
+
+        Dashboard AddDashboard(Subplatform subplatform, Profile profile, UserType dashboardType = UserType.HOME,
+            List<Zone> zones = null);
+
         List<Dashboard> AddDashboards(List<Dashboard> dashboards);
         Dashboard GetDashboard(int dashboardId);
         void ChangeDashboard(Dashboard dashboard);

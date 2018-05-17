@@ -19,7 +19,7 @@ var searchVisible = 0;
 var transparent = true;
 var mobile_device = false;
 
-$(document).ready(function () {
+$(document).ready(function() {
 
   $.material.init();
 
@@ -43,7 +43,7 @@ $(document).ready(function () {
       }
     },
 
-    errorPlacement: function (error, element) {
+    errorPlacement: function(error, element) {
       $(element).parent('div').addClass('has-error');
     }
   });
@@ -54,7 +54,7 @@ $(document).ready(function () {
     'nextSelector': '.btn-next',
     'previousSelector': '.btn-previous',
 
-    onNext: function (tab, navigation, index) {
+    onNext: function(tab, navigation, index) {
       var $valid = $('.wizard-card form').valid();
       if (!$valid) {
         $validator.focusInvalid();
@@ -62,7 +62,7 @@ $(document).ready(function () {
       }
     },
 
-    onInit: function (tab, navigation, index) {
+    onInit: function(tab, navigation, index) {
       //check number of tabs and fill the entire row
       var $total = navigation.find('li').length;
       var $wizard = navigation.closest('.wizard-card');
@@ -76,7 +76,7 @@ $(document).ready(function () {
       $('.moving-tab').css('transition', 'transform 0s');
     },
 
-    onTabClick: function (tab, navigation, index) {
+    onTabClick: function(tab, navigation, index) {
       var $valid = $('.wizard-card form').valid();
 
       if (!$valid) {
@@ -86,7 +86,7 @@ $(document).ready(function () {
       }
     },
 
-    onTabShow: function (tab, navigation, index) {
+    onTabShow: function(tab, navigation, index) {
       var $total = navigation.find('li').length;
       var $current = index + 1;
 
@@ -103,9 +103,10 @@ $(document).ready(function () {
 
       button_text = navigation.find('li:nth-child(' + $current + ') a').html();
 
-      setTimeout(function () {
-        $('.moving-tab').text(button_text);
-      }, 150);
+      setTimeout(function() {
+          $('.moving-tab').text(button_text);
+        },
+        150);
 
       var checkbox = $('.footer-checkbox');
 
@@ -128,11 +129,11 @@ $(document).ready(function () {
 
 
   // Prepare the preview for profile picture
-  $("#wizard-picture").change(function () {
+  $("#wizard-picture").change(function() {
     readURL(this);
   });
 
-  $('[data-toggle="wizard-radio"]').click(function () {
+  $('[data-toggle="wizard-radio"]').click(function() {
     wizard = $(this).closest('.wizard-card');
     wizard.find('[data-toggle="wizard-radio"]').removeClass('active');
     $(this).addClass('active');
@@ -140,7 +141,7 @@ $(document).ready(function () {
     $(this).find('[type="radio"]').attr('checked', 'true');
   });
 
-  $('[data-toggle="wizard-checkbox"]').click(function () {
+  $('[data-toggle="wizard-checkbox"]').click(function() {
     if ($(this).hasClass('active')) {
       $(this).removeClass('active');
       $(this).find('[type="checkbox"]').removeAttr('checked');
@@ -155,22 +156,21 @@ $(document).ready(function () {
 });
 
 
-
 //Function to show image before upload
 
 function readURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
 
-    reader.onload = function (e) {
+    reader.onload = function(e) {
       $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
     };
     reader.readAsDataURL(input.files[0]);
   }
 }
 
-$(window).resize(function () {
-  $('.wizard-card').each(function () {
+$(window).resize(function() {
+  $('.wizard-card').each(function() {
     $wizard = $(this);
 
     index = $wizard.bootstrapWizard('currentIndex');
@@ -226,32 +226,33 @@ function refreshAnimation($wizard, index) {
 }
 
 materialDesign = {
-
-  checkScrollForTransparentNavbar: debounce(function () {
-    if ($(document).scrollTop() > 260) {
-      if (transparent) {
-        transparent = false;
-        $('.navbar-color-on-scroll').removeClass('navbar-transparent');
+  checkScrollForTransparentNavbar: debounce(function() {
+      if ($(document).scrollTop() > 260) {
+        if (transparent) {
+          transparent = false;
+          $('.navbar-color-on-scroll').removeClass('navbar-transparent');
+        }
+      } else {
+        if (!transparent) {
+          transparent = true;
+          $('.navbar-color-on-scroll').addClass('navbar-transparent');
+        }
       }
-    } else {
-      if (!transparent) {
-        transparent = true;
-        $('.navbar-color-on-scroll').addClass('navbar-transparent');
-      }
-    }
-  }, 17)
+    },
+    17)
 
 };
 
 function debounce(func, wait, immediate) {
   var timeout;
-  return function () {
+  return function() {
     var context = this, args = arguments;
     clearTimeout(timeout);
-    timeout = setTimeout(function () {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    }, wait);
+    timeout = setTimeout(function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      },
+      wait);
     if (immediate && !timeout) func.apply(context, args);
   };
 }

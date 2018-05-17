@@ -9,11 +9,10 @@ namespace PB.BL.Domain.Items
     [Table("tblKeyword")]
     public class Keyword
     {
-        [Key]
-        [DataMember]
-        public int KeywordId { get; set; }
-        [DataMember]
-        public string Name { get; set; }
+        [Key] [DataMember] public int KeywordId { get; set; }
+
+        [DataMember] public string Name { get; set; }
+
         public List<Item> Items { get; set; }
     }
 }

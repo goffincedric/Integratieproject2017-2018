@@ -1,14 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Linq;
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.DAL.EF;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Linq;
 
 namespace PB.DAL.Migrations
 {
@@ -25,93 +25,95 @@ namespace PB.DAL.Migrations
             // Seed basic data
 
             #region Subplatforms
+
             //Makes PB subplatform
-            Subplatform pbSubplatform = ctx.Subplatforms.FirstOrDefaultAsync(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower())).Result;
+            Subplatform pbSubplatform = ctx.Subplatforms
+                .FirstOrDefaultAsync(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower())).Result;
             if (pbSubplatform == null)
-            {
-                pbSubplatform = new Subplatform()
+                pbSubplatform = new Subplatform
                 {
                     Name = "Politieke Barometer",
                     URL = "politieke-barometer",
                     DateOnline = DateTime.Now,
-                    Settings = new List<SubplatformSetting>()
+                    Settings = new List<SubplatformSetting>
                     {
-                        new SubplatformSetting(){
+                        new SubplatformSetting
+                        {
                             SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
                             Value = "31",
                             Subplatform = pbSubplatform
                         },
-                        new SubplatformSetting()
+                        new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SOURCE_API_URL,
                             Value = "https://kdg.textgain.com/query",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
-                         new SubplatformSetting()
+                        new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_THEME,
                             Value = "Light",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
-                        new SubplatformSetting()
+                        new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
                             Value = @"~/Content/Images/Users/user.png",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
-                        new SubplatformSetting()
+                        new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
                             Value = @"~/Content/Images/Users/user.png",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
-                        new SubplatformSetting()
+                        new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SOCIAL_SOURCE,
                             Value = "Twitter",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
-                         new SubplatformSetting()
+                        new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SOCIAL_SOURCE_URL,
                             Value = "https://twitter.com",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
-                         new SubplatformSetting()
+                        new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SITE_NAME,
                             Value = "Barometer",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
-                          new SubplatformSetting()
+                        new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SITE_ICON_URL,
                             Value = @"~/Content/Images/Site/logo_new.png",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
-                          new SubplatformSetting()
+                        new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SEED_INTERVAL_HOURS,
                             Value = "24",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
-                          new SubplatformSetting()
+                        new SubplatformSetting
                         {
                             SettingName = Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS,
                             Value = "24",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
-                          new SubplatformSetting()
+                        new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS,
                             Value = "7",
@@ -123,25 +125,25 @@ namespace PB.DAL.Migrations
                     Items = new List<Item>(),
                     Pages = new List<Page>()
                 };
-            }
 
             //Makes Test subplatform
-            Subplatform testSubplatform = ctx.Subplatforms.FirstOrDefaultAsync(s => s.Name.ToLower().Equals("Test".ToLower())).Result;
+            Subplatform testSubplatform =
+                ctx.Subplatforms.FirstOrDefaultAsync(s => s.Name.ToLower().Equals("Test".ToLower())).Result;
             if (testSubplatform == null)
-            {
-                testSubplatform = new Subplatform()
+                testSubplatform = new Subplatform
                 {
                     Name = "Test",
                     URL = "testing-testing",
                     DateOnline = DateTime.Now,
-                    Settings = new List<SubplatformSetting>()
+                    Settings = new List<SubplatformSetting>
                     {
-                        new SubplatformSetting(){
+                        new SubplatformSetting
+                        {
                             SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
                             Value = "31",
                             Subplatform = testSubplatform
                         },
-                        new SubplatformSetting()
+                        new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SOURCE_API_URL,
                             Value = "https://kdg.textgain.com/query",
@@ -153,21 +155,22 @@ namespace PB.DAL.Migrations
                     Items = new List<Item>(),
                     Pages = new List<Page>()
                 };
-            }
+
             #endregion
 
             #region Organisation
+
             //Makes all organisations
-            List<Organisation> OrganisationsToAdd = new List<Organisation>()
+            List<Organisation> OrganisationsToAdd = new List<Organisation>
             {
-                new Organisation()
+                new Organisation
                 {
                     Name = "PVDA",
                     FullName = "Partij van de Arbeid",
-                    IconURL=@"~/Content/Images/Organisations/pvda.jpg",
+                    IconURL = @"~/Content/Images/Organisations/pvda.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform,
                         testSubplatform
@@ -177,14 +180,14 @@ namespace PB.DAL.Migrations
                     Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 },
-                new Organisation()
+                new Organisation
                 {
                     Name = "CD&V",
                     FullName = "Christen-Democratisch en Vlaams",
-                    IconURL=@"~/Content/Images/Organisations/cdv.png",
+                    IconURL = @"~/Content/Images/Organisations/cdv.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform,
                         testSubplatform
@@ -194,14 +197,14 @@ namespace PB.DAL.Migrations
                     Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 },
-                new Organisation()
+                new Organisation
                 {
-                    Name =  "SP.A",
-                    FullName ="Socialistische Partij Anders",
-                    IconURL=@"~/Content/Images/Organisations/spa.jpg",
+                    Name = "SP.A",
+                    FullName = "Socialistische Partij Anders",
+                    IconURL = @"~/Content/Images/Organisations/spa.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform,
                         testSubplatform
@@ -211,14 +214,14 @@ namespace PB.DAL.Migrations
                     Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 },
-                new Organisation()
+                new Organisation
                 {
                     Name = "Open Vld",
                     FullName = "Open Vlaamse Liberalen en Democraten",
-                    IconURL=@"~/Content/Images/Organisations/openvld.png",
+                    IconURL = @"~/Content/Images/Organisations/openvld.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform
                     },
@@ -227,14 +230,14 @@ namespace PB.DAL.Migrations
                     Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 },
-                new Organisation()
+                new Organisation
                 {
                     Name = "Groen",
                     FullName = "Groen",
-                    IconURL=@"~/Content/Images/Organisations/groen.jpg",
+                    IconURL = @"~/Content/Images/Organisations/groen.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform
                     },
@@ -243,14 +246,14 @@ namespace PB.DAL.Migrations
                     Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 },
-                new Organisation()
+                new Organisation
                 {
                     Name = "N-VA",
                     FullName = "Nieuw-Vlaamse Alliantie",
-                    IconURL=@"~/Content/Images/Organisations/nva.jpg",
+                    IconURL = @"~/Content/Images/Organisations/nva.jpg",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform
                     },
@@ -259,14 +262,14 @@ namespace PB.DAL.Migrations
                     Elements = new List<Element>(),
                     Themes = new List<Theme>()
                 },
-                new Organisation()
+                new Organisation
                 {
                     Name = "VB",
-                    FullName ="Vlaams Belang" ,
-                    IconURL=@"~/Content/Images/Organisations/vb.png",
+                    FullName = "Vlaams Belang",
+                    IconURL = @"~/Content/Images/Organisations/vb.png",
                     Keywords = new List<Keyword>(),
                     People = new List<Person>(),
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform
                     },
@@ -282,160 +285,164 @@ namespace PB.DAL.Migrations
                 if (organisation != null) OrganisationsToAdd.Remove(o);
             }).Wait();
             if (OrganisationsToAdd.Count != 0) ctx.Organisations.AddRange(OrganisationsToAdd);
+
             #endregion
 
             #region Keywords
-            List<Keyword> KeywordsToAdd = new List<Keyword>()
+
+            List<Keyword> KeywordsToAdd = new List<Keyword>
             {
-                new Keyword()
+                new Keyword
                 {
-                    Name="Auto",
+                    Name = "Auto",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Openbaar Vervoer",
+                    Name = "Openbaar Vervoer",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="File",
+                    Name = "File",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Milieu",
+                    Name = "Milieu",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Groene Energie",
+                    Name = "Groene Energie",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Kernuitstap",
+                    Name = "Kernuitstap",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Vlaams",
+                    Name = "Vlaams",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Links",
+                    Name = "Links",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Rechts",
+                    Name = "Rechts",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Illegaal",
+                    Name = "Illegaal",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Moslim",
+                    Name = "Moslim",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Syrië",
+                    Name = "Syrië",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Oorlog",
+                    Name = "Oorlog",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Christenen",
+                    Name = "Christenen",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Religie",
+                    Name = "Religie",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Economie",
+                    Name = "Economie",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Politiek",
+                    Name = "Politiek",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Corrupt",
+                    Name = "Corrupt",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Amerika",
+                    Name = "Amerika",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Privacy",
+                    Name = "Privacy",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="GDPR",
+                    Name = "GDPR",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Geld",
+                    Name = "Geld",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Hervorming",
+                    Name = "Hervorming",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Wet",
+                    Name = "Wet",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Jeugd",
+                    Name = "Jeugd",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Internet",
+                    Name = "Internet",
                     Items = new List<Item>()
                 },
-                new Keyword()
+                new Keyword
                 {
-                    Name="Technologie",
+                    Name = "Technologie",
                     Items = new List<Item>()
                 }
             };
+
             #endregion
 
             #region Themes
+
             // Makes all themes
-            List<Theme> ThemesToAdd = new List<Theme>()
+            List<Theme> ThemesToAdd = new List<Theme>
             {
-                new Theme()
+                new Theme
                 {
                     Name = "Migratie",
-                    IconURL=@"~/Content/Images/Themes/migratie.png",
+                    IconURL = @"~/Content/Images/Themes/migratie.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
-                    Keywords = new List<Keyword>()
+                    Keywords = new List<Keyword>
                     {
                         KeywordsToAdd[7],
                         KeywordsToAdd[8],
@@ -454,19 +461,19 @@ namespace PB.DAL.Migrations
                         KeywordsToAdd[24],
                         KeywordsToAdd[25]
                     },
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform
                     },
                     SubscribedProfiles = new List<Profile>()
                 },
-                new Theme()
+                new Theme
                 {
                     Name = "Onderwijs",
-                    IconURL=@"~/Content/Images/Themes/onderwijs.png",
+                    IconURL = @"~/Content/Images/Themes/onderwijs.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
-                    Keywords = new List<Keyword>()
+                    Keywords = new List<Keyword>
                     {
                         KeywordsToAdd[6],
                         KeywordsToAdd[7],
@@ -485,19 +492,19 @@ namespace PB.DAL.Migrations
                         KeywordsToAdd[25],
                         KeywordsToAdd[26]
                     },
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform
                     },
                     SubscribedProfiles = new List<Profile>()
                 },
-                new Theme()
+                new Theme
                 {
                     Name = "Veiligheid",
-                    IconURL=@"~/Content/Images/Themes/veiligheid.png",
+                    IconURL = @"~/Content/Images/Themes/veiligheid.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
-                    Keywords = new List<Keyword>()
+                    Keywords = new List<Keyword>
                     {
                         KeywordsToAdd[5],
                         KeywordsToAdd[6],
@@ -517,19 +524,19 @@ namespace PB.DAL.Migrations
                         KeywordsToAdd[25],
                         KeywordsToAdd[26]
                     },
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform
                     },
                     SubscribedProfiles = new List<Profile>()
                 },
-                new Theme()
+                new Theme
                 {
                     Name = "Zorg",
-                    IconURL=@"~/Content/Images/Themes/zorg.png",
+                    IconURL = @"~/Content/Images/Themes/zorg.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
-                    Keywords = new List<Keyword>()
+                    Keywords = new List<Keyword>
                     {
                         KeywordsToAdd[6],
                         KeywordsToAdd[7],
@@ -542,19 +549,19 @@ namespace PB.DAL.Migrations
                         KeywordsToAdd[22],
                         KeywordsToAdd[24]
                     },
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform
                     },
                     SubscribedProfiles = new List<Profile>()
                 },
-                new Theme()
+                new Theme
                 {
                     Name = "Europa",
-                    IconURL=@"~/Content/Images/Themes/eu.png",
+                    IconURL = @"~/Content/Images/Themes/eu.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
-                    Keywords = new List<Keyword>()
+                    Keywords = new List<Keyword>
                     {
                         KeywordsToAdd[3],
                         KeywordsToAdd[4],
@@ -579,19 +586,19 @@ namespace PB.DAL.Migrations
                         KeywordsToAdd[25],
                         KeywordsToAdd[26]
                     },
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform
                     },
                     SubscribedProfiles = new List<Profile>()
                 },
-                new Theme()
+                new Theme
                 {
                     Name = "Milieu",
-                    IconURL=@"~/Content/Images/Themes/eu.png",
+                    IconURL = @"~/Content/Images/Themes/eu.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
-                    Keywords = new List<Keyword>()
+                    Keywords = new List<Keyword>
                     {
                         KeywordsToAdd[0],
                         KeywordsToAdd[1],
@@ -608,19 +615,19 @@ namespace PB.DAL.Migrations
                         KeywordsToAdd[23],
                         KeywordsToAdd[24]
                     },
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform
                     },
                     SubscribedProfiles = new List<Profile>()
                 },
-                new Theme()
+                new Theme
                 {
-                    Name="Mobiliteit",
-                    IconURL=@"~/Content/Images/Themes/mobiliteit.png",
+                    Name = "Mobiliteit",
+                    IconURL = @"~/Content/Images/Themes/mobiliteit.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
-                    Keywords = new List<Keyword>()
+                    Keywords = new List<Keyword>
                     {
                         KeywordsToAdd[0],
                         KeywordsToAdd[1],
@@ -634,19 +641,19 @@ namespace PB.DAL.Migrations
                         KeywordsToAdd[23],
                         KeywordsToAdd[24]
                     },
-                    SubPlatforms = new List<Subplatform>()
+                    SubPlatforms = new List<Subplatform>
                     {
                         pbSubplatform
                     },
                     SubscribedProfiles = new List<Profile>()
                 },
-                new Theme()
+                new Theme
                 {
                     Name = "Energie",
-                    IconURL=@"~/Content/Images/Themes/energie.png",
+                    IconURL = @"~/Content/Images/Themes/energie.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
-                    Keywords = new List<Keyword>()
+                    Keywords = new List<Keyword>
                     {
                         KeywordsToAdd[0],
                         KeywordsToAdd[3],
@@ -670,168 +677,165 @@ namespace PB.DAL.Migrations
                 Theme theme = ThemesToAdd.FirstOrDefault(them => them.Name.ToLower().Equals(t.Name.ToLower()));
                 if (theme != null) ThemesToAdd.Remove(t);
                 else
-                {
-
                     t.Keywords.ForEach(k => k.Items.Add(t));
-
-
-                }
             }).Wait();
 
             if (ThemesToAdd.Count != 0) ctx.Themes.AddRange(ThemesToAdd);
+
             #endregion
 
             #region Pages
-            List<Page> pagesToAdd = new List<Page>()
+
+            List<Page> pagesToAdd = new List<Page>
             {
-                new Page()
+                new Page
                 {
                     PageName = "Home",
                     Title = "Home",
-                    Tags = new List<Tag>()
+                    Tags = new List<Tag>
                     {
-                        new Tag()
+                        new Tag
                         {
-                           Name="BannerTitle",
-                           Text="Politieke Barometer"
+                            Name = "BannerTitle",
+                            Text = "Politieke Barometer"
                         },
-                        new Tag()
+                        new Tag
                         {
-                            Name="BannerTextSub1",
-                            Text = "Volg uw favoriete politiekers, partijen en thema's en bekijk hoe deze door anderen besproken worden op sociale media."
+                            Name = "BannerTextSub1",
+                            Text =
+                                "Volg uw favoriete politiekers, partijen en thema's en bekijk hoe deze door anderen besproken worden op sociale media."
                         },
-                        new Tag()
+                        new Tag
                         {
-                            Name="BannerTextSub2",
+                            Name = "BannerTextSub2",
                             Text = "Creeër uw eigen dashboard en bekijk en analyseer live grafieken!"
                         },
-                        new Tag()
+                        new Tag
                         {
-                            Name="call-to-action-text",
-                            Text="Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data."
+                            Name = "call-to-action-text",
+                            Text =
+                                "Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data."
                         }
-
                     },
                     Subplatform = pbSubplatform
                 },
-                new Page()
+                new Page
                 {
                     PageName = "Dashboard",
                     Title = "Dashboard",
                     Tags = new List<Tag>(),
                     Subplatform = pbSubplatform
                 },
-                new Page()
+                new Page
                 {
                     PageName = "WeeklyReview",
                     Title = "Weekly Review",
                     Tags = new List<Tag>(),
                     Subplatform = pbSubplatform
                 },
-                new Page()
+                new Page
                 {
                     PageName = "Account",
                     Title = "Account",
                     Tags = new List<Tag>(),
                     Subplatform = pbSubplatform
                 },
-                new Page()
+                new Page
                 {
                     PageName = "FAQ",
                     Title = "FAQ",
                     Tags = new List<Tag>(),
                     Subplatform = pbSubplatform
                 },
-                new Page()
+                new Page
                 {
                     PageName = "Contact",
                     Title = "Contact",
                     Tags = new List<Tag>(),
                     Subplatform = pbSubplatform
                 },
-                new Page()
+                new Page
                 {
                     PageName = "ItemDetail",
                     Title = "Item Detail",
                     Tags = new List<Tag>(),
                     Subplatform = pbSubplatform
                 },
-                new Page()
+                new Page
                 {
                     PageName = "Login",
                     Title = "Login",
                     Tags = new List<Tag>(),
                     Subplatform = pbSubplatform
                 },
-                new Page()
+                new Page
                 {
                     PageName = "Register",
                     Title = "Register",
                     Tags = new List<Tag>(),
                     Subplatform = pbSubplatform
                 },
-                new Page()
+                new Page
                 {
                     PageName = "Notification",
                     Title = "Notifications",
                     Tags = new List<Tag>(),
                     Subplatform = pbSubplatform
                 },
-                new Page()
+                new Page
                 {
                     PageName = "UserSettings",
                     Title = "User Settings",
                     Tags = new List<Tag>(),
                     Subplatform = pbSubplatform
                 },
-                new Page()
+                new Page
                 {
                     PageName = "Menu",
                     Title = "Menu",
-                    Tags = new List<Tag>(){
-                          new Tag()
+                    Tags = new List<Tag>
+                    {
+                        new Tag
                         {
-                            Name="Home",
-                            Text="Home"
+                            Name = "Home",
+                            Text = "Home"
                         },
-                          new Tag()
+                        new Tag
                         {
-                            Name="Dashboard",
-                            Text="Dashboard"
+                            Name = "Dashboard",
+                            Text = "Dashboard"
                         },
-                          new Tag()
+                        new Tag
                         {
-                            Name="Weekly_Review",
-                            Text="Weekly Review"
+                            Name = "Weekly_Review",
+                            Text = "Weekly Review"
                         },
-                          new Tag()
+                        new Tag
                         {
-                            Name="Account",
-                            Text="My Account"
+                            Name = "Account",
+                            Text = "My Account"
                         },
-                           new Tag()
+                        new Tag
                         {
-                            Name="More",
-                            Text="More"
+                            Name = "More",
+                            Text = "More"
                         },
-                            new Tag()
+                        new Tag
                         {
-                            Name="FAQ",
-                            Text="FAQ"
+                            Name = "FAQ",
+                            Text = "FAQ"
                         },
-                             new Tag()
+                        new Tag
                         {
-                            Name="Contact",
-                            Text="Contact"
+                            Name = "Contact",
+                            Text = "Contact"
                         },
-                            new Tag()
-                            {
-                                Name="Legal",
-                                Text="Terms of use"
-                              }
-
-                    }
-                    ,
+                        new Tag
+                        {
+                            Name = "Legal",
+                            Text = "Terms of use"
+                        }
+                    },
                     Subplatform = pbSubplatform
                 }
             };
@@ -841,6 +845,7 @@ namespace PB.DAL.Migrations
                 if (page != null) pagesToAdd.Remove(p);
             }).Wait();
             if (pagesToAdd.Count != 0) ctx.Pages.AddRange(pagesToAdd);
+
             #endregion
 
             // Save all pending changes

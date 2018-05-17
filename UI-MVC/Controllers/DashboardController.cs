@@ -1,27 +1,27 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PB.BL;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
 using PB.DAL.EF;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
 
 namespace UI_MVC.Controllers
 {
-    /// <summary>   
-    /// Controller that has control over the persistence of elements, dashboards and zones
-    /// Authorized by all roles
+    /// <summary>
+    ///     Controller that has control over the persistence of elements, dashboards and zones
+    ///     Authorized by all roles
     /// </summary
     [RequireHttps]
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     public class DashboardController : Controller
     {
-        private readonly UnitOfWorkManager uow;
-        private readonly ItemManager itemMgr;
-        private readonly DashboardManager dashboardMgr;
         private readonly AccountManager accountMgr;
+        private readonly DashboardManager dashboardMgr;
+        private readonly ItemManager itemMgr;
         private readonly SubplatformManager SubplatformMgr;
+        private readonly UnitOfWorkManager uow;
 
 
         public DashboardController()
@@ -42,15 +42,17 @@ namespace UI_MVC.Controllers
         }
 
         #region Dashboard
+
         public ActionResult Dashboard(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             var user = accountMgr.GetProfile(User.Identity.GetUserId());
 
-            Dashboard model = dashboardMgr.GetDashboards().FirstOrDefault(d => d.Profile.Id == user.Id && d.Subplatform.URL.ToLower().Equals(subplatform.ToLower()));
+            Dashboard model = dashboardMgr.GetDashboards().FirstOrDefault(d =>
+                d.Profile.Id == user.Id && d.Subplatform.URL.ToLower().Equals(subplatform.ToLower()));
             if (model == null)
             {
-                model = new Dashboard()
+                model = new Dashboard
                 {
                     Profile = user,
                     DashboardType = UserType.USER,
@@ -58,12 +60,16 @@ namespace UI_MVC.Controllers
                     Zones = new List<Zone>()
                 };
                 model = dashboardMgr.AddDashboard(model.Subplatform, model.Profile, model.DashboardType, model.Zones);
-            };
+            }
+
+            ;
             return View(model);
         }
+
         #endregion
-        
+
         #region Wizard
+
         public ActionResult Wizard(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -74,7 +80,7 @@ namespace UI_MVC.Controllers
         {
             return PartialView();
         }
+
         #endregion
-                                                
     }
 }

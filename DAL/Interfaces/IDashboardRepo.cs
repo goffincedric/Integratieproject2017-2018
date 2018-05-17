@@ -1,5 +1,5 @@
-﻿using PB.BL.Domain.Dashboards;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PB.BL.Domain.Dashboards;
 
 namespace PB.DAL
 {

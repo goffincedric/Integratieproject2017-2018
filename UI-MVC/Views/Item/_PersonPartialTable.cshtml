@@ -1,62 +1,62 @@
 ﻿@model IEnumerable<PB.BL.Domain.Items.Person>
 
 <div class="row">
-  <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
+  <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-12">
     <div class="bgc-white p-20 bd">
       <h4 class="c-grey-900 mB-20">Person Table</h4>
-      <table id="tab" class="table table-striped table-bordered" cellspacing="0" style="width:100%">
+      <table id="tab" class="table table-striped table-bordered" cellspacing="0" style="width: 100%">
         <thead>
-          <tr>
-            <th>@Html.DisplayNameFor(model => model.ItemId)</th>
-            <th>@Html.DisplayNameFor(model => model.Name)</th>
-            <th>@Html.DisplayNameFor(model => model.IconURL)</th>
-            <th>@Html.DisplayNameFor(model => model.SocialMediaLink)</th>
-            <th>@Html.DisplayNameFor(model => model.IsTrending)</th>
-            <th>@Html.DisplayNameFor(model => model.Organisation)</th>
-            <th>@Html.DisplayNameFor(model => model.Position)</th>
-            <th>@Html.DisplayNameFor(model => model.Gemeente)</th>
-            <th>Tools</th>
-          </tr>
+        <tr>
+          <th>@Html.DisplayNameFor(model => model.ItemId)</th>
+          <th>@Html.DisplayNameFor(model => model.Name)</th>
+          <th>@Html.DisplayNameFor(model => model.IconURL)</th>
+          <th>@Html.DisplayNameFor(model => model.SocialMediaLink)</th>
+          <th>@Html.DisplayNameFor(model => model.IsTrending)</th>
+          <th>@Html.DisplayNameFor(model => model.Organisation)</th>
+          <th>@Html.DisplayNameFor(model => model.Position)</th>
+          <th>@Html.DisplayNameFor(model => model.Gemeente)</th>
+          <th>Tools</th>
+        </tr>
         </thead>
         <tbody>
-          @foreach (var item in Model)
-          {
-            <tr>
-              <td>@Html.DisplayFor(modelItem => item.ItemId)</td>
-              <td>@Html.DisplayFor(modelItem => item.Name)</td>
-              <td>@Html.DisplayFor(modelItem => item.IconURL)</td>
-              <td>@Html.DisplayFor(modelItem => item.SocialMediaLink)</td>
-              <td>@(item.IsTrending ? "Yes" : "No")</td>
-              <td>@Html.DisplayFor(modelItem => item.Organisation.Name)</td>
-              <td>@Html.DisplayFor(modelItem => item.Position)</td>
-              <td>@Html.DisplayFor(modelItem => item.Gemeente)</td>
-              <td>
-                <div class="row">
-                  @using (Html.BeginForm("DeleteItem", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
-                  {
-                    @Html.AntiForgeryToken()
-                    <button class="btn btn-sm" style="margin-right: 15px">
-                      <a href="javascript:document.getElementById('delete-@item.ItemId').submit()" style="outline:none; all:unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                        <span style="color: #2196f3" class="fsz-sm">
-                          Delete
-                        </span>
-                      </a>
-                    </button>
-                  }
-                  <button class="btn btn-sm">
-                    @Html.ActionLink("Edit", "EditPerson", new { id = item.ItemId })
+        @foreach (var item in Model)
+        {
+          <tr>
+            <td>@Html.DisplayFor(modelItem => item.ItemId)</td>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.IconURL)</td>
+            <td>@Html.DisplayFor(modelItem => item.SocialMediaLink)</td>
+            <td>@(item.IsTrending ? "Yes" : "No")</td>
+            <td>@Html.DisplayFor(modelItem => item.Organisation.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Position)</td>
+            <td>@Html.DisplayFor(modelItem => item.Gemeente)</td>
+            <td>
+              <div class="row">
+                @using (Html.BeginForm("DeleteItem", "Item", new {id = item.ItemId}, FormMethod.Post, new {id = "delete-" + item.ItemId}))
+                {
+                  @Html.AntiForgeryToken()
+                  <button class="btn btn-sm" style="margin-right: 15px">
+                    <a href="javascript:document.getElementById('delete-@item.ItemId').submit()" style="outline: none; all: unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                      <span style="color: #2196f3" class="fsz-sm">
+                        Delete
+                      </span>
+                    </a>
                   </button>
-                </div>
-              </td>
-            </tr>
-          }
+                }
+                <button class="btn btn-sm">
+                  @Html.ActionLink("Edit", "EditPerson", new {id = item.ItemId})
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
         </tbody>
       </table>
     </div>
   </div>
 </div>
 <script defer>
-  $("document").ready(function () {
+  $("document").ready(function() {
     $('#tab').DataTable();
   });
 </script>
