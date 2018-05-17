@@ -30,6 +30,21 @@ $(function () {
     $('.grid-stack').gridstack(options);
 
     new function () {
+        function getRotationDegrees(obj) {
+            var matrix = obj.css("-webkit-transform") ||
+                obj.css("-moz-transform") ||
+                obj.css("-ms-transform") ||
+                obj.css("-o-transform") ||
+                obj.css("transform");
+            if (matrix !== 'none') {
+                var values = matrix.split('(')[1].split(')')[0].split(',');
+                var a = values[0];
+                var b = values[1];
+                var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            } else { angle = 0; }
+            return angle < 0 ? angle + 360 : angle;
+        }
+
         //done
         findElements = function (id) {
             var ZoneData = $.ajax({
@@ -61,6 +76,8 @@ $(function () {
 
         //done
         addElement = function (grid) {
+            console.log(grid);
+
             addingElement = true;
 
             var addZone = $('.add-zone');
@@ -97,21 +114,35 @@ $(function () {
                 $newdiv.children('h4').append($('<span class="delete-zone"></span>'));
                 $newdiv.children('h4').children('.delete-zone').append($('<i class="ti-trash"></i>'));
                 $newdiv.append($('<div class="DashZone"></div>'));
-                $newdiv.append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
+                $newdiv.children('.DashZone').append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
                 var newZone = $('#mainContent').append($newdiv);
 
                 addZone = $('#mainContent').append(addZone);
 
                 $('.grid-stack').gridstack(options);
 
-                grid = newZone.children('.zone-' + ZoneId).children('#zone-' + ZoneId);
+                grid = newZone.children('.zone-' + ZoneId).children('.DashZone').children('#zone-' + ZoneId);
 
-                var deletezone = grid.parent().children('h4').children('.delete-zone');
+                var hidezone = grid.parent().parent().children('h4').children('.arrow-dashboard');
 
-                var editzone = grid.parent().children('h4').children('.edit-zone');
+                addZone.children('.add-zone').children('h4').children('.arrow-dashboard').on('click', function () {
+                    $(this).parent().parent().children(".DashZone").toggle(300);
+                    rotation = getRotationDegrees($(this)) + 180;
+                    $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
+                });
+
+                var deletezone = grid.parent().parent().children('h4').children('.delete-zone');
+
+                var editzone = grid.parent().parent().children('h4').children('.edit-zone');
+
+                hidezone.on('click', function () {
+                    $(this).parent().parent().children(".DashZone").toggle(300);
+                    rotation = getRotationDegrees($(this)) + 180;
+                    $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
+                });
 
                 deletezone.on('click', function () {
-                    removeZone(grid.parent());
+                    removeZone(grid.parent().parent());
                 });
 
                 editzone.on('click', function () {
@@ -210,6 +241,7 @@ $(function () {
                 };
 
                 var cardnumber = 1;
+                $('#locality-dropdown').off('change');
                 $('#locality-dropdown').on('change', function () {
                     if (cardnumber <= 5) {
                         $('#cardholder').append($('<div id="card' + cardnumber + '" class="col-sm-2-5 pX-5">' +
@@ -240,7 +272,6 @@ $(function () {
                 $('#output').off('change');
                 $('#output').on('change', function () {
                     output = $('#output option:selected').text();
-                    console.log(output);
                 });
                 //$('#add-soort').off('click');
                 //$('#add-soort').on('click', function () {
@@ -259,7 +290,6 @@ $(function () {
                 dropdown.prop('selectedIndex', 0);
 
                 // Populate dropdown with list of data
-
                 $.each(data, function (key, entry) {
                     dropdown.append($('<option></option>').attr('value', entry.ItemId).text(entry.Name));
                 });
@@ -278,12 +308,9 @@ $(function () {
                 Wizard.hide();
 
                 //edit later
-
                 var items = getItems($('#cardholder'));
 
                 var itemsJSON = JSON.stringify(items);
-
-                console.log(itemsJSON);
 
                 var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '", "Items": '+itemsJSON+'}');
 
@@ -302,7 +329,9 @@ $(function () {
         };
 
         editZone = function (grid) {
-            console.log(grid);
+            grid.off('click');
+
+            grid.children('.ti-pencil').attr('class', 'ti-check');
 
             var ZoneId = grid.parent().parent().attr('class');
 
@@ -319,6 +348,33 @@ $(function () {
             grid.siblings('input').focus();
 
             grid.siblings('input').val(oldTitle);
+
+            grid.on('click', function () {
+                var input = grid.siblings('input');
+                newTitle = input.val();
+
+                Zone = JSON.parse('{ "Title": "' + newTitle + '", "ZoneId": "' + ZoneId + '"}');
+
+                $.ajax({
+                    async: false,
+                    type: 'PUT',
+                    data: Zone,
+                    dataType: 'json',
+                    headers: Headers,
+                    url: "https://localhost:44342/api/dashboard/putzone/" + ZoneId
+                })
+
+                titleTag.html(newTitle);
+
+                input.replaceWith(titleTag);
+
+                grid.children('.ti-check').attr('class', 'ti-pencil');
+
+                grid.off('click');
+                grid.on('click', function () {
+                    editZone(grid);
+                })
+            })
 
             grid.siblings('input').keypress(function (e) {
                 var input = $(this);
@@ -350,6 +406,13 @@ $(function () {
                     titleTag.html(newTitle);
 
                     $(this).replaceWith(titleTag);
+
+                    grid.children('.ti-check').attr('class', 'ti-pencil');
+
+                    grid.off('click');
+                    grid.on('click', function () {
+                        editZone(grid);
+                    })
                 }
             });
         };
@@ -384,7 +447,6 @@ $(function () {
 
                     if (ElementId !== '+') {
                         if (ZoneId === 'x') {
-
                             var Zone = JSON.parse('{"Title" : "New Zone", "DashboardId" : "' + DashBoardId + '"}');
 
                             ZoneId = $.ajax({
@@ -428,10 +490,17 @@ $(function () {
                             $newdiv.children('h4').append($('<span class="delete-zone"></span>'));
                             $newdiv.children('h4').children('.delete-zone').append($('<i class="ti-trash"></i>'));
                             $newdiv.append($('<div class="DashZone"></div>'));
-                            $newdiv.append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
+                            $newdiv.children('.DashZone').append($('<div class="grid-stack grid-stack-12" id="zone-' + ZoneId + '"></div >'));
                             var newZone = $('#mainContent').append($newdiv);
 
                             addZone = $('#mainContent').append(addZone);
+
+
+                            addZone.children('.add-zone').children('h4').children('.arrow-dashboard').on('click', function () {
+                                $(this).parent().parent().children(".DashZone").toggle(300);
+                                rotation = getRotationDegrees($(this)) + 180;
+                                $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
+                            });
 
                             $('.grid-stack').gridstack(options);
 
@@ -441,16 +510,24 @@ $(function () {
 
                             addZone = addZone.children('.add-zone').children('div').children('#zone-x');
 
-                            grid = newZone.children('.zone-' + ZoneId).children('#zone-' + ZoneId);
+                            grid = newZone.children('.zone-' + ZoneId).children('.DashZone').children('#zone-' + ZoneId);
 
                             addZone.data('gridstack').removeWidget($('#Element-' + ElementId).parent());
 
-                            var deletezone = grid.parent().children('h4').children('.delete-zone');
+                            var deletezone = grid.parent().parent().children('h4').children('.delete-zone');
 
-                            var editzone = grid.parent().children('h4').children('.edit-zone');
+                            var editzone = grid.parent().parent().children('h4').children('.edit-zone');
+
+                            var hidezone = grid.parent().parent().children('h4').children('.arrow-dashboard');
+
+                            hidezone.on('click', function () {
+                                $(this).parent().parent().children(".DashZone").toggle(300);
+                                rotation = getRotationDegrees($(this)) + 180;
+                                $(this).css({ 'transform': 'rotate(' + rotation + 'deg)' });
+                            });
 
                             deletezone.on('click', function () {
-                                removeZone(grid.parent());
+                                removeZone(grid.parent().parent());
                             });
 
                             editzone.on('click', function () {
@@ -467,6 +544,21 @@ $(function () {
 
                             grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
+                            //addelement = $(grid + ":nth-child(1)");
+                            //console.log(addelement);
+
+                            //addelement.on('click', function () {
+                            //    console.log('adding element');
+                            //});
+
+                            console.log(addZone.children().children()/*.children().children('img')*/);
+
+                            addZone.children().children('#Element-+').children().children('img').on('click', function () {
+                                console.log(grid);
+                                console.log(addZone);
+                                addElement(addZone);
+                            });
+
                             chooseChart(Element.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
                         }
                         var oldElement = $.ajax({
@@ -475,8 +567,6 @@ $(function () {
                             headers: Headers,
                             url: "https://localhost:44342/api/dashboard/getelement/" + ElementId
                         }).responseJSON
-
-                        console.log(oldElement);
 
                         var oldZoneId = oldElement.ZoneId;
 
@@ -492,8 +582,6 @@ $(function () {
                         })
 
                         if (oldZoneId !== ZoneId) {
-                            console.log($('#Element-' + ElementId).children('canvas'));
-
                             chooseChart(oldElement.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
                         }
                     }
