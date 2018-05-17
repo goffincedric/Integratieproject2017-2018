@@ -107,35 +107,10 @@ namespace UI_CA_Prototype
             profile.Subscriptions.ForEach(Console.WriteLine);
         }
 
-
-
-        //public Profile CreateAccount()
-        //{
-        //    string AccountName = "";
-        //    string email = "";
-        //    string password = "";
-        //    Console.Write("Accountname: ");
-        //    AccountName = Console.ReadLine();
-        //    Console.Write("Email: ");
-        //    email = Console.ReadLine();
-        //    Console.Write("Password: ");
-        //    password = Console.ReadLine();
-
-        //    Profile newProfile = new Profile()
-        //    {
-        //        Username = AccountName,
-        //        Email = email,
-        //        Password = password
-        //    };
-
-        //    return newProfile;
-        //}
-
-
         //Method to test write functionality of JsonConvert (read written json file on desktop for record-object structure)
         public void WriteTestRecords(IEnumerable<Record> records)
         {
-            List<Record> recordList = records.Where(r => r.Tweet_Id %2 == 0).ToList();
+            List<Record> recordList = records.Where(r => r.Tweet_Id % 2 == 0).ToList();
 
             JsonSerializer serializer = new JsonSerializer
             {

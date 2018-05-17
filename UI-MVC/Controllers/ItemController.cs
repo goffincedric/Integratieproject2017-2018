@@ -377,8 +377,8 @@ namespace UI_MVC.Controllers
                     iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
                 }
 
-
-                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, iconUrl, organisation, null, personEditModel.IsTrending, Subplatform, personEditModel.Gemeente);
+                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, iconUrl, personEditModel.IsTrending, null, null, null, null, null, null, null, personEditModel.Gemeente, null, null, organisation, Subplatform, null);
+                
                 return RedirectToAction("ItemBeheer", "Item");
             }
             return RedirectToAction("ItemBeheer", "Item");

@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accounts\Alert.cs" />
-    <Compile Include="Accounts\Gender.cs" />
+    <Compile Include="Items\Gender.cs" />
     <Compile Include="Accounts\Profile.cs" />
     <Compile Include="Accounts\ProfileAlert.cs" />
     <Compile Include="Accounts\Province.cs" />
@@ -71,7 +71,6 @@
     <Compile Include="Dashboards\Map.cs" />
     <Compile Include="Dashboards\Ranking.cs" />
     <Compile Include="Dashboards\Zone.cs" />
-    <Compile Include="Items\Function.cs" />
     <Compile Include="Items\Hashtag.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\Keyword.cs" />
@@ -84,7 +83,8 @@
     <Compile Include="Items\Theme.cs" />
     <Compile Include="Items\Url.cs" />
     <Compile Include="Items\Word.cs" />
-    <Compile Include="JSONConversion\JClass.cs" />
+    <Compile Include="JSONConversion\JPerson.cs" />
+    <Compile Include="JSONConversion\JRecord.cs" />
     <Compile Include="Platforms\Page.cs" />
     <Compile Include="Platforms\Style.cs" />
     <Compile Include="Platforms\Subplatform.cs" />

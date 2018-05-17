@@ -31,6 +31,5 @@ namespace UI_MVC.Controllers.API
             if (tags.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(tagmap);
         }
-
     }
 }
