@@ -495,7 +495,6 @@ $(function () {
 
                             addZone = $('#mainContent').append(addZone);
 
-
                             addZone.children('.add-zone').children('h4').children('.arrow-dashboard').on('click', function () {
                                 $(this).parent().parent().children(".DashZone").toggle(300);
                                 rotation = getRotationDegrees($(this)) + 180;
@@ -551,7 +550,13 @@ $(function () {
                             //    console.log('adding element');
                             //});
 
-                            console.log(addZone.children().children()/*.children().children('img')*/);
+                            $(".add-element").each(function () {
+                                $(this).off('click');
+                                $(this).on('click', function () {
+                                    var zone = $(this)
+                                    addElement(zone.parent().parent().parent().parent());
+                                });
+                            })
 
                             addZone.children().children('#Element-+').children().children('img').on('click', function () {
                                 console.log(grid);
