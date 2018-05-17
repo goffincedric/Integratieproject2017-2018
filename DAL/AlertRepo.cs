@@ -1,13 +1,11 @@
-﻿using PB.BL.Domain.Accounts;
-using PB.DAL.EF;
-using PB.DAL.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PB.BL.Domain.Accounts;
+using PB.DAL.EF;
+using PB.DAL.Interfaces;
 
 namespace PB.DAL
 {
@@ -40,12 +38,11 @@ namespace PB.DAL
                     Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                         eve.Entry.Entity.GetType().Name, eve.Entry.State);
                     foreach (var ve in eve.ValidationErrors)
-                    {
                         Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
                             ve.PropertyName, ve.ErrorMessage);
-                    }
                 }
             }
+
             return alert;
         }
 
@@ -63,12 +60,11 @@ namespace PB.DAL
                     Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                         eve.Entry.Entity.GetType().Name, eve.Entry.State);
                     foreach (var ve in eve.ValidationErrors)
-                    {
                         Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
                             ve.PropertyName, ve.ErrorMessage);
-                    }
                 }
             }
+
             return newAlerts;
         }
 
@@ -112,7 +108,6 @@ namespace PB.DAL
                 .Include(pa => pa.Alert)
                 .Include(pa => pa.Alert.Item)
                 .FirstOrDefault(pa => pa.ProfileAlertId == profileAlertId);
-                
         }
 
         public IEnumerable<ProfileAlert> ReadProfileAlerts()
@@ -131,7 +126,7 @@ namespace PB.DAL
                 .Where(pa => pa.UserId.Equals(userId))
                 .AsEnumerable();
         }
-        
+
         public void UpdateProfileAlert(ProfileAlert profileAlert)
         {
             profileAlert = ctx.ProfileAlerts.Attach(profileAlert);

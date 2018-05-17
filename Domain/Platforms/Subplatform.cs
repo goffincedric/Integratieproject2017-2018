@@ -1,22 +1,22 @@
-﻿using PB.BL.Domain.Accounts;
-using PB.BL.Domain.Dashboards;
-using PB.BL.Domain.Items;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PB.BL.Domain.Accounts;
+using PB.BL.Domain.Dashboards;
+using PB.BL.Domain.Items;
 
 namespace PB.BL.Domain.Platform
 {
     [Table("tblSubPlatform")]
     public class Subplatform
     {
-        [Key]
-        public int SubplatformId { get; set; }
-        [Required]
-        public string Name { get; set; }
-        [Required]
-        public string URL { get; set; }
+        [Key] public int SubplatformId { get; set; }
+
+        [Required] public string Name { get; set; }
+
+        [Required] public string URL { get; set; }
+
         public DateTime DateOnline { get; set; }
 
         public Style Style { get; set; }
@@ -30,7 +30,7 @@ namespace PB.BL.Domain.Platform
         public override bool Equals(object obj)
         {
             if (!(obj is Subplatform subplatform)) return false;
-            if (subplatform.URL.ToLower().Equals(URL.ToLower()) || 
+            if (subplatform.URL.ToLower().Equals(URL.ToLower()) ||
                 subplatform.SubplatformId == SubplatformId) return true;
             return false;
         }

@@ -1,23 +1,19 @@
-﻿using PB.DAL.EF;
-using System;
+﻿using System;
 using System.Data.Entity.Validation;
 using System.Threading.Tasks;
+using PB.DAL.EF;
 
 namespace PB.DAL
 {
     public class UnitOfWork
-  {
-
-    private IntegratieDbContext ctx;
-
-    internal IntegratieDbContext Context
     {
-      get { return ctx ?? (ctx = new IntegratieDbContext(true)); }
-    }
+        private IntegratieDbContext ctx;
+
+        internal IntegratieDbContext Context => ctx ?? (ctx = new IntegratieDbContext(true));
 
         /// <summary>
-        /// Deze methode zorgt ervoor dat alle tot hier toe aangepaste domein objecten
-        /// worden gepersisteert naar de databank
+        ///     Deze methode zorgt ervoor dat alle tot hier toe aangepaste domein objecten
+        ///     worden gepersisteert naar de databank
         /// </summary>
         public int CommitChanges()
         {
@@ -32,12 +28,11 @@ namespace PB.DAL
                     Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                         eve.Entry.Entity.GetType().Name, eve.Entry.State);
                     foreach (var ve in eve.ValidationErrors)
-                    {
                         Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
                             ve.PropertyName, ve.ErrorMessage);
-                    }
                 }
             }
+
             return -1;
         }
 

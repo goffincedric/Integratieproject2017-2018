@@ -1,38 +1,28 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Host.SystemWeb;
-using PB.BL;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
-using PB.BL.Interfaces;
-using PB.BL.Domain.Accounts;
 using UI_MVC.Controllers.Resource.Constants;
 
 namespace UI_MVC.Controllers.API.Helper_Code.Common
 {
-    /// <summary>   
-    /// Authorization for web API class
-    /// </summary>   
+    /// <summary>
+    ///     Authorization for web API class
+    /// </summary>
     public class AuthorizationHeaderHandler : DelegatingHandler
     {
         #region Send method
-        /// <summary>   
-        /// Send method
-        /// </summary>   
-        /// <param name="request">Request parameter</param>   
-        /// <param name="cancellationToken">Cancellation token parameter</param>   
-        /// <returns>Return HTTP response Task</returns>   
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+
+        /// <summary>
+        ///     Send method
+        /// </summary>
+        /// <param name="request">Request parameter</param>
+        /// <param name="cancellationToken">Cancellation token parameter</param>
+        /// <returns>Return HTTP response Task</returns>
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+            CancellationToken cancellationToken)
         {
             // Initialization
             HttpResponseMessage responseMessage;
@@ -53,13 +43,15 @@ namespace UI_MVC.Controllers.API.Helper_Code.Common
             }
             else
             {
-                responseMessage = request.CreateResponse(System.Net.HttpStatusCode.BadRequest);
+                responseMessage = request.CreateResponse(HttpStatusCode.BadRequest);
                 return await Task<HttpResponseMessage>.Factory.StartNew(() => responseMessage);
             }
+
             // Info
-            responseMessage = request.CreateResponse(System.Net.HttpStatusCode.BadRequest);
+            responseMessage = request.CreateResponse(HttpStatusCode.BadRequest);
             return await Task<HttpResponseMessage>.Factory.StartNew(() => responseMessage);
         }
+
         #endregion
     }
 }

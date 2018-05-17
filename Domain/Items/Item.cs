@@ -1,13 +1,10 @@
-﻿using PB.BL.Domain.Dashboards;
-using PB.BL.Domain.Platform;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using PB.BL.Domain.Accounts;
+using PB.BL.Domain.Dashboards;
+using PB.BL.Domain.Platform;
 
 namespace PB.BL.Domain.Items
 {
@@ -15,16 +12,13 @@ namespace PB.BL.Domain.Items
     [Table("tblItem")]
     public class Item
     {
-        [Key]
-        [DataMember]
-        public int ItemId { get; set; }
-        [DataMember]
-        [Required]
-        public string Name { get; set; }
-        [DataMember]
-        public bool IsTrending { get; set; }
-        [DataMember]
-        public string IconURL { get; set; }
+        [Key] [DataMember] public int ItemId { get; set; }
+
+        [DataMember] [Required] public string Name { get; set; }
+
+        [DataMember] public bool IsTrending { get; set; }
+
+        [DataMember] public string IconURL { get; set; }
 
         public virtual List<Subplatform> SubPlatforms { get; set; }
         public virtual List<Keyword> Keywords { get; set; }

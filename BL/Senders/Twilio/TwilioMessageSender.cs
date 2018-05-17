@@ -7,17 +7,18 @@ using Twilio.Types;
 namespace PB.BL.Senders
 {
     public class TwilioMessageSender : ITwilioMessageSender
-  {
-    public TwilioMessageSender()
     {
-      TwilioClient.Init(ConfigurationManager.AppSettings["SMSAccountIdentification"], ConfigurationManager.AppSettings["SMSAccountPassword"]);
-    }
+        public TwilioMessageSender()
+        {
+            TwilioClient.Init(ConfigurationManager.AppSettings["SMSAccountIdentification"],
+                ConfigurationManager.AppSettings["SMSAccountPassword"]);
+        }
 
-    public async Task SendMessageAsync(string to, string from, string body)
-    {
-      await MessageResource.CreateAsync(new PhoneNumber(to),
-                                        from: new PhoneNumber(from),
-                                        body: body);
+        public async Task SendMessageAsync(string to, string from, string body)
+        {
+            await MessageResource.CreateAsync(new PhoneNumber(to),
+                from: new PhoneNumber(from),
+                body: body);
+        }
     }
-  }
 }

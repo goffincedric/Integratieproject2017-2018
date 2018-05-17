@@ -3,7 +3,7 @@
 namespace PB.BL.Domain.Dashboards
 {
     [Table("tblMap")]
-  public class Map : Element
-  {
-  }
+    public class Map : Element
+    {
+    }
 }

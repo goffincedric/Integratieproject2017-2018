@@ -1,5 +1,5 @@
-﻿using PB.DAL;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using PB.DAL;
 
 namespace PB.BL
 {
@@ -7,10 +7,7 @@ namespace PB.BL
     {
         private UnitOfWork uof;
 
-        public UnitOfWork UnitOfWork
-        {
-            get { return uof ?? (uof = new UnitOfWork()); }
-        }
+        public UnitOfWork UnitOfWork => uof ?? (uof = new UnitOfWork());
 
         public int Save()
         {

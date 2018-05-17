@@ -4,18 +4,21 @@
 
 @Styles.Render("~/Content/dashboardcss")
 <!--     Fonts and icons     -->
-<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+
 @section styles{
   <style type="text/css">
     #grid1 {
-      <!-- border: 3px solid black; -->
+      <!--
+      border: 3px solid black; -->
       padding: 3px;
       margin-bottom: 10px;
     }
 
     #grid2 {
-      <!-- border: 3px solid red; -->
+      <!--
+      border: 3px solid red; -->
       margin-top: 5px;
     }
 
@@ -25,13 +28,9 @@
       background-color: #18bc9c;
     }
 
-    #grid2 .grid-stack-item-content {
-      background-color: grey;
-    }
+    #grid2 .grid-stack-item-content { background-color: grey; }
 
-    #grid1 .grid-stack-item-content {
-      background-color: grey;
-    }
+    #grid1 .grid-stack-item-content { background-color: grey; }
 
     #Wizard {
       position: fixed;
@@ -57,7 +56,18 @@
     @foreach (var zone in Model.Zones)
     {
       <div class="p-10 mB-10 zone-@zone.ZoneId">
-        <h4 class="bb-2"><span class="title mR-15">@zone.Title</span><span class="edit-zone"><i class="ti-pencil"></i></span><span class="arrow-dashboard"><i class="ti-angle-up"></i></span><span class="delete-zone"><i class="ti-trash"></i></span></h4>
+        <h4 class="bb-2">
+          <span class="title mR-15">@zone.Title</span>
+          <span class="edit-zone">
+            <i class="ti-pencil"></i>
+          </span>
+          <span class="arrow-dashboard">
+            <i class="ti-angle-up"></i>
+          </span>
+          <span class="delete-zone">
+            <i class="ti-trash"></i>
+          </span>
+        </h4>
         <div class="DashZone">
           <div class="grid-stack grid-stack-12" id="zone-@zone.ZoneId">
           </div>
@@ -65,7 +75,12 @@
       </div>
     }
     <div class="p-10 mB-10 add-zone">
-      <h4 class="bb-2"><span class="title">Create New Zone</span><span class="arrow-dashboard"><i class="ti-angle-up"></i></span></h4>
+      <h4 class="bb-2">
+        <span class="title">Create New Zone</span>
+        <span class="arrow-dashboard">
+          <i class="ti-angle-up"></i>
+        </span>
+      </h4>
       <div class="DashZone">
         <div class="grid-stack grid-stack-12" id="zone-x">
         </div>
@@ -94,23 +109,29 @@
 <script src="~/Scripts/Charts/Chart.min.js"></script>
 
 <script>
-  $(document).ready(function () {
+  $(document).ready(function() {
     var next = 1;
-    $(".add-more").click(function (e) {
+    $(".add-more").click(function(e) {
       e.preventDefault();
       var addto = "#field" + next;
       var addRemove = "#field" + (next);
       next = next + 1;
-      var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
+      var newIn = '<input autocomplete="off" class="input form-control" id="field' +
+        next +
+        '" name="field' +
+        next +
+        '" type="text">';
       var newInput = $(newIn);
-      var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
+      var removeBtn = '<button id="remove' +
+        (next - 1) +
+        '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
       var removeButton = $(removeBtn);
       $(addto).after(newInput);
       $(addRemove).after(removeButton);
       $("#field" + next).attr('data-source', $(addto).attr('data-source'));
       $("#count").val(next);
 
-      $('.remove-me').click(function (e) {
+      $('.remove-me').click(function(e) {
         e.preventDefault();
         var fieldNum = this.id.charAt(this.id.length - 1);
         var fieldID = "#field" + fieldNum;
@@ -144,22 +165,24 @@
     }
     var can = $('#pie-chart');
     console.log(can.parent().attr('Style', 'width: 400px; height: 250'));
-    new Chart(can, {
-      type: 'pie',
-      data: {
-        labels: label,
-        datasets: [{
-          backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
-          data: values
-        }]
-      },
-      options: {
-
-      }
-    });
+    new Chart(can,
+      {
+        type: 'pie',
+        data: {
+          labels: label,
+          datasets: [
+            {
+              backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+              data: values
+            }
+          ]
+        },
+        options: {
+        }
+      });
   }
 
-  $(document).ready(function () {
+  $(document).ready(function() {
     drawPie(getTopTrending());
   });
 
