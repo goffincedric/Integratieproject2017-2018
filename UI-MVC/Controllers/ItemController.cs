@@ -1,26 +1,30 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web.Mvc;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using PB.BL;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.IO;
+using System.Linq;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
 {
-    /// <summary>
-    ///     Controller for everything that has to handle with items (persons, organisations, themes)
-    ///     Authorized by all roles at the moment
+    /// <summary>   
+    /// Controller for everything that has to handle with items (persons, organisations, themes)
+    /// Authorized by all roles at the moment
     /// </summary
     [RequireHttps]
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     public class ItemController : Controller
     {
+        private readonly UnitOfWorkManager uow;
         private readonly ItemManager itemMgr;
         private readonly SubplatformManager SubplatformMgr;
-        private readonly UnitOfWorkManager uow;
 
         public ItemController()
         {
@@ -37,38 +41,11 @@ namespace UI_MVC.Controllers
             ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
         }
 
-        #region Items
-
-        [HttpPost]
-        public ActionResult DeleteItem(string subplatform, int id)
-        {
-            try
-            {
-                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-                itemMgr.RemoveItem(id, Subplatform);
-
-                return RedirectToAction("ItemBeheer", "Item");
-            }
-            catch
-            {
-                return RedirectToAction("ItemBeheer", "Item");
-            }
-        }
-
-        #endregion
-
-        public ActionResult ItemBeheer()
-        {
-            return View();
-        }
-
         #region Organisation
-
         public ActionResult _OrganisationPartialTable(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            IEnumerable<Organisation> organisations =
-                itemMgr.GetOrganisations().Where(o => o.SubPlatforms.Contains(Subplatform));
+            IEnumerable<Organisation> organisations = itemMgr.GetOrganisations().Where(o => o.SubPlatforms.Contains(Subplatform));
             return PartialView(organisations);
         }
 
@@ -91,7 +68,7 @@ namespace UI_MVC.Controllers
                     if (organisationEditModel.file.ContentLength > 0)
                     {
                         _FileName = Path.GetFileName(organisationEditModel.file.FileName);
-                        var username = organisationEditModel.Name;
+                        var username = organisationEditModel.Name.ToString();
                         var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Organisations/"), newName);
                         organisationEditModel.file.SaveAs(_path);
@@ -100,30 +77,33 @@ namespace UI_MVC.Controllers
                 }
                 else
                 {
-                    iconUrl = Subplatform.Settings
-                        .Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
+                    iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
                 }
 
                 Theme theme = null;
 
                 if (organisationEditModel.ThemeId != null)
                 {
-                    theme = itemMgr.GetTheme((int) organisationEditModel.ThemeId);
-                    itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName,
-                        organisationEditModel.SocialMediaLink, new List<Theme> {theme}, iconUrl,
-                        subplatform: Subplatform);
+                    theme = itemMgr.GetTheme((int)organisationEditModel.ThemeId);
+                    itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName, organisationEditModel.SocialMediaLink, new List<Theme> { theme }, iconUrl, subplatform: Subplatform);
                 }
                 else
                 {
-                    itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName,
-                        organisationEditModel.SocialMediaLink, null, iconUrl, subplatform: Subplatform);
+                    itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName, organisationEditModel.SocialMediaLink, null, iconUrl, subplatform: Subplatform);
                 }
+
+
+
+
+
 
 
                 return RedirectToAction("ItemBeheer", "Item");
             }
 
             return RedirectToAction("ItemBeheer", "Item");
+
+
         }
 
         public ActionResult _ShowThemesOfOrganisation(int id)
@@ -136,7 +116,7 @@ namespace UI_MVC.Controllers
         public ActionResult EditOrganisation(int id)
         {
             Organisation item = itemMgr.GetOrganisation(id);
-            OrganisationEditModel organisation = new OrganisationEditModel
+            OrganisationEditModel organisation = new OrganisationEditModel()
             {
                 Name = item.Name,
                 FullName = item.FullName,
@@ -160,7 +140,7 @@ namespace UI_MVC.Controllers
                     if (organisationEditModel.file.ContentLength > 0)
                     {
                         _FileName = Path.GetFileName(organisationEditModel.file.FileName);
-                        var username = organisationEditModel.Name;
+                        var username = organisationEditModel.Name.ToString();
                         var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
                         organisationEditModel.file.SaveAs(_path);
@@ -172,7 +152,6 @@ namespace UI_MVC.Controllers
                 {
                     iconUrl = organisation.IconURL;
                 }
-
                 organisation.IsTrending = organisationEditModel.IsTrending;
                 organisation.FullName = organisationEditModel.FullName;
                 organisation.SocialMediaLink = organisationEditModel.SocialMediaLink;
@@ -180,14 +159,11 @@ namespace UI_MVC.Controllers
                 itemMgr.ChangeOrganisation(organisation);
                 return RedirectToAction("ItemBeheer", "Item");
             }
-
             return RedirectToAction("ItemBeheer", "Item");
         }
-
         #endregion
 
         #region Keywords
-
         public ActionResult _KeywordPartialTable(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -211,7 +187,6 @@ namespace UI_MVC.Controllers
                 itemMgr.AddKeyword(keyword.Name, keyword.Items);
                 return RedirectToAction("ItemBeheer", "Item");
             }
-
             return RedirectToAction("ItemBeheer", "Item");
         }
 
@@ -252,11 +227,9 @@ namespace UI_MVC.Controllers
             IEnumerable<Keyword> keywords = itemMgr.GetTheme(id).Keywords.ToList();
             return PartialView(keywords);
         }
-
         #endregion
 
         #region Themes
-
         public ActionResult _ThemaPartialTable(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -283,7 +256,7 @@ namespace UI_MVC.Controllers
                     if (themeEditModel.file.ContentLength > 0)
                     {
                         _FileName = Path.GetFileName(themeEditModel.file.FileName);
-                        var username = themeEditModel.Name;
+                        var username = themeEditModel.Name.ToString();
                         var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Themes/"), newName);
                         themeEditModel.file.SaveAs(_path);
@@ -292,34 +265,30 @@ namespace UI_MVC.Controllers
                 }
                 else
                 {
-                    iconUrl = Subplatform.Settings
-                        .Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
+                    iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
                 }
-
                 if (themeEditModel.KeywordId is null)
                 {
-                    Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl,
-                        new List<Keyword>(), themeEditModel.IsTrending, Subplatform);
+                    Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, new List<Keyword>(), themeEditModel.IsTrending, Subplatform);
                 }
                 else
                 {
-                    Keyword keyword = itemMgr.GetKeyword((int) themeEditModel.KeywordId);
-                    Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl,
-                        new List<Keyword> {keyword}, themeEditModel.IsTrending, Subplatform);
+                    Keyword keyword = itemMgr.GetKeyword((int)themeEditModel.KeywordId);
+                    Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, new List<Keyword> { keyword }, themeEditModel.IsTrending, Subplatform);
                 }
 
 
                 return RedirectToAction("ItemBeheer", "Item");
             }
-
             return RedirectToAction("ItemBeheer", "Item");
+
         }
 
         [HttpGet]
         public ActionResult EditTheme(int id)
         {
             Theme item = itemMgr.GetTheme(id);
-            ThemeEditModel themeEditModel = new ThemeEditModel
+            ThemeEditModel themeEditModel = new ThemeEditModel()
             {
                 ItemId = item.ItemId,
                 Name = item.Name,
@@ -342,7 +311,7 @@ namespace UI_MVC.Controllers
                     if (themeEditModel.file.ContentLength > 0)
                     {
                         _FileName = Path.GetFileName(themeEditModel.file.FileName);
-                        var username = themeEditModel.Name;
+                        var username = themeEditModel.Name.ToString();
                         var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Themes/"), newName);
                         themeEditModel.file.SaveAs(_path);
@@ -354,23 +323,19 @@ namespace UI_MVC.Controllers
                 {
                     iconUrl = theme.IconURL;
                 }
-
                 theme.IsTrending = themeEditModel.IsTrending;
                 theme.Name = themeEditModel.Name;
                 theme.Description = themeEditModel.Description;
-                Keyword keyword = itemMgr.GetKeyword((int) themeEditModel.KeywordId);
+                Keyword keyword = itemMgr.GetKeyword((int)themeEditModel.KeywordId);
                 theme.Keywords.Add(keyword);
                 itemMgr.ChangeTheme(theme);
                 return RedirectToAction("ItemBeheer", "Item");
             }
-
             return RedirectToAction("ItemBeheer", "Item");
         }
-
         #endregion
 
         #region Persons
-
         public ActionResult _PersonPartialTable(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -393,11 +358,10 @@ namespace UI_MVC.Controllers
                 Organisation organisation = null;
                 if (personEditModel.OrganisationId != null && personEditModel.OrganisationId >= 1)
                 {
-                    organisation = itemMgr.GetOrganisation((int) personEditModel.OrganisationId);
+                    organisation = itemMgr.GetOrganisation((int)personEditModel.OrganisationId);
                     if (organisation == null)
                         return RedirectToAction("ItemBeheer", "Item");
                 }
-
                 var iconUrl = "";
                 string _FileName = "";
                 if (personEditModel.file != null)
@@ -414,51 +378,51 @@ namespace UI_MVC.Controllers
                 }
                 else
                 {
-                    iconUrl = Subplatform.Settings
-                        .Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
+                    iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
                 }
 
-                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, iconUrl,
-                    personEditModel.IsTrending, null, null, null, null, null, null, null, personEditModel.Gemeente,
-                    null, null, organisation, Subplatform, null);
+                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, iconUrl, personEditModel.IsTrending, null, null, null, null, null, null, null, personEditModel.Gemeente, null, null, organisation, Subplatform, null);
 
                 return RedirectToAction("ItemBeheer", "Item");
             }
-
             return RedirectToAction("ItemBeheer", "Item");
+
         }
 
         [HttpGet]
         public ActionResult EditPerson(int id)
         {
             Person item = itemMgr.GetPerson(id);
-            PersonEditModel person = new PersonEditModel
+            PersonEditModel person = new PersonEditModel()
             {
                 Name = item.Name,
                 IsTrending = item.IsTrending,
                 SocialMediaLink = item.SocialMediaLink,
                 Gemeente = item.Gemeente,
-                ItemId = item.ItemId
+                ItemId = item.ItemId,
             };
 
-            if (item.Organisation != null) person.OrganisationId = item.Organisation.ItemId;
+            if (item.Organisation != null)
+            {
+                person.OrganisationId = item.Organisation.ItemId;
+            }
             return View(person);
         }
 
         [HttpPost]
         public ActionResult EditPerson(string subplatform, int id, PersonEditModel personEditModel)
         {
+
             if (ModelState.IsValid)
             {
                 Person person = itemMgr.GetPerson(personEditModel.ItemId);
                 Organisation organisation = null;
                 if (personEditModel.OrganisationId != null && personEditModel.OrganisationId >= 1)
                 {
-                    organisation = itemMgr.GetOrganisation((int) personEditModel.OrganisationId);
+                    organisation = itemMgr.GetOrganisation((int)personEditModel.OrganisationId);
                     if (organisation == null)
                         return RedirectToAction("ItemBeheer", "Item");
                 }
-
                 Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
                 var iconUrl = "";
                 string _FileName = "";
@@ -479,7 +443,6 @@ namespace UI_MVC.Controllers
                 {
                     iconUrl = person.IconURL;
                 }
-
                 person.Gemeente = personEditModel.Gemeente;
                 person.IsTrending = personEditModel.IsTrending;
                 person.Organisation = organisation;
@@ -488,10 +451,85 @@ namespace UI_MVC.Controllers
                 itemMgr.ChangePerson(person);
                 return RedirectToAction("ItemBeheer", "Item");
             }
-
             return RedirectToAction("ItemBeheer", "Item");
         }
 
+        [HttpPost]
+        public JsonResult Export()
+        {
+            IEnumerable<Person> persons = itemMgr.GetPersons().ToList();
+            var serializerSettings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat
+            };
+            string json = JsonConvert.SerializeObject(persons, serializerSettings);
+            string _path = Path.Combine(Server.MapPath("~/Content/Export/"), "Persons.json");
+            System.IO.File.WriteAllText(_path, json);
+            return Json(new { fileName = "Persons.json", errorMessage = "" });
+        }
+
+        [HttpGet]
+        public ActionResult ExportPersons(string file)
+        {
+            string fullPath = Path.Combine(Server.MapPath("~/Content/Export/"), file);
+            return File(fullPath, "application/", file);
+        }
+
+        [HttpPost]
+        public ActionResult Import(string subplatform, FileViewModel fileViewModel)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            if (ModelState.IsValid)
+            {
+
+                if (fileViewModel.file != null)
+                {
+                    if (fileViewModel.file.ContentLength > 0)
+                    {
+                        string inputContent;
+
+                        using (StreamReader inputStreamReader = new StreamReader(fileViewModel.file.InputStream))
+                        {
+
+                            inputContent = inputStreamReader.ReadToEnd();
+                            itemMgr.JPersonToRecord(inputContent, Subplatform);
+
+                        }
+                    }
+                }
+
+
+                return View("Itembeheer");
+            }
+            return View("Itembeheer");
+        }
+
         #endregion
+
+        #region Items
+        [HttpPost]
+        public ActionResult DeleteItem(string subplatform, int id)
+        {
+            try
+            {
+                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+                itemMgr.RemoveItem(id, Subplatform);
+
+                return RedirectToAction("ItemBeheer", "Item");
+            }
+            catch
+            {
+                return RedirectToAction("ItemBeheer", "Item");
+            }
+        }
+        #endregion
+
+        public ActionResult ItemBeheer()
+        {
+
+            return View();
+        }
+
     }
 }
