@@ -52,7 +52,7 @@ namespace PB.BL.Interfaces
         IEnumerable<Record> GetRecordsFromItem(int itemId);
 
         List<Record> JClassToRecord(List<JClass> data);
-        List<Item> JPersonToRecord(List<JPerson> data, Subplatform subplatform);
+        List<Item> JPersonToRecord(string jsonstring, Subplatform subplatform);
         void SyncDatabase(Subplatform subplatform);
         Task<int> SyncDatabaseAsync(Subplatform subplatform);
         void CleanupOldRecords(Subplatform subplatform);
