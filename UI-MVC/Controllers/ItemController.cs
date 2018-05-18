@@ -476,34 +476,34 @@ namespace UI_MVC.Controllers
             return File(fullPath, "application/", file);
         }
 
-        [HttpPost]
-        public ActionResult Import(string subplatform, FileViewModel fileViewModel)
-        {
-            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            if (ModelState.IsValid)
-            {
+        //[HttpPost]
+        //public ActionResult Import(string subplatform, FileViewModel fileViewModel)
+        //{
+        //    Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+        //    if (ModelState.IsValid)
+        //    {
 
-                if (fileViewModel.file != null)
-                {
-                    if (fileViewModel.file.ContentLength > 0)
-                    {
-                        string inputContent;
+        //        if (fileViewModel.file != null)
+        //        {
+        //            if (fileViewModel.file.ContentLength > 0)
+        //            {
+        //                string inputContent;
 
-                        using (StreamReader inputStreamReader = new StreamReader(fileViewModel.file.InputStream))
-                        {
+        //                using (StreamReader inputStreamReader = new StreamReader(fileViewModel.file.InputStream))
+        //                {
 
-                            inputContent = inputStreamReader.ReadToEnd();
-                            itemMgr.JPersonToRecord(inputContent, Subplatform);
+        //                    inputContent = inputStreamReader.ReadToEnd();
+        //                    itemMgr.JPersonToRecord(inputContent, Subplatform);
 
-                        }
-                    }
-                }
+        //                }
+        //            }
+        //        }
 
 
-                return View("Itembeheer");
-            }
-            return View("Itembeheer");
-        }
+        //        return View("Itembeheer");
+        //    }
+        //    return View("Itembeheer");
+        //}
 
         #endregion
 
@@ -526,6 +526,12 @@ namespace UI_MVC.Controllers
         #endregion
 
         public ActionResult ItemBeheer()
+        {
+
+            return View();
+        }
+
+        public ActionResult Charts()
         {
 
             return View();
