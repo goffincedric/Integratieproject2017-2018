@@ -165,7 +165,7 @@ $(function () {
             var X = newElement.data().gsX;
             var Y = newElement.data().gsY;
 
-            var Element = JSON.parse('{"X" : "' + X + '", "Y" : "' + Y + '", "Width": "3", "Height": "3", "IsDraggable": "true","IsFinished":"false", "ZoneId": "' + ZoneId + '"}');
+            var Element = JSON.parse('{"X" : "' + X + '", "Y" : "' + Y + '", "Width": "3", "Height": "3", "IsDraggable": "true","IsUnfinished":"true", "ZoneId": "' + ZoneId + '"}');
 
             var ElementId = $.ajax({
                 async: false,
@@ -419,7 +419,7 @@ $(function () {
 
                 var itemsJSON = JSON.stringify(items);
 
-                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '","DataType":"'+DataType+'", "IsFinished":"true", "Items": ' + itemsJSON + '}');
+                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '","DataType":"'+DataType+'", "IsUnfinished":"false", "Items": ' + itemsJSON + '}');
 
                 $.ajax({
                     async: false,
@@ -746,7 +746,7 @@ $(function () {
                     //this for now(change later), Gets correct data from database
                     _.each(elements, function (node) {
                         console.log(node);
-                        if (node.IsFinished) {
+                        if (!node.IsUnfinished) {
                             var newElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + node.ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div/><div/>'),
                                 node.X, node.Y, node.Width, node.Height);
                             newElement.children('#Element-' + node.ElementId).children('.delete-element').on('click', function () {

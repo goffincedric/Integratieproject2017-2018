@@ -121,7 +121,7 @@ namespace UI_MVC.Controllers.API
                 newElement.ZoneId = element.ZoneId;
                 newElement.Zone = newZone;
                 newElement.GraphType = element.GraphType;
-                newElement.IsFinished = element.IsFinished;
+                newElement.IsUnfinished = element.IsUnfinished;
 
                 DashboardMgr.ChangeElement(newElement);
             }
@@ -141,7 +141,7 @@ namespace UI_MVC.Controllers.API
             element.Zone = zone;
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            element = DashboardMgr.AddElement(zone, element.X, element.Y, element.Width, element.Height,element.IsFinished, isDraggable: element.IsDraggable);
+            element = DashboardMgr.AddElement(zone, element.X, element.Y, element.Width, element.Height,element.IsUnfinished, isDraggable: element.IsDraggable);
             zone.Elements.Add(element);
 
             return Ok(element); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte element
