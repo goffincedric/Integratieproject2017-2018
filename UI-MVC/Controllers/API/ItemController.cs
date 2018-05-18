@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using PB.BL;
 using PB.BL.Domain.Items;
 using PB.BL.Interfaces;
-using System.IO;
 
 namespace UI_MVC.Controllers.API
 {

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Domain.JSONConversion;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using PB.BL;
 using PB.BL.Domain.Items;
@@ -400,6 +401,7 @@ namespace UI_MVC.Controllers
                 SocialMediaLink = item.SocialMediaLink,
                 Gemeente = item.Gemeente,
                 ItemId = item.ItemId,
+                District = item.District
             };
 
             if (item.Organisation != null)
@@ -448,6 +450,7 @@ namespace UI_MVC.Controllers
                 person.Organisation = organisation;
                 person.SocialMediaLink = personEditModel.SocialMediaLink;
                 person.Name = personEditModel.Name;
+                person.District = personEditModel.District;
                 itemMgr.ChangePerson(person);
                 return RedirectToAction("ItemBeheer", "Item");
             }
@@ -487,9 +490,9 @@ namespace UI_MVC.Controllers
                 {
                     if (fileViewModel.file.ContentLength > 0)
                     {
-
-                        List<Item> persons = itemMgr.JPersonToRecord(System.IO.File.ReadAllText(fileViewModel.file), Subplatform);
-
+                        StreamReader stream = new StreamReader(fileViewModel.file.InputStream);
+                        string x = stream.ReadToEnd();
+                        List<Item> persons = itemMgr.JPersonToRecord(JsonConvert.DeserializeObject<List<JPerson>>(x), Subplatform);
                         itemMgr.AddItems(persons);
 
 
@@ -500,8 +503,8 @@ namespace UI_MVC.Controllers
 
             return View("Itembeheer");
         }
-          
-    }
+
+   
 
     #endregion
 

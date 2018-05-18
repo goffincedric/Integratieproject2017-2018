@@ -6,17 +6,17 @@
       <h4 class="c-grey-900 mB-20">Person Table</h4>
       <table id="tab" class="table table-striped table-bordered" cellspacing="0" style="width: 100%">
         <thead>
-        <tr>
-          <th>@Html.DisplayNameFor(model => model.ItemId)</th>
-          <th>@Html.DisplayNameFor(model => model.Name)</th>
-          <th>@Html.DisplayNameFor(model => model.IconURL)</th>
-          <th>@Html.DisplayNameFor(model => model.SocialMediaLink)</th>
-          <th>@Html.DisplayNameFor(model => model.IsTrending)</th>
-          <th>@Html.DisplayNameFor(model => model.Organisation)</th>
-          <th>@Html.DisplayNameFor(model => model.Position)</th>
-          <th>@Html.DisplayNameFor(model => model.Gemeente)</th>
-          <th>Tools</th>
-        </tr>
+          <tr>
+            <th>@Html.DisplayNameFor(model => model.ItemId)</th>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.SocialMediaLink)</th>
+            <th>@Html.DisplayNameFor(model => model.IsTrending)</th>
+            <th>@Html.DisplayNameFor(model => model.Organisation)</th>
+            <th>@Html.DisplayNameFor(model => model.Position)</th>
+            <th>@Html.DisplayNameFor(model => model.Gemeente)</th>
+            <th>@Html.DisplayNameFor(model => model.District)</th>
+            <th>Tools</th>
+          </tr>
         </thead>
         <tbody>
         @foreach (var item in Model)
@@ -24,15 +24,15 @@
           <tr>
             <td>@Html.DisplayFor(modelItem => item.ItemId)</td>
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.IconURL)</td>
             <td>@Html.DisplayFor(modelItem => item.SocialMediaLink)</td>
             <td>@(item.IsTrending ? "Yes" : "No")</td>
             <td>@Html.DisplayFor(modelItem => item.Organisation.Name)</td>
             <td>@Html.DisplayFor(modelItem => item.Position)</td>
             <td>@Html.DisplayFor(modelItem => item.Gemeente)</td>
+            <td>@Html.DisplayFor(modelItem => item.District)</td>
             <td>
               <div class="row">
-                @using (Html.BeginForm("DeleteItem", "Item", new {id = item.ItemId}, FormMethod.Post, new {id = "delete-" + item.ItemId}))
+                @using (Html.BeginForm("DeleteItem", "Item", new { id = item.ItemId }, FormMethod.Post, new { id = "delete-" + item.ItemId }))
                 {
                   @Html.AntiForgeryToken()
                   <button class="btn btn-sm" style="margin-right: 15px">
@@ -44,7 +44,7 @@
                   </button>
                 }
                 <button class="btn btn-sm">
-                  @Html.ActionLink("Edit", "EditPerson", new {id = item.ItemId})
+                  @Html.ActionLink("Edit", "EditPerson", new { id = item.ItemId })
                 </button>
               </div>
             </td>
