@@ -931,7 +931,7 @@ $(function () {
         var counter = 0;
         $.each(itemIds,
           function (index, value) {
-            var URL = "https://localhost:44342/api/item/GetTrendingMentionsCountOverall/" + value;
+            var URL = "https://localhost:44342/api/item/GetTrendingHashtagsCountOverall/" + value;
             makeAjaxCall(URL, "GET").then(process);
 
             function process(output2) {
@@ -981,8 +981,98 @@ $(function () {
           break;
       }
       if (itemIds.length == 1) {
+        var URL = "https://localhost:44342/api/item/GetTrendingMentionsCount/" + itemIds[0];
+        makeAjaxCall(URL, "GET").then(process);
 
+        function process(output) {
+
+          var keys = [];
+          keys = Object.keys(output);
+          var label = [];
+          var values = [];
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output[keys[i]]);
+          }
+
+
+          new Chart(can,
+            {
+              type: graph,
+              data: {
+                labels: label,
+                datasets: [
+                  {
+                    backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                    data: values
+                  }
+                ]
+              },
+              options: {
+                responsive: true
+              }
+            });
+
+
+        }
       } else {
+        console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+
+        var datagrafiek = {
+          datasets: [],
+          labels: ["Tweets"]
+
+        };
+
+        var myChart = new Chart(can,
+          {
+            type: graph,
+            data: datagrafiek,
+            options: {
+              responsive: true,
+              legend: {
+                display: true
+              }
+
+
+            }
+
+          });
+
+        var counter = 0;
+        $.each(itemIds,
+          function (index, value) {
+            var URL = "https://localhost:44342/api/item/GetTrendingMentionsCountOverall/" + value;
+            makeAjaxCall(URL, "GET").then(process);
+
+            function process(output2) {
+              var keys = [];
+              keys = Object.keys(output2);
+
+              var label = [];
+              var values = [];
+
+
+
+              for (var i = 0; i < keys.length; i++) {
+                label.push(keys[i]);
+                values.push(output2[keys[i]]);
+              }
+
+
+              console.log("Values: " + values);
+              var backgroundColors = ["#36a2eb", "#ffce56", "#7DDF64", "#ff6384", "#36a2eb", "#cc65fe"];
+              var myNewDataSet = {
+                label: label,
+                data: values,
+                backgroundColor: backgroundColors[counter]
+              }
+              datagrafiek.datasets.push(myNewDataSet);
+              myChart.update();
+              counter++;
+            }
+          });
 
       }
     };
@@ -1003,8 +1093,98 @@ $(function () {
           break;
       }
       if (itemIds.length == 1) {
+        var URL = "https://localhost:44342/api/item/GetTrendingWordsCount/" + itemIds[0];
+        makeAjaxCall(URL, "GET").then(process);
 
+        function process(output) {
+
+          var keys = [];
+          keys = Object.keys(output);
+          var label = [];
+          var values = [];
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output[keys[i]]);
+          }
+
+
+          new Chart(can,
+            {
+              type: graph,
+              data: {
+                labels: label,
+                datasets: [
+                  {
+                    backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                    data: values
+                  }
+                ]
+              },
+              options: {
+                responsive: true
+              }
+            });
+
+
+        }
       } else {
+        console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+
+        var datagrafiek = {
+          datasets: [],
+          labels: ["Tweets"]
+
+        };
+
+        var myChart = new Chart(can,
+          {
+            type: graph,
+            data: datagrafiek,
+            options: {
+              responsive: true,
+              legend: {
+                display: true
+              }
+
+
+            }
+
+          });
+
+        var counter = 0;
+        $.each(itemIds,
+          function (index, value) {
+            var URL = "https://localhost:44342/api/item/GetTrendingWordsCountOverall/" + value;
+            makeAjaxCall(URL, "GET").then(process);
+
+            function process(output2) {
+              var keys = [];
+              keys = Object.keys(output2);
+
+              var label = [];
+              var values = [];
+
+
+
+              for (var i = 0; i < keys.length; i++) {
+                label.push(keys[i]);
+                values.push(output2[keys[i]]);
+              }
+
+
+              console.log("Values: " + values);
+              var backgroundColors = ["#36a2eb", "#ffce56", "#7DDF64", "#ff6384", "#36a2eb", "#cc65fe"];
+              var myNewDataSet = {
+                label: label,
+                data: values,
+                backgroundColor: backgroundColors[counter]
+              }
+              datagrafiek.datasets.push(myNewDataSet);
+              myChart.update();
+              counter++;
+            }
+          });
 
       }
     };
