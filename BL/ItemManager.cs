@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.JSONConversion;
+using Newtonsoft.Json;
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
@@ -793,9 +794,12 @@ namespace PB.BL
             return newRecords;
         }
 
-        public List<Item> JPersonToRecord(List<JPerson> data, Subplatform subplatform)
+        public List<Item> JPersonToRecord(string jsonstring, Subplatform subplatform)
         {
             InitNonExistingRepo();
+
+            List<JPerson> data = JsonConvert.DeserializeObject<List<JPerson>>(jsonstring);
+
             List<Person> oldPersons = ItemRepo.ReadPersons().ToList();
             List<Item> newPersons = new List<Item>();
 
