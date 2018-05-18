@@ -20,6 +20,7 @@ namespace PB.BL.Domain.Dashboards
         public int Height { get; set; }
         public bool IsDraggable { get; set; }
         public GraphType GraphType { get; set; }
+        public DataType DataType { get; set; }
         public bool IsFinished { get; set; }
 
         public int ZoneId { get; set; }

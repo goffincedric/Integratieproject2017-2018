@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accounts\Alert.cs" />
+    <Compile Include="Dashboards\DataType.cs" />
     <Compile Include="Items\Gender.cs" />
     <Compile Include="Accounts\Profile.cs" />
     <Compile Include="Accounts\ProfileAlert.cs" />

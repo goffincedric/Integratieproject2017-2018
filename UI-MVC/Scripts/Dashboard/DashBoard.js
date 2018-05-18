@@ -201,6 +201,7 @@ $(function () {
             var data = null;
             var onderwerp = null;
             var output = null;
+            var DataType = null;
 
             //$('#next-1').attr('disabled', 'disabled');
 
@@ -301,6 +302,7 @@ $(function () {
                         //console.log($('input:checked').attr('id'));
                         switch ($('input:checked').attr('id')) {
                             case 'mention': console.log('mention');
+                                DataType = 0;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
@@ -309,6 +311,7 @@ $(function () {
                                 $('#map').parent().parent().hide();
                                 break;
                             case 'hashtag': console.log('hashtag');
+                                DataType = 1;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
@@ -317,6 +320,7 @@ $(function () {
                                 $('#map').parent().parent().hide();
                                 break;
                             case 'evolution': console.log('evolution');
+                                DataType = 2;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().hide();
                                 $('#donut').parent().parent().hide();
@@ -325,6 +329,7 @@ $(function () {
                                 $('#map').parent().parent().hide();
                                 break;
                             case 'sentiment': console.log('sentiment');
+                                DataType = 3;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().hide();
                                 $('#donut').parent().parent().hide();
@@ -333,6 +338,7 @@ $(function () {
                                 $('#map').parent().parent().hide();
                                 break;
                             case 'age': console.log('age');
+                                DataType = 4;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
@@ -341,6 +347,7 @@ $(function () {
                                 $('#map').parent().parent().hide();
                                 break;
                             case 'gender': console.log('gender');
+                                DataType = 5;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
@@ -349,6 +356,7 @@ $(function () {
                                 $('#map').parent().parent().hide();
                                 break;
                             case 'words': console.log('words');
+                                DataType = 6;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
@@ -357,6 +365,7 @@ $(function () {
                                 $('#map').parent().parent().hide();
                                 break;
                             case 'location': console.log('location');
+                                DataType = 7;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
@@ -410,7 +419,7 @@ $(function () {
 
                 var itemsJSON = JSON.stringify(items);
 
-                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '","IsFinished":"true", "Items": ' + itemsJSON + '}');
+                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '","DataType":"'+DataType+'", "IsFinished":"true", "Items": ' + itemsJSON + '}');
 
                 $.ajax({
                     async: false,
