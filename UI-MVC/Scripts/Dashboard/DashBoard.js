@@ -267,8 +267,7 @@ $(function () {
                         var cardnumber = 1;
                         $('#locality-dropdown').off('change');
                         $('#locality-dropdown').on('change', function () {
-                            console.log($('#card' + (cardnumber - 1)).children('.card').children('.container'));
-                            if ($('#card' + (cardnumber - 1)).children('.card').children('.container').children('h4').text() != '#') {
+                            if ($('#card' + (cardnumber - 1)).children('.card').children('.container').children('h4').text() !== '#') {
                                 if (cardnumber <= 5) {
                                     $('#cardholder').append($('<div id="card' + cardnumber + '" class="col-sm-2-5 pX-5">' +
                                         '<h5 class= "info-text" > Voeg hier toe!</h5>' +
@@ -291,7 +290,6 @@ $(function () {
                                         $(this).siblings('.container').children('h4').children('.itemId').text(item.ItemId);
                                         $(this).siblings('.container').children('.itemName').text(item.Name);
                                     })
-                                    console.log($('#card' + (cardnumber - 1)));
                                     cardnumber++;
                                 }
                             }
@@ -422,7 +420,7 @@ $(function () {
 
                 var itemsJSON = JSON.stringify(items);
 
-                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '","DataType":"'+DataType+'", "IsUnfinished":"false", "Items": ' + itemsJSON + '}');
+                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '","DataType":"' + DataType + '", "IsUnfinished":"false", "Items": ' + itemsJSON + '}');
 
                 $.ajax({
                     async: false,
@@ -710,12 +708,14 @@ $(function () {
             $.each(cards.children(), function () {
                 itemId = $(this).children('.card').children('.container').children('h4').children('.itemId').text();
 
-                items.push($.ajax({
-                    async: false,
-                    type: 'GET',
-                    headers: Headers,
-                    url: "https://localhost:44342/api/item/getitem/" + itemId
-                }).responseJSON);
+                if (itemId !== '#') {
+                    items.push($.ajax({
+                        async: false,
+                        type: 'GET',
+                        headers: Headers,
+                        url: "https://localhost:44342/api/item/getitem/" + itemId
+                    }).responseJSON);
+                }
             })
             return items;
         }
