@@ -297,6 +297,7 @@ $(function () {
                         $(this).attr('id', 'next-2');
                         break;
                     case "next-2":
+                        $('#cardholder').empty();
                         switch ($('input:checked').attr('id')) {
                             case 'mention': console.log('mention');
                                 DataType = 0;
