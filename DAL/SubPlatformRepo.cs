@@ -1,11 +1,11 @@
-﻿using PB.BL.Domain.Platform;
-using PB.BL.Domain.Settings;
-using PB.DAL.EF;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
+using PB.BL.Domain.Platform;
+using PB.BL.Domain.Settings;
+using PB.DAL.EF;
 
 namespace PB.DAL
 {
@@ -29,6 +29,7 @@ namespace PB.DAL
         }
 
         #region Subplatform
+
         public Subplatform CreateSubplatform(Subplatform subplatform)
         {
             ctx.Subplatforms.Add(subplatform);
@@ -37,19 +38,18 @@ namespace PB.DAL
             {
                 ctx.SaveChanges();
             }
-            catch(DbEntityValidationException e)
+            catch (DbEntityValidationException e)
             {
                 foreach (var eve in e.EntityValidationErrors)
                 {
                     Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                         eve.Entry.Entity.GetType().Name, eve.Entry.State);
                     foreach (var ve in eve.ValidationErrors)
-                    {
                         Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
                             ve.PropertyName, ve.ErrorMessage);
-                    }
                 }
             }
+
             return subplatform;
         }
 
@@ -99,9 +99,11 @@ namespace PB.DAL
             ctx.Entry(subplatform).State = EntityState.Modified;
             ctx.SaveChanges();
         }
+
         #endregion
 
         #region Subplatformsetting
+
         public SubplatformSetting CreateSubplatformSetting(SubplatformSetting subplatformSetting)
         {
             subplatformSetting = ctx.SubplatformSettings.Add(subplatformSetting);
@@ -117,15 +119,14 @@ namespace PB.DAL
                     Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                         eve.Entry.Entity.GetType().Name, eve.Entry.State);
                     foreach (var ve in eve.ValidationErrors)
-                    {
                         Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
                             ve.PropertyName, ve.ErrorMessage);
-                    }
                 }
             }
+
             return subplatformSetting;
         }
-        
+
         public IEnumerable<SubplatformSetting> ReadSubplatformSettings()
         {
             return ctx.SubplatformSettings
@@ -145,7 +146,9 @@ namespace PB.DAL
         {
             return ctx.SubplatformSettings
                 .Include(ss => ss.Subplatform)
-                .FirstOrDefault(ss => ss.Subplatform.SubplatformId == subplatformId && ss.SettingName.ToString().Equals(settingName.ToString()));
+                .FirstOrDefault(ss =>
+                    ss.Subplatform.SubplatformId == subplatformId &&
+                    ss.SettingName.ToString().Equals(settingName.ToString()));
         }
 
         public void UpdateSubplatformSetting(SubplatformSetting subplatformSetting)
@@ -154,9 +157,11 @@ namespace PB.DAL
             ctx.Entry(subplatformSetting).State = EntityState.Modified;
             ctx.SaveChanges();
         }
+
         #endregion
 
         #region Page
+
         public IEnumerable<Page> ReadPages()
         {
             return ctx.Pages
@@ -164,7 +169,7 @@ namespace PB.DAL
                 .Include(p => p.Subplatform)
                 .AsEnumerable();
         }
-        
+
         public IEnumerable<Page> ReadPages(string subplatformUrl)
         {
             return ctx.Pages
@@ -205,12 +210,11 @@ namespace PB.DAL
                     Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                         eve.Entry.Entity.GetType().Name, eve.Entry.State);
                     foreach (var ve in eve.ValidationErrors)
-                    {
                         Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
                             ve.PropertyName, ve.ErrorMessage);
-                    }
                 }
             }
+
             return page;
         }
 
@@ -230,9 +234,11 @@ namespace PB.DAL
                 ctx.SaveChanges();
             }
         }
+
         #endregion
 
         #region Tag
+
         public IEnumerable<Tag> ReadTags()
         {
             return ctx.Tags
@@ -277,12 +283,11 @@ namespace PB.DAL
                     Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                         eve.Entry.Entity.GetType().Name, eve.Entry.State);
                     foreach (var ve in eve.ValidationErrors)
-                    {
                         Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
                             ve.PropertyName, ve.ErrorMessage);
-                    }
                 }
             }
+
             return tag;
         }
 
@@ -302,6 +307,7 @@ namespace PB.DAL
                 ctx.SaveChanges();
             }
         }
+
         #endregion
     }
 }

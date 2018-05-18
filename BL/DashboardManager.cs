@@ -1,10 +1,10 @@
-﻿using PB.BL.Domain.Accounts;
+﻿using System.Collections.Generic;
+using System.Linq;
+using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Platform;
 using PB.BL.Interfaces;
 using PB.DAL;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PB.BL
 {
@@ -16,39 +16,18 @@ namespace PB.BL
 
         public DashboardManager()
         {
-
         }
 
         public DashboardManager(UnitOfWorkManager uowMgr)
         {
-
             UowManager = uowMgr;
             DashboardRepo = new DashboardRepo(uowMgr.UnitOfWork);
         }
 
-        public void InitNonExistingRepo(bool createWithUnitOfWork = false)
+        public Dashboard AddDashboard(Subplatform subplatform, Profile profile, UserType dashboardType = UserType.HOME,
+            List<Zone> zones = null)
         {
-            if (DashboardRepo == null)
-            {
-                if (createWithUnitOfWork)
-                {
-                    if (UowManager == null)
-                    {
-                        UowManager = new UnitOfWorkManager();
-                    }
-
-                    DashboardRepo = new DashboardRepo(UowManager.UnitOfWork);
-                }
-                else
-                {
-                    DashboardRepo = new DashboardRepo();
-                }
-            }
-        }
-
-        public Dashboard AddDashboard(Subplatform subplatform, Profile profile, UserType dashboardType = UserType.HOME, List<Zone> zones = null)
-        {
-            Dashboard dashboard = new Dashboard()
+            Dashboard dashboard = new Dashboard
             {
                 DashboardType = dashboardType,
                 Zones = zones ?? new List<Zone>(),
@@ -62,11 +41,6 @@ namespace PB.BL
             UowManager.Save();
 
             return dashboard;
-        }
-
-        private Dashboard AddDashboard(Dashboard dashboard)
-        {
-            return DashboardRepo.CreateDashboard(dashboard);
         }
 
         public List<Dashboard> AddDashboards(List<Dashboard> dashboards)
@@ -118,31 +92,13 @@ namespace PB.BL
         public Zone AddZone(Dashboard dashboard, string title)
         {
             InitNonExistingRepo();
-            Zone zone = new Zone()
+            Zone zone = new Zone
             {
                 Dashboard = dashboard,
                 Title = title,
                 Elements = new List<Element>()
             };
             dashboard.Zones.Add(zone);
-
-            zone = DashboardRepo.CreateZone(zone);
-            UowManager.Save();
-
-            return zone;
-        }
-
-        public Zone AddZone(Dashboard dashboard, string title, List<Element> elements)
-        {
-            InitNonExistingRepo();
-            Zone zone = new Zone()
-            {
-                Dashboard = dashboard,
-                Title = title,
-                Elements = elements
-            };
-            dashboard.Zones.Add(zone);
-            elements.ForEach(e => e.Zone = zone);
 
             zone = DashboardRepo.CreateZone(zone);
             UowManager.Save();
@@ -178,10 +134,11 @@ namespace PB.BL
             return DashboardRepo.ReadElement(elementId);
         }
 
-        public Element AddElement(Zone zone, int x, int y, int width, int height, bool isDraggable = true, bool isFinished = false)
+        public Element AddElement(Zone zone, int x, int y, int width, int height, bool isDraggable = true,
+            bool isFinished = false)
         {
             InitNonExistingRepo();
-            Element element = new Element()
+            Element element = new Element
             {
                 Zone = zone,
                 X = x,
@@ -211,6 +168,44 @@ namespace PB.BL
             InitNonExistingRepo();
             DashboardRepo.DeleteElement(elementId);
             UowManager.Save();
+        }
+
+        public void InitNonExistingRepo(bool createWithUnitOfWork = false)
+        {
+            if (DashboardRepo == null)
+                if (createWithUnitOfWork)
+                {
+                    if (UowManager == null) UowManager = new UnitOfWorkManager();
+
+                    DashboardRepo = new DashboardRepo(UowManager.UnitOfWork);
+                }
+                else
+                {
+                    DashboardRepo = new DashboardRepo();
+                }
+        }
+
+        private Dashboard AddDashboard(Dashboard dashboard)
+        {
+            return DashboardRepo.CreateDashboard(dashboard);
+        }
+
+        public Zone AddZone(Dashboard dashboard, string title, List<Element> elements)
+        {
+            InitNonExistingRepo();
+            Zone zone = new Zone
+            {
+                Dashboard = dashboard,
+                Title = title,
+                Elements = elements
+            };
+            dashboard.Zones.Add(zone);
+            elements.ForEach(e => e.Zone = zone);
+
+            zone = DashboardRepo.CreateZone(zone);
+            UowManager.Save();
+
+            return zone;
         }
     }
 }

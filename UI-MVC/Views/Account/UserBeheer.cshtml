@@ -8,19 +8,19 @@
 <main class="main-content bgc-grey-100">
   <div id="mainContent">
     <div class="container-fluid">
-      <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
+      <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
           <h1 class="h3" style="text-align: center">Beheer Users en Admins</h1>
         </div>
       </div>
-      <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
+      <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
           <h1 class="h5" style="text-align: center">Import/Export Tools</h1>
           <div class="row">
-            <div class="col-6" style="text-align:center">
+            <div class="col-6" style="text-align: center">
               <button id="export" class="btn btn-lg btn-primary" enabled>Export Users</button>
             </div>
-            <div class="col-6" style="text-align:center">
+            <div class="col-6" style="text-align: center">
               <button class="btn btn-lg btn-primary" disabled>Import users</button>
             </div>
           </div>
@@ -28,7 +28,7 @@
       </div>
       @Html.Action("_UserTable")
       <div class="row" style="margin-top: 10px;">
-        <div class="col-sm" style="padding:0; margin:0 10px 0 0">
+        <div class="col-sm" style="padding: 0; margin: 0 10px 0 0">
           <div class="layers bd bgc-white p-20">
             <div class="layer w-100 mB-10">
               <h6 class="lh-1">Beheer Admins</h6>
@@ -40,7 +40,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm" style="padding:0; margin:0 0 0 10px">
+        <div class="col-sm" style="padding: 0; margin: 0 0 0 10px">
           <div class="layers bd bgc-white p-20">
             <div class="layer w-100 mB-10">
               <h6 class="lh-1">Beheer SuperAdmins</h6>
@@ -54,7 +54,7 @@
         </div>
       </div>
       <div id="partial"></div>
-      <div style="margin: 10px 0;padding:0;" class="masonry-item col-md-12">
+      <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
           <h6 class="c-grey-900">Users</h6>
           <div class="mT-30" id="graph-bar">
@@ -67,24 +67,25 @@
 
 </main>
 
-<link href="~/Content/datatables.min.css" rel="stylesheet" />
+<link href="~/Content/datatables.min.css" rel="stylesheet"/>
 <script src="~/Scripts/datatables.min.js"></script>
 <script src="~/Scripts/charts/Chart.min.js"></script>
 <script>
-  $("#export").click(function () {
-  $.ajax({
-    type: "POST",
-    url: '@Url.Action("Export","Account")', //call your controller and action
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-}).done(function (data) {
-    //get the file name for download
-    if (data.fileName != "") {
+  $("#export").click(function() {
+    $.ajax({
+      type: "POST",
+      url: '@Url.Action("Export", "Account")', //call your controller and action
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+    }).done(function(data) {
+      //get the file name for download
+      if (data.fileName != "") {
         //use window.location.href for redirect to download action for download the file
         window.location.href = "@Url.RouteUrl(new
-            { Controller = "Account", Action = "ExportUsers"})/?file=" + data.fileName;
-    }
-});
+                                {Controller = "Account", Action = "ExportUsers"})/?file=" +
+          data.fileName;
+      }
+    });
   });
 
   function drawLineChart(id) {
@@ -108,38 +109,41 @@
       values.push(test[keys[i]]);
     }
     var can = $('#user-chart');
-    new Chart(can, {
-      type: 'line',
-      data: {
-        labels: label,
-        datasets: [
-          {
-            label: "",
-            backgroundColor: "rgba(3, 169, 244, 0.5)",
-            borderColor: "#0277bd",
-            data: values
-          }
-        ]
-      },
-      options: {
-        legend: { display: true },
-        responsive: true,
-        maintainAspectRatio: false,
-        title: {
-          display: true,
-          text: 'Account Rate evolution'
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              min: 0,
-              beginAtZero: true,
-              stepSize: 1
+    new Chart(can,
+      {
+        type: 'line',
+        data: {
+          labels: label,
+          datasets: [
+            {
+              label: "",
+              backgroundColor: "rgba(3, 169, 244, 0.5)",
+              borderColor: "#0277bd",
+              data: values
             }
-          }]
+          ]
+        },
+        options: {
+          legend: { display: true },
+          responsive: true,
+          maintainAspectRatio: false,
+          title: {
+            display: true,
+            text: 'Account Rate evolution'
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  min: 0,
+                  beginAtZero: true,
+                  stepSize: 1
+                }
+              }
+            ]
+          }
         }
-      }
-    });
+      });
   }
 
   drawLineChart();
@@ -147,18 +151,18 @@
 
 
 <script>
-  $(function () {
-    $("#loadAdmin").click(function () {
+  $(function() {
+    $("#loadAdmin").click(function() {
 
       $('#partial').load('@Url.Action("_AdminTable", "Account")');
 
     });
   });
 
-  $(function () {
-    $("#loadSuper").click(function () {
+  $(function() {
+    $("#loadSuper").click(function() {
 
-       $('#partial').load('@Url.Action("_SuperAdminTable", "Account")');
+      $('#partial').load('@Url.Action("_SuperAdminTable", "Account")');
 
     });
   });

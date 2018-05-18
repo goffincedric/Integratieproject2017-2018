@@ -1,40 +1,40 @@
-﻿using Domain.JSONConversion;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Domain.JSONConversion;
 using Mono.Options;
 using Newtonsoft.Json;
 using PB.BL;
 using PB.BL.Domain.Accounts;
-using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
-using PB.BL.Domain.JSONConversion;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.BL.Interfaces;
 using PB.DAL.EF;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
 
 namespace UI_CA_Prototype
 {
-    class Program
+    internal class Program
     {
-        private static bool WillSeed = false;
+        private static bool WillSeed;
         private static OptionSet CLIOptions;
 
         private static UnitOfWorkManager Uow = new UnitOfWorkManager();
-        private static IAccountManager AccountMgr = new AccountManager(new IntegratieUserStore(Uow.UnitOfWork), Uow);
-        private static IItemManager ItemMgr = new ItemManager(Uow);
-        private static ISubplatformManager SubplatformMgr = new SubplatformManager(Uow);
 
-        private static ExtensionMethods ExtensionMethods = new ExtensionMethods();
+        private static readonly IAccountManager AccountMgr =
+            new AccountManager(new IntegratieUserStore(Uow.UnitOfWork), Uow);
 
-        private static bool Stop = false;
+        private static readonly IItemManager ItemMgr = new ItemManager(Uow);
+        private static readonly ISubplatformManager SubplatformMgr = new SubplatformManager(Uow);
+
+        private static readonly ExtensionMethods ExtensionMethods = new ExtensionMethods();
+
+        private static bool Stop;
         private static Profile SelectedProfile;
         private static Subplatform SelectedSubplatform;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             //Handles CLI options/args and acts accordingly
             HandleCLIArgs(args);
@@ -80,6 +80,7 @@ namespace UI_CA_Prototype
                     Console.WriteLine(e.Message);
                     Console.WriteLine();
                 }
+
                 Console.WriteLine("\n");
             }
         }
@@ -105,19 +106,27 @@ namespace UI_CA_Prototype
                         SelectedSubplatform = ExtensionMethods.SelectSubplatform(SubplatformMgr.GetSubplatforms());
                         break;
                     case 4:
-                        if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
+                        if (SelectedProfile == null)
+                            throw new Exception(
+                                "U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
                         AccountMgr.AddSubscription(SelectedProfile, ExtensionMethods.SelectItem(ItemMgr.GetPersons()));
                         break;
                     case 5:
-                        if (SelectedProfile == null) throw new Exception("U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
-                        AccountMgr.RemoveSubscription(SelectedProfile, ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
+                        if (SelectedProfile == null)
+                            throw new Exception(
+                                "U heeft nog geen account geselecteerd, gelieve er eerst een te kiezen");
+                        AccountMgr.RemoveSubscription(SelectedProfile,
+                            ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
                         break;
                     case 6:
                         AccountMgr.SendWeeklyReviews();
                         break;
                     case 7:
-                        if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
-                        int days = int.Parse(SelectedSubplatform.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
+                        if (SelectedSubplatform == null)
+                            throw new Exception(
+                                "U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
+                        int days = int.Parse(SelectedSubplatform.Settings
+                            .FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
                         ItemMgr.CleanupOldRecords(SelectedSubplatform);
                         break;
                     case 8:
@@ -163,31 +172,43 @@ namespace UI_CA_Prototype
             bool GenerateAlerts = false;
             bool QuietMode = false;
             //Available CLI options
-            CLIOptions = new OptionSet {
-                {"c|cleanup-db:", "Cleans the database of old records for the given subplatform and exits program. If no subplatforms are given, the database will clean up old records for all subplatforms. This option can be called multiple times.", cdb =>
+            CLIOptions = new OptionSet
+            {
+                {
+                    "c|cleanup-db:",
+                    "Cleans the database of old records for the given subplatform and exits program. If no subplatforms are given, the database will clean up old records for all subplatforms. This option can be called multiple times.",
+                    cdb =>
                     {
-                        if (cdb == null && SubplatformsToClear.Count == 0) {
+                        if (cdb == null && SubplatformsToClear.Count == 0)
+                        {
                             SubplatformsToClear.AddRange(SubplatformMgr.GetSubplatforms());
                             CleanupAll = true;
                         }
+
                         if (!CleanupAll)
                         {
                             if (Subplatforms == null) Subplatforms = SubplatformMgr.GetSubplatforms().ToList();
-                            Subplatform subplatform = Subplatforms.FirstOrDefault(s => s.Name.Replace(" ", "").ToLower().Equals(cdb.Replace(" ", "").ToLower()));
+                            Subplatform subplatform = Subplatforms.FirstOrDefault(s =>
+                                s.Name.Replace(" ", "").ToLower().Equals(cdb.Replace(" ", "").ToLower()));
                             if (subplatform == null) Console.WriteLine("'" + cdb + "' is not a known subplatform");
                             else SubplatformsToClear.Add(subplatform);
                         }
                     }
                 },
-                {"g|generate-alerts", "Will generate alerts for all current profiles with subscriptions and update item trending status.", g => GenerateAlerts = (g != null) },
-                {"h|help", "Shows this message and exits.", h =>
+                {
+                    "g|generate-alerts",
+                    "Will generate alerts for all current profiles with subscriptions and update item trending status.",
+                    g => GenerateAlerts = g != null
+                },
+                {
+                    "h|help", "Shows this message and exits.", h =>
                     {
                         ShowHelp();
                         Environment.Exit(0);
                     }
                 },
-                {"q|quiet", "Will execute parsed commands and close quietly.", q => QuietMode = (q != null) },
-                {"s|sync", "Will use data from TextGainAPI to sync the database.", s => WillSeed = (s != null) },
+                {"q|quiet", "Will execute parsed commands and close quietly.", q => QuietMode = q != null},
+                {"s|sync", "Will use data from TextGainAPI to sync the database.", s => WillSeed = s != null}
             };
 
 
@@ -229,7 +250,8 @@ namespace UI_CA_Prototype
                 {
                     SubplatformsToClear.ForEach(s =>
                     {
-                        int days = int.Parse(s.Settings.FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
+                        int days = int.Parse(s.Settings
+                            .FirstOrDefault(se => se.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value);
                         Console.WriteLine("Clear " + s.Name + " from records older than " + days + " days");
                         ItemMgr.CleanupOldRecords(s);
                     });
@@ -241,6 +263,7 @@ namespace UI_CA_Prototype
                     Console.ReadKey();
                     Environment.Exit(1);
                 }
+
                 Console.WriteLine(" ");
             }
 
@@ -279,7 +302,8 @@ namespace UI_CA_Prototype
             {
                 ItemManager.IsSyncing = true;
                 //Makes PB subplatform
-                Subplatform pbSubplatform = SubplatformMgr.GetSubplatforms().FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
+                Subplatform pbSubplatform = SubplatformMgr.GetSubplatforms()
+                    .FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
                 ItemMgr.SyncDatabase(pbSubplatform);
 
                 ItemManager.IsSyncing = false;

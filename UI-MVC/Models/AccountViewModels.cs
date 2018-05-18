@@ -7,12 +7,9 @@ using System.Web;
 
 namespace UI_MVC.Models
 {
-
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Required] [Display(Name = "Email")] public string Email { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -30,12 +27,9 @@ namespace UI_MVC.Models
 
     public class VerifyCodeViewModel
     {
-        [Required]
-        public string Provider { get; set; }
+        [Required] public string Provider { get; set; }
 
-        [Required]
-        [Display(Name = "Code")]
-        public string Code { get; set; }
+        [Required] [Display(Name = "Code")] public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
         [Display(Name = "Remember this browser?")]
@@ -46,7 +40,6 @@ namespace UI_MVC.Models
 
     public class LoginViewModel
     {
-
         [Required]
         [Display(Name = "Username")]
         public string Username { get; set; }
@@ -56,8 +49,7 @@ namespace UI_MVC.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
+        [Display(Name = "Remember me?")] public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
@@ -85,7 +77,6 @@ namespace UI_MVC.Models
 
     public class ResetPasswordViewModel
     {
-
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
         [DataType(DataType.Password)]
@@ -102,6 +93,7 @@ namespace UI_MVC.Models
         [Display(Name = "Confirm password")]
         [Compare("NewPassword", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
         //public string Code { get; set; }
     }
 
@@ -116,7 +108,6 @@ namespace UI_MVC.Models
     public class AlertsViewModel
     {
         public List<Alert> Alerts { get; set; }
-
     }
 
     public class AccountEditModel
@@ -125,9 +116,11 @@ namespace UI_MVC.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
         [Required]
         [Display(Name = "Username")]
         public string UserName { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Street { get; set; }
@@ -138,7 +131,6 @@ namespace UI_MVC.Models
 
         public AccountEditModel()
         {
-
         }
 
         public AccountEditModel(Profile profile)
@@ -165,7 +157,6 @@ namespace UI_MVC.Models
                     City = City,
                     Province = Province,
                     PostalCode = PostalCode,
-
                 },
                 Email = Email
             };
@@ -174,7 +165,5 @@ namespace UI_MVC.Models
 
     public class DeleteProfileModel
     {
-
     }
-
 }

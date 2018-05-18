@@ -1,6 +1,6 @@
-﻿using PB.BL.Domain.Platform;
+﻿using System.Collections.Generic;
+using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
-using System.Collections.Generic;
 
 namespace PB.DAL
 {

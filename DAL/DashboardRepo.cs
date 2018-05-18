@@ -1,8 +1,8 @@
-﻿using PB.BL.Domain.Dashboards;
-using PB.DAL.EF;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using PB.BL.Domain.Dashboards;
+using PB.DAL.EF;
 
 namespace PB.DAL
 {

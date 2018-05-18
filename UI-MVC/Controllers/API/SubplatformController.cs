@@ -1,20 +1,19 @@
-﻿using PB.BL;
-using PB.BL.Domain.Platform;
-using PB.BL.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using PB.BL;
+using PB.BL.Domain.Platform;
+using PB.BL.Interfaces;
 
 namespace UI_MVC.Controllers.API
 {
     public class SubplatformController : ApiController
     {
+        private readonly ISubplatformManager SubplatformMgr;
 
         private readonly UnitOfWorkManager UowMgr;
-        private readonly ISubplatformManager SubplatformMgr;
+
         public SubplatformController()
         {
             UowMgr = new UnitOfWorkManager();
@@ -22,7 +21,7 @@ namespace UI_MVC.Controllers.API
         }
 
         [HttpPost]
-        public IHttpActionResult GetTags([FromBody]String name)
+        public IHttpActionResult GetTags([FromBody] string name)
         {
             Page page = SubplatformMgr.GetPage(name);
             IEnumerable<Tag> tags = page.Tags.ToList();

@@ -10,12 +10,13 @@ namespace UI_MVC
             bundles.IgnoreList.Clear();
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-3.3.1.js"));
+                "~/Scripts/jquery-3.3.1.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrapjs").Include(
-                        "~/Scripts/bootstrap.js"));
+                "~/Scripts/bootstrap.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/adminator").Include("~/Scripts/load.js", "~/Scripts/vendor.js", "~/Scripts/bundle.js"));
+            bundles.Add(new ScriptBundle("~/bundles/adminator").Include("~/Scripts/load.js", "~/Scripts/vendor.js",
+                "~/Scripts/bundle.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/changetheme").Include("~/Scripts/Changetheme.js"));
 
@@ -23,10 +24,13 @@ namespace UI_MVC
 
             bundles.Add(new ScriptBundle("~/bundles/AccountControl").Include("~/Scripts/AccountControl.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/Dashboard").Include("~/Scripts/Dashboard/DashboardControl.js", "~/Scripts/Dashboard/Dashboard.js"));
-            
+            bundles.Add(new ScriptBundle("~/bundles/Dashboard").Include("~/Scripts/Dashboard/DashboardControl.js",
+                "~/Scripts/Dashboard/Dashboard.js"));
+
             bundles.Add(new StyleBundle("~/Content/bootstrapcss").Include("~/Content/bootstrap.css"));
-            bundles.Add(new StyleBundle("~/Content/dashboardcss").Include("~/Content/Styling/Grid/gridstack.css", "~/Content/Styling/Grid/gridstack-extra.css", "~/Content/Styling/Wizard/material-bootstrap-wizard.css"));
+            bundles.Add(new StyleBundle("~/Content/dashboardcss").Include("~/Content/Styling/Grid/gridstack.css",
+                "~/Content/Styling/Grid/gridstack-extra.css",
+                "~/Content/Styling/Wizard/material-bootstrap-wizard.css"));
         }
     }
 }

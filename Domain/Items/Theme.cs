@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
@@ -9,20 +8,19 @@ namespace PB.BL.Domain.Items
     [Table("tblTheme")]
     public class Theme : Item
     {
-        [DataMember]
-        public string Description { get; set; }
+        [DataMember] public string Description { get; set; }
 
-        
+
         public virtual List<Record> Records { get; set; }
-        
+
         public virtual List<Person> Persons { get; set; }
-       
+
         public virtual List<Organisation> Organisations { get; set; }
 
         public override bool Equals(object obj)
         {
             return obj is Theme theme &&
-                    Name.ToLower().Equals(theme.Name.ToLower());
+                   Name.ToLower().Equals(theme.Name.ToLower());
         }
 
         public override int GetHashCode()
@@ -34,7 +32,7 @@ namespace PB.BL.Domain.Items
 
         public override string ToString()
         {
-            return Name + ": " + Description + " (Id: " + (ItemId) + ") - Aantal records: ";
+            return Name + ": " + Description + " (Id: " + ItemId + ") - Aantal records: ";
         }
     }
 }

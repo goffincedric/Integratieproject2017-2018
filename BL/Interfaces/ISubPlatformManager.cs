@@ -1,7 +1,7 @@
-﻿using PB.BL.Domain.Accounts;
+﻿using System.Collections.Generic;
+using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
-using System.Collections.Generic;
 
 namespace PB.BL.Interfaces
 {
@@ -14,7 +14,9 @@ namespace PB.BL.Interfaces
         void ChangeSubplatform(Subplatform subplatform);
         void RemoveSubplatform(int subplatformId);
 
-        SubplatformSetting AddSubplatformSetting(Setting.Platform settingName, int subplatformId, string value, bool isEnabled);
+        SubplatformSetting AddSubplatformSetting(Setting.Platform settingName, int subplatformId, string value,
+            bool isEnabled);
+
         void ChangeSubplatformSetting(Subplatform subplatform, SubplatformSetting setting);
         void ChangeSubplatformSettings(Subplatform subplatform, List<SubplatformSetting> settings);
         SubplatformSetting GetSubplatformSetting(int subplatformId, Setting.Platform settingname);
@@ -29,7 +31,7 @@ namespace PB.BL.Interfaces
 
         IEnumerable<Tag> GetTags();
         IEnumerable<Tag> GetTags(int pageId);
-        Tag AddTag(int pageId,string name, string text);
+        Tag AddTag(int pageId, string name, string text);
         Tag GetTag(int tagId);
         Tag GetTag(string name);
         void ChangeTag(Tag tag);

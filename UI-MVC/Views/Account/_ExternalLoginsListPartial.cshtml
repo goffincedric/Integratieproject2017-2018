@@ -13,14 +13,15 @@
   }
   else
   {
-    using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+    using (Html.BeginForm("ExternalLogin", "Account", new {ReturnUrl = Model.ReturnUrl}))
     {
       @Html.AntiForgeryToken()
       <div id="socialLoginList">
         <div class="btn-toolbar">
           @foreach (AuthenticationDescription p in loginProviders)
           {
-            <button class="btnLoginProviders btn btn-lg" type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i></i> @p.AuthenticationType</button>
+            <button class="btnLoginProviders btn btn-lg" type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">
+              <i></i> @p.AuthenticationType</button>
           }
         </div>
       </div>
@@ -37,5 +38,3 @@
   $("button:nth-child(2) i").addClass("fa fa-facebook");
   $("button:nth-child(3) i").addClass("fa fa-twitter pr-1");
 </script>
-
-

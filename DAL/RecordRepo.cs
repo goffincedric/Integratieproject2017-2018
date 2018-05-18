@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using PB.BL.Domain.Items;
-using PB.BL.Domain.JSONConversion;
 using PB.DAL.EF;
 
 namespace PB.DAL
@@ -32,7 +27,7 @@ namespace PB.DAL
             ctx.SaveChanges();
             return record;
         }
-        
+
         public IEnumerable<Record> CreateRecords(IEnumerable<Record> records)
         {
             ctx.Records.AddRange(records);
@@ -98,6 +93,13 @@ namespace PB.DAL
             return ctx.Urls.AsEnumerable();
         }
 
+        public void UpdateRecord(Record record)
+        {
+            ctx.Records.Attach(record);
+            ctx.Entry(record).State = EntityState.Modified;
+            ctx.SaveChanges();
+        }
+
         public Mention ReadMention(string name)
         {
             return ctx.Mentions.FirstOrDefault(m => m.Name.ToLower().Equals(name.ToLower()));
@@ -118,18 +120,10 @@ namespace PB.DAL
             return ctx.Urls.FirstOrDefault(u => u.Link.ToLower().Equals(link.ToLower()));
         }
 
-        public void UpdateRecord(Record record)
+        public IEnumerable<Record> GetAllRecordsBefore(Person person, DateTime end)
         {
-            ctx.Records.Attach(record);
-            ctx.Entry(record).State = EntityState.Modified;
-            ctx.SaveChanges();
+            return ctx.Records.Where(x => x.Date < end)
+                .Concat(ctx.Records.Where(r => r.Persons.Contains(person)));
         }
-
-        public IEnumerable<Record> GetAllRecordsBefore(Person person, DateTime end) =>
-          // Returnt een lijst van Records met vermelding van dezelfde politieker. Er kan een einddatum worden meegegeven. 
-          ctx.Records.Where(x => x.Date < end)
-            .Concat(ctx.Records.Where(r => r.Persons.Contains(person)));
     }
 }
-
-
