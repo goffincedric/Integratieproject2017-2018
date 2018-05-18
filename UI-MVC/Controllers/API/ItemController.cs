@@ -512,8 +512,9 @@ namespace UI_MVC.Controllers.API
             {
                 IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
                     .ToList().Where(p => p.Sentiment.Polarity != 0.0)
-                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(10);
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date);
+                records = theme.Persons.SelectMany(p => p.Records).ToList().Where(p => p.Sentiment.Polarity != 0.0)
+                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Except(first).ToList().Take(10);
             }
 
             Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
