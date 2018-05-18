@@ -1,11 +1,5 @@
-﻿main.bgc-grey-100 {
-    background-color: transparent !important;
-}
+﻿main.bgc-grey-100 { background-color: transparent !important; }
 
-.header-container .nav-right .themes .dropdown-menu {
-    min-width: 150px;
-}
+.header-container .nav-right .themes .dropdown-menu { min-width: 150px; }
 
-body {
-    background-color: #f9fafb
-}
+body { background-color: #f9fafb }

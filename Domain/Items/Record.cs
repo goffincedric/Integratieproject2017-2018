@@ -1,5 +1,4 @@
-﻿using PB.BL.Domain.Items;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,8 +8,8 @@ namespace PB.BL.Domain.Items
     [Table("tblRecord")]
     public class Record
     {
-        [Key]
-        public long Tweet_Id { get; set; }
+        [Key] public long Tweet_Id { get; set; }
+
         public string Source { get; set; }
         public double? Longitude { get; set; }
         public double? Latitude { get; set; }
@@ -30,7 +29,7 @@ namespace PB.BL.Domain.Items
 
         public override string ToString()
         {
-            string text = Date.ToString() + " - Persons: ";
+            string text = Date + " - Persons: ";
             Persons.ForEach(p => text += p.Name + ", ");
             return text.Substring(0, text.Length - 2) + " (" + Tweet_Id + ")";
         }

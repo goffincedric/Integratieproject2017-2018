@@ -1,8 +1,8 @@
-﻿using PB.BL.Domain.Items;
-using PB.DAL.EF;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using PB.BL.Domain.Items;
+using PB.DAL.EF;
 
 namespace PB.DAL
 {
@@ -38,7 +38,7 @@ namespace PB.DAL
             ctx.SaveChanges();
             return items;
         }
-        
+
         public void DeleteItem(int itemId)
         {
             Item item = ReadItem(itemId);
@@ -179,10 +179,7 @@ namespace PB.DAL
 
         public void UpdateItems(List<Item> items)
         {
-            items.ForEach(item =>
-            {
-                ctx.Items.Attach(item);
-            });
+            items.ForEach(item => { ctx.Items.Attach(item); });
             ctx.SaveChanges();
         }
 
@@ -199,13 +196,14 @@ namespace PB.DAL
             ctx.Entry(keyword).State = EntityState.Modified;
             ctx.SaveChanges();
         }
+
         public void UpdateTheme(Theme theme)
         {
             ctx.Themes.Attach(theme);
             ctx.Entry(theme).State = EntityState.Modified;
             ctx.SaveChanges();
-
         }
+
         public void UpdateOrganisation(Organisation organisation)
         {
             ctx.Organisations.Attach(organisation);

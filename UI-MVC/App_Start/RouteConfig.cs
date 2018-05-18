@@ -14,7 +14,13 @@ namespace UI_MVC
             routes.MapRoute(
                 name: "Default",
                 url: "{subplatform}/{controller}/{action}/{id}",
-                defaults: new { subplatform = "politieke-barometer", controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new
+                {
+                    subplatform = "politieke-barometer",
+                    controller = "Home",
+                    action = "Index",
+                    id = UrlParameter.Optional
+                }
             );
         }
     }

@@ -1,15 +1,15 @@
-﻿using Domain.Accounts;
-using Microsoft.AspNet.Identity.EntityFramework;
-using PB.BL.Domain.Accounts;
-using PB.BL.Domain.Dashboards;
-using PB.BL.Domain.Items;
-using PB.BL.Domain.Platform;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
 using System.Threading.Tasks;
+using Domain.Accounts;
+using Microsoft.AspNet.Identity.EntityFramework;
+using PB.BL.Domain.Accounts;
+using PB.BL.Domain.Dashboards;
+using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
 
 namespace PB.DAL.EF
 {
@@ -18,9 +18,8 @@ namespace PB.DAL.EF
     {
         private readonly bool delaySave;
 
-        public IntegratieDbContext() : base("IntegratieDB_EFCodeFirst", throwIfV1Schema: false)
+        public IntegratieDbContext() : base("IntegratieDB_EFCodeFirst", false)
         {
-
         }
 
         public IntegratieDbContext(bool unitOfworkPresent = false) : base("IntegratieDB_EFCodeFirst")
@@ -28,6 +27,41 @@ namespace PB.DAL.EF
             //Database.SetInitializer(new IntegratieDbInitializer()); // Verplaatst naar DbConfiguration
             delaySave = unitOfworkPresent;
         }
+
+
+        public DbSet<UserData> UserData { get; set; }
+        public DbSet<UserSetting> UserSettings { get; set; }
+        public DbSet<WeeklyReview> WeeklyReviews { get; set; }
+        public DbSet<ProfileAlert> ProfileAlerts { get; set; }
+        public DbSet<Alert> Alerts { get; set; }
+
+        public DbSet<Comparison> Comparisons { get; set; }
+        public DbSet<Dashboard> Dashboards { get; set; }
+
+        public DbSet<Element> Elements { get; set; }
+
+        //public DbSet<Graph> Graphs { get; set; }
+        //public DbSet<Map> Maps { get; set; }
+        //public DbSet<Ranking> Rankings { get; set; }
+        public DbSet<Zone> Zones { get; set; }
+
+        //public DbSet<Function> Functions { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<Keyword> Keywords { get; set; }
+        public DbSet<Organisation> Organisations { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Record> Records { get; set; }
+        public DbSet<Theme> Themes { get; set; }
+        public DbSet<Mention> Mentions { get; set; }
+        public DbSet<Url> Urls { get; set; }
+        public DbSet<Word> Words { get; set; }
+        public DbSet<Hashtag> Hashtags { get; set; }
+
+        public DbSet<Page> Pages { get; set; }
+        public DbSet<Style> Styles { get; set; }
+        public DbSet<Subplatform> Subplatforms { get; set; }
+        public DbSet<SubplatformSetting> SubplatformSettings { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
 
         public static IntegratieDbContext Create()
@@ -98,7 +132,7 @@ namespace PB.DAL.EF
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<WeeklyReviewProfileAlert>()
-                .HasKey(wrpa => new { wrpa.WeeklyReviewId, wrpa.ProfileAlertId });
+                .HasKey(wrpa => new {wrpa.WeeklyReviewId, wrpa.ProfileAlertId});
 
             modelBuilder.Entity<ProfileAlert>()
                 .HasMany(pa => pa.WeeklyReviewsProfileAlerts)
@@ -229,19 +263,17 @@ namespace PB.DAL.EF
                     Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                         eve.Entry.Entity.GetType().Name, eve.Entry.State);
                     foreach (var ve in eve.ValidationErrors)
-                    {
                         Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
                             ve.PropertyName, ve.ErrorMessage);
-                    }
                 }
             }
+
             return -1;
         }
 
         internal int CommitChanges()
         {
             if (delaySave)
-            {
                 try
                 {
                     return base.SaveChanges();
@@ -249,75 +281,32 @@ namespace PB.DAL.EF
                 catch (DbEntityValidationException dbEx)
                 {
                     foreach (var validationErrors in dbEx.EntityValidationErrors)
-                    {
-                        foreach (var validationError in validationErrors.ValidationErrors)
-                        {
-                            Console.WriteLine("Property: {0} Error: {1}",
-                                                    validationError.PropertyName,
-                                                    validationError.ErrorMessage);
-                        }
-                    }
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                        Console.WriteLine("Property: {0} Error: {1}",
+                            validationError.PropertyName,
+                            validationError.ErrorMessage);
                 }
-            }
+
             throw new InvalidOperationException("Geen UnitOfWork presented, gebruik SaveChanges in de plaats");
         }
 
-        async internal Task<int> CommitChangesAsync()
+        internal async Task<int> CommitChangesAsync()
         {
             if (delaySave)
-            {
                 try
                 {
-                    return await base.SaveChangesAsync();
+                    return await SaveChangesAsync();
                 }
                 catch (DbEntityValidationException dbEx)
                 {
                     foreach (var validationErrors in dbEx.EntityValidationErrors)
-                    {
-                        foreach (var validationError in validationErrors.ValidationErrors)
-                        {
-                            Console.WriteLine("Property: {0} Error: {1}",
-                                                    validationError.PropertyName,
-                                                    validationError.ErrorMessage);
-                        }
-                    }
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                        Console.WriteLine("Property: {0} Error: {1}",
+                            validationError.PropertyName,
+                            validationError.ErrorMessage);
                 }
-            }
+
             throw new InvalidOperationException("Geen UnitOfWork presented, gebruik SaveChanges in de plaats");
         }
-
-
-        public DbSet<UserData> UserData { get; set; }
-        public DbSet<UserSetting> UserSettings { get; set; }
-        public DbSet<WeeklyReview> WeeklyReviews { get; set; }
-        public DbSet<ProfileAlert> ProfileAlerts { get; set; }
-        public DbSet<Alert> Alerts { get; set; }
-
-        public DbSet<Comparison> Comparisons { get; set; }
-        public DbSet<Dashboard> Dashboards { get; set; }
-        public DbSet<Element> Elements { get; set; }
-        //public DbSet<Graph> Graphs { get; set; }
-        //public DbSet<Map> Maps { get; set; }
-        //public DbSet<Ranking> Rankings { get; set; }
-        public DbSet<Zone> Zones { get; set; }
-
-        //public DbSet<Function> Functions { get; set; }
-        public DbSet<Item> Items { get; set; }
-        public DbSet<Keyword> Keywords { get; set; }
-        public DbSet<Organisation> Organisations { get; set; }
-        public DbSet<Person> Persons { get; set; }
-        public DbSet<Record> Records { get; set; }
-        public DbSet<Theme> Themes { get; set; }
-        public DbSet<Mention> Mentions { get; set; }
-        public DbSet<Url> Urls { get; set; }
-        public DbSet<Word> Words { get; set; }
-        public DbSet<Hashtag> Hashtags { get; set; }
-
-        public DbSet<Page> Pages { get; set; }
-        public DbSet<Style> Styles { get; set; }
-        public DbSet<Subplatform> Subplatforms { get; set; }
-        public DbSet<SubplatformSetting> SubplatformSettings { get; set; }
-        public DbSet<Tag> Tags { get; set; }
-
     }
 }

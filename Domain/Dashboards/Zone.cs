@@ -7,8 +7,8 @@ namespace PB.BL.Domain.Dashboards
     [Table("tblZone")]
     public class Zone
     {
-        [Key]
-        public int ZoneId { get; set; }
+        [Key] public int ZoneId { get; set; }
+
         public string Title { get; set; }
         public int DashboardId { get; set; }
 

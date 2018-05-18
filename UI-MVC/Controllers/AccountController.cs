@@ -1,42 +1,46 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using PB.BL;
-using PB.BL.Domain.Accounts;
-using PB.BL.Domain.Settings;
-using PB.BL.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using PB.BL.Domain.Items;
-using UI_MVC.Models;
-using PB.BL.Domain.Platform;
-using System.Linq;
-using PB.DAL.EF;
-using System.IO;
 using Domain.Accounts;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using Newtonsoft.Json;
+using PB.BL;
+using PB.BL.Domain.Accounts;
+using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
+using PB.BL.Domain.Settings;
+using PB.BL.Interfaces;
+using PB.DAL.EF;
+using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
 {
-    /// <summary>   
-    /// Controller for everything that has to handle with account or to get an account
-    /// Authorized by all roles
-    /// </summary> 
+    /// <summary>
+    ///     Controller for everything that has to handle with account or to get an account
+    ///     Authorized by all roles
+    /// </summary>
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     [RequireHttps]
     public class AccountController : Controller
     {
-        private static readonly UnitOfWorkManager uow = new UnitOfWorkManager();
+
+        private readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private AccountManager _accountMgr;
         private IntegratieSignInManager _signInManager;
-        private readonly SubplatformManager SubplatformMgr = new SubplatformManager(uow);
+        private readonly SubplatformManager SubplatformMgr;
         private ItemManager _itemMgr;
+    
 
         public AccountController()
         {
+            SubplatformMgr = new SubplatformManager(uow);
+
             ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
             ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
             ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
@@ -47,52 +51,53 @@ namespace UI_MVC.Controllers
             ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
         }
 
-        public IntegratieSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<IntegratieSignInManager>();
-            }
-            private set
-            {
-                _signInManager = value;
-            }
-        }
-
-        public AccountManager UserManager
-        {
-            get
-            {
-                return _accountMgr ?? HttpContext.GetOwinContext().GetUserManager<AccountManager>();
-            }
-            private set
-            {
-                _accountMgr = value;
-            }
-        }
-
-        public ItemManager ItemMgr
-        {
-            get
-            {
-                return _itemMgr ?? new ItemManager(HttpContext.GetOwinContext().Get<IntegratieDbContext>()); ;
-            }
-            private set
-            {
-                _itemMgr = value;
-            }
-        }
-
-        public AccountController(AccountManager userManager, IntegratieSignInManager signInManager, ItemManager itemManager)
+        public AccountController(AccountManager userManager, IntegratieSignInManager signInManager,
+            ItemManager itemManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
             _itemMgr = itemManager;
         }
 
+        public IntegratieSignInManager SignInManager
+        {
+            get => _signInManager ?? HttpContext.GetOwinContext().Get<IntegratieSignInManager>();
+            private set => _signInManager = value;
+        }
+
+        public AccountManager UserManager
+        {
+            get => _accountMgr ?? HttpContext.GetOwinContext().GetUserManager<AccountManager>();
+            private set => _accountMgr = value;
+        }
+
+        public ItemManager ItemMgr
+        {
+            get => _itemMgr ?? new ItemManager(HttpContext.GetOwinContext().Get<IntegratieDbContext>());
+            private set => _itemMgr = value;
+        }
+
+        #region Alerts
+
+        public ActionResult WeeklyReview()
+        {
+            WeeklyReview weeklyReview = UserManager.GetLatestWeeklyReview(User.Identity.GetUserId());
+            if (weeklyReview is null) return View(weeklyReview);
+
+            Person person = ItemMgr.GetPerson(weeklyReview.TopPersonId);
+            if (person.IconURL is null)
+                ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Users/user.png");
+            else
+                ViewBag.Icon = VirtualPathUtility.ToAbsolute(person.IconURL);
+
+            return View(weeklyReview);
+        }
+
+        #endregion
 
 
         #region LoginRegister
+
         [AllowAnonymous]
         public ActionResult Login(string subplatform, string returnUrl)
         {
@@ -106,12 +111,10 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(string subplatform, LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            if (!ModelState.IsValid) return View(model);
 
-            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: true);
+            var result =
+                await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, true);
 
             switch (result)
             {
@@ -148,52 +151,54 @@ namespace UI_MVC.Controllers
                 {
                     UserName = model.Username,
                     Email = model.Email,
-                    ProfileIcon = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_NEW_USER_ICON).Value
-                    ,
+                    ProfileIcon =
+                        SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId,
+                            Setting.Platform.DEFAULT_NEW_USER_ICON).Value,
                     CreatedOn = DateTime.Today
                 };
-                user.UserData = new UserData() { Profile = user };
+                user.UserData = new UserData {Profile = user};
                 user.Settings = new List<UserSetting>
                 {
-                    new UserSetting()
+                    new UserSetting
                     {
                         Profile = user,
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
-                        Value = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME).Value,
+                        Value = SubplatformMgr
+                            .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME).Value,
                         boolValue = false
                     },
-                     new UserSetting()
+                    new UserSetting
                     {
                         Profile = user,
                         IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
-                        Value=null, //moet nog boolean worden
-                        boolValue=true
-                    },
-                    new UserSetting()
-                    {
-                        Profile = user,
-                        IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
-                        Value=null, //moet nog boolean worden
-                        boolValue=true
-                    },
-                    new UserSetting()
-                    {
-                        Profile = user,
-                        IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
-                        Value=null, //moet nog boolean worden
+                        SettingName = Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
+                        Value = null, //moet nog boolean worden
                         boolValue = true
                     },
-                      new UserSetting()
+                    new UserSetting
                     {
                         Profile = user,
                         IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
-                        Value=null, //moet nog boolean worden
-                        boolValue=true
+                        SettingName = Setting.Account.WANTS_SITE_NOTIFICATIONS,
+                        Value = null, //moet nog boolean worden
+                        boolValue = true
+                    },
+                    new UserSetting
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName = Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
+                        Value = null, //moet nog boolean worden
+                        boolValue = true
+                    },
+                    new UserSetting
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName = Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
+                        Value = null, //moet nog boolean worden
+                        boolValue = true
                     }
                 };
 
@@ -203,12 +208,14 @@ namespace UI_MVC.Controllers
                     //Assign Role to user
                     await UserManager.AddToRoleAsync(user.Id, "User");
                     //Login
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    await SignInManager.SignInAsync(user, false, false);
 
-                    return RedirectToAction("Index", "Home", new { subplatform });
+                    return RedirectToAction("Index", "Home", new {subplatform});
                 }
+
                 AddErrors(result);
             }
+
             return View(model);
         }
 
@@ -217,16 +224,19 @@ namespace UI_MVC.Controllers
         public ActionResult LogOff(string subplatform)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home", new { subplatform });
+            return RedirectToAction("Index", "Home", new {subplatform});
         }
+
         #endregion
 
         #region Notification
+
         public ActionResult GetNotificationCount(string subplatform)
         {
             Profile user = UserManager.GetProfile(User.Identity.GetUserId());
-            int alertCount = user.ProfileAlerts.FindAll(pa => !pa.IsRead && pa.Alert.Item.SubPlatforms.Find(s => s.URL.ToLower().Equals(subplatform)) != null).Count;
-            return Content(String.Format("{0}", alertCount));
+            int alertCount = user.ProfileAlerts.FindAll(pa =>
+                !pa.IsRead && pa.Alert.Item.SubPlatforms.Find(s => s.URL.ToLower().Equals(subplatform)) != null).Count;
+            return Content(string.Format("{0}", alertCount));
         }
 
         public ActionResult ClickNotification(int id)
@@ -239,7 +249,7 @@ namespace UI_MVC.Controllers
 
             int itemId = profileAlert.Alert.ItemId;
 
-            return RedirectToAction("ItemDetail", "Home", new { id = itemId });
+            return RedirectToAction("ItemDetail", "Home", new {id = itemId});
         }
 
         public ActionResult _NotificationDropdown(string subplatform)
@@ -258,32 +268,8 @@ namespace UI_MVC.Controllers
 
         #endregion
 
-        #region Alerts
-        public ActionResult WeeklyReview()
-        {
-            WeeklyReview weeklyReview = UserManager.GetLatestWeeklyReview(User.Identity.GetUserId());
-            if (weeklyReview is null)
-            {
-                return View(weeklyReview);
-            }
-            else
-            {
-                Person person = ItemMgr.GetPerson(weeklyReview.TopPersonId);
-                if (person.IconURL is null)
-                {
-                    ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Users/user.png");
-                }
-                else
-                {
-                    ViewBag.Icon = VirtualPathUtility.ToAbsolute(person.IconURL);
-                }
-            }
-
-            return View(weeklyReview);
-        }
-        #endregion
-
         #region Account
+
         public ActionResult Account(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -291,15 +277,15 @@ namespace UI_MVC.Controllers
             if (Request.IsAuthenticated)
             {
                 Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
-                ViewBag.ProfileImage = (profile.ProfileIcon is null) ? VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_NEW_USER_ICON).Value) : VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+                ViewBag.ProfileImage = profile.ProfileIcon is null
+                    ? VirtualPathUtility.ToAbsolute(SubplatformMgr
+                        .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_NEW_USER_ICON).Value)
+                    : VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
                 AccountEditModel account = new AccountEditModel(profile);
                 return View(account);
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
+            return RedirectToAction("Index", "Home");
         }
 
         // TODO: MOET PUT ZIJN I.P.V. POST
@@ -316,7 +302,7 @@ namespace UI_MVC.Controllers
                 {
                     _FileName = Path.GetFileName(editedAccount.file.FileName);
 
-                    var username = newProfile.UserName.ToString();
+                    var username = newProfile.UserName;
                     var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
                     string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
                     editedAccount.file.SaveAs(_path);
@@ -339,12 +325,12 @@ namespace UI_MVC.Controllers
             newProfile.UserData.PostalCode = editedAccount.PostalCode;
 
 
-
             if (ModelState.IsValid)
             {
                 UserManager.ChangeProfile(newProfile);
                 return RedirectToAction("Account", "Account");
             }
+
             return View();
         }
 
@@ -357,26 +343,18 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction("Account", "Account");
-            }
+            if (!ModelState.IsValid) return RedirectToAction("Account", "Account");
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
 
-            if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
-            {
-                return RedirectToAction("Account", "Account");
-            }
+            if (UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, model.Password) ==
+                PasswordVerificationResult.Failed) return RedirectToAction("Account", "Account");
 
 
             string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
 
             var result = await UserManager.ResetPasswordAsync(user.Id, code, model.NewPassword);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Account", "Account");
-            }
+            if (result.Succeeded) return RedirectToAction("Account", "Account");
             AddErrors(result);
             return RedirectToAction("Index", "Home");
         }
@@ -390,10 +368,7 @@ namespace UI_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteProfile(string subplatform, DeleteProfileModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction("Account", "Account");
-            }
+            if (!ModelState.IsValid) return RedirectToAction("Account", "Account");
             var user = UserManager.GetProfile(User.Identity.GetUserId());
 
             UserManager.RemoveProfile(user.Id);
@@ -406,13 +381,11 @@ namespace UI_MVC.Controllers
         // TODO: REMOVE USER ROLE FROM AUTHORIZE 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = ("User,Admin,SuperAdmin"))]
+        [Authorize(Roles = "User,Admin,SuperAdmin")]
         public ActionResult DeleteProfileAdmin(string userId)
         {
             if (!ModelState.IsValid || userId.Equals(User.Identity.GetUserId()))
-            {
                 return RedirectToAction("UserBeheer", "Account");
-            }
 
             var user = UserManager.GetProfile(userId);
 
@@ -426,9 +399,11 @@ namespace UI_MVC.Controllers
             IEnumerable<Item> Subscriptions = UserManager.GetProfile(User.Identity.GetUserId()).Subscriptions;
             return View(Subscriptions);
         }
+
         #endregion
 
         #region UserBeheer
+
         public ViewResult UserBeheer()
         {
             return View();
@@ -437,7 +412,8 @@ namespace UI_MVC.Controllers
         public ActionResult _UserTable()
         {
             string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("User")).First().Id;
-            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
+            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList()
+                .Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
             return PartialView(profiles);
         }
 
@@ -445,14 +421,16 @@ namespace UI_MVC.Controllers
         public ActionResult _AdminTable()
         {
             string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("Admin")).First().Id;
-            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
+            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList()
+                .Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
             return PartialView(profiles);
         }
 
         public ActionResult _SuperAdminTable()
         {
             string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("SuperAdmin")).First().Id;
-            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList().Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
+            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList()
+                .Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
             return PartialView(profiles);
         }
 
@@ -495,11 +473,11 @@ namespace UI_MVC.Controllers
         public ActionResult _UserSettingDetails()
         {
             IEnumerable<UserSetting> settings = UserManager.GetProfile(User.Identity.GetUserId()).Settings;
-            UserSettingViewModel oldSettings = new UserSettingViewModel()
+            UserSettingViewModel oldSettings = new UserSettingViewModel
             {
                 WANTS_EMAIL_NOTIFICATIONS = settings.ElementAt(0).boolValue,
                 WANTS_ANDROID_NOTIFICATIONS =
-                settings.ElementAt(1).boolValue,
+                    settings.ElementAt(1).boolValue,
                 WANTS_SITE_NOTIFICATIONS = settings.ElementAt(2).boolValue,
                 WANTS_WEEKLY_REVIEW_VIA_MAIL = settings.ElementAt(4).boolValue
             };
@@ -521,29 +499,29 @@ namespace UI_MVC.Controllers
             UserManager.ChangeProfile(newProfile);
             return RedirectToAction("UserSettings", "Account");
         }
+
         #endregion
 
         #region ExternalLogin
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string subplatform, string provider, string returnUrl)
         {
             // Request a redirect to the external login provider
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { subplatform, returnUrl }));
+            return new ChallengeResult(provider,
+                Url.Action("ExternalLoginCallback", "Account", new {subplatform, returnUrl}));
         }
 
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string subplatform, string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-            if (loginInfo == null)
-            {
-                return RedirectToAction("Login", "Account", new { subplatform, returnUrl });
-            }
+            if (loginInfo == null) return RedirectToAction("Login", "Account", new {subplatform, returnUrl});
 
             // Sign in the user with this external login provider if the user already has a login
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            var result = await SignInManager.ExternalSignInAsync(loginInfo, false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -556,73 +534,76 @@ namespace UI_MVC.Controllers
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.Subplatform = subplatform;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return View("ExternalLoginConfirmation",
+                        new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
             }
         }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(string subplatform, ExternalLoginConfirmationViewModel model, string returnUrl)
+        public async Task<ActionResult> ExternalLoginConfirmation(string subplatform,
+            ExternalLoginConfirmationViewModel model, string returnUrl)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             if (ModelState.IsValid)
             {
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return RedirectToAction("Login", "Account");
-                }
+                if (info == null) return RedirectToAction("Login", "Account");
 
                 var name = info.Email.Split('@')[0];
                 var user = new Profile
                 {
                     UserName = name,
                     Email = model.Email,
-                    ProfileIcon = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_NEW_USER_ICON).Value,
+                    ProfileIcon =
+                        SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId,
+                            Setting.Platform.DEFAULT_NEW_USER_ICON).Value,
                     CreatedOn = DateTime.Today
                 };
-                user.UserData = new UserData() { Profile = user };
+                user.UserData = new UserData {Profile = user};
                 user.Settings = new List<UserSetting>
                 {
-                    new UserSetting()
+                    new UserSetting
                     {
                         Profile = user,
                         IsEnabled = true,
                         SettingName = Setting.Account.THEME,
-                        Value = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME).Value,
+                        Value = SubplatformMgr
+                            .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME).Value,
                         boolValue = false
                     },
-                     new UserSetting()
+                    new UserSetting
                     {
                         Profile = user,
                         IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
-                        Value=null, //moet nog boolean worden
-                        boolValue=true
-                    },
-                    new UserSetting()
-                    {
-                        Profile = user,
-                        IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_SITE_NOTIFICATIONS,
-                        Value=null, //moet nog boolean worden
-                        boolValue=true
-                    },
-                    new UserSetting()
-                    {
-                        Profile = user,
-                        IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
-                        Value=null, //moet nog boolean worden
+                        SettingName = Setting.Account.WANTS_ANDROID_NOTIFICATIONS,
+                        Value = null, //moet nog boolean worden
                         boolValue = true
                     },
-                      new UserSetting()
+                    new UserSetting
                     {
                         Profile = user,
                         IsEnabled = true,
-                        SettingName =Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
-                        Value=null, //moet nog boolean worden
-                        boolValue=true
+                        SettingName = Setting.Account.WANTS_SITE_NOTIFICATIONS,
+                        Value = null, //moet nog boolean worden
+                        boolValue = true
+                    },
+                    new UserSetting
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName = Setting.Account.WANTS_EMAIL_NOTIFICATIONS,
+                        Value = null, //moet nog boolean worden
+                        boolValue = true
+                    },
+                    new UserSetting
+                    {
+                        Profile = user,
+                        IsEnabled = true,
+                        SettingName = Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL,
+                        Value = null, //moet nog boolean worden
+                        boolValue = true
                     }
                 };
 
@@ -634,10 +615,11 @@ namespace UI_MVC.Controllers
                     await UserManager.AddToRoleAsync(user.Id, "User");
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        await SignInManager.SignInAsync(user, false, false);
                         return RedirectToLocal(returnUrl);
                     }
                 }
+
                 AddErrors(result);
             }
 
@@ -649,6 +631,7 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region Export
+
         [HttpPost]
         public JsonResult Export()
         {
@@ -657,7 +640,7 @@ namespace UI_MVC.Controllers
             string json = JsonConvert.SerializeObject(profiles, Formatting.Indented);
             string _path = Path.Combine(Server.MapPath("~/Content/Export/"), "Users.json");
             System.IO.File.WriteAllText(_path, json);
-            return Json(new { fileName = "Users.json", errorMessage = "" });
+            return Json(new {fileName = "Users.json", errorMessage = ""});
         }
 
         [HttpGet]
@@ -666,33 +649,24 @@ namespace UI_MVC.Controllers
             string fullPath = Path.Combine(Server.MapPath("~/Content/Export/"), file);
             return File(fullPath, "application/", file);
         }
+
         #endregion
 
         #region Helpers
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
+
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         private void AddErrors(IdentityResult result)
         {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
+            foreach (var error in result.Errors) ModelState.AddModelError("", error);
         }
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
+            if (Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl);
             return RedirectToAction("Index", "Home");
         }
+
         private const string XsrfKey = "XsrfId";
 
         internal class ChallengeResult : HttpUnauthorizedResult
@@ -715,18 +689,12 @@ namespace UI_MVC.Controllers
 
             public override void ExecuteResult(ControllerContext context)
             {
-                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
-                if (UserId != null)
-                {
-                    properties.Dictionary[XsrfKey] = UserId;
-                }
+                var properties = new AuthenticationProperties {RedirectUri = RedirectUri};
+                if (UserId != null) properties.Dictionary[XsrfKey] = UserId;
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
 
-
         #endregion
-
-
     }
 }

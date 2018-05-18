@@ -1,4 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Domain.JSONConversion;
+using Newtonsoft.Json;
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
@@ -10,26 +15,20 @@ using PB.BL.RestClient;
 using PB.DAL;
 using PB.DAL.EF;
 using PB.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PB.BL
 {
     public class ItemManager : IItemManager
     {
+        public static volatile bool IsSyncing;
+        private IAlertRepo AlertRepo;
         private IItemRepo ItemRepo;
         private IRecordRepo RecordRepo;
-        private IAlertRepo AlertRepo;
-
-        public volatile static bool IsSyncing;
 
         private UnitOfWorkManager UowManager;
 
         public ItemManager()
         {
-
         }
 
         public ItemManager(IntegratieDbContext context)
@@ -44,17 +43,106 @@ namespace PB.BL
             RecordRepo = new RecordRepo(uowMgr.UnitOfWork);
         }
 
+        public void SyncDatabase(Subplatform subplatform)
+        {
+            // Set IsSyncing flag
+            IsSyncing = true;
+            SyncDatabaseAsync(subplatform).GetAwaiter().GetResult();
+
+            // Set IsSyncing flag
+            IsSyncing = false;
+        }
+
+        public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
+        {
+            InitNonExistingRepo();
+
+            // Validation
+            if (subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.DAYS_TO_KEEP_RECORDS) is
+                null) throw new Exception("Subplatform has no set period to keep records!");
+            if (subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.SOURCE_API_URL) is null)
+                throw new Exception("Subplatform has no set API url!");
+
+            // Injects api seed data
+            APICalls restClient = new APICalls
+            {
+                API_URL = subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.SOURCE_API_URL)
+                    .Value
+            };
+
+            // Add themes and keywords to dictionary
+            Dictionary<string, string[]> ThemesAndKeywords = new Dictionary<string, string[]>();
+            ItemRepo.ReadThemes().Where(k => k.SubPlatforms.Contains(subplatform)).ToList().ForEach(t =>
+            {
+                ThemesAndKeywords.Add(t.Name, t.Keywords.Select(k => k.Name).ToArray());
+            });
+
+            // Call API with request
+            List<JClass> requestedRecords = new List<JClass>();
+            try
+            {
+                requestedRecords.AddRange(restClient.RequestRecords(
+                    since: DateTime.Now.AddDays(-int.Parse(subplatform.Settings
+                        .First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value)),
+                    themes: ThemesAndKeywords));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.GetType().Name + ": " + e.Message);
+                if (e.InnerException != null) Console.WriteLine("Inner Exception: " + e.InnerException);
+                throw e;
+            }
+
+            // Link items to subplatform
+            requestedRecords.ForEach(r => r.Subplatforms.Add(subplatform));
+
+            //Convert JClass to Record and persist to database
+            List<Record> newRecords = JClassToRecord(requestedRecords);
+
+            // Persist items tgo database
+            RecordRepo.CreateRecords(newRecords);
+
+            // Save pending changes
+            return await UowManager.SaveAsync();
+        }
+
+        public void CleanupOldRecords(Subplatform subplatform)
+        {
+            InitNonExistingRepo();
+
+            // Validation
+            if (subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.DAYS_TO_KEEP_RECORDS) is
+                null) throw new Exception("Subplatform has no set period to keep records!");
+
+            // Days to keep records
+            int days = int.Parse(subplatform.Settings
+                .FirstOrDefault(ss => ss.SettingName == Setting.Platform.DAYS_TO_KEEP_RECORDS).Value);
+
+            // All persons
+            List<Person> persons = ItemRepo.ReadPersons().Where(i => i.SubPlatforms.Contains(subplatform)).ToList();
+
+            // All records to clear
+            List<Record> oldRecords = persons
+                .SelectMany(p => p.Records)
+                .Distinct()
+                .Where(r => r.Date.Date < DateTime.Today.AddDays(-days))
+                .ToList();
+
+            // Persist deleted records
+            RecordRepo.DeleteRecords(oldRecords);
+
+            // Save pending changes
+            UowManager.Save();
+        }
+
         #region Init
+
         public void InitNonExistingRepo(bool createWithUnitOfWork = false)
         {
             if (RecordRepo == null || ItemRepo == null)
-            {
                 if (createWithUnitOfWork)
                 {
-                    if (UowManager == null)
-                    {
-                        UowManager = new UnitOfWorkManager();
-                    }
+                    if (UowManager == null) UowManager = new UnitOfWorkManager();
 
                     RecordRepo = new RecordRepo(UowManager.UnitOfWork);
                     ItemRepo = new ItemRepo(UowManager.UnitOfWork);
@@ -66,11 +154,12 @@ namespace PB.BL
                     ItemRepo = new ItemRepo();
                     AlertRepo = new AlertRepo();
                 }
-            }
         }
+
         #endregion
 
         #region Items
+
         public IEnumerable<Item> AddItems(List<Item> items)
         {
             InitNonExistingRepo();
@@ -87,11 +176,12 @@ namespace PB.BL
             return ItemRepo.CreateItem(item);
         }
 
-        public Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, List<Theme> themes = null, string iconUrl = null, bool isTrending = false, Subplatform subplatform = null)
+        public Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null,
+            List<Theme> themes = null, string iconUrl = null, bool isTrending = false, Subplatform subplatform = null)
         {
             InitNonExistingRepo();
 
-            Organisation organisation = new Organisation()
+            Organisation organisation = new Organisation
             {
                 Name = name,
                 FullName = fullname,
@@ -113,17 +203,20 @@ namespace PB.BL
             }
 
 
-
             organisation = ItemRepo.CreateOrganisation(organisation);
             UowManager.Save();
 
             return organisation;
         }
 
-        public Person AddPerson(string name, string socialMediaLink, string iconUrl, bool isTrending = false, string firstName = null, string lastName = null, string level = null, string site = null, string twitterName = null, string position = null, string district = null, string gemeente = null, string postalCode = null, Gender? gender = null, Organisation organisation = null, Subplatform subplatform = null, DateTime? dateOfBirth = null)
+        public Person AddPerson(string name, string socialMediaLink, string iconUrl, bool isTrending = false,
+            string firstName = null, string lastName = null, string level = null, string site = null,
+            string twitterName = null, string position = null, string district = null, string gemeente = null,
+            string postalCode = null, Gender? gender = null, Organisation organisation = null,
+            Subplatform subplatform = null, DateTime? dateOfBirth = null)
         {
             InitNonExistingRepo();
-            Person person = new Person()
+            Person person = new Person
             {
                 Name = name,
                 SocialMediaLink = socialMediaLink,
@@ -141,7 +234,7 @@ namespace PB.BL
                 Postalcode = position,
                 Gender = gender ?? Gender.OTHERS,
                 Organisation = organisation,
-                SubPlatforms = (subplatform is null) ? new List<Subplatform>() : new List<Subplatform>() { subplatform },
+                SubPlatforms = subplatform is null ? new List<Subplatform>() : new List<Subplatform> {subplatform},
                 DateOfBirth = dateOfBirth ?? new DateTime(1970, 01, 01),
                 Elements = new List<Element>(),
                 SubscribedProfiles = new List<Profile>(),
@@ -160,10 +253,11 @@ namespace PB.BL
             return person;
         }
 
-        public Theme AddTheme(string name, string description, string iconUrl, List<Keyword> keywords = null, bool isTrending = false, Subplatform subplatform = null)
+        public Theme AddTheme(string name, string description, string iconUrl, List<Keyword> keywords = null,
+            bool isTrending = false, Subplatform subplatform = null)
         {
             InitNonExistingRepo();
-            Theme theme = new Theme()
+            Theme theme = new Theme
             {
                 Name = name,
                 Description = description,
@@ -182,13 +276,11 @@ namespace PB.BL
             }
 
             if (keywords != null)
-            {
                 keywords.ForEach(k =>
                 {
                     if (k.Items == null) k.Items = new List<Item>();
                     k.Items.Add(theme);
                 });
-            }
             theme = ItemRepo.CreateTheme(theme);
             UowManager.Save();
             return theme;
@@ -333,15 +425,17 @@ namespace PB.BL
             return record.Mentions.Count;
         }
 
-        public Dictionary<DateTime, int> GetTweetAmountByDate(Predicate<Record> predicate, DateTime since, DateTime until)
+        public Dictionary<DateTime, int> GetTweetAmountByDate(Predicate<Record> predicate, DateTime since,
+            DateTime until)
         {
             InitNonExistingRepo();
             Dictionary<DateTime, int> records =
-                (from record in RecordRepo.ReadRecords().ToList().FindAll(r => predicate.Invoke(r) && r.Date > since && r.Date < until)
-                 group record by record.Date.Date
-                 into groupedRecords
-                 select groupedRecords)
-                    .ToDictionary(gr => gr.Key, gr => gr.ToList().Count);
+                (from record in RecordRepo.ReadRecords().ToList()
+                        .FindAll(r => predicate.Invoke(r) && r.Date > since && r.Date < until)
+                    group record by record.Date.Date
+                    into groupedRecords
+                    select groupedRecords)
+                .ToDictionary(gr => gr.Key, gr => gr.ToList().Count);
             return records;
         }
 
@@ -356,10 +450,10 @@ namespace PB.BL
             InitNonExistingRepo();
             Dictionary<DateTime, int> records =
                 (from record in RecordRepo.ReadRecords().ToList().FindAll(r => r.Date > since && r.Date < until)
-                 group record by record.Date.Date
-                 into groupedRecords
-                 select groupedRecords)
-                    .ToDictionary(gr => gr.Key, gr => gr.ToList().Count);
+                    group record by record.Date.Date
+                    into groupedRecords
+                    select groupedRecords)
+                .ToDictionary(gr => gr.Key, gr => gr.ToList().Count);
             return records;
         }
 
@@ -372,11 +466,14 @@ namespace PB.BL
         public Dictionary<Person, int> GetTopPoliticians(int amount)
         {
             InitNonExistingRepo();
-            return ItemRepo.ReadPersons().OrderByDescending(p => p.Records.Count).ToDictionary(p => p, p => p.Records.Count);
+            return ItemRepo.ReadPersons().OrderByDescending(p => p.Records.Count)
+                .ToDictionary(p => p, p => p.Records.Count);
         }
+
         #endregion
 
         #region Records
+
         public IEnumerable<Record> GetRecords()
         {
             InitNonExistingRepo();
@@ -389,10 +486,12 @@ namespace PB.BL
             return RecordRepo.ReadRecord(id);
         }
 
-        public Record AddRecord(long tweetId, RecordProfile recordProfile, List<Word> words, Sentiment sentiment, string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Theme> themes, List<Person> persons, DateTime date, double longitude, double latitude, bool retweet)
+        public Record AddRecord(long tweetId, RecordProfile recordProfile, List<Word> words, Sentiment sentiment,
+            string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Theme> themes,
+            List<Person> persons, DateTime date, double longitude, double latitude, bool retweet)
         {
             InitNonExistingRepo();
-            Record record = new Record()
+            Record record = new Record
             {
                 Tweet_Id = tweetId,
                 RecordProfile = recordProfile,
@@ -442,9 +541,11 @@ namespace PB.BL
             if (person is null) throw new Exception("Item with id (" + itemId + ") is not a person or doesn't exist");
             return RecordRepo.ReadRecords().Where(r => r.Persons.Contains(person));
         }
+
         #endregion
 
         #region Keywords
+
         public IEnumerable<Keyword> GetKeywords()
         {
             return ItemRepo.ReadKeywords();
@@ -453,7 +554,8 @@ namespace PB.BL
         public IEnumerable<Keyword> GetKeywords(int itemId)
         {
             InitNonExistingRepo();
-            IEnumerable<Keyword> keywords = ItemRepo.ReadKeywords().Where(k => k.Items.FindAll(i => i.ItemId == itemId).Count > 0);
+            IEnumerable<Keyword> keywords =
+                ItemRepo.ReadKeywords().Where(k => k.Items.FindAll(i => i.ItemId == itemId).Count > 0);
             return keywords;
         }
 
@@ -484,15 +586,12 @@ namespace PB.BL
 
         public Keyword AddKeyword(string name, List<Item> items = null)
         {
-            Keyword keyword = new Keyword()
+            Keyword keyword = new Keyword
             {
                 Name = name,
                 Items = items ?? new List<Item>()
             };
-            if (items != null)
-            {
-                items.ForEach(i => i.Keywords.Add(keyword));
-            }
+            if (items != null) items.ForEach(i => i.Keywords.Add(keyword));
 
             keyword = ItemRepo.CreateKeyword(keyword);
             UowManager.Save();
@@ -503,9 +602,11 @@ namespace PB.BL
         {
             return ItemRepo.ReadKeywords().Count();
         }
+
         #endregion
 
         #region JsonConversions
+
         public List<Record> JClassToRecord(List<JClass> data)
         {
             InitNonExistingRepo();
@@ -527,12 +628,14 @@ namespace PB.BL
                 counter++;
                 if (oldRecords.FirstOrDefault(r => r.Tweet_Id == el.Id) == null)
                 {
-                    Record record = new Record()
+                    Record record = new Record
                     {
                         Tweet_Id = el.Id,
                         RecordProfile = el.Profile,
                         Words = new List<Word>(),
-                        Sentiment = (el.Sentiment.Count != 0) ? new Sentiment(el.Sentiment[0], el.Sentiment[1]) : new Sentiment(0, 0),
+                        Sentiment = el.Sentiment.Count != 0
+                            ? new Sentiment(el.Sentiment[0], el.Sentiment[1])
+                            : new Sentiment(0, 0),
                         Source = el.Source,
                         Hashtags = new List<Hashtag>(),
                         Mentions = new List<Mention>(),
@@ -555,7 +658,7 @@ namespace PB.BL
 
                         if (personCheck == null)
                         {
-                            personCheck = new Person()
+                            personCheck = new Person
                             {
                                 Name = person,
                                 IsTrending = false,
@@ -585,7 +688,7 @@ namespace PB.BL
                             Theme themeCheck = oldThemes.FirstOrDefault(t => t.Name.ToLower().Equals(theme.ToLower()));
                             if (themeCheck == null)
                             {
-                                themeCheck = new Theme()
+                                themeCheck = new Theme
                                 {
                                     Name = theme,
                                     IsTrending = false,
@@ -609,12 +712,14 @@ namespace PB.BL
                                     if (!themeCheck.SubPlatforms.Contains(sp)) themeCheck.SubPlatforms.Add(sp);
                                 });
                             }
+
                             record.Themes.Add(themeCheck);
                             themeCheck.Records.Add(record);
 
                             personCheck.Themes.Add(themeCheck);
                             themeCheck.Persons.Add(personCheck);
                         }
+
                         record.Persons.Add(personCheck);
                         personCheck.Records.Add(record);
                     }
@@ -680,22 +785,21 @@ namespace PB.BL
                     }
 
                     if (newRecords.FirstOrDefault(r => r.Tweet_Id == record.Tweet_Id) != null)
-                    {
                         newRecords[newRecords.FindIndex(r => r.Tweet_Id == record.Tweet_Id)] = record;
-                    }
                     else
-                    {
                         newRecords.Add(record);
-                    }
                 }
             }
 
             return newRecords;
         }
 
-        public List<Item> JPersonToRecord(List<JPerson> data, Subplatform subplatform)
+        public List<Item> JPersonToRecord(string jsonstring, Subplatform subplatform)
         {
             InitNonExistingRepo();
+
+            List<JPerson> data = JsonConvert.DeserializeObject<List<JPerson>>(jsonstring);
+
             List<Person> oldPersons = ItemRepo.ReadPersons().ToList();
             List<Item> newPersons = new List<Item>();
 
@@ -707,13 +811,14 @@ namespace PB.BL
                 Person personCheck = oldPersons.FirstOrDefault(p => p.Name.ToLower() == el.Full_name.ToLower());
                 if (personCheck == null)
                 {
-                    personCheck = new Person()
+                    personCheck = new Person
                     {
                         ItemId = el.Id,
                         Name = el.Full_name,
                         IsTrending = false,
-                        IconURL = subplatform.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
-                        SubPlatforms = new List<Subplatform>()
+                        IconURL = subplatform.Settings
+                            .FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
+                        SubPlatforms = new List<Subplatform>
                         {
                             subplatform
                         },
@@ -759,27 +864,30 @@ namespace PB.BL
                 }
 
                 // Organisation
-                Organisation organisationCheck = oldOrganisations.FirstOrDefault(o => o.Name.ToLower().Equals(el.Organistion.ToLower()) || o.FullName.ToLower().Equals(el.Organistion.ToLower()));
+                Organisation organisationCheck = oldOrganisations.FirstOrDefault(o =>
+                    o.Name.ToLower().Equals(el.Organistion.ToLower()) ||
+                    o.FullName.ToLower().Equals(el.Organistion.ToLower()));
                 if (organisationCheck == null)
                 {
-                    organisationCheck = new Organisation()
+                    organisationCheck = new Organisation
                     {
                         Name = el.Organistion,
                         IsTrending = false,
-                        IconURL = subplatform.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
-                        SubPlatforms = new List<Subplatform>()
-                            {
-                                subplatform
-                            },
+                        IconURL = subplatform.Settings
+                            .FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
+                        SubPlatforms = new List<Subplatform>
+                        {
+                            subplatform
+                        },
                         Keywords = new List<Keyword>(),
                         Elements = new List<Element>(),
                         SubscribedProfiles = new List<Profile>(),
                         Alerts = new List<Alert>(),
                         FullName = el.Organistion,
-                        People = new List<Person>()
-                            {
-                                personCheck
-                            },
+                        People = new List<Person>
+                        {
+                            personCheck
+                        },
                         Themes = new List<Theme>()
                     };
                     personCheck.Organisation = organisationCheck;
@@ -792,106 +900,15 @@ namespace PB.BL
                     personCheck.Organisation = organisationCheck;
                     organisationCheck.People.Add(personCheck);
 
-                    if (!organisationCheck.SubPlatforms.Contains(subplatform)) organisationCheck.SubPlatforms.Add(subplatform);
+                    if (!organisationCheck.SubPlatforms.Contains(subplatform))
+                        organisationCheck.SubPlatforms.Add(subplatform);
                     subplatform.Items.Add(organisationCheck);
                 }
             }
 
             return newPersons;
         }
+
         #endregion
-
-        public void SyncDatabase(Subplatform subplatform)
-        {
-            // Set IsSyncing flag
-            IsSyncing = true;
-            SyncDatabaseAsync(subplatform).GetAwaiter().GetResult();
-
-            // Set IsSyncing flag
-            IsSyncing = false;
-        }
-
-        public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
-        {
-            InitNonExistingRepo();
-
-            // Validation
-            if (subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.DAYS_TO_KEEP_RECORDS) is null)
-            {
-                throw new Exception("Subplatform has no set period to keep records!");
-            }
-            if (subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.SOURCE_API_URL) is null)
-            {
-                throw new Exception("Subplatform has no set API url!");
-            }
-
-            // Injects api seed data
-            APICalls restClient = new APICalls()
-            {
-                API_URL = subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.SOURCE_API_URL).Value
-            };
-
-            // Add themes and keywords to dictionary
-            Dictionary<string, string[]> ThemesAndKeywords = new Dictionary<string, string[]>();
-            ItemRepo.ReadThemes().Where(k => k.SubPlatforms.Contains(subplatform)).ToList().ForEach(t =>
-            {
-                ThemesAndKeywords.Add(t.Name, t.Keywords.Select(k => k.Name).ToArray());
-            });
-
-            // Call API with request
-            List<JClass> requestedRecords = new List<JClass>();
-            try
-            {
-                requestedRecords.AddRange(restClient.RequestRecords(since: DateTime.Now.AddDays(-int.Parse(subplatform.Settings.First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value)), themes: ThemesAndKeywords));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.GetType().Name + ": " + e.Message);
-                if (e.InnerException != null) Console.WriteLine("Inner Exception: " + e.InnerException);
-                throw (e);
-            }
-
-            // Link items to subplatform
-            requestedRecords.ForEach(r => r.Subplatforms.Add(subplatform));
-
-            //Convert JClass to Record and persist to database
-            List<Record> newRecords = JClassToRecord(requestedRecords);
-
-            // Persist items tgo database
-            RecordRepo.CreateRecords(newRecords);
-
-            // Save pending changes
-            return await UowManager.SaveAsync();
-        }
-
-        public void CleanupOldRecords(Subplatform subplatform)
-        {
-            InitNonExistingRepo();
-
-            // Validation
-            if (subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.DAYS_TO_KEEP_RECORDS) is null)
-            {
-                throw new Exception("Subplatform has no set period to keep records!");
-            }
-
-            // Days to keep records
-            int days = int.Parse(subplatform.Settings.FirstOrDefault(ss => ss.SettingName == Setting.Platform.DAYS_TO_KEEP_RECORDS).Value);
-
-            // All persons
-            List<Person> persons = ItemRepo.ReadPersons().Where(i => i.SubPlatforms.Contains(subplatform)).ToList();
-
-            // All records to clear
-            List<Record> oldRecords = persons
-                .SelectMany(p => p.Records)
-                .Distinct()
-                .Where(r => r.Date.Date < DateTime.Today.AddDays(-days))
-                .ToList();
-
-            // Persist deleted records
-            RecordRepo.DeleteRecords(oldRecords);
-
-            // Save pending changes
-            UowManager.Save();
-        }
     }
 }

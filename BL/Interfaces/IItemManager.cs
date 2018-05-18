@@ -1,10 +1,10 @@
-﻿using Domain.JSONConversion;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Domain.JSONConversion;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.JSONConversion;
 using PB.BL.Domain.Platform;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace PB.BL.Interfaces
 {
@@ -17,9 +17,19 @@ namespace PB.BL.Interfaces
         Organisation GetOrganisation(int itemId);
         Theme GetTheme(int itemId);
         IEnumerable<Item> AddItems(List<Item> items);
-        Person AddPerson(string name, string socialMediaLink, string iconUrl, bool isTrending = false, string firstName = null, string lastName = null, string level = null, string site = null, string twitterName = null, string position = null, string district = null, string gemeente = null, string postalCode = null, Gender? gender = null, Organisation organisation = null, Subplatform subplatform = null, DateTime? dateOfBirth = null);
-        Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null, List<Theme> themes = null, string iconUrl = null, bool isTrending = false, Subplatform subplatform = null);
-        Theme AddTheme(string themeName, string description, string iconUrl, List<Keyword> keywords = null, bool isTrending = false, Subplatform subplatform = null);
+
+        Person AddPerson(string name, string socialMediaLink, string iconUrl, bool isTrending = false,
+            string firstName = null, string lastName = null, string level = null, string site = null,
+            string twitterName = null, string position = null, string district = null, string gemeente = null,
+            string postalCode = null, Gender? gender = null, Organisation organisation = null,
+            Subplatform subplatform = null, DateTime? dateOfBirth = null);
+
+        Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null,
+            List<Theme> themes = null, string iconUrl = null, bool isTrending = false, Subplatform subplatform = null);
+
+        Theme AddTheme(string themeName, string description, string iconUrl, List<Keyword> keywords = null,
+            bool isTrending = false, Subplatform subplatform = null);
+
         void ChangeItem(Item item);
         void ChangeItems(List<Item> items);
         void ChangePerson(Person person);
@@ -46,13 +56,17 @@ namespace PB.BL.Interfaces
 
         IEnumerable<Record> GetRecords();
         Record GetRecord(long id);
-        Record AddRecord(long tweetId, RecordProfile recordProfile, List<Word> words, Sentiment sentiment, string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Theme> themes, List<Person> persons, DateTime date, double longitude, double latitude, bool retweet);
+
+        Record AddRecord(long tweetId, RecordProfile recordProfile, List<Word> words, Sentiment sentiment,
+            string source, List<Hashtag> hashtags, List<Mention> mentions, List<Url> uRLs, List<Theme> themes,
+            List<Person> persons, DateTime date, double longitude, double latitude, bool retweet);
+
         void ChangeRecord(Record record);
         void RemoveRecord(long id);
         IEnumerable<Record> GetRecordsFromItem(int itemId);
 
         List<Record> JClassToRecord(List<JClass> data);
-        List<Item> JPersonToRecord(List<JPerson> data, Subplatform subplatform);
+        List<Item> JPersonToRecord(string jsonstring, Subplatform subplatform);
         void SyncDatabase(Subplatform subplatform);
         Task<int> SyncDatabaseAsync(Subplatform subplatform);
         void CleanupOldRecords(Subplatform subplatform);
