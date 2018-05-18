@@ -430,8 +430,8 @@ namespace UI_MVC.Controllers.API
         {
             if (id == null) return BadRequest("No Id provided");
             if (id < 0) return BadRequest("Wrong id has been provided");
-            if (ItemMgr.GetItem((int) id) == null) NotFound();
-            ItemMgr.RemoveItem((int) id);
+            if (ItemMgr.GetItem((int)id) == null) NotFound();
+            ItemMgr.RemoveItem((int)id);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -496,21 +496,35 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetPersonEvolution(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            if (item is Person)
+            IEnumerable<Record> records = null;
+
+            if (item is Person person)
             {
-                IEnumerable<Record> records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0)
+                records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0)
                     .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(10);
-                Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
-                records.ToList().ForEach(p =>
-                {
-                    recordsmap.Add(p.Date, p.Sentiment.Polarity * p.Sentiment.Objectivity);
-                });
-                recordsmap.OrderBy(o => o.Key);
-                if (records == null) return StatusCode(HttpStatusCode.NoContent);
-                return Ok(recordsmap);
+            }
+            else if (item is Organisation organisation)
+            {
+                records = organisation.People.SelectMany(p => p.Records).ToList().Where(p => p.Sentiment.Polarity != 0.0)
+                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(10);
+            }
+            else if (item is Theme theme)
+            {
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
+                    .ToList().Where(p => p.Sentiment.Polarity != 0.0)
+                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(10);
+                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            Dictionary<string, double> recordsmap = new Dictionary<string, double>();
+            records.ToList().ForEach(p =>
+            {
+                recordsmap.Add(item.Name, p.Sentiment.Polarity * p.Sentiment.Objectivity);
+            });
+            recordsmap.OrderBy(o => o.Key);
+            if (records == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(recordsmap);
+           
         }
 
         [HttpGet]
@@ -673,7 +687,7 @@ namespace UI_MVC.Controllers.API
             return NotFound();
         }
 
-       
+
 
 
         [HttpGet]
