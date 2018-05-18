@@ -44,7 +44,6 @@ namespace PB.BL
         }
 
         #region Init & create
-
         public void InitNonExistingRepo(bool createWithUnitOfWork = false)
         {
             if (ProfileRepo == null)
@@ -378,7 +377,6 @@ namespace PB.BL
         #endregion
 
         #region Alerts
-
         public WeeklyReview GetLatestWeeklyReview(string userId)
         {
             InitNonExistingRepo();
@@ -516,7 +514,10 @@ namespace PB.BL
             List<Item> itemsToUpdate = Trendspotter.CheckTrendingItems(allItems.ToList(), 10, ref alerts);
 
             // Get all profiles with subscriptions
-            List<Profile> Profiles = ProfileRepo.ReadProfiles().Where(p => p.Subscriptions.Count > 0).ToList();
+            List<Profile> Profiles = ProfileRepo.ReadProfiles().Where(p => 
+                p.Subscriptions.Count > 0 && 
+                p.Settings.Find(us => us.SettingName.Equals(Setting.Account.WANTS_SITE_NOTIFICATIONS)).boolValue
+            ).ToList();
 
             // Alle subscriptions uit profiles halen
             List<Item> Subscriptions = Profiles.SelectMany(p => p.Subscriptions).Distinct().ToList();

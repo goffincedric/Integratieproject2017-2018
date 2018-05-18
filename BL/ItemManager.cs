@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.JSONConversion;
@@ -234,7 +235,7 @@ namespace PB.BL
                 Postalcode = position,
                 Gender = gender ?? Gender.OTHERS,
                 Organisation = organisation,
-                SubPlatforms = subplatform is null ? new List<Subplatform>() : new List<Subplatform> {subplatform},
+                SubPlatforms = subplatform is null ? new List<Subplatform>() : new List<Subplatform> { subplatform },
                 DateOfBirth = dateOfBirth ?? new DateTime(1970, 01, 01),
                 Elements = new List<Element>(),
                 SubscribedProfiles = new List<Profile>(),
@@ -432,9 +433,9 @@ namespace PB.BL
             Dictionary<DateTime, int> records =
                 (from record in RecordRepo.ReadRecords().ToList()
                         .FindAll(r => predicate.Invoke(r) && r.Date > since && r.Date < until)
-                    group record by record.Date.Date
+                 group record by record.Date.Date
                     into groupedRecords
-                    select groupedRecords)
+                 select groupedRecords)
                 .ToDictionary(gr => gr.Key, gr => gr.ToList().Count);
             return records;
         }
@@ -450,9 +451,9 @@ namespace PB.BL
             InitNonExistingRepo();
             Dictionary<DateTime, int> records =
                 (from record in RecordRepo.ReadRecords().ToList().FindAll(r => r.Date > since && r.Date < until)
-                    group record by record.Date.Date
+                 group record by record.Date.Date
                     into groupedRecords
-                    select groupedRecords)
+                 select groupedRecords)
                 .ToDictionary(gr => gr.Key, gr => gr.ToList().Count);
             return records;
         }
@@ -797,7 +798,7 @@ namespace PB.BL
         public List<Item> JPersonToRecord(List<JPerson> data, Subplatform subplatform)
         {
             InitNonExistingRepo();
-            
+
             List<Person> oldPersons = ItemRepo.ReadPersons().ToList();
             List<Item> newPersons = new List<Item>();
 
@@ -833,7 +834,7 @@ namespace PB.BL
                         TwitterName = el.Twitter,
                         Position = el.Position,
                         District = el.District,
-                        Gemeente = el.Town,
+                        Gemeente = ToPascalCase(el.Town),
                         Postalcode = el.Postalcode,
                         Gender = el.Gender,
                         DateOfBirth = el.DateOfBirth,
@@ -855,7 +856,7 @@ namespace PB.BL
                     personCheck.TwitterName = el.Twitter;
                     personCheck.Position = el.Position;
                     personCheck.District = el.District;
-                    personCheck.Gemeente = el.Town;
+                    personCheck.Gemeente = ToPascalCase(el.Town);
                     personCheck.Postalcode = el.Postalcode;
                     personCheck.Gender = el.Gender;
                     personCheck.DateOfBirth = el.DateOfBirth;
@@ -907,6 +908,43 @@ namespace PB.BL
             return newPersons;
         }
 
+        public string ToPascalCase(string value)
+        {
+            if (value.Equals(string.Empty)) return value;
+            value = value.Substring(0, 1).ToUpper() + value.Substring(1).ToLower();
+            string[] words = null;
+            if (value.Contains("-"))
+            {
+                words = value.Split('-');
+                foreach (string word in words)
+                {
+                    words[Array.IndexOf(words, word)] = word.Substring(0, 1).ToUpper() + word.Substring(1);
+                }
+                value = string.Join("-", words);
+            }
+
+            if (value.Contains("_"))
+            {
+                words = value.Split('_');
+                foreach (string word in words)
+                {
+                    words[Array.IndexOf(words, word)] = word.Substring(0, 1).ToUpper() + word.Substring(1);
+                }
+                value = string.Join("_", words);
+            }
+
+            if (value.Contains(" "))
+            {
+                words = value.Split(' ');
+                foreach (string word in words)
+                {
+                    words[Array.IndexOf(words, word)] = word.Substring(0, 1).ToUpper() + word.Substring(1);
+                }
+                value = string.Join(" ", words);
+            }
+
+            return value;
+        }
         #endregion
     }
 }
