@@ -476,39 +476,37 @@ namespace UI_MVC.Controllers
             return File(fullPath, "application/", file);
         }
 
-        //[HttpPost]
-        //public ActionResult Import(string subplatform, FileViewModel fileViewModel)
-        //{
-        //    Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-        //    if (ModelState.IsValid)
-        //    {
-
-        //        if (fileViewModel.file != null)
-        //        {
-        //            if (fileViewModel.file.ContentLength > 0)
-        //            {
-        //                string inputContent;
-
-        //                using (StreamReader inputStreamReader = new StreamReader(fileViewModel.file.InputStream))
-        //                {
-
-        //                    inputContent = inputStreamReader.ReadToEnd();
-        //                    itemMgr.JPersonToRecord(inputContent, Subplatform);
-
-        //                }
-        //            }
-        //        }
-
-
-        //        return View("Itembeheer");
-        //    }
-        //    return View("Itembeheer");
-        //}
-
-        #endregion
-
-        #region Items
         [HttpPost]
+        public ActionResult Import(string subplatform, FileViewModel fileViewModel)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            if (ModelState.IsValid)
+            {
+
+                if (fileViewModel.file != null)
+                {
+                    if (fileViewModel.file.ContentLength > 0)
+                    {
+
+                        List<Item> persons = itemMgr.JPersonToRecord(System.IO.File.ReadAllText(fileViewModel.file), Subplatform);
+
+                        itemMgr.AddItems(persons);
+
+
+                    }
+                }
+            }
+
+
+            return View("Itembeheer");
+        }
+          
+    }
+
+    #endregion
+
+    #region Items
+    [HttpPost]
         public ActionResult DeleteItem(string subplatform, int id)
         {
             try
