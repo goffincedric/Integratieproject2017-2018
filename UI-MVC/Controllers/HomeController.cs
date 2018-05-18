@@ -231,7 +231,7 @@ namespace UI_MVC.Controllers
             return View(item);
         }
 
-        [Authorize]
+        [Authorize(Roles = "User,Admin,SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddSubscription(int id)
@@ -248,7 +248,7 @@ namespace UI_MVC.Controllers
             return RedirectToAction("ItemDetail", "Home", new {Id = id});
         }
 
-        [Authorize]
+        [Authorize(Roles = "User,Admin,SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RemoveSubscription(int id)

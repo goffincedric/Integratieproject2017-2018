@@ -37,6 +37,7 @@ namespace UI_MVC.Controllers
             ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
         }
 
+
         public ActionResult _ChangeHomePage(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -53,6 +54,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _ChangeHomePage(HomePageViewModel homePageViewModel)
         {
             Tag BannerTitle = SubplatformMgr.GetTag("BannerTitle");
@@ -76,6 +78,7 @@ namespace UI_MVC.Controllers
 
         #region SubplatformSettings
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult PlatformSettings()
         {
             ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
@@ -88,6 +91,7 @@ namespace UI_MVC.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _SubplatformSetting(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -113,6 +117,7 @@ namespace UI_MVC.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult SubplatformSetting(string subplatform,
             SubplatformSettingViewModel subplatformSettingViewModel)
         {
@@ -187,7 +192,7 @@ namespace UI_MVC.Controllers
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
-
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _SeedIntervals(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -206,6 +211,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult SeedIntervals(string subplatform, SeedIntervals intervals)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -242,12 +248,14 @@ namespace UI_MVC.Controllers
 
         #region DeploySubplatform
 
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult _DeploySubplatform()
         {
             return PartialView();
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult DeploySubplatform(SubplatformViewModel subplatformViewModel)
         {
             if (ModelState.IsValid)
@@ -261,6 +269,7 @@ namespace UI_MVC.Controllers
         #region Uploads
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult UploadSiteLogo(string subplatform, FileViewModel fileViewModel)
         {
             if (ModelState.IsValid)
@@ -293,6 +302,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult UploadDefaultItemLogo(string subplatform, FileViewModel fileViewModel)
         {
             if (ModelState.IsValid)
@@ -325,6 +335,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult UploadDefaultUserLogo(string subplatform, FileViewModel fileViewModel)
         {
             if (ModelState.IsValid)
@@ -361,6 +372,7 @@ namespace UI_MVC.Controllers
         #region AdminSubplatformTools
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult GenerateAlertsManually()
         {
             List<Item> itemsToUpdate = new List<Item>();
@@ -370,6 +382,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult CleanupDB(string subplatform)
         {
             Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
@@ -378,6 +391,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult Syncronize(string subplatform)
         {
             if (!ItemManager.IsSyncing)
@@ -396,6 +410,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult SendWeeklyReviews(string subplatform)
         {
             accountMgr.SendWeeklyReviews();

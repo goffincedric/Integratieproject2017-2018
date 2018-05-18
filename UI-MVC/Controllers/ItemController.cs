@@ -42,7 +42,9 @@ namespace UI_MVC.Controllers
             ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
         }
 
+
         #region Organisation
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _OrganisationPartialTable(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -50,6 +52,9 @@ namespace UI_MVC.Controllers
             return PartialView(organisations);
         }
 
+
+
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _OrganisationPartialCreate()
         {
             return PartialView();
@@ -57,6 +62,7 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult OrganisationPartialCreate(string subplatform, OrganisationEditModel organisationEditModel)
         {
             if (ModelState.IsValid)
@@ -107,6 +113,7 @@ namespace UI_MVC.Controllers
 
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _ShowThemesOfOrganisation(int id)
         {
             IEnumerable<Theme> theme = itemMgr.GetOrganisation(id).Themes.ToList();
@@ -114,6 +121,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult EditOrganisation(int id)
         {
             Organisation item = itemMgr.GetOrganisation(id);
@@ -129,6 +137,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult EditOrganisation(string subplatform, int id, OrganisationEditModel organisationEditModel)
         {
             if (ModelState.IsValid)
@@ -165,6 +174,7 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region Keywords
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _KeywordPartialTable(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -180,6 +190,7 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult KeywordPartialCreate(string subplatform, Keyword keyword)
         {
             if (ModelState.IsValid)
@@ -191,6 +202,7 @@ namespace UI_MVC.Controllers
             return RedirectToAction("ItemBeheer", "Item");
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public ActionResult DeleteKeyword(string subplatform, int id)
         {
@@ -208,6 +220,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult EditKeyword(int id)
         {
             Keyword keyword = itemMgr.GetKeyword(id);
@@ -216,13 +229,14 @@ namespace UI_MVC.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult EditKeyword(string subplatform, int id)
         {
             Keyword keyword = itemMgr.GetKeyword(id);
             return View(keyword);
         }
 
-
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _ShowKeywordOfTheme(int id)
         {
             IEnumerable<Keyword> keywords = itemMgr.GetTheme(id).Keywords.ToList();
@@ -231,19 +245,21 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region Themes
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _ThemaPartialTable(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             IEnumerable<Theme> themes = itemMgr.GetThemes().Where(t => t.SubPlatforms.Contains(Subplatform));
             return PartialView(themes);
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _ThemaPartialCreate()
         {
             return PartialView();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [ValidateAntiForgeryToken]
         public ActionResult ThemaPartialCreate(string subplatform, ThemeEditModel themeEditModel)
         {
@@ -286,6 +302,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult EditTheme(int id)
         {
             Theme item = itemMgr.GetTheme(id);
@@ -300,6 +317,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult EditTheme(string subplatform, int id, ThemeEditModel themeEditModel)
         {
             if (ModelState.IsValid)
@@ -337,6 +355,7 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region Persons
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _PersonPartialTable(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -344,6 +363,7 @@ namespace UI_MVC.Controllers
             return PartialView(persons);
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _PersonPartialCreate()
         {
             return PartialView();
@@ -351,6 +371,7 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult PersonPartialCreate(string subplatform, PersonEditModel personEditModel)
         {
             if (ModelState.IsValid)
@@ -391,6 +412,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult EditPerson(int id)
         {
             Person item = itemMgr.GetPerson(id);
@@ -412,6 +434,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult EditPerson(string subplatform, int id, PersonEditModel personEditModel)
         {
 
@@ -458,6 +481,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public JsonResult Export()
         {
             IEnumerable<Person> persons = itemMgr.GetPersons().ToList();
@@ -473,6 +497,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult ExportPersons(string file)
         {
             string fullPath = Path.Combine(Server.MapPath("~/Content/Export/"), file);
@@ -480,6 +505,7 @@ namespace UI_MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult Import(string subplatform, FileViewModel fileViewModel)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
