@@ -1,0 +1,493 @@
+﻿
+@{
+  ViewBag.Title = "Charts";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Charts</h2>
+
+<canvas id="evol" height="50"></canvas>
+
+<canvas id="sentiment" height="50"></canvas>
+
+<canvas id="pie" height="100"></canvas>
+
+<canvas id="pie2" height="100"></canvas>
+
+<canvas id="mentions" height="100"></canvas>
+
+<canvas id="barage" height="100"></canvas>
+
+<script src="~/Scripts/Charts/Chart.min.js"></script>
+
+<script>
+  function makeAjaxCall(url, methodType) {
+    var promiseObj = new Promise(function (resolve) {
+      var xhr = new XMLHttpRequest();
+      xhr.open(methodType, url, true);
+      xhr.setRequestHeader("x-api-key", "303d22a4-402b-4d3c-b279-9e81c0480711");
+      xhr.send();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            console.log("xhr done successfully");
+            var resp = "";
+            resp = xhr.response;
+            resolve(JSON.parse(resp));
+
+          } else {
+            console.log("xhr failed");
+          }
+        } else {
+          console.log("xhr processing going on");
+        }
+      }
+      console.log("request sent succesfully");
+
+    });
+    return promiseObj;
+  }
+
+</script>
+
+<script>
+  function drawLineChart() {
+
+
+    var can = $('#evol');
+    var datagrafiek = {
+      labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
+      datasets: []
+    };
+
+    var myLineChart = new Chart(can,
+      {
+        type: 'line',
+        data: datagrafiek,
+        options: {
+          responsive: true,
+          scales: {
+            yAxes: [
+              {
+                display: true,
+                ticks: {
+                  // minimum will be 0, unless there is a lower value.
+                  // OR //
+                  beginAtZero: false,
+
+
+                  // minimum value will be 0.
+                }
+              }
+            ]
+          }
+        }
+      });
+
+    var array = [8, 9]
+    var counter = 0;
+    $.each(array,
+      function (index, value) {
+        var URL = "https://localhost:44342/api/item/GetPersonEvolution/" + value;
+        makeAjaxCall(URL, "GET").then(process);
+
+        function process(output2) {
+          var keys = [];
+          keys = Object.keys(output2);
+
+          var label = [];
+          var values = [];
+
+          var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
+          var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+          var points = ["#512da8", "#1976d2", "#388e3c"];
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output2[keys[i]] / 10);
+          }
+
+          var myNewDataSet = {
+            label: value,
+            data: values,
+            borderWidth: 2,
+            backgroundColor: backgroundcolors[counter],
+            borderColor: borderColors[counter],
+            pointBackgroundColor: points[counter]
+
+          }
+
+          datagrafiek.datasets.push(myNewDataSet);
+
+          myLineChart.update();
+          counter++;
+        }
+      });
+
+
+  }
+
+
+  drawLineChart();
+
+  function drawLineChart2() {
+
+
+    var can = $('#sentiment');
+    var datagrafiek = {
+      datasets: [],
+      labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"]
+    };
+
+    var myLineChart = new Chart(can,
+      {
+        type: 'line',
+        data: datagrafiek,
+        options: {
+          responsive: true,
+          scales: {
+            yAxes: [
+              {
+                display: true,
+                ticks: {
+                  // minimum will be 0, unless there is a lower value.
+                  // OR //
+                  beginAtZero: false,
+                  // minimum value will be 0.
+                }
+              }
+            ]
+          }
+        }
+      });
+    $("#loader-1").hide();
+    can.show();
+    var array = [22, 28]
+    var counter = 0;
+    $.each(array,
+      function (index, value) {
+        var URL = "https://localhost:44342/api/item/GetItemTweet/" + value;
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+        function process(output2) {
+          var keys = [];
+          keys = Object.keys(output2);
+
+          var label = [];
+          var values = [];
+
+          var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
+          var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+          var points = ["#512da8", "#1976d2", "#388e3c"];
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output2[keys[i]]);
+          }
+
+          var myNewDataSet = {
+            label: value,
+            data: values,
+            borderWidth: 2,
+          
+            borderColor: borderColors[counter],
+            pointBackgroundColor: points[counter]
+
+          }
+
+          datagrafiek.datasets.push(myNewDataSet);
+
+          myLineChart.update();
+          counter++;
+        }
+      });
+
+
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+  }
+
+
+  drawLineChart2();
+
+
+
+  function pie() {
+    var can = $('#pie');
+    var datagrafiek = {
+      datasets: [],
+      labels: []
+    };
+
+    var myLineChart = new Chart(can,
+      {
+        type: 'bar',
+        data: datagrafiek,
+        options: {
+          responsive: true
+        }
+
+      });
+    var array = [22, 28]
+    var counter = 0;
+    $.each(array,
+      function (index, value) {
+        var URL = "https://localhost:44342/api/item/GetAges/" + value;
+        makeAjaxCall(URL, "GET").then(process);
+
+        function process(output2) {
+          var keys = [];
+          keys = Object.keys(output2);
+
+          var label = [];
+          var values = [];
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output2[keys[i]]);
+          }
+          var myNewDataSet = {
+            label: value,
+            data: values,
+            backgroundColor: ["#36a2eb", "#ffce56", "#7DDF64", "#ff6384", "#36a2eb", "#cc65fe"]
+          }
+
+          datagrafiek.datasets.push(myNewDataSet);
+          myLineChart.update(label);
+          counter++;
+        }
+      });
+  }
+
+  pie();
+
+
+  function pie2() {
+
+
+    var can = $('#pie2');
+    var datagrafiek = {
+      datasets: [],
+      labels: ["f", "m"]
+    };
+
+    var myLineChart = new Chart(can,
+      {
+        type: 'doughnut',
+        data: datagrafiek,
+        options: {
+          responsive: true,
+          legend: {
+            display: true
+          }
+
+        }
+
+      });
+    $("#loader-1").hide();
+    can.show();
+    var array = [22, 28]
+    var counter = 0;
+    $.each(array,
+      function (index, value) {
+        var URL = "https://localhost:44342/api/item/GetGender/" + value;
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+        function process(output2) {
+          var keys = [];
+          keys = Object.keys(output2);
+
+          var label = [];
+          var values = [];
+
+
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output2[keys[i]] / 10);
+          }
+
+          console.log(values);
+
+      
+          var myNewDataSet = {
+            label: value,
+            data: values,
+            backgroundColor: ["#36a2eb", "#ffce56", "#7DDF64","#ff6384", "#36a2eb", "#cc65fe"]
+
+          }
+
+
+          datagrafiek.datasets.push(myNewDataSet);
+          //datagrafiek.labels.push(label);
+          myLineChart.update();
+          counter++;
+        }
+      });
+
+
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+  }
+
+  pie2();
+
+
+  function drawMentions() {
+    var can = $('#mentions');
+    var datagrafiek = {
+      datasets: [],
+      labels: ["Tweets"]
+
+    };
+
+    var myLineChart = new Chart(can,
+      {
+        type: 'bar',
+        data: datagrafiek,
+        options: {
+          responsive: true,
+          legend: {
+            display: true
+          }
+
+
+        }
+
+      });
+    $("#loader-1").hide();
+    can.show();
+    var array = [22, 28]
+    var counter = 0;
+    $.each(array,
+      function (index, value) {
+        var URL = "https://localhost:44342/api/item/GetTrendingMentionsCountOverall/" + value;
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+        function process(output2) {
+          var keys = [];
+          keys = Object.keys(output2);
+
+          var label = [];
+          var values = [];
+
+
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output2[keys[i]]);
+          }
+
+
+          console.log("Values: " + values);
+          var backgroundColors = ["#36a2eb", "#ffce56", "#7DDF64", "#ff6384", "#36a2eb", "#cc65fe"];
+          var myNewDataSet = {
+            label: label,
+            data: values,
+            backgroundColor: backgroundColors[counter]
+          
+
+          }
+
+
+          datagrafiek.datasets.push(myNewDataSet);
+          //datagrafiek.labels.push(label);
+          myLineChart.update();
+          counter++;
+        }
+      });
+
+
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+  }
+
+  drawMentions();
+
+
+  function drawBarAge() {
+    var can = $('#barage');
+    var datagrafiek = {
+      datasets: [],
+     labels: ["25+","-25","onbekends"]
+
+    };
+
+    var myLineChart = new Chart(can,
+      {
+        type: 'bar',
+        data: datagrafiek,
+        options: {
+          responsive: true,
+          legend: {
+            display: true
+          }
+
+
+        }
+
+      });
+    $("#loader-1").hide();
+    can.show();
+    var array = [22, 28]
+    var counter = 0;
+    $.each(array,
+      function (index, value) {
+        var URL = "https://localhost:44342/api/item/GetTrendingMentionsCountOverall/" + value;
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+        function process(output2) {
+          var keys = [];
+          keys = Object.keys(output2);
+
+          var label = [];
+          var values = [];
+
+
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output2[keys[i]]);
+          }
+
+          console.log(values);
+
+          console.log("Values: " + values);
+          var backgroundColors = ["#36a2eb", "#ffce56", "#7DDF64", "#ff6384", "#36a2eb", "#cc65fe"];
+          var myNewDataSet = {
+            label: label,
+            data: values,
+            backgroundColor: backgroundColors[counter]
+
+
+          }
+
+
+          datagrafiek.datasets.push(myNewDataSet);
+          //datagrafiek.labels.push(label);
+          myLineChart.update();
+          counter++;
+        }
+      });
+
+
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+  }
+
+  drawBarAge();
+
+</script>
+
+
+
+
+
+
+
+
+
