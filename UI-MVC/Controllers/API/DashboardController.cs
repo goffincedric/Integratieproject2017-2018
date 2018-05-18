@@ -72,12 +72,12 @@ namespace UI_MVC.Controllers.API
         {
             if (id == null) return BadRequest("No Id provided");
             if (id < 0) return BadRequest("Wrong id has been provided");
-            Zone zone = DashboardMgr.GetZone((int) id);
+            Zone zone = DashboardMgr.GetZone((int)id);
             if (zone == null) NotFound();
             if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
             Dashboard dashboard = DashboardMgr.GetDashboard(zone.DashboardId);
             dashboard.Zones.Remove(zone);
-            DashboardMgr.RemoveZone((int) id);
+            DashboardMgr.RemoveZone((int)id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -128,10 +128,13 @@ namespace UI_MVC.Controllers.API
                 newElement.Zone = newZone;
                 newElement.GraphType = element.GraphType;
                 newElement.IsUnfinished = element.IsUnfinished;
-                foreach (var item in element.Items)
+                if (element.Items != null)
                 {
-                     Item addItem = ItemMgr.GetItem(item.ItemId);
-                    newElement.Items.Add(addItem);
+                    foreach (var item in element.Items)
+                    {
+                        Item addItem = ItemMgr.GetItem(item.ItemId);
+                        newElement.Items.Add(addItem);
+                    }
                 }
 
                 DashboardMgr.ChangeElement(newElement);
@@ -153,7 +156,7 @@ namespace UI_MVC.Controllers.API
             element.Zone = zone;
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            element = DashboardMgr.AddElement(zone, element.X, element.Y, element.Width, element.Height,element.IsUnfinished, isDraggable: element.IsDraggable);
+            element = DashboardMgr.AddElement(zone, element.X, element.Y, element.Width, element.Height, element.IsUnfinished, isDraggable: element.IsDraggable);
             zone.Elements.Add(element);
 
             return
@@ -166,10 +169,10 @@ namespace UI_MVC.Controllers.API
         {
             if (id == null) return BadRequest("No Id provided");
             if (id < 0) return BadRequest("Wrong id has been provided");
-            if (DashboardMgr.GetElement((int) id) == null) NotFound();
-            Element element = DashboardMgr.GetElement((int) id);
+            if (DashboardMgr.GetElement((int)id) == null) NotFound();
+            Element element = DashboardMgr.GetElement((int)id);
 
-            DashboardMgr.RemoveElement((int) id);
+            DashboardMgr.RemoveElement((int)id);
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
