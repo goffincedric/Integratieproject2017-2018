@@ -248,14 +248,14 @@ namespace UI_MVC.Controllers
 
         #region DeploySubplatform
 
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _DeploySubplatform()
         {
             return PartialView();
         }
 
         [HttpPost]
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult DeploySubplatform(SubplatformViewModel subplatformViewModel)
         {
             if (ModelState.IsValid)
