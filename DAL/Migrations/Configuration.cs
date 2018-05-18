@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Domain.JSONConversion;
 using Newtonsoft.Json;
 using PB.BL.Domain.Accounts;
@@ -17,6 +18,17 @@ namespace PB.DAL.Migrations
 {
     internal sealed class Configuration : DbMigrationsConfiguration<IntegratieDbContext>
     {
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
@@ -292,7 +304,7 @@ namespace PB.DAL.Migrations
 
             #region Persons
             List<Person> personsToAdd = new List<Person>();
-            List<JPerson> data = JsonConvert.DeserializeObject<List<JPerson>>(File.ReadAllText(@"politiciJSON\politici.json"));
+            List<JPerson> data = JsonConvert.DeserializeObject<List<JPerson>>(File.ReadAllText(AssemblyDirectory + @"\politiciJSON\politici.json"));
 
             foreach (var el in data)
             {
