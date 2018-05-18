@@ -5,12 +5,8 @@
         BAR,
         LINE,
         PIE,
-        SCATTRE,
         DONUT,
         WORDCLOUD,
-        RADAR,
-        AREA,
-        NODE,
         MAP
     }
 }

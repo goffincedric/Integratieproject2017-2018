@@ -127,6 +127,7 @@ namespace UI_MVC.Controllers.API
                 newElement.Zone = newZone;
                 newElement.GraphType = element.GraphType;
                 newElement.IsUnfinished = element.IsUnfinished;
+                newElement.DataType = element.DataType;
                 if (element.Items != null)
                 {
                     foreach (var item in element.Items)
