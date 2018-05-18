@@ -30,6 +30,10 @@ $(function () {
     $('.grid-stack').gridstack(options);
 
     new function () {
+        var testwizard = $('#wizard');
+
+        console.log(testwizard);
+
         function getRotationDegrees(obj) {
             var matrix = obj.css("-webkit-transform") ||
                 obj.css("-moz-transform") ||
@@ -197,6 +201,10 @@ $(function () {
             var data = null;
             var onderwerp = null;
             var output = null;
+
+            //$('#next-1').attr('disabled', 'disabled');
+
+            //var onderwerpRadio = [$('#person'), $('#organisation'), $('#theme')];
 
             $('.btn-next').on('click', function () {
                 switch ($(this).attr('id')) {
@@ -402,7 +410,7 @@ $(function () {
 
                 var itemsJSON = JSON.stringify(items);
 
-                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '", "Items": ' + itemsJSON + '}');
+                var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '","IsFinished":"true", "Items": ' + itemsJSON + '}');
 
                 $.ajax({
                     async: false,
@@ -728,15 +736,25 @@ $(function () {
 
                     //this for now(change later), Gets correct data from database
                     _.each(elements, function (node) {
-                        var newElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + node.ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div/><div/>'),
-                            node.X, node.Y, node.Width, node.Height);
-                        newElement.children('#Element-' + node.ElementId).children('.delete-element').on('click', function () {
-                            deleteElement($(this), grid);
-                        });
+                        console.log(node);
+                        if (node.IsFinished) {
+                            var newElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + node.ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div/><div/>'),
+                                node.X, node.Y, node.Width, node.Height);
+                            newElement.children('#Element-' + node.ElementId).children('.delete-element').on('click', function () {
+                                deleteElement($(this), grid);
+                            });
 
-                        newElement.children('#Element-' + node.ElementId).append($('<canvas></canvas>')).children('canvas').attr('id', 'pie-chart');
+                            newElement.children('#Element-' + node.ElementId).append($('<canvas></canvas>')).children('canvas').attr('id', 'pie-chart');
 
-                        chooseChart(node.GraphType, newElement.children('#Element-' + node.ElementId).children('canvas'), 25);
+                            chooseChart(node.GraphType, newElement.children('#Element-' + node.ElementId).children('canvas'), 25);
+                        } else {
+                            $.ajax({
+                                async: false,
+                                type: 'Delete',
+                                headers: Headers,
+                                url: "https://localhost:44342/api/dashboard/deleteelement/" + node.ElementId
+                            })
+                        }
                     }, this);
 
                     var plusElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);

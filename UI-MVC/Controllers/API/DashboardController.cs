@@ -121,6 +121,7 @@ namespace UI_MVC.Controllers.API
                 newElement.ZoneId = element.ZoneId;
                 newElement.Zone = newZone;
                 newElement.GraphType = element.GraphType;
+                newElement.IsFinished = element.IsFinished;
 
                 DashboardMgr.ChangeElement(newElement);
             }
