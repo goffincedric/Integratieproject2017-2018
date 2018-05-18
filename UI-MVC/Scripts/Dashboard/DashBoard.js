@@ -15,8 +15,6 @@ DashData = $.ajax({
 }).responseJSON;
 
 $(function () {
-    var itemIds = [];
-
     var addingElement = false;
 
     var options = {
@@ -297,8 +295,9 @@ $(function () {
                         $(this).attr('id', 'next-2');
                         break;
                     case "next-2":
+                        $('#cardholder').empty();
                         switch ($('input:checked').attr('id')) {
-                            case 'mention': console.log('mention');
+                            case 'mention':
                                 DataType = 0;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
@@ -307,7 +306,7 @@ $(function () {
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'hashtag': console.log('hashtag');
+                            case 'hashtag':
                                 DataType = 1;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
@@ -316,7 +315,7 @@ $(function () {
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'evolution': console.log('evolution');
+                            case 'evolution':
                                 DataType = 2;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().hide();
@@ -325,7 +324,7 @@ $(function () {
                                 $('#line').parent().parent().show();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'sentiment': console.log('sentiment');
+                            case 'sentiment':
                                 DataType = 3;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().hide();
@@ -334,25 +333,25 @@ $(function () {
                                 $('#line').parent().parent().show();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'age': console.log('age');
+                            case 'age':
                                 DataType = 4;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().show();
+                                $('#word').parent().parent().hide();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'gender': console.log('gender');
+                            case 'gender':
                                 DataType = 5;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().show();
+                                $('#word').parent().parent().hide();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'words': console.log('words');
+                            case 'words':
                                 DataType = 6;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
@@ -361,7 +360,7 @@ $(function () {
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'location': console.log('location');
+                            case 'location':
                                 DataType = 7;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
@@ -377,9 +376,6 @@ $(function () {
                     case "next-3":
                         $(this).attr('id', 'next-4');
                         $('#previous-2').attr('id', 'previous-3');
-                        break;
-                    case "next-4":
-                        $('#previous-3').attr('id', 'previous-4');
                         break;
                 };
             });
@@ -397,9 +393,6 @@ $(function () {
                         $(this).attr('id', 'previous-2');
                         $('#next-4').attr('id', 'next-3');
                         break;
-                    case 'previous-4':
-                        $(this).attr('id', 'previous-3');
-                        break;
                 };
             });
 
@@ -410,7 +403,15 @@ $(function () {
                 switch ($('input:checked').attr('id')) {
                     case 'bar': GraphType = 0;
                         break;
+                    case 'line': GraphType = 1;
+                        break;
                     case 'pie': GraphType = 2;
+                        break;
+                    case 'donut': GraphType = 3;
+                        break;
+                    case 'word': GraphType = 4;
+                        break;
+                    case 'map': GraphType = 5;
                         break;
                 }
                 Wizard.hide();
@@ -431,7 +432,15 @@ $(function () {
                     url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
                 })
 
-                chooseChart(GraphType, newElement.children('#Element-' + ElementId).children('canvas'), 25);
+                var ItemIds = []
+
+                _.each(Element.Items, function (item) {
+                    ItemIds.push(item.ItemId);
+                });
+
+                console.log(ItemIds);
+
+                chooseChart(GraphType, newElement.children('#Element-' + ElementId).children('canvas'), ItemIds, DataType);
             });
             addingElement = false;
         };
@@ -667,12 +676,18 @@ $(function () {
                             })
 
                             addZone.children().children('#Element-+').children().children('img').on('click', function () {
-                                console.log(grid);
-                                console.log(addZone);
                                 addElement(addZone);
                             });
 
-                            chooseChart(Element.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
+                            var ItemIds = []
+
+                            _.each(Element.Items, function (item) {
+                                ItemIds.push(item.ItemId);
+                            });
+
+                            console.log(ItemIds);
+
+                            chooseChart(Element.GraphType, $('#Element-' + ElementId).children('canvas'), ItemIds, Element.DataType);
                         }
                         var oldElement = $.ajax({
                             async: false,
@@ -683,7 +698,7 @@ $(function () {
 
                         var oldZoneId = oldElement.ZoneId;
 
-                        Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove + '", "ZoneId": "' + ZoneId + '", "GraphType": "' + oldElement.GraphType + '"}');
+                        Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + element.x + '", "Y" : "' + element.y + '", "Width": "' + element.width + '", "Height": "' + element.height + '", "IsDraggable": "' + !element.noMove + '", "ZoneId": "' + ZoneId + '", "GraphType": "' + oldElement.GraphType + '", "DataType": "' + oldElement.DataType + '"}');
 
                         $.ajax({
                             async: false,
@@ -695,7 +710,15 @@ $(function () {
                         })
 
                         if (oldZoneId !== ZoneId) {
-                            chooseChart(oldElement.GraphType, $('#Element-' + ElementId).children('canvas'), 25);
+                            var ItemIds = []
+
+                            _.each(oldElement.Items, function (item) {
+                                ItemIds.push(item.ItemId);
+                            });
+
+                            console.log(ItemIds);
+
+                            chooseChart(oldElement.GraphType, $('#Element-' + ElementId).children('canvas'), ItemIds, oldElement.DataType);
                         }
                     }
                 }
@@ -748,7 +771,6 @@ $(function () {
 
                     //this for now(change later), Gets correct data from database
                     _.each(elements, function (node) {
-                        console.log(node);
                         if (!node.IsUnfinished) {
                             var newElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + node.ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div/><div/>'),
                                 node.X, node.Y, node.Width, node.Height);
@@ -758,7 +780,13 @@ $(function () {
 
                             newElement.children('#Element-' + node.ElementId).append($('<canvas></canvas>')).children('canvas').attr('id', 'pie-chart');
 
-                            chooseChart(node.GraphType, newElement.children('#Element-' + node.ElementId).children('canvas'), 25);
+                            var ItemIds = []
+
+                            _.each(node.Items, function (item) {
+                                ItemIds.push(item.ItemId);
+                            });
+
+                            chooseChart(node.GraphType, newElement.children('#Element-' + node.ElementId).children('canvas'), ItemIds, node.DataType);
                         } else {
                             $.ajax({
                                 async: false,
@@ -778,243 +806,341 @@ $(function () {
             }
         };
 
-        chooseChart = function (type, can, id) {
-            switch (type) {
-                case 0: drawBarChart(can, id)
+        chooseChart = function (type, can, ids, data) {
+            console.log(type);
+            switch (data) {
+                case 0: console.log(data);
                     break;
-                case 1: drawLineChart();
+                case 1: console.log(data);
                     break;
-                case 2: drawPie(id, can);
+                case 2: DrawEvolution(can, ids, type)
                     break;
-                case 3: console.log('Scattre');
+                case 3: DrawSentiment(can, ids, type);
                     break;
-                case 4: drawDonut();
+                case 4: DrawAge(can, ids, type);
                     break;
-                case 5: console.log('WordCloud');
+                case 5: DrawGender(can, ids, type);
                     break;
-                case 6: console.log('Radar');
+                case 6: console.log(data);
                     break;
-                case 7: console.log('Area');
-                    break;
-                case 8: console.log('Node');
-                    break;
-                case 9: console.log('Map');
+                case 7: console.log(data);
                     break;
             }
         };
 
-        getTopTrending = function () {
-            var tmp = "";
-            tmp = $.ajax({
-                async: false,
-                type: 'GET',
-                dataType: 'json',
-                url: "https://localhost:44342/api/item/getMostPopularPerson/",
-                headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-            }).responseJSON
-
-            return tmp;
+        function makeAjaxCall(url, methodType) {
+            var promiseObj = new Promise(function (resolve) {
+                var xhr = new XMLHttpRequest();
+                xhr.open(methodType, url, true);
+                xhr.setRequestHeader("x-api-key", "303d22a4-402b-4d3c-b279-9e81c0480711");
+                xhr.send();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            console.log("xhr done successfully");
+                            var resp = "";
+                            resp = xhr.response;
+                            resolve(JSON.parse(resp));
+                        } else {
+                            console.log("xhr failed");
+                        }
+                    } else {
+                        console.log("xhr processing going on");
+                    }
+                }
+                console.log("request sent succesfully");
+            });
+            return promiseObj;
         };
 
-        drawLineChart = function (can) {
-            var persons = "";
-            persons = $.ajax({
-                async: false,
-                type: 'GET',
-                dataType: 'json',
-                url: "https://localhost:44342/api/item/GetMostPopularPersons",
-                headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-            }).responseJSON
-            //can.attr('height', '300px');
+        DrawAge = function (can, itemIds, graph) {
+            console.log(graph);
+            switch (graph){
+                case 0: graph = 'bar';
+                    break;
+                case 1: graph = 'line';
+                    break;
+                case 2: graph = 'pie';
+                    break;
+                case 3: graph = 'doughnut';
+                    break;
+                case 4: graph = 'wordcloud';
+                    break;
+                case 5: graph = 'map';
+                    break;
+            }
+            //var can = $('#pie');
+            var datagrafiek = {
+                datasets: [],
+                labels: ["25+", "25-", "onbekend"]
+            };
 
+            var myChart = new Chart(can,
+                {
+                    type: graph,
+                    data: datagrafiek,
+                    options: {
+                        responsive: true,
+                        title: { display: true, text: 'Leeftijds vergelijking' }
+                    }
+
+                });
+
+            var counter = 0;
+            $.each(itemIds,
+                function (index, value) {
+                    var URL = "https://localhost:44342/api/item/GetAges/" + value;
+                    makeAjaxCall(URL, "GET").then(process);
+
+                    function process(output2) {
+                        var keys = [];
+                        keys = Object.keys(output2);
+
+                        var label = [];
+                        var values = [];
+
+                        for (var i = 0; i < keys.length; i++) {
+                            label.push(keys[i]);
+                            values.push(output2[keys[i]]);
+                        }
+                        var myNewDataSet = {
+                            label: value,
+                            data: values,
+                            backgroundColor: ["#36a2eb", "#ffce56", "#7DDF64", "#ff6384", "#36a2eb", "#cc65fe"]
+                        }
+
+                        datagrafiek.datasets.push(myNewDataSet);
+                        myChart.update();
+                        counter++;
+                    }
+                });
+        }
+
+        DrawGender = function (can, itemIds, graph) {
+            switch (graph) {
+                case 0: graph = 'bar';
+                    break;
+                case 1: graph = 'line';
+                    break;
+                case 2: graph = 'pie';
+                    break;
+                case 3: graph = 'doughnut';
+                    break;
+                case 4: graph = 'wordcloud';
+                    break;
+                case 5: graph = 'map';
+                    break;
+            }
+            //var can = $('#pie');
+            var datagrafiek = {
+                datasets: [],
+                labels: ["♂ man", "♀ vrouw"]
+            };
+
+            var myChart = new Chart(can,
+                {
+                    type: graph,
+                    data: datagrafiek,
+                    options: {
+                        responsive: true,
+                        title: {display:true, text:'Geslachts vergelijking'}
+                    }
+
+                });
+
+            var counter = 0;
+            $.each(itemIds,
+                function (index, value) {
+                    var URL = "https://localhost:44342/api/item/GetGender/" + value;
+                    makeAjaxCall(URL, "GET").then(process);
+
+                    function process(output2) {
+                        var keys = [];
+                        keys = Object.keys(output2);
+
+                        var label = [];
+                        var values = [];
+
+                        for (var i = 0; i < keys.length; i++) {
+                            label.push(keys[i]);
+                            values.push(output2[keys[i]]);
+                        }
+                        var myNewDataSet = {
+                            label: value,
+                            data: values,
+                            backgroundColor: ["#36a2eb", "#ff99ed"]
+                        }
+
+                        datagrafiek.datasets.push(myNewDataSet);
+                        myChart.update();
+                        counter++;
+                    }
+                });
+        }
+
+        DrawSentiment = function (can, itemIds, graph) {
+            switch (graph) {
+                case 0: graph = 'bar';
+                    break;
+                case 1: graph = 'line';
+                    break;
+                case 2: graph = 'pie';
+                    break;
+                case 3: graph = 'doughnut';
+                    break;
+                case 4: graph = 'wordcloud';
+                    break;
+                case 5: graph = 'map';
+                    break;
+            }
             var datagrafiek = {
                 labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
                 datasets: []
             };
-
-            // var labelslist; 
-
-            var myLineChart = new Chart(can, {
-                type: 'line',
-                data: datagrafiek,
-
-            });
+            var myLineChart = new Chart(can,
+                {
+                    type: graph,
+                    data: datagrafiek,
+                    options: {
+                        responsive: true,
+                        scales: {
+                            yAxes: [
+                                {
+                                    display: true,
+                                    ticks: {
+                                        // minimum will be 0, unless there is a lower value.
+                                        // OR //
+                                        beginAtZero: false,
+                                        // minimum value will be 0.
+                                    }
+                                }
+                            ]
+                        },
+                        title: { display: true, text: 'Sentiment vergelijking' }
+                    }
+                });
 
             var counter = 0;
-            $.each(persons, function (key, value) {
-                var tweet = "";
-                tweet = $.ajax({
-                    async: false,
-                    type: 'GET',
-                    dataType: 'json',
-                    url: "https://localhost:44342/api/item/GetPersonEvolution/" + key,
-                    headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-                }).responseJSON
+            $.each(itemIds,
+                function (index, value) {
+                    var URL = "https://localhost:44342/api/item/GetPersonEvolution/" + value;
+                    makeAjaxCall(URL, "GET").then(process);
 
-                var keys = [];
-                keys = Object.keys(tweet);
+                    function process(output2) {
+                        var keys = [];
+                        keys = Object.keys(output2);
 
-                var label = [];
-                var values = [];
+                        var label = [];
+                        var values = [];
 
-                var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
-                var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
-                var points = ["#512da8", "#1976d2", "#388e3c"];
+                        var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
+                        var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+                        var points = ["#512da8", "#1976d2", "#388e3c"];
 
-                for (var i = 0; i < keys.length; i++) {
-                    label.push(keys[i]);
-                    values.push(tweet[keys[i]] / 10);
-                }
+                        for (var i = 0; i < keys.length; i++) {
+                            label.push(keys[i]);
+                            values.push(output2[keys[i]]);
+                        }
 
-                var myNewDataSet = {
-                    label: value,
-                    data: values,
-                    borderWidth: 2,
-                    backgroundColor: backgroundcolors[counter],
-                    borderColor: borderColors[counter],
-                    pointBackgroundColor: points[counter]
-
-                }
-
-                datagrafiek.datasets.push(myNewDataSet);
-
-                myLineChart.update();
-                counter++;
-            });
-        };
-
-        drawDonut = function (can) {
-            var count = "";
-            count = $.ajax({
-                async: false,
-                type: 'GET',
-                dataType: 'json',
-                url: "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + getTopTrending(),
-                headers: Headers
-            }).responseJSON
-
-            var keys = [];
-            keys = Object.keys(count);
-            var label = [];
-            var values = [];
-
-            for (var i = 0; i < keys.length; i++) {
-                label.push(keys[i]);
-                values.push(count[keys[i]] / 10);
-            }
-
-            new Chart(can, {
-                type: 'doughnut',
-                data: {
-                    labels: label,
-                    datasets: [
-                        {
-                            label: "Hashtags",
+                        var myNewDataSet = {
+                            label: value,
                             data: values,
-                            backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64", "#7BDFF2", "#FDE74C", "#47E5BC", "#DAD6D6", "#EF3E36"]
+                            borderWidth: 2,
+                            backgroundColor: backgroundcolors[counter],
+                            borderColor: borderColors[counter],
+                            pointBackgroundColor: points[counter]
+
                         }
-                    ]
-                },
-                options: {
 
-                }
-            });
-        };
+                        datagrafiek.datasets.push(myNewDataSet);
 
-        drawPie = function (id, canvas) {
-            var count = "";
-            count = $.ajax({
-                async: false,
-                type: 'GET',
-                dataType: 'json',
-                url: "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id,
-                headers: Headers
-            }).responseJSON
-
-            var keys = [];
-            keys = Object.keys(count);
-            var label = [];
-            var values = [];
-
-            for (var i = 0; i < keys.length; i++) {
-                label.push(keys[i]);
-                values.push(count[keys[i]] / 10);
-            }
-
-            //var can = $('#pie-chart');
-            //console.log(can.attr('Style', 'height: 50%;'));
-            //can.attr('Style', 'width: 300px; height: 300px');
-
-            new Chart(canvas, {
-                type: 'pie',
-                data: {
-                    labels: label,
-                    datasets: [{
-                        backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
-                        data: values
-                    }]
-                },
-                options: {
-                    responsive: true
-                }
-            });
-        };
-
-        drawBarChart = function (can, id) {
-            var bar = "";
-            bar = $.ajax({
-                async: false,
-                type: 'GET',
-                dataType: 'json',
-                url: "https://localhost:44342/api/item/getpersontweet/" + id,
-                headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' }
-
-            }).responseJSON
-
-            var keys = [];
-            keys = Object.keys(bar);
-            var label = [];
-            var values = [];
-
-            for (var i = 0; i < keys.length; i++) {
-                label.push(keys[i]);
-                values.push(bar[keys[i]]);
-            }
-
-            //console.log(label);
-            //console.log(values);
-
-            //var can = $('#bar2-chart');
-            //can.attr('width', '300px');
-            //can.attr('height', '300px');
-
-            new Chart(can, {
-                type: 'bar',
-                data: {
-                    labels: label,
-                    datasets: [
-                        {
-                            label: "Aantal tweets",
-                            backgroundColor: "#03a9f4",
-                            borderColor: "#rgba(3, 169, 244, 0.5)",
-                            data: values
-                        }
-                    ]
-                },
-                options: {
-                    legend: { display: true },
-                    responsive: true,
-                    scales: {
-                        xAxes: [
-                            {
-                                display: false
-                            }
-                        ]
+                        myLineChart.update();
+                        counter++;
                     }
+                });
+        }
 
-                }
-            });
-        };
+        DrawEvolution = function (can, itemIds, graph) {
+            switch (graph) {
+                case 0: graph = 'bar';
+                    break;
+                case 1: graph = 'line';
+                    break;
+                case 2: graph = 'pie';
+                    break;
+                case 3: graph = 'doughnut';
+                    break;
+                case 4: graph = 'wordcloud';
+                    break;
+                case 5: graph = 'map';
+                    break;
+            }
+            var datagrafiek = {
+                labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
+                datasets: []
+            };
+            var myLineChart = new Chart(can,
+                {
+                    type: graph,
+                    data: datagrafiek,
+                    options: {
+                        responsive: true,
+                        scales: {
+                            yAxes: [
+                                {
+                                    display: true,
+                                    ticks: {
+                                        // minimum will be 0, unless there is a lower value.
+                                        // OR //
+                                        beginAtZero: false,
+                                        // minimum value will be 0.
+                                    }
+                                }
+                            ]
+                        },
+                        title: { display: true, text: 'Sentiment vergelijking' }
+                    }
+                });
+
+            var counter = 0;
+            $.each(itemIds,
+                function (index, value) {
+                    var URL = "https://localhost:44342/api/item/GetItemTweet/" + value;
+                    makeAjaxCall(URL, "GET").then(process);
+
+                    function process(output2) {
+                        var keys = [];
+                        keys = Object.keys(output2);
+
+                        var label = [];
+                        var values = [];
+
+                        var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
+                        var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+                        var points = ["#512da8", "#1976d2", "#388e3c"];
+
+                        for (var i = 0; i < keys.length; i++) {
+                            label.push(keys[i]);
+                            values.push(output2[keys[i]]);
+                        }
+
+                        var myNewDataSet = {
+                            label: value,
+                            data: values,
+                            borderWidth: 2,
+                            backgroundColor: backgroundcolors[counter],
+                            borderColor: borderColors[counter],
+                            pointBackgroundColor: points[counter]
+
+                        }
+
+                        datagrafiek.datasets.push(myNewDataSet);
+
+                        myLineChart.update();
+                        counter++;
+                    }
+                });
+        }
 
         $(".grid-stack").each(function () {
             this.grid = $(this).data('gridstack');
