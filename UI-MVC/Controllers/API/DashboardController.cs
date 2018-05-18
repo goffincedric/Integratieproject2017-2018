@@ -3,6 +3,7 @@ using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using PB.BL;
 using PB.BL.Domain.Dashboards;
+using PB.BL.Domain.Items;
 
 namespace UI_MVC.Controllers.API
 {
@@ -10,6 +11,7 @@ namespace UI_MVC.Controllers.API
     public class DashboardController : ApiController
     {
         private readonly DashboardManager DashboardMgr;
+        private readonly ItemManager ItemMgr;
         private readonly SubplatformManager SubplatformMgr;
         private readonly UnitOfWorkManager UowMgr;
 
@@ -17,6 +19,7 @@ namespace UI_MVC.Controllers.API
         {
             UowMgr = new UnitOfWorkManager();
             DashboardMgr = new DashboardManager(UowMgr);
+            ItemMgr = new ItemManager(UowMgr);
             SubplatformMgr = new SubplatformManager(UowMgr);
         }
 
@@ -124,6 +127,12 @@ namespace UI_MVC.Controllers.API
                 newElement.ZoneId = element.ZoneId;
                 newElement.Zone = newZone;
                 newElement.GraphType = element.GraphType;
+                newElement.IsUnfinished = element.IsUnfinished;
+                foreach (var item in element.Items)
+                {
+                     Item addItem = ItemMgr.GetItem(item.ItemId);
+                    newElement.Items.Add(addItem);
+                }
 
                 DashboardMgr.ChangeElement(newElement);
             }
@@ -144,8 +153,7 @@ namespace UI_MVC.Controllers.API
             element.Zone = zone;
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            element = DashboardMgr.AddElement(zone, element.X, element.Y, element.Width, element.Height,
-                element.IsDraggable);
+            element = DashboardMgr.AddElement(zone, element.X, element.Y, element.Width, element.Height,element.IsUnfinished, isDraggable: element.IsDraggable);
             zone.Elements.Add(element);
 
             return

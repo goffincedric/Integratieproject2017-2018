@@ -20,12 +20,13 @@ namespace PB.BL.Domain.Dashboards
 
         public bool IsDraggable { get; set; }
         public GraphType GraphType { get; set; }
-        public bool IsFinished { get; set; }
+        public DataType DataType { get; set; }
+        public bool IsUnfinished { get; set; }
 
         public int ZoneId { get; set; }
         public Zone Zone { get; set; }
 
-        public List<Item> Items { get; set; }
+        public virtual List<Item> Items { get; set; }
         //public List<Comparison> Comparison { get; set; }
     }
 }
