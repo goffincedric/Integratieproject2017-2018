@@ -299,7 +299,7 @@ $(function () {
                     case "next-2":
                         $('#cardholder').empty();
                         switch ($('input:checked').attr('id')) {
-                            case 'mention': console.log('mention');
+                            case 'mention':
                                 DataType = 0;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
@@ -308,7 +308,7 @@ $(function () {
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'hashtag': console.log('hashtag');
+                            case 'hashtag':
                                 DataType = 1;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
@@ -317,7 +317,7 @@ $(function () {
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'evolution': console.log('evolution');
+                            case 'evolution':
                                 DataType = 2;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().hide();
@@ -326,7 +326,7 @@ $(function () {
                                 $('#line').parent().parent().show();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'sentiment': console.log('sentiment');
+                            case 'sentiment':
                                 DataType = 3;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().hide();
@@ -335,7 +335,7 @@ $(function () {
                                 $('#line').parent().parent().show();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'age': console.log('age');
+                            case 'age':
                                 DataType = 4;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
@@ -344,7 +344,7 @@ $(function () {
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'gender': console.log('gender');
+                            case 'gender':
                                 DataType = 5;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
@@ -353,7 +353,7 @@ $(function () {
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'words': console.log('words');
+                            case 'words':
                                 DataType = 6;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
@@ -362,7 +362,7 @@ $(function () {
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
-                            case 'location': console.log('location');
+                            case 'location':
                                 DataType = 7;
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
@@ -379,9 +379,6 @@ $(function () {
                         $(this).attr('id', 'next-4');
                         $('#previous-2').attr('id', 'previous-3');
                         break;
-                    case "next-4":
-                        $('#previous-3').attr('id', 'previous-4');
-                        break;
                 };
             });
 
@@ -397,9 +394,6 @@ $(function () {
                     case 'previous-3':
                         $(this).attr('id', 'previous-2');
                         $('#next-4').attr('id', 'next-3');
-                        break;
-                    case 'previous-4':
-                        $(this).attr('id', 'previous-3');
                         break;
                 };
             });
@@ -668,8 +662,6 @@ $(function () {
                             })
 
                             addZone.children().children('#Element-+').children().children('img').on('click', function () {
-                                console.log(grid);
-                                console.log(addZone);
                                 addElement(addZone);
                             });
 
@@ -749,7 +741,6 @@ $(function () {
 
                     //this for now(change later), Gets correct data from database
                     _.each(elements, function (node) {
-                        console.log(node);
                         if (!node.IsUnfinished) {
                             var newElement = griddata.addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + node.ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div/><div/>'),
                                 node.X, node.Y, node.Width, node.Height);

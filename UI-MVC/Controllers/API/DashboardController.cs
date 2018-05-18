@@ -112,7 +112,6 @@ namespace UI_MVC.Controllers.API
             if (element.ElementId != id) return BadRequest();
             Element newElement = DashboardMgr.GetElement(id);
             if (newElement == null) return NotFound();
-            if (element.Items.Count == 0) return BadRequest();
             Zone newZone = DashboardMgr.GetZone(element.ZoneId);
             if (newZone == null) return NotFound();
             if (!newZone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
