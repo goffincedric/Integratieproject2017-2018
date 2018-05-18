@@ -267,39 +267,38 @@ $(function () {
                         var cardnumber = 1;
                         $('#locality-dropdown').off('change');
                         $('#locality-dropdown').on('change', function () {
-                            if (cardnumber <= 5) {
-                                $('#cardholder').append($('<div id="card' + cardnumber + '" class="col-sm-2-5 pX-5">' +
-                                    '<h5 class= "info-text" > Voeg hier toe!</h5>' +
-                                    '<div class="card">' +
-                                    '<img src="/Content/Images/plus-icon.png" alt="Avatar" style="width:100%">' +
-                                    '<div class="container">' +
-                                    '<h4><b class="itemId">#</b></h4>' +
-                                    '<p class="itemName">Architect & Engineer</p>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '</div>'));
-                                $('#card' + cardnumber).children('.card').children('img').on('click', function () {
-                                    var item = ($.ajax({
-                                        async: false,
-                                        type: 'GET',
-                                        headers: Headers,
-                                        url: "https://localhost:44342/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
-                                    }).responseJSON);
-                                    $(this).attr('src', (item.IconURL).substring(1, item.IconURL.length));
-                                    $(this).siblings('.container').children('h4').children('.itemId').text(item.ItemId);
-                                    $(this).siblings('.container').children('.itemName').text(item.Name);
-                                })
-                                cardnumber++;
+                            console.log($('#card' + (cardnumber - 1)).children('.card').children('.container'));
+                            if ($('#card' + (cardnumber - 1)).children('.card').children('.container').children('h4').text() != '#') {
+                                if (cardnumber <= 5) {
+                                    $('#cardholder').append($('<div id="card' + cardnumber + '" class="col-sm-2-5 pX-5">' +
+                                        '<h5 class= "info-text" > Voeg hier toe!</h5>' +
+                                        '<div class="card">' +
+                                        '<img src="/Content/Images/plus-icon.png" alt="Avatar" style="width:100%">' +
+                                        '<div class="container">' +
+                                        '<h4><b class="itemId">#</b></h4>' +
+                                        '<p class="itemName">Architect & Engineer</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>'));
+                                    $('#card' + cardnumber).children('.card').children('img').on('click', function () {
+                                        var item = ($.ajax({
+                                            async: false,
+                                            type: 'GET',
+                                            headers: Headers,
+                                            url: "https://localhost:44342/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
+                                        }).responseJSON);
+                                        $(this).attr('src', (item.IconURL).substring(1, item.IconURL.length));
+                                        $(this).siblings('.container').children('h4').children('.itemId').text(item.ItemId);
+                                        $(this).siblings('.container').children('.itemName').text(item.Name);
+                                    })
+                                    console.log($('#card' + (cardnumber - 1)));
+                                    cardnumber++;
+                                }
                             }
                         });
                         $(this).attr('id', 'next-2');
                         break;
                     case "next-2":
-                        $(this).attr('id', 'next-3');
-                        $('#previous-1').attr('id', 'previous-2');
-                        break;
-                    case "next-3":
-                        //console.log($('input:checked').attr('id'));
                         switch ($('input:checked').attr('id')) {
                             case 'mention': console.log('mention');
                                 DataType = 0;
@@ -374,6 +373,10 @@ $(function () {
                                 $('#map').parent().parent().show();
                                 break;
                         }
+                        $(this).attr('id', 'next-3');
+                        $('#previous-1').attr('id', 'previous-2');
+                        break;
+                    case "next-3":
                         $(this).attr('id', 'next-4');
                         $('#previous-2').attr('id', 'previous-3');
                         break;
