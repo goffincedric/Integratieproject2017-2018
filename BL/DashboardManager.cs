@@ -178,7 +178,7 @@ namespace PB.BL
             return DashboardRepo.ReadElement(elementId);
         }
 
-        public Element AddElement(Zone zone, int x, int y, int width, int height, bool isDraggable = true, bool isFinished = false)
+        public Element AddElement(Zone zone, int x, int y, int width, int height, bool isFinished, bool isDraggable = true)
         {
             InitNonExistingRepo();
             Element element = new Element()

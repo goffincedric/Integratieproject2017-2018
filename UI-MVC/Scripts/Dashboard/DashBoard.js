@@ -165,7 +165,7 @@ $(function () {
             var X = newElement.data().gsX;
             var Y = newElement.data().gsY;
 
-            var Element = JSON.parse('{"X" : "' + X + '", "Y" : "' + Y + '", "Width": "3", "Height": "3", "IsDraggable": "true", "ZoneId": "' + ZoneId + '"}');
+            var Element = JSON.parse('{"X" : "' + X + '", "Y" : "' + Y + '", "Width": "3", "Height": "3", "IsDraggable": "true","IsFinished":"false", "ZoneId": "' + ZoneId + '"}');
 
             var ElementId = $.ajax({
                 async: false,
