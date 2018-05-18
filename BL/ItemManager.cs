@@ -474,7 +474,6 @@ namespace PB.BL
         #endregion
 
         #region Records
-
         public IEnumerable<Record> GetRecords()
         {
             InitNonExistingRepo();
@@ -543,6 +542,20 @@ namespace PB.BL
             return RecordRepo.ReadRecords().Where(r => r.Persons.Contains(person));
         }
 
+        public Dictionary<string, int> GetTweetCountByDistrict()
+        {
+            IEnumerable<Person> persons = ItemRepo.ReadPersons();
+
+            Dictionary<string, int> districtTweets = persons.Where(p => p.District != null).GroupBy(p => p.District).ToDictionary(kv => kv.Key, kv => kv.ToList().SelectMany(p => p.Records).Distinct().Count());
+            districtTweets.TryGetValue("Vlaanderen", out int vlaanderenAantal);
+            districtTweets.Remove("Vlaanderen");
+            districtTweets.Remove("Geen");
+            if (vlaanderenAantal > 0)
+            {
+                districtTweets.Keys.ToList().ForEach(k => districtTweets[k] = districtTweets[k] + vlaanderenAantal);
+            }
+            return districtTweets;
+        }
         #endregion
 
         #region Keywords
@@ -795,7 +808,7 @@ namespace PB.BL
             return newRecords;
         }
 
-        public List<Item> JPersonToRecord(List<JPerson> data, Subplatform subplatform)
+        public List<Item> JPersonToPerson(List<JPerson> data, Subplatform subplatform)
         {
             InitNonExistingRepo();
 
@@ -908,9 +921,9 @@ namespace PB.BL
             return newPersons;
         }
 
-        public string ToPascalCase(string value)
+        public static string ToPascalCase(string value)
         {
-            if (value.Equals(string.Empty)) return value;
+            if (String.IsNullOrWhiteSpace(value)) return value;
             value = value.Substring(0, 1).ToUpper() + value.Substring(1).ToLower();
             string[] words = null;
             if (value.Contains("-"))
