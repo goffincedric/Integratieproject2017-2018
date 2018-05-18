@@ -1,7 +1,7 @@
 ﻿
 @{
-    ViewBag.Title = "Charts";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+  ViewBag.Title = "Charts";
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Charts</h2>
@@ -14,7 +14,7 @@
 
 <canvas id="pie2" height="100"></canvas>
 
-<canvas id="donut" height="100"></canvas>
+<canvas id="mentions" height="100"></canvas>
 
 <script src="~/Scripts/Charts/Chart.min.js"></script>
 
@@ -51,84 +51,84 @@
 
 <script>
   function drawLineChart() {
-   
-
-      var can = $('#evol');
-      var datagrafiek = {
-        labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
-        datasets: []
-      };
-
-      var myLineChart = new Chart(can,
-        {
-          type: 'line',
-          data: datagrafiek,
-          options: {
-            responsive: true,
-            scales: {
-              yAxes: [
-                {
-                  display: true,
-                  ticks: {
-                    // minimum will be 0, unless there is a lower value.
-                    // OR //
-                    beginAtZero: false,
 
 
-                    // minimum value will be 0.
-                  }
+    var can = $('#evol');
+    var datagrafiek = {
+      labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
+      datasets: []
+    };
+
+    var myLineChart = new Chart(can,
+      {
+        type: 'line',
+        data: datagrafiek,
+        options: {
+          responsive: true,
+          scales: {
+            yAxes: [
+              {
+                display: true,
+                ticks: {
+                  // minimum will be 0, unless there is a lower value.
+                  // OR //
+                  beginAtZero: false,
+
+
+                  // minimum value will be 0.
                 }
-              ]
-            }
+              }
+            ]
           }
-        });
-      $("#loader-1").hide();
-      can.show();
-      var array = [22,28]
-      var counter = 0;
-      $.each(array,
-        function (index, value) {
-          var URL = "https://localhost:44342/api/item/GetPersonEvolution/" + value;
-          makeAjaxCall(URL, "GET").then(process, errorHandler);
+        }
+      });
+    $("#loader-1").hide();
+    can.show();
+    var array = [22, 28]
+    var counter = 0;
+    $.each(array,
+      function (index, value) {
+        var URL = "https://localhost:44342/api/item/GetPersonEvolution/" + value;
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
 
-          function process(output2) {
-            var keys = [];
-            keys = Object.keys(output2);
+        function process(output2) {
+          var keys = [];
+          keys = Object.keys(output2);
 
-            var label = [];
-            var values = [];
+          var label = [];
+          var values = [];
 
-            var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
-            var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
-            var points = ["#512da8", "#1976d2", "#388e3c"];
+          var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
+          var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+          var points = ["#512da8", "#1976d2", "#388e3c"];
 
-            for (var i = 0; i < keys.length; i++) {
-              label.push(keys[i]);
-              values.push(output2[keys[i]] / 10);
-            }
-
-            var myNewDataSet = {
-              label: value,
-              data: values,
-              borderWidth: 2,
-              backgroundColor: backgroundcolors[counter],
-              borderColor: borderColors[counter],
-              pointBackgroundColor: points[counter]
-
-            }
-
-            datagrafiek.datasets.push(myNewDataSet);
-
-            myLineChart.update();
-            counter++;
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output2[keys[i]] / 10);
           }
-        });
+
+          var myNewDataSet = {
+            label: value,
+            data: values,
+            borderWidth: 2,
+            backgroundColor: backgroundcolors[counter],
+            borderColor: borderColors[counter],
+            pointBackgroundColor: points[counter]
+
+          }
+
+          datagrafiek.datasets.push(myNewDataSet);
+
+          myLineChart.update();
+          counter++;
+        }
+      });
 
 
-      function errorHandler(statusCode) {
-        console.log("failed with status", status);
-      }
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
     }
+  }
 
 
   drawLineChart();
@@ -231,9 +231,9 @@
         data: datagrafiek,
         options: {
           responsive: true
-          
-          }
-        
+
+        }
+
       });
     $("#loader-1").hide();
     can.show();
@@ -251,22 +251,20 @@
           var label = [];
           var values = [];
 
-      
+
 
           for (var i = 0; i < keys.length; i++) {
             label.push(keys[i]);
             values.push(output2[keys[i]]);
           }
-
-          var backgroundColor = ["#36a2eb", "#ffce56", "#7DDF64"]
           var myNewDataSet = {
             label: value,
             data: values,
-            backgroundColor:["#36a2eb", "#ffce56", "#7DDF64"]
+            backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"]
 
           }
 
-          
+
           datagrafiek.datasets.push(myNewDataSet);
           //datagrafiek.labels.push(label);
           myLineChart.update();
@@ -294,10 +292,10 @@
 
     var myLineChart = new Chart(can,
       {
-        type: 'pie',
+        type: 'doughnut',
         data: datagrafiek,
         options: {
-          responsive: true, 
+          responsive: true,
           legend: {
             display: true
           }
@@ -325,14 +323,16 @@
 
           for (var i = 0; i < keys.length; i++) {
             label.push(keys[i]);
-            values.push(output2[keys[i]]);
+            values.push(output2[keys[i]] / 10);
           }
 
-          var backgroundColor = ["#36a2eb", "#ffce56", "#7DDF64"]
+          console.log(values);
+
+      
           var myNewDataSet = {
             label: value,
             data: values,
-            backgroundColor: ["#36a2eb", "#ffce56", "#7DDF64"]
+            backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"]
 
           }
 
@@ -352,6 +352,77 @@
 
   pie2();
 
+
+  function drawMentions() {
+    var can = $('#mentions');
+    var datagrafiek = {
+      datasets: []
+
+    };
+
+    var myLineChart = new Chart(can,
+      {
+        type: 'bar',
+        data: datagrafiek,
+        options: {
+          responsive: true,
+          legend: {
+            display: true
+          }
+
+
+        }
+
+      });
+    $("#loader-1").hide();
+    can.show();
+    var array = [22, 28]
+    var counter = 0;
+    $.each(array,
+      function (index, value) {
+        var URL = "https://localhost:44342/api/item/GetTrendingMentionsCountOverall/" + value;
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+        function process(output2) {
+          var keys = [];
+          keys = Object.keys(output2);
+
+          var label = [];
+          var values = [];
+
+
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output2[keys[i]]);
+          }
+
+
+          console.log("Values: " + values);
+          var backgroundColors = ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"];
+          var myNewDataSet = {
+            label: label,
+            data: values,
+            backgroundColor: backgroundColors[counter]
+          
+
+          }
+
+
+          datagrafiek.datasets.push(myNewDataSet);
+          datagrafiek.labels.push(label);
+          myLineChart.update();
+          counter++;
+        }
+      });
+
+
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+  }
+
+  drawMentions();
 
 </script>
 
