@@ -48,7 +48,6 @@ namespace UI_MVC.Controllers.API
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-
         // POST: api/dashboard/postzone/{dashboardId}
         [HttpPost]
         public IHttpActionResult PostZone(int id, [FromBody] Zone zone)
@@ -136,10 +135,8 @@ namespace UI_MVC.Controllers.API
                         newElement.Items.Add(addItem);
                     }
                 }
-
                 DashboardMgr.ChangeElement(newElement);
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
 
