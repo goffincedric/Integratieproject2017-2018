@@ -786,8 +786,6 @@ $(function () {
                                 ItemIds.push(item.ItemId);
                             });
 
-                            console.log(node);
-
                             chooseChart(node.GraphType, newElement.children('#Element-' + node.ElementId).children('canvas'), ItemIds, node.DataType);
                         } else {
                             $.ajax({
@@ -815,7 +813,7 @@ $(function () {
                     break;
                 case 1: console.log(data);
                     break;
-                case 2: console.log(data);
+                case 2: DrawEvolution(can, ids, type)
                     break;
                 case 3: DrawSentiment(can, ids, type);
                     break;
@@ -1026,6 +1024,88 @@ $(function () {
             $.each(itemIds,
                 function (index, value) {
                     var URL = "https://localhost:44342/api/item/GetPersonEvolution/" + value;
+                    makeAjaxCall(URL, "GET").then(process);
+
+                    function process(output2) {
+                        var keys = [];
+                        keys = Object.keys(output2);
+
+                        var label = [];
+                        var values = [];
+
+                        var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
+                        var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+                        var points = ["#512da8", "#1976d2", "#388e3c"];
+
+                        for (var i = 0; i < keys.length; i++) {
+                            label.push(keys[i]);
+                            values.push(output2[keys[i]]);
+                        }
+
+                        var myNewDataSet = {
+                            label: value,
+                            data: values,
+                            borderWidth: 2,
+                            backgroundColor: backgroundcolors[counter],
+                            borderColor: borderColors[counter],
+                            pointBackgroundColor: points[counter]
+
+                        }
+
+                        datagrafiek.datasets.push(myNewDataSet);
+
+                        myLineChart.update();
+                        counter++;
+                    }
+                });
+        }
+
+        DrawEvolution = function (can, itemIds, graph) {
+            switch (graph) {
+                case 0: graph = 'bar';
+                    break;
+                case 1: graph = 'line';
+                    break;
+                case 2: graph = 'pie';
+                    break;
+                case 3: graph = 'doughnut';
+                    break;
+                case 4: graph = 'wordcloud';
+                    break;
+                case 5: graph = 'map';
+                    break;
+            }
+            var datagrafiek = {
+                labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
+                datasets: []
+            };
+            var myLineChart = new Chart(can,
+                {
+                    type: graph,
+                    data: datagrafiek,
+                    options: {
+                        responsive: true,
+                        scales: {
+                            yAxes: [
+                                {
+                                    display: true,
+                                    ticks: {
+                                        // minimum will be 0, unless there is a lower value.
+                                        // OR //
+                                        beginAtZero: false,
+                                        // minimum value will be 0.
+                                    }
+                                }
+                            ]
+                        },
+                        title: { display: true, text: 'Sentiment vergelijking' }
+                    }
+                });
+
+            var counter = 0;
+            $.each(itemIds,
+                function (index, value) {
+                    var URL = "https://localhost:44342/api/item/GetItemTweet/" + value;
                     makeAjaxCall(URL, "GET").then(process);
 
                     function process(output2) {
