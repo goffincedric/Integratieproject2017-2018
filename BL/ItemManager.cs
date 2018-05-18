@@ -694,12 +694,10 @@ namespace PB.BL
             return newRecords;
         }
 
-        public List<Item> JPersonToRecord(string jsonstring, Subplatform subplatform)
+        public List<Item> JPersonToRecord(List<JPerson> data, Subplatform subplatform)
         {
             InitNonExistingRepo();
-
-            List<JPerson> data = JsonConvert.DeserializeObject<List<JPerson>>(jsonstring);
-
+            
             List<Person> oldPersons = ItemRepo.ReadPersons().ToList();
             List<Item> newPersons = new List<Item>();
 

@@ -55,7 +55,7 @@ namespace UI_MVC
                         itemMgr.SyncDatabase(s);
                     },
                     (schedule) => schedule
-                    .ToRunOnceAt(1, 0)
+                    .ToRunOnceAt(9, 10)
                     .AndEvery(int.Parse(seedInterval)).Hours());
                 }
                 if (!(alertGenerationInterval is null))
@@ -65,7 +65,7 @@ namespace UI_MVC
                         accountMgr.GenerateAllAlerts(s.Items);
                     },
                     (schedule) => schedule
-                    .ToRunOnceAt(6, 0)
+                    .ToRunOnceAt(9, 30)
                     .AndEvery(int.Parse(alertGenerationInterval)).Hours());
                 }
             });
