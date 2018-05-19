@@ -61,11 +61,10 @@ namespace UI_CA_Prototype
                 Console.WriteLine("7) Verwijder oude records uit database");
                 Console.WriteLine("8) Voeg API data toe");
                 Console.WriteLine("9) Voeg alerts to aan selected profile");
-                Console.WriteLine("10) Laad politici in via json");
                 Console.WriteLine("---------------- Info -----------------");
-                Console.WriteLine("11) Toon alle records");
-                Console.WriteLine("12) Toon alle persons");
-                Console.WriteLine("13) Toon subscribed items van geselecteerd profiel");
+                Console.WriteLine("10) Toon alle records");
+                Console.WriteLine("11) Toon alle persons");
+                Console.WriteLine("12) Toon subscribed items van geselecteerd profiel");
                 Console.WriteLine("-------------- Commands ---------------");
                 Console.WriteLine("99) Toon de CLI help pagina");
                 Console.WriteLine("0) Afsluiten");
@@ -137,17 +136,12 @@ namespace UI_CA_Prototype
                         AccountMgr.GenerateAllAlerts(SelectedProfile.Subscriptions);
                         break;
                     case 10:
-                        if (SelectedSubplatform == null) throw new Exception("U heeft nog geen subplatform geselecteerd, gelieve er eerst een te kiezen");
-                        List<Item> persons = ItemMgr.JPersonToRecord(JsonConvert.DeserializeObject<List<JPerson>>(File.ReadAllText(@"politiciJSON\politici.json")), SelectedSubplatform);
-                        ItemMgr.AddItems(persons);
-                        break;
-                    case 11:
                         ExtensionMethods.ShowRecords(ItemMgr.GetRecords());
                         break;
-                    case 12:
+                    case 11:
                         ExtensionMethods.ShowPersons(ItemMgr.GetPersons());
                         break;
-                    case 13:
+                    case 12:
                         ExtensionMethods.ShowSubScribedItems(SelectedProfile);
                         break;
                     case 99:

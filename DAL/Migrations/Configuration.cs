@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using Domain.JSONConversion;
+using Newtonsoft.Json;
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
@@ -14,6 +18,17 @@ namespace PB.DAL.Migrations
 {
     internal sealed class Configuration : DbMigrationsConfiguration<IntegratieDbContext>
     {
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
@@ -25,9 +40,10 @@ namespace PB.DAL.Migrations
             // Seed basic data
 
             #region Subplatforms
-
             //Makes PB subplatform
             Subplatform pbSubplatform = ctx.Subplatforms
+                .Include(s => s.Settings)
+                .Include(s => s.Items)
                 .FirstOrDefaultAsync(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower())).Result;
             if (pbSubplatform == null)
                 pbSubplatform = new Subplatform
@@ -159,7 +175,6 @@ namespace PB.DAL.Migrations
             #endregion
 
             #region Organisation
-
             //Makes all organisations
             List<Organisation> OrganisationsToAdd = new List<Organisation>
             {
@@ -285,11 +300,125 @@ namespace PB.DAL.Migrations
                 if (organisation != null) OrganisationsToAdd.Remove(o);
             }).Wait();
             if (OrganisationsToAdd.Count != 0) ctx.Organisations.AddRange(OrganisationsToAdd);
+            #endregion
 
+            #region Persons
+            List<Person> personsToAdd = new List<Person>();
+            List<JPerson> data = JsonConvert.DeserializeObject<List<JPerson>>(File.ReadAllText(AssemblyDirectory + @"\politiciJSON\politici.json"));
+
+            foreach (var el in data)
+            {
+                Person personCheck = ctx.Persons
+                    .Include(p => p.SubPlatforms)
+                    .FirstOrDefault(p => p.Name.ToLower() == el.Full_name.ToLower());
+                if (personCheck == null)
+                {
+                    personCheck = new Person
+                    {
+                        ItemId = el.Id,
+                        Name = el.Full_name,
+                        IsTrending = false,
+                        IconURL = pbSubplatform.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
+                        SubPlatforms = new List<Subplatform>
+                        {
+                            pbSubplatform
+                        },
+                        Keywords = new List<Keyword>(),
+                        Elements = new List<Element>(),
+                        SubscribedProfiles = new List<Profile>(),
+                        Alerts = new List<Alert>(),
+                        TrendingScore = 0,
+                        FirstName = el.First_name,
+                        LastName = el.Last_name,
+                        Level = el.Level,
+                        SocialMediaLink = el.Facebook,
+                        Site = el.Site,
+                        TwitterName = el.Twitter,
+                        Position = el.Position,
+                        District = el.District,
+                        Gemeente = ToPascalCase(el.Town),
+                        Postalcode = el.Postalcode,
+                        Gender = el.Gender,
+                        DateOfBirth = el.DateOfBirth,
+                        Records = new List<Record>(),
+                        Themes = new List<Theme>()
+                    };
+                    pbSubplatform.Items.Add(personCheck);
+                }
+                else
+                {
+                    personCheck.Name = el.Full_name;
+                    if (!personCheck.SubPlatforms.Contains(pbSubplatform)) personCheck.SubPlatforms.Add(pbSubplatform);
+                    personCheck.FirstName = el.First_name;
+                    personCheck.LastName = el.Last_name;
+                    personCheck.Level = el.Level;
+                    personCheck.SocialMediaLink = el.Site;
+                    personCheck.Site = el.Site;
+                    personCheck.TwitterName = el.Twitter;
+                    personCheck.Position = el.Position;
+                    personCheck.District = el.District;
+                    personCheck.Gemeente = ToPascalCase(el.Town);
+                    personCheck.Postalcode = el.Postalcode;
+                    personCheck.Gender = el.Gender;
+                    personCheck.DateOfBirth = el.DateOfBirth;
+                }
+
+                // Organisation
+                Organisation organisationCheck = ctx.Organisations
+                    .Include(s => s.People)
+                    .Include(s => s.SubPlatforms)
+                    .FirstOrDefault(o =>
+                    o.Name.ToLower().Equals(el.Organistion.ToLower()) ||
+                    o.FullName.ToLower().Equals(el.Organistion.ToLower()));
+                if (organisationCheck == null)
+                {
+                    organisationCheck = new Organisation
+                    {
+                        Name = el.Organistion,
+                        IsTrending = false,
+                        IconURL = pbSubplatform.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
+                        SubPlatforms = new List<Subplatform>
+                        {
+                            pbSubplatform
+                        },
+                        Keywords = new List<Keyword>(),
+                        Elements = new List<Element>(),
+                        SubscribedProfiles = new List<Profile>(),
+                        Alerts = new List<Alert>(),
+                        FullName = el.Organistion,
+                        People = new List<Person>
+                        {
+                            personCheck
+                        },
+                        Themes = new List<Theme>()
+                    };
+                    personCheck.Organisation = organisationCheck;
+                }
+                else
+                {
+                    personCheck.Organisation = organisationCheck;
+                    organisationCheck.People.Add(personCheck);
+
+                    if (!organisationCheck.SubPlatforms.Contains(pbSubplatform))
+                        organisationCheck.SubPlatforms.Add(pbSubplatform);
+                    pbSubplatform.Items.Add(organisationCheck);
+                }
+
+                personsToAdd.Add(personCheck);
+            }
+            ctx.Persons.ForEachAsync(p =>
+            {
+                Person person = personsToAdd.FirstOrDefault(per => per.Equals(p));
+                if (person != null)
+                {
+                    bool removed = personsToAdd.Remove(person);
+                    ;
+                }
+            }).Wait();
+            if (personsToAdd.Count != 0) ctx.Persons.AddRange(personsToAdd);
             #endregion
 
             #region Keywords
-
             List<Keyword> KeywordsToAdd = new List<Keyword>
             {
                 new Keyword
@@ -428,7 +557,6 @@ namespace PB.DAL.Migrations
                     Items = new List<Item>()
                 }
             };
-
             #endregion
 
             #region Themes
@@ -685,7 +813,6 @@ namespace PB.DAL.Migrations
             #endregion
 
             #region Pages
-
             List<Page> pagesToAdd = new List<Page>
             {
                 new Page
@@ -702,8 +829,7 @@ namespace PB.DAL.Migrations
                         new Tag
                         {
                             Name = "BannerTextSub1",
-                            Text =
-                                "Volg uw favoriete politiekers, partijen en thema's en bekijk hoe deze door anderen besproken worden op sociale media."
+                            Text = "Volg uw favoriete politiekers, partijen en thema's en bekijk hoe deze door anderen besproken worden op sociale media."
                         },
                         new Tag
                         {
@@ -713,8 +839,7 @@ namespace PB.DAL.Migrations
                         new Tag
                         {
                             Name = "call-to-action-text",
-                            Text =
-                                "Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data."
+                            Text = "Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data."
                         }
                     },
                     Subplatform = pbSubplatform
@@ -850,6 +975,44 @@ namespace PB.DAL.Migrations
 
             // Save all pending changes
             ctx.SaveChanges();
+        }
+
+        public string ToPascalCase(string value)
+        {
+            if (value.Equals(string.Empty)) return value;
+            value = value.Substring(0, 1).ToUpper() + value.Substring(1).ToLower();
+            string[] words = null;
+            if (value.Contains("-"))
+            {
+                words = value.Split('-');
+                foreach (string word in words)
+                {
+                    words[Array.IndexOf(words, word)] = word.Substring(0, 1).ToUpper() + word.Substring(1);
+                }
+                value = string.Join("-", words);
+            }
+
+            if (value.Contains("_"))
+            {
+                words = value.Split('_');
+                foreach (string word in words)
+                {
+                    words[Array.IndexOf(words, word)] = word.Substring(0, 1).ToUpper() + word.Substring(1);
+                }
+                value = string.Join("_", words);
+            }
+
+            if (value.Contains(" "))
+            {
+                words = value.Split(' ');
+                foreach (string word in words)
+                {
+                    words[Array.IndexOf(words, word)] = word.Substring(0, 1).ToUpper() + word.Substring(1);
+                }
+                value = string.Join(" ", words);
+            }
+
+            return value;
         }
     }
 }

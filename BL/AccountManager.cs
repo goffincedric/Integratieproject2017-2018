@@ -44,7 +44,6 @@ namespace PB.BL
         }
 
         #region Init & create
-
         public void InitNonExistingRepo(bool createWithUnitOfWork = false)
         {
             if (ProfileRepo == null)
@@ -124,21 +123,21 @@ namespace PB.BL
             if (!roleManager.RoleExists("SuperAdmin"))
             {
                 //Create SuperAdmin role
-                var role = new IdentityRole {Name = "SuperAdmin"};
+                var role = new IdentityRole { Name = "SuperAdmin" };
                 roleManager.Create(role);
             }
 
             //Create Admin role
             if (!roleManager.RoleExists("Admin"))
             {
-                var role = new IdentityRole {Name = "Admin"};
+                var role = new IdentityRole { Name = "Admin" };
                 roleManager.Create(role);
             }
 
             //Create User role   
             if (!roleManager.RoleExists("User"))
             {
-                var role = new IdentityRole {Name = "User"};
+                var role = new IdentityRole { Name = "User" };
                 roleManager.Create(role);
             }
 
@@ -152,7 +151,7 @@ namespace PB.BL
                     ProfileIcon = @"~/Content/Images/Users/user.png",
                     CreatedOn = DateTime.Now
                 };
-                user.UserData = new UserData {Profile = user};
+                user.UserData = new UserData { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
                     new UserSetting
@@ -210,7 +209,7 @@ namespace PB.BL
                     ProfileIcon = @"~/Content/Images/Users/user.png",
                     CreatedOn = DateTime.Now
                 };
-                user2.UserData = new UserData {Profile = user2};
+                user2.UserData = new UserData { Profile = user2 };
                 user2.Settings = new List<UserSetting>
                 {
                     new UserSetting
@@ -378,7 +377,6 @@ namespace PB.BL
         #endregion
 
         #region Alerts
-
         public WeeklyReview GetLatestWeeklyReview(string userId)
         {
             InitNonExistingRepo();
@@ -393,10 +391,10 @@ namespace PB.BL
             // Get all profiles with at least 1 read profilealert from last week
             List<Profile> allProfiles = GetProfiles()
                 .Where(p =>
+                    p.Settings.Find(us => us.SettingName.Equals(Setting.Account.WANTS_WEEKLY_REVIEW_VIA_MAIL)).boolValue &&
                     p.Subscriptions.Count > 0 &&
                     p.Email != null &&
-                    p.ProfileAlerts.FindAll(pa => pa.TimeStamp.Date >= DateTime.Today.AddDays(-7))
-                        .Count > 0)
+                    p.ProfileAlerts.FindAll(pa => pa.TimeStamp.Date >= DateTime.Today.AddDays(-7)).Count > 0)
                 .ToList();
 
             // Pick 1 random alert from each day
@@ -449,7 +447,7 @@ namespace PB.BL
                     );
                     sb.Append(sbItem.ToString());
                 });
-                List<Person> persons = p.Subscriptions.Where(i => i is Person).Select(i => (Person) i).ToList();
+                List<Person> persons = p.Subscriptions.Where(i => i is Person).Select(i => (Person)i).ToList();
                 Person person = persons.First(pe =>
                     pe.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count == persons.Max(ps =>
                         ps.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count));
@@ -516,7 +514,10 @@ namespace PB.BL
             List<Item> itemsToUpdate = Trendspotter.CheckTrendingItems(allItems.ToList(), 10, ref alerts);
 
             // Get all profiles with subscriptions
-            List<Profile> Profiles = ProfileRepo.ReadProfiles().Where(p => p.Subscriptions.Count > 0).ToList();
+            List<Profile> Profiles = ProfileRepo.ReadProfiles().Where(p =>
+                p.Subscriptions.Count > 0 &&
+                p.Settings.Find(us => us.SettingName.Equals(Setting.Account.WANTS_SITE_NOTIFICATIONS)).boolValue
+            ).ToList();
 
             // Alle subscriptions uit profiles halen
             List<Item> Subscriptions = Profiles.SelectMany(p => p.Subscriptions).Distinct().ToList();
@@ -588,7 +589,7 @@ namespace PB.BL
             List<Item> subscribedItems = profile.Subscriptions;
 
             //Items opdelen in Subklasses [Person, Organisation, Theme]
-            List<Person> people = subscribedItems.Where(i => i is Person).ToList().Select(i => (Person) i).ToList();
+            List<Person> people = subscribedItems.Where(i => i is Person).ToList().Select(i => (Person)i).ToList();
             List<Organisation> organisations = new List<Organisation>(); // Alerts op organisaties;
             List<Theme> themes = new List<Theme>(); // Alerts op thema's
 
@@ -668,7 +669,7 @@ namespace PB.BL
             {
                 List<ProfileAlert> profileAlerts = GetProfileAlerts(subplatform, userId).ToList();
 
-                profileAlerts.Sort(delegate(ProfileAlert x, ProfileAlert y)
+                profileAlerts.Sort(delegate (ProfileAlert x, ProfileAlert y)
                 {
                     if (x.TimeStamp == null && y.TimeStamp == null) return 0;
                     if (x.TimeStamp == null) return -1;
@@ -692,7 +693,7 @@ namespace PB.BL
             {
                 List<ProfileAlert> profileAlerts = GetProfileAlerts(subplatform, userId).ToList();
 
-                profileAlerts.Sort(delegate(ProfileAlert x, ProfileAlert y)
+                profileAlerts.Sort(delegate (ProfileAlert x, ProfileAlert y)
                 {
                     if (x.TimeStamp == null && y.TimeStamp == null) return 0;
                     if (x.TimeStamp == null) return -1;

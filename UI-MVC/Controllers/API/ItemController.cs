@@ -469,7 +469,6 @@ namespace UI_MVC.Controllers.API
         #endregion
 
         #region Records
-
         [HttpGet]
         public IHttpActionResult GetRecordsFromPerson(int id)
         {
@@ -488,10 +487,15 @@ namespace UI_MVC.Controllers.API
             return Ok(personmap);
         }
 
+        [HttpGet]
+        public IHttpActionResult GetTweetsByDistrict()
+        {
+            return Ok(ItemMgr.GetTweetCountByDistrict());
+        }
+
         #endregion
 
         #region SentimentAnalyse
-
         [HttpGet]
         public IHttpActionResult GetPersonEvolution(int id)
         {
@@ -525,7 +529,7 @@ namespace UI_MVC.Controllers.API
             recordsmap.OrderBy(o => o.Key);
             if (records == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
-           
+
         }
 
         [HttpGet]
@@ -541,7 +545,6 @@ namespace UI_MVC.Controllers.API
             if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
-
         #endregion
 
         #region TweetEvolution
@@ -753,7 +756,6 @@ namespace UI_MVC.Controllers.API
         #endregion
 
         #region Popularity
-
         [HttpGet]
         public IHttpActionResult GetMostPopularPerson()
         {
