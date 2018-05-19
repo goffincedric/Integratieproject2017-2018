@@ -680,7 +680,7 @@ webpackJsonp([0],
           var t = function() {
             r("#world-map-marker").length > 0 &&
             (r("#vmap").remove(), r("#world-map-marker").append(
-                '\n        <div\n          id="vmap"\n          style="\n            height: 490px;\n            position: relative;\n            overflow: hidden;\n            background-color: transparent;\n          "\n        >\n        </div>\n      '),
+                '\n        <div\n          id="vmap"\n          style="\n            height: 500px;\n            position: relative;\n            overflow: hidden;\n            background-color: transparent;\n          "\n        >\n        </div>\n      '),
               r("#vmap").vectorMap({
                 map: "be_mill",
                 zoomButtons: false,
@@ -726,9 +726,9 @@ webpackJsonp([0],
           {
             "insets": [
               {
-                "width": 900,
+                "width": 800,
                 "top": 0,
-                "height": 613.8264117465903,
+                "height": 150,
                 "bbox": [
                   {
                     "y": -6304997.820898261,
@@ -798,12 +798,12 @@ webpackJsonp([0],
                 "name": "Brussel"
               }
             },
-            "height": 613.8264117465903,
+            "height": 250,
             "projection": {
               "type": "mill",
               "centralMeridian": 0.0
             },
-            "width": 900.0
+            "width": 800.0
           })
       }).call(i, a(2))
     },

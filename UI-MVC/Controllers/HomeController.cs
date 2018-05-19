@@ -205,13 +205,21 @@ namespace UI_MVC.Controllers
             Item item = itemMgr.GetItem(id);
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             if (!item.SubPlatforms.Contains(Subplatform)) return HttpNotFound();
-            ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
+          
 
             if (item is Person person)
             {
                 int? count = person.Records.Count();
                 ViewBag.Vermeldingen = count is null ? 0 : count;
                 ViewBag.Partij = person.Organisation is null ? "Geen partij" : person.Organisation.Name;
+                if(person.TwitterName != null && person.TwitterName != "")
+                {
+                    ViewBag.Icon = "https://twitter.com/" + person.TwitterName + "/profile_image?size=original";
+                }
+                else
+                {
+                    ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
+                }
             }
 
             if (item is Organisation organisation)
@@ -219,12 +227,14 @@ namespace UI_MVC.Controllers
                 int? count = organisation.People.Count();
                 ViewBag.Leden = count is null ? 0 : count;
                 ViewBag.FullName = organisation.FullName;
+                ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
             }
 
             if (item is Theme theme)
             {
                 int? count = theme.Records.Count();
                 ViewBag.Associaties = count is null ? 0 : count;
+                ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
             }
 
             ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));
