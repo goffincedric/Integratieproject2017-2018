@@ -8,7 +8,8 @@
 
 $("#download2").on('click',
   function () {
-    var image = document.getElementById("#doughnut-chart").toDataURL("image/jpg")
+    console.log("donut");
+    var image = document.getElementById("doughnut-chart").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
     download2.setAttribute("href", image);
 
@@ -22,23 +23,18 @@ $("#download3").on('click',
   });
 $("#download4").on('click',
   function () {
-    var image = document.getElementById("bar2-chart").toDataURL("image/jpg")
+    var image = document.getElementById("bar-chart").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
     download4.setAttribute("href", image);
 
   });
-$("#download6").on('click',
-  function () {
-    var image = document.getElementById("radar2-chart").toDataURL("image/jpg")
-      .replace("image/jpg", "image/octet-stream");
-    download4.setAttribute("href", image);
 
-  });
-$("#download7").on('click',
+
+$("#download5").on('click',
   function () {
-    var image = document.getElementById("myChart").toDataURL("image/jpg")
+    var image = document.getElementById("line-chart").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
-    download4.setAttribute("href", image);
+    download5.setAttribute("href", image);
 
   });
 
@@ -98,48 +94,12 @@ function showIncrease() {
 
 showIncrease();
 
-function drawRadarChart() {
-  var can2 = $('#radar2-chart');
-
-  new Chart(can2,
-    {
-      type: 'radar',
-      data: {
-        labels: ["Test 1", "Test 2", "Test 3", "Test 4", "Test 5"],
-        datasets: [
-          {
-            label: "Data 1",
-            fill: true,
-            backgroundColor: "rgba(237, 231, 246, 0.5)",
-            borderColor: "#673ab7",
-            pointBorderColor: "#fff",
-            pointBackgroundColor: "#512da8",
-            data: [8.77, 55.61, 21.69, 6.62, 60.82]
-          }, {
-            label: "Data 2",
-            fill: true,
-            backgroundColor: "rgba(232, 245, 233, 0.5)",
-            borderColor: "#2196f3",
-            pointBorderColor: "#fff",
-            pointBackgroundColor: "#1976d2",
-            data: [19.48, 54.16, 7.61, 8.06, 4.45]
-          }
-        ]
-      },
-      options: {
-        responive: true
-      }
-    });
-
-}
-
-drawRadarChart();
 
 function drawBarChart() {
 
   var URL = "https://localhost:44342/api/item/getpersonstop/5";
   makeAjaxCall(URL, "GET").then(process, errorHandler);
-  var can = $('#bar2-chart');
+  var can = $('#bar-chart');
 
   function process(output) {
     console.log(output);
@@ -249,9 +209,10 @@ function drawLineChart() {
             label: value,
             data: values,
             borderWidth: 2,
-            backgroundColor: backgroundcolors[counter],
+           // backgroundColor: backgroundcolors[counter],
             borderColor: borderColors[counter],
-            pointBackgroundColor: points[counter]
+            pointBackgroundColor: points[counter],
+            fill:false
 
           }
 
@@ -389,3 +350,97 @@ function TrendingPersonGraphs() {
 }
 
 TrendingPersonGraphs();
+
+
+function drawOrganisations() {
+  var URL = "https://localhost:44342/api/item/GetMostPopularOrganisations/3";
+  makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+  function process(output) {
+    var can = $('#line-chart');
+    var datagrafiek = {
+      labels: ["Dag 1", "Dag 2", "Dag 3", "Dag 4", "Dag 5", "Dag 6", "Dag 7", "Dag 8", "Dag 9", "Dag 10"],
+      datasets: []
+    };
+
+    var myLineChart = new Chart(can,
+      {
+        type: 'line',
+        data: datagrafiek,
+        options: {
+          responsive: true,
+          scales: {
+            yAxes: [
+              {
+                display: true,
+                ticks: {
+                  // minimum will be 0, unless there is a lower value.
+                  // OR //
+                  beginAtZero: false,
+
+
+                  // minimum value will be 0.
+                }
+              }
+            ]
+          }
+        }
+      });
+    $("#loader-7").hide();
+    can.show();
+
+    var counter = 0;
+    $.each(output,
+      function (key, value) {
+        var URL = "https://localhost:44342/api/item/GetItemTweet/" + key;
+        makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+        function process(output2) {
+          var keys = [];
+          keys = Object.keys(output2);
+
+          var label = [];
+          var values = [];
+
+          var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
+          var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
+          var points = ["#512da8", "#1976d2", "#388e3c"];
+
+          for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+            values.push(output2[keys[i]]);
+          }
+
+          var myNewDataSet = {
+            label: value,
+            data: values,
+            borderWidth: 2,
+            borderColor: borderColors[counter],
+            pointBackgroundColor: points[counter],
+            fill: false
+
+          }
+
+          datagrafiek.datasets.push(myNewDataSet);
+
+          myLineChart.update();
+          counter++;
+        }
+      });
+
+
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+
+
+  }
+
+
+  function errorHandler(statusCode) {
+    console.log("failed with status", status);
+  }
+
+}
+
+drawOrganisations();
