@@ -721,7 +721,7 @@ namespace UI_MVC.Controllers.API
                     hashtags.Add(p.HashTag, p.Records.Count);
                 });
 
-            if (hashtags is null || hashtags.Count() == 0) return NotFound();
+            if (hashtags is null || hashtags.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(hashtags);
         }
 

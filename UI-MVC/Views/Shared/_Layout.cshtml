@@ -55,15 +55,16 @@
           </span><span class="title">@ViewBag.Home</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="sidebar-link" href="@Url.Action("Dashboard", "Dashboard")">
-          <span class="icon-holder">
-            <i class="c-brown-500 ti-bar-chart"></i>
-          </span><span class="title">@ViewBag.Dashboard</span>
-        </a>
-      </li>
+
       @if (Request.IsAuthenticated)
       {
+        <li class="nav-item">
+          <a class="sidebar-link" href="@Url.Action("Dashboard", "Dashboard")">
+            <span class="icon-holder">
+              <i class="c-brown-500 ti-bar-chart"></i>
+            </span><span class="title">@ViewBag.Dashboard</span>
+          </a>
+        </li>
         <li class="nav-item">
           <a class="sidebar-link" href="@Url.Action("WeeklyReview", "Account")">
             <span class="icon-holder">
@@ -199,6 +200,8 @@
                 </a>
               </li>
               <li role="separator" class="divider"></li>
+              @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
+              {
               <li>
                 <a href="@Url.Action("UserBeheer", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                   <i class="ti-panel mR-10"></i> <span>Beheer Users</span>
@@ -214,6 +217,7 @@
                   <i class="ti-dashboard mR-10"></i> <span>Beheer Platform</span>
                 </a>
               </li>
+              }
               <li role="separator" class="divider"></li>
               <li>
                 @if (Request.IsAuthenticated)

@@ -35,7 +35,7 @@ namespace UI_MVC.Controllers
         private IntegratieSignInManager _signInManager;
         private readonly SubplatformManager SubplatformMgr;
         private ItemManager _itemMgr;
-    
+
 
         public AccountController()
         {
@@ -156,7 +156,7 @@ namespace UI_MVC.Controllers
                             Setting.Platform.DEFAULT_NEW_USER_ICON).Value,
                     CreatedOn = DateTime.Today
                 };
-                user.UserData = new UserData {Profile = user};
+                user.UserData = new UserData { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
                     new UserSetting
@@ -210,7 +210,7 @@ namespace UI_MVC.Controllers
                     //Login
                     await SignInManager.SignInAsync(user, false, false);
 
-                    return RedirectToAction("Index", "Home", new {subplatform});
+                    return RedirectToAction("Index", "Home", new { subplatform });
                 }
 
                 AddErrors(result);
@@ -224,7 +224,7 @@ namespace UI_MVC.Controllers
         public ActionResult LogOff(string subplatform)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home", new {subplatform});
+            return RedirectToAction("Index", "Home", new { subplatform });
         }
 
         #endregion
@@ -249,7 +249,7 @@ namespace UI_MVC.Controllers
 
             int itemId = profileAlert.Alert.ItemId;
 
-            return RedirectToAction("ItemDetail", "Home", new {id = itemId});
+            return RedirectToAction("ItemDetail", "Home", new { id = itemId });
         }
 
         public ActionResult _NotificationDropdown(string subplatform)
@@ -511,14 +511,14 @@ namespace UI_MVC.Controllers
         {
             // Request a redirect to the external login provider
             return new ChallengeResult(provider,
-                Url.Action("ExternalLoginCallback", "Account", new {subplatform, returnUrl}));
+                Url.Action("ExternalLoginCallback", "Account", new { subplatform, returnUrl }));
         }
 
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string subplatform, string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-            if (loginInfo == null) return RedirectToAction("Login", "Account", new {subplatform, returnUrl});
+            if (loginInfo == null) return RedirectToAction("Login", "Account", new { subplatform, returnUrl });
 
             // Sign in the user with this external login provider if the user already has a login
             var result = await SignInManager.ExternalSignInAsync(loginInfo, false);
@@ -535,7 +535,7 @@ namespace UI_MVC.Controllers
                     ViewBag.Subplatform = subplatform;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation",
-                        new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
+                        new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
 
@@ -561,7 +561,7 @@ namespace UI_MVC.Controllers
                             Setting.Platform.DEFAULT_NEW_USER_ICON).Value,
                     CreatedOn = DateTime.Today
                 };
-                user.UserData = new UserData {Profile = user};
+                user.UserData = new UserData { Profile = user };
                 user.Settings = new List<UserSetting>
                 {
                     new UserSetting
@@ -640,7 +640,7 @@ namespace UI_MVC.Controllers
             string json = JsonConvert.SerializeObject(profiles, Formatting.Indented);
             string _path = Path.Combine(Server.MapPath("~/Content/Export/"), "Users.json");
             System.IO.File.WriteAllText(_path, json);
-            return Json(new {fileName = "Users.json", errorMessage = ""});
+            return Json(new { fileName = "Users.json", errorMessage = "" });
         }
 
         [HttpGet]
@@ -689,7 +689,7 @@ namespace UI_MVC.Controllers
 
             public override void ExecuteResult(ControllerContext context)
             {
-                var properties = new AuthenticationProperties {RedirectUri = RedirectUri};
+                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
                 if (UserId != null) properties.Dictionary[XsrfKey] = UserId;
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }

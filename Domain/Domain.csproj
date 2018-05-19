@@ -67,10 +67,7 @@
     <Compile Include="Dashboards\Dashboard.cs" />
     <Compile Include="Dashboards\UserType.cs" />
     <Compile Include="Dashboards\Element.cs" />
-    <Compile Include="Dashboards\Graph.cs" />
     <Compile Include="Dashboards\GraphType.cs" />
-    <Compile Include="Dashboards\Map.cs" />
-    <Compile Include="Dashboards\Ranking.cs" />
     <Compile Include="Dashboards\Zone.cs" />
     <Compile Include="Items\Hashtag.cs" />
     <Compile Include="Items\Item.cs" />
