@@ -294,7 +294,6 @@ namespace PB.DAL.Migrations
                     Themes = new List<Theme>()
                 }
             };
-            List<Organisation> allOrganisations = OrganisationsToAdd.ToList();
             ctx.Organisations
                     .Include(s => s.People)
                     .Include(s => s.SubPlatforms)
@@ -303,16 +302,13 @@ namespace PB.DAL.Migrations
                 Organisation organisation = OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
                 if (organisation != null)
                 {
-                    OrganisationsToAdd.Remove(organisation);
-                    allOrganisations[allOrganisations.IndexOf(organisation)] = o;
+                    OrganisationsToAdd[OrganisationsToAdd.IndexOf(organisation)] = o;
                 }
                 else
                 {
-                    allOrganisations.Add(o);
+                    OrganisationsToAdd.Add(o);
                 }
             });
-            //if (OrganisationsToAdd.Count != 0) OrganisationsToAdd = ctx.Organisations.AddRange(OrganisationsToAdd).ToList();
-            if (allOrganisations.Count == 0) allOrganisations.AddRange(OrganisationsToAdd);
             #endregion
 
             #region Persons
@@ -360,7 +356,7 @@ namespace PB.DAL.Migrations
                 }
 
                 // Organisation
-                Organisation organisationCheck = allOrganisations
+                Organisation organisationCheck = OrganisationsToAdd
                     .FirstOrDefault(o =>
                     o.Name.ToLower().Equals(el.Organistion.ToLower()) ||
                     o.FullName.ToLower().Equals(el.Organistion.ToLower()));
@@ -386,20 +382,19 @@ namespace PB.DAL.Migrations
                         },
                         Themes = new List<Theme>()
                     };
-                    personCheck.Organisation = organisationCheck;
-                    pbSubplatform.Items.Add(organisationCheck);
 
-                    allOrganisations.Add(organisationCheck);
+                    OrganisationsToAdd.Add(organisationCheck);
                 }
                 else
                 {
-                    personCheck.Organisation = organisationCheck;
                     organisationCheck.People.Add(personCheck);
 
                     if (!organisationCheck.SubPlatforms.Contains(pbSubplatform))
                         organisationCheck.SubPlatforms.Add(pbSubplatform);
-                    pbSubplatform.Items.Add(organisationCheck);
                 }
+
+                personCheck.Organisation = organisationCheck;
+                pbSubplatform.Items.Add(organisationCheck);
 
                 personsToAdd.Add(personCheck);
             }
@@ -409,7 +404,6 @@ namespace PB.DAL.Migrations
                 if (person != null)
                 {
                     bool removed = personsToAdd.Remove(person);
-                    ;
                 }
             }).Wait();
             if (personsToAdd.Count != 0) ctx.Persons.AddRange(personsToAdd);
