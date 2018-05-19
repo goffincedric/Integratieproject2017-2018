@@ -27,7 +27,6 @@ namespace UI_MVC
             bundles.Add(new ScriptBundle("~/bundles/Dashboard").Include("~/Scripts/Dashboard/DashboardControl.js",
                 "~/Scripts/Dashboard/Dashboard.js"));
 
-            bundles.Add(new StyleBundle("~/Content/bootstrapcss").Include("~/Content/bootstrap.css"));
             bundles.Add(new StyleBundle("~/Content/dashboardcss").Include("~/Content/Styling/Grid/gridstack.css",
                 "~/Content/Styling/Grid/gridstack-extra.css",
                 "~/Content/Styling/Wizard/material-bootstrap-wizard.css"));
