@@ -19,16 +19,5 @@ namespace UI_MVC.Controllers.API
             UowMgr = new UnitOfWorkManager();
             SubplatformMgr = new SubplatformManager(UowMgr);
         }
-
-        [HttpPost]
-        public IHttpActionResult GetTags([FromBody] string name)
-        {
-            Page page = SubplatformMgr.GetPage(name);
-            IEnumerable<Tag> tags = page.Tags.ToList();
-            Dictionary<int, string> tagmap = new Dictionary<int, string>();
-            tags.ToList().ForEach(p => tagmap.Add(p.TagId, p.Name));
-            if (tags.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
-            return Ok(tagmap);
-        }
     }
 }

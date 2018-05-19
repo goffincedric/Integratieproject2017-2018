@@ -518,7 +518,7 @@ namespace UI_MVC.Controllers
                     {
                         StreamReader stream = new StreamReader(fileViewModel.file.InputStream);
                         string x = stream.ReadToEnd();
-                        List<Item> persons = itemMgr.JPersonToRecord(JsonConvert.DeserializeObject<List<JPerson>>(x), Subplatform);
+                        List<Item> persons = itemMgr.JPersonToPerson(JsonConvert.DeserializeObject<List<JPerson>>(x), Subplatform);
                         itemMgr.AddItems(persons);
 
 
