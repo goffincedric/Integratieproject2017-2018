@@ -170,7 +170,8 @@ function drawLineChart() {
                 ticks: {
                   // minimum will be 0, unless there is a lower value.
                   // OR //
-                  beginAtZero: false,
+                  beginAtZero: false
+                },
                   scaleLabel: {
                     display: true,
                     labelString: 'Sentiment evolutie'
@@ -179,7 +180,7 @@ function drawLineChart() {
 
                   // minimum value will be 0.
                 }
-              }
+              
             ]
           }
         }
@@ -380,14 +381,15 @@ function drawOrganisations() {
                 ticks: {
                   // minimum will be 0, unless there is a lower value.
                   // OR //
-                  beginAtZero: false,
+                  beginAtZero: false
+                },
                   scaleLabel: {
                     display: true,
                     labelString: 'Tweet aantaal'
                   }
 
                   // minimum value will be 0.
-                }
+                
               }
             ]
           }
