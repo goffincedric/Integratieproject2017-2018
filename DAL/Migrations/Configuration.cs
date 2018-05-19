@@ -294,12 +294,25 @@ namespace PB.DAL.Migrations
                     Themes = new List<Theme>()
                 }
             };
-            ctx.Organisations.ForEachAsync(o =>
+            List<Organisation> allOrganisations = OrganisationsToAdd.ToList();
+            ctx.Organisations
+                    .Include(s => s.People)
+                    .Include(s => s.SubPlatforms)
+                    .ToList().ForEach(o =>
             {
                 Organisation organisation = OrganisationsToAdd.FirstOrDefault(org => org.Equals(o));
-                if (organisation != null) OrganisationsToAdd.Remove(o);
-            }).Wait();
-            if (OrganisationsToAdd.Count != 0) ctx.Organisations.AddRange(OrganisationsToAdd);
+                if (organisation != null)
+                {
+                    OrganisationsToAdd.Remove(organisation);
+                    allOrganisations[allOrganisations.IndexOf(organisation)] = o;
+                }
+                else
+                {
+                    allOrganisations.Add(o);
+                }
+            });
+            //if (OrganisationsToAdd.Count != 0) OrganisationsToAdd = ctx.Organisations.AddRange(OrganisationsToAdd).ToList();
+            if (allOrganisations.Count == 0) allOrganisations.AddRange(OrganisationsToAdd);
             #endregion
 
             #region Persons
@@ -345,28 +358,9 @@ namespace PB.DAL.Migrations
                     };
                     pbSubplatform.Items.Add(personCheck);
                 }
-                else
-                {
-                    personCheck.Name = el.Full_name;
-                    if (!personCheck.SubPlatforms.Contains(pbSubplatform)) personCheck.SubPlatforms.Add(pbSubplatform);
-                    personCheck.FirstName = el.First_name;
-                    personCheck.LastName = el.Last_name;
-                    personCheck.Level = el.Level;
-                    personCheck.SocialMediaLink = el.Site;
-                    personCheck.Site = el.Site;
-                    personCheck.TwitterName = el.Twitter;
-                    personCheck.Position = el.Position;
-                    personCheck.District = el.District;
-                    personCheck.Gemeente = ToPascalCase(el.Town);
-                    personCheck.Postalcode = el.Postalcode;
-                    personCheck.Gender = el.Gender;
-                    personCheck.DateOfBirth = el.DateOfBirth;
-                }
 
                 // Organisation
-                Organisation organisationCheck = ctx.Organisations
-                    .Include(s => s.People)
-                    .Include(s => s.SubPlatforms)
+                Organisation organisationCheck = allOrganisations
                     .FirstOrDefault(o =>
                     o.Name.ToLower().Equals(el.Organistion.ToLower()) ||
                     o.FullName.ToLower().Equals(el.Organistion.ToLower()));
@@ -393,6 +387,9 @@ namespace PB.DAL.Migrations
                         Themes = new List<Theme>()
                     };
                     personCheck.Organisation = organisationCheck;
+                    pbSubplatform.Items.Add(organisationCheck);
+
+                    allOrganisations.Add(organisationCheck);
                 }
                 else
                 {

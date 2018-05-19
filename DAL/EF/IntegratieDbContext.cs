@@ -87,6 +87,29 @@ namespace PB.DAL.EF
             /*
              * Relations, Foreign Keys, ...
              */
+            modelBuilder.Entity<Element>()
+               .HasMany(e => e.Items)
+               .WithMany(i => i.Elements)
+               .Map(m => { m.ToTable("tblElementItem"); });
+
+            modelBuilder.Entity<Zone>()
+                .HasMany(z => z.Elements)
+                .WithRequired(e => e.Zone)
+                .HasForeignKey(e => e.ZoneId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Dashboard>()
+                .HasMany(d => d.Zones)
+                .WithRequired(z => z.Dashboard)
+                .HasForeignKey(z => z.DashboardId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Profile>()
+                .HasMany(p => p.Dashboards)
+                .WithRequired(d => d.Profile)
+                .HasForeignKey(d => d.UserId)
+                .WillCascadeOnDelete(true);
+
             modelBuilder.Entity<Profile>()
                 .HasRequired(p => p.UserData)
                 .WithRequiredPrincipal(ud => ud.Profile)
@@ -101,12 +124,6 @@ namespace PB.DAL.EF
                 .HasMany(p => p.AdminPlatforms)
                 .WithMany(p => p.Admins)
                 .Map(m => { m.ToTable("tblSubplatformAdmins"); });
-
-            modelBuilder.Entity<Profile>()
-                .HasMany(p => p.Dashboards)
-                .WithRequired(d => d.Profile)
-                .HasForeignKey(d => d.UserId)
-                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Profile>()
                 .HasMany(p => p.ProfileAlerts)
@@ -209,9 +226,6 @@ namespace PB.DAL.EF
                 .HasForeignKey(ss => ss.SubplatformId)
                 .WillCascadeOnDelete(true);
 
-            //modelBuilder.Entity<SubplatformSetting>()
-            //    .HasKey(ss => new { ss.SubplatformId, ss.SettingName });
-
             modelBuilder.Entity<Subplatform>()
                 .HasMany(s => s.Pages)
                 .WithRequired(p => p.Subplatform)
@@ -222,18 +236,6 @@ namespace PB.DAL.EF
                 .HasMany(p => p.Tags)
                 .WithRequired(t => t.Page)
                 .HasForeignKey(t => t.PageId)
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<Dashboard>()
-                .HasMany(d => d.Zones)
-                .WithRequired(z => z.Dashboard)
-                .HasForeignKey(z => z.DashboardId)
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<Zone>()
-                .HasMany(z => z.Elements)
-                .WithRequired(e => e.Zone)
-                .HasForeignKey(e => e.ZoneId)
                 .WillCascadeOnDelete(true);
 
             //identity tables
