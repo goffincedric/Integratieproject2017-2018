@@ -28,7 +28,7 @@ function makeAjaxCall(url, methodType) {
   return promiseObj;
 }
 
-var URL = "https://localhost:44342/api/item/getpersonstop/" + 10;
+var URL = "https://localhost:44342/api/item/GetThemasTop/" + 6;
 makeAjaxCall(URL, "GET").then(process, errorHandler);
 
 function process(output) {
@@ -52,6 +52,7 @@ function process(output) {
   }
 
 
+
   var myConfig = {
     "graphset": [
       {
@@ -71,6 +72,7 @@ function process(output) {
     ]
   };
 
+  $("#loader-8").hide();
   zingchart.render({
     id: 'myChart',
     data: myConfig,

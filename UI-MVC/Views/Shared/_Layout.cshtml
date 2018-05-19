@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <title>@ViewBag.Title</title>
   @* Styles *@
-  @Styles.Render("~/Content/bootstrapcss")
+  <link href="~/Content/bootstrap.css" rel="stylesheet" />
   @Styles.Render("~/Content/Styling/Style.css")
   <link id="ThemeLink" href="@Html.Action("GetThemeSetting", "Home")" rel="stylesheet">
   @Scripts.Render("~/bundles/jquery")
@@ -15,7 +15,7 @@
   <link rel="icon" href="@Html.Action("GetLogo", "Home")"/>
   <link href="~/Content/fa.css" rel="stylesheet"/>
 </head>
-<body class="app">
+<body class="app is-collapsed">
 <div id="loader">
   <div class="spinner"></div>
 </div>
@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-    <ul class="sidebar-menu scrollable pos-r">
+    <ul class="sidebar-menu  scrollable pos-r">
       <li class="nav-item">
         <a class="sidebar-link" href="@Url.Action("Index", "Home")">
           <span class="icon-holder">

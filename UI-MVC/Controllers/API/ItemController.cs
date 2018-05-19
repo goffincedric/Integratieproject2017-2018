@@ -487,6 +487,17 @@ namespace UI_MVC.Controllers.API
             return Ok(personmap);
         }
 
+
+        [HttpGet]
+        public IHttpActionResult GetThemasTop(int id)
+        {
+            IEnumerable<Theme> themes = ItemMgr.GetThemes().OrderByDescending(o => o.Records.Count()).Take(id);
+            Dictionary<string, int> themesmap = new Dictionary<string, int>();
+            themes.ToList().ForEach(p => { themesmap.Add(p.Name, p.Records.Count()); });
+            if (themes == null || themes.Count() == 0) return NotFound();
+            return Ok(themesmap);
+        }
+
         [HttpGet]
         public IHttpActionResult GetTweetsByDistrict()
         {
@@ -781,6 +792,22 @@ namespace UI_MVC.Controllers.API
                 Persons.OrderByDescending(p => p.TrendingScore).Take(id ?? 3).ToList()
                     .ForEach(p => ids.Add(p.ItemId, p.Name));
 
+
+            if (ids is null || ids.Count() == 0) return NotFound();
+            return Ok(ids);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetMostPopularOrganisations(int? id)
+        {
+            Dictionary<int, string> ids = new Dictionary<int, string>();
+            List<Organisation> organisations = ItemMgr.GetOrganisations().ToList();
+            if (organisations is null || organisations.Count() == 0)
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            organisations.OrderByDescending(p => p.People.Sum(r => r.Records.Count)).Take(id ?? 3).ToList()
+            .ForEach(p => ids.Add(p.ItemId, p.Name));
 
             if (ids is null || ids.Count() == 0) return NotFound();
             return Ok(ids);
