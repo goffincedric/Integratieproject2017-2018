@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <title>@ViewBag.Title</title>
   @* Styles *@
-  @Styles.Render("~/Content/bootstrapcss")
+  <link href="~/Content/bootstrap.css" rel="stylesheet" />
   @Styles.Render("~/Content/Styling/Style.css")
   <link id="ThemeLink" href="@Html.Action("GetThemeSetting", "Home")" rel="stylesheet">
   @Scripts.Render("~/bundles/jquery")
