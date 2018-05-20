@@ -179,6 +179,7 @@ namespace UI_MVC.Controllers
         {
             ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text;
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
+           
             return View("Index");
         }
 

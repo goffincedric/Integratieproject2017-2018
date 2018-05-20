@@ -533,3 +533,21 @@ function drawMap() {
   }
 
 }
+
+
+function showTweets() {
+
+  var URL = "https://localhost:44342/api/item/GetTweetName";
+  makeAjaxCall(URL, "GET").then(process);
+
+  console.log("TEEEEEEEEEEEEEEST");
+  function process(output) {
+    console.log(output);
+    console.log("TEEEEEEEEEEEEEEST");
+    $("#tweets").html('<a class="twitter-timeline" tweet-limit="5" height="450" href="https://twitter.com/' + output + '?ref_src=twsrc%5Etfw"></a>');
+    
+  }
+  
+}
+
+showTweets();
