@@ -3,17 +3,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <title>@ViewBag.Title</title>
-  @* Styles *@
-  <link href="~/Content/bootstrap.css" rel="stylesheet" />
-  @Styles.Render("~/Content/Styling/Style.css")
-  <link id="ThemeLink" href="@Html.Action("GetThemeSetting", "Home")" rel="stylesheet">
-  @Scripts.Render("~/bundles/jquery")
-  @Scripts.Render("~/bundles/bootstrapjs")
-  <link rel="icon" href="@Html.Action("GetLogo", "Home")"/>
-  <link href="~/Content/fa.css" rel="stylesheet"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+    @* Styles *@
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    @Styles.Render("~/Content/Styling/Style.css")
+    <link id="ThemeLink" href="@Html.Action("GetThemeSetting", "Home")" rel="stylesheet">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrapjs")
+    <link rel="icon" href="@Html.Action("GetLogo", "Home")" />
+    <link href="~/Content/fa.css" rel="stylesheet" />
+    <link href="~/Content/Styling/jVectorMap/jquery-jvectormap-2.0.3.css" rel="stylesheet" />
+    <script src="~/Scripts/jVectorMap/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="~/Scripts/jVectorMap/jquery-jvectormap-be-mill.js"></script>
 </head>
 <body class="app is-collapsed">
 <div id="loader">
