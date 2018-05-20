@@ -15,6 +15,20 @@ namespace PB.BL.Domain.Accounts
     [DataContract]
     public class Profile : IdentityUser
     {
+        [DataMember]
+        public string Name
+        {
+            get { return base.UserName; }
+            set { base.UserName = value; }
+        }
+
+        [DataMember]
+        public string Email
+        {
+            get { return base.Email; }
+            set { base.Email = value; }
+        }
+
         [DataMember] public string ProfileIcon { get; set; }
 
         [DataMember] public DateTime CreatedOn { get; set; }
@@ -22,6 +36,8 @@ namespace PB.BL.Domain.Accounts
         [DataMember] public UserData UserData { get; set; }
 
         [DataMember] public List<UserSetting> Settings { get; set; }
+
+        
 
         public List<Dashboard> Dashboards { get; set; }
         public List<ProfileAlert> ProfileAlerts { get; set; }
