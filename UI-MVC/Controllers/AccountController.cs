@@ -236,7 +236,7 @@ namespace UI_MVC.Controllers
             int alertCount = 0;
             if (User.Identity.IsAuthenticated)
             {
-                if (user == null)
+                if (user != null)
                 {
                     alertCount = user.ProfileAlerts.FindAll(pa => !pa.IsRead && pa.Alert.Item.SubPlatforms.Find(s => s.URL.ToLower().Equals(subplatform)) != null).Count;
                 }

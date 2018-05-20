@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using PB.BL;
 using PB.BL.Domain.Items;
@@ -381,10 +382,11 @@ namespace UI_MVC.Controllers
             if (!AccountManager.IsGeneratingAlerts)
             {
                 AccountManager.IsGeneratingAlerts = true;
-                accountMgr.GenerateAllAlertsAsync(itemMgr.GetItems()).GetAwaiter().OnCompleted(new System.Action(() =>
+                Task.Run(async () =>
                 {
+                    await accountMgr.GenerateAllAlertsAsync(itemMgr.GetItems());
                     AccountManager.IsGeneratingAlerts = false;
-                }));
+                });
             }
 
             return RedirectToAction("PlatformSettings", "Subplatform");
@@ -397,11 +399,11 @@ namespace UI_MVC.Controllers
             if (!ItemManager.IsCleaning)
             {
                 ItemManager.IsCleaning = true;
-                Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
-                itemMgr.CleanupOldRecordsAsync(sp).GetAwaiter().OnCompleted(new System.Action(() =>
+                Task.Run(async () =>
                 {
+                    await itemMgr.CleanupOldRecordsAsync(SubplatformMgr.GetSubplatform(subplatform));
                     ItemManager.IsCleaning = false;
-                }));
+                });
             }
 
             return RedirectToAction("PlatformSettings", "Subplatform");
@@ -415,12 +417,11 @@ namespace UI_MVC.Controllers
             {
                 // Set IsSyncing field
                 ItemManager.IsSyncing = true;
-                Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
-                // TODO: Tasking met JobManager
-                itemMgr.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(new System.Action(() =>
+                Task.Run(async () =>
                 {
+                    await itemMgr.SyncDatabaseAsync(SubplatformMgr.GetSubplatform(subplatform));
                     ItemManager.IsSyncing = false;
-                }));
+                });
             }
 
             return RedirectToAction("PlatformSettings", "Subplatform");
@@ -434,10 +435,11 @@ namespace UI_MVC.Controllers
             {
                 // Set IsGeneratingAlerts flag
                 AccountManager.IsSendingWeeklyReviews = true;
-                accountMgr.SendWeeklyReviewsAsync().GetAwaiter().OnCompleted(new System.Action(() =>
+                Task.Run(async () =>
                 {
+                    await accountMgr.SendWeeklyReviewsAsync();
                     AccountManager.IsSendingWeeklyReviews = false;
-                }));
+                });
             }
 
             return RedirectToAction("PlatformSettings", "Subplatform");
