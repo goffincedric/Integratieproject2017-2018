@@ -115,25 +115,33 @@ namespace UI_MVC.Controllers
             return Content("");
         }
 
-        public ActionResult GetThemeSetting()
+        public ActionResult GetThemeSetting(string subplatform)
         {
             if (User.Identity.IsAuthenticated)
             {
                 string theme = "";
                 Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
-                UserSetting userSetting = accountMgr.GetUserSetting(profile.Id, Setting.Account.THEME);
-
-                switch (userSetting.Value)
+                if (profile != null)
                 {
-                    case "Light":
-                        theme = "LightMode";
-                        break;
-                    case "Dark":
-                        theme = "DarkMode";
-                        break;
-                    case "Future":
-                        theme = "FutureMode";
-                        break;
+                    UserSetting userSetting = accountMgr.GetUserSetting(profile.Id, Setting.Account.THEME);
+
+                    switch (userSetting.Value)
+                    {
+                        case "Light":
+                            theme = "LightMode";
+                            break;
+                        case "Dark":
+                            theme = "DarkMode";
+                            break;
+                        case "Future":
+                            theme = "FutureMode";
+                            break;
+                    }
+                }
+                else
+                {
+                    theme = SubplatformMgr.GetSubplatform(subplatform).Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_THEME))?.Value;
+                    if (theme == null) theme = "Light";
                 }
 
                 return Content(@"/Content/Theme/" + theme + @".css");
@@ -163,7 +171,7 @@ namespace UI_MVC.Controllers
         [Route("~/")]
         public ActionResult Index2()
         {
-            return RedirectToAction("Index", "Home", new {subplatform = "politieke-barometer"});
+            return RedirectToAction("Index", "Home", new { subplatform = "politieke-barometer" });
         }
 
         [Route("")]
@@ -252,10 +260,10 @@ namespace UI_MVC.Controllers
             if (!user.Subscriptions.Contains(item))
             {
                 accountMgr.AddSubscription(user, item);
-                return RedirectToAction("ItemDetail", "Home", new {Id = id});
+                return RedirectToAction("ItemDetail", "Home", new { Id = id });
             }
 
-            return RedirectToAction("ItemDetail", "Home", new {Id = id});
+            return RedirectToAction("ItemDetail", "Home", new { Id = id });
         }
 
         [Authorize(Roles = "User,Admin,SuperAdmin")]
@@ -269,10 +277,10 @@ namespace UI_MVC.Controllers
             if (user.Subscriptions.Contains(item))
             {
                 accountMgr.RemoveSubscription(user, item);
-                return RedirectToAction("ItemDetail", "Home", new {Id = id});
+                return RedirectToAction("ItemDetail", "Home", new { Id = id });
             }
 
-            return RedirectToAction("ItemDetail", "Home", new {Id = id});
+            return RedirectToAction("ItemDetail", "Home", new { Id = id });
         }
 
         #endregion
