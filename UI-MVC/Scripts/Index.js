@@ -376,6 +376,9 @@ function map() {
             values.push(output[keys[i]]);
         }
 
+        $('#loader-9').hide();
+        $('#test-map').show();
+
         mapData = {
             "ANT": values[1],
             "BRU": values[3],
@@ -400,6 +403,7 @@ function map() {
                     fill: "#e6e6e6"
                 }
             },
+            zoomOnScroll: false,
             normalizeFunction: "linear",
             onRegionTipShow: function (e, el, code) {
                 el.html(el.html() + ' (GDP - ' + mapData[code] + ')');
