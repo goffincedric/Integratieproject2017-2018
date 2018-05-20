@@ -356,6 +356,59 @@ function TrendingPersonGraphs() {
 
 TrendingPersonGraphs();
 
+function map() {
+    var URL = "https://localhost:44342/api/item/GetTweetsByDistrict";
+    makeAjaxCall(URL, "GET").then(process);
+
+    var mapData;
+
+    function process(output) {
+        console.log(output);
+
+        var keys = [];
+        keys = Object.keys(output);
+        var label = [];
+        var values = [];
+
+        for (var i = 0; i < keys.length; i++) {
+            label.push(keys[i]);
+
+            values.push(output[keys[i]]);
+        }
+
+        mapData = {
+            "ANT": values[1],
+            "BRU": values[3],
+            "LIM": values[4],
+            "OVL": values[2],
+            "VBR": values[5],
+            "WVL": values[0]
+        };
+
+        $('#test-map').vectorMap({
+            map: "be_mill",
+            series: {
+                regions: [{
+                    values: mapData,
+                    scale: ["#C8EEFF", "#0071A4"],
+                    normalizeFunction: 'polynomial'
+                }]
+            },
+            backgroundColor: "transparent",
+            regionStyle: {
+                initial: {
+                    fill: "#e6e6e6"
+                }
+            },
+            normalizeFunction: "linear",
+            onRegionTipShow: function (e, el, code) {
+                el.html(el.html() + ' (GDP - ' + mapData[code] + ')');
+            }
+        });
+    }
+}
+
+map();
 
 function drawOrganisations() {
   var URL = "https://localhost:44342/api/item/GetMostPopularOrganisations/3";
