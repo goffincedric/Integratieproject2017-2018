@@ -215,11 +215,25 @@ namespace UI_MVC.Controllers
                 if(person.TwitterName != null && person.TwitterName != "")
                 {
                     ViewBag.Icon = "https://twitter.com/" + person.TwitterName + "/profile_image?size=original";
+                    ViewBag.Twitter = "https://twitter.com/" + person.TwitterName;
                 }
                 else
                 {
                     ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
+                    ViewBag.Twitter = "";
                 }
+
+                if(person.Site == "" || person.Site is null)
+                {
+                    ViewBag.Site = "";
+                }
+                else
+                {
+                    ViewBag.Site =  "//" + person.Site;
+                }
+                
+                
+               
             }
 
             if (item is Organisation organisation)
