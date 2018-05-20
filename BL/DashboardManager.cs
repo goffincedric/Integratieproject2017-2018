@@ -134,7 +134,7 @@ namespace PB.BL
             return DashboardRepo.ReadElement(elementId);
         }
 
-        public Element AddElement(Zone zone, int x, int y, int width, int height, bool isUnfinished = true, bool isDraggable = true)
+        public Element AddElement(Zone zone, int x, int y, int width, int height, GraphType graph, bool isUnfinished = true, bool isDraggable = true)
         {
             InitNonExistingRepo();
             Element element = new Element
@@ -144,6 +144,7 @@ namespace PB.BL
                 Y = y,
                 Width = width,
                 Height = height,
+                GraphType = graph,
                 IsDraggable = isDraggable,
                 IsUnfinished = isUnfinished
             };

@@ -7,6 +7,7 @@
         PIE,
         DONUT,
         WORDCLOUD,
-        MAP
+        MAP,
+        NONE
     }
 }
