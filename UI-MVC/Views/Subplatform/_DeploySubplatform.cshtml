@@ -4,9 +4,7 @@
 {
   @Html.AntiForgeryToken()
   <div class="form-group row">
-    <div class="col-sm-4">
-      <label>Deploy new subplatform</label>
-    </div>
+ 
     <div class="col-sm-6">
       <span>Subplatform name</span>
       @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})

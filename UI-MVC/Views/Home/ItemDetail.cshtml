@@ -5,7 +5,9 @@
 }
 
 <style>
-  .colom-6-center { padding: 0 0 0 20%; }
+  .colom-6-center {
+    padding: 0 0 0 20%;
+  }
 </style>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
@@ -14,77 +16,101 @@
   <div id="mainContent" class="container-fluid">
     <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-12">
       <div class="bgc-white p-20 bd">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-3">
-              <img style="width: 200px; height: auto; position: absolute; margin: auto; top: 0; left: 0; right: 0; bottom: 0;" src="@ViewBag.Icon" alt="logo" />
-            </div>
-            <div class="col-9">
-              <div class="h-75 w-100">
+        <div class="row">
+          <div class="col-3">
+            <img style="width: 200px; height: auto; border-radius:50%; position: absolute; margin: auto; top: 0; left: 0; right: 0; bottom: 0;" src="@ViewBag.Icon" alt="logo" />
+          </div>
+          <div class="col-7">
+            <div class="h-75 w-100">
+              @if (Model is PB.BL.Domain.Items.Person)
+              {
+
                 <div class="row" style="margin: 0; text-align: center;">
                   <h1 style="color: #2196f3; text-align: center; padding-top: 3%; width: 100%;" class="display-4"> @Html.DisplayFor(model => model.Name)</h1>
                 </div>
-                <div class="row">
-                  @if (Model is PB.BL.Domain.Items.Person)
-                  {
-                    <ul style="list-style-type: none; width: 100%; text-align: center;">
-                      <li style="display: inline-block;">
-                        <h5 class="h5">@ViewBag.Vermeldingen Vermeldingen</h5>
-                      </li>
-                      <li style="display: inline-block;">
-                        <h5 class="h5">-</h5>
-                      </li>
-                      <li style="display: inline-block;">
-                        <h5 class="h5">@ViewBag.Partij</h5>
-                      </li>
-
-                    </ul>
-                  }
-                  else if (Model is PB.BL.Domain.Items.Organisation)
-                  {
-                    <ul style="list-style-type: none; width: 100%; text-align: center;">
-                      <li style="display: inline-block;">
-                        <h5 class="h5">@ViewBag.Leden Leden</h5>
-                      </li>
-                      <li style="display: inline-block;">
-                        <h5 class="h5">-</h5>
-                      </li>
-                      <li style="display: inline-block;">
-                        <h5 class="h5">@ViewBag.FullName</h5>
-                      </li>
-                    </ul>
-                  }
-                  else if (Model is PB.BL.Domain.Items.Theme)
-                  {
-                    <ul style="list-style-type: none; width: 100%; text-align: center;">
-                      <li style="display: inline-block;">
-                        <h5 class="h5">@ViewBag.Associaties Associaties</h5>
-                      </li>
-                    </ul>
-                  }
+                <div class="row" style="margin: 0; text-align: center;">
+                  <h1 class="h3" style=" text-align: center; width: 100%;"> @ViewBag.Partij</h1>
                 </div>
-              </div>
-              <div class="h-25 w-100 d-inline-block">
-                @if (ViewBag.Subscribed)
+                <div class="row" style="padding-bottom:16px;">
+
+
+                  <ul style="list-style-type: none; width: 100%; text-align: center;">
+
+                    <li style="display: inline-block;">
+                      <a href="@ViewBag.Twitter" target="_blank">  <i style="color: #2196f3; text-align:right; font-size:20px;" class="ti-twitter"></i> </a>
+                    </li>
+                    <li style="display: inline-block; padding: 0 10px;">
+                      <h5 class="h5">-</h5>
+                    </li>
+                    <li style="display: inline-block;">
+                      <h5 class="h5">@ViewBag.Vermeldingen Vermeldingen</h5>
+                    </li>
+                    <li style="display: inline-block; padding: 0 10px;">
+                      <h5 class="h5">-</h5>
+                    </li>
+                    <li style="display: inline-block;">
+                      <a href="@ViewBag.Site" target="_blank">  <i style="color: #2196f3; text-align:right; padding-left: 10px; font-size:20px;" class="ti-world"></i></a>
+                    </li>
+                  </ul>
+                </div>
+
+
+              }
+              else if (Model is PB.BL.Domain.Items.Organisation)
+              {
+                <div class="row" style="margin: 0; text-align: center;">
+                  <h1 style="color: #2196f3; text-align: center; padding-top: 3%; width: 100%;" class="display-4"> @Html.DisplayFor(model => model.Name)</h1>
+                </div>
+                <ul style="list-style-type: none; width: 100%; text-align: center;">
+                  <li style="display: inline-block;">
+                    <h5 class="h5">@ViewBag.Leden Leden</h5>
+                  </li>
+                  <li style="display: inline-block;">
+                    <h5 class="h5">-</h5>
+                  </li>
+                  <li style="display: inline-block;">
+                    <h5 class="h5">@ViewBag.FullName</h5>
+                  </li>
+                </ul>
+              }
+              else if (Model is PB.BL.Domain.Items.Theme)
+              {
+
+                <div class="row" style="margin: 0; text-align: center;">
+                  <h1 style="color: #2196f3; text-align: center; padding-top: 3%; width: 100%;" class="display-4"> @Html.DisplayFor(model => model.Name)</h1>
+                </div>
+                <ul style="list-style-type: none; width: 100%; text-align: center;">
+                  <li style="display: inline-block;">
+                    <h5 class="h5">@ViewBag.Associaties Associaties</h5>
+                  </li>
+                </ul>
+              }
+            </div>
+
+            <div class="h-25 w-100 d-inline-block">
+              @if (ViewBag.Subscribed)
+              {
+                using (Html.BeginForm("RemoveSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
                 {
-                  using (Html.BeginForm("RemoveSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
-                  {
-                    @Html.AntiForgeryToken()
-                    <button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
-                  }
+                  @Html.AntiForgeryToken()
+                  <button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
                 }
-                else
+              }
+              else
+              {
+                using (Html.BeginForm("AddSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
                 {
-                  using (Html.BeginForm("AddSubscription", "Home", new { Id = Model.ItemId }, FormMethod.Post))
-                  {
-                    @Html.AntiForgeryToken()
-                    <button type="submit" value="Subscribe me!" class="btn btn-outline-primary btn-lg btn-block">Subcribe!</button>
-                  }
+                  @Html.AntiForgeryToken()
+                  <button type="submit" value="Subscribe me!" class="btn btn-outline-primary btn-lg btn-block">Subcribe!</button>
                 }
-              </div>
+              }
             </div>
           </div>
         </div>
+        <div class="col-2">
+
+        </div>
+
       </div>
     </div>
 
@@ -141,53 +167,132 @@
         </div>
       </div>
     </div>
-    <div class="row">
-    <div class="masonry-item col-md-6" style="margin: 10px 0; padding-right: 15px; padding-left: 0;">
-      <div class="bd bgc-white">
-        <div class="layers">
-          <div class="layer w-100 pX-20 pT-20">
-            <h6 class="c-grey-900">Tweets</h6>
-            <a id="download2" download="Canvas.jpg">
-              <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 30px; position: absolute;"></i>
-            </a>
-            <i style="top: 30px; right: 60px; position: absolute; opacity: 0.6;" class="fas fa-thumbtack"></i>
-          </div>
-          <div class="layer w-100 p-20" style="min-height: 200px; max-height: 200px; display: table;">
-            <div class="loader loader-6" id="loader-1" style="display: table-cell; vertical-align: middle; text-align: center">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <canvas id="line-chart2" height="100" style="display: none"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="masonry-item col-md-6" style="margin: 10px 0; padding-right: 0px; padding-left: 15px;">
-      <div class="bd bgc-white">
-        <div class="layers">
-          <div class="layer w-100 pX-20 pT-20">
-            <h6 class="c-grey-900">Sentiment</h6>
-            <a id="download8" download="Canvas.jpg">
-              <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 30px; position: absolute;"></i>
-            </a>
-            <i style="top: 30px; right: 60px; position: absolute; opacity: 0.6;" class="fas fa-thumbtack"></i>
-          </div>
-          <div class="layer w-100 p-20" style="min-height: 200px; max-height: 200px; display: table;">
-            <div class="loader loader-6" id="loader-8" style="display: table-cell; vertical-align: middle; text-align: center">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
+    @if (Model is PB.BL.Domain.Items.Organisation || Model is PB.BL.Domain.Items.Theme)
+    {
+      <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-12">
+
+        <div class="bgc-white p-20 bd">
+          <h6 class="c-grey-900">Top persons voor @Model.Name </h6>
+          <div class="row">
+
+            <div class="col-3">
+              <div class="p-20">
+                <div class="row">
+                  <div class="col-3" >
+                    <div id="pic1">
+                      @*<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500" id="output1"></span>*@
+
+                    </div>
+                  </div>
+                  <div class="col-9" style="padding-top: 20px;padding-left: 35px;">
+                    <h6 id="pers1"></h6>
+                  </div>
+                </div>
+              </div>
             </div>
-            <canvas id="sentiment" height="100" style="display: none"></canvas>
+            <div class="col-3">
+              <div class=" p-20">
+
+                <div class="row">
+                  <div class="col-3" >
+
+                    <div id="pic2">
+                      @*<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500"></span>*@
+                    </div>
+                  </div>
+                  <div class="col-9" style="padding-top: 20px;padding-left: 35px;">
+                    <h6  id="pers2"></h6>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div class=" p-20">
+
+                <div class="row">
+                  <div class="col-3">
+                    <div id="pic3">
+                      @*<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500"></span>*@
+                    </div>
+                  </div>
+                  <div class="col-9" style="padding-top: 20px;padding-left: 35px;">
+                    <h6 class="lh-1" id="pers3"></h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div class="p-20">
+
+                <div class="row">
+                  <div class="col-3">
+
+                    <div id="pic4">
+                      @*<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500"></span>*@
+                    </div>
+                  </div>
+
+                  <div class="col-9" style="padding-top: 20px;padding-left: 35px;">
+                    <h6 id="pers4"></h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+    <div class="row">
+      <div class="masonry-item col-md-6" style="margin: 10px 0; padding-right: 15px; padding-left: 0;">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Tweets</h6>
+              <a id="download2" download="Canvas.jpg">
+                <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 30px; position: absolute;"></i>
+              </a>
+              <i style="top: 30px; right: 60px; position: absolute; opacity: 0.6;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height: 200px; max-height: 200px; display: table;">
+              <div class="loader loader-6" id="loader-1" style="display: table-cell; vertical-align: middle; text-align: center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <canvas id="line-chart2" height="100" style="display: none"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="masonry-item col-md-6" style="margin: 10px 0; padding-right: 0px; padding-left: 15px;">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Sentiment</h6>
+              <a id="download8" download="Canvas.jpg">
+                <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 30px; position: absolute;"></i>
+              </a>
+              <i style="top: 30px; right: 60px; position: absolute; opacity: 0.6;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height: 200px; max-height: 200px; display: table;">
+              <div class="loader loader-6" id="loader-8" style="display: table-cell; vertical-align: middle; text-align: center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <canvas id="sentiment" height="100" style="display: none"></canvas>
+            </div>
           </div>
         </div>
       </div>
     </div>
-      </div>
 
 
     <div class="row">
@@ -532,7 +637,7 @@
 
       for (var i = 0; i < keys.length; i++) {
         label.push(keys[i].substring(0, 10));
-        values.push(output[keys[i]));
+        values.push(output[keys[i]]);
       }
       var can = $('#line-chart2');
       new Chart(can,
@@ -546,7 +651,7 @@
                 label: "Tweets",
                // backgroundColor: "rgba(3, 169, 244, 0.5)",
                 borderColor: "#0277bd",
-                data: values, 
+                data: values,
                 fill:false
               }
             ]
@@ -603,9 +708,9 @@
             datasets: [
               {
                 label: "Sentiment evolutie",
-             
+
                 borderColor: "#0277bd",
-                data: values, 
+                data: values,
                 fill: false
               }
             ]
@@ -643,6 +748,29 @@
 {
   <script>
 
+
+  function showTopPersons() {
+    var URL = "https://localhost:44342/api/item/GetPopularTweetName/" + @Html.Raw(Model.ItemId);
+    makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+    function process(output) {
+
+      var keys = [];
+      keys = Object.keys(output);
+      for (var i = 1; i < keys.length + 1; i++) {
+
+        $("#pers" + i).html(keys[i - 1]);
+        var image = "https://twitter.com/" + output[keys[i - 1]] + "/profile_image?size=original";
+        $("#pic" + i).append('<img style="width: 50px; height: auto; border-radius:50%;" src="' + image + '" alt="logo" />')
+      }
+    }
+
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+  }
+
+    showTopPersons();
 
     function Hashtags() {
       var URL = "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + @Html.Raw(Model.ItemId);

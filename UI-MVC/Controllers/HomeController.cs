@@ -179,6 +179,8 @@ namespace UI_MVC.Controllers
         {
             ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text;
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
+            Person person = itemMgr.GetPersons().Where(p => p.TwitterName != "" || p.TwitterName != null).OrderByDescending(p => p.TrendingScore).FirstOrDefault();
+            ViewBag.TweetName = "https://twitter.com/" + person.TwitterName + "?ref_src=twsrc%5Etfw";
             return View("Index");
         }
 
@@ -223,11 +225,25 @@ namespace UI_MVC.Controllers
                 if(person.TwitterName != null && person.TwitterName != "")
                 {
                     ViewBag.Icon = "https://twitter.com/" + person.TwitterName + "/profile_image?size=original";
+                    ViewBag.Twitter = "https://twitter.com/" + person.TwitterName;
                 }
                 else
                 {
                     ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
+                    ViewBag.Twitter = "";
                 }
+
+                if(person.Site == "" || person.Site is null)
+                {
+                    ViewBag.Site = "";
+                }
+                else
+                {
+                    ViewBag.Site = new System.UriBuilder(person.Site).Uri; 
+                }
+                
+                
+               
             }
 
             if (item is Organisation organisation)

@@ -9,6 +9,8 @@
       <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
           <h3 class="h3">Platform stats</h3>
+          <br />
+          <br />
           <span style="color: #2196f3" class="fsz-sm">
             Totaal aantal users: @Html.Label("Totaal aantal users:", (string) ViewBag.TotalUsers)
           </span>
@@ -37,15 +39,87 @@
       <br/>
       <hr/>
       <div class="row">
-        <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-6">
-          <div class="bgc-white p-20 bd" style="min-height: 450px;">
+        <div style="margin: 10px 0; padding-left: 0;" class="masonry-item col-md-6">
+          <div class="bgc-white p-20 bd" style="min-height: 480px;">
             <h6 style="margin-bottom: 25px" class="h6">Subplatform settings</h6>
             @Html.Action("_SubplatformSetting", "Subplatform")
           </div>
         </div>
 
         <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-6">
-          <div class="bgc-white p-20 bd" style="min-height: 450px;">
+          <div class="bgc-white p-20 bd" style="min-height: 480px;">
+            <h6 style="margin-bottom: 25px" class="h6">Default images</h6>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label>Change site logo</label>
+              </div>
+              <div class="col-sm-6">
+                @using (Html.BeginForm("UploadSiteLogo", "Subplatform", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                  <div class="row">
+                    <div class="col-9" style="padding: 0; margin: 0">
+                      <div class="fileUpload blue-btn btn width100" style="margin: 0;">
+                        <span>Upload a new site logo</span>
+                        <input type="file" class="uploadlogo1 uploadlogo" name="file" id="file" />
+                      </div>
+                    </div>
+                    <div class="col-3" style="padding: 0; margin: 0">
+                      <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label>Change default item icon</label>
+              </div>
+              <div class="col-sm-6">
+                @using (Html.BeginForm("UploadDefaultItemLogo", "Subplatform", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                  <div class="row">
+                    <div class="col-9" style="padding: 0; margin: 0">
+                      <div class="fileUpload blue-btn btn width100" style="margin: 0;">
+                        <span>Upload a new item icon</span>
+                        <input type="file" class="uploadlogo2 uploadlogo" name="file" id="file" />
+                      </div>
+                    </div>
+                    <div class="col-3" style="padding: 0; margin: 0">
+                      <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label>Change default user icon</label>
+              </div>
+              <div class="col-sm-6">
+                @using (Html.BeginForm("UploadDefaultUserLogo", "Subplatform", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                  <div class="row">
+                    <div class="col-9" style="padding: 0; margin: 0">
+                      <div class="fileUpload blue-btn btn width100" style="margin: 0;">
+                        <span>Upload a new user icon</span>
+                        <input type="file" class="uploadlogo3 uploadlogo" name="file" id="file" />
+                      </div>
+                    </div>
+                    <div class="col-3" style="padding: 0; margin: 0">
+                      <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+
+        <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-6">
+          <div class="bgc-white p-20 bd" style="min-height: 630px;">
             <h6 style="margin-bottom: 25px" class="h6">Sync tools</h6>
             <div class="row">
                 <div class="col-6">
@@ -107,99 +181,39 @@
             </div>
           </div>
         </div>
-        <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-6">
-          <div class="bgc-white p-20 bd" style="min-height: 400px;">
-            <h6 style="margin-bottom: 25px" class="h6">Default images</h6>
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label>Change site logo</label>
-              </div>
-              <div class="col-sm-6">
-                @using (Html.BeginForm("UploadSiteLogo", "Subplatform", FormMethod.Post, new {enctype = "multipart/form-data"}))
-                {
-                  <div class="row">
-                    <div class="col-9" style="padding: 0; margin: 0">
-                      <div class="fileUpload blue-btn btn width100" style="margin: 0;">
-                        <span>Upload a new site logo</span>
-                        <input type="file" class="uploadlogo1 uploadlogo" name="file" id="file"/>
-                      </div>
-                    </div>
-                    <div class="col-3" style="padding: 0; margin: 0">
-                      <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
-                    </div>
-                  </div>
-                }
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label>Change default item icon</label>
-              </div>
-              <div class="col-sm-6">
-                @using (Html.BeginForm("UploadDefaultItemLogo", "Subplatform", FormMethod.Post, new {enctype = "multipart/form-data"}))
-                {
-                  <div class="row">
-                    <div class="col-9" style="padding: 0; margin: 0">
-                      <div class="fileUpload blue-btn btn width100" style="margin: 0;">
-                        <span>Upload a new item icon</span>
-                        <input type="file" class="uploadlogo2 uploadlogo" name="file" id="file"/>
-                      </div>
-                    </div>
-                    <div class="col-3" style="padding: 0; margin: 0">
-                      <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
-                    </div>
-                  </div>
-                }
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-4">
-                <label>Change default user icon</label>
-              </div>
-              <div class="col-sm-6">
-                @using (Html.BeginForm("UploadDefaultUserLogo", "Subplatform", FormMethod.Post, new {enctype = "multipart/form-data"}))
-                {
-                  <div class="row">
-                    <div class="col-9" style="padding: 0; margin: 0">
-                      <div class="fileUpload blue-btn btn width100" style="margin: 0;">
-                        <span>Upload a new user icon</span>
-                        <input type="file" class="uploadlogo3 uploadlogo" name="file" id="file"/>
-                      </div>
-                    </div>
-                    <div class="col-3" style="padding: 0; margin: 0">
-                      <button type="submit" style="margin-left: 15px" class="btn btn-primary btn-lg">Save</button>
-                    </div>
-                  </div>
-                }
-              </div>
-            </div>
-          </div>
-        </div>
+
         @if (User.IsInRole("SuperAdmin"))
         {
-        <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-6">
-          <div class="bgc-white p-20 bd" style="min-height: 400px;">
-            <h6 style="margin-bottom: 25px" class="h6">Deploy new subplatform</h6>
-            @Html.Action("_DeploySubplatform", "Subplatform")
+          <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-6">
+            <div class="bgc-white p-20 bd" style="min-height: 630px;">
+              <h6 style="margin-bottom: 25px" class="h6">Deploy new subplatform</h6>
+              @Html.Action("_DeploySubplatform", "Subplatform")
+              <h6 style="margin-bottom: 25px" class="h6">Active subplatforms</h6>
+              @Html.Action("_ShowSubplatform", "Subplatform")
+            </div>
           </div>
-        </div>
-        <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-6">
-          <div class="bgc-white p-20 bd" style="min-height: 400px;">
-            <h6 style="margin-bottom: 25px" class="h6">Change Homepage</h6>
-            @Html.Action("_ChangeHomePage", "Subplatform")
+          <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-6">
+            <div class="bgc-white p-20 bd" style="min-height: 400px;">
+              <h6 style="margin-bottom: 25px" class="h6">Change Homepage</h6>
+              @Html.Action("_ChangeHomePage", "Subplatform")
+            </div>
           </div>
-        </div>
 
-        <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-6">
-          <div class="bgc-white p-20 bd" style="min-height: 400px;">
-            <h6 style="margin-bottom: 25px" class="h6">Change menu</h6>
-            @*@Html.Action("_ChangeMenu", "Subplatform")*@
+          <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-6">
+            <div class="bgc-white p-20 bd" style="min-height: 400px;">
+              <h6 style="margin-bottom: 25px" class="h6">Change menu</h6>
+              @*@Html.Action("_ChangeMenu", "Subplatform")*@
+
+              <h6 style="margin-bottom: 25px" class="h6">Change FAQ</h6>
+
+              <h6 style="margin-bottom: 25px" class="h6">Add FAQ</h6>
+            </div>
           </div>
-        </div>
         }
       </div>
+      </div>
     </div>
-  </div>
+
 </main>
 <script>
   $(document).ready(function($) {

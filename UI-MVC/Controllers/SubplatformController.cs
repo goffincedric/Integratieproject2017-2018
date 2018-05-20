@@ -443,6 +443,23 @@ namespace UI_MVC.Controllers
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
+
+        
+        [Authorize(Roles = "Admin,SuperAdmin")]
+        public ActionResult _ShowSubplatform()
+        {
+            IEnumerable<Subplatform> subplatforms = SubplatformMgr.GetSubplatforms();
+
+            return PartialView(subplatforms);
+        }
+
+        [Authorize(Roles = "Admin,SuperAdmin")]
+        public ActionResult EditSubplatform(int id)
+        {
+          Subplatform subplatform = SubplatformMgr.GetSubplatform(id);
+
+            return PartialView(subplatform);
+        }
         #endregion
     }
 }

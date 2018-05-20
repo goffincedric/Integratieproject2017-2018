@@ -562,6 +562,7 @@ namespace PB.BL
             {
                 districtTweets.Keys.ToList().ForEach(k => districtTweets[k] = districtTweets[k] + vlaanderenAantal);
             }
+            districtTweets.OrderBy(p => p.Key);
             return districtTweets;
         }
         #endregion
