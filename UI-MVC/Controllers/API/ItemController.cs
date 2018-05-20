@@ -776,6 +776,14 @@ namespace UI_MVC.Controllers.API
         }
 
         [HttpGet]
+        public IHttpActionResult GetTweetName()
+        {
+            Person person = ItemMgr.GetPersons().Where(p=>p.TwitterName != "" || p.TwitterName != null).OrderByDescending(p => p.TrendingScore).FirstOrDefault();
+            if (person is null) return NotFound();
+            return Ok(person.TwitterName);
+        }
+
+        [HttpGet]
         public IHttpActionResult GetMostPopularPersons(int? id)
         {
             Dictionary<int, string> ids = new Dictionary<int, string>();
@@ -796,6 +804,7 @@ namespace UI_MVC.Controllers.API
             if (ids is null || ids.Count() == 0) return NotFound();
             return Ok(ids);
         }
+
 
         [HttpGet]
         public IHttpActionResult GetMostPopularOrganisations(int? id)
