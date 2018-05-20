@@ -542,9 +542,10 @@ function showTweets() {
 
   console.log("TEEEEEEEEEEEEEEST");
   function process(output) {
-    console.log(output);
-    console.log("TEEEEEEEEEEEEEEST");
-    $("#tweets").html('<a class="twitter-timeline" tweet-limit="5" height="450" href="https://twitter.com/' + output + '?ref_src=twsrc%5Etfw"></a>');
+
+    var html = "https://twitter.com/" + output + "?ref_src=twsrc%5Etfw";
+
+    $("#twitterfeed").append('<a class="twitter-timeline" tweet-limit="5" height="450" href="' + html + '"></a>');
     
   }
   
