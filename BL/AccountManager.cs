@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Domain.Accounts;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -23,6 +24,9 @@ namespace PB.BL
     //data to store, it also handles some logic and settings
     public class AccountManager : UserManager<Profile>, IAccountManager
     {
+        public static bool IsGeneratingAlerts;
+        public static bool IsSendingWeeklyReviews;
+
         private IAlertRepo AlertRepo;
         private IProfileRepo ProfileRepo;
         private readonly IntegratieUserStore store;
@@ -386,7 +390,17 @@ namespace PB.BL
         }
 
         // TODO: Async maken
-        public Dictionary<Profile, List<ProfileAlert>> SendWeeklyReviews()
+        public void SendWeeklyReviews()
+        {
+            // Set IsGeneratingAlerts flag
+            IsSendingWeeklyReviews = true;
+            SendWeeklyReviewsAsync().GetAwaiter().OnCompleted(new Action(() =>
+            {
+                IsSendingWeeklyReviews = false;
+            }));
+        }
+
+        public async Task<Dictionary<Profile, List<ProfileAlert>>> SendWeeklyReviewsAsync()
         {
             // Get all profiles with at least 1 read profilealert from last week
             List<Profile> allProfiles = GetProfiles()
@@ -421,89 +435,103 @@ namespace PB.BL
                 Subject = "Weekly Review"
             };
 
-            AlertsPerProfile.Keys.ToList().ForEach(p =>
+            await Task.Run(() =>
             {
-                // Get profileAlerts
-                List<ProfileAlert> profileAlerts = new List<ProfileAlert>();
-                AlertsPerProfile.TryGetValue(p, out profileAlerts);
-                if (profileAlerts.Count == 0) return;
-
-                // Construct body
-                StringBuilder sbBody = new StringBuilder(GmailSender.WeeklyReviewBody);
-                sbBody.Replace(GmailSender.DefaultUsernameSubstring, p.UserData.FirstName ?? p.UserName);
-                StringBuilder sb = new StringBuilder();
-                profileAlerts = profileAlerts.OrderByDescending(pa => pa.TimeStamp).ToList();
-                profileAlerts.ForEach(pa =>
+                AlertsPerProfile.Keys.ToList().ForEach(p =>
                 {
-                    StringBuilder sbItem = new StringBuilder(GmailSender.WeeklyReviewListItem);
-                    sbItem.Replace(GmailSender.WeeklyReviewListItemIconSubstring,
-                        "https://integratieproject.azurewebsites.net" + pa.Alert.Item.IconURL.Substring(1) ??
-                        GmailSender.DefaultItemIcon);
-                    sbItem.Replace(GmailSender.DefaultItemLinkSubstring, "#");
-                    sbItem.Replace(GmailSender.WeeklyReviewListItemNameSubstring, pa.Alert.Item.Name);
-                    sbItem.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring,
-                        pa.Alert.Item.Name + " " + pa.Alert.Event + " " + pa.Alert.Subject + " - " +
-                        pa.TimeStamp.Date.ToShortDateString() + "<br>" + pa.Alert.Text + "."
-                    );
-                    sb.Append(sbItem.ToString());
-                });
-                List<Person> persons = p.Subscriptions.Where(i => i is Person).Select(i => (Person)i).ToList();
-                Person person = persons.First(pe =>
-                    pe.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count == persons.Max(ps =>
-                        ps.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count));
+                    // Get profileAlerts
+                    List<ProfileAlert> profileAlerts = new List<ProfileAlert>();
+                    AlertsPerProfile.TryGetValue(p, out profileAlerts);
+                    if (profileAlerts.Count == 0) return;
 
-                sbBody.Replace(GmailSender.DefaultItemLinkSubstring, "#");
-                sbBody.Replace(GmailSender.WeeklyReviewListItemNameSubstring, person.Name);
-                sbBody.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring,
-                    person.Name + " is tijdens de afgelopen week " +
-                    person.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-14)).Count +
-                    " aantal keer het onderwerp geweest in iemand zijn/haar tweet.");
-
-                sbBody.Replace(GmailSender.WeeklyReviewListSubstring, sb.ToString());
-
-                // Set mail body
-                sender.Body = sbBody.ToString();
-
-                // Set mail recipient
-                sender.ToEmail = p.Email;
-
-                // Send mail
-                sender.Send();
-
-                // Make WeeklyReview and persist
-                if (p.WeeklyReviews == null) p.WeeklyReviews = new List<WeeklyReview>();
-                WeeklyReview weeklyReview = new WeeklyReview
-                {
-                    TopPersonId = person.ItemId,
-                    Profile = profileAlerts[0].Profile,
-                    TimeGenerated = DateTime.Now,
-                    TopPersonText = person.Name + " is tijdens de afgelopen week " +
-                                    person.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-14)).Count +
-                                    " aantal keer het onderwerp geweest in iemand zijn/haar tweet.",
-                    WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlert>()
-                };
-                profileAlerts.ForEach(pa =>
-                {
-                    WeeklyReviewProfileAlert weeklyReviewProfileAlerts = new WeeklyReviewProfileAlert
+                    // Construct body
+                    StringBuilder sbBody = new StringBuilder(GmailSender.WeeklyReviewBody);
+                    sbBody.Replace(GmailSender.DefaultUsernameSubstring, p.UserData.FirstName ?? p.UserName);
+                    StringBuilder sb = new StringBuilder();
+                    profileAlerts = profileAlerts.OrderByDescending(pa => pa.TimeStamp).ToList();
+                    profileAlerts.ForEach(pa =>
                     {
-                        ProfileAlert = pa,
-                        WeeklyReview = weeklyReview
+                        StringBuilder sbItem = new StringBuilder(GmailSender.WeeklyReviewListItem);
+                        sbItem.Replace(GmailSender.WeeklyReviewListItemIconSubstring,
+                            "https://integratieproject.azurewebsites.net" + pa.Alert.Item.IconURL.Substring(1) ??
+                            GmailSender.DefaultItemIcon);
+                        sbItem.Replace(GmailSender.DefaultItemLinkSubstring, "#");
+                        sbItem.Replace(GmailSender.WeeklyReviewListItemNameSubstring, pa.Alert.Item.Name);
+                        sbItem.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring,
+                            pa.Alert.Item.Name + " " + pa.Alert.Event + " " + pa.Alert.Subject + " - " +
+                            pa.TimeStamp.Date.ToShortDateString() + "<br>" + pa.Alert.Text + "."
+                        );
+                        sb.Append(sbItem.ToString());
+                    });
+                    List<Person> persons = p.Subscriptions.Where(i => i is Person).Select(i => (Person)i).ToList();
+                    Person person = persons.First(pe =>
+                        pe.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count == persons.Max(ps =>
+                            ps.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count));
+
+                    sbBody.Replace(GmailSender.DefaultItemLinkSubstring, "#");
+                    sbBody.Replace(GmailSender.WeeklyReviewListItemNameSubstring, person.Name);
+                    sbBody.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring,
+                        person.Name + " is tijdens de afgelopen week " +
+                        person.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-14)).Count +
+                        " aantal keer het onderwerp geweest in iemand zijn/haar tweet.");
+
+                    sbBody.Replace(GmailSender.WeeklyReviewListSubstring, sb.ToString());
+
+                    // Set mail body
+                    sender.Body = sbBody.ToString();
+
+                    // Set mail recipient
+                    sender.ToEmail = p.Email;
+
+                    // Send mail
+                    sender.Send();
+
+                    // Make WeeklyReview and persist
+                    if (p.WeeklyReviews == null) p.WeeklyReviews = new List<WeeklyReview>();
+                    WeeklyReview weeklyReview = new WeeklyReview
+                    {
+                        TopPersonId = person.ItemId,
+                        Profile = profileAlerts[0].Profile,
+                        TimeGenerated = DateTime.Now,
+                        TopPersonText = person.Name + " is tijdens de afgelopen week " +
+                                        person.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-14)).Count +
+                                        " aantal keer het onderwerp geweest in iemand zijn/haar tweet.",
+                        WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlert>()
                     };
-                    pa.WeeklyReviewsProfileAlerts.Add(weeklyReviewProfileAlerts);
-                    weeklyReview.WeeklyReviewsProfileAlerts.Add(weeklyReviewProfileAlerts);
+                    profileAlerts.ForEach(pa =>
+                    {
+                        WeeklyReviewProfileAlert weeklyReviewProfileAlerts = new WeeklyReviewProfileAlert
+                        {
+                            ProfileAlert = pa,
+                            WeeklyReview = weeklyReview
+                        };
+                        pa.WeeklyReviewsProfileAlerts.Add(weeklyReviewProfileAlerts);
+                        weeklyReview.WeeklyReviewsProfileAlerts.Add(weeklyReviewProfileAlerts);
+                    });
+                    p.WeeklyReviews.Add(weeklyReview);
                 });
-                p.WeeklyReviews.Add(weeklyReview);
+
+                // Persist changed profiles
             });
 
-            // Persist changed profiles
             ProfileRepo.UpdateProfiles(allProfiles);
-            UowManager.Save();
+            await UowManager.SaveAsync();
 
             return AlertsPerProfile;
         }
 
+        public void GenerateAllAlerts(IEnumerable<Item> allItems)
+        {
+            // Set IsGeneratingAlerts flag
+            IsGeneratingAlerts = true;
+            GenerateAllAlertsAsync(allItems).GetAwaiter().OnCompleted(new Action(() =>
+            {
+                IsGeneratingAlerts = false;
+            }));
+        }
+
         // TODO: Async maken
-        public List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems)
+        public async Task<List<Alert>> GenerateAllAlertsAsync(IEnumerable<Item> allItems)
         {
             InitNonExistingRepo();
 
@@ -572,7 +600,7 @@ namespace PB.BL
             //Persist alerts
             AlertRepo.CreatAlerts(alertsToCreate).ToList();
             alertsToUpdate.ForEach(AlertRepo.UpdateAlert);
-            UowManager.Save();
+            await UowManager.SaveAsync();
 
             return alerts;
         }
