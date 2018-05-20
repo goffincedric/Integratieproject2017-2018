@@ -822,6 +822,27 @@ namespace UI_MVC.Controllers.API
             return Ok(ids);
         }
 
+        [HttpGet]
+        public IHttpActionResult GetPopularTweetName(int id)
+        {
+            Item item = ItemMgr.GetItem(id);
+            Dictionary<string, string> map = new Dictionary<string, string>();
+            if (item is Organisation organisation)
+            {
+                organisation.People.Where(p => p.TwitterName != "" || p.TwitterName != null).OrderBy(r => r.TrendingScore).Take(4).ToList().ForEach(s => map.Add(s.Name, s.TwitterName));
+            }else if(item is Theme theme)
+            {
+                theme.Persons.Where(p => p.TwitterName != "" || p.TwitterName != null).OrderBy(r => r.TrendingScore).Take(4).ToList().ForEach(s => map.Add(s.Name, s.TwitterName));
+            }
+            
+           
+            if (map is null) return NotFound();
+            return Ok(map);
+        }
+
+
+
+
         #endregion
     }
 }

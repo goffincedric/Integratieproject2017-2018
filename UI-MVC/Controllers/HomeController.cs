@@ -179,7 +179,8 @@ namespace UI_MVC.Controllers
         {
             ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text;
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
-           
+            Person person = itemMgr.GetPersons().Where(p => p.TwitterName != "" || p.TwitterName != null).OrderByDescending(p => p.TrendingScore).FirstOrDefault();
+            ViewBag.TweetName = "https://twitter.com/" + person.TwitterName + "?ref_src=twsrc%5Etfw";
             return View("Index");
         }
 
@@ -238,7 +239,7 @@ namespace UI_MVC.Controllers
                 }
                 else
                 {
-                    ViewBag.Site =  "//" + person.Site;
+                    ViewBag.Site = new System.UriBuilder(person.Site).Uri; 
                 }
                 
                 

@@ -167,6 +167,85 @@
         </div>
       </div>
     </div>
+
+    @if (Model is PB.BL.Domain.Items.Organisation || Model is PB.BL.Domain.Items.Theme)
+    {
+      <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-12">
+
+        <div class="bgc-white p-20 bd">
+          <h6 class="c-grey-900">Top persons voor @Model.Name </h6>
+          <div class="row">
+
+            <div class="col-3">
+              <div class="p-20">
+                <div class="row">
+                  <div class="col-3" >
+                    <div id="pic1">
+                      @*<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500" id="output1"></span>*@
+
+                    </div>
+                  </div>
+                  <div class="col-9" style="padding-top: 20px;padding-left: 35px;">
+                    <h6 id="pers1"></h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class=" p-20">
+
+                <div class="row">
+                  <div class="col-3" >
+
+                    <div id="pic2">
+                      @*<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500"></span>*@
+                    </div>
+                  </div>
+                  <div class="col-9" style="padding-top: 20px;padding-left: 35px;">
+                    <h6  id="pers2"></h6>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div class=" p-20">
+
+                <div class="row">
+                  <div class="col-3">
+                    <div id="pic3">
+                      @*<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500"></span>*@
+                    </div>
+                  </div>
+                  <div class="col-9" style="padding-top: 20px;padding-left: 35px;">
+                    <h6 class="lh-1" id="pers3"></h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div class="p-20">
+
+                <div class="row">
+                  <div class="col-3">
+
+                    <div id="pic4">
+                      @*<span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500"></span>*@
+                    </div>
+                  </div>
+
+                  <div class="col-9" style="padding-top: 20px;padding-left: 35px;">
+                    <h6 id="pers4"></h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
     <div class="row">
       <div class="masonry-item col-md-6" style="margin: 10px 0; padding-right: 15px; padding-left: 0;">
         <div class="bd bgc-white">
@@ -669,6 +748,29 @@
 {
   <script>
 
+
+  function showTopPersons() {
+    var URL = "https://localhost:44342/api/item/GetPopularTweetName/" + @Html.Raw(Model.ItemId);
+    makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+    function process(output) {
+
+      var keys = [];
+      keys = Object.keys(output);
+      for (var i = 1; i < keys.length + 1; i++) {
+
+        $("#pers" + i).html(keys[i - 1]);
+        var image = "https://twitter.com/" + output[keys[i - 1]] + "/profile_image?size=original";
+        $("#pic" + i).append('<img style="width: 50px; height: auto; border-radius:50%;" src="' + image + '" alt="logo" />')
+      }
+    }
+
+    function errorHandler(statusCode) {
+      console.log("failed with status", status);
+    }
+  }
+
+    showTopPersons();
 
     function Hashtags() {
       var URL = "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + @Html.Raw(Model.ItemId);

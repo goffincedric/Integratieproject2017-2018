@@ -5,6 +5,7 @@
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 <style>
   #chart {
     margin: auto;
@@ -281,8 +282,8 @@
                 </div>
               </div>
 
-              <div class="peer bdL p-20 w-30p@lg+ w-100p@lg-" id="twitterfeed" style="min-height:400px">
-                @*<a class="twitter-timeline" tweet-limit="5" height="450" href="https://twitter.com/ImadeAnnouri?ref_src=twsrc%5Etfw"></a>*@
+              <div class="peer bdL p-20 w-30p@lg+ w-100p@lg- test" id="twitterfeed" style="min-height:400px">
+                <a class="twitter-timeline" tweet-limit="5" height="450" href="@ViewBag.TweetName"></a>
               </div>
             </div>
           </div>
@@ -301,3 +302,4 @@
 <script src="~/Scripts/Wordcloud/zingchart-wordcloud.min.js"></script>
 <script src="~/Scripts/Wordcloud/wordcloud.js"></script>
 <script src="~/Scripts/Index.js" defer></script>
+

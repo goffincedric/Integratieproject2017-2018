@@ -406,7 +406,7 @@ function map() {
             zoomOnScroll: false,
             normalizeFunction: "linear",
             onRegionTipShow: function (e, el, code) {
-                el.html(el.html() + ' (GDP - ' + mapData[code] + ')');
+                el.html(el.html() + ' (' + mapData[code] + ' Tweet)');
             }
         });
     }
@@ -537,22 +537,3 @@ function drawMap() {
   }
 
 }
-
-
-function showTweets() {
-
-  var URL = "https://localhost:44342/api/item/GetTweetName";
-  makeAjaxCall(URL, "GET").then(process);
-
-  console.log("TEEEEEEEEEEEEEEST");
-  function process(output) {
-
-    var html = "https://twitter.com/" + output + "?ref_src=twsrc%5Etfw";
-
-    $("#twitterfeed").append('<a class="twitter-timeline" tweet-limit="5" height="450" href="' + html + '"></a>');
-    
-  }
-  
-}
-
-showTweets();
