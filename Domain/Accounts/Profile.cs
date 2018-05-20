@@ -16,14 +16,14 @@ namespace PB.BL.Domain.Accounts
     public class Profile : IdentityUser
     {
         [DataMember]
-        public string Name
+        public override string UserName
         {
             get { return base.UserName; }
             set { base.UserName = value; }
         }
 
         [DataMember]
-        public string Email
+        public override string Email
         {
             get { return base.Email; }
             set { base.Email = value; }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using PB.BL.Domain.Accounts;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
@@ -30,10 +31,13 @@ namespace PB.BL.Interfaces
 
         Profile AddSubscription(Profile profile, Item item);
         Profile RemoveSubscription(Profile profile, Item item);
-
-        Dictionary<Profile, List<ProfileAlert>> SendWeeklyReviews();
-        List<Alert> GenerateAllAlerts(IEnumerable<Item> allItems);
+        
         List<Alert> GenerateProfileAlerts(Profile profile);
+        void GenerateAllAlerts(IEnumerable<Item> allItems);
+        Task<List<Alert>> GenerateAllAlertsAsync(IEnumerable<Item> allItems);
+
+        void SendWeeklyReviews();
+        Task<Dictionary<Profile, List<ProfileAlert>>> SendWeeklyReviewsAsync();
 
         int GetUserCount();
     }

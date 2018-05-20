@@ -29,7 +29,6 @@ namespace UI_MVC.Controllers
     [RequireHttps]
     public class AccountController : Controller
     {
-
         private readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private AccountManager _accountMgr;
         private IntegratieSignInManager _signInManager;
@@ -94,7 +93,6 @@ namespace UI_MVC.Controllers
         }
 
         #endregion
-
 
         #region LoginRegister
 
@@ -233,9 +231,17 @@ namespace UI_MVC.Controllers
 
         public ActionResult GetNotificationCount(string subplatform)
         {
+            
             Profile user = UserManager.GetProfile(User.Identity.GetUserId());
-            int alertCount = user.ProfileAlerts.FindAll(pa =>
-                !pa.IsRead && pa.Alert.Item.SubPlatforms.Find(s => s.URL.ToLower().Equals(subplatform)) != null).Count;
+            int alertCount = 0;
+            if (User.Identity.IsAuthenticated)
+            {
+                if (user == null)
+                {
+                    alertCount = user.ProfileAlerts.FindAll(pa => !pa.IsRead && pa.Alert.Item.SubPlatforms.Find(s => s.URL.ToLower().Equals(subplatform)) != null).Count;
+                }
+            }
+            
             return Content(string.Format("{0}", alertCount));
         }
 
