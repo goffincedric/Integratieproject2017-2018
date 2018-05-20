@@ -154,7 +154,7 @@ namespace UI_MVC.Controllers.API
             element.Zone = zone;
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            element = DashboardMgr.AddElement(zone, element.X, element.Y, element.Width, element.Height, element.IsUnfinished, isDraggable: element.IsDraggable);
+            element = DashboardMgr.AddElement(zone, element.X, element.Y, element.Width, element.Height,element.GraphType, element.IsUnfinished, isDraggable: element.IsDraggable);
             zone.Elements.Add(element);
 
             return

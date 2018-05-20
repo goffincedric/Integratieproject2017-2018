@@ -163,7 +163,7 @@ $(function () {
             var X = newElement.data().gsX;
             var Y = newElement.data().gsY;
 
-            var Element = JSON.parse('{"X" : "' + X + '", "Y" : "' + Y + '", "Width": "3", "Height": "3", "IsDraggable": "true","IsUnfinished":"true", "ZoneId": "' + ZoneId + '"}');
+            var Element = JSON.parse('{"X" : "' + X + '", "Y" : "' + Y + '", "Width": "3", "Height": "3", "IsDraggable": "true","IsUnfinished":"true", "ZoneId": "' + ZoneId + '", "GraphType": "6"}');
 
             var ElementId = $.ajax({
                 async: false,
@@ -1365,60 +1365,64 @@ $(function () {
                     break;
             }
 
-            var div = can.parent();
-            can.replaceWith('<div class="map"></div>');
-            div = div.children(".map");
+            if (graph === 'map') {
+                var div = can.parent();
+                can.replaceWith('<h4>Hoeveelheid tweets per provincie</h4><div class="map" style="height: 100%"></div>');
+                div = div.children(".map");
 
-            var URL = "https://localhost:44342/api/item/GetTweetsByDistrict";
-            makeAjaxCall(URL, "GET").then(process);
+                var URL = "https://localhost:44342/api/item/GetTweetsByDistrict";
+                makeAjaxCall(URL, "GET").then(process);
 
-            var mapData;
+                var mapData;
 
-            function process(output) {
-                console.log(output);
+                function process(output) {
+                    console.log(output);
 
-                var keys = [];
-                keys = Object.keys(output);
-                var label = [];
-                var values = [];
+                    var keys = [];
+                    keys = Object.keys(output);
+                    var label = [];
+                    var values = [];
 
-                for (var i = 0; i < keys.length; i++) {
-                    label.push(keys[i]);
+                    for (var i = 0; i < keys.length; i++) {
+                        label.push(keys[i]);
 
-                    values.push(output[keys[i]]);
-                }
-
-                mapData = {
-                    "ANT": values[1],
-                    "BRU": values[3],
-                    "LIM": values[4],
-                    "OVL": values[2],
-                    "VBR": values[5],
-                    "WVL": values[0]
-                };
-
-                div.vectorMap({
-                    map: "be_mill",
-                    series: {
-                        regions: [{
-                            values: mapData,
-                            scale: ["#C8EEFF", "#0071A4"],
-                            normalizeFunction: 'polynomial'
-                        }]
-                    },
-                    backgroundColor: "transparent",
-                    regionStyle: {
-                        initial: {
-                            fill: "#e6e6e6"
-                        }
-                    },
-                    zoomOnScroll: false,
-                    zoomButtons: false,
-                    normalizeFunction: "linear",
-                    onRegionTipShow: function (e, el, code) {
-                        el.html(el.html() + ' (GDP - ' + mapData[code] + ')');
+                        values.push(output[keys[i]]);
                     }
-                });
+
+                    mapData = {
+                        "ANT": values[1],
+                        "BRU": values[3],
+                        "LIM": values[4],
+                        "OVL": values[2],
+                        "VBR": values[5],
+                        "WVL": values[0]
+                    };
+
+                    div.vectorMap({
+                        map: "be_mill",
+                        series: {
+                            regions: [{
+                                values: mapData,
+                                scale: ["#C8EEFF", "#0071A4"],
+                                normalizeFunction: 'polynomial'
+                            }]
+                        },
+                        backgroundColor: "transparent",
+                        regionStyle: {
+                            initial: {
+                                fill: "#e6e6e6"
+                            }
+                        },
+                        zoomOnScroll: false,
+                        zoomButtons: false,
+                        normalizeFunction: "linear",
+                        onRegionTipShow: function (e, el, code) {
+                            el.html(el.html() + ' (Tweets - ' + mapData[code] + ')');
+                        }
+                    });
+                }
+            } else {
+                //insert other graphs here
             }
         }
 

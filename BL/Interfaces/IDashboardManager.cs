@@ -26,7 +26,7 @@ namespace PB.BL.Interfaces
 
         IEnumerable<Element> GetElements();
         Element GetElement(int elementId);
-        Element AddElement(Zone zone, int x, int y, int width, int height, bool isFinished, bool isDraggable);
+        Element AddElement(Zone zone, int x, int y, int width, int height, GraphType graph, bool isFinished, bool isDraggable);
         void ChangeElement(Element element);
         void RemoveElement(int elementId);
     }
