@@ -2,47 +2,50 @@
 
 @using (Html.BeginForm("_ChangeHomePage", "Subplatform", FormMethod.Post))
 {
-  <div class="form-group row">
+  <div class="form-group row mT-50">
     <div class="col-sm-5">
       <label>Banner title</label>
     </div>
     <div class="col-sm-5">
       <div class="row">
-        @Html.EditorFor(model => model.BannerTitle, new {htmlAttributes = new {@class = "form-control", @type = "text"}})
+        @Html.EditorFor(model => model.BannerTitle, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
       </div>
     </div>
   </div>
+  <br />
   <div class="form-group row">
     <div class="col-sm-5">
       <label>Banner text (1)</label>
     </div>
     <div class="col-sm-5">
       <div class="row">
-        @Html.TextAreaFor(model => model.BannerTextSub1, new {@class = "form-control", @type = "text", @rows = 3})
+        @Html.TextAreaFor(model => model.BannerTextSub1, new { @class = "form-control", @type = "text", @rows = 5 })
       </div>
     </div>
   </div>
+  <br />
   <div class="form-group row">
     <div class="col-sm-5">
       <label>Banner text (2)</label>
     </div>
     <div class="col-sm-5">
       <div class="row">
-        @Html.TextAreaFor(model => model.BannerTextSub2, new {@class = "form-control", @type = "text", @rows = 3})
+        @Html.TextAreaFor(model => model.BannerTextSub2, new { @class = "form-control", @type = "text", @rows = 5})
       </div>
     </div>
   </div>
+  <br />
   <div class="form-group row">
     <div class="col-sm-5">
       <label>call-to-action tekst</label>
     </div>
     <div class="col-sm-5">
       <div class="row">
-        @Html.TextAreaFor(model => model.Call_to_action, new {@class = "form-control", @type = "text", @rows = 3})
+        @Html.TextAreaFor(model => model.Call_to_action, new { @class = "form-control", @type = "text", @rows = 4 })
       </div>
     </div>
   </div>
-
+  <br />
   <div class="form-group row">
     <div class="col-sm-12">
       <div class="row">
