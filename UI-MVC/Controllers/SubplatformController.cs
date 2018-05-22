@@ -10,7 +10,7 @@ using UI_MVC.Models;
 
 namespace UI_MVC.Controllers
 {
-    [RequireHttps]
+
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     public class SubplatformController : Controller
     {

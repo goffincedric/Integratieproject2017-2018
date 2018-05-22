@@ -5,7 +5,7 @@ namespace UI_MVC.Controllers
     /// <summary>
     ///     Has control over the error pages. Will come to action when error has been encountered.
     /// </summary
-    [RequireHttps]
+
     public class ErrorController : Controller
     {
         public ViewResult Index()
