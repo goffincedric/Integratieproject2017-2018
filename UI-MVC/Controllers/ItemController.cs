@@ -532,12 +532,12 @@ namespace UI_MVC.Controllers
             return View("Itembeheer");
         }
 
-   
 
-    #endregion
 
-    #region Items
-    [HttpPost]
+        #endregion
+
+        #region Items
+        [HttpPost]
         public ActionResult DeleteItem(string subplatform, int id)
         {
             try

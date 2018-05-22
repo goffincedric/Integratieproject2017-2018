@@ -60,12 +60,19 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region Load
-
         public ActionResult ChangeProfilePic()
         {
-            Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
-            var image = VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
-            return Content(image);
+            if (User.Identity.IsAuthenticated)
+            {
+                Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
+                if (profile != null)
+                {
+                    var image = VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+                    return Content(image);
+                }
+            }
+
+            return ChangeLogoutin();
         }
 
         public ActionResult ChangeLogoutin()

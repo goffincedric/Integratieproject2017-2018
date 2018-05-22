@@ -39,7 +39,7 @@
       <br />
 
       <div class="row">
-        <div  class="masonry-item col-md-6" style="margin: 10px 0;">
+        <div class="masonry-item col-md-6" style="margin: 10px 0;">
           <div class="bgc-white p-20 bd" style="min-height: 480px;">
             <h6 style="margin-bottom: 25px" class="h6">Subplatform settings</h6>
             @Html.Action("_SubplatformSetting", "Subplatform")
@@ -117,45 +117,70 @@
       </div>
 
       <div class="row">
-         
+
         <div class="masonry-item col-md-6" style="margin: 10px 0;">
           <div class="bgc-white p-20 bd" style="min-height: 630px;">
             <h6 style="margin-bottom: 25px" class="h6">Sync tools</h6>
             <div class="row">
+
               <div class="col-6">
+                @using (Html.BeginForm("CleanupDB", "Subplatform", FormMethod.Post))
+                {
+                  if (ViewBag.IsCleaning)
+                  {
+                    <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg" disabled>Cleanup DB</button>
+                    <label>Database is momenteel een cleanup aan het ondergaan...</label>
+                  }
+                  else
+                  {
+                    <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Cleanup DB</button>
+                  }
+                }
+
                 @using (Html.BeginForm("Syncronize", "Subplatform", FormMethod.Post))
                 {
                   if (ViewBag.IsSyncing)
                   {
-                    <button type="submit" style="margin: 30px 0;" class="btn btn-primary btn-lg" disabled>Syncroniseer API</button>
+                    <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg" disabled>Syncroniseer API</button>
                     <label>Database is momenteel een sync aan het ondergaan...</label>
                   }
                   else
                   {
-                    <button type="submit" style="margin: 30px 0;" class="btn btn-primary btn-lg">Syncroniseer API</button>
+                    <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Syncroniseer API</button>
                   }
                 }
 
                 @using (Html.BeginForm("GenerateAlertsManually", "Subplatform", FormMethod.Post))
                 {
-                  <button type="submit" style="margin: 30px 0" ; class="btn btn-primary btn-lg">Generate alerts manually</button>
-                }
-
-                @using (Html.BeginForm("CleanupDB", "Subplatform", FormMethod.Post))
-                {
-                  <button type="submit" style="margin: 30px 0;" class="btn btn-primary btn-lg">Cleanup DB</button>
+                  if (ViewBag.IsGeneratingAlerts)
+                  {
+                    <button type="submit" style="margin: 25px 0" ; class="btn btn-primary btn-lg" disabled>Generate alerts manually</button>
+                    <label>Er worden momenteel alerts gegenerated door de site...</label>
+                  }
+                  else
+                  {
+                    <button type="submit" style="margin: 25px 0" ; class="btn btn-primary btn-lg">Generate alerts manually</button>
+                  }
                 }
 
                 @using (Html.BeginForm("SendWeeklyReviews", "Subplatform", FormMethod.Post))
                 {
-                  <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Send Weekly Reviews</button>
+                  if (ViewBag.IsSendingWeeklyReviews)
+                  {
+                    <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg" disabled>Send Weekly Reviews</button>
+                    <label>Er worden momenteel weekly reviews verstuurd door de site...</label>
+                  }
+                  else
+                  {
+                    <button type="submit" style="margin: 25px 0;" class="btn btn-primary btn-lg">Send Weekly Reviews</button>
+                  }
                 }
               </div>
               @if (User.IsInRole("SuperAdmin"))
               {
-              <div class="col-6">
-                @Html.Action("_SeedIntervals", "Subplatform")
-              </div>
+                <div class="col-6">
+                  @Html.Action("_SeedIntervals", "Subplatform")
+                </div>
               }
             </div>
           </div>
@@ -204,7 +229,7 @@
                   <br />
                   <div class="col-2" style=" display: flex; align-items: center; justify-content: center; padding-top:10px;">
                     <label style="visibility:hidden" id="" class="col-form-label-sm">
-                     
+
                     </label>
                     <button id="btnSave" class="btn btn-primary btn-lg mT-10">Save</button>
                   </div>
@@ -295,7 +320,7 @@
     });
   });
 
- 
+
 
   $("#btnSave").click(function () {
     const menu = { MenuItem: $("#menu option:selected").text(), MenuText: $("#text").val(), Subplatform: "@ViewBag.Subplatform"};

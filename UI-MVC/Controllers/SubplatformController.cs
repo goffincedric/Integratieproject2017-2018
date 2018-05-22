@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using PB.BL;
 using PB.BL.Domain.Items;
@@ -88,8 +89,10 @@ namespace UI_MVC.Controllers
             ViewBag.TotalKeywords = itemMgr.GetKeywordsCount().ToString();
             ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
             ViewBag.IsSyncing = ItemManager.IsSyncing;
-            ViewBag.Subplatform = SubplatformMgr.GetSubplatform(subplatform).URL;
-            ViewBag.SubplatformId = SubplatformMgr.GetSubplatform(subplatform).SubplatformId;
+            ViewBag.IsCleaning = ItemManager.IsCleaning;
+            ViewBag.IsGeneratingAlerts = AccountManager.IsGeneratingAlerts;
+            ViewBag.IsSendingWeeklyReviews = AccountManager.IsSendingWeeklyReviews;
+
             return View();
         }
 
@@ -377,9 +380,16 @@ namespace UI_MVC.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult GenerateAlertsManually()
         {
-            List<Item> itemsToUpdate = new List<Item>();
-            accountMgr.GenerateAllAlerts(itemMgr.GetItems());
-            itemMgr.ChangeItems(itemsToUpdate);
+            if (!AccountManager.IsGeneratingAlerts)
+            {
+                AccountManager.IsGeneratingAlerts = true;
+                Task.Run(async () =>
+                {
+                    await accountMgr.GenerateAllAlertsAsync(itemMgr.GetItems());
+                    AccountManager.IsGeneratingAlerts = false;
+                });
+            }
+
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
@@ -387,8 +397,16 @@ namespace UI_MVC.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult CleanupDB(string subplatform)
         {
-            Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
-            itemMgr.CleanupOldRecords(sp);
+            if (!ItemManager.IsCleaning)
+            {
+                ItemManager.IsCleaning = true;
+                Task.Run(async () =>
+                {
+                    await itemMgr.CleanupOldRecordsAsync(SubplatformMgr.GetSubplatform(subplatform));
+                    ItemManager.IsCleaning = false;
+                });
+            }
+
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
@@ -400,12 +418,11 @@ namespace UI_MVC.Controllers
             {
                 // Set IsSyncing field
                 ItemManager.IsSyncing = true;
-                UnitOfWorkManager unitOfWorkManager = new UnitOfWorkManager();
-                SubplatformManager subplatformManager = new SubplatformManager(unitOfWorkManager);
-                ItemManager itemManager = new ItemManager(unitOfWorkManager);
-                Subplatform sp = subplatformManager.GetSubplatform(subplatform);
-                // TODO: Tasking met JobManager
-                itemManager.SyncDatabaseAsync(sp).GetAwaiter().OnCompleted(() => { ItemManager.IsSyncing = false; });
+                Task.Run(async () =>
+                {
+                    await itemMgr.SyncDatabaseAsync(SubplatformMgr.GetSubplatform(subplatform));
+                    ItemManager.IsSyncing = false;
+                });
             }
 
             return RedirectToAction("PlatformSettings", "Subplatform");
@@ -415,7 +432,17 @@ namespace UI_MVC.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult SendWeeklyReviews(string subplatform)
         {
-            accountMgr.SendWeeklyReviews();
+            if (!AccountManager.IsSendingWeeklyReviews)
+            {
+                // Set IsGeneratingAlerts flag
+                AccountManager.IsSendingWeeklyReviews = true;
+                Task.Run(async () =>
+                {
+                    await accountMgr.SendWeeklyReviewsAsync();
+                    AccountManager.IsSendingWeeklyReviews = false;
+                });
+            }
+
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 

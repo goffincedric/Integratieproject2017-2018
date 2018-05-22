@@ -809,7 +809,7 @@ $(function () {
         chooseChart = function (type, can, ids, data) {
             console.log(type);
             switch (data) {
-                case 0: c
+                case 0: DrawMentions(can, id, type);
                     break;
                 case 1: DrawHashtags(can, ids, type);
                     break;
