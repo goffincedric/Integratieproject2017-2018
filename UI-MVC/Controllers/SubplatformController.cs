@@ -79,7 +79,7 @@ namespace UI_MVC.Controllers
         #region SubplatformSettings
 
         [Authorize(Roles = "Admin,SuperAdmin")]
-        public ActionResult PlatformSettings()
+        public ActionResult PlatformSettings(string subplatform)
         {
             ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
             ViewBag.TotalPersons = itemMgr.GetPersonsCount().ToString();
@@ -88,6 +88,8 @@ namespace UI_MVC.Controllers
             ViewBag.TotalKeywords = itemMgr.GetKeywordsCount().ToString();
             ViewBag.TotalItems = itemMgr.GetItemsCount().ToString();
             ViewBag.IsSyncing = ItemManager.IsSyncing;
+            ViewBag.Subplatform = SubplatformMgr.GetSubplatform(subplatform).URL;
+            ViewBag.SubplatformId = SubplatformMgr.GetSubplatform(subplatform).SubplatformId;
             return View();
         }
 

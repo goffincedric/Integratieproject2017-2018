@@ -198,6 +198,8 @@ namespace UI_MVC.Controllers
         {
             IEnumerable<Tag> tags = SubplatformMgr.GetPage(2).Tags.ToList();
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
+            ViewBag.Tag = "#collapse";
+            ViewBag.Control = "collapse";
             return View(tags);
         }
 
@@ -301,5 +303,11 @@ namespace UI_MVC.Controllers
         }
 
         #endregion
+
+
+        public ActionResult test()
+        {
+            return View();
+        }
     }
 }
