@@ -517,7 +517,7 @@ namespace UI_MVC.Controllers
         public ActionResult EditUser(string id,  Profile newProfile)
         {
             Profile profile = UserManager.GetProfile(id);
-            profile.Name = newProfile.Name;
+           
             profile.Email = newProfile.Email;
             profile.UserName = newProfile.UserName;
             UserManager.ChangeProfile(profile); 
