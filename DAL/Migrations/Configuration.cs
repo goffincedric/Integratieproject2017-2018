@@ -162,7 +162,77 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SOURCE_API_URL,
-                            Value = "https://kdg.textgain.com/query",
+                            Value = "",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                        new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.DEFAULT_THEME,
+                            Value = "Light",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                        new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
+                            Value = @"~/Content/Images/Users/user.png",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                        new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
+                            Value = @"~/Content/Images/Users/user.png",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                        new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.SOCIAL_SOURCE,
+                            Value = "",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                        new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.SOCIAL_SOURCE_URL,
+                            Value = "",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                        new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.SITE_NAME,
+                            Value = "Testing",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                        new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.SITE_ICON_URL,
+                            Value = @"~/Content/Images/Site/logo_new.png",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                        new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.SEED_INTERVAL_HOURS,
+                            Value = "24",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                        new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS,
+                            Value = "24",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                        new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS,
+                            Value = "7",
                             IsEnabled = true,
                             Subplatform = testSubplatform
                         }
@@ -322,36 +392,74 @@ namespace PB.DAL.Migrations
                     .FirstOrDefault(p => p.Name.ToLower() == el.Full_name.ToLower());
                 if (personCheck == null)
                 {
-                    personCheck = new Person
+                    if (el.Twitter is null || el.Twitter == "")
                     {
-                        ItemId = el.Id,
-                        Name = el.Full_name,
-                        IsTrending = false,
-                        IconURL = pbSubplatform.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
-                        SubPlatforms = new List<Subplatform>
+                        personCheck = new Person
+                        {
+                            ItemId = el.Id,
+                            Name = el.Full_name,
+                            IsTrending = false,
+                            IconURL = pbSubplatform.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
+                            SubPlatforms = new List<Subplatform>
                         {
                             pbSubplatform
                         },
-                        Keywords = new List<Keyword>(),
-                        Elements = new List<Element>(),
-                        SubscribedProfiles = new List<Profile>(),
-                        Alerts = new List<Alert>(),
-                        TrendingScore = 0,
-                        FirstName = el.First_name,
-                        LastName = el.Last_name,
-                        Level = el.Level,
-                        SocialMediaLink = el.Facebook,
-                        Site = el.Site,
-                        TwitterName = el.Twitter,
-                        Position = el.Position,
-                        District = el.District,
-                        Gemeente = ToPascalCase(el.Town),
-                        Postalcode = el.Postalcode,
-                        Gender = el.Gender,
-                        DateOfBirth = el.DateOfBirth,
-                        Records = new List<Record>(),
-                        Themes = new List<Theme>()
-                    };
+                            Keywords = new List<Keyword>(),
+                            Elements = new List<Element>(),
+                            SubscribedProfiles = new List<Profile>(),
+                            Alerts = new List<Alert>(),
+                            TrendingScore = 0,
+                            FirstName = el.First_name,
+                            LastName = el.Last_name,
+                            Level = el.Level,
+                            SocialMediaLink = el.Facebook,
+                            Site = el.Site,
+                            TwitterName = el.Twitter,
+                            Position = el.Position,
+                            District = el.District,
+                            Gemeente = ToPascalCase(el.Town),
+                            Postalcode = el.Postalcode,
+                            Gender = el.Gender,
+                            DateOfBirth = el.DateOfBirth,
+                            Records = new List<Record>(),
+                            Themes = new List<Theme>()
+                        };
+                    }
+                    else
+                    {
+                        personCheck = new Person
+                        {
+                            ItemId = el.Id,
+                            Name = el.Full_name,
+                            IsTrending = false,
+                            IconURL = "https://twitter.com/" + el.Twitter + "/profile_image?size=original",
+                            SubPlatforms = new List<Subplatform>
+                        {
+                            pbSubplatform
+                        },
+                            Keywords = new List<Keyword>(),
+                            Elements = new List<Element>(),
+                            SubscribedProfiles = new List<Profile>(),
+                            Alerts = new List<Alert>(),
+                            TrendingScore = 0,
+                            FirstName = el.First_name,
+                            LastName = el.Last_name,
+                            Level = el.Level,
+                            SocialMediaLink = el.Facebook,
+                            Site = el.Site,
+                            TwitterName = el.Twitter,
+                            Position = el.Position,
+                            District = el.District,
+                            Gemeente = ToPascalCase(el.Town),
+                            Postalcode = el.Postalcode,
+                            Gender = el.Gender,
+                            DateOfBirth = el.DateOfBirth,
+                            Records = new List<Record>(),
+                            Themes = new List<Theme>()
+                        };
+                    }
+
+
                     pbSubplatform.Items.Add(personCheck);
                 }
 
@@ -860,8 +968,51 @@ namespace PB.DAL.Migrations
                 {
                     PageName = "FAQ",
                     Title = "FAQ",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
+                    Subplatform = pbSubplatform,
+                    Tags = new List<Tag>
+                    {
+                        new Tag
+                        {
+                            Name = "Question1",
+                            Text = "Waarom zou ik me registreren op de politieke barometer?",
+                            Text2 = " De politieke barometer kan je bijstaan om politieke trends te monitoren. Hiermee kan jij je visie op politieke events en trends aanscherpen, waardoor je ook je bewuster wordt van wat er rondom je gebeurt. Dit zal er voor zorgen dat je met zekerheid naar de stemhokjes kan."
+                        },
+                        new Tag
+                        {
+                            Name="Question2",
+                            Text = "Klinkt goed, hoe maak ik een account aan ?",
+                            Text2 = "Je klikt rechtsboven op het aanmelden / registreren. Wij verwerken je gegevens en je kan direct aan de slag !"
+                        },
+                        new Tag
+                        {   Name ="Question3",
+                            Text= "Hoe subscribe ik op een item?",
+                            Text2 = "Rechts boven vindt u een zoekbalk waarin in de naam van het gewenste thema of de gewenste persoon of organisatie kan invullen. Dit zal u leiden tot aan de detailpagina waar een subscribe knop in het menu staat."
+                        },
+                        new Tag
+                        {
+                            Name = "Question4",
+                            Text = "Kan ik mijn wachtwoord of gebruikersnaam nog aanpassen ?",
+                            Text2=  "Ja, dit gaat ! Als je naar je persoonlijke instellingen gaat dan kan je al deze gegevens up to date brengen."
+                        },
+                        new Tag
+                        {
+                            Name = "Question5",
+                            Text = "Kan ik mijn account ook verwijderen?",
+                            Text2 = "Ja, dit gaat ook in je persoonlijke instellingen. We vinden het echter wel spijtig om je te zien vertrekken. Het zou ons veel plezier doen moest je het contact formulier invullen en je ervaringen met het platform delen."
+                        },
+                        new Tag
+                        {
+                            Name = "Question6",
+                            Text = "Hoe werkt politieke barometer ?",
+                            Text2 =  "Wij werken nauw samen met TextGain. Zij analyseren Twitter-berichten voor ons en wij bieden u met veel plezier deze data aan in een overzichtelijk formaat."
+                        },
+                        new Tag
+                        {
+                            Name = "Question7",
+                            Text = "Ik vind jullie kleurenschema maar niets. Kan ik dit aanpassen ?",
+                            Text2 ="Ja, dit gaat. U kan rechtsboven uw thema aanpassen naar een van onze 3 thema's. Indien u geen enkel van onze thema's leuk vindt, kan u altijd een verzoek sturen via onze contact pagina."
+                        }
+                    }
                 },
                 new Page
                 {

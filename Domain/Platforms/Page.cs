@@ -13,7 +13,7 @@ namespace PB.BL.Domain.Platform
 
         [Required] public string Title { get; set; }
 
-        public List<Tag> Tags { get; set; }
+        public virtual List<Tag> Tags { get; set; }
 
         public int SubplatformId { get; set; }
 

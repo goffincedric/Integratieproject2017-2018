@@ -12,8 +12,6 @@ namespace UI_MVC
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/jquery-3.3.1.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrapjs").Include(
-                "~/Scripts/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/adminator").Include("~/Scripts/load.js", "~/Scripts/vendor.js",
                 "~/Scripts/bundle.js"));
