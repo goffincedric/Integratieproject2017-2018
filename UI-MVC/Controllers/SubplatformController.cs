@@ -80,7 +80,7 @@ namespace UI_MVC.Controllers
         #region SubplatformSettings
 
         [Authorize(Roles = "Admin,SuperAdmin")]
-        public ActionResult PlatformSettings()
+        public ActionResult PlatformSettings(string subplatform)
         {
             ViewBag.TotalUsers = accountMgr.GetUserCount().ToString();
             ViewBag.TotalPersons = itemMgr.GetPersonsCount().ToString();
@@ -92,6 +92,7 @@ namespace UI_MVC.Controllers
             ViewBag.IsCleaning = ItemManager.IsCleaning;
             ViewBag.IsGeneratingAlerts = AccountManager.IsGeneratingAlerts;
             ViewBag.IsSendingWeeklyReviews = AccountManager.IsSendingWeeklyReviews;
+
             return View();
         }
 
