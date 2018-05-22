@@ -27,6 +27,7 @@
         </div>
       </div>
       @Html.Action("_UserTable")
+      @if (User.IsInRole("SuperAdmin")) { 
       <div class="row" style="margin-top: 10px;">
         <div class="col-sm" style="padding: 0; margin: 0 10px 0 0">
           <div class="layers bd bgc-white p-20">
@@ -53,6 +54,8 @@
           </div>
         </div>
       </div>
+        }
+     
       <div id="partial"></div>
       <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
