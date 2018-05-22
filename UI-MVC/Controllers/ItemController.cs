@@ -423,7 +423,9 @@ namespace UI_MVC.Controllers
                 SocialMediaLink = item.SocialMediaLink,
                 Gemeente = item.Gemeente,
                 ItemId = item.ItemId,
-                District = item.District
+                District = item.District, 
+                Level = item.Level,
+                Site = item.Site
             };
 
             if (item.Organisation != null)

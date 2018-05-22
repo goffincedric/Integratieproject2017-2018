@@ -974,25 +974,25 @@ namespace PB.DAL.Migrations
                         new Tag
                         {
                             Name = "Question1",
-                            Text = "Waarom zou ik me registreren op de politieke barometer?",
-                            Text2 = " De politieke barometer kan je bijstaan om politieke trends te monitoren. Hiermee kan jij je visie op politieke events en trends aanscherpen, waardoor je ook je bewuster wordt van wat er rondom je gebeurt. Dit zal er voor zorgen dat je met zekerheid naar de stemhokjes kan."
+                            Text = "Waarom zou ik me registreren op de Politieke Barometer?",
+                            Text2 = "De politieke barometer kan u bijstaan om politieke trends te monitoren en te analyseren. Hiermee kan u uw visie op politieke events en trends aanscherpen, waardoor u ook bewuster wordt van wat er rondom je gebeurt. Dit zal er voor zorgen dat u met zekerheid naar de stemhokjes kan."
                         },
                         new Tag
                         {
                             Name="Question2",
-                            Text = "Klinkt goed, hoe maak ik een account aan ?",
-                            Text2 = "Je klikt rechtsboven op het aanmelden / registreren. Wij verwerken je gegevens en je kan direct aan de slag !"
+                            Text = "Hoe maak ik een account aan?",
+                            Text2 = "Klik Rechtsboven op het login / register. Wij verwerken uw gegevens en u kan direct aan de slag!"
                         },
                         new Tag
                         {   Name ="Question3",
                             Text= "Hoe subscribe ik op een item?",
-                            Text2 = "Rechts boven vindt u een zoekbalk waarin in de naam van het gewenste thema of de gewenste persoon of organisatie kan invullen. Dit zal u leiden tot aan de detailpagina waar een subscribe knop in het menu staat."
+                            Text2 = "Rechts boven vindt u een zoekbalk waarin in de naam van het gewenste thema, persoon of organisatie kan ingevult worden. Dit zal u leiden tot aan de desbetreffende detailpagina waar een subscribe knop in het menu staat."
                         },
                         new Tag
                         {
                             Name = "Question4",
-                            Text = "Kan ik mijn wachtwoord of gebruikersnaam nog aanpassen ?",
-                            Text2=  "Ja, dit gaat ! Als je naar je persoonlijke instellingen gaat dan kan je al deze gegevens up to date brengen."
+                            Text = "Kan ik mijn wachtwoord of gebruikersnaam nog aanpassen?",
+                            Text2=  "Ja, dit gaat! Als u naar je persoonlijke instellingen gaat dan kan je al deze gegevens up-to-date houden."
                         },
                         new Tag
                         {
@@ -1003,13 +1003,13 @@ namespace PB.DAL.Migrations
                         new Tag
                         {
                             Name = "Question6",
-                            Text = "Hoe werkt politieke barometer ?",
-                            Text2 =  "Wij werken nauw samen met TextGain. Zij analyseren Twitter-berichten voor ons en wij bieden u met veel plezier deze data aan in een overzichtelijk formaat."
+                            Text = "Hoe werkt politieke barometer?",
+                            Text2 =  "Wij werken nauw samen met TextGain, een bedrijf dat Web services aanbied voor voorspellende text analyses. Zij analyseren Twitter-berichten voor ons en wij bieden u met veel plezier deze data aan in een overzichtelijk formaat."
                         },
                         new Tag
                         {
                             Name = "Question7",
-                            Text = "Ik vind jullie kleurenschema maar niets. Kan ik dit aanpassen ?",
+                            Text = "Ik vind jullie kleurenschema maar niets. Kan ik dit aanpassen?",
                             Text2 ="Ja, dit gaat. U kan rechtsboven uw thema aanpassen naar een van onze 3 thema's. Indien u geen enkel van onze thema's leuk vindt, kan u altijd een verzoek sturen via onze contact pagina."
                         }
                     }

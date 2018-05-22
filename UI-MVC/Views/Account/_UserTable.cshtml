@@ -21,7 +21,7 @@
             <td>@Html.DisplayFor(modelItem => item.Email)</td>
             <td>
               <div class="row">
-                @using (Html.BeginForm("DeleteProfileAdmin", "Account", new {userId = item.Id}, FormMethod.Post, new {id = "delete-" + item.Id}))
+                @using (Html.BeginForm("DeleteProfileAdmin", "Account", new { userId = item.Id }, FormMethod.Post, new { id = "delete-" + item.Id }))
                 {
                   @Html.AntiForgeryToken()
 
@@ -33,10 +33,10 @@
                     </a>
                   </button>
                 }
-                @using (Html.BeginForm("VoteToAdmin", "Account", new {id = item.Id}, FormMethod.Post, new {id = "admin-" + item.Id}))
+                @using (Html.BeginForm("VoteToAdmin", "Account", new { id = item.Id }, FormMethod.Post, new { id = "admin-" + item.Id }))
                 {
                   @Html.AntiForgeryToken()
-                  <button class="btn btn-sm">
+                  <button class="btn btn-sm"  style="margin-right: 5px">
                     <a href="javascript:document.getElementById('admin-@item.Id').submit()" style="outline: none; all: unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                       <span style="color: #2196f3" class="fsz-sm">
                         Make Admin
@@ -44,6 +44,9 @@
                     </a>
                   </button>
                 }
+                <button class="btn btn-sm">
+                  @Html.ActionLink("Edit", "EditUser", new { id = item.Id })
+                </button>
               </div>
             </td>
           </tr>

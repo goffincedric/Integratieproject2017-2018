@@ -113,7 +113,7 @@ namespace UI_MVC.Controllers
 
             var result =
                 await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, true);
-
+            
             switch (result)
             {
                 case SignInStatus.Success:
@@ -504,6 +504,24 @@ namespace UI_MVC.Controllers
             oldProfile.Settings.ElementAt(4).boolValue = newSettings.WANTS_WEEKLY_REVIEW_VIA_MAIL;
             UserManager.ChangeProfile(newProfile);
             return RedirectToAction("UserSettings", "Account");
+        }
+
+        public ActionResult EditUser(string id)
+        {
+            Profile profile = UserManager.GetProfile(id.ToString());
+            return View(profile);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUser(string id,  Profile newProfile)
+        {
+            Profile profile = UserManager.GetProfile(id);
+            profile.Name = newProfile.Name;
+            profile.Email = newProfile.Email;
+            profile.UserName = newProfile.UserName;
+            UserManager.ChangeProfile(profile); 
+            return View(profile);
         }
 
         #endregion

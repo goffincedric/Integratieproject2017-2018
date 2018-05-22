@@ -5,10 +5,11 @@ using System.Web;
 
 namespace UI_MVC.Models
 {
-    public class MenuViewModel
+    public class FAQViewModel
     {
-        public string MenuItem { get; set; }
-        public string MenuText { get; set; }
+        public String FAQitem { get; set; }
+        public string Question { get; set; }
+        public string Answer { get; set; }
         public string Subplatform { get; set; }
     }
 }
