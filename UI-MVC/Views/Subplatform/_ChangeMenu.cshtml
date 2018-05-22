@@ -1,12 +1,20 @@
 ﻿<div class="form-group row">
   <div class="col-sm-5">
-    <label>Change menu</label>
+    <label class="control-label">Selecteer menu item</label>
   </div>
   <div class="col-sm-5">
     <div class="row">
-      <select id="menu">
-        <option>Kies menu item...</option>
-      </select>
+      <div class="col-3">
+        <select id="menu" class="form-control">
+          <option disabled>Kies menu item...</option>
+        </select>
+      </div>
+      <div class="col-3">
+        <textarea class="form-control" style="display:none;" id="text" />
+      </div>
+      <div class="col-3"><button class=" btn btn-primary btn-sm">Save</button></div>
+     
+      
 
     </div>
   </div>
@@ -15,12 +23,12 @@
 
 <script>
   function makeAjaxCall(url, methodType) {
-    var promiseObj = new Promise(function(resolve, reject) {
+    var promiseObj = new Promise(function (resolve, reject) {
       var xhr = new XMLHttpRequest();
       xhr.open(methodType, url, true);
       xhr.setRequestHeader("x-api-key", "303d22a4-402b-4d3c-b279-9e81c0480711");
       xhr.send();
-      xhr.onreadystatechange = function() {
+      xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             console.log("xhr done successfully");
@@ -42,19 +50,5 @@
     return promiseObj;
   }
 
-  function Tags() {
-      var URL = "https://localhost:44342/api/item/GetTags/Menu";
-      makeAjaxCall(URL, "GET").then(process, errorHandler);
-
-      function process(output) {
-        var keys = [];
-        keys = Object.keys(output);
-        var label = [];
-        var values = [];
-
-        for (var i = 0; i < keys.length; i++) {
-          label.push(keys[i]);
-          values.push(output[keys[i]]);
-        }
-      }
-    </script>
+ 
+</script>

@@ -60,12 +60,19 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region Load
-
         public ActionResult ChangeProfilePic()
         {
-            Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
-            var image = VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
-            return Content(image);
+            if (User.Identity.IsAuthenticated)
+            {
+                Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
+                if (profile != null)
+                {
+                    var image = VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+                    return Content(image);
+                }
+            }
+
+            return ChangeLogoutin();
         }
 
         public ActionResult ChangeLogoutin()
@@ -179,6 +186,8 @@ namespace UI_MVC.Controllers
         {
             ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text;
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
+            Person person = itemMgr.GetPersons().Where(p => p.TwitterName != "" || p.TwitterName != null).OrderByDescending(p => p.TrendingScore).FirstOrDefault();
+            ViewBag.TweetName = "https://twitter.com/" + person.TwitterName + "?ref_src=twsrc%5Etfw";
             return View("Index");
         }
 
@@ -194,8 +203,11 @@ namespace UI_MVC.Controllers
 
         public ActionResult FAQ(string subplatform)
         {
+            IEnumerable<Tag> tags = SubplatformMgr.GetPage(2).Tags.ToList();
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
-            return View();
+            ViewBag.Tag = "#collapse";
+            ViewBag.Control = "collapse";
+            return View(tags);
         }
 
         public ActionResult Legal(string subplatform)
@@ -223,11 +235,25 @@ namespace UI_MVC.Controllers
                 if(person.TwitterName != null && person.TwitterName != "")
                 {
                     ViewBag.Icon = "https://twitter.com/" + person.TwitterName + "/profile_image?size=original";
+                    ViewBag.Twitter = "https://twitter.com/" + person.TwitterName;
                 }
                 else
                 {
                     ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
+                    ViewBag.Twitter = "";
                 }
+
+                if(person.Site == "" || person.Site is null)
+                {
+                    ViewBag.Site = "";
+                }
+                else
+                {
+                    ViewBag.Site = new System.UriBuilder(person.Site).Uri; 
+                }
+                
+                
+               
             }
 
             if (item is Organisation organisation)
@@ -284,5 +310,11 @@ namespace UI_MVC.Controllers
         }
 
         #endregion
+
+
+        public ActionResult test()
+        {
+            return View();
+        }
     }
 }

@@ -423,7 +423,9 @@ namespace UI_MVC.Controllers
                 SocialMediaLink = item.SocialMediaLink,
                 Gemeente = item.Gemeente,
                 ItemId = item.ItemId,
-                District = item.District
+                District = item.District, 
+                Level = item.Level,
+                Site = item.Site
             };
 
             if (item.Organisation != null)
@@ -530,12 +532,12 @@ namespace UI_MVC.Controllers
             return View("Itembeheer");
         }
 
-   
 
-    #endregion
 
-    #region Items
-    [HttpPost]
+        #endregion
+
+        #region Items
+        [HttpPost]
         public ActionResult DeleteItem(string subplatform, int id)
         {
             try

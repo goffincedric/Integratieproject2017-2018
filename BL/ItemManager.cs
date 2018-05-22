@@ -21,7 +21,8 @@ namespace PB.BL
 {
     public class ItemManager : IItemManager
     {
-        public static volatile bool IsSyncing;
+        public static bool IsSyncing;
+        public static bool IsCleaning;
         private IAlertRepo AlertRepo;
         private IItemRepo ItemRepo;
         private IRecordRepo RecordRepo;
@@ -48,10 +49,12 @@ namespace PB.BL
         {
             // Set IsSyncing flag
             IsSyncing = true;
-            SyncDatabaseAsync(subplatform).GetAwaiter().GetResult();
+            SyncDatabaseAsync(subplatform).GetAwaiter().OnCompleted(new Action(() =>
+            {
+                // Set IsSyncing flag
+                IsSyncing = false;
+            }));
 
-            // Set IsSyncing flag
-            IsSyncing = false;
         }
 
         public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
@@ -109,6 +112,11 @@ namespace PB.BL
 
         public void CleanupOldRecords(Subplatform subplatform)
         {
+            CleanupOldRecordsAsync(subplatform).GetAwaiter().GetResult();
+        }
+
+        public async Task<int> CleanupOldRecordsAsync(Subplatform subplatform)
+        {
             InitNonExistingRepo();
 
             // Validation
@@ -133,7 +141,7 @@ namespace PB.BL
             RecordRepo.DeleteRecords(oldRecords);
 
             // Save pending changes
-            UowManager.Save();
+            return await UowManager.SaveAsync();
         }
 
         #region Init
@@ -554,6 +562,7 @@ namespace PB.BL
             {
                 districtTweets.Keys.ToList().ForEach(k => districtTweets[k] = districtTweets[k] + vlaanderenAantal);
             }
+            districtTweets.OrderBy(p => p.Key);
             return districtTweets;
         }
         #endregion

@@ -406,7 +406,7 @@ function map() {
             zoomOnScroll: false,
             normalizeFunction: "linear",
             onRegionTipShow: function (e, el, code) {
-                el.html(el.html() + ' (GDP - ' + mapData[code] + ')');
+                el.html(el.html() + ' (' + mapData[code] + ' Tweet)');
             }
         });
     }
@@ -510,3 +510,30 @@ function drawOrganisations() {
 }
 
 drawOrganisations();
+
+
+
+
+function drawMap() {
+
+  var URL = "https://localhost:44342/api/item/GetTweetsByDistrict";
+  makeAjaxCall(URL, "GET").then(process);
+
+
+  function process(output) {
+    console.log(output);
+
+    var keys = [];
+    keys = Object.keys(output);
+    var label = [];
+    var values = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      label.push(keys[i]);
+
+      values.push(output[keys[i]]);
+    }
+    
+  }
+
+}

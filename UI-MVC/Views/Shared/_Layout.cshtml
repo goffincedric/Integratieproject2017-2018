@@ -3,20 +3,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>@ViewBag.Title</title>
-    @* Styles *@
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    @Styles.Render("~/Content/Styling/Style.css")
-    <link id="ThemeLink" href="@Html.Action("GetThemeSetting", "Home")" rel="stylesheet">
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrapjs")
-    <link rel="icon" href="@Html.Action("GetLogo", "Home")" />
-    <link href="~/Content/fa.css" rel="stylesheet" />
-    <link href="~/Content/Styling/jVectorMap/jquery-jvectormap-2.0.3.css" rel="stylesheet" />
-    <script src="~/Scripts/jVectorMap/jquery-jvectormap-2.0.3.min.js"></script>
-    <script src="~/Scripts/jVectorMap/jquery-jvectormap-be-mill.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>@ViewBag.Title</title>
+  @* Styles *@
+  <link href="~/Content/bootstrap.css" rel="stylesheet" />
+  @Styles.Render("~/Content/Styling/Style.css")
+  <link id="ThemeLink" href="@Html.Action("GetThemeSetting", "Home")" rel="stylesheet">
+  @Scripts.Render("~/bundles/jquery")
+
+  <link rel="icon" href="@Html.Action("GetLogo", "Home")" />
+
+  <link href="~/Content/Fonts/FontAwesome/fontawesome-all.css" rel="stylesheet" />
+  <link href="~/Content/Styling/jVectorMap/jquery-jvectormap-2.0.3.css" rel="stylesheet" />
+  <script src="~/Scripts/jVectorMap/jquery-jvectormap-2.0.3.min.js"></script>
+  <script src="~/Scripts/jVectorMap/jquery-jvectormap-be-mill.js"></script>
 </head>
 <body class="app is-collapsed">
 <div id="loader">
@@ -58,16 +59,16 @@
           </span><span class="title">@ViewBag.Home</span>
         </a>
       </li>
-
+      <li class="nav-item">
+        <a class="sidebar-link" href="@Url.Action("Dashboard", "Dashboard")">
+          <span class="icon-holder">
+            <i class="c-brown-500 ti-bar-chart"></i>
+          </span><span class="title">@ViewBag.Dashboard</span>
+        </a>
+      </li>
       @if (Request.IsAuthenticated)
       {
-        <li class="nav-item">
-          <a class="sidebar-link" href="@Url.Action("Dashboard", "Dashboard")">
-            <span class="icon-holder">
-              <i class="c-brown-500 ti-bar-chart"></i>
-            </span><span class="title">@ViewBag.Dashboard</span>
-          </a>
-        </li>
+
         <li class="nav-item">
           <a class="sidebar-link" href="@Url.Action("WeeklyReview", "Account")">
             <span class="icon-holder">

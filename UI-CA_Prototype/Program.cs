@@ -294,13 +294,10 @@ namespace UI_CA_Prototype
         {
             if (!ItemManager.IsSyncing)
             {
-                ItemManager.IsSyncing = true;
                 //Makes PB subplatform
                 Subplatform pbSubplatform = SubplatformMgr.GetSubplatforms()
                     .FirstOrDefault(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower()));
                 ItemMgr.SyncDatabase(pbSubplatform);
-
-                ItemManager.IsSyncing = false;
             }
         }
     }

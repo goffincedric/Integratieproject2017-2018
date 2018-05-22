@@ -12,6 +12,7 @@ namespace PB.BL.Domain.Platform
         [Required] public string Name { get; set; }
 
         public string Text { get; set; }
+        public string Text2 { get; set; }
 
         public int PageId { get; set; }
 

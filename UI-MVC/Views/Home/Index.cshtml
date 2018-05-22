@@ -4,6 +4,8 @@
 }
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 <style>
   #chart {
     margin: auto;
@@ -36,253 +38,261 @@
     </div>
   </div>
   <div id="mainContent">
-      <div class="row gap-20 masonry pos-r">
-          <div class="masonry-sizer col-md-6"></div>
-          <div class="masonry-item w-100">
-              <div class="row gap-20">
-                  <div class="col-md-3">
-                      <div class="layers bd bgc-white p-20">
-                          <div class="layer w-100 mB-10">
-                              <h6 class="lh-1" id="pol0"></h6>
-                          </div>
-                          <div class="layer w-100">
-                              <div class="peers ai-sb fxw-nw">
-                                  <div class="peer peer-greed">
-                                      <span id="sparklinedash"></span>
-                                  </div>
-                                  <div class="peer">
-                                      <span id="poli0" class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500"></span>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-3">
-                      <div class="layers bd bgc-white p-20">
-                          <div class="layer w-100 mB-10">
-                              <h6 class="lh-1" id="pol1"></h6>
-                          </div>
-                          <div class="layer w-100">
-                              <div class="peers ai-sb fxw-nw">
-                                  <div class="peer peer-greed">
-                                      <span id="sparklinedash2"></span>
-                                  </div>
-                                  <div class="peer">
-                                      <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500" id="poli1"></span>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-3">
-                      <div class="layers bd bgc-white p-20">
-                          <div class="layer w-100 mB-10">
-                              <h6 class="lh-1" id="pol2"></h6>
-                          </div>
-                          <div class="layer w-100">
-                              <div class="peers ai-sb fxw-nw">
-                                  <div class="peer peer-greed">
-                                      <span id="sparklinedash3"></span>
-                                  </div>
-                                  <div class="peer">
-                                      <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500" id="poli2"></span>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-3">
-                      <div class="layers bd bgc-white p-20">
-                          <div class="layer w-100 mB-10">
-                              <h6 class="lh-1" id="pol3"></h6>
-                          </div>
-                          <div class="layer w-100">
-                              <div class="peers ai-sb fxw-nw">
-                                  <div class="peer peer-greed">
-                                      <span id="sparklinedash4"></span>
-                                  </div>
-                                  <div class="peer">
-                                      <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500" id="poli3"></span>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+    <div class="row gap-20 masonry pos-r">
+      <div class="masonry-sizer col-md-6"></div>
+      <div class="masonry-item w-100">
+        <div class="row gap-20">
+          <div class="col-md-3">
+            <div class="layers bd bgc-white p-20">
+              <div class="layer w-100 mB-10">
+                <h6 class="lh-1" id="pol0"></h6>
               </div>
-          </div>
-          <div class="masonry-item col-md-6">
-              <div class="bd bgc-white">
-                  <div class="layers">
-                      <div class="layer w-100 pX-20 pT-20">
-                          <h6 class="c-grey-900">Top politici - Sentiment</h6>
-                          <a id="download1" download="Canvas.jpg">
-                              <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 20px; position: absolute;"></i>
-                          </a>
-                          <i style="top: 30px; right: 50px; opacity: 0.6; position: absolute;" class="fas fa-thumbtack"></i>
-                      </div>
-                      <div class="layer w-100 p-20" style="min-height: 350px; max-height: 350px; display: table;">
-                          <div class="loader loader-6" id="loader-1" style="display: table-cell; vertical-align: middle; text-align: center">
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                          </div>
-                          <canvas id="evol" height="100" style="display: none"></canvas>
-                      </div>
+              <div class="layer w-100">
+                <div class="peers ai-sb fxw-nw">
+                  <div class="peer peer-greed">
+                    <span id="sparklinedash"></span>
                   </div>
-              </div>
-          </div>
-          <div class="masonry-item col-md-6">
-              <div class="bd bgc-white">
-                  <div class="layers">
-                      <div class="layer w-100 pX-20 pT-20">
-                          <h6 class="c-grey-900">Top trending hashtags</h6>
-                          <a id="download2" download="Canvas.jpg">
-                              <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 20px; position: absolute;"></i>
-                          </a>
-                          <i style="top: 30px; right: 50px; position: absolute; opacity: 0.6;" class="fas fa-thumbtack"></i>
-                      </div>
-                      <div class="layer w-100 p-20" style="min-height: 350px; max-height: 350px; display: table;">
-                          <div class="loader loader-6" id="loader-2" style="display: table-cell; vertical-align: middle; text-align: center">
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                          </div>
-                          <canvas id="doughnut-chart" height="100" style="display: none"></canvas>
-                      </div>
+                  <div class="peer">
+                    <span id="poli0" class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500"></span>
                   </div>
+                </div>
               </div>
+            </div>
           </div>
-          <div class="masonry-item col-md-6">
-              <div class="bd bgc-white">
-                  <div class="layers">
-                      <div class="layer w-100 pX-20 pT-20">
-                          <h6 class="c-grey-900">Top trending Mentions</h6>
-                          <a id="download3" download="Canvas.jpg">
-                              <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 20px; position: absolute;"></i>
-                          </a>
-                          <i style="top: 30px; right: 50px; position: absolute; opacity: 0.6;" class="fas fa-thumbtack"></i>
-                      </div>
-                      <div class="layer w-100 p-20" style="min-height: 350px; max-height: 350px; display: table;">
-                          <div class="loader loader-6" id="loader-3" style="display: table-cell; vertical-align: middle; text-align: center">
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                          </div>
-                          <canvas id="pie-chart" height="100" style="display: none"></canvas>
-                      </div>
+          <div class="col-md-3">
+            <div class="layers bd bgc-white p-20">
+              <div class="layer w-100 mB-10">
+                <h6 class="lh-1" id="pol1"></h6>
+              </div>
+              <div class="layer w-100">
+                <div class="peers ai-sb fxw-nw">
+                  <div class="peer peer-greed">
+                    <span id="sparklinedash2"></span>
                   </div>
-              </div>
-          </div>
-          <div class="masonry-item col-md-6">
-              <div class="bd bgc-white">
-                  <div class="layers">
-                      <div class="layer w-100 pX-20 pT-20">
-                          <h6 class="c-grey-900">Top politici</h6>
-                          <a id="download4" download="Canvas.jpg">
-                              <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 20px; position: absolute;"></i>
-                          </a>
-                          <i style="top: 30px; right: 50px; opacity: 0.6; position: absolute;" class="fas fa-thumbtack"></i>
-                      </div>
-                      <div class="layer w-100 p-20" style="min-height: 350px; max-height: 350px; display: table;">
-                          <div class="loader loader-6" style="display: table-cell; vertical-align: middle; text-align: center" id="loader-4">
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                          </div>
-                          <canvas id="bar-chart" height="100" style="display: none"></canvas>
-                      </div>
+                  <div class="peer">
+                    <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500" id="poli1"></span>
                   </div>
+                </div>
               </div>
+            </div>
           </div>
-          @if (!Request.IsAuthenticated)
-    {
-      <div class="hide-content">
+          <div class="col-md-3">
+            <div class="layers bd bgc-white p-20">
+              <div class="layer w-100 mB-10">
+                <h6 class="lh-1" id="pol2"></h6>
+              </div>
+              <div class="layer w-100">
+                <div class="peers ai-sb fxw-nw">
+                  <div class="peer peer-greed">
+                    <span id="sparklinedash3"></span>
+                  </div>
+                  <div class="peer">
+                    <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500" id="poli2"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="layers bd bgc-white p-20">
+              <div class="layer w-100 mB-10">
+                <h6 class="lh-1" id="pol3"></h6>
+              </div>
+              <div class="layer w-100">
+                <div class="peers ai-sb fxw-nw">
+                  <div class="peer peer-greed">
+                    <span id="sparklinedash4"></span>
+                  </div>
+                  <div class="peer">
+                    <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500" id="poli3"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="masonry-item col-md-6">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Top politici - Sentiment</h6>
+              <a id="download1" download="Canvas.jpg">
+                <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 20px; position: absolute;"></i>
+              </a>
+              <i style="top: 30px; right: 50px; opacity: 0.6; position: absolute;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height: 350px; max-height: 350px; display: table;">
+              <div class="loader loader-6" id="loader-1" style="display: table-cell; vertical-align: middle; text-align: center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <canvas id="evol" height="100" style="display: none"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="masonry-item col-md-6">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Top trending hashtags</h6>
+              <a id="download2" download="Canvas.jpg">
+                <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 20px; position: absolute;"></i>
+              </a>
+              <i style="top: 30px; right: 50px; position: absolute; opacity: 0.6;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height: 350px; max-height: 350px; display: table;">
+              <div class="loader loader-6" id="loader-2" style="display: table-cell; vertical-align: middle; text-align: center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <canvas id="doughnut-chart" height="100" style="display: none"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="masonry-item col-md-6">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Top trending Mentions</h6>
+              <a id="download3" download="Canvas.jpg">
+                <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 20px; position: absolute;"></i>
+              </a>
+              <i style="top: 30px; right: 50px; position: absolute; opacity: 0.6;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height: 350px; max-height: 350px; display: table;">
+              <div class="loader loader-6" id="loader-3" style="display: table-cell; vertical-align: middle; text-align: center">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <canvas id="pie-chart" height="100" style="display: none"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="masonry-item col-md-6">
+        <div class="bd bgc-white">
+          <div class="layers">
+            <div class="layer w-100 pX-20 pT-20">
+              <h6 class="c-grey-900">Top politici</h6>
+              <a id="download4" download="Canvas.jpg">
+                <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 20px; position: absolute;"></i>
+              </a>
+              <i style="top: 30px; right: 50px; opacity: 0.6; position: absolute;" class="fas fa-thumbtack"></i>
+            </div>
+            <div class="layer w-100 p-20" style="min-height: 350px; max-height: 350px; display: table;">
+              <div class="loader loader-6" style="display: table-cell; vertical-align: middle; text-align: center" id="loader-4">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <canvas id="bar-chart" height="100" style="display: none"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      @if (!Request.IsAuthenticated)
+      {
+        <div class="hide-content">
           <div class="outer">
-              <div class="middle">
-                  <div class="inner">
-                      <h4 class="mb-5 call-to-action-text">
-                          @ViewBag.CallToAction
-                      </h4>
-                      <a href="@Url.Action("Login", "Account")" class="btn btn-primary text-uppercase call-to-action-button">Start nu</a>
-                  </div>
+            <div class="middle">
+              <div class="inner">
+                <h4 class="mb-5 call-to-action-text">
+                  @ViewBag.CallToAction
+                </h4>
+                <a href="@Url.Action("Login", "Account")" class="btn btn-primary text-uppercase call-to-action-button">Start nu</a>
               </div>
+            </div>
           </div>
-      </div>
-}
-else
-{
+        </div>
+      }
+      else
+      {
 
-      <div class="masonry-item col-md-6">
+        <div class="masonry-item col-md-6">
           <div class="bd bgc-white">
-              <div class="layers">
-                  <div class="layer w-100 pX-20 pT-20">
-                      <h6 class="c-grey-900">Top partijen - Tweets</h6>
-                      <a id="download5" download="Canvas.jpg">
-                          <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 20px; position: absolute;"></i>
-                      </a>
-                      <i style="top: 30px; right: 50px; opacity: 0.6; position: absolute;" class="fas fa-thumbtack"></i>
-                  </div>
-                  <div class="layer w-100 p-20" style="min-height: 400px; max-height: 400px; display: table;">
-                      <div class="loader loader-6" style="display: table-cell; vertical-align: middle; text-align: center" id="loader-7">
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                      </div>
-                      <canvas id="line-chart" height="140" style="display: none"></canvas>
-                  </div>
-              </div>
-          </div>
-      </div>
 
-      <div class="masonry-item col-md-6">
-          <div class="bd bgc-white">
-              <div class="layers">
-                  <div class="layer w-100 pX-20 pT-20">
-                      <h6 class="c-grey-900">Top Thema's</h6>
-                      <i style="top: 30px; right: 50px; opacity: 0.6; position: absolute;" class="fas fa-thumbtack"></i>
-                  </div>
-                  <div class="layer w-100" style="min-height: 350px; max-height: 350px; display: table;">
-                      <div class="loader loader-6" style="display: table-cell; vertical-align: middle; text-align: center" id="loader-8">
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                      </div>
-                      <div id="myChart" style="height: 100%; width: 100%; min-height: 400px;"></div>
-                  </div>
+            <div class="layers">
+              <div class="layer w-100 pX-20 pT-20">
+                <h6 class="c-grey-900">Top partijen - Tweets</h6>
+                <a id="download5" download="Canvas.jpg">
+                  <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 20px; position: absolute;"></i>
+                </a>
+                <i style="top: 30px; right: 50px; opacity: 0.6; position: absolute;" class="fas fa-thumbtack"></i>
               </div>
+              <div class="layer w-100 p-20" style="min-height: 400px; max-height: 400px; display: table;">
+                <div class="loader loader-6" style="display: table-cell; vertical-align: middle; text-align: center" id="loader-7">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <canvas id="line-chart" height="100" style="display: none"></canvas>
+              </div>
+            </div>
           </div>
-      </div>
+        </div>
 
-      <div class="masonry-item col-md-6">
+        <div class="masonry-item col-md-6">
           <div class="bd bgc-white">
-              <div class="layers">
-                  <div class="layer w-100 pX-20 pT-20">
-                      <h6 class="c-grey-900">Tweets per provincie</h6>
-                      <a id="download8" download="Canvas.jpg">
-                          <i class="fas fa-download" style="top: 28px; opacity: 0.6; right: 20px; position: absolute;"></i>
-                      </a>
-                      <i style="top: 30px; right: 50px; opacity: 0.6; position: absolute;" class="fas fa-thumbtack"></i>
-                  </div>
-                  <div class="layer w-100 p-20" style="min-height: 350px; max-height: 350px; display: table;">
-                      <div class="loader loader-6" style="display: table-cell; vertical-align: middle; text-align: center" id="loader-9">
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                      </div>
-                      <div id="test-map" style="width: 100%; height: 350px; display: none;"></div>
-                  </div>
+            <div class="layers">
+              <div class="layer w-100 pX-20 pT-20">
+                <h6 class="c-grey-900">Top Thema's</h6>
+                <i style="top: 30px; right: 50px; opacity: 0.6; position: absolute;" class="fas fa-thumbtack"></i>
               </div>
+              <div class="layer w-100" style="min-height: 350px; max-height: 350px; display: table;">
+                <div class="loader loader-6" style="display: table-cell; vertical-align: middle; text-align: center" id="loader-8">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div id="myChart" style="height: 100%; width: 100%; min-height: 400px;"></div>
+              </div>
+            </div>
           </div>
-      </div>
-}
-      </div>
+        </div>
+
+        <div class="masonry-item col-12">
+          <div class="bd bgc-white">
+            <div class="peers fxw-nw@lg+ ai-s">
+              <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
+                <div class="layers">
+                  <div class="layer w-100 mB-10">
+                    <h6 class="lh-1">Tweets per provincie</h6>
+                  </div>
+                  <div class="layer w-100">
+                    <div class="loader loader-6" style="display: table-cell; vertical-align: middle; text-align: center" id="loader-9">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <div id="test-map" style="width: 100%; height: 350px; display: none;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="peer bdL p-20 w-30p@lg+ w-100p@lg- test" id="twitterfeed" style="min-height:400px">
+                <a class="twitter-timeline" tweet-limit="5" height="450" href="@ViewBag.TweetName"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      }
+    </div>
   </div>
 </main>
 
@@ -292,3 +302,4 @@ else
 <script src="~/Scripts/Wordcloud/zingchart-wordcloud.min.js"></script>
 <script src="~/Scripts/Wordcloud/wordcloud.js"></script>
 <script src="~/Scripts/Index.js" defer></script>
+
