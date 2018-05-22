@@ -203,8 +203,9 @@ namespace UI_MVC.Controllers
 
         public ActionResult FAQ(string subplatform)
         {
+            IEnumerable<Tag> tags = SubplatformMgr.GetPage(2).Tags.ToList();
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
-            return View();
+            return View(tags);
         }
 
         public ActionResult Legal(string subplatform)

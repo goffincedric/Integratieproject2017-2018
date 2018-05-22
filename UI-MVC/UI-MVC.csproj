@@ -251,6 +251,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\HomePageViewModel.cs" />
+    <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\OrganisationEditModel.cs" />
     <Compile Include="Models\SeedIntervals.cs" />
     <Compile Include="Models\SubplatformSettingViewModel.cs" />

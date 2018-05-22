@@ -1,101 +1,39 @@
-﻿@{
+﻿@model IEnumerable<PB.BL.Domain.Platform.Tag>
 
+@{
   ViewBag.Title = "FAQ";
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link href="~/Content/Styling/FAQ.css" rel="stylesheet"/>
-<main class="main-content bgc-grey-100">
-  <div id="mainContent">
+<main class="main-content bgc-grey-100" style="padding:0; margin:0">
+  <div id="mainContent" >
     <div id="backgroundfaq">
       <div id="con" class="w-100 h-100">
-        <div class="col-md-12">
+       
+        <div class="col-md-12" style="padding:0; margin:0">
+          <div style="margin: 0; padding: 50px 0;" class="masonry-item col-md-12">
+            <div class="p-20">
+              <h1 class="h1" style="text-align: center; padding-top: 50px;">Frequently Asked Questions </h1>
+            </div>
+          </div>
           <ol>
-            <li>
-              <p>
-                <a class="btn btn-primary btn-lg" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
-                  Waarom zou ik me registreren op de politieke barometer?
-                </a>
-              </p>
-              <div class="collapse" id="collapse1">
-                <div class="card card-body">
-                  De politieke barometer kan je bijstaan om politieke trends te monitoren. Hiermee kan jij je visie op politieke events en trends aanscherpen, waardoor je ook je bewuster wordt van wat er rondom je gebeurt.
-                  Dit zal er voor zorgen dat je met zekerheid naar de stemhokjes kan.
+            @foreach (var faq in Model)
+            {
+              <li style="padding-bottom:25px">
+                <p>
+                  <a class="btn btn-primary btn-lg" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
+                    @Html.DisplayFor(modelItem => faq.Text)
+                  </a>
+                </p>
+                <div class="collapse" id="collapse1">
+                  <div class="card card-body">
+                    @Html.DisplayFor(modelItem => faq.Text2)
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              <p>
-                <a class="btn btn-primary btn-lg" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
-                  Klinkt goed, hoe maak ik een account aan ?
-                </a>
-              </p>
-              <div class="collapse" id="collapse2">
-                <div class="card card-body">
-                  Je klikt rechtsboven op het aanmelden / registreren. Wij verwerken je gegevens en je kan direct aan de slag !
-                </div>
-              </div>
-            </li>
-            <li>
-              <p>
-                <a class="btn btn-primary btn-lg" data-toggle="collapse" href="#collapse3" role="button" aria-expanded="false" aria-controls="collapse3">
-                  Hoe subscribe ik op een item?
-                </a>
-              </p>
-              <div class="collapse" id="collapse3">
-                <div class="card card-body">
-                  Rechts boven vindt u een zoekbalk waarin in de naam van het gewenste thema of de gewenste persoon of organisatie kan invullen. Dit zal u leiden tot aan de detailpagina waar een subscribe knop in het menu staat.
-                </div>
-              </div>
-            </li>
-            <li>
-              <p>
-                <a class="btn btn-primary btn-lg" data-toggle="collapse" href="#collapse4" role="button" aria-expanded="false" aria-controls="collapse4">
-                  Kan ik mijn wachtwoord of gebruikersnaam nog aanpassen ?
-                </a>
-              </p>
-              <div class="collapse" id="collapse4">
-                <div class="card card-body">
-                  Ja, dit gaat ! Als je naar je persoonlijke instellingen gaat dan kan je al deze gegevens up to date brengen.
-                </div>
-              </div>
-            </li>
-            <li>
-              <p>
-                <a class="btn btn-primary btn-lg" data-toggle="collapse" href="#collapse5" role="button" aria-expanded="false" aria-controls="collapse5">
-                  Kan ik mijn account ook verwijderen ?
-                </a>
-              </p>
-              <div class="collapse" id="collapse5">
-                <div class="card card-body">
-                  Ja, dit gaat ook in je persoonlijke instellingen. We vinden het echter wel spijtig om je te zien vertrekken. Het zou ons veel plezier doen moest je het contact formulier invullen en je ervaringen met het platform delen.
-                </div>
-              </div>
-            </li>
-            <li>
-              <p>
-                <a class="btn btn-primary btn-lg" data-toggle="collapse" href="#collapse6" role="button" aria-expanded="false" aria-controls="collapse6">
-                  Hoe werkt politieke barometer ?
-                </a>
-              </p>
-              <div class="collapse" id="collapse6">
-                <div class="card card-body">
-                  Wij werken nauw samen met TextGain. Zij analyseren Twitter-berichten voor ons en wij bieden u met veel plezier deze data aan in een overzichtelijk formaat.
-                </div>
-              </div>
-            </li>
-            <li>
-              <p>
-                <a class="btn btn-primary btn-lg" data-toggle="collapse" href="#collapse7" role="button" aria-expanded="false" aria-controls="collapse7">
-                  Ik vind jullie kleurenschema maar niets. Kan ik dit aanpassen ?
-                </a>
-              </p>
-              <div class="collapse" id="collapse7">
-                <div class="card card-body">
-                  Ja, dit gaat. U kan rechtsboven uw thema aanpassen naar een van onze 3 thema's. Indien u geen enkel van onze thema's leuk vindt, kan u altijd een verzoek sturen via onze contact pagina.
-                </div>
-              </div>
-            </li>
+              </li>
+            }
+
           </ol>
         </div>
       </div>
