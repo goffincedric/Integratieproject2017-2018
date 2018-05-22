@@ -15,7 +15,10 @@ DashData = $.ajax({
 }).responseJSON;
 
 $(function () {
+    var cleanWizard;
+
     var addingElement = false;
+    var deletingElement = false;
 
     var options = {
         width: 12,
@@ -28,10 +31,6 @@ $(function () {
     $('.grid-stack').gridstack(options);
 
     new function () {
-        var testwizard = $('#wizard');
-
-        console.log(testwizard);
-
         function getRotationDegrees(obj) {
             var matrix = obj.css("-webkit-transform") ||
                 obj.css("-moz-transform") ||
@@ -61,6 +60,7 @@ $(function () {
         };
 
         deleteElement = function (element, grid) {
+            deletingElement = true;
             var Element = element.parent();
             var ElementId = Element.attr('id');
             ElementId = ElementId.substring(ElementId.indexOf('-') + 1, ElementId.length);
@@ -74,12 +74,11 @@ $(function () {
             })
 
             grid.data('gridstack').removeWidget(Element);
+            deletingElement = false;
         };
 
         //done
         addElement = function (grid) {
-            console.log(grid);
-
             addingElement = true;
 
             var addZone = $('.add-zone');
@@ -414,14 +413,18 @@ $(function () {
                     case 'map': GraphType = 5;
                         break;
                 }
-                Wizard.hide();
 
-                //edit later
                 var items = getItems($('#cardholder'));
 
                 var itemsJSON = JSON.stringify(items);
 
                 var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '","DataType":"' + DataType + '", "IsUnfinished":"false", "Items": ' + itemsJSON + '}');
+
+                Wizard.hide();
+
+                console.log(Wizard);
+
+                resetWizard(Wizard);
 
                 $.ajax({
                     async: false,
@@ -432,16 +435,10 @@ $(function () {
                     url: "https://localhost:44342/api/dashboard/putelement/" + ElementId
                 })
 
-                var ItemIds = []
-
-                _.each(Element.Items, function (item) {
-                    ItemIds.push(item.ItemId);
-                });
-
-                console.log(ItemIds);
-
-                chooseChart(GraphType, newElement.children('#Element-' + ElementId).children('canvas'), ItemIds, DataType);
+                chooseChart(GraphType, newElement.children('#Element-' + ElementId).children('canvas'), Element.Items, DataType);
             });
+
+            cleanWizard = Wizard.clone();
             addingElement = false;
         };
 
@@ -550,7 +547,8 @@ $(function () {
         };
 
         changeElements = function (elements, grid) {
-            if (!addingElement) {
+            if (!addingElement && !deletingElement) {
+                console.log('change');
                 var ZoneId = grid.attr('id');
                 ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
                 var count = 0;
@@ -685,9 +683,7 @@ $(function () {
                                 ItemIds.push(item.ItemId);
                             });
 
-                            console.log(ItemIds);
-
-                            chooseChart(Element.GraphType, $('#Element-' + ElementId).children('canvas'), ItemIds, Element.DataType);
+                            chooseChart(Element.GraphType, $('#Element-' + ElementId).children('canvas'), Element.Items, Element.DataType);
                         }
                         var oldElement = $.ajax({
                             async: false,
@@ -716,9 +712,7 @@ $(function () {
                                 ItemIds.push(item.ItemId);
                             });
 
-                            console.log(ItemIds);
-
-                            chooseChart(oldElement.GraphType, $('#Element-' + ElementId).children('canvas'), ItemIds, oldElement.DataType);
+                            chooseChart(oldElement.GraphType, $('#Element-' + ElementId).children('canvas'), oldElement.Items, oldElement.DataType);
                         }
                     }
                 }
@@ -743,13 +737,38 @@ $(function () {
             return items;
         }
 
-        //done
+        resetWizard = function (wizard) {
+            console.log(wizard);
+            wizard.replaceWith(cleanWizard);
+            $.getScript("https://localhost:44342/Scripts/Wizard/jquery.validate.min.js")
+                .done(function (script, textStatus) {
+                    console.log(textStatus);
+                })
+                .fail(function (jqxhr, settings, exception) {
+                    console.log("Triggered ajaxError handler.");
+                });
+            $.getScript("https://localhost:44342/Scripts/Wizard/jquery.bootstrap.js")
+                .done(function (script, textStatus) {
+                    console.log(textStatus);
+                })
+                .fail(function (jqxhr, settings, exception) {
+                    console.log("Triggered ajaxError handler.");
+                });
+            $.getScript("https://localhost:44342/Scripts/Wizard/material-bootstrap-wizard.js")
+                .done(function (script, textStatus) {
+                    console.log(textStatus);
+                })
+                .fail(function (jqxhr, settings, exception) {
+                    console.log("Triggered ajaxError handler.");
+                });
+            console.log($('#Wizard').hide());
+        }
+
         clearGrid = function (grid) {
             grid.removeAll();
             return false;
         }.bind(this);
 
-        //almost done
         loadGrid = function (grid) {
             clearGrid(grid.data('gridstack'));
             var ZoneId = grid.attr('id');
@@ -786,7 +805,7 @@ $(function () {
                                 ItemIds.push(item.ItemId);
                             });
 
-                            chooseChart(node.GraphType, newElement.children('#Element-' + node.ElementId).children('canvas'), ItemIds, node.DataType);
+                            chooseChart(node.GraphType, newElement.children('#Element-' + node.ElementId).children('canvas'), node.Items, node.DataType);
                         } else {
                             $.ajax({
                                 async: false,
@@ -806,24 +825,23 @@ $(function () {
             }
         };
 
-        chooseChart = function (type, can, ids, data) {
-            console.log(type);
+        chooseChart = function (type, can, items, data) {
             switch (data) {
-                case 0: DrawMentions(can, id, type);
+                case 0: DrawMentions(can, items, type);
                     break;
-                case 1: DrawHashtags(can, ids, type);
+                case 1: DrawHashtags(can, items, type);
                     break;
-                case 2: DrawEvolution(can, ids, type);
+                case 2: DrawEvolution(can, items, type);
                     break;
-                case 3: DrawSentiment(can, ids, type);
+                case 3: DrawSentiment(can, items, type);
                     break;
-                case 4: DrawAge(can, ids, type);
+                case 4: DrawAge(can, items, type);
                     break;
-                case 5: DrawGender(can, ids, type);
+                case 5: DrawGender(can, items, type);
                     break;
-                case 6: DrawWords(can, ids, type);
+                case 6: DrawWords(can, items, type);
                     break;
-                case 7: DrawLocation(can, ids, type);
+                case 7: DrawLocation(can, items, type);
                     break;
             }
         };
@@ -837,18 +855,14 @@ $(function () {
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
-                            console.log("xhr done successfully");
                             var resp = "";
                             resp = xhr.response;
                             resolve(JSON.parse(resp));
                         } else {
-                            console.log("xhr failed");
                         }
                     } else {
-                        console.log("xhr processing going on");
                     }
                 }
-                console.log("request sent succesfully");
             });
             return promiseObj;
         };
@@ -869,7 +883,7 @@ $(function () {
                     break;
             }
             if (itemIds.length == 1) {
-                var URL = "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + itemIds[0];
+                var URL = "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + itemIds[0].ItemId;
                 makeAjaxCall(URL, "GET").then(process);
 
                 function process(output) {
@@ -901,8 +915,6 @@ $(function () {
                         });
                 }
             } else {
-                console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-
                 var datagrafiek = {
                     datasets: [],
                     labels: ["Tweets"]
@@ -923,7 +935,7 @@ $(function () {
                 var counter = 0;
                 $.each(itemIds,
                     function (index, value) {
-                        var URL = "https://localhost:44342/api/item/GetTrendingHashtagsCountOverall/" + value;
+                        var URL = "https://localhost:44342/api/item/GetTrendingHashtagsCountOverall/" + value.ItemId;
                         makeAjaxCall(URL, "GET").then(process);
                         function process(output2) {
                             var keys = [];
@@ -935,10 +947,9 @@ $(function () {
                                 label.push(keys[i]);
                                 values.push(output2[keys[i]]);
                             }
-                            console.log("Values: " + values);
                             var backgroundColors = ["#36a2eb", "#ffce56", "#7DDF64", "#ff6384", "#36a2eb", "#cc65fe"];
                             var myNewDataSet = {
-                                label: label,
+                                label: value.Name,
                                 data: values,
                                 backgroundColor: backgroundColors[counter]
                             }
@@ -967,7 +978,7 @@ $(function () {
                     break;
             }
             if (itemIds.length == 1) {
-                var URL = "https://localhost:44342/api/item/GetTrendingMentionsCount/" + itemIds[0];
+                var URL = "https://localhost:44342/api/item/GetTrendingMentionsCount/" + itemIds[0].ItemId;
                 makeAjaxCall(URL, "GET").then(process);
 
                 function process(output) {
@@ -997,11 +1008,8 @@ $(function () {
                                 responsive: true
                             }
                         });
-
                 }
             } else {
-                console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-
                 var datagrafiek = {
                     datasets: [],
                     labels: ["Tweets"]
@@ -1021,7 +1029,7 @@ $(function () {
                 var counter = 0;
                 $.each(itemIds,
                     function (index, value) {
-                        var URL = "https://localhost:44342/api/item/GetTrendingMentionsCountOverall/" + value;
+                        var URL = "https://localhost:44342/api/item/GetTrendingMentionsCountOverall/" + value.ItemId;
                         makeAjaxCall(URL, "GET").then(process);
 
                         function process(output2) {
@@ -1033,10 +1041,9 @@ $(function () {
                                 label.push(keys[i]);
                                 values.push(output2[keys[i]]);
                             }
-                            console.log("Values: " + values);
                             var backgroundColors = ["#36a2eb", "#ffce56", "#7DDF64", "#ff6384", "#36a2eb", "#cc65fe"];
                             var myNewDataSet = {
-                                label: label,
+                                label: value.Name,
                                 data: values,
                                 backgroundColor: backgroundColors[counter]
                             }
@@ -1065,7 +1072,7 @@ $(function () {
                     break;
             }
             if (itemIds.length == 1) {
-                var URL = "https://localhost:44342/api/item/GetTrendingWordsCount/" + itemIds[0];
+                var URL = "https://localhost:44342/api/item/GetTrendingWordsCount/" + itemIds[0].ItemId;
                 makeAjaxCall(URL, "GET").then(process);
 
                 function process(output) {
@@ -1097,8 +1104,6 @@ $(function () {
                         });
                 }
             } else {
-                console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-
                 var datagrafiek = {
                     datasets: [],
                     labels: ["Tweets"]
@@ -1118,7 +1123,7 @@ $(function () {
                 var counter = 0;
                 $.each(itemIds,
                     function (index, value) {
-                        var URL = "https://localhost:44342/api/item/GetTrendingWordsCountOverall/" + value;
+                        var URL = "https://localhost:44342/api/item/GetTrendingWordsCountOverall/" + value.ItemId;
                         makeAjaxCall(URL, "GET").then(process);
                         function process(output2) {
                             var keys = [];
@@ -1129,10 +1134,9 @@ $(function () {
                                 label.push(keys[i]);
                                 values.push(output2[keys[i]]);
                             }
-                            console.log("Values: " + values);
                             var backgroundColors = ["#36a2eb", "#ffce56", "#7DDF64", "#ff6384", "#36a2eb", "#cc65fe"];
                             var myNewDataSet = {
-                                label: label,
+                                label: value.Name,
                                 data: values,
                                 backgroundColor: backgroundColors[counter]
                             }
@@ -1145,7 +1149,6 @@ $(function () {
         };
 
         DrawAge = function (can, itemIds, graph) {
-            console.log(graph);
             switch (graph) {
                 case 0: graph = 'bar';
                     break;
@@ -1180,7 +1183,7 @@ $(function () {
             var counter = 0;
             $.each(itemIds,
                 function (index, value) {
-                    var URL = "https://localhost:44342/api/item/GetAges/" + value;
+                    var URL = "https://localhost:44342/api/item/GetAges/" + value.ItemId;
                     makeAjaxCall(URL, "GET").then(process);
 
                     function process(output2) {
@@ -1195,7 +1198,7 @@ $(function () {
                             values.push(output2[keys[i]]);
                         }
                         var myNewDataSet = {
-                            label: value,
+                            label: value.Name,
                             data: values,
                             backgroundColor: ["#36a2eb", "#ffce56", "#7DDF64", "#ff6384", "#36a2eb", "#cc65fe"]
                         }
@@ -1241,7 +1244,7 @@ $(function () {
             var counter = 0;
             $.each(itemIds,
                 function (index, value) {
-                    var URL = "https://localhost:44342/api/item/GetGender/" + value;
+                    var URL = "https://localhost:44342/api/item/GetGender/" + value.ItemIds;
                     makeAjaxCall(URL, "GET").then(process);
 
                     function process(output2) {
@@ -1256,7 +1259,7 @@ $(function () {
                             values.push(output2[keys[i]]);
                         }
                         var myNewDataSet = {
-                            label: value,
+                            label: value.Name,
                             data: values,
                             backgroundColor: ["#36a2eb", "#ff99ed"]
                         }
@@ -1312,7 +1315,7 @@ $(function () {
             var counter = 0;
             $.each(itemIds,
                 function (index, value) {
-                    var URL = "https://localhost:44342/api/item/GetPersonEvolution/" + value;
+                    var URL = "https://localhost:44342/api/item/GetPersonEvolution/" + value.ItemId;
                     makeAjaxCall(URL, "GET").then(process);
 
                     function process(output2) {
@@ -1332,7 +1335,7 @@ $(function () {
                         }
 
                         var myNewDataSet = {
-                            label: value,
+                            label: value.Name,
                             data: values,
                             borderWidth: 2,
                             backgroundColor: backgroundcolors[counter],
@@ -1376,7 +1379,6 @@ $(function () {
                 var mapData;
 
                 function process(output) {
-                    console.log(output);
 
                     var keys = [];
                     keys = Object.keys(output);
@@ -1471,7 +1473,7 @@ $(function () {
             var counter = 0;
             $.each(itemIds,
                 function (index, value) {
-                    var URL = "https://localhost:44342/api/item/GetItemTweet/" + value;
+                    var URL = "https://localhost:44342/api/item/GetItemTweet/" + value.ItemId;
                     makeAjaxCall(URL, "GET").then(process);
 
                     function process(output2) {
@@ -1491,13 +1493,12 @@ $(function () {
                         }
 
                         var myNewDataSet = {
-                            label: value,
+                            label: value.Name,
                             data: values,
                             borderWidth: 2,
                             backgroundColor: backgroundcolors[counter],
                             borderColor: borderColors[counter],
                             pointBackgroundColor: points[counter]
-
                         }
 
                         datagrafiek.datasets.push(myNewDataSet);
