@@ -194,7 +194,7 @@ $(function () {
             $('.btn-cancel').on('click', function () {
                 deleteElement(newElement.children('#Element-' + ElementId).children(), grid);
                 Wizard.children().attr('id', '');
-                Wizard.hide();
+                resetWizard(Wizard);
             });
 
             var data = null;
