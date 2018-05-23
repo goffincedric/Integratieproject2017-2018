@@ -117,6 +117,7 @@ namespace UI_MVC.Controllers.API
             else
                 stijging3 = "+" + stijging3 + "%";
             details.Add("Retweet", stijging3);
+            
             if (details.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(details);
         }
@@ -146,9 +147,10 @@ namespace UI_MVC.Controllers.API
                     .ToList();
                 records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
             }
-
+            if (records.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             records.SelectMany(r => r.Words).Distinct().OrderByDescending(h => h.Records.Count).Distinct().Take(5)
                 .ToList().ForEach(p => words.Add(p.Text, p.Records.Count));
+            if (words is null || words.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(words);
         }
 
@@ -173,6 +175,7 @@ namespace UI_MVC.Controllers.API
                 records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
             }
 
+            if (records.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             int count = records.SelectMany(r => { return r.Words; }).Count();
             words.Add(item.Name, count);
             if (words is null || words.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
@@ -205,6 +208,7 @@ namespace UI_MVC.Controllers.API
                 records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
             }
 
+            if (records.Count() == 0) return StatusCode(HttpStatusCode.NoContent); 
             records.SelectMany(r => r.URLs).Distinct().Take(6).ToList().ForEach(p => urls.Add(p.Link));
             urls.Distinct();
             if (urls is null || urls.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
@@ -238,9 +242,11 @@ namespace UI_MVC.Controllers.API
             {
                 return NotFound();
             }
+            if (records.Count() == 0) return StatusCode(HttpStatusCode.NoContent); 
 
             records.GroupBy(p => p.RecordProfile.Age).ToList()
                 .ForEach(p => ages.Add(p.ToList().First().RecordProfile.Age, p.ToList().Count()));
+            if (ages is null || ages.Count() == 0) return StatusCode(HttpStatusCode.NoContent); 
             return Ok(ages);
         }
 
@@ -249,7 +255,7 @@ namespace UI_MVC.Controllers.API
         {
             Item item = ItemMgr.GetItem(id);
             IEnumerable<Record> records = null;
-            Dictionary<string, int> ages = new Dictionary<string, int>();
+            Dictionary<string, int> gender = new Dictionary<string, int>();
             if (item is Person person)
             {
                 records = person.Records;
@@ -268,10 +274,11 @@ namespace UI_MVC.Controllers.API
             {
                 return NotFound();
             }
-
+            if (records.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             records.GroupBy(p => p.RecordProfile.Gender).ToList().ForEach(p =>
-                ages.Add(p.ToList().First().RecordProfile.Gender, p.ToList().Count()));
-            return Ok(ages);
+                gender.Add(p.ToList().First().RecordProfile.Gender, p.ToList().Count()));
+            if (gender is null || gender.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(gender);
         }
 
         #region Items
@@ -538,7 +545,7 @@ namespace UI_MVC.Controllers.API
                 recordsmap.Add(p.Date, p.Sentiment.Polarity * p.Sentiment.Objectivity);
             });
             recordsmap.OrderBy(o => o.Key);
-            if (records == null) return StatusCode(HttpStatusCode.NoContent);
+            if (records == null || recordsmap is null || recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
 
         }
@@ -553,7 +560,7 @@ namespace UI_MVC.Controllers.API
             recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key).Take(10)
                 .ToDictionary(r => r.Key.Date,
                     r => r.Average(p => p.Sentiment.Objectivity) * r.Average(f => f.Sentiment.Polarity));
-            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            if (recordsmap == null || records.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
         #endregion
@@ -581,12 +588,12 @@ namespace UI_MVC.Controllers.API
             }
 
             records = records.Distinct().ToList();
-            if (records == null) return NotFound();
+            if (records == null) return StatusCode(HttpStatusCode.NoContent);
             Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
             recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key).Take(10)
                 .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
 
-            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            if (recordsmap == null || recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
 
@@ -599,7 +606,7 @@ namespace UI_MVC.Controllers.API
 
             recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
                 .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
-            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            if (recordsmap == null ||recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
 
