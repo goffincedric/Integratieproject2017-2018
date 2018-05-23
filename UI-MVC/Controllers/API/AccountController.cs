@@ -91,5 +91,16 @@ namespace UI_MVC.Controllers.API
             if (profileRate == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(profileRate);
         }
+
+
+        [HttpGet]
+        public IHttpActionResult GetSubscriptions()
+        {
+            IEnumerable<string> subscriptions = UserManager.GetProfile(User.Identity.GetUserId()).Subscriptions.Select(p=>p.Name);
+            return Ok(subscriptions); 
+          
+        }
+
+
     }
 }
