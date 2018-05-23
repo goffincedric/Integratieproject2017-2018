@@ -68,8 +68,6 @@ namespace PB.DAL
                 .Include(r => r.Hashtags)
                 .Include(r => r.Words)
                 .Include(r => r.Themes)
-                .Include(r=>r.Sentiment)
-                .Include(r=>r.Date)
                 .AsEnumerable();
         }
 
