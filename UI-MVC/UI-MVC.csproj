@@ -351,7 +351,6 @@
     <Content Include="Scripts\Wizard\jquery.bootstrap.js" />
     <Content Include="Scripts\Wizard\jquery.validate.min.js" />
     <Content Include="Scripts\Wizard\material-bootstrap-wizard.js" />
-    <Content Include="Scripts\Wizard\Wizard.js" />
     <Content Include="Scripts\WordCloud\wordcloud.js" />
     <Content Include="Scripts\WordCloud\zingchart-wordcloud.min.js" />
     <Content Include="Scripts\WordCloud\zingchart.min.js" />
