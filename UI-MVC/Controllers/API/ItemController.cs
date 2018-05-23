@@ -32,20 +32,22 @@ namespace UI_MVC.Controllers.API
             foreach (Person person in persons)
             {
                 IEnumerable<Record> records = person.Records.ToList();
-                double allDays = records.OrderByDescending(p => p.Date.Date).GroupBy(p => p.Date.Date).ToList().Take(4)
-                    .Average(p => p.ToList().Count());
-                DateTime last = records.OrderByDescending(p => p.Date).First().Date.Date;
-                double lastDay = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Count();
-                string stijging = "";
-                stijging = Math.Round((lastDay - allDays) / allDays * 100, 2).ToString();
-                if (double.Parse(stijging) < 0)
-                    stijging = stijging + "%";
-                else
-                    stijging = "+" + stijging + "%";
+                if (records.Any())
+                {
+                    double allDays = records.OrderByDescending(p => p.Date.Date).GroupBy(p => p.Date.Date).ToList().Take(4)
+                        .Average(p => p.ToList().Count());
+                    DateTime last = records.OrderByDescending(p => p.Date).First().Date.Date;
+                    double lastDay = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Count();
+                    string stijging = "";
+                    stijging = Math.Round((lastDay - allDays) / allDays * 100, 2).ToString();
+                    if (double.Parse(stijging) < 0)
+                        stijging = stijging + "%";
+                    else
+                        stijging = "+" + stijging + "%";
 
-                stijgingmap.Add(person.Name, stijging);
+                    stijgingmap.Add(person.Name, stijging);
+                }
             }
-
 
             if (stijgingmap == null || stijgingmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(stijgingmap);
