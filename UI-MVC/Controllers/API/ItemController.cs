@@ -527,6 +527,7 @@ namespace UI_MVC.Controllers.API
             }
             else if (item is Organisation organisation)
             {
+                
                 records = organisation.People.SelectMany(p => p.Records).ToList().Where(p => p.Sentiment.Polarity != 0.0)
                     .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(10);
             }
