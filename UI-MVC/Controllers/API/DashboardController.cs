@@ -1,9 +1,14 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using PB.BL;
 using PB.BL.Domain.Dashboards;
 using PB.BL.Domain.Items;
+using PB.BL.Domain.Platform;
 
 namespace UI_MVC.Controllers.API
 {
@@ -14,6 +19,13 @@ namespace UI_MVC.Controllers.API
         private readonly ItemManager ItemMgr;
         private readonly SubplatformManager SubplatformMgr;
         private readonly UnitOfWorkManager UowMgr;
+        private AccountManager _accountMgr;
+
+        public AccountManager UserManager
+        {
+            get => _accountMgr ?? HttpContext.Current.GetOwinContext().GetUserManager<AccountManager>();
+            private set => _accountMgr = value;
+        }
 
         public DashboardController()
         {
@@ -32,6 +44,22 @@ namespace UI_MVC.Controllers.API
             if (!dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
             if (dashboard.Zones.Count == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(dashboard.Zones);
+        }
+
+        // GET: api/dashboard/getdashboardzones/politieke-barometer
+        [HttpGet]
+        public IHttpActionResult GetDashboardZones(string subplatform)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            Dashboard dashboard = UserManager.GetProfile(User.Identity.GetUserId()).Dashboards.FirstOrDefault(d =>
+            {
+                return d.SubplatformId == Subplatform.SubplatformId;
+            });
+            if (dashboard == null) return StatusCode(HttpStatusCode.NoContent);
+            if (!dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
+            if (dashboard.Zones.Count == 0) return StatusCode(HttpStatusCode.NoContent);
+            Dictionary<int, string> zones = dashboard.Zones.ToDictionary(k => k.ZoneId, v => v.Title);
+            return Ok(zones);
         }
 
         // PUT: api/dashboard/putzone/{zoneId}
@@ -90,6 +118,23 @@ namespace UI_MVC.Controllers.API
             if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
             if (zone.Elements.Count == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(zone.Elements);
+        }
+
+        // GET: api/dashboard/getzoneelements/5
+        [HttpGet]
+        public IHttpActionResult GetZoneElementsItemIds(int id)
+        {
+            Zone zone = DashboardMgr.GetZone(id);
+            if (zone == null) return StatusCode(HttpStatusCode.NoContent);
+            if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
+            if (zone.Elements.Count == 0) return StatusCode(HttpStatusCode.NoContent);
+            List<Element> elements = zone.Elements;
+            elements.ForEach(e =>
+            {
+                e.ItemIds = e.Items.Select(i => i.ItemId).ToList();
+                e.Items = null;
+            });
+            return Ok(elements);
         }
 
         // GET: api/dashboard/getelement/5

@@ -547,7 +547,41 @@ namespace UI_MVC.Controllers.API
             recordsmap.OrderBy(o => o.Key);
             if (records == null || recordsmap is null || recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
+        }
 
+        [HttpGet]
+        public IHttpActionResult GetPersonEvolutionString(int id)
+        {
+            Item item = ItemMgr.GetItem(id);
+            IEnumerable<Record> records = null;
+
+            if (item is Person person)
+            {
+                records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0)
+                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(10);
+            }
+            else if (item is Organisation organisation)
+            {
+                records = organisation.People.SelectMany(p => p.Records).ToList().Where(p => p.Sentiment.Polarity != 0.0)
+                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(10);
+            }
+            else if (item is Theme theme)
+            {
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
+                    .ToList().Where(p => p.Sentiment.Polarity != 0.0)
+                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date);
+                records = theme.Persons.SelectMany(p => p.Records).ToList().Where(p => p.Sentiment.Polarity != 0.0)
+                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Except(first).ToList().Take(10);
+            }
+
+            Dictionary<string, double> recordsmap = new Dictionary<string, double>();
+            records.ToList().ForEach(p =>
+            {
+                recordsmap.Add(p.Date.ToShortDateString(), p.Sentiment.Polarity * p.Sentiment.Objectivity);
+            });
+            recordsmap.OrderBy(o => o.Key);
+            if (records == null) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(recordsmap);
         }
 
         [HttpGet]
@@ -566,7 +600,6 @@ namespace UI_MVC.Controllers.API
         #endregion
 
         #region TweetEvolution
-
         [HttpGet]
         public IHttpActionResult GetItemTweet(int id)
         {
@@ -594,6 +627,36 @@ namespace UI_MVC.Controllers.API
                 .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
 
             if (recordsmap == null || recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            return Ok(recordsmap);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetItemTweetString(int id)
+        {
+            Item item = ItemMgr.GetItem(id);
+            List<Record> records = new List<Record>();
+            if (item is Person person)
+            {
+                records.AddRange(person.Records.ToList());
+            }
+            else if (item is Organisation organisation)
+            {
+                records.AddRange(organisation.People.SelectMany(p => p.Records).Distinct().ToList());
+            }
+            else if (item is Theme theme)
+            {
+                records.AddRange(theme.Persons.SelectMany(p => p.Records).Distinct().ToList());
+                records.AddRange(theme.Organisations.SelectMany(p =>
+                    p.People.SelectMany(r => r.Records).Distinct().ToList()));
+            }
+
+            records = records.Distinct().ToList();
+            if (records == null) return NotFound();
+            Dictionary<string, int> recordsmap = new Dictionary<string, int>();
+            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key).Take(10)
+                .ToDictionary(r => r.Key.Date.ToShortDateString(), r => r.ToList().Count());
+
+            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
 

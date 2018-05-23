@@ -12,7 +12,7 @@ namespace PB.BL.Domain.Dashboards
         [Key] public int DashboardId { get; set; }
 
         public UserType DashboardType { get; set; }
-        public List<Zone> Zones { get; set; }
+        public virtual List<Zone> Zones { get; set; }
         public string UserId { get; set; }
         public int SubplatformId { get; set; }
 
