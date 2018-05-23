@@ -303,7 +303,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().show();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -312,7 +311,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().show();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -321,7 +319,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().hide();
                                 $('#donut').parent().parent().hide();
-                                $('#word').parent().parent().hide();
                                 $('#line').parent().parent().show();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -330,7 +327,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().hide();
                                 $('#donut').parent().parent().hide();
-                                $('#word').parent().parent().hide();
                                 $('#line').parent().parent().show();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -339,7 +335,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().hide();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -348,7 +343,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().hide();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -357,7 +351,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().show();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -366,7 +359,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().show();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().show();
                                 break;
@@ -409,8 +401,6 @@ $(function () {
                     case 'pie': GraphType = 2;
                         break;
                     case 'donut': GraphType = 3;
-                        break;
-                    case 'word': GraphType = 4;
                         break;
                     case 'map': GraphType = 5;
                         break;
@@ -880,8 +870,6 @@ $(function () {
                     break;
                 case 3: graph = 'doughnut';
                     break;
-                case 4: graph = 'wordcloud';
-                    break;
                 case 5: graph = 'map';
                     break;
             }
@@ -980,8 +968,6 @@ $(function () {
                     break;
                 case 3: graph = 'doughnut';
                     break;
-                case 4: graph = 'wordcloud';
-                    break;
                 case 5: graph = 'map';
                     break;
             }
@@ -1078,8 +1064,6 @@ $(function () {
                     break;
                 case 3: graph = 'doughnut';
                     break;
-                case 4: graph = 'wordcloud';
-                    break;
                 case 5: graph = 'map';
                     break;
             }
@@ -1174,8 +1158,6 @@ $(function () {
                     break;
                 case 3: graph = 'doughnut';
                     break;
-                case 4: graph = 'wordcloud';
-                    break;
                 case 5: graph = 'map';
                     break;
             }
@@ -1238,8 +1220,6 @@ $(function () {
                     break;
                 case 3: graph = 'doughnut';
                     break;
-                case 4: graph = 'wordcloud';
-                    break;
                 case 5: graph = 'map';
                     break;
             }
@@ -1299,8 +1279,6 @@ $(function () {
                 case 2: graph = 'pie';
                     break;
                 case 3: graph = 'doughnut';
-                    break;
-                case 4: graph = 'wordcloud';
                     break;
                 case 5: graph = 'map';
                     break;
@@ -1383,8 +1361,6 @@ $(function () {
                     break;
                 case 3: graph = 'doughnut';
                     break;
-                case 4: graph = 'wordcloud';
-                    break;
                 case 5: graph = 'map';
                     break;
             }
@@ -1462,8 +1438,6 @@ $(function () {
                 case 2: graph = 'pie';
                     break;
                 case 3: graph = 'doughnut';
-                    break;
-                case 4: graph = 'wordcloud';
                     break;
                 case 5: graph = 'map';
                     break;
