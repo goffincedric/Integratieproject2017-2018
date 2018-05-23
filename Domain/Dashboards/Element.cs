@@ -26,6 +26,9 @@ namespace PB.BL.Domain.Dashboards
         public int ZoneId { get; set; }
         public Zone Zone { get; set; }
 
+        [NotMapped]
+        public List<int> ItemIds { get; set; }
+
         public virtual List<Item> Items { get; set; }
         //public List<Comparison> Comparison { get; set; }
     }

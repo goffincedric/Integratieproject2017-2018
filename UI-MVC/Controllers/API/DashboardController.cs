@@ -120,6 +120,23 @@ namespace UI_MVC.Controllers.API
             return Ok(zone.Elements);
         }
 
+        // GET: api/dashboard/getzoneelements/5
+        [HttpGet]
+        public IHttpActionResult GetZoneElementsItemIds(int id)
+        {
+            Zone zone = DashboardMgr.GetZone(id);
+            if (zone == null) return StatusCode(HttpStatusCode.NoContent);
+            if (!zone.Dashboard.UserId.Equals(User.Identity.GetUserId())) return Unauthorized();
+            if (zone.Elements.Count == 0) return StatusCode(HttpStatusCode.NoContent);
+            List<Element> elements = zone.Elements;
+            elements.ForEach(e =>
+            {
+                e.ItemIds = e.Items.Select(i => i.ItemId).ToList();
+                e.Items = null;
+            });
+            return Ok(elements);
+        }
+
         // GET: api/dashboard/getelement/5
         [HttpGet]
         public IHttpActionResult GetElement(int id)
