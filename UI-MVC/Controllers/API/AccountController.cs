@@ -97,6 +97,7 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetSubscriptions()
         {
             IEnumerable<string> subscriptions = UserManager.GetProfile(User.Identity.GetUserId()).Subscriptions.Select(p=>p.Name);
+            if (subscriptions is null || subscriptions.Count() ==  0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(subscriptions); 
           
         }
