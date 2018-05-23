@@ -158,7 +158,7 @@ $(function () {
                 });
             };
 
-            var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div class="loader loader-6 loader-dash" style="width: 100%; height:100%; padding-top:25%; id="loader-x"><span></span><span></span><span></span><span></span></div><canvas style="display: none;"></canvas><div/><div/>'), 0, 0, 3, 3, true);
+            var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div class="loader loader-6 loader-dash" style="width: 100%; height:100%; padding-top:25%;" id="loader-x"><span></span><span></span><span></span><span></span></div><canvas style="display: none;"></canvas><div/><div/>'), 0, 0, 3, 3, true);
             var X = newElement.data().gsX;
             var Y = newElement.data().gsY;
 
@@ -646,7 +646,7 @@ $(function () {
 
                             addZone.data('gridstack').move($('.add-zone').children('div').children('div').children('div'), 0, 0);
 
-                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div class="loader loader-6 loader-dash" style="width: 100%; height:100%; padding-top:25%; id="loader-x"><span></span><span></span><span></span><span></span></div><canvas style="display: none;"></canvas><div/><div/>'), Element.X, Element.Y, Element.Width, Element.Height, true);
+                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas style="display: none;"></canvas><div/><div/>'), Element.X, Element.Y, Element.Width, Element.Height, true);
 
                             grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
@@ -904,7 +904,6 @@ $(function () {
                                 responsive: true
                             }
                         });
-
                     $("#loader-" + elementId).hide();
                     can.show();
                 }
