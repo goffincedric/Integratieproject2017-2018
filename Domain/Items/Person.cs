@@ -31,9 +31,11 @@ namespace PB.BL.Domain.Items
 
         [DataMember] public string Postalcode { get; set; }
 
-        [DataMember] public Gender Gender { get; set; }
+        [DataMember]
+        public Gender Gender { get; set; }
 
-        [DataMember] public Organisation Organisation { get; set; }
+        [DataMember]
+        public Organisation Organisation { get; set; }
 
         [DataMember] public DateTime DateOfBirth { get; set; }
 

@@ -117,7 +117,7 @@ namespace UI_MVC.Controllers.API
             else
                 stijging3 = "+" + stijging3 + "%";
             details.Add("Retweet", stijging3);
-            
+
             if (details.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(details);
         }
@@ -208,7 +208,7 @@ namespace UI_MVC.Controllers.API
                 records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
             }
 
-            if (records.Count() == 0) return StatusCode(HttpStatusCode.NoContent); 
+            if (records.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             records.SelectMany(r => r.URLs).Distinct().Take(6).ToList().ForEach(p => urls.Add(p.Link));
             urls.Distinct();
             if (urls is null || urls.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
@@ -242,11 +242,11 @@ namespace UI_MVC.Controllers.API
             {
                 return NotFound();
             }
-            if (records.Count() == 0) return StatusCode(HttpStatusCode.NoContent); 
+            if (records.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
             records.GroupBy(p => p.RecordProfile.Age).ToList()
                 .ForEach(p => ages.Add(p.ToList().First().RecordProfile.Age, p.ToList().Count()));
-            if (ages is null || ages.Count() == 0) return StatusCode(HttpStatusCode.NoContent); 
+            if (ages is null || ages.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(ages);
         }
 
@@ -522,30 +522,24 @@ namespace UI_MVC.Controllers.API
 
             if (item is Person person)
             {
-                records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0)
-                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(10);
+                records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date);
             }
             else if (item is Organisation organisation)
             {
-                records = organisation.People.SelectMany(p => p.Records).ToList().Where(p => p.Sentiment.Polarity != 0.0)
-                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(10);
+
+                records = organisation.People.SelectMany(p => p.Records).Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date);
             }
             else if (item is Theme theme)
             {
                 IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
-                    .ToList().Where(p => p.Sentiment.Polarity != 0.0)
-                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date);
-                records = theme.Persons.SelectMany(p => p.Records).ToList().Where(p => p.Sentiment.Polarity != 0.0)
-                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Except(first).ToList().Take(10);
+                    .Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(10)).OrderByDescending(a => a.Date.Date);
+                records = theme.Persons.SelectMany(p => p.Records).Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date).Except(first);
             }
 
-            Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
-            records.ToList().ForEach(p =>
-            {
-                recordsmap.Add(p.Date, p.Sentiment.Polarity * p.Sentiment.Objectivity);
-            });
+            Dictionary<DateTime, double> recordsmap = records.GroupBy(r => r.Date.Date).ToDictionary(kv => kv.Key, kv => kv.ToList().Average(r => r.Sentiment.Polarity * r.Sentiment.Objectivity));
+
+            if (recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             recordsmap.OrderBy(o => o.Key);
-            if (records == null || recordsmap is null || recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
 
@@ -669,7 +663,7 @@ namespace UI_MVC.Controllers.API
 
             recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
                 .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
-            if (recordsmap == null ||recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            if (recordsmap == null || recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
 
@@ -848,7 +842,7 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetTweetName()
         {
-            Person person = ItemMgr.GetPersons().Where(p=>p.TwitterName != "" || p.TwitterName != null).OrderByDescending(p => p.TrendingScore).FirstOrDefault();
+            Person person = ItemMgr.GetPersons().Where(p => p.TwitterName != "" || p.TwitterName != null).OrderByDescending(p => p.TrendingScore).FirstOrDefault();
             if (person is null) return NotFound();
             return Ok(person.TwitterName);
         }
@@ -900,12 +894,13 @@ namespace UI_MVC.Controllers.API
             if (item is Organisation organisation)
             {
                 organisation.People.Where(p => p.TwitterName != "" && p.TwitterName != null).OrderBy(r => r.TrendingScore).Take(4).ToList().ForEach(s => map.Add(s.Name, s.TwitterName));
-            }else if(item is Theme theme)
+            }
+            else if (item is Theme theme)
             {
                 theme.Persons.Where(p => p.TwitterName != "" && p.TwitterName != null).OrderBy(r => r.TrendingScore).Take(4).ToList().ForEach(s => map.Add(s.Name, s.TwitterName));
             }
-            
-           
+
+
             if (map is null) return NotFound();
             return Ok(map);
         }

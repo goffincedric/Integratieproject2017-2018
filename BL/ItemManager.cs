@@ -637,7 +637,6 @@ namespace PB.BL
             List<Word> allWords = RecordRepo.ReadWords().ToList();
             List<Hashtag> allHashtags = RecordRepo.ReadHashTags().ToList();
             List<Url> allUrls = RecordRepo.ReadUrls().ToList();
-
             List<Record> oldRecords = RecordRepo.ReadRecords().ToList();
             List<Record> newRecords = new List<Record>();
             List<Person> oldPersons = ItemRepo.ReadPersons().ToList();
