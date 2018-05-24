@@ -5,47 +5,47 @@
       <h4 class="c-grey-900 mB-20">Keywords Table</h4>
       <table id="tab" class="table table-striped table-bordered" cellspacing="0" style="width: 100%">
         <thead>
-        <tr>
-          <th>@Html.DisplayNameFor(model => model.KeywordId)</th>
-          <th>@Html.DisplayNameFor(model => model.Name)</th>
-          <th>@Html.DisplayNameFor(model => model.Items)</th>
-          <th>Tools</th>
-        </tr>
+          <tr>
+            <th>@Html.DisplayNameFor(model => model.KeywordId)</th>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Items)</th>
+            <th>Tools</th>
+          </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model)
-        {
-          <tr>
-            <td>@Html.DisplayFor(modelItem => item.KeywordId)</td>
-            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Items)</td>
-            <td>
-              <div class="row">
-                @using (Html.BeginForm("DeleteKeyword", "Item", new {id = item.KeywordId}, FormMethod.Post, new {id = "delete-" + item.KeywordId}))
-                {
-                  @Html.AntiForgeryToken()
-                  <button class="btn btn-sm" style="margin-right: 15px">
-                    <a href="javascript:document.getElementById('delete-@item.KeywordId').submit()" style="outline: none; all: unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                      <span style="color: #2196f3" class="fsz-sm">
-                        Delete
-                      </span>
-                    </a>
+          @foreach (var item in Model)
+          {
+            <tr>
+              <td>@Html.DisplayFor(modelItem => item.KeywordId)</td>
+              <td>@Html.DisplayFor(modelItem => item.Name)</td>
+              <td>@Html.DisplayFor(modelItem => item.Items)</td>
+              <td>
+                <div class="row">
+                  @using (Html.BeginForm("DeleteKeyword", "Item", new { id = item.KeywordId }, FormMethod.Post, new { id = "delete-" + item.KeywordId }))
+                  {
+                    @Html.AntiForgeryToken()
+                    <button class="btn btn-sm" style="margin-right: 15px">
+                      <a href="javascript:document.getElementById('delete-@item.KeywordId').submit()" style="outline: none; all: unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                        <span style="color: #2196f3" class="fsz-sm">
+                          Delete
+                        </span>
+                      </a>
+                    </button>
+                  }
+                  <button class="btn btn-sm">
+                    @Html.ActionLink("Edit", "EditKeyword", new { id = item.KeywordId })
                   </button>
-                }
-                <button class="btn btn-sm">
-                  @Html.ActionLink("Edit", "EditKeyword", new {id = item.KeywordId})
-                </button>
-              </div>
-            </td>
-          </tr>
-        }
+                </div>
+              </td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
   </div>
 </div>
-<script defer>
-  $("document").ready(function() {
+<script>
+  $("document").ready(function () {
     $('#tab').DataTable();
   });
 </script>

@@ -70,17 +70,17 @@
             <div class="col-6" style="text-align:center">
               @using (Html.BeginForm("Import", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
               {
-              <div class="row" style="text-align:center; margin-left:25%">
+                <div class="row" style="text-align:center; margin-left:25%">
 
-                <div class="fileUpload blue-btn btn" style="margin:0;">
-                  <span>Selecteer JSON-bestand</span>
-                  <input type="file" class="uploadlogo uploadfile" name="file" id="file" />
+                  <div class="fileUpload blue-btn btn" style="margin:0;">
+                    <span>Selecteer JSON-bestand</span>
+                    <input type="file" class="uploadlogo uploadfile" name="file" id="file" />
+                  </div>
+
+
+                  <button id="import" class="btn btn-lg btn-primary" style="margin-left:15px" enabled>Importeer</button>
+
                 </div>
-
-
-                <button id="import" class="btn btn-lg btn-primary" style="margin-left:15px" enabled>Importeer</button>
-                
-              </div>
               }
 
             </div>
@@ -123,7 +123,6 @@
   }
     // Upload btn end
 
-  });
 
   $("#export").click(function () {
     $.ajax({

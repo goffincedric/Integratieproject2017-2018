@@ -22,12 +22,12 @@ namespace PB.BL.Domain.Items
         [DataMember]
         public bool Retweet { get; set; }
         [DataMember]
-        public DateTime Date { get; set; }
+        public virtual DateTime Date { get; set; }
 
         [DataMember]
         public RecordProfile RecordProfile { get; set; }
         [DataMember]
-        public Sentiment Sentiment { get; set; }
+        public virtual Sentiment Sentiment { get; set; }
 
         [DataMember]
         public virtual List<Hashtag> Hashtags { get; set; }

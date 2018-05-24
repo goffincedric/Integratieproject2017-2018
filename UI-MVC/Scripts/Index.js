@@ -68,7 +68,7 @@ function makeAjaxCall(url, methodType) {
 
 function showIncrease() {
     var URL = "https://localhost:44342/api/item/GetPersonIncrease";
-    makeAjaxCall(URL, "GET").then(process, errorHandler);
+    makeAjaxCall(URL, "GET").then(process);
 
     function process(output) {
         var keys = [];
@@ -98,7 +98,7 @@ showIncrease();
 function drawBarChart() {
 
     var URL = "https://localhost:44342/api/item/getpersonstop/5";
-    makeAjaxCall(URL, "GET").then(process, errorHandler);
+    makeAjaxCall(URL, "GET").then(process);
     var can = $('#bar-chart');
 
     function process(output) {
@@ -137,10 +137,6 @@ function drawBarChart() {
         can.show();
     }
 
-
-    function errorHandler(statusCode) {
-        console.log("failed with status", status);
-    }
 }
 
 
@@ -148,7 +144,7 @@ drawBarChart();
 
 function drawLineChart() {
     var URL = "https://localhost:44342/api/item/GetMostPopularPersons/3";
-    makeAjaxCall(URL, "GET").then(process, errorHandler);
+    makeAjaxCall(URL, "GET").then(process);
 
     function process(output) {
         var can = $('#evol');
@@ -192,7 +188,7 @@ function drawLineChart() {
         $.each(output,
             function (key, value) {
                 var URL = "https://localhost:44342/api/item/GetPersonEvolution/" + key;
-                makeAjaxCall(URL, "GET").then(process, errorHandler);
+                makeAjaxCall(URL, "GET").then(process);
 
                 function process(output2) {
                     var keys = [];
@@ -229,17 +225,13 @@ function drawLineChart() {
             });
 
 
-        function errorHandler(statusCode) {
-            console.log("failed with status", status);
-        }
+      
 
 
     }
 
 
-    function errorHandler(statusCode) {
-        console.log("failed with status", status);
-    }
+   
 
 }
 
@@ -247,13 +239,13 @@ drawLineChart();
 
 function TrendingPersonGraphs() {
     var URL = "https://localhost:44342/api/item/getMostPopularPerson";
-    makeAjaxCall(URL, "GET").then(process, errorHandler);
+    makeAjaxCall(URL, "GET").then(process);
 
     function process(id) {
 
         function getHashtags(id) {
             var URL = "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + id;
-            makeAjaxCall(URL, "GET").then(process, errorHandler);
+            makeAjaxCall(URL, "GET").then(process);
 
             function process(output) {
 
@@ -291,16 +283,14 @@ function TrendingPersonGraphs() {
                 can.show();
             }
 
-            function errorHandler(statusCode) {
-                console.log("failed with status", status);
-            }
+           
         }
 
         getHashtags(id);
 
         function drawPie(id) {
             var URL = "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id;
-            makeAjaxCall(URL, "GET").then(process, errorHandler);
+            makeAjaxCall(URL, "GET").then(process);
 
             function process(output) {
 
@@ -340,18 +330,13 @@ function TrendingPersonGraphs() {
 
             }
 
-            function errorHandler(statusCode) {
-                console.log("failed with status", status);
-            }
+         
 
         }
 
         drawPie(id);
     }
 
-    function errorHandler(statusCode) {
-        console.log("failed with status", status);
-    }
 }
 
 TrendingPersonGraphs();

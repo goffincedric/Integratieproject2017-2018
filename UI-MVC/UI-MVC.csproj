@@ -271,7 +271,6 @@
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\datatables.min.css" />
-    <Content Include="Content\fa.css" />
     <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
@@ -336,7 +335,6 @@
     <Content Include="Scripts\Index\hide-content.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Content\Export\Users.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\changetheme.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -346,6 +344,7 @@
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-2.0.3.min.js" />
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-be-mill.js" />
     <Content Include="Scripts\load.js" />
+    <Content Include="Scripts\Search.js" />
     <Content Include="Scripts\vendor.js" />
     <Content Include="Scripts\Wizard\bootstrap.min.js" />
     <Content Include="Scripts\Wizard\jquery.bootstrap.js" />
@@ -421,6 +420,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Export\" />
     <Folder Include="Content\Images\Persons\" />
     <Folder Include="Content\Images\Subplatform\" />
   </ItemGroup>

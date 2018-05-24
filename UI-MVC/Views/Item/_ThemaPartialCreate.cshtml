@@ -63,12 +63,8 @@
   }
 </div>
 
-
 <script>
-
-
   var tmp = "";
-
   tmp = $.ajax({
     async: false,
     type: 'GET',
@@ -83,9 +79,6 @@
     $("#FromJson").append($("<option></option>").val(tmp[i].KeywordId).html(tmp[i].Name));
   }
 
-  //$("FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
-
-
   $(document).ready(function() {
     $("#IsHot").change(function() {
       if ($("#IsHot").is(":checked")) {
@@ -93,9 +86,7 @@
       }
     });
   });
-</script>
 
-<script>
   $(document).ready(function($) {
 
     // Upload btn on change call function
