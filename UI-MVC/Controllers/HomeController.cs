@@ -186,7 +186,7 @@ namespace UI_MVC.Controllers
         {
             ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text;
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
-            Person person = itemMgr.GetPersons().Where(p => p.TwitterName != "" || p.TwitterName != null).OrderByDescending(p => p.TrendingScore).FirstOrDefault();
+            Person person = itemMgr.GetPersons().Where(p => !string.IsNullOrWhiteSpace(p.TwitterName)).OrderByDescending(p => p.TrendingScore).FirstOrDefault();
             ViewBag.TweetName = "https://twitter.com/" + person.TwitterName + "?ref_src=twsrc%5Etfw";
             return View("Index");
         }
@@ -225,14 +225,14 @@ namespace UI_MVC.Controllers
             Item item = itemMgr.GetItem(id);
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             if (!item.SubPlatforms.Contains(Subplatform)) return HttpNotFound();
-          
+            
 
             if (item is Person person)
             {
                 int? count = person.Records.Count();
                 ViewBag.Vermeldingen = count is null ? 0 : count;
                 ViewBag.Partij = person.Organisation is null ? "Geen partij" : person.Organisation.Name;
-                if(person.TwitterName != null && person.TwitterName != "")
+                if(!string.IsNullOrWhiteSpace(person.TwitterName))
                 {
                     ViewBag.Icon = "https://twitter.com/" + person.TwitterName + "/profile_image?size=original";
                     ViewBag.Twitter = "https://twitter.com/" + person.TwitterName;
@@ -243,7 +243,7 @@ namespace UI_MVC.Controllers
                     ViewBag.Twitter = "";
                 }
 
-                if(person.Site == "" || person.Site is null)
+                if (string.IsNullOrWhiteSpace(person.Site))
                 {
                     ViewBag.Site = "";
                 }
@@ -308,13 +308,6 @@ namespace UI_MVC.Controllers
 
             return RedirectToAction("ItemDetail", "Home", new { Id = id });
         }
-
         #endregion
-
-
-        public ActionResult test()
-        {
-            return View();
-        }
     }
 }

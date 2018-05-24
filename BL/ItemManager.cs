@@ -45,6 +45,7 @@ namespace PB.BL
             RecordRepo = new RecordRepo(uowMgr.UnitOfWork);
         }
 
+        #region Database operations
         public void SyncDatabase(Subplatform subplatform)
         {
             // Set IsSyncing flag
@@ -54,7 +55,6 @@ namespace PB.BL
                 // Set IsSyncing flag
                 IsSyncing = false;
             }));
-
         }
 
         public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
@@ -143,6 +143,7 @@ namespace PB.BL
             // Save pending changes
             return await UowManager.SaveAsync();
         }
+        #endregion
 
         #region Init
 
@@ -629,7 +630,6 @@ namespace PB.BL
         #endregion
 
         #region JsonConversions
-
         public List<Record> JClassToRecord(List<JClass> data)
         {
             InitNonExistingRepo();

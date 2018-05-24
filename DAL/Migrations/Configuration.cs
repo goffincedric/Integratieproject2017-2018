@@ -392,7 +392,7 @@ namespace PB.DAL.Migrations
                     .FirstOrDefault(p => p.Name.ToLower() == el.Full_name.ToLower());
                 if (personCheck == null)
                 {
-                    if (el.Twitter is null || el.Twitter == "")
+                    if (string.IsNullOrWhiteSpace(el.Twitter))
                     {
                         personCheck = new Person
                         {
@@ -401,9 +401,9 @@ namespace PB.DAL.Migrations
                             IsTrending = false,
                             IconURL = pbSubplatform.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value,
                             SubPlatforms = new List<Subplatform>
-                        {
-                            pbSubplatform
-                        },
+                            {
+                                pbSubplatform
+                            },
                             Keywords = new List<Keyword>(),
                             Elements = new List<Element>(),
                             SubscribedProfiles = new List<Profile>(),
@@ -412,9 +412,9 @@ namespace PB.DAL.Migrations
                             FirstName = el.First_name,
                             LastName = el.Last_name,
                             Level = el.Level,
-                            SocialMediaLink = el.Facebook,
-                            Site = el.Site,
-                            TwitterName = el.Twitter,
+                            SocialMediaLink = (el.Facebook.Contains(" ")) ? "" : el.Facebook,
+                            Site = (el.Site.Contains(" ")) ? "" : el.Site,
+                            TwitterName = (el.Twitter.Contains(" ")) ? "" : el.Twitter,
                             Position = el.Position,
                             District = el.District,
                             Gemeente = ToPascalCase(el.Town),
@@ -432,11 +432,13 @@ namespace PB.DAL.Migrations
                             ItemId = el.Id,
                             Name = el.Full_name,
                             IsTrending = false,
-                            IconURL = "https://twitter.com/" + el.Twitter + "/profile_image?size=original",
+                            IconURL = (el.Twitter.Contains(" ")) ?
+                                pbSubplatform.Settings.FirstOrDefault(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).Value
+                                : "https://twitter.com/" + el.Twitter + "/profile_image?size=original",
                             SubPlatforms = new List<Subplatform>
-                        {
-                            pbSubplatform
-                        },
+                            {
+                                pbSubplatform
+                            },
                             Keywords = new List<Keyword>(),
                             Elements = new List<Element>(),
                             SubscribedProfiles = new List<Profile>(),
@@ -445,9 +447,9 @@ namespace PB.DAL.Migrations
                             FirstName = el.First_name,
                             LastName = el.Last_name,
                             Level = el.Level,
-                            SocialMediaLink = el.Facebook,
-                            Site = el.Site,
-                            TwitterName = el.Twitter,
+                            SocialMediaLink = (el.Facebook.Contains(" ")) ? "" : el.Facebook,
+                            Site = (el.Site.Contains(" ")) ? "" : el.Site,
+                            TwitterName = (el.Twitter.Contains(" ")) ? "" : el.Twitter,
                             Position = el.Position,
                             District = el.District,
                             Gemeente = ToPascalCase(el.Town),
@@ -458,8 +460,7 @@ namespace PB.DAL.Migrations
                             Themes = new List<Theme>()
                         };
                     }
-
-
+                    
                     pbSubplatform.Items.Add(personCheck);
                 }
 
@@ -1121,7 +1122,7 @@ namespace PB.DAL.Migrations
 
         public string ToPascalCase(string value)
         {
-            if (value.Equals(string.Empty)) return value;
+            if (string.IsNullOrWhiteSpace(value)) return value;
             value = value.Substring(0, 1).ToUpper() + value.Substring(1).ToLower();
             string[] words = null;
             if (value.Contains("-"))
