@@ -333,6 +333,7 @@
     <Content Include="Scripts\AccountControl.js" />
     <Content Include="Scripts\Index.js" />
     <Content Include="Scripts\Index\hide-content.js" />
+    <Content Include="Scripts\ItemDetail.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -408,12 +409,10 @@
     <Content Include="Views\Subplatform\_SubplatformSetting.cshtml" />
     <Content Include="Views\Account\WeeklyReview.cshtml" />
     <Content Include="Views\Subplatform\_ChangeHomePage.cshtml" />
-    <Content Include="Views\Subplatform\_ChangeMenu.cshtml" />
     <Content Include="Views\Item\_ShowKeywordOfTheme.cshtml" />
     <Content Include="Views\Subplatform\_SeedIntervals.cshtml" />
     <Content Include="Views\Item\_ShowThemesOfOrganisation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Item\Charts.cshtml" />
     <Content Include="Views\Subplatform\_ShowSubplatform.cshtml" />
     <Content Include="Views\Subplatform\EditSubplatform.cshtml" />
     <Content Include="Views\Account\EditUser.cshtml" />

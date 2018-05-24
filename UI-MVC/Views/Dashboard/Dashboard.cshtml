@@ -9,15 +9,12 @@
 @section styles{
   <style type="text/css">
     #grid1 {
-      <!--
-      border: 3px solid black; -->
       padding: 3px;
       margin-bottom: 10px;
     }
 
     #grid2 {
-      <!--
-      border: 3px solid red; -->
+
       margin-top: 5px;
     }
 
@@ -57,31 +54,31 @@
 <main class="main-content bgc-grey-100" id="dashboard-@Model.DashboardId">
   <div id="mainContent">
     <div id="Wizard" class="container">
-      @{
-        Html.RenderAction("_Wizard", "Dashboard");
-      }
+@{
+  Html.RenderAction("_Wizard", "Dashboard");
+}
     </div>
-    @foreach (var zone in Model.Zones)
-    {
-      <div class="p-10 mB-10 zone-@zone.ZoneId">
-        <h4 class="bb-2">
-          <span class="title mR-15">@zone.Title</span>
-          <span class="edit-zone">
-            <i class="ti-pencil"></i>
-          </span>
-          <span class="arrow-dashboard">
-            <i class="ti-angle-up"></i>
-          </span>
-          <span class="delete-zone">
-            <i class="ti-trash"></i>
-          </span>
-        </h4>
-        <div class="DashZone">
-          <div class="grid-stack grid-stack-12" id="zone-@zone.ZoneId">
-          </div>
-        </div>
-      </div>
-    }
+@foreach (var zone in Model.Zones)
+{
+  <div class="p-10 mB-10 zone-@zone.ZoneId">
+  <h4 class="bb-2">
+  <span class="title mR-15">@zone.Title</span>
+  <span class="edit-zone">
+  <i class="ti-pencil"></i>
+  </span>
+  <span class="arrow-dashboard">
+  <i class="ti-angle-up"></i>
+  </span>
+  <span class="delete-zone">
+  <i class="ti-trash"></i>
+  </span>
+  </h4>
+  <div class="DashZone">
+  <div class="grid-stack grid-stack-12" id="zone-@zone.ZoneId">
+  </div>
+  </div>
+  </div>
+}
     <div class="p-10 mB-10 add-zone">
       <h4 class="bb-2">
         <span class="title">Create New Zone</span>
@@ -115,37 +112,3 @@
 <script src="~/Scripts/Wizard/jquery.validate.min.js" defer></script>
 <!--  Chartjs -->
 <script src="~/Scripts/Charts/Chart.min.js"></script>
-
-<script>
-  $(document).ready(function () {
-    var next = 1;
-    $(".add-more").click(function (e) {
-      e.preventDefault();
-      var addto = "#field" + next;
-      var addRemove = "#field" + (next);
-      next = next + 1;
-      var newIn = '<input autocomplete="off" class="input form-control" id="field' +
-        next +
-        '" name="field' +
-        next +
-        '" type="text">';
-      var newInput = $(newIn);
-      var removeBtn = '<button id="remove' +
-        (next - 1) +
-        '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
-      var removeButton = $(removeBtn);
-      $(addto).after(newInput);
-      $(addRemove).after(removeButton);
-      $("#field" + next).attr('data-source', $(addto).attr('data-source'));
-      $("#count").val(next);
-
-      $('.remove-me').click(function (e) {
-        e.preventDefault();
-        var fieldNum = this.id.charAt(this.id.length - 1);
-        var fieldID = "#field" + fieldNum;
-        $(this).remove();
-        $(fieldID).remove();
-      });
-    });
-  });
-</script>
