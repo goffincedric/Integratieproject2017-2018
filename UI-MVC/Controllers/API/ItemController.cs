@@ -617,7 +617,7 @@ namespace UI_MVC.Controllers.API
             records = records.Distinct().ToList();
             if (records == null) return StatusCode(HttpStatusCode.NoContent);
             Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
-            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key).Take(10)
+            recordsmap = records.GroupBy(r => r.Date.Date).OrderBy(r => r.Key).Take(10)
                 .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
 
             if (recordsmap == null || recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);

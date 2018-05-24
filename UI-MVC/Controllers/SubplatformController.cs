@@ -92,6 +92,8 @@ namespace UI_MVC.Controllers
             ViewBag.IsCleaning = ItemManager.IsCleaning;
             ViewBag.IsGeneratingAlerts = AccountManager.IsGeneratingAlerts;
             ViewBag.IsSendingWeeklyReviews = AccountManager.IsSendingWeeklyReviews;
+            ViewBag.Subplatform = SubplatformMgr.GetSubplatform(subplatform).URL;
+            ViewBag.SubplatformId = SubplatformMgr.GetSubplatform(subplatform).SubplatformId;
 
             return View();
         }
@@ -300,10 +302,10 @@ namespace UI_MVC.Controllers
                         });
                     }
 
-                return RedirectToAction("PlatformSettings", "Home");
+                return RedirectToAction("PlatformSettings", "Subplatform");
             }
 
-            return RedirectToAction("PlatformSettings", "Home");
+            return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
         [HttpPost]
@@ -333,10 +335,10 @@ namespace UI_MVC.Controllers
                         });
                     }
 
-                return RedirectToAction("PlatformSettings", "Home");
+                return RedirectToAction("PlatformSettings", "Subplatform");
             }
 
-            return RedirectToAction("PlatformSettings", "Home");
+            return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
         [HttpPost]
@@ -366,10 +368,10 @@ namespace UI_MVC.Controllers
                         });
                     }
 
-                return RedirectToAction("PlatformSettings", "Home");
+                return RedirectToAction("PlatformSettings", "Subplatform");
             }
 
-            return RedirectToAction("PlatformSettings", "Home");
+            return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
         #endregion
@@ -464,6 +466,18 @@ namespace UI_MVC.Controllers
             return PartialView(subplatform);
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
+        [HttpPost]
+        public ActionResult EditSubplatform(Subplatform newsubplatform)
+        {
+            Subplatform subplatform = SubplatformMgr.GetSubplatform(newsubplatform.SubplatformId);
+
+            subplatform.Name = newsubplatform.Name;
+            subplatform.URL = newsubplatform.URL;
+            SubplatformMgr.ChangeSubplatform(subplatform); 
+
+            return PartialView(subplatform);
+        }
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _ChangeMenu()
         {
