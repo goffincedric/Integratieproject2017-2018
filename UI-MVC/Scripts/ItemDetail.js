@@ -1,57 +1,57 @@
-﻿("#download1").on('click',
+﻿$("#download1").on('click',
   function () {
-    var image = document.getElementById("line-chart2").toDataURL("image/jpg")
+    var image = document.getElementById("line2-chart").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
     download1.setAttribute("href", image);
 
   });
 
-("#download2").on('click',
+$("#download2").on('click',
   function () {
     var image = document.getElementById("sentiment").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
-    download1.setAttribute("href", image);
+    download2.setAttribute("href", image);
 
   });
 
-("#download3").on('click',
+$("#download3").on('click',
   function () {
     var image = document.getElementById("age-chart").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
-    download1.setAttribute("href", image);
+    download3.setAttribute("href", image);
 
   });
 
-("#download4").on('click',
+$("#download4").on('click',
   function () {
     var image = document.getElementById("gender-chart").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
-    download1.setAttribute("href", image);
+    download4.setAttribute("href", image);
 
   });
 
-("#download5").on('click',
+$("#download5").on('click',
   function () {
     var image = document.getElementById("hashtag-chart").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
-    download1.setAttribute("href", image);
+    download5.setAttribute("href", image);
 
   });
 
 
-("#download6").on('click',
+$("#download6").on('click',
   function () {
     var image = document.getElementById("mentions-chart").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
-    download1.setAttribute("href", image);
+    download6.setAttribute("href", image);
 
   });
 
-("#download7").on('click',
+$("#download7").on('click',
   function () {
     var image = document.getElementById("mycanvas").toDataURL("image/jpg")
       .replace("image/jpg", "image/octet-stream");
-    download1.setAttribute("href", image);
+    download7.setAttribute("href", image);
 
   });
 
@@ -425,7 +425,7 @@ function Mentions(id) {
 
 function HashtagsPerson(id) {
   var URL = "https://localhost:44342/api/item/GetTrendingHashtags/" + id;
-  makeAjaxCall(URL, "GET").then(process, errorHandler);
+  makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
     var counter = 0;

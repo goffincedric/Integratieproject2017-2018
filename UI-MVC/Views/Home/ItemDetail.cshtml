@@ -15,10 +15,10 @@
 <main class="main-content bgc-grey-100">
   <div id="mainContent" class="container-fluid">
     <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-12">
-      <div class="bgc-white p-20 bd">
+      <div class="bgc-white p-20 bd" >
         <div class="row">
-          <div class="col-3">
-            <img style="width: 150px; height:150px; border-radius:50%; position: absolute; margin: auto; top: 0; left: 0; right: 0; bottom: 0;" src="@ViewBag.Icon" alt="logo" />
+          <div class="col-3" text-align:center;">
+            <img style="width: 170px; height:170px; border-radius:50%; position: absolute; margin:auto; top: 0; left: 0; right: 0; bottom: 0;" src="@ViewBag.Icon" alt="logo" />
           </div>
           <div class="col-7">
             <div class="h-75 w-100">
@@ -34,7 +34,7 @@
                 <div class="row" style="padding-bottom:16px;">
 
 
-                  <ul style="list-style-type: none; width: 100%; text-align: center;">
+                  <ul style="list-style-type: none; width: 100%; padding:0; text-align: center;">
 
                     <li style="display: inline-block;">
                       <a href="@ViewBag.Twitter" target="_blank">  <i style="color: #2196f3; text-align:right; font-size:20px;" class="ti-twitter"></i> </a>
@@ -61,7 +61,7 @@
                 <div class="row" style="margin: 0; text-align: center;">
                   <h1 style="color: #2196f3; text-align: center; padding-top: 3%; width: 100%;" class="display-4"> @Html.DisplayFor(model => model.Name)</h1>
                 </div>
-                <ul style="list-style-type: none; width: 100%; text-align: center;">
+                <ul style="list-style-type: none; padding:0; width: 100%; text-align: center;">
                   <li style="display: inline-block;">
                     <h5 class="h5">@ViewBag.Leden Leden</h5>
                   </li>
@@ -79,7 +79,7 @@
                 <div class="row" style="margin: 0; text-align: center;">
                   <h1 style="color: #2196f3; text-align: center; padding-top: 3%; width: 100%;" class="display-4"> @Html.DisplayFor(model => model.Name)</h1>
                 </div>
-                <ul style="list-style-type: none; width: 100%; text-align: center;">
+                <ul style="list-style-type: none; padding:0; width: 100%; text-align: center;">
                   <li style="display: inline-block;">
                     <h5 class="h5">@ViewBag.Associaties Associaties</h5>
                   </li>
@@ -468,11 +468,11 @@
 @if (Model is PB.BL.Domain.Items.Organisation || Model is PB.BL.Domain.Items.Theme)
 {
   <script>
-    var id =@Html.Raw(Model.ItemId);
+    var id=@Html.Raw(Model.ItemId);
 
     showTopPersons(id);
     Hashtags(id);
-    Mentions();
+    Mentions(id);
   </script>
 }
 
