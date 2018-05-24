@@ -17,7 +17,6 @@ namespace UI_MVC.Controllers
     ///     put a certain method.
     ///     Authorization depends on used method
     /// </summary
-    [RequireHttps]
     [RoutePrefix("{subplatform}")]
     public class HomeController : Controller
     {

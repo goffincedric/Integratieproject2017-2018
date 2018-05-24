@@ -26,7 +26,6 @@ namespace UI_MVC.Controllers
     ///     Authorized by all roles
     /// </summary>
     [Authorize(Roles = "User,Admin,SuperAdmin")]
-    [RequireHttps]
     public class AccountController : Controller
     {
         private readonly UnitOfWorkManager uow = new UnitOfWorkManager();

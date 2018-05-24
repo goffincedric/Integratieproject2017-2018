@@ -8,9 +8,9 @@
   <title>@ViewBag.Title</title>
   @* Styles *@
   <link href="~/Content/bootstrap.css" rel="stylesheet" />
-  @Styles.Render("~/Content/Styling/Style.css")
+  <link href="~/Content/Styling/Style.css" rel="stylesheet" />
   <link id="ThemeLink" href="@Html.Action("GetThemeSetting", "Home")" rel="stylesheet">
-  @Scripts.Render("~/bundles/jquery")
+  <script src="~/Scripts/jquery-3.3.1.js"></script>
 
   <link rel="icon" href="@Html.Action("GetLogo", "Home")" />
 
@@ -174,7 +174,7 @@
           <li class="dropdown">
             <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
               <div class="peer mR-10">
-                <img class="w-2r bdrs-50p" src="@Html.Action("ChangeProfilePic", "Home")"/>
+                <img class="w-2r bdrs-50p" src="@Html.Action("ChangeProfilePic", "Home")" />
               </div>
 
               @if (Request.IsAuthenticated)
@@ -205,27 +205,27 @@
               <li role="separator" class="divider"></li>
               @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
               {
-              <li>
-                <a href="@Url.Action("UserBeheer", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                  <i class="ti-panel mR-10"></i> <span>Beheer Users</span>
-                </a>
-              </li>
-              <li>
-                <a href="@Url.Action("ItemBeheer", "Item")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                  <i class="ti-user mR-10"></i> <span>Beheer Items</span>
-                </a>
-              </li>
-              <li>
-                <a href="@Url.Action("PlatformSettings", "Subplatform")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                  <i class="ti-dashboard mR-10"></i> <span>Beheer Platform</span>
-                </a>
-              </li>
+                <li>
+                  <a href="@Url.Action("UserBeheer", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <i class="ti-panel mR-10"></i> <span>Beheer Users</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="@Url.Action("ItemBeheer", "Item")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <i class="ti-user mR-10"></i> <span>Beheer Items</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="@Url.Action("PlatformSettings", "Subplatform")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <i class="ti-dashboard mR-10"></i> <span>Beheer Platform</span>
+                  </a>
+                </li>
               }
               <li role="separator" class="divider"></li>
               <li>
                 @if (Request.IsAuthenticated)
                 {
-                  using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm"}))
+                  using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                   {
                     @Html.AntiForgeryToken()
                     {
@@ -265,7 +265,9 @@
   </div>
   @RenderSection("styles", false)
   @RenderBody()
-  @Scripts.Render("~/bundles/adminator")
+  <script src="~/Scripts/load.js"></script>
+  <script src="~/Scripts/vendor.js"></script>
+  <script src="~/Scripts/bundle.js"></script>
 </div>
 </div>
 

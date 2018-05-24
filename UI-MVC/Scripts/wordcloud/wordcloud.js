@@ -28,7 +28,7 @@ function makeAjaxCall(url, methodType) {
   return promiseObj;
 }
 
-var URL = "https://localhost:44342/api/item/GetThemasTop/" + 6;
+var URL = "http://localhost:51379/api/item/GetThemasTop/" + 6;
 makeAjaxCall(URL, "GET").then(process, errorHandler);
 
 function process(output) {

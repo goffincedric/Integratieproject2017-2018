@@ -86,7 +86,7 @@ function makeAjaxCall(url, methodType) {
 
 
 function showDetails(id) {
-  var URL = "https://localhost:44342/api/item/GetItemDetails/" + id;
+  var URL = "http://localhost:51379/api/item/GetItemDetails/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -104,7 +104,7 @@ function showDetails(id) {
 
 
 function Age(id) {
-  var URL = "https://localhost:44342/api/item/GetGender/" + id;
+  var URL = "http://localhost:51379/api/item/GetGender/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -144,7 +144,7 @@ function Age(id) {
 }
 
 function Geslacht(id) {
-  var URL = "https://localhost:44342/api/item/GetAges/" + id;
+  var URL = "http://localhost:51379/api/item/GetAges/" + id;
   makeAjaxCall(URL, "GET").then(process, errorHandler);
 
   function process(output) {
@@ -190,7 +190,7 @@ function Geslacht(id) {
 function urls(id) {
 
 
-  var URL = "https://localhost:44342/api/item/GetTrendingUrl/" + id;
+  var URL = "http://localhost:51379/api/item/GetTrendingUrl/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -211,7 +211,7 @@ function urls(id) {
 
 function drawLineChart(id) {
 
-  var URL = "https://localhost:44342/api/item/GetItemTweet/" + id;
+  var URL = "http://localhost:51379/api/item/GetItemTweet/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -263,7 +263,7 @@ function drawLineChart(id) {
 
 function drawSentiment(id) {
 
-  var URL = "https://localhost:44342/api/item/GetPersonEvolution/" + id;
+  var URL = "http://localhost:51379/api/item/GetPersonEvolution/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -317,7 +317,7 @@ function drawSentiment(id) {
 
 
 function showTopPersons(id) {
-  var URL = "https://localhost:44342/api/item/GetPopularTweetName/" + id;
+  var URL = "http://localhost:51379/api/item/GetPopularTweetName/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -336,7 +336,7 @@ function showTopPersons(id) {
 }
 
 function Hashtags(id) {
-  var URL = "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + id;
+  var URL = "http://localhost:51379/api/item/GetTrendingHashtagsCount/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -379,7 +379,7 @@ function Hashtags(id) {
 
 
 function Mentions(id) {
-  var URL = "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id;
+  var URL = "http://localhost:51379/api/item/GetTrendingMentionsCount/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -424,7 +424,7 @@ function Mentions(id) {
 //PERSON ONLY CODE///
 
 function HashtagsPerson(id) {
-  var URL = "https://localhost:44342/api/item/GetTrendingHashtags/" + id;
+  var URL = "http://localhost:51379/api/item/GetTrendingHashtags/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -463,7 +463,7 @@ function HashtagsPerson(id) {
 }
 
 function mentionlist(id) {
-  var URL = "https://localhost:44342/api/item/GetTrendingMentions/" + id;
+  var URL = "http://localhost:51379/api/item/GetTrendingMentions/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -506,7 +506,7 @@ function mentionlist(id) {
 
 function drawNodeBox(id) {
 
-  var URL = "https://localhost:44342/api/item/getrecordsfromperson/";
+  var URL = "http://localhost:51379/api/item/getrecordsfromperson/";
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {

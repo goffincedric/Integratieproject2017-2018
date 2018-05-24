@@ -9,6 +9,7 @@ namespace UI_MVC.App_Start
         public static void Register(HttpConfiguration config)
         {
             // Web API routes
+            config.EnableCors();
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

@@ -49,7 +49,7 @@ namespace UI_MVC
 
                 CookieName = "MyAuthCookie",
                 CookieHttpOnly = false,
-                CookieSecure = CookieSecureOption.Always,
+             
 
                 SlidingExpiration = true
             });

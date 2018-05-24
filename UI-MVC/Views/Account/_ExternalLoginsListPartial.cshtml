@@ -13,7 +13,7 @@
   }
   else
   {
-    using (Html.BeginForm("ExternalLogin", "Account", new {ReturnUrl = Model.ReturnUrl}))
+    using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
     {
       @Html.AntiForgeryToken()
       <div id="socialLoginList">
@@ -21,15 +21,17 @@
           @foreach (AuthenticationDescription p in loginProviders)
           {
             <button class="btnLoginProviders btn btn-lg" type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">
-              <i></i> @p.AuthenticationType</button>
+              <i></i> @p.AuthenticationType
+            </button>
           }
         </div>
       </div>
     }
   }
 }
+<script src="~/Scripts/jquery-3.3.1.js"></script>
 
-@Scripts.Render("~/bundles/jquery")
+
 <script>
   $(".btn-toolbar button:nth-child(1)").addClass("btn btn-social btn-sm btn-google");
   $("button:nth-child(2)").addClass("btn btn-social btn-sm btn-facebook");

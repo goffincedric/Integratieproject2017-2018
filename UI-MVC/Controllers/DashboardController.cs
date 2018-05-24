@@ -13,7 +13,7 @@ namespace UI_MVC.Controllers
     ///     Controller that has control over the persistence of elements, dashboards and zones
     ///     Authorized by all roles
     /// </summary
-    [RequireHttps]
+
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     public class DashboardController : Controller
     {

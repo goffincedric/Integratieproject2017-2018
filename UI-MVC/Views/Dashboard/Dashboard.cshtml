@@ -1,7 +1,10 @@
 ﻿@{
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Styles.Render("~/Content/dashboardcss")
+
+<link href="~/Content/Styling/Grid/gridstack.css" rel="stylesheet" />
+<link href="~/Content/Styling/Grid/gridstack-extra.css" rel="stylesheet" />
+<link href="~/Content/Styling/Wizard/material-bootstrap-wizard.css" rel="stylesheet" />
 <!--     Fonts and icons     -->
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
@@ -14,7 +17,6 @@
     }
 
     #grid2 {
-
       margin-top: 5px;
     }
 
@@ -54,31 +56,31 @@
 <main class="main-content bgc-grey-100" id="dashboard-@Model.DashboardId">
   <div id="mainContent">
     <div id="Wizard" class="container">
-@{
-  Html.RenderAction("_Wizard", "Dashboard");
-}
+      @{
+        Html.RenderAction("_Wizard", "Dashboard");
+      }
     </div>
-@foreach (var zone in Model.Zones)
-{
-  <div class="p-10 mB-10 zone-@zone.ZoneId">
-  <h4 class="bb-2">
-  <span class="title mR-15">@zone.Title</span>
-  <span class="edit-zone">
-  <i class="ti-pencil"></i>
-  </span>
-  <span class="arrow-dashboard">
-  <i class="ti-angle-up"></i>
-  </span>
-  <span class="delete-zone">
-  <i class="ti-trash"></i>
-  </span>
-  </h4>
-  <div class="DashZone">
-  <div class="grid-stack grid-stack-12" id="zone-@zone.ZoneId">
-  </div>
-  </div>
-  </div>
-}
+    @foreach (var zone in Model.Zones)
+    {
+      <div class="p-10 mB-10 zone-@zone.ZoneId">
+        <h4 class="bb-2">
+          <span class="title mR-15">@zone.Title</span>
+          <span class="edit-zone">
+            <i class="ti-pencil"></i>
+          </span>
+          <span class="arrow-dashboard">
+            <i class="ti-angle-up"></i>
+          </span>
+          <span class="delete-zone">
+            <i class="ti-trash"></i>
+          </span>
+        </h4>
+        <div class="DashZone">
+          <div class="grid-stack grid-stack-12" id="zone-@zone.ZoneId">
+          </div>
+        </div>
+      </div>
+    }
     <div class="p-10 mB-10 add-zone">
       <h4 class="bb-2">
         <span class="title">Create New Zone</span>
@@ -101,8 +103,8 @@
 <script src="~/Scripts/Grid/gridstack.js"></script>
 <script src="~/Scripts/Grid/gridstack.jQueryUI.js"></script>
 
-@Scripts.Render("~/bundles/Dashboard")
-
+<script src="~/Scripts/Dashboard/DashboardControl.js"></script>
+<script src="~/Scripts/Dashboard/DashBoard.js"></script>
 <!--   Wizard   -->
 <!--   Core JS Files   -->
 <script src="~/Scripts/Wizard/bootstrap.min.js" defer></script>
