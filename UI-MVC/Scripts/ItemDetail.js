@@ -506,7 +506,7 @@ function mentionlist(id) {
 
 function drawNodeBox(id) {
 
-  var URL = "http://localhost:51379/api/item/getrecordsfromperson/";
+  var URL = "http://localhost:51379/api/item/getrecordsfromperson/" +id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {

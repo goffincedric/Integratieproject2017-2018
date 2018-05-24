@@ -361,6 +361,7 @@
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-2.0.3.min.js" />
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-be-mill.js" />
     <Content Include="Scripts\load.js" />
+    <Content Include="Scripts\ndbx.js" />
     <Content Include="Scripts\Search.js" />
     <Content Include="Scripts\vendor.js" />
     <Content Include="Scripts\Wizard\bootstrap.min.js" />
