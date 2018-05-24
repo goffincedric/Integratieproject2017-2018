@@ -87,7 +87,7 @@ function makeAjaxCall(url, methodType) {
 
 function showDetails(id) {
   var URL = "https://localhost:44342/api/item/GetItemDetails/" + id;
-  makeAjaxCall(URL, "GET").then(process, errorHandler);
+  makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
 
@@ -99,7 +99,444 @@ function showDetails(id) {
     }
   }
 
+  
+}
+
+
+function Age(id) {
+  var URL = "https://localhost:44342/api/item/GetGender/" + id;
+  makeAjaxCall(URL, "GET").then(process);
+
+  function process(output) {
+    var keys = [];
+    keys = Object.keys(output);
+    var label = [];
+    var values = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      label.push(keys[i].substring(0, 10));
+      values.push(output[keys[i]]);
+    }
+    var can = $('#age-chart');
+
+    new Chart(can,
+      {
+        type: 'doughnut',
+        data:
+          {
+            labels: label,
+            datasets: [
+              {
+                backgroundColor: ["#36a2eb", "#ffce56", "#7DDF64"],
+                data: values
+              }
+            ]
+          },
+        options:
+          {
+            responsive: true
+          }
+      });
+    $("#loader-2").hide();
+    can.show();
+  }
+
+}
+
+function Geslacht(id) {
+  var URL = "https://localhost:44342/api/item/GetAges/" + id;
+  makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+  function process(output) {
+    var keys = [];
+    keys = Object.keys(output);
+    var label = [];
+    var values = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      label.push(keys[i].substring(0, 10));
+      values.push(output[keys[i]]);
+    }
+
+    var can = $('#gender-chart');
+    new Chart(can,
+      {
+        type: 'pie',
+        data:
+          {
+            labels: label,
+            datasets: [
+              {
+                backgroundColor: ["#36a2eb", "#ffce56", "#7DDF64"],
+                data: values
+              }
+            ]
+          },
+        options:
+          {
+            responsive: true
+          }
+      });
+    $("#loader-3").hide();
+    can.show();
+  }
+
   function errorHandler(statusCode) {
     console.log("failed with status", status);
   }
+}
+
+
+function urls(id) {
+
+
+  var URL = "https://localhost:44342/api/item/GetTrendingUrl/" + id;
+  makeAjaxCall(URL, "GET").then(process);
+
+  function process(output) {
+    console.log(output);
+
+    $.each(output,
+      function (data, realdata) {
+        $("#urls").append('<i style="margin-right:10px" class="fas fa-link"></i>' +
+          '<a target="_blank" href=' +
+          realdata +
+          ">" +
+          realdata +
+          "</a><br/>");
+      });
+  }
+
+}
+
+function drawLineChart(id) {
+
+  var URL = "https://localhost:44342/api/item/GetItemTweet/" + id;
+  makeAjaxCall(URL, "GET").then(process);
+
+  function process(output) {
+    var keys = [];
+    keys = Object.keys(output);
+    var label = [];
+    var values = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      label.push(keys[i].substring(0, 10));
+      values.push(output[keys[i]]);
+    }
+    var can = $('#line-chart2');
+    new Chart(can,
+      {
+        type: 'line',
+        data:
+          {
+            labels: label,
+            datasets: [
+              {
+                label: "Tweets",
+                // backgroundColor: "rgba(3, 169, 244, 0.5)",
+                borderColor: "#0277bd",
+                data: values,
+                fill: false
+              }
+            ]
+          },
+        options:
+          {
+            legend: { display: true },
+            responsive: true,
+            scales: {
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Tweet aantaal'
+                }
+              }]
+            }
+          }
+      });
+    $("#loader-1").hide();
+    can.show();
+  }
+
+}
+
+function drawSentiment(id) {
+
+  var URL = "https://localhost:44342/api/item/GetPersonEvolution/" + id;
+  makeAjaxCall(URL, "GET").then(process);
+
+  function process(output) {
+    var keys = [];
+    keys = Object.keys(output);
+    var label = [];
+    var values = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      label.push(keys[i].substring(0, 10));
+      values.push(output[keys[i]]);
+    }
+    var can = $('#sentiment');
+    new Chart(can,
+      {
+        type: 'line',
+        data:
+          {
+            labels: label,
+            datasets: [
+              {
+                label: "Sentiment evolutie",
+
+                borderColor: "#0277bd",
+                data: values,
+                fill: false
+              }
+            ]
+          },
+        options:
+          {
+            legend: { display: true },
+            responsive: true,
+            scales: {
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Sentiment waarde'
+                }
+              }]
+            }
+          }
+      });
+    $("#loader-8").hide();
+    can.show();
+  }
+
+}
+
+//ORGANISATION AND THEME ONLY FUNCTION
+
+
+function showTopPersons(id) {
+  var URL = "https://localhost:44342/api/item/GetPopularTweetName/" + id;
+  makeAjaxCall(URL, "GET").then(process);
+
+  function process(output) {
+
+    var keys = [];
+    keys = Object.keys(output);
+    for (var i = 1; i < keys.length + 1; i++) {
+
+      $("#pers" + i).html(keys[i - 1]);
+      var image = "https://twitter.com/" + output[keys[i - 1]] + "/profile_image?size=original";
+      $("#pic" + i).append('<img style="width: 50px; height:50px; border-radius:50%;" src="' + image + '" alt="logo" />')
+    }
+  }
+
+
+}
+
+function Hashtags(id) {
+  var URL = "https://localhost:44342/api/item/GetTrendingHashtagsCount/" + id;
+  makeAjaxCall(URL, "GET").then(process);
+
+  function process(output) {
+    var keys = [];
+    keys = Object.keys(output);
+    var label = [];
+    var values = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      label.push(keys[i].substring(0, 10));
+      values.push(output[keys[i]]);
+    }
+
+    var can = $('#hashtag-chart');
+    new Chart(can,
+      {
+        type: 'bar',
+        data:
+          {
+            labels: label,
+            datasets: [
+              {
+                backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                data: values
+              }
+            ]
+          },
+        options:
+          {
+            responsive: true,
+            legend: {
+              display: false
+            }
+          }
+      });
+    $("#loader-4").hide();
+    can.show();
+  }
+}
+
+
+function Mentions(id) {
+  var URL = "https://localhost:44342/api/item/GetTrendingMentionsCount/" + id;
+  makeAjaxCall(URL, "GET").then(process);
+
+  function process(output) {
+    var keys = [];
+    keys = Object.keys(output);
+    var label = [];
+    var values = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      label.push(keys[i].substring(0, 10));
+      values.push(output[keys[i]]);
+    }
+    var can = $('#mentions-chart');
+
+    new Chart(can,
+      {
+        type: 'horizontalBar',
+        data:
+          {
+            labels: label,
+            datasets: [
+              {
+                backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                data: values
+              }
+            ]
+          },
+        options:
+          {
+            responsive: true,
+            legend: {
+              display: false
+            }
+          }
+      });
+    $("#loader-5").hide();
+    can.show();
+  }
+
+}
+
+//PERSON ONLY CODE///
+
+function HashtagsPerson(id) {
+  var URL = "https://localhost:44342/api/item/GetTrendingHashtags/" + id;
+  makeAjaxCall(URL, "GET").then(process, errorHandler);
+
+  function process(output) {
+    var counter = 0;
+
+    $.each(output,
+      function (data, realdata) {
+        counter++;
+        var name = 'https://twitter.com/search?q=%23' + realdata + '&src=tyah&lang=nl';
+        if (counter <= 4) {
+          $("#hashtag1").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' +
+            '<a  target="_blank" href=' +
+            name +
+            ">" +
+            realdata +
+            '</a><br/>');
+        } else if (counter <= 8) {
+          $("#hashtag2").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' +
+            '<a  target="_blank" href=' +
+            name +
+            ">" +
+            realdata +
+            '</a><br/>');
+        } else {
+          $("#hashtag3").append('<i style="margin-right:10px" class="fas fa-hashtag"></i>' +
+            '<a  target="_blank" href=' +
+            name +
+            ">" +
+            realdata +
+            '</a><br/>');
+        }
+      });
+    $("#loader-7").hide();
+    $("#hashtags").show();
+  }
+}
+
+function mentionlist(id) {
+  var URL = "https://localhost:44342/api/item/GetTrendingMentions/" + id;
+  makeAjaxCall(URL, "GET").then(process);
+
+  function process(output) {
+    var counter2 = 0;
+    $.each(output,
+      function (data, realdata) {
+        var name = 'https://twitter.com/' + realdata;
+        counter2++;
+        if (counter2 <= 4) {
+          $("#mention1").append('<i style="margin-right:10px" class="fas fa-at"></i>' +
+            '<a  target="_blank" href=' +
+            name +
+            ">" +
+            realdata +
+            '</a><br/>');
+        } else if (counter2 <= 8) {
+          $("#mention2").append('<i style="margin-right:10px" class="fas fa-at"></i>' +
+            '<a  target="_blank" href=' +
+            name +
+            ">" +
+            realdata +
+            '</a><br/>');
+        } else {
+          $("#mention3").append('<i style="margin-right:10px" class="fas fa-at"></i>' +
+            '<a  target="_blank" href=' +
+            name +
+            ">" +
+            realdata +
+            '</a><br/>');
+        }
+      });
+    $("#loader-6").hide();
+    $("#mentions").show();
+  }
+
+
+
+}
+
+
+function drawNodeBox(id) {
+
+  var URL = "https://localhost:44342/api/item/getrecordsfromperson/";
+  makeAjaxCall(URL, "GET").then(process);
+
+  function process(output) {
+    var itemid = id;
+
+
+    var options = {
+      userId: 'ThomasVerhoeven',
+      projectId: 'sparkline',
+      functionId: 'main',
+      canvasId: 'mycanvas'
+    };
+
+
+    ndbx.embed(options,
+      function (err, player) {
+        if (err) {
+          console.log('Load error:', err);
+        } else {
+          window.player = player;
+
+          player.setValue('datareader', 'v', output);
+          player.start();
+          player.stop(); //anders infinite loop
+
+        }
+      });
+
+    $("#loader-9").hide();
+    $("#mycanvas").show();
+  }
+
 }
