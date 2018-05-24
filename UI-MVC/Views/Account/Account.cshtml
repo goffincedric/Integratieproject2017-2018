@@ -17,41 +17,41 @@
             <i class="ti-angle-up"></i>
           </span>
         </h4>
-        @using (Html.BeginForm("Account", "Account", FormMethod.Post, new {enctype = "multipart/form-data"}))
+        @using (Html.BeginForm("Account", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
           @Html.AntiForgeryToken()
           <form>
-            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-row">
               <div class="form-group col-md-6" style="margin-bottom: 75px;">
                 <div class="form-row h-50" style="padding-top: 25px;">
                   <img class="img-fluid" src="@ViewBag.ProfileImage" style="max-height: 100px; max-width: 100px;">
                   <div class="fileUpload blue-btn btn width100 w-75" style="margin-top: 25px; margin-left: 15px;">
                     <span>Upload a new profile picture</span>
-                    <input type="file" class="uploadlogo" name="file" id="file"/>
+                    <input type="file" class="uploadlogo" name="file" id="file" />
                   </div>
                 </div>
                 <div class="form-row">
                   <label for="inputEmail4">Email</label>
-                  @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control", @type = "email", @placeholder = "Email"}})
+                  @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })
                 </div>
-                <br/>
+                <br />
                 <div class="form-row">
                   <label for="inputEmail4">Gebruikersnaam</label>
-                  @Html.EditorFor(model => model.UserName, new {htmlAttributes = new {@class = "form-control", @id = "inputGebruikersnaam", @type = "text", @placeholder = "Gebruikersnaam"}})
+                  @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "inputGebruikersnaam", @type = "text", @placeholder = "Gebruikersnaam" } })
                 </div>
-                <br/>
+                <br />
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <div class="form-row2">
                       <label for="inputEmail4">Achternaam</label>
-                      @Html.EditorFor(model => model.LastName, new {htmlAttributes = new {@class = "form-control", @type = "text", @placeholder = "Achternaam"}})
+                      @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Achternaam" } })
                     </div>
                   </div>
                   <div class="form-group col-md-6">
                     <div class="form-row3">
                       <label for="inputEmail4">Voornaam</label>
-                      @Html.EditorFor(model => model.FirstName, new {htmlAttributes = new {@class = "form-control", @type = "text", @placeholder = "Voornaam"}})
+                      @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Voornaam" } })
                     </div>
                   </div>
                 </div>
@@ -62,26 +62,26 @@
 
                   <div class="form-row">
                     <label for="inputAddress">Straat en huisnummer</label>
-                    @Html.EditorFor(model => model.Street, new {htmlAttributes = new {@class = "form-control", @type = "text", @placeholder = "Straat + huisnummer"}})
+                    @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Straat + huisnummer" } })
                   </div>
-                  <br/>
+                  <br />
                   <div class="form-row">
                     <label for="inputCity">Stad</label>
-                    @Html.EditorFor(model => model.City, new {htmlAttributes = new {@class = "form-control", @type = "text", @placeholder = "City"}})
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "City" } })
                   </div>
-                  <br/>
+                  <br />
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <div class="form-row2">
                         <label for="inputState">Provincie</label>
-                        @Html.EnumDropDownListFor(model => model.Province, htmlAttributes: new {@class = "form-control"})
+                        @Html.EnumDropDownListFor(model => model.Province, htmlAttributes: new { @class = "form-control" })
                       </div>
                     </div>
-                    <br/>
+                    <br />
                     <div class="form-group col-md-6">
                       <div class="form-row3">
                         <label for="inputZip">Postcode</label>
-                        @Html.EditorFor(model => model.PostalCode, new {htmlAttributes = new {@class = "form-control", @placeholder = "postcode"}})
+                        @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "postcode" } })
                       </div>
                     </div>
                   </div>
@@ -114,7 +114,6 @@
       var filename = readURL(this);
       var name = filename.substring(filename.indexOf(".") + 1);
       var username = "@Model.UserName.ToString()";
-      console.log(name);
       $(this).parent().children('span').html(username + "." + name);
     });
 
