@@ -1,33 +1,33 @@
 ﻿$(document).ready(function () {
-  var next = 1;
-  $(".add-more").click(function (e) {
-    e.preventDefault();
-    var addto = "#field" + next;
-    var addRemove = "#field" + (next);
-    next = next + 1;
-    var newIn = '<input autocomplete="off" class="input form-control" id="field' +
-      next +
-      '" name="field' +
-      next +
-      '" type="text">';
-    var newInput = $(newIn);
-    var removeBtn = '<button id="remove' +
-      (next - 1) +
-      '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
-    var removeButton = $(removeBtn);
-    $(addto).after(newInput);
-    $(addRemove).after(removeButton);
-    $("#field" + next).attr('data-source', $(addto).attr('data-source'));
-    $("#count").val(next);
+    var next = 1;
+    $(".add-more").click(function (e) {
+        e.preventDefault();
+        var addto = "#field" + next;
+        var addRemove = "#field" + (next);
+        next = next + 1;
+        var newIn = '<input autocomplete="off" class="input form-control" id="field' +
+            next +
+            '" name="field' +
+            next +
+            '" type="text">';
+        var newInput = $(newIn);
+        var removeBtn = '<button id="remove' +
+            (next - 1) +
+            '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
+        var removeButton = $(removeBtn);
+        $(addto).after(newInput);
+        $(addRemove).after(removeButton);
+        $("#field" + next).attr('data-source', $(addto).attr('data-source'));
+        $("#count").val(next);
 
-    $('.remove-me').click(function (e) {
-      e.preventDefault();
-      var fieldNum = this.id.charAt(this.id.length - 1);
-      var fieldID = "#field" + fieldNum;
-      $(this).remove();
-      $(fieldID).remove();
+        $('.remove-me').click(function (e) {
+            e.preventDefault();
+            var fieldNum = this.id.charAt(this.id.length - 1);
+            var fieldID = "#field" + fieldNum;
+            $(this).remove();
+            $(fieldID).remove();
+        });
     });
-  });
 });
 
 
@@ -191,7 +191,7 @@ $(function () {
                 });
             };
 
-            var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div class="loader loader-6 loader-dash" style="width: 100%; height:100%; padding-top:25%; id="loader-x"><span></span><span></span><span></span><span></span></div><canvas style="display: none;"></canvas><div/><div/>'), 0, 0, 3, 3, true);
+            var newElement = grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-x"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div class="loader loader-6 loader-dash" style="width: 100%; height:100%; padding-top:25%;" id="loader-x"><span></span><span></span><span></span><span></span></div><canvas style="display: none;"></canvas><div/><div/>'), 0, 0, 3, 3, true);
             var X = newElement.data().gsX;
             var Y = newElement.data().gsY;
 
@@ -221,13 +221,14 @@ $(function () {
             });
 
             var Wizard = $('#Wizard');
+            $('.wizard-navigation').children('.moving-tab').css('width', '25%');
             Wizard.show();
             Wizard.children().attr('id', 'Wizard-' + ElementId);
             $('.btn-cancel').off('click');
             $('.btn-cancel').on('click', function () {
                 deleteElement(newElement.children('#Element-' + ElementId).children(), grid);
                 Wizard.children().attr('id', '');
-                Wizard.hide();
+                resetWizard(Wizard);
             });
 
             var data = null;
@@ -318,7 +319,11 @@ $(function () {
                                             headers: Headers,
                                             url: "https://localhost:44342/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
                                         }).responseJSON);
-                                        $(this).attr('src', (item.IconURL).substring(1, item.IconURL.length));
+                                        if (item.IconURL.substring(0, 1) === '~') {
+                                            $(this).attr('src', (item.IconURL).substring(1, item.IconURL.length));
+                                        } else {
+                                            $(this).attr('src', (item.IconURL).substring(0, item.IconURL.length));
+                                        }
                                         $(this).siblings('.container').children('h4').children('.itemId').text(item.ItemId);
                                         $(this).siblings('.container').children('.itemName').text(item.Name);
                                     })
@@ -336,7 +341,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().show();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -345,7 +349,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().show();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -354,7 +357,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().hide();
                                 $('#donut').parent().parent().hide();
-                                $('#word').parent().parent().hide();
                                 $('#line').parent().parent().show();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -363,7 +365,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().hide();
                                 $('#donut').parent().parent().hide();
-                                $('#word').parent().parent().hide();
                                 $('#line').parent().parent().show();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -372,7 +373,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().hide();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -381,7 +381,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().hide();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -390,7 +389,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().show();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().hide();
                                 break;
@@ -399,7 +397,6 @@ $(function () {
                                 $('#bar').parent().parent().show();
                                 $('#pie').parent().parent().show();
                                 $('#donut').parent().parent().show();
-                                $('#word').parent().parent().show();
                                 $('#line').parent().parent().hide();
                                 $('#map').parent().parent().show();
                                 break;
@@ -443,8 +440,6 @@ $(function () {
                         break;
                     case 'donut': GraphType = 3;
                         break;
-                    case 'word': GraphType = 4;
-                        break;
                     case 'map': GraphType = 5;
                         break;
                 }
@@ -456,8 +451,6 @@ $(function () {
                 var Element = JSON.parse('{"ElementId":"' + ElementId + '", "X" : "' + newElement.data().gsX + '", "Y" : "' + newElement.data().gsY + '", "Width": "' + newElement.data().gsWidth + '", "Height": "' + newElement.data().gsHeight + '", "IsDraggable": "' + true + '", "ZoneId": "' + ZoneId + '", "GraphType" : "' + GraphType + '","DataType":"' + DataType + '", "IsUnfinished":"false", "Items": ' + itemsJSON + '}');
 
                 Wizard.hide();
-
-                console.log(Wizard);
 
                 resetWizard(Wizard);
 
@@ -583,7 +576,6 @@ $(function () {
 
         changeElements = function (elements, grid) {
             if (!addingElement && !deletingElement) {
-                console.log('change');
                 var ZoneId = grid.attr('id');
                 ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
                 var count = 0;
@@ -689,7 +681,7 @@ $(function () {
 
                             addZone.data('gridstack').move($('.add-zone').children('div').children('div').children('div'), 0, 0);
 
-                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><div class="loader loader-6 loader-dash" style="width: 100%; height:100%; padding-top:25%; id="loader-x"><span></span><span></span><span></span><span></span></div><canvas style="display: none;"></canvas><div/><div/>'), Element.X, Element.Y, Element.Width, Element.Height, true);
+                            grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id="Element-' + ElementId + '"><i class="ti-trash float-right mR-15 mT-15 delete-element"></i><canvas style="display: none;"></canvas><div/><div/>'), Element.X, Element.Y, Element.Width, Element.Height, true);
 
                             grid.data('gridstack').addWidget($('<div><div class="grid-stack-item-content bgc-white bd" id ="Element-+"><div><img class="w-3r bdrs-50p alert-img add-element" src="/Content/Images/plus-icon.png"><div/><div/><div/>'), 0, 0, 3, 3, true);
 
@@ -777,21 +769,18 @@ $(function () {
             wizard.replaceWith(cleanWizard);
             $.getScript("https://localhost:44342/Scripts/Wizard/jquery.validate.min.js")
                 .done(function (script, textStatus) {
-                    console.log(textStatus);
                 })
                 .fail(function (jqxhr, settings, exception) {
                     console.log("Triggered ajaxError handler.");
                 });
             $.getScript("https://localhost:44342/Scripts/Wizard/jquery.bootstrap.js")
                 .done(function (script, textStatus) {
-                    console.log(textStatus);
                 })
                 .fail(function (jqxhr, settings, exception) {
                     console.log("Triggered ajaxError handler.");
                 });
             $.getScript("https://localhost:44342/Scripts/Wizard/material-bootstrap-wizard.js")
                 .done(function (script, textStatus) {
-                    console.log(textStatus);
                 })
                 .fail(function (jqxhr, settings, exception) {
                     console.log("Triggered ajaxError handler.");
@@ -913,8 +902,6 @@ $(function () {
                     break;
                 case 3: graph = 'doughnut';
                     break;
-                case 4: graph = 'wordcloud';
-                    break;
                 case 5: graph = 'map';
                     break;
             }
@@ -949,7 +936,6 @@ $(function () {
                                 responsive: true
                             }
                         });
-
                     $("#loader-" + elementId).hide();
                     can.show();
                 }
@@ -1012,8 +998,6 @@ $(function () {
                 case 2: graph = 'pie';
                     break;
                 case 3: graph = 'doughnut';
-                    break;
-                case 4: graph = 'wordcloud';
                     break;
                 case 5: graph = 'map';
                     break;
@@ -1111,8 +1095,6 @@ $(function () {
                     break;
                 case 3: graph = 'doughnut';
                     break;
-                case 4: graph = 'wordcloud';
-                    break;
                 case 5: graph = 'map';
                     break;
             }
@@ -1207,8 +1189,6 @@ $(function () {
                     break;
                 case 3: graph = 'doughnut';
                     break;
-                case 4: graph = 'wordcloud';
-                    break;
                 case 5: graph = 'map';
                     break;
             }
@@ -1271,8 +1251,6 @@ $(function () {
                     break;
                 case 3: graph = 'doughnut';
                     break;
-                case 4: graph = 'wordcloud';
-                    break;
                 case 5: graph = 'map';
                     break;
             }
@@ -1332,8 +1310,6 @@ $(function () {
                 case 2: graph = 'pie';
                     break;
                 case 3: graph = 'doughnut';
-                    break;
-                case 4: graph = 'wordcloud';
                     break;
                 case 5: graph = 'map';
                     break;
@@ -1416,8 +1392,6 @@ $(function () {
                     break;
                 case 3: graph = 'doughnut';
                     break;
-                case 4: graph = 'wordcloud';
-                    break;
                 case 5: graph = 'map';
                     break;
             }
@@ -1495,8 +1469,6 @@ $(function () {
                 case 2: graph = 'pie';
                     break;
                 case 3: graph = 'doughnut';
-                    break;
-                case 4: graph = 'wordcloud';
                     break;
                 case 5: graph = 'map';
                     break;
