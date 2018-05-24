@@ -62,8 +62,8 @@ namespace UI_MVC.Controllers.API
             return Ok(zones);
         }
 
-        // PUT: api/dashboard/putzone/{zoneId}
-        [HttpPut]
+        // POST: api/dashboard/putzone/{zoneId}
+        [HttpPost]
         public IHttpActionResult PutZone(int id, [FromBody] Zone zone)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -93,7 +93,7 @@ namespace UI_MVC.Controllers.API
             return Ok(zone); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte zone
         }
 
-        // DELETE: api/dashboard/deletezone/zoneId
+        // POST: api/dashboard/deletezone/zoneId
         [HttpDelete]
         public IHttpActionResult DeleteZone(int? id)
         {
@@ -148,8 +148,8 @@ namespace UI_MVC.Controllers.API
             return Ok(element);
         }
 
-        // PUT: api/dashboard/putelement/{elementId}
-        [HttpPut]
+        // POST: api/dashboard/putelement/{elementId}
+        [HttpPost]
         public IHttpActionResult PutElement(int id, [FromBody] Element element)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -206,8 +206,8 @@ namespace UI_MVC.Controllers.API
                 Ok(element); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte element
         }
 
-        // DELETE: api/dashboard/deleteelement
-        [HttpDelete]
+        // POST: api/dashboard/deleteelement
+        [HttpPost]
         public IHttpActionResult DeleteElement(int? id)
         {
             if (id == null) return BadRequest("No Id provided");

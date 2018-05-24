@@ -4268,7 +4268,7 @@
   var keycode = $.ui.keyCode = {
     BACKSPACE: 8,
     COMMA: 188,
-    DELETE: 46,
+    POST: 46,
     DOWN: 40,
     END: 35,
     ENTER: 13,
@@ -7323,9 +7323,9 @@
     $.fn.button = (function(orig) {
       return function() {
         if (!this.length ||
-          (this.length && this[0].tagName !== "INPUT") ||
+          (this.length && this[0].tagName !== "INPOST") ||
           (this.length &&
-            this[0].tagName === "INPUT" &&
+            this[0].tagName === "INPOST" &&
             (
               this.attr("type") !== "checkbox" && this.attr("type") !== "radio"
             ))) {

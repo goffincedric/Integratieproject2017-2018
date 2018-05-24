@@ -32555,7 +32555,7 @@
               a = {
                 DATA_TOGGLE_CARROT: '[data-toggle^="button"]',
                 DATA_TOGGLE: '[data-toggle="buttons"]',
-                INPUT: "input",
+                INPOST: "input",
                 ACTIVE: ".active",
                 BUTTON: ".btn"
               },
@@ -32574,7 +32574,7 @@
                     n = !0,
                     r = t(this._element).closest(a.DATA_TOGGLE)[0];
                   if (r) {
-                    var o = t(this._element).find(a.INPUT)[0];
+                    var o = t(this._element).find(a.INPOST)[0];
                     if (o) {
                       if ("radio" === o.type)
                         if (o.checked && t(this._element).hasClass(i.ACTIVE)) e = !1;
@@ -38825,7 +38825,7 @@
           s = e.aanFeatures,
           l = '<input type="search" class="' + i.sFilterInput + '"/>',
           u = a.sSearch;
-        u = u.match(/_INPUT_/) ? u.replace("_INPUT_", l) : u + l;
+        u = u.match(/_INPOST_/) ? u.replace("_INPOST_", l) : u + l;
         var d = t("<div/>",
               {
                 id: s.f ? null : r + "_filter",

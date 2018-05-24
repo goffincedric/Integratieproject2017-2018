@@ -456,7 +456,7 @@ $(function () {
 
                 $.ajax({
                     async: false,
-                    type: 'PUT',
+                    type: 'POST',
                     data: Element,
                     dataType: 'json',
                     headers: Headers,
@@ -499,7 +499,7 @@ $(function () {
 
                 $.ajax({
                     async: false,
-                    type: 'PUT',
+                    type: 'POST',
                     data: Zone,
                     dataType: 'json',
                     headers: Headers,
@@ -538,7 +538,7 @@ $(function () {
 
                     $.ajax({
                         async: false,
-                        type: 'PUT',
+                        type: 'POST',
                         data: Zone,
                         dataType: 'json',
                         headers: Headers,
@@ -566,7 +566,7 @@ $(function () {
 
             $.ajax({
                 async: false,
-                type: 'DELETE',
+                type: 'POST',
                 headers: Headers,
                 url: "http://localhost:51379/api/dashboard/deletezone/" + ZoneId
             })
@@ -611,7 +611,7 @@ $(function () {
 
                             $.ajax({
                                 async: false,
-                                type: 'PUT',
+                                type: 'POST',
                                 data: Element,
                                 dataType: 'json',
                                 headers: Headers,
@@ -725,7 +725,7 @@ $(function () {
 
                         $.ajax({
                             async: false,
-                            type: 'PUT',
+                            type: 'POST',
                             data: Element,
                             dataType: 'json',
                             headers: Headers,

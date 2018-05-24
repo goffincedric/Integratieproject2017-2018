@@ -280,6 +280,7 @@
     <Content Include="Content\datatables.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Fonts\roboto.css" />
     <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />

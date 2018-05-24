@@ -433,7 +433,7 @@ namespace UI_MVC.Controllers.API
                 Ok(theme); //Indien nodig aanpassen naar CreatedAtRoute om te redirecten naar pagina van gemaakte item
         }
 
-        // PUT: api/item/5
+        // POST: api/item/5
         [HttpPut]
         [Authorize(Roles = "User,Admin,SuperAdmin")]
         public IHttpActionResult Put(int id, [FromBody] Item item)
@@ -445,7 +445,7 @@ namespace UI_MVC.Controllers.API
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // DELETE: api/item/5
+        // POST: api/item/5
         [HttpDelete]
         [Authorize(Roles = "User,Admin,SuperAdmin")]
         public IHttpActionResult Delete([FromBody] int? id)

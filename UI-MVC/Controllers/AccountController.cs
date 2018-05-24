@@ -293,7 +293,7 @@ namespace UI_MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // TODO: MOET PUT ZIJN I.P.V. POST
+        // TODO: MOET POST ZIJN I.P.V. POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Account(AccountEditModel editedAccount)

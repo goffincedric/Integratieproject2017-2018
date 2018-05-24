@@ -316,7 +316,7 @@
     console.log("GERAAKT");
     $.ajax({
       url: "http://localhost:51379/api/subplatform/ChangeTagFAQ",
-      type: "PUT",
+      type: "POST",
       data: JSON.stringify(faqChange),
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
       contentType: 'application/json'
@@ -333,7 +333,7 @@
     $.ajax({
 
       url: "http://localhost:51379/api/subplatform/ChangeTagMenu",
-      type: "PUT",
+      type: "POST",
       data: JSON.stringify(menu),
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
       contentType: 'application/json'
