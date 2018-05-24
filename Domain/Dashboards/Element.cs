@@ -30,6 +30,5 @@ namespace PB.BL.Domain.Dashboards
         public List<int> ItemIds { get; set; }
 
         public virtual List<Item> Items { get; set; }
-        //public List<Comparison> Comparison { get; set; }
     }
 }

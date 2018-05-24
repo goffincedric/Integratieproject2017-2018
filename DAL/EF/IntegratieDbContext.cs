@@ -34,10 +34,8 @@ namespace PB.DAL.EF
         public DbSet<WeeklyReview> WeeklyReviews { get; set; }
         public DbSet<ProfileAlert> ProfileAlerts { get; set; }
         public DbSet<Alert> Alerts { get; set; }
-
-        public DbSet<Comparison> Comparisons { get; set; }
+        
         public DbSet<Dashboard> Dashboards { get; set; }
-
         public DbSet<Element> Elements { get; set; }
         public DbSet<Zone> Zones { get; set; }
 
