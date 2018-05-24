@@ -478,13 +478,7 @@ namespace UI_MVC.Controllers
 
             return PartialView(subplatform);
         }
-        [Authorize(Roles = "Admin,SuperAdmin")]
-        public ActionResult _ChangeMenu()
-        {
        
-
-            return PartialView();
-        }
         #endregion
     }
 }
