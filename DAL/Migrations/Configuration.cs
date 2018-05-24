@@ -822,7 +822,7 @@ namespace PB.DAL.Migrations
                 new Theme
                 {
                     Name = "Milieu",
-                    IconURL = @"~/Content/Images/Themes/eu.png",
+                    IconURL = @"~/Content/Images/Themes/milieu.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
                     Keywords = new List<Keyword>
