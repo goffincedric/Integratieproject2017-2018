@@ -21,8 +21,10 @@ namespace UI_MVC.Controllers.API
             ItemMgr = new ItemManager(UowMgr);
         }
 
-        #region RelatieveStijging
-
+        #region Item Details
+        // TODO OMSCHRIJVING
+        // Relatieve stijging
+        // ERROR: SEQUENCE CONTAINS NO ELEMENTS
         [HttpGet]
         public IHttpActionResult GetPersonIncrease()
         {
@@ -32,48 +34,48 @@ namespace UI_MVC.Controllers.API
             foreach (Person person in persons)
             {
                 IEnumerable<Record> records = person.Records.ToList();
-                double allDays = records.OrderByDescending(p => p.Date.Date).GroupBy(p => p.Date.Date).ToList().Take(4)
-                    .Average(p => p.ToList().Count());
+
+                double allDays = records.OrderByDescending(p => p.Date.Date).GroupBy(p => p.Date.Date).ToList().Take(4).Average(p => p.ToList().Count());
                 DateTime last = records.OrderByDescending(p => p.Date).First().Date.Date;
                 double lastDay = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Count();
-                string stijging = "";
-                stijging = Math.Round((lastDay - allDays) / allDays * 100, 2).ToString();
+
+                string stijging = Math.Round((lastDay - allDays) / allDays * 100, 2).ToString();
+
                 if (double.Parse(stijging) < 0)
+                {
                     stijging = stijging + "%";
+                }
                 else
+                {
                     stijging = "+" + stijging + "%";
+                }
 
                 stijgingmap.Add(person.Name, stijging);
             }
-
-
-            if (stijgingmap == null || stijgingmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            
+            if (stijgingmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(stijgingmap);
         }
 
-        #endregion
-
-        #region ItemDetails
-
+        // TODO OMSCHRIJVING + CLEANUP?
         [HttpGet]
         public IHttpActionResult GetItemDetails(int id)
         {
             Item item = ItemMgr.GetItem(id);
             Dictionary<string, string> details = new Dictionary<string, string>();
-            IEnumerable<Record> records = null;
+            List<Record> records = new List<Record>();
             if (item is Person person)
             {
-                records = person.Records.ToList();
+                records.AddRange(person.Records);
             }
             else if (item is Organisation organisation)
             {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
+                records.AddRange(organisation.People.SelectMany(p => p.Records));
             }
             else if (item is Theme theme)
             {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
-                    .ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records));
+                records.AddRange(theme.Persons.SelectMany(p => p.Records).Except(first));
             }
 
             if (records is null || records.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
@@ -121,92 +123,105 @@ namespace UI_MVC.Controllers.API
             if (details.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(details);
         }
-
         #endregion
 
         #region Words
-
+        // Gets top 5 trending words and their respective amount of records
         [HttpGet]
         public IHttpActionResult GetTrendingWordsCount(int id)
         {
+            // Get item and check if exists
             Item item = ItemMgr.GetItem(id);
+            if (item is null) return BadRequest("Item doesn't exist");
 
-            IEnumerable<Record> records = null;
-            Dictionary<string, int> words = new Dictionary<string, int>();
+            // Gets records from item
+            List<Record> records = new List<Record>();
             if (item is Person person)
             {
-                records = person.Records;
+                records.AddRange(person.Records);
             }
             else if (item is Organisation organisation)
             {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
+                records.AddRange(organisation.People.SelectMany(p => p.Records));
             }
             else if (item is Theme theme)
             {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
-                    .ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records));
+                records.AddRange(theme.Persons.SelectMany(p => p.Records).Except(first));
             }
+
             if (records.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
-            records.SelectMany(r => r.Words).Distinct().OrderByDescending(h => h.Records.Count).Distinct().Take(5)
-                .ToList().ForEach(p => words.Add(p.Text, p.Records.Count));
-            if (words is null || words.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            
+            Dictionary<string, int> words = records
+                .SelectMany(r => r.Words).Distinct()
+                .OrderByDescending(h => h.Records.Count)
+                .Take(5)
+                .ToDictionary(w => w.Text, w => w.Records.Count);
+
+            if (words.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(words);
         }
 
+        // Gets top 5 trending words and their respective amount of records
         [HttpGet]
         public IHttpActionResult GetTrendingWordsCountOverall(int id)
         {
+            // Get item and check if exists
             Item item = ItemMgr.GetItem(id);
-            IEnumerable<Record> records = null;
-            Dictionary<string, int> words = new Dictionary<string, int>();
+            if (item is null) return BadRequest("Item doesn't exist");
+
+            // Gets records from item
+            List<Record> records = new List<Record>();
             if (item is Person person)
             {
-                records = person.Records;
+                records.AddRange(person.Records);
             }
             else if (item is Organisation organisation)
             {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
+                records.AddRange(organisation.People.SelectMany(p => p.Records));
             }
             else if (item is Theme theme)
             {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
-                    .ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records));
+                records.AddRange(theme.Persons.SelectMany(p => p.Records).Except(first));
             }
 
             if (records.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
-            int count = records.SelectMany(r => { return r.Words; }).Count();
-            words.Add(item.Name, count);
-            if (words is null || words.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+
+            // Count words from all records
+            Dictionary<string, int> words = new Dictionary<string, int>
+            {
+                {
+                    item.Name, records.SelectMany(r => { return r.Words; }).Count()
+                }
+            };
             return Ok(words);
         }
-
         #endregion
 
         #region Urls
-
+        // 
         [HttpGet]
         public IHttpActionResult GetTrendingUrl(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            IEnumerable<Record> records = null;
-            List<string> urls = new List<string>();
+            List<Record> records = new List<Record>();
 
             if (item is Person person)
             {
-                records = person.Records;
+                records.AddRange(person.Records);
             }
             else if (item is Organisation organisation)
             {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
+                records.AddRange(organisation.People.SelectMany(p => p.Records).ToList());
             }
             else if (item is Theme theme)
             {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
-                    .ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records));
+                records.AddRange(theme.Persons.SelectMany(p => p.Records).Except(first));
             }
+
+            List<string> urls = new List<string>();
 
             if (records.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             records.SelectMany(r => r.URLs).Distinct().Take(6).ToList().ForEach(p => urls.Add(p.Link));
@@ -514,8 +529,38 @@ namespace UI_MVC.Controllers.API
         #endregion
 
         #region SentimentAnalyse
+        // Gets the average sentiment from item grouped by date from last 10 days
         [HttpGet]
         public IHttpActionResult GetPersonEvolution(int id)
+        {
+            Item item = ItemMgr.GetItem(id);
+            IEnumerable<Record> records = null;
+
+            if (item is Person person)
+            {
+                records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date);
+            }
+            else if (item is Organisation organisation)
+            {
+                records = organisation.People.SelectMany(p => p.Records).Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date);
+            }
+            else if (item is Theme theme)
+            {
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
+                    .Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(10)).OrderByDescending(a => a.Date.Date);
+                records = theme.Persons.SelectMany(p => p.Records).Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date).Except(first);
+            }
+
+            Dictionary<DateTime, double> recordsmap = records.GroupBy(r => r.Date.Date).ToDictionary(kv => kv.Key, kv => kv.ToList().Average(r => r.Sentiment.Polarity * r.Sentiment.Objectivity));
+
+            if (recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            recordsmap.OrderBy(o => o.Key);
+            return Ok(recordsmap);
+        }
+
+        // Gets the average sentiment from item grouped by date (string-format) from last 10 days
+        [HttpGet]
+        public IHttpActionResult GetPersonEvolutionString(int id)
         {
             Item item = ItemMgr.GetItem(id);
             IEnumerable<Record> records = null;
@@ -536,64 +581,15 @@ namespace UI_MVC.Controllers.API
                 records = theme.Persons.SelectMany(p => p.Records).Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date).Except(first);
             }
 
-            Dictionary<DateTime, double> recordsmap = records.GroupBy(r => r.Date.Date).ToDictionary(kv => kv.Key, kv => kv.ToList().Average(r => r.Sentiment.Polarity * r.Sentiment.Objectivity));
-
+            Dictionary<string, double> recordsmap = records.GroupBy(r => r.Date.Date.ToShortDateString()).ToDictionary(kv => kv.Key, kv => kv.ToList().Average(r => r.Sentiment.Polarity * r.Sentiment.Objectivity));
             if (recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             recordsmap.OrderBy(o => o.Key);
-            return Ok(recordsmap);
-        }
-
-        [HttpGet]
-        public IHttpActionResult GetPersonEvolutionString(int id)
-        {
-            Item item = ItemMgr.GetItem(id);
-            IEnumerable<Record> records = null;
-
-            if (item is Person person)
-            {
-                records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0)
-                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(10);
-            }
-            else if (item is Organisation organisation)
-            {
-                records = organisation.People.SelectMany(p => p.Records).ToList().Where(p => p.Sentiment.Polarity != 0.0)
-                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Take(10);
-            }
-            else if (item is Theme theme)
-            {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
-                    .ToList().Where(p => p.Sentiment.Polarity != 0.0)
-                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date);
-                records = theme.Persons.SelectMany(p => p.Records).ToList().Where(p => p.Sentiment.Polarity != 0.0)
-                    .Where(o => o.Sentiment.Objectivity != 0).OrderByDescending(a => a.Date).Except(first).ToList().Take(10);
-            }
-
-            Dictionary<string, double> recordsmap = new Dictionary<string, double>();
-            records.ToList().ForEach(p =>
-            {
-                recordsmap.Add(p.Date.ToShortDateString(), p.Sentiment.Polarity * p.Sentiment.Objectivity);
-            });
-            recordsmap.OrderBy(o => o.Key);
-            if (records == null) return StatusCode(HttpStatusCode.NoContent);
-            return Ok(recordsmap);
-        }
-
-        [HttpGet]
-        public IHttpActionResult GetPersonAverageSentiment(int id)
-        {
-            IEnumerable<Record> records = ItemMgr.GetPerson(id).Records;
-            if (records == null) return NotFound();
-            Dictionary<DateTime, double> recordsmap = new Dictionary<DateTime, double>();
-
-            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key).Take(10)
-                .ToDictionary(r => r.Key.Date,
-                    r => r.Average(p => p.Sentiment.Objectivity) * r.Average(f => f.Sentiment.Polarity));
-            if (recordsmap == null || records.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
         #endregion
 
         #region TweetEvolution
+        // Gets amount of records from item grouped by date from last 10 days
         [HttpGet]
         public IHttpActionResult GetItemTweet(int id)
         {
@@ -601,7 +597,7 @@ namespace UI_MVC.Controllers.API
             List<Record> records = new List<Record>();
             if (item is Person person)
             {
-                records.AddRange(person.Records.ToList());
+                records.AddRange(person.Records);
             }
             else if (item is Organisation organisation)
             {
@@ -616,22 +612,26 @@ namespace UI_MVC.Controllers.API
 
             records = records.Distinct().ToList();
             if (records == null) return StatusCode(HttpStatusCode.NoContent);
-            Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
-            recordsmap = records.GroupBy(r => r.Date.Date).OrderBy(r => r.Key).Take(10)
+            Dictionary<DateTime, int> recordsmap = records
+                .Where(r => r.Date > DateTime.Now.AddDays(-10))
+                .GroupBy(r => r.Date.Date)
+                .OrderBy(r => r.Key)
                 .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
 
-            if (recordsmap == null || recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            if (recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
 
+        // Gets amount of records from item grouped by date (string-format) from last 10 days
         [HttpGet]
         public IHttpActionResult GetItemTweetString(int id)
         {
             Item item = ItemMgr.GetItem(id);
+            if (item == null) return StatusCode(HttpStatusCode.BadRequest);
             List<Record> records = new List<Record>();
             if (item is Person person)
             {
-                records.AddRange(person.Records.ToList());
+                records.AddRange(person.Records);
             }
             else if (item is Organisation organisation)
             {
@@ -645,23 +645,28 @@ namespace UI_MVC.Controllers.API
             }
 
             records = records.Distinct().ToList();
-            if (records == null) return NotFound();
-            Dictionary<string, int> recordsmap = new Dictionary<string, int>();
-            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key).Take(10)
+            if (records == null) return StatusCode(HttpStatusCode.NoContent);
+            Dictionary<string, int> recordsmap = records
+                .Where(r => r.Date > DateTime.Now.AddDays(-10))
+                .GroupBy(r => r.Date.Date)
+                .OrderBy(r => r.Key)
                 .ToDictionary(r => r.Key.Date.ToShortDateString(), r => r.ToList().Count());
 
-            if (recordsmap == null) return StatusCode(HttpStatusCode.NoContent);
+            if (recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
         }
 
+        // Gets amount of records from persons grouped by date
         [HttpGet]
         public IHttpActionResult GetPersonTweet(int id)
         {
-            IEnumerable<Record> records = ItemMgr.GetPerson(id).Records;
+            IEnumerable<Record> records = ItemMgr.GetPerson(id)?.Records;
             if (records == null) return NotFound();
             Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
 
-            recordsmap = records.GroupBy(r => r.Date.Date).OrderByDescending(r => r.Key)
+            recordsmap = records
+                .GroupBy(r => r.Date.Date)
+                .OrderByDescending(r => r.Key)
                 .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
             if (recordsmap == null || recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             return Ok(recordsmap);
@@ -842,7 +847,7 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetTweetName()
         {
-            Person person = ItemMgr.GetPersons().Where(p => p.TwitterName != "" || p.TwitterName != null).OrderByDescending(p => p.TrendingScore).FirstOrDefault();
+            Person person = ItemMgr.GetPersons().Where(p => !string.IsNullOrWhiteSpace(p.TwitterName)).OrderByDescending(p => p.TrendingScore).FirstOrDefault();
             if (person is null) return NotFound();
             return Ok(person.TwitterName);
         }
@@ -893,14 +898,13 @@ namespace UI_MVC.Controllers.API
             Dictionary<string, string> map = new Dictionary<string, string>();
             if (item is Organisation organisation)
             {
-                organisation.People.Where(p => p.TwitterName != "" && p.TwitterName != null).OrderBy(r => r.TrendingScore).Take(4).ToList().ForEach(s => map.Add(s.Name, s.TwitterName));
+                organisation.People.Where(p => !string.IsNullOrWhiteSpace(p.TwitterName)).OrderBy(r => r.TrendingScore).Take(4).ToList().ForEach(s => map.Add(s.Name, s.TwitterName));
             }
             else if (item is Theme theme)
             {
-                theme.Persons.Where(p => p.TwitterName != "" && p.TwitterName != null).OrderBy(r => r.TrendingScore).Take(4).ToList().ForEach(s => map.Add(s.Name, s.TwitterName));
+                theme.Persons.Where(p => !string.IsNullOrWhiteSpace(p.TwitterName)).OrderBy(r => r.TrendingScore).Take(4).ToList().ForEach(s => map.Add(s.Name, s.TwitterName));
             }
-
-
+            
             if (map is null) return NotFound();
             return Ok(map);
         }
