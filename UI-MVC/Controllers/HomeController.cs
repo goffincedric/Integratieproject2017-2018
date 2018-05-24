@@ -225,7 +225,7 @@ namespace UI_MVC.Controllers
             Item item = itemMgr.GetItem(id);
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             if (!item.SubPlatforms.Contains(Subplatform)) return HttpNotFound();
-          
+            
 
             if (item is Person person)
             {

@@ -33,9 +33,9 @@ namespace UI_MVC.Controllers.API
 
             foreach (Person person in persons)
             {
-                IEnumerable<Record> records = person.Records.ToList();
-
-                double allDays = records.OrderByDescending(p => p.Date.Date).GroupBy(p => p.Date.Date).ToList().Take(4).Average(p => p.ToList().Count());
+                List<Record> records = person.Records;
+                if (records.Count == 0) continue;
+                double allDays = records.OrderByDescending(p => p.Date.Date).GroupBy(p => p.Date.Date).Take(4).Average(p => p.ToList().Count());
                 DateTime last = records.OrderByDescending(p => p.Date).First().Date.Date;
                 double lastDay = records.OrderByDescending(p => p.Date.Date).Where(p => p.Date.Date >= last).Count();
 
