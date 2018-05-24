@@ -3,7 +3,7 @@
     "UserName": "captain",
     "Email": "example@example.tld",
     "ProfileIcon": "~/Content/Images/Users/user.png",
-    "CreatedOn": "2018-05-23T20:43:34.6740697",
+    "CreatedOn": "2018-05-24T12:48:51.4250663",
     "UserData": {
       "Id": 1,
       "FirstName": null,
@@ -50,9 +50,56 @@
     "UserName": "admin",
     "Email": "admin@example.tld",
     "ProfileIcon": "~/Content/Images/Users/user.png",
-    "CreatedOn": "2018-05-23T20:43:34.9271063",
+    "CreatedOn": "2018-05-24T12:48:51.7772278",
     "UserData": {
       "Id": 2,
+      "FirstName": null,
+      "LastName": null,
+      "Street": null,
+      "PostalCode": null,
+      "City": null,
+      "Province": 0
+    },
+    "Settings": [
+      {
+        "SettingName": 0,
+        "IsEnabled": true,
+        "Value": null,
+        "boolValue": true
+      },
+      {
+        "SettingName": 1,
+        "IsEnabled": true,
+        "Value": null,
+        "boolValue": true
+      },
+      {
+        "SettingName": 2,
+        "IsEnabled": true,
+        "Value": null,
+        "boolValue": true
+      },
+      {
+        "SettingName": 3,
+        "IsEnabled": true,
+        "Value": "Light",
+        "boolValue": false
+      },
+      {
+        "SettingName": 4,
+        "IsEnabled": true,
+        "Value": null,
+        "boolValue": true
+      }
+    ]
+  },
+  {
+    "UserName": "thomas.ver.1994",
+    "Email": "thomas.ver.1998@gmail.com",
+    "ProfileIcon": "~/Content/Images/Users/user.png",
+    "CreatedOn": "2018-05-24T00:00:00",
+    "UserData": {
+      "Id": 3,
       "FirstName": null,
       "LastName": null,
       "Street": null,
