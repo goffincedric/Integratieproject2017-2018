@@ -1353,9 +1353,9 @@ $(function () {
                         var label = [];
                         var values = [];
 
-                        var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
-                        var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
-                        var points = ["#512da8", "#1976d2", "#388e3c"];
+                      var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)", "#ffe0b2", "#ffcdd2"];
+                      var borderColors = ["#673ab7", "#2196f3", "#4caf50", "#fb8c00", "#e53935"]
+                      var points = ["#512da8", "#1976d2", "#388e3c", "#e65100", "#b71c1c"];
 
                         for (var i = 0; i < keys.length; i++) {
                             label.push(keys[i]);
@@ -1368,7 +1368,8 @@ $(function () {
                             borderWidth: 2,
                             backgroundColor: backgroundcolors[counter],
                             borderColor: borderColors[counter],
-                            pointBackgroundColor: points[counter]
+                          pointBackgroundColor: points[counter], 
+                          fill: false
 
                         }
 
@@ -1513,9 +1514,9 @@ $(function () {
                         var label = [];
                         var values = [];
 
-                        var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)"];
-                        var borderColors = ["#673ab7", "#2196f3", "#4caf50"]
-                        var points = ["#512da8", "#1976d2", "#388e3c"];
+                      var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)", "#ffe0b2", "#ffcdd2"];
+                      var borderColors = ["#673ab7", "#2196f3", "#4caf50", "#fb8c00", "#e53935"]
+                      var points = ["#512da8", "#1976d2", "#388e3c", "#e65100", "#b71c1c"];
 
                         for (var i = 0; i < keys.length; i++) {
                             label.push(keys[i]);
@@ -1528,7 +1529,8 @@ $(function () {
                             borderWidth: 2,
                             backgroundColor: backgroundcolors[counter],
                             borderColor: borderColors[counter],
-                            pointBackgroundColor: points[counter]
+                          pointBackgroundColor: points[counter],
+                          fill: false
                         }
 
                         datagrafiek.datasets.push(myNewDataSet);
