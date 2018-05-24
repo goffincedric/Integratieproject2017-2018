@@ -319,7 +319,11 @@ $(function () {
                                             headers: Headers,
                                             url: "https://localhost:44342/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
                                         }).responseJSON);
-                                        $(this).attr('src', (item.IconURL).substring(1, item.IconURL.length));
+                                        if (item.IconURL.substring(0, 1) === '~') {
+                                            $(this).attr('src', (item.IconURL).substring(1, item.IconURL.length));
+                                        } else {
+                                            $(this).attr('src', (item.IconURL).substring(0, item.IconURL.length));
+                                        }
                                         $(this).siblings('.container').children('h4').children('.itemId').text(item.ItemId);
                                         $(this).siblings('.container').children('.itemName').text(item.Name);
                                     })
@@ -448,8 +452,6 @@ $(function () {
 
                 Wizard.hide();
 
-                console.log(Wizard);
-
                 resetWizard(Wizard);
 
                 $.ajax({
@@ -574,7 +576,6 @@ $(function () {
 
         changeElements = function (elements, grid) {
             if (!addingElement && !deletingElement) {
-                console.log('change');
                 var ZoneId = grid.attr('id');
                 ZoneId = ZoneId.substring(ZoneId.indexOf('-') + 1, ZoneId.length);
                 var count = 0;
@@ -768,21 +769,18 @@ $(function () {
             wizard.replaceWith(cleanWizard);
             $.getScript("https://localhost:44342/Scripts/Wizard/jquery.validate.min.js")
                 .done(function (script, textStatus) {
-                    console.log(textStatus);
                 })
                 .fail(function (jqxhr, settings, exception) {
                     console.log("Triggered ajaxError handler.");
                 });
             $.getScript("https://localhost:44342/Scripts/Wizard/jquery.bootstrap.js")
                 .done(function (script, textStatus) {
-                    console.log(textStatus);
                 })
                 .fail(function (jqxhr, settings, exception) {
                     console.log("Triggered ajaxError handler.");
                 });
             $.getScript("https://localhost:44342/Scripts/Wizard/material-bootstrap-wizard.js")
                 .done(function (script, textStatus) {
-                    console.log(textStatus);
                 })
                 .fail(function (jqxhr, settings, exception) {
                     console.log("Triggered ajaxError handler.");

@@ -1879,6 +1879,10 @@ h3 { margin-bottom: 0px; }
   max-width: 20%
 }
 
+.card img{
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1439px) and (min-width: 992px) {
     .sidebar { width: 70px; }
 }
