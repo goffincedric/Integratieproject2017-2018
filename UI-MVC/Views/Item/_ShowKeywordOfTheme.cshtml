@@ -9,7 +9,7 @@
         <tr>
           <th>@Html.DisplayNameFor(model => model.KeywordId)</th>
           <th>@Html.DisplayNameFor(model => model.Name)</th>
-          <th>Tools</th>
+        
         </tr>
         </thead>
         <tbody>
@@ -18,21 +18,6 @@
           <tr>
             <td>@Html.DisplayFor(modelItem => item.KeywordId)</td>
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>
-              <div class="row">
-                @using (Html.BeginForm("DeleteKeywordFromTheme", "Item", new {id = item.KeywordId}, FormMethod.Post, new {id = "delete-" + item.KeywordId}))
-                {
-                  @Html.AntiForgeryToken()
-                  <button class="btn btn-sm" style="margin-right: 15px">
-                    <a href="javascript:document.getElementById('delete-@item.KeywordId').submit()" style="outline: none; all: unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                      <span style="color: #2196f3" class="fsz-sm">
-                        Delete
-                      </span>
-                    </a>
-                  </button>
-                }
-              </div>
-            </td>
           </tr>
         }
         </tbody>

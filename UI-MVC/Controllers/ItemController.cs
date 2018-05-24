@@ -560,11 +560,6 @@ namespace UI_MVC.Controllers
             return View();
         }
 
-        public ActionResult Charts()
-        {
-
-            return View();
-        }
-
+       
     }
 }
