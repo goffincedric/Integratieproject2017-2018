@@ -333,6 +333,7 @@
     <Content Include="Scripts\AccountControl.js" />
     <Content Include="Scripts\Index.js" />
     <Content Include="Scripts\Index\hide-content.js" />
+    <Content Include="Scripts\ItemDetail.js" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
