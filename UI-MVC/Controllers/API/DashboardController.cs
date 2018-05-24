@@ -94,7 +94,7 @@ namespace UI_MVC.Controllers.API
         }
 
         // POST: api/dashboard/deletezone/zoneId
-        [HttpDelete]
+        [HttpPost]
         public IHttpActionResult DeleteZone(int? id)
         {
             if (id == null) return BadRequest("No Id provided");
