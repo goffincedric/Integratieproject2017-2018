@@ -78,7 +78,6 @@
 </script>
 <script>
   var tmp = "";
-
   tmp = $.ajax({
     async: false,
     type: 'GET',
@@ -89,8 +88,7 @@
   for (var i = 0; i < tmp.length; i++) {
     $("#FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
   }
-</script>
-<script>
+
   $(document).ready(function($) {
 
     // Upload btn on change call function

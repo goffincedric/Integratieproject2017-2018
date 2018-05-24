@@ -27,35 +27,36 @@
         </div>
       </div>
       @Html.Action("_UserTable")
-      @if (User.IsInRole("SuperAdmin")) { 
-      <div class="row" style="margin-top: 10px;">
-        <div class="col-sm" style="padding: 0; margin: 0 10px 0 0">
-          <div class="layers bd bgc-white p-20">
-            <div class="layer w-100 mB-10">
-              <h6 class="lh-1">Beheer Admins</h6>
+      @if (User.IsInRole("SuperAdmin"))
+      {
+        <div class="row" style="margin-top: 10px;">
+          <div class="col-sm" style="padding: 0; margin: 0 10px 0 0">
+            <div class="layers bd bgc-white p-20">
+              <div class="layer w-100 mB-10">
+                <h6 class="lh-1">Beheer Admins</h6>
+              </div>
+              <div class="layer w-100">
+                <div class="peers ai-sb fxw-nw">
+                  <button type="button" class="btn btn-primary btn-lg btn-block" id="loadAdmin">Beheer</button>
+                </div>
+              </div>
             </div>
-            <div class="layer w-100">
-              <div class="peers ai-sb fxw-nw">
-                <button type="button" class="btn btn-primary btn-lg btn-block" id="loadAdmin">Beheer</button>
+          </div>
+          <div class="col-sm" style="padding: 0; margin: 0 0 0 10px">
+            <div class="layers bd bgc-white p-20">
+              <div class="layer w-100 mB-10">
+                <h6 class="lh-1">Beheer SuperAdmins</h6>
+              </div>
+              <div class="layer w-100">
+                <div class="peers ai-sb fxw-nw">
+                  <button type="button" class="btn btn-primary btn-lg btn-block" id="loadSuper">Beheer</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-sm" style="padding: 0; margin: 0 0 0 10px">
-          <div class="layers bd bgc-white p-20">
-            <div class="layer w-100 mB-10">
-              <h6 class="lh-1">Beheer SuperAdmins</h6>
-            </div>
-            <div class="layer w-100">
-              <div class="peers ai-sb fxw-nw">
-                <button type="button" class="btn btn-primary btn-lg btn-block" id="loadSuper">Beheer</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-        }
-     
+      }
+
       <div id="partial"></div>
       <div style="margin: 10px 0; padding: 0;" class="masonry-item col-md-12">
         <div class="bgc-white p-20 bd">
@@ -70,7 +71,7 @@
 
 </main>
 
-<link href="~/Content/datatables.min.css" rel="stylesheet"/>
+<link href="~/Content/datatables.min.css" rel="stylesheet" />
 <script src="~/Scripts/datatables.min.js"></script>
 <script src="~/Scripts/charts/Chart.min.js"></script>
 <script>
