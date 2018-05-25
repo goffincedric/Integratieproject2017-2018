@@ -30,4 +30,4 @@ Admin:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Password: Disney2018  
   
 Gewone gebruiker:  
-     Zelf aan te maken via site  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zelf aan te maken via site  
