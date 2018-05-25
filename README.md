@@ -1,8 +1,6 @@
-#####################
 # Integratieproject #
-#####################
-Team name: TeamNameNotFoundException
-Team nr.: Team 10
+ Team name: TeamNameNotFoundException  
+ Team nr.: Team 10  
 Groepsleden: 
 * Céline Verwilligen
 * Lotte Marien
