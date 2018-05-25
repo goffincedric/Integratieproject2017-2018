@@ -294,7 +294,7 @@ namespace UI_MVC.Controllers.API
         {
             // Get item and check if exists
             Item item = ItemMgr.GetItem(id);
-            if (item is null) return BadRequest("Item doesn't exist");
+            if (item is null) NotFound();
 
             // Gets records from item
             List<Record> records = new List<Record>();
@@ -330,7 +330,7 @@ namespace UI_MVC.Controllers.API
         {
             // Get item and check if exists
             Item item = ItemMgr.GetItem(id);
-            if (item is null) return BadRequest("Item doesn't exist");
+            if (item is null) NotFound();
 
             // Gets records from item
             List<Record> records = new List<Record>();
@@ -367,7 +367,7 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetTrendingUrl(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            if (item is null) return BadRequest();
+            if (item is null) NotFound();
 
             List<Record> records = new List<Record>();
             if (item is Person person)
@@ -397,7 +397,7 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetAges(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            if (item is null) return BadRequest();
+            if (item is null) NotFound();
             List<Record> records = new List<Record>(); ;
             if (item is Person person)
             {
@@ -425,7 +425,7 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetGender(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            if (item is null) return BadRequest();
+            if (item is null) NotFound();
 
             List<Record> records = new List<Record>();
             if (item is Person person)
@@ -674,10 +674,9 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetPersonTweet(int id)
         {
             IEnumerable<Record> records = ItemMgr.GetPerson(id)?.Records;
-            if (records == null) return NotFound();
-            Dictionary<DateTime, int> recordsmap = new Dictionary<DateTime, int>();
+            if (records is null) return NotFound();
 
-            recordsmap = records
+            Dictionary<DateTime, int> recordsmap = records
                 .GroupBy(r => r.Date.Date)
                 .OrderByDescending(r => r.Key)
                 .ToDictionary(r => r.Key.Date, r => r.ToList().Count());
@@ -688,16 +687,13 @@ namespace UI_MVC.Controllers.API
         #endregion
 
         #region Mentions
-
+        // Gets 8 top trending mentions from person
         [HttpGet]
         public IHttpActionResult GetTrendingMentions(int id)
         {
-            if (ItemMgr.GetItem(id) is Person)
+            if (ItemMgr.GetItem(id) is Person person)
             {
-                IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
-                List<string> mentions = new List<string>();
-                records.SelectMany(r => r.Mentions).Distinct().OrderByDescending(m => m.Records.Count).Take(8).ToList()
-                    .ForEach(p => mentions.Add(p.Name));
+                IEnumerable<string> mentions = person.Records.SelectMany(r => r.Mentions).Distinct().OrderByDescending(m => m.Records.Count).Take(8).Select(m => m.Name);                
                 return Ok(mentions);
             }
 
@@ -708,23 +704,24 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetTrendingMentionsCount(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            IEnumerable<Record> records = null;
-            Dictionary<string, int> mentions = new Dictionary<string, int>();
+            if (item == null) NotFound();
+
+            List<Record> records = new List<Record>();
             if (item is Person person)
             {
-                records = person.Records;
+                records.AddRange(person.Records);
             }
             else if (item is Organisation organisation)
             {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
+                records.AddRange(organisation.People.SelectMany(p => p.Records));
             }
             else if (item is Theme theme)
             {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
-                    .ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records));
+                records.AddRange(theme.Persons.SelectMany(p => p.Records).Except(first));
             }
 
+            Dictionary<string, int> mentions = records.
             records.SelectMany(r => { return r.Mentions; }).Distinct()
                 .OrderByDescending(h => { return h.Records.Count(); }).Distinct().Take(5).ToList().ForEach(p =>
                 {
