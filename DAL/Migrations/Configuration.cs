@@ -56,7 +56,7 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
-                            Value = "31",
+                            Value = "21",
                             Subplatform = pbSubplatform
                         },
                         new SubplatformSetting
@@ -156,7 +156,7 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
-                            Value = "31",
+                            Value = "21",
                             Subplatform = testSubplatform
                         },
                         new SubplatformSetting
