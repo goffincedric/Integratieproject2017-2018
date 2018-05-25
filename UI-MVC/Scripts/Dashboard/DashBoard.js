@@ -1241,7 +1241,7 @@ $(function () {
                 });
         }
 
-        DrawGender = function (can, itemIds, graph, elementId) {
+      DrawGender = function (can, itemIds, graph, elementId) {
             switch (graph) {
                 case 0: graph = 'bar';
                     break;
@@ -1273,30 +1273,31 @@ $(function () {
             var counter = 0;
             $.each(itemIds,
                 function (index, value) {
-                    var URL = "https://localhost:44342/api/item/GetGender/" + value.ItemIds;
+                  var URL = "https://localhost:44342/api/item/GetGender/" + value.ItemId;
                     makeAjaxCall(URL, "GET").then(process);
 
                     function process(output2) {
-                        var keys = [];
-                        keys = Object.keys(output2);
+                      var keys = [];
+                      keys = Object.keys(output2);
 
-                        var label = [];
-                        var values = [];
+                      var label = [];
+                      var values = [];
 
-                        for (var i = 0; i < keys.length; i++) {
-                            label.push(keys[i]);
-                            values.push(output2[keys[i]]);
-                        }
-                        var myNewDataSet = {
-                            label: value.Name,
-                            data: values,
-                            backgroundColor: ["#36a2eb", "#ff99ed"]
-                        }
-                        datagrafiek.datasets.push(myNewDataSet);
-                        myChart.update();
-                        counter++;
-                        $("#loader-" + elementId).hide();
-                        can.show();
+                      for (var i = 0; i < keys.length; i++) {
+                        label.push(keys[i]);
+                        values.push(output2[keys[i]]);
+                      }
+                      var myNewDataSet = {
+                        label: value.Name,
+                        data: values,
+                        backgroundColor: ["#36a2eb", "#ffce56", "#7DDF64", "#ff6384", "#36a2eb", "#cc65fe"]
+                      }
+
+                      datagrafiek.datasets.push(myNewDataSet);
+                      myChart.update();
+                      counter++;
+                      $("#loader-" + elementId).hide();
+                      can.show();
                     }
                 });
         }
