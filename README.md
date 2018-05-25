@@ -1,14 +1,15 @@
-################################################
-# Integratieproject                            #
-# Team name: TeamNameNotFoundException         #
-# Team nr.: Team 10 	                       #				
-# Groepsleden: Céline Verwilligen              #
-#	        Lotte Marien		       # 	
-#	        Cédric Goffin		       #	
-#	        Lins Van Nijlen                #
-#	        Stef Havermans		       #
-#	        Thomas Verhoeven               #
-################################################
+#####################
+# Integratieproject #
+#####################
+Team name: TeamNameNotFoundException
+Team nr.: Team 10
+Groepsleden: 
+* Céline Verwilligen
+* Lotte Marien
+* Cédric Goffin
+* Lins Van Nijlen
+* Stef Havermans
+* Thomas Verhoeven
 
 
 Dit is een project voor de studenten Toegepaste Informatica op Karel De Grote, Antwerpen. 
