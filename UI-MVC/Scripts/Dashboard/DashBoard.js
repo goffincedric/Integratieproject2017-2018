@@ -44,7 +44,7 @@ DashData = $.ajax({
     type: 'GET',
     dataType: 'json',
     headers: Headers,
-    url: "http://localhost:8010/api/dashboard/getdashboardzones/" + DashBoardId
+    url: "http://10.134.216.25:8010/api/dashboard/getdashboardzones/" + DashBoardId
 }).responseJSON;
 
 $(function () {
@@ -86,7 +86,7 @@ $(function () {
                 type: 'GET',
                 dataType: 'json',
                 headers: Headers,
-                url: "http://localhost:8010/api/dashboard/getzoneelements/" + id
+                url: "http://10.134.216.25:8010/api/dashboard/getzoneelements/" + id
             }).responseJSON;
 
             return ZoneData;
@@ -103,7 +103,7 @@ $(function () {
                 async: false,
                 type: 'Delete',
                 headers: Headers,
-                url: "http://localhost:8010/api/dashboard/deleteelement/" + ElementId
+                url: "http://10.134.216.25:8010/api/dashboard/deleteelement/" + ElementId
             })
 
             grid.data('gridstack').removeWidget(Element);
@@ -132,7 +132,7 @@ $(function () {
                     data: Zone,
                     dataType: 'json',
                     headers: Headers,
-                    url: "http://localhost:8010/api/dashboard/postzone/" + DashBoardId
+                    url: "http://10.134.216.25:8010/api/dashboard/postzone/" + DashBoardId
                 }).responseJSON.ZoneId
 
                 $('.add-zone').remove();
@@ -203,7 +203,7 @@ $(function () {
                 data: Element,
                 dataType: 'json',
                 headers: Headers,
-                url: "http://localhost:8010/api/dashboard/postelement/" + ZoneId
+                url: "http://10.134.216.25:8010/api/dashboard/postelement/" + ZoneId
             }).responseJSON.ElementId
 
             $("#loader-x").attr('id', 'loader-' + ElementId);
@@ -250,7 +250,7 @@ $(function () {
                                     async: false,
                                     type: 'GET',
                                     headers: Headers,
-                                    url: "http://localhost:8010/api/item/getperson"
+                                    url: "http://10.134.216.25:8010/api/item/getperson"
                                 }).responseJSON;
                                 onderwerp = 'politieker';
                                 break;
@@ -260,7 +260,7 @@ $(function () {
                                     async: false,
                                     type: 'GET',
                                     headers: Headers,
-                                    url: "http://localhost:8010/api/item/getorganisation"
+                                    url: "http://10.134.216.25:8010/api/item/getorganisation"
                                 }).responseJSON;
                                 onderwerp = 'organisatie';
                                 break;
@@ -270,7 +270,7 @@ $(function () {
                                     async: false,
                                     type: 'GET',
                                     headers: Headers,
-                                    url: "http://localhost:8010/api/item/gettheme"
+                                    url: "http://10.134.216.25:8010/api/item/gettheme"
                                 }).responseJSON;
                                 onderwerp = 'thema';
                                 break;
@@ -317,7 +317,7 @@ $(function () {
                                             async: false,
                                             type: 'GET',
                                             headers: Headers,
-                                            url: "http://localhost:8010/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
+                                            url: "http://10.134.216.25:8010/api/item/getitem/" + $("#locality-dropdown option:selected").attr('value')
                                         }).responseJSON);
                                         if (item.IconURL.substring(0, 1) === '~') {
                                             $(this).attr('src', (item.IconURL).substring(1, item.IconURL.length));
@@ -460,7 +460,7 @@ $(function () {
                     data: Element,
                     dataType: 'json',
                     headers: Headers,
-                    url: "http://localhost:8010/api/dashboard/putelement/" + ElementId
+                    url: "http://10.134.216.25:8010/api/dashboard/putelement/" + ElementId
                 })
 
                 chooseChart(GraphType, newElement.children('#Element-' + ElementId).children('canvas'), Element.Items, DataType, Element.ElementId);
@@ -503,7 +503,7 @@ $(function () {
                     data: Zone,
                     dataType: 'json',
                     headers: Headers,
-                    url: "http://localhost:8010/api/dashboard/putzone/" + ZoneId
+                    url: "http://10.134.216.25:8010/api/dashboard/putzone/" + ZoneId
                 })
 
                 titleTag.html(newTitle);
@@ -542,7 +542,7 @@ $(function () {
                         data: Zone,
                         dataType: 'json',
                         headers: Headers,
-                        url: "http://localhost:8010/api/dashboard/putzone/" + ZoneId
+                        url: "http://10.134.216.25:8010/api/dashboard/putzone/" + ZoneId
                     })
 
                     titleTag.html(newTitle);
@@ -568,7 +568,7 @@ $(function () {
                 async: false,
                 type: 'POST',
                 headers: Headers,
-                url: "http://localhost:8010/api/dashboard/deletezone/" + ZoneId
+                url: "http://10.134.216.25:8010/api/dashboard/deletezone/" + ZoneId
             })
 
             $(grid).remove();
@@ -597,14 +597,14 @@ $(function () {
                                 data: Zone,
                                 dataType: 'json',
                                 headers: Headers,
-                                url: "http://localhost:8010/api/dashboard/postzone/" + DashBoardId
+                                url: "http://10.134.216.25:8010/api/dashboard/postzone/" + DashBoardId
                             }).responseJSON.ZoneId
 
                             var Element = $.ajax({
                                 async: false,
                                 type: 'GET',
                                 headers: Headers,
-                                url: "http://localhost:8010/api/dashboard/getelement/" + ElementId
+                                url: "http://10.134.216.25:8010/api/dashboard/getelement/" + ElementId
                             }).responseJSON
 
                             Element.ZoneId = ZoneId;
@@ -615,7 +615,7 @@ $(function () {
                                 data: Element,
                                 dataType: 'json',
                                 headers: Headers,
-                                url: "http://localhost:8010/api/dashboard/putelement/" + ElementId
+                                url: "http://10.134.216.25:8010/api/dashboard/putelement/" + ElementId
                             })
 
                             var addZone = $('.add-zone');
@@ -716,7 +716,7 @@ $(function () {
                             async: false,
                             type: 'GET',
                             headers: Headers,
-                            url: "http://localhost:8010/api/dashboard/getelement/" + ElementId
+                            url: "http://10.134.216.25:8010/api/dashboard/getelement/" + ElementId
                         }).responseJSON
 
                         var oldZoneId = oldElement.ZoneId;
@@ -729,7 +729,7 @@ $(function () {
                             data: Element,
                             dataType: 'json',
                             headers: Headers,
-                            url: "http://localhost:8010/api/dashboard/putelement/" + ElementId
+                            url: "http://10.134.216.25:8010/api/dashboard/putelement/" + ElementId
                         })
 
                         if (oldZoneId !== ZoneId) {
@@ -757,7 +757,7 @@ $(function () {
                         async: false,
                         type: 'GET',
                         headers: Headers,
-                        url: "http://localhost:8010/api/item/getitem/" + itemId
+                        url: "http://10.134.216.25:8010/api/item/getitem/" + itemId
                     }).responseJSON);
                 }
             })
@@ -767,19 +767,19 @@ $(function () {
         resetWizard = function (wizard) {
             console.log(wizard);
             wizard.replaceWith(cleanWizard);
-            $.getScript("http://localhost:8010/Scripts/Wizard/jquery.validate.min.js")
+            $.getScript("http://10.134.216.25:8010/Scripts/Wizard/jquery.validate.min.js")
                 .done(function (script, textStatus) {
                 })
                 .fail(function (jqxhr, settings, exception) {
                     console.log("Triggered ajaxError handler.");
                 });
-            $.getScript("http://localhost:8010/Scripts/Wizard/jquery.bootstrap.js")
+            $.getScript("http://10.134.216.25:8010/Scripts/Wizard/jquery.bootstrap.js")
                 .done(function (script, textStatus) {
                 })
                 .fail(function (jqxhr, settings, exception) {
                     console.log("Triggered ajaxError handler.");
                 });
-            $.getScript("http://localhost:8010/Scripts/Wizard/material-bootstrap-wizard.js")
+            $.getScript("http://10.134.216.25:8010/Scripts/Wizard/material-bootstrap-wizard.js")
                 .done(function (script, textStatus) {
                 })
                 .fail(function (jqxhr, settings, exception) {
@@ -836,7 +836,7 @@ $(function () {
                                 async: false,
                                 type: 'Delete',
                                 headers: Headers,
-                                url: "http://localhost:8010/api/dashboard/deleteelement/" + node.ElementId
+                                url: "http://10.134.216.25:8010/api/dashboard/deleteelement/" + node.ElementId
                             })
                         }
                     }, this);
@@ -906,7 +906,7 @@ $(function () {
                     break;
             }
             if (itemIds.length == 1) {
-                var URL = "http://localhost:8010/api/item/GetTrendingHashtagsCount/" + itemIds[0].ItemId;
+                var URL = "http://10.134.216.25:8010/api/item/GetTrendingHashtagsCount/" + itemIds[0].ItemId;
                 makeAjaxCall(URL, "GET").then(process);
 
                 function process(output) {
@@ -960,7 +960,7 @@ $(function () {
                 var counter = 0;
                 $.each(itemIds,
                     function (index, value) {
-                        var URL = "http://localhost:8010/api/item/GetTrendingHashtagsCountOverall/" + value.ItemId;
+                        var URL = "http://10.134.216.25:8010/api/item/GetTrendingHashtagsCountOverall/" + value.ItemId;
                         makeAjaxCall(URL, "GET").then(process);
                         function process(output2) {
                             var keys = [];
@@ -1003,7 +1003,7 @@ $(function () {
                     break;
             }
             if (itemIds.length == 1) {
-                var URL = "http://localhost:8010/api/item/GetTrendingMentionsCount/" + itemIds[0].ItemId;
+                var URL = "http://10.134.216.25:8010/api/item/GetTrendingMentionsCount/" + itemIds[0].ItemId;
                 makeAjaxCall(URL, "GET").then(process);
 
                 function process(output) {
@@ -1056,7 +1056,7 @@ $(function () {
                 var counter = 0;
                 $.each(itemIds,
                     function (index, value) {
-                        var URL = "http://localhost:8010/api/item/GetTrendingMentionsCountOverall/" + value.ItemId;
+                        var URL = "http://10.134.216.25:8010/api/item/GetTrendingMentionsCountOverall/" + value.ItemId;
                         makeAjaxCall(URL, "GET").then(process);
 
                         function process(output2) {
@@ -1099,7 +1099,7 @@ $(function () {
                     break;
             }
             if (itemIds.length == 1) {
-                var URL = "http://localhost:8010/api/item/GetTrendingWordsCount/" + itemIds[0].ItemId;
+                var URL = "http://10.134.216.25:8010/api/item/GetTrendingWordsCount/" + itemIds[0].ItemId;
                 makeAjaxCall(URL, "GET").then(process);
 
                 function process(output) {
@@ -1152,7 +1152,7 @@ $(function () {
                 var counter = 0;
                 $.each(itemIds,
                     function (index, value) {
-                        var URL = "http://localhost:8010/api/item/GetTrendingWordsCountOverall/" + value.ItemId;
+                        var URL = "http://10.134.216.25:8010/api/item/GetTrendingWordsCountOverall/" + value.ItemId;
                         makeAjaxCall(URL, "GET").then(process);
                         function process(output2) {
                             var keys = [];
@@ -1212,7 +1212,7 @@ $(function () {
             var counter = 0;
             $.each(itemIds,
                 function (index, value) {
-                    var URL = "http://localhost:8010/api/item/GetAges/" + value.ItemId;
+                    var URL = "http://10.134.216.25:8010/api/item/GetAges/" + value.ItemId;
                     makeAjaxCall(URL, "GET").then(process);
 
                     function process(output2) {
@@ -1273,7 +1273,7 @@ $(function () {
             var counter = 0;
             $.each(itemIds,
                 function (index, value) {
-                    var URL = "http://localhost:8010/api/item/GetGender/" + value.ItemIds;
+                    var URL = "http://10.134.216.25:8010/api/item/GetGender/" + value.ItemIds;
                     makeAjaxCall(URL, "GET").then(process);
 
                     function process(output2) {
@@ -1343,7 +1343,7 @@ $(function () {
             var counter = 0;
             $.each(itemIds,
                 function (index, value) {
-                    var URL = "http://localhost:8010/api/item/GetPersonEvolution/" + value.ItemId;
+                    var URL = "http://10.134.216.25:8010/api/item/GetPersonEvolution/" + value.ItemId;
                     makeAjaxCall(URL, "GET").then(process);
 
                     function process(output2) {
@@ -1403,7 +1403,7 @@ $(function () {
                 div = div.children(".map");
                 div.hide();
 
-                var URL = "http://localhost:8010/api/item/GetTweetsByDistrict";
+                var URL = "http://10.134.216.25:8010/api/item/GetTweetsByDistrict";
                 makeAjaxCall(URL, "GET").then(process);
 
                 var mapData;
@@ -1504,7 +1504,7 @@ $(function () {
             var counter = 0;
             $.each(itemIds,
                 function (index, value) {
-                    var URL = "http://localhost:8010/api/item/GetItemTweet/" + value.ItemId;
+                    var URL = "http://10.134.216.25:8010/api/item/GetItemTweet/" + value.ItemId;
                     makeAjaxCall(URL, "GET").then(process);
 
                     function process(output2) {

@@ -60,6 +60,7 @@ function makeAjaxCall(url, methodType) {
   var promiseObj = new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
     xhr.open(methodType, url, true);
+ 
     xhr.setRequestHeader("x-api-key", "303d22a4-402b-4d3c-b279-9e81c0480711");
     xhr.send();
     xhr.onreadystatechange = function () {
@@ -86,7 +87,7 @@ function makeAjaxCall(url, methodType) {
 
 
 function showDetails(id) {
-  var URL = "http://localhost:8010/api/item/GetItemDetails/" + id;
+  var URL = "http://10.134.216.25:8010/api/item/GetItemDetails/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -104,7 +105,7 @@ function showDetails(id) {
 
 
 function Age(id) {
-  var URL = "http://localhost:8010/api/item/GetGender/" + id;
+  var URL = "http://10.134.216.25:8010/api/item/GetGender/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -144,7 +145,7 @@ function Age(id) {
 }
 
 function Geslacht(id) {
-  var URL = "http://localhost:8010/api/item/GetAges/" + id;
+  var URL = "http://10.134.216.25:8010/api/item/GetAges/" + id;
   makeAjaxCall(URL, "GET").then(process, errorHandler);
 
   function process(output) {
@@ -190,7 +191,7 @@ function Geslacht(id) {
 function urls(id) {
 
 
-  var URL = "http://localhost:8010/api/item/GetTrendingUrl/" + id;
+  var URL = "http://10.134.216.25:8010/api/item/GetTrendingUrl/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -211,7 +212,7 @@ function urls(id) {
 
 function drawLineChart(id) {
 
-  var URL = "http://localhost:8010/api/item/GetItemTweet/" + id;
+  var URL = "http://10.134.216.25:8010/api/item/GetItemTweet/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -263,7 +264,7 @@ function drawLineChart(id) {
 
 function drawSentiment(id) {
 
-  var URL = "http://localhost:8010/api/item/GetPersonEvolution/" + id;
+  var URL = "http://10.134.216.25:8010/api/item/GetPersonEvolution/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -317,7 +318,7 @@ function drawSentiment(id) {
 
 
 function showTopPersons(id) {
-  var URL = "http://localhost:8010/api/item/GetPopularTweetName/" + id;
+  var URL = "http://10.134.216.25:8010/api/item/GetPopularTweetName/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -336,7 +337,7 @@ function showTopPersons(id) {
 }
 
 function Hashtags(id) {
-  var URL = "http://localhost:8010/api/item/GetTrendingHashtagsCount/" + id;
+  var URL = "http://10.134.216.25:8010/api/item/GetTrendingHashtagsCount/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -379,7 +380,7 @@ function Hashtags(id) {
 
 
 function Mentions(id) {
-  var URL = "http://localhost:8010/api/item/GetTrendingMentionsCount/" + id;
+  var URL = "http://10.134.216.25:8010/api/item/GetTrendingMentionsCount/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -424,7 +425,7 @@ function Mentions(id) {
 //PERSON ONLY CODE///
 
 function HashtagsPerson(id) {
-  var URL = "http://localhost:8010/api/item/GetTrendingHashtags/" + id;
+  var URL = "http://10.134.216.25:8010/api/item/GetTrendingHashtags/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -463,7 +464,7 @@ function HashtagsPerson(id) {
 }
 
 function mentionlist(id) {
-  var URL = "http://localhost:8010/api/item/GetTrendingMentions/" + id;
+  var URL = "http://10.134.216.25:8010/api/item/GetTrendingMentions/" + id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
@@ -506,7 +507,7 @@ function mentionlist(id) {
 
 function drawNodeBox(id) {
 
-  var URL = "http://localhost:8010/api/item/getrecordsfromperson/" +id;
+  var URL = "http://10.134.216.25:8010/api/item/getrecordsfromperson/" +id;
   makeAjaxCall(URL, "GET").then(process);
 
   function process(output) {
