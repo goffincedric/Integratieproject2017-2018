@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using PB.BL;
@@ -12,6 +13,7 @@ using PB.BL.Domain.Platform;
 
 namespace UI_MVC.Controllers.API
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [Authorize(Roles = "User,Admin,SuperAdmin")]
     public class DashboardController : ApiController
     {

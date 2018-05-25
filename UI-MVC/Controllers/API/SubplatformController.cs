@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using PB.BL;
 using PB.BL.Domain.Platform;
 using PB.BL.Interfaces;
@@ -9,6 +10,7 @@ using UI_MVC.Models;
 
 namespace UI_MVC.Controllers.API
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class SubplatformController : ApiController
     {
         private readonly ISubplatformManager SubplatformMgr;

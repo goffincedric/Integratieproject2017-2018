@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Newtonsoft.Json;
 using PB.BL;
 using PB.BL.Domain.Items;
@@ -10,6 +11,7 @@ using PB.BL.Interfaces;
 
 namespace UI_MVC.Controllers.API
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ItemController : ApiController
     {
         private readonly IItemManager ItemMgr;
