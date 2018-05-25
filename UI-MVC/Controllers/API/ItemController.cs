@@ -720,16 +720,10 @@ namespace UI_MVC.Controllers.API
                 IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records));
                 records.AddRange(theme.Persons.SelectMany(p => p.Records).Except(first));
             }
+            if (records.Count == 0) return NotFound();
 
-            Dictionary<string, int> mentions = records.
-            records.SelectMany(r => { return r.Mentions; }).Distinct()
-                .OrderByDescending(h => { return h.Records.Count(); }).Distinct().Take(5).ToList().ForEach(p =>
-                {
-                    mentions.Add(p.Name, p.Records.Count()
-                    );
-                });
-
-            if (mentions is null || mentions.Count() == 0) return NotFound();
+            Dictionary<string, int> mentions = records.SelectMany(r => r.Mentions).Distinct().OrderByDescending(m => m.Records.Count).Take(5).ToDictionary(m => m.Name, m => m.Records.Count);
+            if (mentions.Count() == 0) return NotFound();
 
             return Ok(mentions);
         }
@@ -738,26 +732,28 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetTrendingMentionsCountOverall(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            IEnumerable<Record> records = null;
-            Dictionary<string, int> mentions = new Dictionary<string, int>();
+            List<Record> records = new List<Record>();
             if (item is Person person)
             {
-                records = person.Records;
+                records.AddRange(person.Records);
             }
             else if (item is Organisation organisation)
             {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
+                records.AddRange(organisation.People.SelectMany(p => p.Records));
             }
             else if (item is Theme theme)
             {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
-                    .ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records));
+                records.AddRange(theme.Persons.SelectMany(p => p.Records).Except(first));
             }
 
-            int count = records.SelectMany(r => { return r.Mentions; }).Count();
-            mentions.Add(item.Name, count);
-            if (mentions is null || mentions.Count() == 0) return NotFound();
+            if (records.Count == 0) return NotFound();
+            Dictionary<string, int> mentions = new Dictionary<string, int>
+            {
+                { item.Name, records.SelectMany(r => { return r.Mentions; }).Count() }
+            };
+
+            if (mentions.Count() == 0) return NotFound();
             return Ok(mentions);
         }
 
@@ -771,47 +767,40 @@ namespace UI_MVC.Controllers.API
             if (ItemMgr.GetItem(id) is Person)
             {
                 IEnumerable<Record> records = ItemMgr.GetRecordsFromItem(id);
-                List<string> hashtags = new List<string>();
-
-                records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h => h.Records.Count).Take(8).ToList()
-                    .ForEach(p => hashtags.Add(p.HashTag));
+                if (records == null || records.Count() == 0) return NotFound();
+                IEnumerable<string> hashtags = records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h => h.Records.Count).Take(8).Select(h => h.HashTag);
                 return Ok(hashtags);
             }
 
             return NotFound();
         }
-
-
-
-
+        
         [HttpGet]
         public IHttpActionResult GetTrendingHashtagsCount(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            IEnumerable<Record> records = null;
-            Dictionary<string, int> hashtags = new Dictionary<string, int>();
+            if (item is null) return NotFound();
+
+            List<Record> records = new List<Record>();
             if (item is Person person)
             {
-                records = person.Records;
+                records.AddRange(person.Records);
             }
             else if (item is Organisation organisation)
             {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
+                records.AddRange(organisation.People.SelectMany(p => p.Records));
             }
             else if (item is Theme theme)
             {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
-                    .ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records));
+                records.AddRange(theme.Persons.SelectMany(p => p.Records).Except(first));
             }
 
-            records.SelectMany(r => { return r.Hashtags; }).Distinct()
-                .OrderByDescending(h => { return h.Records.Count; }).Distinct().Take(5).ToList().ForEach(p =>
-                {
-                    hashtags.Add(p.HashTag, p.Records.Count);
-                });
+            if (records.Count == 0) return NotFound();
 
-            if (hashtags is null || hashtags.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            Dictionary<string, int> hashtags = records.SelectMany(r => r.Hashtags).Distinct().OrderByDescending(h => h.Records.Count).Take(5).ToDictionary(h => h.HashTag, h => h.Records.Count);
+            if (hashtags.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+
             return Ok(hashtags);
         }
 
@@ -820,26 +809,31 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetTrendingHashtagsCountOverall(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            IEnumerable<Record> records = null;
-            Dictionary<string, int> hashtags = new Dictionary<string, int>();
+            if (item is null) return NotFound();
+
+            List<Record> records = new List<Record>();
             if (item is Person person)
             {
-                records = person.Records;
+                records.AddRange(person.Records);
             }
             else if (item is Organisation organisation)
             {
-                records = organisation.People.SelectMany(p => p.Records).ToList();
+                records.AddRange(organisation.People.SelectMany(p => p.Records));
             }
             else if (item is Theme theme)
             {
-                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
-                    .ToList();
-                records = theme.Persons.SelectMany(p => p.Records).Except(first).ToList();
+                IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records));
+                records.AddRange(theme.Persons.SelectMany(p => p.Records).Except(first));
             }
 
-            int count = records.SelectMany(r => { return r.Hashtags; }).Count();
-            hashtags.Add(item.Name, count);
-            if (hashtags is null || hashtags.Count() == 0) return NotFound();
+            if (records.Count == 0) return NotFound();
+
+            Dictionary<string, int> hashtags = new Dictionary<string, int>
+            {
+                { item.Name, records.SelectMany(r => { return r.Hashtags; }).Count() }
+            };
+            if (hashtags.Count() == 0) return NotFound();
+
             return Ok(hashtags);
         }
 
@@ -883,8 +877,7 @@ namespace UI_MVC.Controllers.API
             if (ids is null || ids.Count() == 0) return NotFound();
             return Ok(ids);
         }
-
-
+        
         [HttpGet]
         public IHttpActionResult GetMostPopularOrganisations(int? id)
         {
@@ -918,10 +911,6 @@ namespace UI_MVC.Controllers.API
             if (map is null) return NotFound();
             return Ok(map);
         }
-
-
-
-
         #endregion
     }
 }

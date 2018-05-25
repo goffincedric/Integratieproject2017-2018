@@ -1,10 +1,10 @@
 [
   {
-    "TrendingScore": 0,
+    "TrendingScore": 27,
     "FirstName": "Imade",
     "LastName": "Annouri",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.imadeannouri.be",
+    "SocialMediaLink": "",
     "Site": "http://www.imadeannouri.be",
     "TwitterName": "ImadeAnnouri",
     "Position": "Parlement",
@@ -27,11 +27,11 @@
     "IconURL": "https://twitter.com/ImadeAnnouri/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 4,
     "FirstName": "Caroline",
     "LastName": "Bastiaens",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.carolinebastiaens.be",
+    "SocialMediaLink": "https:/www.facebook.com/carolinebastiaens",
     "Site": "http://www.carolinebastiaens.be",
     "TwitterName": "@bastiaenscarol",
     "Position": "Parlement",
@@ -54,11 +54,11 @@
     "IconURL": "https://twitter.com/@bastiaenscarol/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 13,
     "FirstName": "Jan",
     "LastName": "Bertels",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://janbertels.be/",
+    "SocialMediaLink": "https://www.facebook.com/spaJanBertels",
     "Site": "http://janbertels.be/",
     "TwitterName": "jan_bertels",
     "Position": "Parlement",
@@ -81,11 +81,11 @@
     "IconURL": "https://twitter.com/jan_bertels/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 8,
     "FirstName": "Vera",
     "LastName": "Celis",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.veracelis.be",
+    "SocialMediaLink": "https://www.facebook.com/VeraCelis",
     "Site": "http://www.veracelis.be",
     "TwitterName": "Vera_Celis",
     "Position": "Parlement",
@@ -98,7 +98,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2059-06-08T00:00:00",
@@ -108,11 +108,11 @@
     "IconURL": "https://twitter.com/Vera_Celis/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 19,
     "FirstName": "Dirk",
     "LastName": "De Kort",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.dirkdekort.be",
+    "SocialMediaLink": "https://www.facebook.com/dirk.dekort.77",
     "Site": "www.dirkdekort.be",
     "TwitterName": "Dirk_de_Kort",
     "Position": "Parlement",
@@ -135,11 +135,11 @@
     "IconURL": "https://twitter.com/Dirk_de_Kort/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 384,
     "FirstName": "Annick",
     "LastName": "De Ridder",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.annickderidder.be",
+    "SocialMediaLink": "https://www.facebook.com/Annick.Deridder10",
     "Site": "http://www.annickderidder.be",
     "TwitterName": "Annickderidder",
     "Position": "Parlement",
@@ -152,7 +152,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -162,11 +162,11 @@
     "IconURL": "https://twitter.com/Annickderidder/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 11,
     "FirstName": "Caroline",
     "LastName": "Gennez",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.carolinegennez.be",
+    "SocialMediaLink": "https://www.facebook.com/carolinegennez",
     "Site": "http://www.carolinegennez.be",
     "TwitterName": "carogennez",
     "Position": "Parlement",
@@ -193,7 +193,7 @@
     "FirstName": "Kathleen",
     "LastName": "Helsen",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.kathleenhelsen.be",
+    "SocialMediaLink": "https://www.facebook.com/kathleen.helsen.3",
     "Site": "www.kathleenhelsen.be",
     "TwitterName": "KathleenHelsen",
     "Position": "Parlement",
@@ -216,11 +216,11 @@
     "IconURL": "https://twitter.com/KathleenHelsen/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 103,
     "FirstName": "Marc",
     "LastName": "Hendrickx",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.marc-hendrickx.be",
+    "SocialMediaLink": "",
     "Site": "http://www.marc-hendrickx.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -233,7 +233,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1968-08-08T00:00:00",
@@ -243,11 +243,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 50,
     "FirstName": "Jan",
     "LastName": "Hofkens",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.janhofkens.be",
+    "SocialMediaLink": "https://www.facebook.com/Jan-Hofkens",
     "Site": "www.janhofkens.be",
     "TwitterName": "JanHofkens",
     "Position": "Parlement",
@@ -260,7 +260,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1969-04-08T00:00:00",
@@ -270,11 +270,11 @@
     "IconURL": "https://twitter.com/JanHofkens/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Sofie",
     "LastName": "Joosen",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.sofiejoosen.be",
+    "SocialMediaLink": "https://www.facebook.com/sofie.joosen.3",
     "Site": "http://www.sofiejoosen.be",
     "TwitterName": "SofieJoosen",
     "Position": "Parlement",
@@ -287,7 +287,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1986-07-04T00:00:00",
@@ -301,7 +301,7 @@
     "FirstName": "Ward",
     "LastName": "Kennes-Desmeyter",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://wardkennes.cdenv.be",
+    "SocialMediaLink": "https://www.facebook.com/ward.kennes.9",
     "Site": "http://wardkennes.cdenv.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -324,11 +324,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 5,
     "FirstName": "Yasmine",
     "LastName": "Kherbache",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.yasminekherbache.be",
+    "SocialMediaLink": "https://www.facebook.com/yasmine.kherbache",
     "Site": "http://www.yasminekherbache.be",
     "TwitterName": "kherbache",
     "Position": "Parlement",
@@ -355,7 +355,7 @@
     "FirstName": "Kathleen",
     "LastName": "Krekels",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.kathleenkrekels.be",
+    "SocialMediaLink": "",
     "Site": "http://www.kathleenkrekels.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -368,7 +368,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1968-05-06T00:00:00",
@@ -378,11 +378,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 5,
     "FirstName": "Ingrid",
     "LastName": "Pira",
     "Level": "Vlaams",
-    "SocialMediaLink": "",
+    "SocialMediaLink": "https://www.facebook.com/ingrid.pira",
     "Site": "",
     "TwitterName": "IngridPira1",
     "Position": "Parlement",
@@ -409,7 +409,7 @@
     "FirstName": "Tinne",
     "LastName": "Rombouts",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.tinnerombouts.be",
+    "SocialMediaLink": "http://www.facebook.com/RomboutsTinne",
     "Site": "www.tinnerombouts.be",
     "TwitterName": "TinneRombouts",
     "Position": "Parlement",
@@ -432,11 +432,11 @@
     "IconURL": "https://twitter.com/TinneRombouts/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 14,
     "FirstName": "Willem-Frederik",
     "LastName": "Schiltz",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.wfschiltz.be",
+    "SocialMediaLink": "http://www.facebook.com/wfschiltz",
     "Site": "http://www.wfschiltz.be",
     "TwitterName": "wfschiltz",
     "Position": "Parlement",
@@ -459,11 +459,11 @@
     "IconURL": "https://twitter.com/wfschiltz/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Katrien",
     "LastName": "Schryvers",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.katrienschryvers.be",
+    "SocialMediaLink": "www.facebook.com/katrien.schryvers",
     "Site": "http://www.katrienschryvers.be",
     "TwitterName": "KatrienSchryver",
     "Position": "Parlement",
@@ -486,11 +486,11 @@
     "IconURL": "https://twitter.com/KatrienSchryver/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 485,
     "FirstName": "Bart",
     "LastName": "Somers",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.bartsomers.be",
+    "SocialMediaLink": "www.facebook.com/bart.somers1",
     "Site": "http://www.bartsomers.be",
     "TwitterName": "BartSomers",
     "Position": "Parlement",
@@ -513,11 +513,11 @@
     "IconURL": "https://twitter.com/BartSomers/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Martine",
     "LastName": "Taelman",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.martinetaelman.be",
+    "SocialMediaLink": "http://www.facebook.com/MartineTaelman",
     "Site": "http://www.martinetaelman.be",
     "TwitterName": "martinetaelman",
     "Position": "Parlement",
@@ -540,7 +540,7 @@
     "IconURL": "https://twitter.com/martinetaelman/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 27,
     "FirstName": "Güler",
     "LastName": "Turan",
     "Level": "Vlaams",
@@ -567,7 +567,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 83,
     "FirstName": "Wouter",
     "LastName": "Van Besien",
     "Level": "Vlaams",
@@ -594,7 +594,7 @@
     "IconURL": "https://twitter.com/WouterVanBesien/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 66,
     "FirstName": "Ludo",
     "LastName": "Van Campenhout",
     "Level": "Vlaams",
@@ -611,7 +611,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -621,11 +621,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 39,
     "FirstName": "Koen",
     "LastName": "Van den Heuvel",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.koenvandenheuvel.be",
+    "SocialMediaLink": "https://www.facebook.com/koen.vandenheuvel.1291",
     "Site": "http://www.koenvandenheuvel.be",
     "TwitterName": "KVDHeuvel_VP",
     "Position": "Parlement",
@@ -648,11 +648,11 @@
     "IconURL": "https://twitter.com/KVDHeuvel_VP/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 895,
     "FirstName": "Anke",
     "LastName": "Van dermeersch",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://ankevandermeersch.be",
+    "SocialMediaLink": "https://www.facebook.com/anke.vandermeersch.7",
     "Site": "http://ankevandermeersch.be",
     "TwitterName": "anke_online",
     "Position": "Parlement",
@@ -671,15 +671,15 @@
     "DateOfBirth": "1972-10-27T00:00:00",
     "ItemId": 42,
     "Name": "Anke Van dermeersch",
-    "IsTrending": false,
+    "IsTrending": true,
     "IconURL": "https://twitter.com/anke_online/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Tine",
     "LastName": "van der Vloet",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.tinevandervloet.be",
+    "SocialMediaLink": "",
     "Site": "http://www.tinevandervloet.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -692,7 +692,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1978-01-31T00:00:00",
@@ -702,11 +702,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 4,
     "FirstName": "Kris",
     "LastName": "Van Dijck",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.krisvandijck.be",
+    "SocialMediaLink": "https://www.facebook.com/kris.vandijck.7",
     "Site": "http://www.krisvandijck.be",
     "TwitterName": "KrisVanDijck1",
     "Position": "Parlement",
@@ -719,7 +719,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2063-02-10T00:00:00",
@@ -733,7 +733,7 @@
     "FirstName": "Jan",
     "LastName": "Van Esbroeck",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://janvanesbroeck.n-va.be/",
+    "SocialMediaLink": "https://www.facebook.com/jan.vanesbroeck",
     "Site": "http://janvanesbroeck.n-va.be/",
     "TwitterName": "",
     "Position": "Parlement",
@@ -746,7 +746,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1968-09-30T00:00:00",
@@ -756,11 +756,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 239,
     "FirstName": "Tom",
     "LastName": "Van Grieken",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.tomvangrieken.be",
+    "SocialMediaLink": "https://www.facebook.com/vangriekentom",
     "Site": "www.tomvangrieken.be",
     "TwitterName": "tomvangrieken",
     "Position": "Parlement",
@@ -787,7 +787,7 @@
     "FirstName": "Paul",
     "LastName": "Van Miert",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.paulvanmiert.be",
+    "SocialMediaLink": "https://www.facebook.com/paul.van.miert",
     "Site": "http://www.paulvanmiert.be",
     "TwitterName": "VanMiertPaul",
     "Position": "Parlement",
@@ -800,7 +800,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2065-03-05T00:00:00",
@@ -810,7 +810,7 @@
     "IconURL": "https://twitter.com/VanMiertPaul/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Manuela",
     "LastName": "Van Werde",
     "Level": "Vlaams",
@@ -827,7 +827,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -837,11 +837,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 61,
     "FirstName": "Peter",
     "LastName": "Wouters",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.peter-wouters.be",
+    "SocialMediaLink": "https://www.facebook.com/peter.wouters.39",
     "Site": "http://www.peter-wouters.be",
     "TwitterName": "Peterwouters6",
     "Position": "Parlement",
@@ -854,7 +854,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1967-03-22T00:00:00",
@@ -868,7 +868,7 @@
     "FirstName": "Herman",
     "LastName": "Wynants",
     "Level": "Vlaams",
-    "SocialMediaLink": "",
+    "SocialMediaLink": "https://www.facebook.com/herman.wijnants.1",
     "Site": "",
     "TwitterName": "",
     "Position": "Parlement",
@@ -881,7 +881,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2046-02-15T00:00:00",
@@ -918,11 +918,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 9,
     "FirstName": "Ann",
     "LastName": "Brusseel",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.annbrusseel.be/",
+    "SocialMediaLink": "",
     "Site": "http://www.annbrusseel.be/",
     "TwitterName": "AnnBrusseel",
     "Position": "Parlement",
@@ -945,11 +945,11 @@
     "IconURL": "https://twitter.com/AnnBrusseel/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Yamila",
     "LastName": "Idrissi",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.yamila.be",
+    "SocialMediaLink": "https://www.facebook.com/yamila.idrissi",
     "Site": "http://www.yamila.be",
     "TwitterName": "Yamila_Idrissi",
     "Position": "Parlement",
@@ -972,7 +972,7 @@
     "IconURL": "https://twitter.com/Yamila_Idrissi/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Joris",
     "LastName": "Poschet",
     "Level": "Vlaams",
@@ -999,11 +999,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 6,
     "FirstName": "Elke",
     "LastName": "Van den Brandt",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.elkevandenbrandt.be",
+    "SocialMediaLink": "https://www.facebook.com/elke.vandenbrandt.7",
     "Site": "http://www.elkevandenbrandt.be",
     "TwitterName": "elkevdbrandt",
     "Position": "Parlement",
@@ -1026,11 +1026,11 @@
     "IconURL": "https://twitter.com/elkevdbrandt/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 73,
     "FirstName": "Karl",
     "LastName": "Vanlouwe",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.karlvanlouwe.be",
+    "SocialMediaLink": "https://www.facebook.com/karlvanlouwe",
     "Site": "http://www.karlvanlouwe.be",
     "TwitterName": "KarlVanlouwe",
     "Position": "Parlement",
@@ -1043,7 +1043,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1970-10-22T00:00:00",
@@ -1053,11 +1053,11 @@
     "IconURL": "https://twitter.com/KarlVanlouwe/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 20,
     "FirstName": "Rob",
     "LastName": "Beenders",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.robbeenders.be",
+    "SocialMediaLink": "https://www.facebook.com/Rob.beenders",
     "Site": "http://www.robbeenders.be",
     "TwitterName": "Robbeenders",
     "Position": "Parlement",
@@ -1080,11 +1080,11 @@
     "IconURL": "https://twitter.com/Robbeenders/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Lode",
     "LastName": "Ceyssens",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.lodeceyssens.be",
+    "SocialMediaLink": "https://www.facebook.com/lodeceyssens",
     "Site": "http://www.lodeceyssens.be",
     "TwitterName": "LodeCeyssens",
     "Position": "Parlement",
@@ -1111,7 +1111,7 @@
     "FirstName": "An",
     "LastName": "Christiaens",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.anchristiaens.be",
+    "SocialMediaLink": "https://www.facebook.com/an.christiaens.5",
     "Site": "http://www.anchristiaens.be",
     "TwitterName": "AnTongeren",
     "Position": "Parlement",
@@ -1138,7 +1138,7 @@
     "FirstName": "Sonja",
     "LastName": "Claes",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.sonjaclaes.be",
+    "SocialMediaLink": "https://www.facebook.com/#!/sonja.claes.94",
     "Site": "http://www.sonjaclaes.be",
     "TwitterName": "sonjaclaes",
     "Position": "Parlement",
@@ -1161,11 +1161,11 @@
     "IconURL": "https://twitter.com/sonjaclaes/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Johan",
     "LastName": "Danen",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.johandanen.be",
+    "SocialMediaLink": "www.facebook.com/johan.danen",
     "Site": "http://www.johandanen.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -1188,11 +1188,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Jelle",
     "LastName": "Engelbosch",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.jelleengelbosch.be",
+    "SocialMediaLink": "https://www.facebook.com/jelle.engelbosch",
     "Site": "http://www.jelleengelbosch.be",
     "TwitterName": "JelleEngelbosch",
     "Position": "Parlement",
@@ -1205,7 +1205,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1980-10-06T00:00:00",
@@ -1215,11 +1215,11 @@
     "IconURL": "https://twitter.com/JelleEngelbosch/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Lies",
     "LastName": "Jans",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.liesjans.be",
+    "SocialMediaLink": "https://www.facebook.com/lies.jans.5",
     "Site": "http://www.liesjans.be",
     "TwitterName": "lies_jans",
     "Position": "Parlement",
@@ -1232,7 +1232,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1974-01-20T00:00:00",
@@ -1242,7 +1242,7 @@
     "IconURL": "https://twitter.com/lies_jans/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Vera",
     "LastName": "Jans",
     "Level": "Vlaams",
@@ -1269,11 +1269,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 20,
     "FirstName": "Chris",
     "LastName": "Janssens",
     "Level": "Vlaams",
-    "SocialMediaLink": "",
+    "SocialMediaLink": "facebook.com/chris.janssens1",
     "Site": "",
     "TwitterName": "chrisjanssensVB",
     "Position": "Parlement",
@@ -1296,11 +1296,11 @@
     "IconURL": "https://twitter.com/chrisjanssensVB/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 4,
     "FirstName": "Marino",
     "LastName": "Keulen",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.marinokeulen.be",
+    "SocialMediaLink": "www.facebook.com/marino.keulen",
     "Site": "http://www.marinokeulen.be",
     "TwitterName": "KeulenMarino",
     "Position": "Parlement",
@@ -1323,11 +1323,11 @@
     "IconURL": "https://twitter.com/KeulenMarino/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 5,
     "FirstName": "Jos",
     "LastName": "Lantmeeters",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.joslantmeeters.be",
+    "SocialMediaLink": "https://www.facebook.com/joslantmeeters",
     "Site": "www.joslantmeeters.be",
     "TwitterName": "joslantmeeters",
     "Position": "Parlement",
@@ -1340,7 +1340,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2064-03-30T00:00:00",
@@ -1350,11 +1350,11 @@
     "IconURL": "https://twitter.com/joslantmeeters/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Ingrid",
     "LastName": "Lieten",
     "Level": "Vlaams",
-    "SocialMediaLink": "ingridlieten.be",
+    "SocialMediaLink": "https://www.facebook.com/ingridlieten",
     "Site": "ingridlieten.be",
     "TwitterName": "ingridlieten",
     "Position": "Parlement",
@@ -1377,11 +1377,11 @@
     "IconURL": "https://twitter.com/ingridlieten/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Lydia",
     "LastName": "Peeters",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://lydiapeeters",
+    "SocialMediaLink": "",
     "Site": "http://lydiapeeters",
     "TwitterName": "",
     "Position": "Parlement",
@@ -1404,11 +1404,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 114,
     "FirstName": "Jan",
     "LastName": "Peumans",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.janpeumans.be",
+    "SocialMediaLink": "facebook/janpeumans",
     "Site": "www.janpeumans.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -1421,7 +1421,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2051-06-01T00:00:00",
@@ -1431,7 +1431,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Grete",
     "LastName": "Remen",
     "Level": "Vlaams",
@@ -1448,7 +1448,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -1489,7 +1489,7 @@
     "FirstName": "Barbara",
     "LastName": "Bonte",
     "Level": "Vlaams",
-    "SocialMediaLink": "",
+    "SocialMediaLink": "www.facebook.com/barbarabonte",
     "Site": "",
     "TwitterName": "barbarabonte",
     "Position": "Parlement",
@@ -1512,11 +1512,11 @@
     "IconURL": "https://twitter.com/barbarabonte/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 8,
     "FirstName": "Robrecht",
     "LastName": "Bothuyne",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.bothuyne.be",
+    "SocialMediaLink": "www.facebook.com/robrecht.bothuyne",
     "Site": "www.bothuyne.be",
     "TwitterName": "RobrechtB",
     "Position": "Parlement",
@@ -1539,11 +1539,11 @@
     "IconURL": "https://twitter.com/RobrechtB/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Caroline",
     "LastName": "Croo",
     "Level": "Vlaams",
-    "SocialMediaLink": "",
+    "SocialMediaLink": "https://www.facebook.com/carolinecroo",
     "Site": "",
     "TwitterName": "",
     "Position": "Parlement",
@@ -1556,7 +1556,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2063-01-28T00:00:00",
@@ -1566,11 +1566,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 13,
     "FirstName": "Koen",
     "LastName": "Daniëls",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.koendaniels.be",
+    "SocialMediaLink": "https://www.facebook.com/#!/koendaniels",
     "Site": "http://www.koendaniels.be",
     "TwitterName": "koendaniels",
     "Position": "Parlement",
@@ -1583,7 +1583,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1978-05-17T00:00:00",
@@ -1593,11 +1593,11 @@
     "IconURL": "https://twitter.com/koendaniels/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 30,
     "FirstName": "Mathias",
     "LastName": "De Clercq",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.mathiasdeclercq.be",
+    "SocialMediaLink": "https://www.facebook.com/mathias.declercq",
     "Site": "www.mathiasdeclercq.be",
     "TwitterName": "MathiasDeClercq",
     "Position": "Parlement",
@@ -1620,7 +1620,7 @@
     "IconURL": "https://twitter.com/MathiasDeClercq/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 258,
     "FirstName": "Herman",
     "LastName": "De Croo",
     "Level": "Vlaams",
@@ -1647,11 +1647,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 8,
     "FirstName": "Jean-Jacques",
     "LastName": "De Gucht",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.jeanjacquesdegucht.be",
+    "SocialMediaLink": "",
     "Site": "www.jeanjacquesdegucht.be",
     "TwitterName": "jjdegucht",
     "Position": "Parlement",
@@ -1674,11 +1674,11 @@
     "IconURL": "https://twitter.com/jjdegucht/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Kurt",
     "LastName": "De Loor",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.kurtdeloor.be",
+    "SocialMediaLink": "",
     "Site": "http://www.kurtdeloor.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -1705,7 +1705,7 @@
     "FirstName": "Ingeborg",
     "LastName": "De Meulemeester",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.ingeborgdemeulemeester.be",
+    "SocialMediaLink": "",
     "Site": "http://www.ingeborgdemeulemeester.be",
     "TwitterName": "borg_dm",
     "Position": "Parlement",
@@ -1718,7 +1718,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2065-04-14T00:00:00",
@@ -1732,7 +1732,7 @@
     "FirstName": "Marnic",
     "LastName": "De Meulemeester",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.marnicdemeulemeester.be",
+    "SocialMediaLink": "http://www.facebook.com/marnicdemeulemeester",
     "Site": "http://www.marnicdemeulemeester.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -1755,11 +1755,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Jos",
     "LastName": "De Meyer",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.josdemeyer.be",
+    "SocialMediaLink": "www.facebook.com/jos.demeyer.545",
     "Site": "www.josdemeyer.be",
     "TwitterName": "JosDeMeyer",
     "Position": "Parlement",
@@ -1782,11 +1782,11 @@
     "IconURL": "https://twitter.com/JosDeMeyer/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Jenne",
     "LastName": "De Potter",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.jennedepotter.be",
+    "SocialMediaLink": "",
     "Site": "www.jennedepotter.be",
     "TwitterName": "JenneDePotter",
     "Position": "Parlement",
@@ -1836,11 +1836,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 41,
     "FirstName": "Matthias",
     "LastName": "Diependaele",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.matthiasdiependaele.be",
+    "SocialMediaLink": "https://www.facebook.com/Matthias-Diependaele-543319679114946/",
     "Site": "http://www.matthiasdiependaele.be",
     "TwitterName": "@MDiependaele",
     "Position": "Parlement",
@@ -1853,7 +1853,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1979-07-08T00:00:00",
@@ -1867,7 +1867,7 @@
     "FirstName": "Cindy",
     "LastName": "Franssen",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.cindyfranssen.be",
+    "SocialMediaLink": "www.facebook.com/cindy.franssen.90",
     "Site": "http://www.cindyfranssen.be",
     "TwitterName": "FranssenCindy",
     "Position": "Parlement",
@@ -1890,11 +1890,11 @@
     "IconURL": "https://twitter.com/FranssenCindy/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 9,
     "FirstName": "Andries",
     "LastName": "Gryffroy",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.andriesgryffroy.be",
+    "SocialMediaLink": "http://www.facebook.com/AndriesGryffroy",
     "Site": "www.andriesgryffroy.be",
     "TwitterName": "gryffroy",
     "Position": "Parlement",
@@ -1907,7 +1907,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2063-12-03T00:00:00",
@@ -1917,11 +1917,11 @@
     "IconURL": "https://twitter.com/gryffroy/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Marius",
     "LastName": "Meremans",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.mariusmeremans.be/",
+    "SocialMediaLink": "https://www.facebook.com/marius.meremans",
     "Site": "http://www.mariusmeremans.be/",
     "TwitterName": "mariusmeremans",
     "Position": "Parlement",
@@ -1934,7 +1934,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2015-05-20T00:00:00",
@@ -1944,11 +1944,11 @@
     "IconURL": "https://twitter.com/mariusmeremans/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 15,
     "FirstName": "Elisabeth",
     "LastName": "Meuleman",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.elisabethmeuleman.be",
+    "SocialMediaLink": "https://www.facebook.com/elisabeth.meuleman.1",
     "Site": "http://www.elisabethmeuleman.be",
     "TwitterName": "elisameuleman",
     "Position": "Parlement",
@@ -1971,11 +1971,11 @@
     "IconURL": "https://twitter.com/elisameuleman/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 13,
     "FirstName": "Björn",
     "LastName": "Rzoska",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.bjornrzoska.be",
+    "SocialMediaLink": "www.facebook.com/bjorn.rzoska",
     "Site": "http://www.bjornrzoska.be",
     "TwitterName": "BjornRzoska",
     "Position": "Parlement",
@@ -1998,11 +1998,11 @@
     "IconURL": "https://twitter.com/BjornRzoska/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 6,
     "FirstName": "Freya",
     "LastName": "Saeys",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://Freyasaeys.be",
+    "SocialMediaLink": "",
     "Site": "http://Freyasaeys.be",
     "TwitterName": "FreyaSaeys",
     "Position": "Parlement",
@@ -2025,11 +2025,11 @@
     "IconURL": "https://twitter.com/FreyaSaeys/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 5,
     "FirstName": "Valerie",
     "LastName": "Taeldeman",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.valerietaeldeman.be",
+    "SocialMediaLink": "https://www.facebook.com/valerie.taeldeman",
     "Site": "http://www.valerietaeldeman.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -2052,11 +2052,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 7,
     "FirstName": "Freya",
     "LastName": "Van den Bossche",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.freyavandenbossche.be",
+    "SocialMediaLink": "http://www.facebook.com/freyavandenbossche",
     "Site": "www.freyavandenbossche.be",
     "TwitterName": "freyabos",
     "Position": "Parlement",
@@ -2079,7 +2079,7 @@
     "IconURL": "https://twitter.com/freyabos/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 20,
     "FirstName": "Joris",
     "LastName": "Vandenbroucke",
     "Level": "Vlaams",
@@ -2106,11 +2106,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 9,
     "FirstName": "Miranda",
     "LastName": "Van Eetvelde",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.mirandavaneetvelde.be",
+    "SocialMediaLink": "http://facebook.com/miranda.vaneetvelde",
     "Site": "http://www.mirandavaneetvelde.be",
     "TwitterName": "mveetvelde",
     "Position": "Parlement",
@@ -2123,7 +2123,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2059-09-24T00:00:00",
@@ -2133,11 +2133,11 @@
     "IconURL": "https://twitter.com/mveetvelde/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Bart",
     "LastName": "Van Malderen",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.bartvanmalderen.be",
+    "SocialMediaLink": "http://www.facebook.com/bartvanmalderen",
     "Site": "http://www.bartvanmalderen.be",
     "TwitterName": "bartvanmalderen",
     "Position": "Parlement",
@@ -2160,11 +2160,11 @@
     "IconURL": "https://twitter.com/bartvanmalderen/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 8,
     "FirstName": "Karim",
     "LastName": "Van Overmeire",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.karimvanovermeire.be",
+    "SocialMediaLink": "https://www.facebook.com/karim.vanovermeire",
     "Site": "http://www.karimvanovermeire.be",
     "TwitterName": "KVanOvermeire",
     "Position": "Parlement",
@@ -2177,7 +2177,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2064-10-14T00:00:00",
@@ -2187,11 +2187,11 @@
     "IconURL": "https://twitter.com/KVanOvermeire/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Sabine",
     "LastName": "Vermeulen",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.sabinevermeulen.be",
+    "SocialMediaLink": "https://www.facebook.com/sabine.vermeulen.1",
     "Site": "http://www.sabinevermeulen.be",
     "TwitterName": "Sab_Vermeulen",
     "Position": "Parlement",
@@ -2204,7 +2204,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1971-12-03T00:00:00",
@@ -2214,11 +2214,11 @@
     "IconURL": "https://twitter.com/Sab_Vermeulen/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Karin",
     "LastName": "Brouwers",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.karin.brouwers.cdenv.be",
+    "SocialMediaLink": "http://www.facebook.com/karin.brouwers.33",
     "Site": "www.karin.brouwers.cdenv.be",
     "TwitterName": "BrouwersKarin?iid=am-4065281413413037888524344&nid=23+recipient&uid=366055121&utm_content=profile",
     "Position": "Parlement",
@@ -2241,7 +2241,7 @@
     "IconURL": "https://twitter.com/BrouwersKarin?iid=am-4065281413413037888524344&nid=23+recipient&uid=366055121&utm_content=profile/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 87,
     "FirstName": "Rik",
     "LastName": "Daems",
     "Level": "Vlaams",
@@ -2268,11 +2268,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 16,
     "FirstName": "Piet",
     "LastName": "De Bruyn",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.pietdebruyn.be",
+    "SocialMediaLink": "www.facebook.com/pietdebruyn",
     "Site": "http://www.pietdebruyn.be",
     "TwitterName": "PietDeBruyn",
     "Position": "Parlement",
@@ -2285,7 +2285,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1968-02-04T00:00:00",
@@ -2295,11 +2295,11 @@
     "IconURL": "https://twitter.com/PietDeBruyn/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 10,
     "FirstName": "Jo",
     "LastName": "De Ro",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.jodero.be",
+    "SocialMediaLink": "www.facebook.com\\jo.dero.31",
     "Site": "http://www.jodero.be",
     "TwitterName": "jo_dero",
     "Position": "Parlement",
@@ -2322,11 +2322,11 @@
     "IconURL": "https://twitter.com/jo_dero/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Gwenny",
     "LastName": "De Vroe",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.gwennydevroe.be",
+    "SocialMediaLink": "",
     "Site": "http://www.gwennydevroe.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -2349,11 +2349,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Michel",
     "LastName": "Doomst",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.micheldoomst.be",
+    "SocialMediaLink": "",
     "Site": "http://www.micheldoomst.be",
     "TwitterName": "micheldoomst",
     "Position": "Parlement",
@@ -2376,7 +2376,7 @@
     "IconURL": "https://twitter.com/micheldoomst/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Lieve",
     "LastName": "Maes",
     "Level": "Vlaams",
@@ -2393,7 +2393,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -2407,7 +2407,7 @@
     "FirstName": "An",
     "LastName": "Moerenhout",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.anmoerenhout.be",
+    "SocialMediaLink": "http://www.facebook.com/moerenhoutan",
     "Site": "http://www.anmoerenhout.be",
     "TwitterName": "anmoerenhout",
     "Position": "Parlement",
@@ -2430,11 +2430,11 @@
     "IconURL": "https://twitter.com/anmoerenhout/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 6,
     "FirstName": "Bart",
     "LastName": "Nevens",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://bartnevens.be",
+    "SocialMediaLink": "https://www.facebook.com/bart.nevens.9",
     "Site": "http://bartnevens.be",
     "TwitterName": "BartNevens",
     "Position": "Parlement",
@@ -2447,7 +2447,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2066-04-11T00:00:00",
@@ -2461,7 +2461,7 @@
     "FirstName": "Katrien",
     "LastName": "organisationka",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.katrienorganisationka.be",
+    "SocialMediaLink": "http://www.facebook.com/katrienorganisationka",
     "Site": "http://www.katrienorganisationka.be",
     "TwitterName": "katorganisation",
     "Position": "Parlement",
@@ -2484,11 +2484,11 @@
     "IconURL": "https://twitter.com/katorganisation/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 72,
     "FirstName": "Lorin",
     "LastName": "Parys",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.lorinparys.be",
+    "SocialMediaLink": "http://www.facebook.com/lorinparys",
     "Site": "http://www.lorinparys.be",
     "TwitterName": "lorinparys",
     "Position": "Parlement",
@@ -2501,7 +2501,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1976-12-04T00:00:00",
@@ -2511,11 +2511,11 @@
     "IconURL": "https://twitter.com/lorinparys/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 670,
     "FirstName": "Peter",
     "LastName": "Persyn",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.peterpersyn.be",
+    "SocialMediaLink": "http://www.facebook.com/peter.persyn.1",
     "Site": "http://www.peterpersyn.be",
     "TwitterName": "peter_persyn",
     "Position": "Parlement",
@@ -2528,21 +2528,21 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2062-02-12T00:00:00",
     "ItemId": 111,
     "Name": "Peter Persyn",
-    "IsTrending": false,
+    "IsTrending": true,
     "IconURL": "https://twitter.com/peter_persyn/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 278,
     "FirstName": "Gwendolyn",
     "LastName": "Rutten",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.gwendolynrutten.be/",
+    "SocialMediaLink": "https://www.facebook.com/profile.php?id=1187112478&fref=ts",
     "Site": "http://www.gwendolynrutten.be/",
     "TwitterName": "RuttenGwendolyn",
     "Position": "Parlement",
@@ -2565,11 +2565,11 @@
     "IconURL": "https://twitter.com/RuttenGwendolyn/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 16,
     "FirstName": "Hermes",
     "LastName": "Sanctorum",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.hermessanctorum.be",
+    "SocialMediaLink": "https://www.facebook.com/hermes.sanctorum",
     "Site": "www.hermessanctorum.be",
     "TwitterName": "hermessanctorum",
     "Position": "Parlement",
@@ -2592,11 +2592,11 @@
     "IconURL": "https://twitter.com/hermessanctorum/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 11,
     "FirstName": "Katia",
     "LastName": "Segers",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.segerskatia.be/",
+    "SocialMediaLink": "http://www.facebook.com/KatiaSegers",
     "Site": "http://www.segerskatia.be/",
     "TwitterName": "katiasegers",
     "Position": "Parlement",
@@ -2619,11 +2619,11 @@
     "IconURL": "https://twitter.com/katiasegers/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 12,
     "FirstName": "Willy",
     "LastName": "Segers",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.willysegers.be",
+    "SocialMediaLink": "https://www.facebook.com/pages/Willy-Segers/172565137927",
     "Site": "http://www.willysegers.be",
     "TwitterName": "@willy_segers",
     "Position": "Parlement",
@@ -2636,7 +2636,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2058-11-21T00:00:00",
@@ -2646,11 +2646,11 @@
     "IconURL": "https://twitter.com/@willy_segers/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 10,
     "FirstName": "Nadia",
     "LastName": "Sminate",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.nadiasminate.be",
+    "SocialMediaLink": "www.facebook.com/nadia.sminate",
     "Site": "www.nadiasminate.be",
     "TwitterName": "NadiaSminate",
     "Position": "Parlement",
@@ -2663,7 +2663,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1981-12-29T00:00:00",
@@ -2673,11 +2673,11 @@
     "IconURL": "https://twitter.com/NadiaSminate/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 104,
     "FirstName": "Bruno",
     "LastName": "Tobback",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.s-p-a.be",
+    "SocialMediaLink": "",
     "Site": "www.s-p-a.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -2700,7 +2700,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Christian",
     "LastName": "Van Eyken",
     "Level": "Vlaams",
@@ -2727,11 +2727,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 36,
     "FirstName": "Peter",
     "LastName": "Van Rompuy",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.petervanrompuy.be",
+    "SocialMediaLink": "https://www.facebook.com/peter.rompuy",
     "Site": "http://www.petervanrompuy.be",
     "TwitterName": "Petervanrompuy",
     "Position": "Parlement",
@@ -2754,11 +2754,11 @@
     "IconURL": "https://twitter.com/Petervanrompuy/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Björn",
     "LastName": "Anseeuw",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.bjornanseeuw.be",
+    "SocialMediaLink": "https://www.facebook.com/bjorn.anseeuw",
     "Site": "http://www.bjornanseeuw.be",
     "TwitterName": "bjanseeuw",
     "Position": "Parlement",
@@ -2771,7 +2771,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1976-09-17T00:00:00",
@@ -2781,11 +2781,11 @@
     "IconURL": "https://twitter.com/bjanseeuw/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 17,
     "FirstName": "Bart",
     "LastName": "Caron",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.bartcaron.be",
+    "SocialMediaLink": "https://www.facebook.com/bart.caron",
     "Site": "http://www.bartcaron.be",
     "TwitterName": "BartCaron",
     "Position": "Parlement",
@@ -2835,11 +2835,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Cathy",
     "LastName": "Coudyser",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.cathycoudyser.be",
+    "SocialMediaLink": "https://www.facebook.com/Ccoudyser",
     "Site": "http://www.cathycoudyser.be",
     "TwitterName": "cathycoudyser",
     "Position": "Parlement",
@@ -2852,7 +2852,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1969-12-14T00:00:00",
@@ -2862,11 +2862,11 @@
     "IconURL": "https://twitter.com/cathycoudyser/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 332,
     "FirstName": "John",
     "LastName": "Crombez",
     "Level": "Geen",
-    "SocialMediaLink": "www.johnenjohan.be",
+    "SocialMediaLink": "www.facebook.com/john.crombez",
     "Site": "www.johnenjohan.be",
     "TwitterName": "johncrombez",
     "Position": "Voorzitter",
@@ -2943,7 +2943,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Jan",
     "LastName": "Durnez",
     "Level": "Vlaams",
@@ -2970,11 +2970,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 23,
     "FirstName": "Martine",
     "LastName": "Fournier",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.martinefournier.be",
+    "SocialMediaLink": "https://www.facebook.com/martine.fournier.16",
     "Site": "www.martinefournier.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -3014,7 +3014,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -3028,7 +3028,7 @@
     "FirstName": "Michèle",
     "LastName": "Hostekint",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.michelehostekint.be",
+    "SocialMediaLink": "https://www.facebook.com/michelehostekint",
     "Site": "www.michelehostekint.be",
     "TwitterName": "mhostekint",
     "Position": "Parlement",
@@ -3051,11 +3051,11 @@
     "IconURL": "https://twitter.com/mhostekint/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 9,
     "FirstName": "Renaat",
     "LastName": "Landuyt",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.renaatlanduyt.be",
+    "SocialMediaLink": "",
     "Site": "http://www.renaatlanduyt.be",
     "TwitterName": "rlanduyt",
     "Position": "Parlement",
@@ -3078,11 +3078,11 @@
     "IconURL": "https://twitter.com/rlanduyt/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Bert",
     "LastName": "Maertens",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.bertmaertens.be",
+    "SocialMediaLink": "https://www.facebook.com/Bert.Maertens",
     "Site": "http://www.bertmaertens.be",
     "TwitterName": "MaertensBert",
     "Position": "Parlement",
@@ -3095,7 +3095,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1981-11-16T00:00:00",
@@ -3105,11 +3105,11 @@
     "IconURL": "https://twitter.com/MaertensBert/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 46,
     "FirstName": "Axel",
     "LastName": "Ronse",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.axelronse.be",
+    "SocialMediaLink": "https://www.facebook.com/AxelRonse",
     "Site": "www.axelronse.be",
     "TwitterName": "axelronse",
     "Position": "Parlement",
@@ -3122,7 +3122,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1981-07-20T00:00:00",
@@ -3132,7 +3132,7 @@
     "IconURL": "https://twitter.com/axelronse/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 7,
     "FirstName": "Stefaan",
     "LastName": "Sintobin",
     "Level": "Vlaams",
@@ -3159,11 +3159,11 @@
     "IconURL": "https://twitter.com/StefaanSintobin/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 5,
     "FirstName": "Tine",
     "LastName": "Soens",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.tinesoens.be",
+    "SocialMediaLink": "https://www.facebook.com/tine.soens",
     "Site": "http://www.tinesoens.be",
     "TwitterName": "TineSoens",
     "Position": "Parlement",
@@ -3190,7 +3190,7 @@
     "FirstName": "Ann",
     "LastName": "Soete",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.annsoete.be",
+    "SocialMediaLink": "https://www.facebook.com/ann.soete",
     "Site": "http://www.annsoete.be",
     "TwitterName": "AnnSoete",
     "Position": "Parlement",
@@ -3203,7 +3203,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2059-02-18T00:00:00",
@@ -3217,7 +3217,7 @@
     "FirstName": "Emmily",
     "LastName": "Talpe",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.emmily.be",
+    "SocialMediaLink": "https://www.facebook.com/emmilytalpe",
     "Site": "http://www.emmily.be",
     "TwitterName": "emmilytalpe",
     "Position": "Parlement",
@@ -3240,11 +3240,11 @@
     "IconURL": "https://twitter.com/emmilytalpe/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Wilfried",
     "LastName": "Vandaele",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.wilfriedvandaele.be",
+    "SocialMediaLink": "",
     "Site": "www.wilfriedvandaele.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -3257,7 +3257,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2059-05-06T00:00:00",
@@ -3294,11 +3294,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Mercedes",
     "LastName": "Van Volcem",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://Www.mercedesvanvolcem.be",
+    "SocialMediaLink": "",
     "Site": "http://Www.mercedesvanvolcem.be",
     "TwitterName": "mercedesvvolcem",
     "Position": "Parlement",
@@ -3321,11 +3321,11 @@
     "IconURL": "https://twitter.com/mercedesvvolcem/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 4,
     "FirstName": "Johan",
     "LastName": "Verstreken",
     "Level": "Vlaams",
-    "SocialMediaLink": "",
+    "SocialMediaLink": "https://www.facebook.com/johanverstreken.5",
     "Site": "",
     "TwitterName": "johanverstreken",
     "Position": "Parlement",
@@ -3348,11 +3348,11 @@
     "IconURL": "https://twitter.com/johanverstreken/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 113,
     "FirstName": "Hendrik",
     "LastName": "Bogaert",
     "Level": "Federaal",
-    "SocialMediaLink": "www.hendrikbogaert.be",
+    "SocialMediaLink": "https://www.facebook.com/hendrik.bogaert.9",
     "Site": "www.hendrikbogaert.be",
     "TwitterName": "hendrikbogaert",
     "Position": "Parlement",
@@ -3375,11 +3375,11 @@
     "IconURL": "https://twitter.com/hendrikbogaert/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 15,
     "FirstName": "Franky",
     "LastName": "Demon",
     "Level": "Federaal",
-    "SocialMediaLink": "www.frankydemon.be",
+    "SocialMediaLink": "www.facebook.com/frankydemon",
     "Site": "www.frankydemon.be",
     "TwitterName": "frankydemon",
     "Position": "Parlement",
@@ -3402,11 +3402,11 @@
     "IconURL": "https://twitter.com/frankydemon/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Roel",
     "LastName": "Deseyn",
     "Level": "Federaal",
-    "SocialMediaLink": "www.roeldeseyn.be",
+    "SocialMediaLink": "www.facebook.com/roeldeseyn",
     "Site": "www.roeldeseyn.be",
     "TwitterName": "roeldeseyn",
     "Position": "Parlement",
@@ -3429,11 +3429,11 @@
     "IconURL": "https://twitter.com/roeldeseyn/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Nathalie",
     "LastName": "Muylle",
     "Level": "Federaal",
-    "SocialMediaLink": "www.nathaliemuylle.be",
+    "SocialMediaLink": "www.facebook.com/nathalie.muylle",
     "Site": "www.nathaliemuylle.be",
     "TwitterName": "nathaliemuylle",
     "Position": "Parlement",
@@ -3460,7 +3460,7 @@
     "FirstName": "An",
     "LastName": "Capoen",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.ancapoen.be",
+    "SocialMediaLink": "https://www.facebook.com/pages/An-Capoen/128105340557056?fref=ts",
     "Site": "http://www.ancapoen.be",
     "TwitterName": "ancapoen",
     "Position": "Parlement",
@@ -3473,7 +3473,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1982-09-20T00:00:00",
@@ -3483,7 +3483,7 @@
     "IconURL": "https://twitter.com/ancapoen/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 4,
     "FirstName": "Koenraad",
     "LastName": "Degroote",
     "Level": "Federaal",
@@ -3500,7 +3500,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -3527,7 +3527,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -3537,7 +3537,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Rita",
     "LastName": "Gantois",
     "Level": "Federaal",
@@ -3554,7 +3554,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2058-06-14T00:00:00",
@@ -3564,7 +3564,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Jan",
     "LastName": "Vercammen",
     "Level": "Federaal",
@@ -3581,7 +3581,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -3591,11 +3591,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Brecht",
     "LastName": "Vermeulen",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.brechtvermeulen.be",
+    "SocialMediaLink": "https://www.facebook.com/brecht.vermeulen.9",
     "Site": "http://www.brechtvermeulen.be",
     "TwitterName": "VermeulenBrecht",
     "Position": "Parlement",
@@ -3608,7 +3608,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1969-06-17T00:00:00",
@@ -3618,11 +3618,11 @@
     "IconURL": "https://twitter.com/VermeulenBrecht/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 6,
     "FirstName": "Alain",
     "LastName": "Top",
     "Level": "Federaal",
-    "SocialMediaLink": "",
+    "SocialMediaLink": "http://www.facebook.com/alain.top",
     "Site": "",
     "TwitterName": "alain_top",
     "Position": "Parlement",
@@ -3645,7 +3645,7 @@
     "IconURL": "https://twitter.com/alain_top/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 62,
     "FirstName": "Johan",
     "LastName": "Vande Lanotte",
     "Level": "Federaal",
@@ -3676,7 +3676,7 @@
     "FirstName": "Ann",
     "LastName": "Vanheste",
     "Level": "Federaal",
-    "SocialMediaLink": "http://annvanheste.be",
+    "SocialMediaLink": "",
     "Site": "http://annvanheste.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -3726,11 +3726,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 70,
     "FirstName": "Vincent",
     "LastName": "Van Quickenborne",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.vincentvanquickenborne.be",
+    "SocialMediaLink": "https://www.facebook.com/vincentvq",
     "Site": "http://www.vincentvanquickenborne.be",
     "TwitterName": "VincentVQ",
     "Position": "Parlement",
@@ -3753,11 +3753,11 @@
     "IconURL": "https://twitter.com/VincentVQ/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 61,
     "FirstName": "Wouter",
     "LastName": "De Vriendt",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.wouterdevriendt.be",
+    "SocialMediaLink": "www.facebook.com/wouter.devriendt3",
     "Site": "http://www.wouterdevriendt.be",
     "TwitterName": "WouterDeVriendt",
     "Position": "Parlement",
@@ -3780,11 +3780,11 @@
     "IconURL": "https://twitter.com/WouterDeVriendt/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 167,
     "FirstName": "Siegfried",
     "LastName": "Bracke",
     "Level": "Federaal",
-    "SocialMediaLink": "www.siegfriedbracke.be",
+    "SocialMediaLink": "",
     "Site": "www.siegfriedbracke.be",
     "TwitterName": "sthbracke",
     "Position": "Parlement",
@@ -3797,7 +3797,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2053-02-21T00:00:00",
@@ -3807,11 +3807,11 @@
     "IconURL": "https://twitter.com/sthbracke/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 8,
     "FirstName": "Peter",
     "LastName": "Buysrogge",
     "Level": "Federaal",
-    "SocialMediaLink": "www.peterbuysrogge.be",
+    "SocialMediaLink": "",
     "Site": "www.peterbuysrogge.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -3824,7 +3824,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1976-03-15T00:00:00",
@@ -3834,11 +3834,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 13,
     "FirstName": "Christoph",
     "LastName": "D'Haese",
     "Level": "Federaal",
-    "SocialMediaLink": "www.christophdhaese.be",
+    "SocialMediaLink": "www.facebook.com/christoph.dhaese",
     "Site": "www.christophdhaese.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -3851,7 +3851,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1967-02-25T00:00:00",
@@ -3861,11 +3861,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 83,
     "FirstName": "Peter",
     "LastName": "Dedecker",
     "Level": "Federaal",
-    "SocialMediaLink": "http://peterdedecker.eu",
+    "SocialMediaLink": "https://www.facebook.com/peterdedecker",
     "Site": "http://peterdedecker.eu",
     "TwitterName": "peterdedecker",
     "Position": "Parlement",
@@ -3878,7 +3878,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1983-07-11T00:00:00",
@@ -3888,11 +3888,11 @@
     "IconURL": "https://twitter.com/peterdedecker/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 7,
     "FirstName": "Sarah",
     "LastName": "Smeyers",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.sarahsmeyers.be/",
+    "SocialMediaLink": "https://www.facebook.com/pages/Sarah-Smeyers/95712061024",
     "Site": "http://www.sarahsmeyers.be/",
     "TwitterName": "SarahSmeyers",
     "Position": "Parlement",
@@ -3905,7 +3905,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1980-08-10T00:00:00",
@@ -3915,11 +3915,11 @@
     "IconURL": "https://twitter.com/SarahSmeyers/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 6,
     "FirstName": "Goedele",
     "LastName": "Uyttersprot",
     "Level": "Federaal",
-    "SocialMediaLink": "www.goedele-uyttersprot.be",
+    "SocialMediaLink": "",
     "Site": "www.goedele-uyttersprot.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -3932,7 +3932,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1980-10-17T00:00:00",
@@ -3946,7 +3946,7 @@
     "FirstName": "Katja",
     "LastName": "Gabriëls",
     "Level": "Federaal",
-    "SocialMediaLink": "",
+    "SocialMediaLink": "www.facebook.com/KatjaGabriels",
     "Site": "",
     "TwitterName": "",
     "Position": "Parlement",
@@ -3969,11 +3969,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 17,
     "FirstName": "Egbert",
     "LastName": "Lachaert",
     "Level": "Federaal",
-    "SocialMediaLink": "www.egbertlachaert.be",
+    "SocialMediaLink": "https://www.facebook.com/egbert.lachaert",
     "Site": "www.egbertlachaert.be",
     "TwitterName": "egbertlachaert",
     "Position": "Parlement",
@@ -4000,7 +4000,7 @@
     "FirstName": "Ine",
     "LastName": "Somers",
     "Level": "Federaal",
-    "SocialMediaLink": "www.inesomers.be",
+    "SocialMediaLink": "www.facebook.com/IneSomersop4",
     "Site": "www.inesomers.be",
     "TwitterName": "IneSomers",
     "Position": "Parlement",
@@ -4023,11 +4023,11 @@
     "IconURL": "https://twitter.com/IneSomers/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 20,
     "FirstName": "Carina",
     "LastName": "Van Cauter",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.carinavancauter.be",
+    "SocialMediaLink": "https://www.facebook.com/CarinaVanCauterOpenVld?fref=ts",
     "Site": "http://www.carinavancauter.be",
     "TwitterName": "carinavancauter",
     "Position": "Parlement",
@@ -4054,7 +4054,7 @@
     "FirstName": "Sarah",
     "LastName": "Claerhout",
     "Level": "Federaal",
-    "SocialMediaLink": "www.sarahclaerhout.be",
+    "SocialMediaLink": "www.facebook.com/SarahClaerhout",
     "Site": "www.sarahclaerhout.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -4077,11 +4077,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Leen",
     "LastName": "Dierick",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.leendierick.be/",
+    "SocialMediaLink": "https://www.facebook.com/leen.dierick",
     "Site": "http://www.leendierick.be/",
     "TwitterName": "leendierick",
     "Position": "Parlement",
@@ -4108,7 +4108,7 @@
     "FirstName": "Stefaan",
     "LastName": "Vercamer",
     "Level": "Federaal",
-    "SocialMediaLink": "www.stefaanvercamer.be",
+    "SocialMediaLink": "facebook.com/stefaanvercamer",
     "Site": "www.stefaanvercamer.be",
     "TwitterName": "StefaanVercamer",
     "Position": "Parlement",
@@ -4131,7 +4131,7 @@
     "IconURL": "https://twitter.com/StefaanVercamer/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 7,
     "FirstName": "Veli",
     "LastName": "Yüksel",
     "Level": "Federaal",
@@ -4185,11 +4185,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 23,
     "FirstName": "Karin",
     "LastName": "Temmerman",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.karintemmerman.be",
+    "SocialMediaLink": "www.facebook.com/karintemmerman",
     "Site": "http://www.karintemmerman.be",
     "TwitterName": "KarinTemmerman",
     "Position": "Parlement",
@@ -4212,11 +4212,11 @@
     "IconURL": "https://twitter.com/KarinTemmerman/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 30,
     "FirstName": "Dirk",
     "LastName": "Van der Maelen",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.dirkvandermaelen.be/",
+    "SocialMediaLink": "https://www.facebook.com/dirkvandermaelen",
     "Site": "http://www.dirkvandermaelen.be/",
     "TwitterName": "dirkvdmaelen",
     "Position": "Parlement",
@@ -4239,11 +4239,11 @@
     "IconURL": "https://twitter.com/dirkvdmaelen/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 337,
     "FirstName": "Barbara",
     "LastName": "Pas",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.barbarapas.org",
+    "SocialMediaLink": "https://www.facebook.com/Barbara.Pas",
     "Site": "http://www.barbarapas.org",
     "TwitterName": "Barbara_Pas",
     "Position": "Parlement",
@@ -4266,11 +4266,11 @@
     "IconURL": "https://twitter.com/Barbara_Pas/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 5,
     "FirstName": "Stefaan",
     "LastName": "Van Hecke",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.stefaanvanhecke.be",
+    "SocialMediaLink": "facebook.com/stefaanvanhecke",
     "Site": "http://www.stefaanvanhecke.be",
     "TwitterName": "SVHecke",
     "Position": "Parlement",
@@ -4293,11 +4293,11 @@
     "IconURL": "https://twitter.com/SVHecke/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Evita",
     "LastName": "Willaert",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.evitawillaert.be",
+    "SocialMediaLink": "facebook.com/evitawillaert",
     "Site": "http://www.evitawillaert.be",
     "TwitterName": "EvitaWillaert",
     "Position": "Parlement",
@@ -4337,7 +4337,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -4347,11 +4347,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 191,
     "FirstName": "Peter",
     "LastName": "De Roover",
     "Level": "Federaal",
-    "SocialMediaLink": "www.peterderoover.be",
+    "SocialMediaLink": "https://www.facebook.com/peter.deroover.5?ref=tn_tnmn",
     "Site": "www.peterderoover.be",
     "TwitterName": "PeterDeRoover1",
     "Position": "Parlement",
@@ -4364,7 +4364,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2062-05-20T00:00:00",
@@ -4374,7 +4374,7 @@
     "IconURL": "https://twitter.com/PeterDeRoover1/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2122,
     "FirstName": "Bart",
     "LastName": "De Wever",
     "Level": "Federaal",
@@ -4391,21 +4391,21 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1970-12-21T00:00:00",
     "ItemId": 180,
     "Name": "Bart De Wever",
-    "IsTrending": false,
+    "IsTrending": true,
     "IconURL": "https://twitter.com/Bart_DeWever/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 18,
     "FirstName": "Sophie",
     "LastName": "De Wit",
     "Level": "Federaal",
-    "SocialMediaLink": "www.sophiedewit.be",
+    "SocialMediaLink": "Facebook.com/sophiedewit",
     "Site": "www.sophiedewit.be",
     "TwitterName": "DeWitSophie",
     "Position": "Parlement",
@@ -4418,7 +4418,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1973-08-28T00:00:00",
@@ -4428,11 +4428,11 @@
     "IconURL": "https://twitter.com/DeWitSophie/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 711,
     "FirstName": "Zuhal",
     "LastName": "Demir",
     "Level": "Federaal",
-    "SocialMediaLink": "www.zuhaldemir.be",
+    "SocialMediaLink": "https://www.facebook.com/zuhal.demir.3956",
     "Site": "www.zuhaldemir.be",
     "TwitterName": "Zu_Demir",
     "Position": "Parlement",
@@ -4445,17 +4445,17 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1980-02-03T00:00:00",
     "ItemId": 182,
     "Name": "Zuhal Demir",
-    "IsTrending": false,
+    "IsTrending": true,
     "IconURL": "https://twitter.com/Zu_Demir/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Johan",
     "LastName": "Klaps",
     "Level": "Federaal",
@@ -4472,7 +4472,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1970-08-19T00:00:00",
@@ -4482,11 +4482,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Koen",
     "LastName": "Metsu",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.koenmetsu.be",
+    "SocialMediaLink": "https://www.facebook.com/#!/koen.metsu.9",
     "Site": "http://www.koenmetsu.be",
     "TwitterName": "MetsuKoen",
     "Position": "Parlement",
@@ -4499,7 +4499,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1981-07-23T00:00:00",
@@ -4509,11 +4509,11 @@
     "IconURL": "https://twitter.com/MetsuKoen/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 36,
     "FirstName": "Yoleen",
     "LastName": "Van Camp",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.yoleenvancamp.be",
+    "SocialMediaLink": "www.facebook.com/yoleenvancamp",
     "Site": "http://www.yoleenvancamp.be",
     "TwitterName": "YoleenVanCamp",
     "Position": "Parlement",
@@ -4526,7 +4526,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1987-08-25T00:00:00",
@@ -4536,7 +4536,7 @@
     "IconURL": "https://twitter.com/YoleenVanCamp/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 8,
     "FirstName": "Rob",
     "LastName": "Van de Velde",
     "Level": "Federaal",
@@ -4553,7 +4553,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -4563,11 +4563,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 21,
     "FirstName": "Valerie",
     "LastName": "Van Peel",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.valerievanpeel.be",
+    "SocialMediaLink": "https://www.facebook.com/valerie.vanpeel?fref=ts",
     "Site": "http://www.valerievanpeel.be",
     "TwitterName": "valerievanpeel",
     "Position": "Parlement",
@@ -4580,7 +4580,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1979-11-10T00:00:00",
@@ -4590,11 +4590,11 @@
     "IconURL": "https://twitter.com/valerievanpeel/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 4,
     "FirstName": "Bert",
     "LastName": "Wollants",
     "Level": "Federaal",
-    "SocialMediaLink": "www.bertwolants.be",
+    "SocialMediaLink": "https://www.facebook.com/pages/Bert-Wollants/122123487813722",
     "Site": "www.bertwolants.be",
     "TwitterName": "bertwollants",
     "Position": "Parlement",
@@ -4607,7 +4607,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1979-08-30T00:00:00",
@@ -4617,11 +4617,11 @@
     "IconURL": "https://twitter.com/bertwollants/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 6,
     "FirstName": "Nahima",
     "LastName": "Lanjri",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.nahima.be",
+    "SocialMediaLink": "",
     "Site": "http://www.nahima.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -4648,7 +4648,7 @@
     "FirstName": "Griet",
     "LastName": "Smaers",
     "Level": "Federaal",
-    "SocialMediaLink": "www.grietsmaers.be",
+    "SocialMediaLink": "",
     "Site": "www.grietsmaers.be",
     "TwitterName": "Grietsmaers",
     "Position": "Parlement",
@@ -4675,7 +4675,7 @@
     "FirstName": "Jef",
     "LastName": "Van den Bergh",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.jefvandenbergh.be",
+    "SocialMediaLink": "https://www.facebook.com/vandenberghjef",
     "Site": "http://www.jefvandenbergh.be",
     "TwitterName": "jefvandenbergh",
     "Position": "Parlement",
@@ -4725,11 +4725,11 @@
     "IconURL": "https://twitter.com/ServaisV/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 303,
     "FirstName": "Filip",
     "LastName": "Dewinter",
     "Level": "Federaal",
-    "SocialMediaLink": "www.fdw.nu",
+    "SocialMediaLink": "http://www.facebook.com/fdwvb",
     "Site": "www.fdw.nu",
     "TwitterName": "fdw_vb",
     "Position": "Parlement",
@@ -4779,11 +4779,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Dirk",
     "LastName": "Van Mechelen",
     "Level": "Federaal",
-    "SocialMediaLink": "www.dirkvanmechelen.com",
+    "SocialMediaLink": "https://www.facebook.com/dirk.vanmechelen.90",
     "Site": "www.dirkvanmechelen.com",
     "TwitterName": "DirkVanMechele1",
     "Position": "Parlement",
@@ -4806,7 +4806,7 @@
     "IconURL": "https://twitter.com/DirkVanMechele1/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Frank",
     "LastName": "Wilrycx",
     "Level": "Federaal",
@@ -4833,7 +4833,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 15,
     "FirstName": "Monica",
     "LastName": "De Coninck",
     "Level": "Federaal",
@@ -4864,7 +4864,7 @@
     "FirstName": "Maya",
     "LastName": "Detiëge",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.mayadetiege.be/",
+    "SocialMediaLink": "https://www.facebook.com/maya.detiege.9",
     "Site": "http://www.mayadetiege.be/",
     "TwitterName": "",
     "Position": "Parlement",
@@ -4891,7 +4891,7 @@
     "FirstName": "David",
     "LastName": "Geerts",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.davidgeerts.be",
+    "SocialMediaLink": "https://www.facebook.com/david.geerts.12",
     "Site": "http://www.davidgeerts.be",
     "TwitterName": "GeertsDavid",
     "Position": "Parlement",
@@ -4914,11 +4914,11 @@
     "IconURL": "https://twitter.com/GeertsDavid/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 134,
     "FirstName": "Meyrem",
     "LastName": "Almaci",
     "Level": "Federaal",
-    "SocialMediaLink": "http://Www.meyremalmaci.be",
+    "SocialMediaLink": "HTTPS://www.facebook.com/meyremalmaci",
     "Site": "http://Www.meyremalmaci.be",
     "TwitterName": "MeyremAlmaci",
     "Position": "Parlement",
@@ -4941,11 +4941,11 @@
     "IconURL": "https://twitter.com/MeyremAlmaci/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 451,
     "FirstName": "Kristof",
     "LastName": "Calvo",
     "Level": "Federaal",
-    "SocialMediaLink": "www.kristofcalvo.be",
+    "SocialMediaLink": "https://www.facebook.com/kcalvo",
     "Site": "www.kristofcalvo.be",
     "TwitterName": "kristofcalvo",
     "Position": "Parlement",
@@ -4968,11 +4968,11 @@
     "IconURL": "https://twitter.com/kristofcalvo/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Inez",
     "LastName": "De Coninck",
     "Level": "Federaal",
-    "SocialMediaLink": "www.inezdeconinck.be",
+    "SocialMediaLink": "https://facebook.com/inezdeconinck",
     "Site": "www.inezdeconinck.be",
     "TwitterName": "inez-deconinck",
     "Position": "Parlement",
@@ -4985,7 +4985,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1977-10-08T00:00:00",
@@ -5012,7 +5012,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -5022,11 +5022,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 24,
     "FirstName": "Jan",
     "LastName": "Spooren",
     "Level": "Federaal",
-    "SocialMediaLink": "www.jan-spooren.be",
+    "SocialMediaLink": "",
     "Site": "www.jan-spooren.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -5039,7 +5039,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1969-12-01T00:00:00",
@@ -5049,11 +5049,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 32,
     "FirstName": "Kristien",
     "LastName": "Van Vaerenbergh",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.kristienvanvaerenbergh.be",
+    "SocialMediaLink": "https://www.facebook.com/kristienvanvaerenbergh",
     "Site": "http://www.kristienvanvaerenbergh.be",
     "TwitterName": "kris10vanvaer",
     "Position": "Parlement",
@@ -5066,7 +5066,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1978-04-22T00:00:00",
@@ -5076,7 +5076,7 @@
     "IconURL": "https://twitter.com/kris10vanvaer/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 45,
     "FirstName": "Hendrik",
     "LastName": "Vuye",
     "Level": "Federaal",
@@ -5107,7 +5107,7 @@
     "FirstName": "Sonja",
     "LastName": "Becq",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.sonjabecq.be/",
+    "SocialMediaLink": "https://facebook.com/sobecq",
     "Site": "http://www.sonjabecq.be/",
     "TwitterName": "SonjaBecq",
     "Position": "Parlement",
@@ -5130,7 +5130,7 @@
     "IconURL": "https://twitter.com/SonjaBecq/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Els",
     "LastName": "Van Hoof",
     "Level": "Federaal",
@@ -5157,11 +5157,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 291,
     "FirstName": "Eric",
     "LastName": "Van Rompuy",
     "Level": "Federaal",
-    "SocialMediaLink": "www.ericvanrompuy.be",
+    "SocialMediaLink": "",
     "Site": "www.ericvanrompuy.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -5184,11 +5184,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 101,
     "FirstName": "Hans",
     "LastName": "Bonte",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.hansbonte.be",
+    "SocialMediaLink": "",
     "Site": "http://www.hansbonte.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -5211,11 +5211,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 3,
     "FirstName": "Karin",
     "LastName": "Jiroflée",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.karinjiroflee.be",
+    "SocialMediaLink": "https://facebook.com/KarinJiroflee",
     "Site": "http://www.karinjiroflee.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -5238,11 +5238,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 4,
     "FirstName": "Anne",
     "LastName": "Dedry",
     "Level": "Federaal",
-    "SocialMediaLink": "www.annededry.be",
+    "SocialMediaLink": "https://facebook.com/annededrygroen",
     "Site": "www.annededry.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -5323,7 +5323,7 @@
     "FirstName": "Luk",
     "LastName": "Van Biesen",
     "Level": "Federaal",
-    "SocialMediaLink": "www.lukvanbiesen.be",
+    "SocialMediaLink": "",
     "Site": "www.lukvanbiesen.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -5346,11 +5346,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Tim",
     "LastName": "Vandenput",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.timvandenput.be",
+    "SocialMediaLink": "https://www.facebook.com/tim.vandenput",
     "Site": "http://www.timvandenput.be",
     "TwitterName": "TimVandenput",
     "Position": "Parlement",
@@ -5373,11 +5373,11 @@
     "IconURL": "https://twitter.com/TimVandenput/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 7,
     "FirstName": "Karolien",
     "LastName": "Grosemans",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.karolien-grosemans.be/",
+    "SocialMediaLink": "https://www.facebook.com/karolien.grosemans",
     "Site": "http://www.karolien-grosemans.be/",
     "TwitterName": "",
     "Position": "Parlement",
@@ -5390,7 +5390,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1970-09-03T00:00:00",
@@ -5400,11 +5400,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 4,
     "FirstName": "Werner",
     "LastName": "Janssen",
     "Level": "Federaal",
-    "SocialMediaLink": "www.wernerjanssen.be",
+    "SocialMediaLink": "www.facebook.com/werner.janssen.54",
     "Site": "www.wernerjanssen.be",
     "TwitterName": "wernerjanssen00",
     "Position": "Parlement",
@@ -5417,7 +5417,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1969-05-06T00:00:00",
@@ -5427,13 +5427,13 @@
     "IconURL": "https://twitter.com/wernerjanssen00/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 46,
     "FirstName": "Peter",
     "LastName": "Luykx",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.peterluykx.be",
+    "SocialMediaLink": "https://www.facebook.com/pages/Peter-Luykx/82085620080?fref=ts",
     "Site": "http://www.peterluykx.be",
-    "TwitterName": "peerlux.be",
+    "TwitterName": "peerlux",
     "Position": "Parlement",
     "District": "Limburg",
     "Gemeente": "Lommel",
@@ -5444,7 +5444,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2064-06-05T00:00:00",
@@ -5454,11 +5454,11 @@
     "IconURL": "https://twitter.com/peerlux/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 20,
     "FirstName": "Wouter",
     "LastName": "Raskin",
     "Level": "Federaal",
-    "SocialMediaLink": "www.wouterraskin.be",
+    "SocialMediaLink": "https://facebook.com/WouterRaskin",
     "Site": "www.wouterraskin.be",
     "TwitterName": "RaskinWouter",
     "Position": "Parlement",
@@ -5471,7 +5471,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1972-04-01T00:00:00",
@@ -5481,11 +5481,11 @@
     "IconURL": "https://twitter.com/RaskinWouter/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1308,
     "FirstName": "Veerle",
     "LastName": "Wouters",
     "Level": "Federaal",
-    "SocialMediaLink": "www.veerlewouters.be",
+    "SocialMediaLink": "www.facebook.com/veerle.wouters.735",
     "Site": "www.veerlewouters.be",
     "TwitterName": "Veerle_Wouters",
     "Position": "Parlement",
@@ -5504,15 +5504,15 @@
     "DateOfBirth": "1974-02-06T00:00:00",
     "ItemId": 221,
     "Name": "Veerle Wouters",
-    "IsTrending": false,
+    "IsTrending": true,
     "IconURL": "https://twitter.com/Veerle_Wouters/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 272,
     "FirstName": "Wouter",
     "LastName": "Beke",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.wouterbeke.be",
+    "SocialMediaLink": "www.facebook.com/wouter.beke",
     "Site": "http://www.wouterbeke.be",
     "TwitterName": "wbeke",
     "Position": "Parlement",
@@ -5539,7 +5539,7 @@
     "FirstName": "Veerle",
     "LastName": "Heeren",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.veerleheeren.be",
+    "SocialMediaLink": "http://www.facebook.com/VeerleHeerenPagina",
     "Site": "http://www.veerleheeren.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -5562,7 +5562,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 8,
     "FirstName": "Raf",
     "LastName": "Terwingen",
     "Level": "Federaal",
@@ -5589,7 +5589,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 9,
     "FirstName": "Meryame",
     "LastName": "Kitir",
     "Level": "Federaal",
@@ -5616,7 +5616,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 17,
     "FirstName": "Peter",
     "LastName": "Vanvelthoven",
     "Level": "Federaal",
@@ -5643,11 +5643,11 @@
     "IconURL": "https://twitter.com/VvelthovenPeter/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 39,
     "FirstName": "Patrick",
     "LastName": "Dewael",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.dewael.com",
+    "SocialMediaLink": "www.facebook.com/dewaelp",
     "Site": "http://www.dewael.com",
     "TwitterName": "patrickdewael",
     "Position": "Parlement",
@@ -5697,11 +5697,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 122,
     "FirstName": "Gerolf",
     "LastName": "Annemans",
     "Level": "Europees",
-    "SocialMediaLink": "http://www.gerolfannemans.org",
+    "SocialMediaLink": "",
     "Site": "http://www.gerolfannemans.org",
     "TwitterName": "gannemans",
     "Position": "Parlement",
@@ -5724,11 +5724,11 @@
     "IconURL": "https://twitter.com/gannemans/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 23,
     "FirstName": "Ivo",
     "LastName": "Belet",
     "Level": "Europees",
-    "SocialMediaLink": "www.ivobelet.eu",
+    "SocialMediaLink": "facebook.com/ivo.belet",
     "Site": "www.ivobelet.eu",
     "TwitterName": "IvoBelet",
     "Position": "Parlement",
@@ -5751,11 +5751,11 @@
     "IconURL": "https://twitter.com/IvoBelet/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 72,
     "FirstName": "Philippe",
     "LastName": "De Backer",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.philippedebacker.be",
+    "SocialMediaLink": "https://www.facebook.com/#!/pages/Philippe-De-Backer/62130106444",
     "Site": "http://www.philippedebacker.be",
     "TwitterName": "debackerphil",
     "Position": "Regering",
@@ -5778,7 +5778,7 @@
     "IconURL": "https://twitter.com/debackerphil/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 21,
     "FirstName": "Mark",
     "LastName": "Demesmaeker",
     "Level": "Europees",
@@ -5795,7 +5795,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -5805,11 +5805,11 @@
     "IconURL": "https://twitter.com/markdemesmaeker/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 14,
     "FirstName": "Anneleen",
     "LastName": "Van Bossuyt",
     "Level": "Europees",
-    "SocialMediaLink": "http://www.anneleenvanbossuyt.eu",
+    "SocialMediaLink": "",
     "Site": "http://www.anneleenvanbossuyt.eu",
     "TwitterName": "anneleenciska",
     "Position": "Parlement",
@@ -5822,7 +5822,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1980-10-01T00:00:00",
@@ -5832,11 +5832,11 @@
     "IconURL": "https://twitter.com/anneleenciska/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 107,
     "FirstName": "Sander",
     "LastName": "Loones",
     "Level": "Europees",
-    "SocialMediaLink": "www.sanderloones.be",
+    "SocialMediaLink": "https://www.facebook.com/sander.loones.1",
     "Site": "www.sanderloones.be",
     "TwitterName": "SanderLoones",
     "Position": "Parlement",
@@ -5849,7 +5849,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1979-01-26T00:00:00",
@@ -5859,11 +5859,11 @@
     "IconURL": "https://twitter.com/SanderLoones/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 58,
     "FirstName": "Hilde",
     "LastName": "Vautmans",
     "Level": "Europees",
-    "SocialMediaLink": "http://www.hildevautmans.be",
+    "SocialMediaLink": "",
     "Site": "http://www.hildevautmans.be",
     "TwitterName": "hildevautmans",
     "Position": "Parlement",
@@ -5886,11 +5886,11 @@
     "IconURL": "https://twitter.com/hildevautmans/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Bart",
     "LastName": "Staes",
     "Level": "Europees",
-    "SocialMediaLink": "http://bartstaes.eu",
+    "SocialMediaLink": "https://www.facebook.com/bartstaes1",
     "Site": "http://bartstaes.eu",
     "TwitterName": "BartStaes",
     "Position": "Parlement",
@@ -5913,11 +5913,11 @@
     "IconURL": "https://twitter.com/BartStaes/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 303,
     "FirstName": "Helga",
     "LastName": "Stevens",
     "Level": "Europees",
-    "SocialMediaLink": "http://www.helgastevens.be",
+    "SocialMediaLink": "https://www.facebook.com/HelgaStevens",
     "Site": "http://www.helgastevens.be",
     "TwitterName": "StevensHelga",
     "Position": "Parlement",
@@ -5930,7 +5930,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1968-09-08T00:00:00",
@@ -5940,11 +5940,11 @@
     "IconURL": "https://twitter.com/StevensHelga/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 13,
     "FirstName": "Kathleen",
     "LastName": "Van Brempt",
     "Level": "Europees",
-    "SocialMediaLink": "",
+    "SocialMediaLink": "https://www.facebook.com/kathleenvanbrempt",
     "Site": "",
     "TwitterName": "kvanbrempt",
     "Position": "Parlement",
@@ -5971,7 +5971,7 @@
     "FirstName": "Tom",
     "LastName": "Vandenkendelaere",
     "Level": "Europees",
-    "SocialMediaLink": "www.eutom.eu",
+    "SocialMediaLink": "",
     "Site": "www.eutom.eu",
     "TwitterName": "tomvdkendelaere",
     "Position": "Parlement",
@@ -5994,7 +5994,7 @@
     "IconURL": "https://twitter.com/tomvdkendelaere/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 4079,
     "FirstName": "Guy",
     "LastName": "Verhofstadt",
     "Level": "Europees",
@@ -6017,15 +6017,15 @@
     "DateOfBirth": "2053-11-04T00:00:00",
     "ItemId": 240,
     "Name": "Guy Verhofstadt",
-    "IsTrending": false,
+    "IsTrending": true,
     "IconURL": "https://twitter.com/GuyVerhofstadt/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 34,
     "FirstName": "Liesbet",
     "LastName": "Dhaene",
     "Level": "Brussels",
-    "SocialMediaLink": "http://www.liesbetdhaene.be",
+    "SocialMediaLink": "https://www.facebook.com/liesbet.dhaene",
     "Site": "http://www.liesbetdhaene.be",
     "TwitterName": "LiesbetDhaene",
     "Position": "Parlement",
@@ -6038,7 +6038,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1976-10-23T00:00:00",
@@ -6048,11 +6048,11 @@
     "IconURL": "https://twitter.com/LiesbetDhaene/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 18,
     "FirstName": "Cieltje",
     "LastName": "Van Achter",
     "Level": "Brussels",
-    "SocialMediaLink": "http://www.cieltjevanachter.be",
+    "SocialMediaLink": "https://www.facebook.com/cieltje.vanachter",
     "Site": "http://www.cieltjevanachter.be",
     "TwitterName": "CieltjeVAchter",
     "Position": "Parlement",
@@ -6065,7 +6065,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1979-11-01T00:00:00",
@@ -6075,11 +6075,11 @@
     "IconURL": "https://twitter.com/CieltjeVAchter/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 25,
     "FirstName": "Johan",
     "LastName": "Van den Driessche",
     "Level": "Brussels",
-    "SocialMediaLink": "http://www.johan-vandendriessche.be",
+    "SocialMediaLink": "https://www.facebook.com/johan.vandendriessche.52",
     "Site": "http://www.johan-vandendriessche.be",
     "TwitterName": "jvddriessche",
     "Position": "Parlement",
@@ -6092,7 +6092,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2053-06-16T00:00:00",
@@ -6102,11 +6102,11 @@
     "IconURL": "https://twitter.com/jvddriessche/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 10,
     "FirstName": "Fouad",
     "LastName": "Ahidar",
     "Level": "Brussels",
-    "SocialMediaLink": "www.fouadahidar.be",
+    "SocialMediaLink": "",
     "Site": "www.fouadahidar.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -6129,11 +6129,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Elke",
     "LastName": "Roex",
     "Level": "Brussels",
-    "SocialMediaLink": "http://www.elkeroex.be",
+    "SocialMediaLink": "https://nl-nl.facebook.com/elke.roex",
     "Site": "http://www.elkeroex.be",
     "TwitterName": "elkeroex",
     "Position": "Parlement",
@@ -6162,7 +6162,7 @@
     "Level": "Brussels",
     "SocialMediaLink": "",
     "Site": "",
-    "TwitterName": "Jef Van Damme",
+    "TwitterName": "",
     "Position": "Parlement",
     "District": "Brussel",
     "Gemeente": "Sint-Jans-Molenbeek",
@@ -6180,14 +6180,14 @@
     "ItemId": 246,
     "Name": "Jef Van Damme",
     "IsTrending": false,
-    "IconURL": "https://twitter.com/Jef Van Damme/profile_image?size=original"
+    "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 257,
     "FirstName": "Pascal",
     "LastName": "Smet",
     "Level": "Brussels",
-    "SocialMediaLink": "http://www.pascalsmet.be",
+    "SocialMediaLink": "",
     "Site": "http://www.pascalsmet.be",
     "TwitterName": "SmetPascal",
     "Position": "Regering",
@@ -6237,11 +6237,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 30,
     "FirstName": "Els",
     "LastName": "Ampe",
     "Level": "Brussels",
-    "SocialMediaLink": "www.elsampe.be",
+    "SocialMediaLink": "",
     "Site": "www.elsampe.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -6268,7 +6268,7 @@
     "FirstName": "René",
     "LastName": "Coppens",
     "Level": "Brussels",
-    "SocialMediaLink": "http://www.renecoppens.be",
+    "SocialMediaLink": "",
     "Site": "http://www.renecoppens.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -6291,7 +6291,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Stefan",
     "LastName": "Cornelis",
     "Level": "Brussels",
@@ -6322,7 +6322,7 @@
     "FirstName": "Carla",
     "LastName": "Dejonghe",
     "Level": "Brussels",
-    "SocialMediaLink": "http://www.carladejonghe.be",
+    "SocialMediaLink": "",
     "Site": "http://www.carladejonghe.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -6372,11 +6372,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 29,
     "FirstName": "Guy",
     "LastName": "Vanhengel",
     "Level": "Brussels",
-    "SocialMediaLink": "www.openvldbrussel.be",
+    "SocialMediaLink": "",
     "Site": "www.openvldbrussel.be",
     "TwitterName": "",
     "Position": "Regering",
@@ -6399,11 +6399,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Paul",
     "LastName": "Delva",
     "Level": "Brussels",
-    "SocialMediaLink": "www.pauldelva.be",
+    "SocialMediaLink": "",
     "Site": "www.pauldelva.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -6426,11 +6426,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 64,
     "FirstName": "Brigitte",
     "LastName": "Grouwels",
     "Level": "Brussels",
-    "SocialMediaLink": "http://Www.brigittegrouwels.be",
+    "SocialMediaLink": "",
     "Site": "http://Www.brigittegrouwels.be",
     "TwitterName": "Bgrouwels",
     "Position": "Parlement",
@@ -6453,11 +6453,11 @@
     "IconURL": "https://twitter.com/Bgrouwels/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 59,
     "FirstName": "Bianca",
     "LastName": "Debaets",
     "Level": "Brussels",
-    "SocialMediaLink": "http://www.biancadebaets.be",
+    "SocialMediaLink": "https://www.facebook.com/bianca.debaets.12?fref=ts",
     "Site": "http://www.biancadebaets.be",
     "TwitterName": "BiancaDebaets",
     "Position": "Regering",
@@ -6480,11 +6480,11 @@
     "IconURL": "https://twitter.com/BiancaDebaets/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 38,
     "FirstName": "Bruno",
     "LastName": "De Lille",
     "Level": "Brussels",
-    "SocialMediaLink": "http://www.brunodelille.be",
+    "SocialMediaLink": "https://www.facebook.com/delillebruno",
     "Site": "http://www.brunodelille.be",
     "TwitterName": "brunodelille",
     "Position": "Parlement",
@@ -6507,11 +6507,11 @@
     "IconURL": "https://twitter.com/brunodelille/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Annemie",
     "LastName": "Maes",
     "Level": "Brussels",
-    "SocialMediaLink": "http://www.annemiemaes.be",
+    "SocialMediaLink": "https://www.facebook.com/annemie.maes.9",
     "Site": "http://www.annemiemaes.be",
     "TwitterName": "annemiemaes46",
     "Position": "Parlement",
@@ -6538,7 +6538,7 @@
     "FirstName": "Arnaud",
     "LastName": "Verstraete",
     "Level": "Brussels",
-    "SocialMediaLink": "www.arnaudverstraete.be",
+    "SocialMediaLink": "",
     "Site": "www.arnaudverstraete.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -6561,11 +6561,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 170,
     "FirstName": "Geert",
     "LastName": "Bourgeois",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.geertbourgeois.be",
+    "SocialMediaLink": "https://www.facebook.com/gb2013",
     "Site": "www.geertbourgeois.be",
     "TwitterName": "geertbourgeois",
     "Position": "Regering",
@@ -6578,7 +6578,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2051-06-07T00:00:00",
@@ -6588,11 +6588,11 @@
     "IconURL": "https://twitter.com/geertbourgeois/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 92,
     "FirstName": "Hilde",
     "LastName": "Crevits",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.hildecrevits.be",
+    "SocialMediaLink": "https://www.facebook.com/hilde.inwestvlaanderen",
     "Site": "www.hildecrevits.be",
     "TwitterName": "crevits",
     "Position": "Regering",
@@ -6615,11 +6615,11 @@
     "IconURL": "https://twitter.com/crevits/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 59,
     "FirstName": "Liesbeth",
     "LastName": "Homans",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.liesbethhomans.be/",
+    "SocialMediaLink": "https://www.facebook.com/liesbeth.homans.9?fref=ts",
     "Site": "http://www.liesbethhomans.be/",
     "TwitterName": "LiesbethHomans",
     "Position": "Regering",
@@ -6632,7 +6632,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1973-02-17T00:00:00",
@@ -6642,11 +6642,11 @@
     "IconURL": "https://twitter.com/LiesbethHomans/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 53,
     "FirstName": "Philippe",
     "LastName": "Muyters",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.philippemuyters.be",
+    "SocialMediaLink": "https://www.facebook.com/muytersphilippe",
     "Site": "www.philippemuyters.be",
     "TwitterName": "philippemuyters",
     "Position": "Regering",
@@ -6659,7 +6659,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2061-06-12T00:00:00",
@@ -6669,11 +6669,11 @@
     "IconURL": "https://twitter.com/philippemuyters/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 212,
     "FirstName": "Joke",
     "LastName": "Schauvliege",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.jokeschauvliege.be",
+    "SocialMediaLink": "www.facebook.com/joke.schauvliege",
     "Site": "www.jokeschauvliege.be",
     "TwitterName": "jokeschauvliege",
     "Position": "Regering",
@@ -6696,11 +6696,11 @@
     "IconURL": "https://twitter.com/jokeschauvliege/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 7,
     "FirstName": "Annemie",
     "LastName": "Turtelboom",
     "Level": "Federaal",
-    "SocialMediaLink": "www.annemieturtelboom.be",
+    "SocialMediaLink": "www.facebook.com/annemie.turtelboom",
     "Site": "www.annemieturtelboom.be",
     "TwitterName": "aturtelboom",
     "Position": "Parlement",
@@ -6723,11 +6723,11 @@
     "IconURL": "https://twitter.com/aturtelboom/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 173,
     "FirstName": "Jo",
     "LastName": "Vandeurzen",
     "Level": "Vlaams",
-    "SocialMediaLink": "www.jovandeurzen.be",
+    "SocialMediaLink": "https://www.facebook.com/vandeurzenjo",
     "Site": "www.jovandeurzen.be",
     "TwitterName": "jovandeurzen",
     "Position": "Regering",
@@ -6750,11 +6750,11 @@
     "IconURL": "https://twitter.com/jovandeurzen/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 326,
     "FirstName": "Ben",
     "LastName": "Weyts",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.benweyts.be",
+    "SocialMediaLink": "",
     "Site": "http://www.benweyts.be",
     "TwitterName": "BenWeyts",
     "Position": "Regering",
@@ -6767,7 +6767,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1970-12-11T00:00:00",
@@ -6777,11 +6777,11 @@
     "IconURL": "https://twitter.com/BenWeyts/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 109,
     "FirstName": "Sven",
     "LastName": "Gatz",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.svengatz.be",
+    "SocialMediaLink": "https://www.facebook.com/pages/Sven-Gatz/100947845480",
     "Site": "http://www.svengatz.be",
     "TwitterName": "svengatz",
     "Position": "Regering",
@@ -6804,11 +6804,11 @@
     "IconURL": "https://twitter.com/svengatz/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 167,
     "FirstName": "Alexander",
     "LastName": "De Croo",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.decroo.belgium.be",
+    "SocialMediaLink": "https://www.facebook.com/alexanderdecroo",
     "Site": "http://www.decroo.belgium.be",
     "TwitterName": "alexanderdecroo",
     "Position": "Regering",
@@ -6831,11 +6831,11 @@
     "IconURL": "https://twitter.com/alexanderdecroo/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 627,
     "FirstName": "Kris",
     "LastName": "Peeters",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.krispeeters.be",
+    "SocialMediaLink": "https://www.facebook.com/kris.peeters1",
     "Site": "http://www.krispeeters.be",
     "TwitterName": "peeters_kris1",
     "Position": "Regering",
@@ -6854,15 +6854,15 @@
     "DateOfBirth": "2062-05-18T00:00:00",
     "ItemId": 271,
     "Name": "Kris Peeters",
-    "IsTrending": false,
+    "IsTrending": true,
     "IconURL": "https://twitter.com/peeters_kris1/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 706,
     "FirstName": "Jan",
     "LastName": "Jambon",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.janjambon.be/",
+    "SocialMediaLink": "",
     "Site": "http://www.janjambon.be/",
     "TwitterName": "JanJambon",
     "Position": "Regering",
@@ -6875,21 +6875,21 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2060-04-26T00:00:00",
     "ItemId": 272,
     "Name": "Jan Jambon",
-    "IsTrending": false,
+    "IsTrending": true,
     "IconURL": "https://twitter.com/JanJambon/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 219,
     "FirstName": "Koen",
     "LastName": "Geens",
     "Level": "Federaal",
-    "SocialMediaLink": "www.koengeens.be",
+    "SocialMediaLink": "https://www.facebook.com/KoenGeensCDenV",
     "Site": "www.koengeens.be",
     "TwitterName": "Koen_Geens1",
     "Position": "Regering",
@@ -6912,7 +6912,7 @@
     "IconURL": "https://twitter.com/Koen_Geens1/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 574,
     "FirstName": "Maggie",
     "LastName": "De Block",
     "Level": "Federaal",
@@ -6939,11 +6939,11 @@
     "IconURL": "https://twitter.com/Maggie_DeBlock/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 246,
     "FirstName": "Johan",
     "LastName": "Van Overtveldt",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.johanvanovertveldt.be/",
+    "SocialMediaLink": "https://www.facebook.com/johanvanovertveldt",
     "Site": "http://www.johanvanovertveldt.be/",
     "TwitterName": "jvanovertveldt",
     "Position": "Regering",
@@ -6956,7 +6956,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2055-08-24T00:00:00",
@@ -6966,11 +6966,11 @@
     "IconURL": "https://twitter.com/jvanovertveldt/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 71,
     "FirstName": "Steven",
     "LastName": "Vandeput",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.vandeput.fgov.be",
+    "SocialMediaLink": "www.facebook.com/svandeput",
     "Site": "http://www.vandeput.fgov.be",
     "TwitterName": "svandeput",
     "Position": "Regering",
@@ -6983,7 +6983,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1967-03-30T00:00:00",
@@ -6993,11 +6993,11 @@
     "IconURL": "https://twitter.com/svandeput/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 5,
     "FirstName": "Pieter",
     "LastName": "De Crem",
     "Level": "Federaal",
-    "SocialMediaLink": "www.pieterdecrem.be",
+    "SocialMediaLink": "",
     "Site": "www.pieterdecrem.be",
     "TwitterName": "pieterdecrem",
     "Position": "Regering",
@@ -7020,11 +7020,11 @@
     "IconURL": "https://twitter.com/pieterdecrem/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 128,
     "FirstName": "Bart",
     "LastName": "Tommelein",
     "Level": "Vlaams",
-    "SocialMediaLink": "http://www.tommelein.com",
+    "SocialMediaLink": "www.facebook.com/bart.tommelein",
     "Site": "http://www.tommelein.com",
     "TwitterName": "barttommelein",
     "Position": "Regering",
@@ -7047,11 +7047,11 @@
     "IconURL": "https://twitter.com/barttommelein/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 5,
     "FirstName": "Elke",
     "LastName": "Sleurs",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.elkesleurs.be",
+    "SocialMediaLink": "https://www.facebook.com/elke.sleurs.14",
     "Site": "http://www.elkesleurs.be",
     "TwitterName": "ElkeSleurs",
     "Position": "Regering",
@@ -7064,7 +7064,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1968-06-02T00:00:00",
@@ -7074,11 +7074,11 @@
     "IconURL": "https://twitter.com/ElkeSleurs/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1831,
     "FirstName": "Theo",
     "LastName": "Francken",
     "Level": "Federaal",
-    "SocialMediaLink": "www.theofrancken.be",
+    "SocialMediaLink": "https://www.facebook.com/theofrancken",
     "Site": "www.theofrancken.be",
     "TwitterName": "FranckenTheo",
     "Position": "Regering",
@@ -7091,21 +7091,21 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1978-07-02T00:00:00",
     "ItemId": 280,
     "Name": "Theo Francken",
-    "IsTrending": false,
+    "IsTrending": true,
     "IconURL": "https://twitter.com/FranckenTheo/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 40,
     "FirstName": "Bert",
     "LastName": "Anciaux",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.bertanciaux.be",
+    "SocialMediaLink": "https://www.facebook.com/bert.anciaux",
     "Site": "http://www.bertanciaux.be",
     "TwitterName": "bertanciaux",
     "Position": "Parlement",
@@ -7128,7 +7128,7 @@
     "IconURL": "https://twitter.com/bertanciaux/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 8,
     "FirstName": "Jan",
     "LastName": "Becaus",
     "Level": "Federaal",
@@ -7145,7 +7145,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -7155,11 +7155,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 15,
     "FirstName": "Petra",
     "LastName": "De Sutter",
     "Level": "Federaal",
-    "SocialMediaLink": "http://Www.petradesutter.be",
+    "SocialMediaLink": "",
     "Site": "http://Www.petradesutter.be",
     "TwitterName": "",
     "Position": "Parlement",
@@ -7182,7 +7182,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Steven",
     "LastName": "Vanackere",
     "Level": "Federaal",
@@ -7209,7 +7209,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 14,
     "FirstName": "Pol",
     "LastName": "Van Den Driessche",
     "Level": "Federaal",
@@ -7226,7 +7226,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -7236,11 +7236,11 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 2,
     "FirstName": "Lode",
     "LastName": "Vereeck",
     "Level": "Federaal",
-    "SocialMediaLink": "http://www.vereeck.be",
+    "SocialMediaLink": "",
     "Site": "http://www.vereeck.be",
     "TwitterName": "@vereeck",
     "Position": "Parlement",
@@ -7263,11 +7263,11 @@
     "IconURL": "https://twitter.com/@vereeck/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 68,
     "FirstName": "Marianne",
     "LastName": "Thyssen",
     "Level": "Europees",
-    "SocialMediaLink": "www.mariannethyssen.be",
+    "SocialMediaLink": "",
     "Site": "www.mariannethyssen.be",
     "TwitterName": "mariannethyssen",
     "Position": "Regering",
@@ -7290,7 +7290,7 @@
     "IconURL": "https://twitter.com/mariannethyssen/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 23,
     "FirstName": "Steve",
     "LastName": "Vandenberghe",
     "Level": "Vlaams",
@@ -7344,7 +7344,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 632,
     "FirstName": "Peter",
     "LastName": "Mertens",
     "Level": "Geen",
@@ -7367,11 +7367,11 @@
     "DateOfBirth": "1967-12-17T00:00:00",
     "ItemId": 290,
     "Name": "Peter Mertens",
-    "IsTrending": false,
+    "IsTrending": true,
     "IconURL": "https://twitter.com/@peter_mertens/profile_image?size=original"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 1,
     "FirstName": "Lieve",
     "LastName": "Wierinck",
     "Level": "Europees",
@@ -7398,7 +7398,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 7,
     "FirstName": "Paul",
     "LastName": "Cordy",
     "Level": "Vlaams",
@@ -7415,7 +7415,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": false,
+      "IsTrending": true,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -7425,7 +7425,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 0,
+    "TrendingScore": 6,
     "FirstName": null,
     "LastName": null,
     "Level": null,
