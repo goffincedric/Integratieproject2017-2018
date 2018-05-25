@@ -525,24 +525,36 @@ namespace UI_MVC.Controllers.API
         public IHttpActionResult GetPersonEvolution(int id)
         {
             Item item = ItemMgr.GetItem(id);
-            IEnumerable<Record> records = null;
+            List<Record> records = new List<Record>();
 
             if (item is Person person)
             {
-                records = ItemMgr.GetPerson(id).Records.Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date);
+                records.AddRange(ItemMgr.GetPerson(id).Records.Where(p =>
+                {
+                    return p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10);
+                }).OrderByDescending(a => a.Date.Date));
             }
             else if (item is Organisation organisation)
             {
-                records = organisation.People.SelectMany(p => p.Records).Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date);
+                records.AddRange(organisation.People.SelectMany(p => p.Records).Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date));
             }
             else if (item is Theme theme)
             {
                 IEnumerable<Record> first = theme.Organisations.SelectMany(p => p.People.SelectMany(r => r.Records))
-                    .Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(10)).OrderByDescending(a => a.Date.Date);
-                records = theme.Persons.SelectMany(p => p.Records).Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date).Except(first);
+                    .Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date);
+                records.AddRange(theme.Persons.SelectMany(p => p.Records).Where(p => p.Sentiment.Polarity != 0.0 && p.Sentiment.Objectivity != 0 && p.Date > DateTime.Now.AddDays(-10)).OrderByDescending(a => a.Date.Date).Except(first));
             }
-
+            
             Dictionary<DateTime, double> recordsmap = records.GroupBy(r => r.Date.Date).ToDictionary(kv => kv.Key, kv => kv.ToList().Average(r => r.Sentiment.Polarity * r.Sentiment.Objectivity));
+
+            for (int i = 0; i < 10; i++)
+            {
+                DateTime day = DateTime.Today.AddDays(-i);
+                if (!recordsmap.ContainsKey(day))
+                {
+                    recordsmap.Add(day, 0);
+                }
+            }
 
             if (recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             recordsmap.OrderBy(o => o.Key);
@@ -573,6 +585,16 @@ namespace UI_MVC.Controllers.API
             }
 
             Dictionary<string, double> recordsmap = records.GroupBy(r => r.Date.Date.ToShortDateString()).ToDictionary(kv => kv.Key, kv => kv.ToList().Average(r => r.Sentiment.Polarity * r.Sentiment.Objectivity));
+
+            for (int i = 0; i < 10; i++)
+            {
+                DateTime day = DateTime.Today.AddDays(-i);
+                if (!recordsmap.ContainsKey(day.ToShortDateString()))
+                {
+                    recordsmap.Add(day.ToShortDateString(), 0);
+                }
+            }
+
             if (recordsmap.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             recordsmap.OrderBy(o => o.Key);
             return Ok(recordsmap);
