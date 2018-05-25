@@ -1383,84 +1383,128 @@ $(function () {
                 });
         }
 
-        DrawLocation = function (can, itemIds, graph, elementId) {
-            switch (graph) {
-                case 0: graph = 'bar';
-                    break;
-                case 1: graph = 'line';
-                    break;
-                case 2: graph = 'pie';
-                    break;
-                case 3: graph = 'doughnut';
-                    break;
-                case 5: graph = 'map';
-                    break;
-            }
-
-            if (graph === 'map') {
-                var div = can.parent();
-                can.replaceWith('<div class="map" style="height: 100%"></div>');
-                div = div.children(".map");
-                div.hide();
-
-                var URL = "https://localhost:44342/api/item/GetTweetsByDistrict";
-                makeAjaxCall(URL, "GET").then(process);
-
-                var mapData;
-
-                function process(output) {
-
-                    var keys = [];
-                    keys = Object.keys(output);
-                    var label = [];
-                    var values = [];
-
-                    for (var i = 0; i < keys.length; i++) {
-                        label.push(keys[i]);
-
-                        values.push(output[keys[i]]);
-                    }
-
-                    $("#loader-" + elementId).hide();
-                    div.show();
-
-                    mapData = {
-                        "ANT": values[1],
-                        "BRU": values[3],
-                        "LIM": values[4],
-                        "OVL": values[2],
-                        "VBR": values[5],
-                        "WVL": values[0]
-                    };
-
-                    div.vectorMap({
-                        map: "be_mill",
-                        series: {
-                            regions: [{
-                                values: mapData,
-                                scale: ["#C8EEFF", "#0071A4"],
-                                normalizeFunction: 'polynomial'
-                            }]
-                        },
-                        backgroundColor: "transparent",
-                        regionStyle: {
-                            initial: {
-                                fill: "#e6e6e6"
-                            }
-                        },
-                        zoomOnScroll: false,
-                        zoomButtons: false,
-                        normalizeFunction: "linear",
-                        onRegionTipShow: function (e, el, code) {
-                            el.html(el.html() + ' (Tweets - ' + mapData[code] + ')');
-                        }
-                    });
-                }
-            } else {
-                //insert other graphs here
-            }
+      DrawLocation = function (can, itemIds, graph, elementId) {
+        switch (graph) {
+          case 0: graph = 'bar';
+            break;
+          case 1: graph = 'line';
+            break;
+          case 2: graph = 'pie';
+            break;
+          case 3: graph = 'doughnut';
+            break;
+          case 5: graph = 'map';
+            break;
         }
 
+        if (graph === 'map') {
+          var div = can.parent();
+          can.replaceWith('<div class="map" style="height: 100%"></div>');
+          div = div.children(".map");
+          div.hide();
+
+          var URL = "https://localhost:44342/api/item/GetTweetsByDistrict";
+          makeAjaxCall(URL, "GET").then(process);
+
+          var mapData;
+
+          function process(output) {
+
+            var keys = [];
+            keys = Object.keys(output);
+            var label = [];
+            var values = [];
+
+            for (var i = 0; i < keys.length; i++) {
+              label.push(keys[i]);
+
+              values.push(output[keys[i]]);
+            }
+
+            $("#loader-" + elementId).hide();
+            div.show();
+
+            mapData = {
+              "ANT": values[1],
+              "BRU": values[3],
+              "LIM": values[4],
+              "OVL": values[2],
+              "VBR": values[5],
+              "WVL": values[0]
+            };
+
+            div.vectorMap({
+              map: "be_mill",
+              series: {
+                regions: [{
+                  values: mapData,
+                  scale: ["#C8EEFF", "#0071A4"],
+                  normalizeFunction: 'polynomial'
+                }]
+              },
+              backgroundColor: "transparent",
+              regionStyle: {
+                initial: {
+                  fill: "#e6e6e6"
+                }
+              },
+              zoomOnScroll: false,
+              zoomButtons: false,
+             
+              normalizeFunction: "linear",
+              onRegionTipShow: function (e, el, code) {
+                el.html(el.html() + ' (Tweets - ' + mapData[code] + ')');
+              }
+            });
+          }
+        } else {
+          var URL = "https://localhost:44342/api/item/GetTweetsByDistrict";
+          makeAjaxCall(URL, "GET").then(process);
+          
+          function process(output) {
+
+            var keys = [];
+            keys = Object.keys(output);
+            var label = [];
+            var values = [];
+
+            for (var i = 0; i < keys.length; i++) {
+              label.push(keys[i]);
+              values.push(output[keys[i]]);
+            }
+            var bool = null; 
+            if (graph == "bar") {
+              bool = false;
+            } else {
+              bool = true;
+            }
+      
+            new Chart(can,
+              {
+                type: graph,
+                data: {
+                  labels: label,
+                  datasets: [
+                    {
+                      backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                      data: values
+                    }
+                  ]
+                },
+                options: {
+                  responsive: true,
+                  title: { display: true, text: 'Tweet per provincie' },
+                  legend: {
+                    display: bool
+                  }
+                }
+              });
+            $("#loader-" + elementId).hide();
+            can.show();
+
+          }
+        }
+      }
         DrawEvolution = function (can, itemIds, graph, elementId) {
             switch (graph) {
                 case 0: graph = 'bar';
