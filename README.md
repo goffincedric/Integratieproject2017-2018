@@ -21,13 +21,13 @@ Link YouTrack: https://kdg-inf-ip1-2018-teamnamenotfoundexception.myjetbrains.co
 Default users
 -------------------
 
-SuperAdmin: 
-	Login name: Captain
-	Password: FliesAway
-
-Admin:
-	Login name: admin
-	Password: Disney2018
-
-Gewone gebruiker:
-	Zelf aan te maken via site
+SuperAdmin:   
+	Login name: Captain  
+	Password: FliesAway  
+  
+Admin:  
+	Login name: admin  
+	Password: Disney2018  
+  
+Gewone gebruiker:  
+	Zelf aan te maken via site  
