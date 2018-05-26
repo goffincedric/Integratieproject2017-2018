@@ -84,9 +84,9 @@ namespace UI_MVC.Controllers
 
             Person person = ItemMgr.GetPerson(weeklyReview.TopPersonId);
             if (person.IconURL is null)
-                ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Users/user.png");
+                ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Images/Users/user.png");
             else
-                ViewBag.Icon = VirtualPathUtility.ToAbsolute(person.IconURL);
+                ViewBag.Icon = person.IconURL;
 
             return View(weeklyReview);
         }

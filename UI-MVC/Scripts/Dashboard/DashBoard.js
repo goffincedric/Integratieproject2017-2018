@@ -101,7 +101,7 @@ $(function () {
 
             $.ajax({
                 async: false,
-                type: 'Delete',
+                type: 'POST',
                 headers: Headers,
                 url: "http://10.134.216.25:8010/api/dashboard/deleteelement/" + ElementId
             })
@@ -834,7 +834,7 @@ $(function () {
                         } else {
                             $.ajax({
                                 async: false,
-                                type: 'Delete',
+                                type: 'POST',
                                 headers: Headers,
                                 url: "http://10.134.216.25:8010/api/dashboard/deleteelement/" + node.ElementId
                             })
@@ -1290,8 +1290,9 @@ $(function () {
                         var myNewDataSet = {
                             label: value.Name,
                             data: values,
-                            backgroundColor: ["#36a2eb", "#ff99ed"]
+                            backgroundColor: ["#36a2eb", "#ffce56", "#7DDF64", "#ff6384", "#36a2eb", "#cc65fe"]
                         }
+
                         datagrafiek.datasets.push(myNewDataSet);
                         myChart.update();
                         counter++;
@@ -1353,9 +1354,9 @@ $(function () {
                         var label = [];
                         var values = [];
 
-                      var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)", "#ffe0b2", "#ffcdd2"];
-                      var borderColors = ["#673ab7", "#2196f3", "#4caf50", "#fb8c00", "#e53935"]
-                      var points = ["#512da8", "#1976d2", "#388e3c", "#e65100", "#b71c1c"];
+                        var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)", "#ffe0b2", "#ffcdd2"];
+                        var borderColors = ["#673ab7", "#2196f3", "#4caf50", "#fb8c00", "#e53935"]
+                        var points = ["#512da8", "#1976d2", "#388e3c", "#e65100", "#b71c1c"];
 
                         for (var i = 0; i < keys.length; i++) {
                             label.push(keys[i]);
@@ -1368,8 +1369,8 @@ $(function () {
                             borderWidth: 2,
                             backgroundColor: backgroundcolors[counter],
                             borderColor: borderColors[counter],
-                          pointBackgroundColor: points[counter], 
-                          fill: false
+                            pointBackgroundColor: points[counter],
+                            fill: false
 
                         }
 
@@ -1450,6 +1451,7 @@ $(function () {
                         },
                         zoomOnScroll: false,
                         zoomButtons: false,
+
                         normalizeFunction: "linear",
                         onRegionTipShow: function (e, el, code) {
                             el.html(el.html() + ' (Tweets - ' + mapData[code] + ')');
@@ -1457,10 +1459,53 @@ $(function () {
                     });
                 }
             } else {
-                //insert other graphs here
+                var URL = "https://localhost:44342/api/item/GetTweetsByDistrict";
+                makeAjaxCall(URL, "GET").then(process);
+
+                function process(output) {
+
+                    var keys = [];
+                    keys = Object.keys(output);
+                    var label = [];
+                    var values = [];
+
+                    for (var i = 0; i < keys.length; i++) {
+                        label.push(keys[i]);
+                        values.push(output[keys[i]]);
+                    }
+                    var bool = null;
+                    if (graph == "bar") {
+                        bool = false;
+                    } else {
+                        bool = true;
+                    }
+
+                    new Chart(can,
+                        {
+                            type: graph,
+                            data: {
+                                labels: label,
+                                datasets: [
+                                    {
+                                        backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#7DDF64"],
+                                        data: values
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                title: { display: true, text: 'Tweet per provincie' },
+                                legend: {
+                                    display: bool
+                                }
+                            }
+                        });
+                    $("#loader-" + elementId).hide();
+                    can.show();
+
+                }
             }
         }
-
         DrawEvolution = function (can, itemIds, graph, elementId) {
             switch (graph) {
                 case 0: graph = 'bar';
@@ -1514,9 +1559,9 @@ $(function () {
                         var label = [];
                         var values = [];
 
-                      var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)", "#ffe0b2", "#ffcdd2"];
-                      var borderColors = ["#673ab7", "#2196f3", "#4caf50", "#fb8c00", "#e53935"]
-                      var points = ["#512da8", "#1976d2", "#388e3c", "#e65100", "#b71c1c"];
+                        var backgroundcolors = ["rgba(237, 231, 246, 0.5)", "rgba(232, 245, 233, 0.5)", "rgba(3, 169, 244, 0.5)", "#ffe0b2", "#ffcdd2"];
+                        var borderColors = ["#673ab7", "#2196f3", "#4caf50", "#fb8c00", "#e53935"]
+                        var points = ["#512da8", "#1976d2", "#388e3c", "#e65100", "#b71c1c"];
 
                         for (var i = 0; i < keys.length; i++) {
                             label.push(keys[i]);
@@ -1529,8 +1574,8 @@ $(function () {
                             borderWidth: 2,
                             backgroundColor: backgroundcolors[counter],
                             borderColor: borderColors[counter],
-                          pointBackgroundColor: points[counter],
-                          fill: false
+                            pointBackgroundColor: points[counter],
+                            fill: false
                         }
 
                         datagrafiek.datasets.push(myNewDataSet);

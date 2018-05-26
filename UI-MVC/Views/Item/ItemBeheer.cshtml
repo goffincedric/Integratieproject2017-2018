@@ -135,7 +135,7 @@
       if (data.fileName != "") {
         //use window.location.href for redirect to download action for download the file
         window.location.href = "@Url.RouteUrl(new
-        { Controller = "Item", Action = "ExportPersons" }) /? file = " + data.fileName;
+        { Controller = "Item", Action = "ExportPersons" })/?file=" + data.fileName;
     }
 });
   });

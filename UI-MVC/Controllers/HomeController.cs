@@ -131,15 +131,15 @@ namespace UI_MVC.Controllers
                 {
                     UserSetting userSetting = accountMgr.GetUserSetting(profile.Id, Setting.Account.THEME);
 
-                    switch (userSetting.Value)
+                    switch (userSetting.Value.ToLower())
                     {
-                        case "Light":
+                        case "light":
                             theme = "LightMode";
                             break;
-                        case "Dark":
+                        case "dark":
                             theme = "DarkMode";
                             break;
-                        case "Future":
+                        case "future":
                             theme = "FutureMode";
                             break;
                     }
