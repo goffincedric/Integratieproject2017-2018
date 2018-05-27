@@ -315,7 +315,7 @@
     const faqChange = { FAQitem: $("#FAQ option:selected").text(), Question: $("#vraag").val(), Answer: $("#antwoord").val(), Subplatform: "@ViewBag.Subplatform"};
     console.log("GERAAKT");
     $.ajax({
-      url: "http://localhost:51379/api/subplatform/ChangeTagFAQ",
+      url: "http://10.134.216.25:8010/api/subplatform/ChangeTagFAQ",
       type: "POST",
       data: JSON.stringify(faqChange),
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
@@ -332,7 +332,7 @@
     console.log("GERAAKT");
     $.ajax({
 
-      url: "http://localhost:51379/api/subplatform/ChangeTagMenu",
+      url: "http://10.134.216.25:8010/api/subplatform/ChangeTagMenu",
       type: "POST",
       data: JSON.stringify(menu),
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
@@ -347,7 +347,7 @@
     console.log("GERAAKT");
     $.ajax({
 
-      url: "http://localhost:51379/api/subplatform/AddQuestion",
+      url: "http://10.134.216.25:8010/api/subplatform/AddQuestion",
       type: "POST",
       data: JSON.stringify(FAQ),
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
@@ -363,7 +363,7 @@
       type: 'GET',
       dataType: 'json',
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
-      url: "http://localhost:51379/api/subplatform/GetTagsOfMenu/" + "@ViewBag.SubplatformId"
+      url: "http://10.134.216.25:8010/api/subplatform/GetTagsOfMenu/" + "@ViewBag.SubplatformId"
     }).responseJSON;
 
     keys = Object.keys(tmp);
@@ -397,7 +397,7 @@
       type: 'GET',
       dataType: 'json',
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
-      url: "http://localhost:51379/api/subplatform/GetTagsFaq/2"
+      url: "http://10.134.216.25:8010/api/subplatform/GetTagsFaq/2"
     }).responseJSON;
 
 
