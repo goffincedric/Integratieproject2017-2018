@@ -40,6 +40,10 @@ namespace UI_MVC.Controllers
             ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
             ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
             ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
+            ViewBag.Item = SubplatformMgr.GetTag("Items").Text;
+            ViewBag.Persons = SubplatformMgr.GetTag("Persons").Text;
+            ViewBag.Organisations = SubplatformMgr.GetTag("Organisations").Text;
+            ViewBag.Themes = SubplatformMgr.GetTag("Themes").Text;
         }
 
 
@@ -560,6 +564,24 @@ namespace UI_MVC.Controllers
             return View();
         }
 
-       
+        //public ActionResult ShowPersons()
+        //{
+        //    IEnumerable<Person> people = itemMgr.GetPersons();
+        //    return View(people);
+        //}
+
+        //public ActionResult ShowOrganisations()
+        //{
+        //    IEnumerable<Organisation> organisations = itemMgr.GetOrganisations();
+        //    return View(organisations);
+        //}
+
+        //public ActionResult ShowThemes()
+        //{
+        //    IEnumerable<Theme> themes = itemMgr.GetThemes();
+        //    return View(themes);
+        //}
+
+
     }
 }

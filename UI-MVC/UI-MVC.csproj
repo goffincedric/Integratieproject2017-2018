@@ -416,6 +416,9 @@
     <Content Include="Views\Subplatform\_ShowSubplatform.cshtml" />
     <Content Include="Views\Subplatform\EditSubplatform.cshtml" />
     <Content Include="Views\Account\EditUser.cshtml" />
+    <Content Include="Views\Item\ShowPersons.cshtml" />
+    <Content Include="Views\Item\ShowThemes.cshtml" />
+    <Content Include="Views\Item\ShowOrganisations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

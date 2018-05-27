@@ -958,6 +958,34 @@ namespace PB.DAL.Migrations
                     Tags = new List<Tag>(),
                     Subplatform = pbSubplatform
                 },
+                 new Page
+                {
+                    PageName = "Items",
+                    Title = "Items",
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
+                },
+                   new Page
+                {
+                    PageName = "Persons",
+                    Title = "Politici",
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
+                },
+                      new Page
+                {
+                    PageName = "Organisations",
+                    Title = "Partijen",
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
+                },
+                             new Page
+                {
+                    PageName = "Themes",
+                    Title = "Thema's",
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
+                },
                 new Page
                 {
                     PageName = "Account",
