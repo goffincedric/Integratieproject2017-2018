@@ -67,7 +67,7 @@ function makeAjaxCall(url, methodType) {
 }
 
 function showIncrease() {
-    var URL = "http://localhost:51379/api/item/GetPersonIncrease";
+    var URL = "http://10.134.216.25:8010/api/item/GetPersonIncrease";
     makeAjaxCall(URL, "GET").then(process);
 
     function process(output) {
@@ -97,7 +97,7 @@ showIncrease();
 
 function drawBarChart() {
 
-    var URL = "http://localhost:51379/api/item/getpersonstop/5";
+    var URL = "http://10.134.216.25:8010/api/item/getpersonstop/5";
     makeAjaxCall(URL, "GET").then(process);
     var can = $('#bar-chart');
 
@@ -143,7 +143,7 @@ function drawBarChart() {
 drawBarChart();
 
 function drawLineChart() {
-    var URL = "http://localhost:51379/api/item/GetMostPopularPersons/3";
+    var URL = "http://10.134.216.25:8010/api/item/GetMostPopularPersons/3";
     makeAjaxCall(URL, "GET").then(process);
 
     function process(output) {
@@ -187,7 +187,7 @@ function drawLineChart() {
         var counter = 0;
         $.each(output,
             function (key, value) {
-                var URL = "http://localhost:51379/api/item/GetPersonEvolution/" + key;
+                var URL = "http://10.134.216.25:8010/api/item/GetPersonEvolution/" + key;
                 makeAjaxCall(URL, "GET").then(process);
 
                 function process(output2) {
@@ -238,13 +238,13 @@ function drawLineChart() {
 drawLineChart();
 
 function TrendingPersonGraphs() {
-    var URL = "http://localhost:51379/api/item/getMostPopularPerson";
+    var URL = "http://10.134.216.25:8010/api/item/getMostPopularPerson";
     makeAjaxCall(URL, "GET").then(process);
 
     function process(id) {
 
         function getHashtags(id) {
-            var URL = "http://localhost:51379/api/item/GetTrendingHashtagsCount/" + id;
+            var URL = "http://10.134.216.25:8010/api/item/GetTrendingHashtagsCount/" + id;
             makeAjaxCall(URL, "GET").then(process);
 
             function process(output) {
@@ -289,7 +289,7 @@ function TrendingPersonGraphs() {
         getHashtags(id);
 
         function drawPie(id) {
-            var URL = "http://localhost:51379/api/item/GetTrendingMentionsCount/" + id;
+            var URL = "http://10.134.216.25:8010/api/item/GetTrendingMentionsCount/" + id;
             makeAjaxCall(URL, "GET").then(process);
 
             function process(output) {
@@ -342,7 +342,7 @@ function TrendingPersonGraphs() {
 TrendingPersonGraphs();
 
 function map() {
-    var URL = "http://localhost:51379/api/item/GetTweetsByDistrict";
+    var URL = "http://10.134.216.25:8010/api/item/GetTweetsByDistrict";
     makeAjaxCall(URL, "GET").then(process);
 
     var mapData;
@@ -400,7 +400,7 @@ function map() {
 map();
 
 function drawOrganisations() {
-    var URL = "http://localhost:51379/api/item/GetMostPopularOrganisations/3";
+    var URL = "http://10.134.216.25:8010/api/item/GetMostPopularOrganisations/3";
     makeAjaxCall(URL, "GET").then(process, errorHandler);
 
     function process(output) {
@@ -443,7 +443,7 @@ function drawOrganisations() {
         var counter = 0;
         $.each(output,
             function (key, value) {
-                var URL = "http://localhost:51379/api/item/GetItemTweet/" + key;
+                var URL = "http://10.134.216.25:8010/api/item/GetItemTweet/" + key;
                 makeAjaxCall(URL, "GET").then(process, errorHandler);
 
                 function process(output2) {
@@ -501,7 +501,7 @@ drawOrganisations();
 
 function drawMap() {
 
-    var URL = "http://localhost:51379/api/item/GetTweetsByDistrict";
+    var URL = "http://10.134.216.25:8010/api/item/GetTweetsByDistrict";
     makeAjaxCall(URL, "GET").then(process);
 
 
