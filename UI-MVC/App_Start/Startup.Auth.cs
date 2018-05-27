@@ -49,7 +49,7 @@ namespace UI_MVC
 
                 CookieName = "MyAuthCookie",
                 CookieHttpOnly = false,
-             
+
 
                 SlidingExpiration = true
             });
@@ -106,7 +106,7 @@ namespace UI_MVC
         private static void ApplyRedirect(CookieApplyRedirectContext context)
         {
             UrlHelper _url = new UrlHelper(HttpContext.Current.Request.RequestContext);
-            String actionUri = _url.Action("Login", "Account", new {returnUrl = context.Request.Uri.PathAndQuery});
+            String actionUri = _url.Action("Login", "Account", new { returnUrl = context.Request.Uri.PathAndQuery });
             context.Response.Redirect(actionUri);
         }
     }
