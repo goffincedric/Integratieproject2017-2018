@@ -1459,7 +1459,7 @@ $(function () {
                     });
                 }
             } else {
-                var URL = "https://localhost:51379/api/item/GetTweetsByDistrict";
+                var URL = "http://10.134.216.25:8010/api/item/GetTweetsByDistrict";
                 makeAjaxCall(URL, "GET").then(process);
 
                 function process(output) {
