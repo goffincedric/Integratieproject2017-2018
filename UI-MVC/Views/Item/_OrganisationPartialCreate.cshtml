@@ -86,7 +86,7 @@
     type: 'GET',
     dataType: 'json',
     headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
-    url: "http://localhost:51379/api/item/GetTheme"
+    url: "http://10.134.216.25:8010/api/item/GetTheme"
   }).responseJSON;
   for (var i = 0; i < tmp.length; i++) {
     $("#FromJson").append($("<option></option>").val(tmp[i].ItemId).html(tmp[i].Name));
