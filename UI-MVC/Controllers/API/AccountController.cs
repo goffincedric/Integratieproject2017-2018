@@ -70,7 +70,7 @@ namespace UI_MVC.Controllers.API
             return Ok(profileAlerts);
         }
 
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult HasReadProfileAlert(int? profileAlertId)
         {
             if (profileAlertId is null) return BadRequest();

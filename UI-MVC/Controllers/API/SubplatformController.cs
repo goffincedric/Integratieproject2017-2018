@@ -31,7 +31,7 @@ namespace UI_MVC.Controllers.API
             SubplatformMgr.GetPages().Where(p => p.PageName.Equals("Menu")).Where(p => p.SubplatformId == id).FirstOrDefault().Tags.ForEach(t => tags.Add(t.Name, t.Text));
             return Ok(tags);
         }
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult ChangeTagMenu([FromBody]MenuViewModel model)
         {
             Subplatform subplatform = SubplatformMgr.GetSubplatform(model.Subplatform);
@@ -46,7 +46,7 @@ namespace UI_MVC.Controllers.API
         }
 
        
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult ChangeTagFAQ([FromBody]FAQViewModel model)
         {
             Subplatform subplatform = SubplatformMgr.GetSubplatform(model.Subplatform);

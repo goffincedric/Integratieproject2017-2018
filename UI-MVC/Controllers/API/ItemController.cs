@@ -160,7 +160,7 @@ namespace UI_MVC.Controllers.API
         }
 
         // PUT: api/item/5
-        [HttpPut]
+        [HttpPost]
         [Authorize(Roles = "User,Admin,SuperAdmin")]
         public IHttpActionResult Put(int id, [FromBody] Item item)
         {
@@ -172,7 +172,7 @@ namespace UI_MVC.Controllers.API
         }
 
         // DELETE: api/item/5
-        [HttpDelete]
+        [HttpPost]
         [Authorize(Roles = "User,Admin,SuperAdmin")]
         public IHttpActionResult Delete([FromBody] int? id)
         {
