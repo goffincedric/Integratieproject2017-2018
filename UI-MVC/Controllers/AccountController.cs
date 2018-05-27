@@ -48,7 +48,7 @@ namespace UI_MVC.Controllers
             ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
             ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
             ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
-            ViewBag.Item = SubplatformMgr.GetTag("Items").Text;
+            ViewBag.Items = SubplatformMgr.GetTag("Items").Text;
             ViewBag.Persons = SubplatformMgr.GetTag("Persons").Text;
             ViewBag.Organisations = SubplatformMgr.GetTag("Organisations").Text;
             ViewBag.Themes = SubplatformMgr.GetTag("Themes").Text;

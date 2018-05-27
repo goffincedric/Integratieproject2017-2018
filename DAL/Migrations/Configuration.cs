@@ -1126,6 +1126,26 @@ namespace PB.DAL.Migrations
                             Name = "Contact",
                             Text = "Contact"
                         },
+                          new Tag
+                        {
+                            Name = "Items",
+                            Text = "Items"
+                        },
+                            new Tag
+                        {
+                            Name = "Persons",
+                            Text = "Politici"
+                        },
+                                new Tag
+                        {
+                            Name = "Organisations",
+                            Text = "Partijen"
+                        },
+              new Tag
+                        {
+                            Name = "Themes",
+                            Text = "Thema's"
+                        },
                         new Tag
                         {
                             Name = "Legal",
