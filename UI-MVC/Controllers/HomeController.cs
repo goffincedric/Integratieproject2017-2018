@@ -57,7 +57,7 @@ namespace UI_MVC.Controllers
         public ActionResult _Search(string subplatform)
         {
             Subplatform sp = SubplatformMgr.GetSubplatform(subplatform);
-            IEnumerable<Item> items = itemMgr.GetItems().Where(i => i.SubPlatforms.Contains(sp));
+            IEnumerable<Item> items = itemMgr.GetItems().Where(i => i.SubPlatforms.Contains(sp)).OrderBy(i => i.Name);
             return PartialView(items);
         }
 
