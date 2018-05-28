@@ -37,7 +37,7 @@
                   <td>
                     @if (!item.SubscribedProfiles.Contains(@ViewBag.Profile))
                     {
-                      using (Html.BeginForm("AddSubscription", "Home", new { Id = item.ItemId }, FormMethod.Post))
+                      using (Html.BeginForm("AddSubscription", "Item", new { Id = item.ItemId }, FormMethod.Post))
                       {
                         @Html.AntiForgeryToken()
                         <button type="submit" value="Subscribe" class="btn btn-outline-primary btn-lg btn-block">Subcribe</button>
@@ -45,7 +45,7 @@
                     }
                     else
                     {
-                      using (Html.BeginForm("RemoveSubscription", "Home", new { Id = item.ItemId }, FormMethod.Post))
+                      using (Html.BeginForm("RemoveSubscription", "Item", new { Id = item.ItemId }, FormMethod.Post))
                       {
                         @Html.AntiForgeryToken()
                         <button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
