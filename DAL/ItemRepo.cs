@@ -140,6 +140,8 @@ namespace PB.DAL
                 .Include(t => t.Elements)
                 .Include(t => t.Alerts)
                 .Include(t => t.Records)
+                .Include(t=>t.Organisations)
+                .Include(t=> t.Persons)
                 .AsEnumerable();
         }
 

@@ -87,6 +87,33 @@
       <li class="nav-item dropdown">
         <a class="dropdown-toggle" href="javascript:void(0);">
           <span class="icon-holder">
+            <i class="c-deep-orange-500 ti-id-badge"></i>
+          </span><span class="title">@ViewBag.Items</span>
+          <span class="arrow">
+            <i class=" ti-angle-right" ></i>
+          </span>
+        </a>
+        <ul class="dropdown-menu">
+          <li class="nav-item dropdown">
+            <a class="sidebar-link" href="@Url.Action("ShowPersons", "Item")">
+              <span>@ViewBag.Persons</span>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="@Url.Action("ShowOrganisations", "Item")">
+              <span>@ViewBag.Organisations</span>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="@Url.Action("ShowThemes", "Item")">
+              <span>@ViewBag.Themes</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="dropdown-toggle" href="javascript:void(0);">
+          <span class="icon-holder">
             <i class="c-teal-500 ti-view-list-alt"></i>
           </span><span class="title">@ViewBag.More</span>
           <span class="arrow">
