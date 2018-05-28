@@ -36,6 +36,10 @@ namespace UI_MVC.Controllers
             ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
             ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
             ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
+            ViewBag.Items = SubplatformMgr.GetTag("Items").Text;
+            ViewBag.Persons = SubplatformMgr.GetTag("Persons").Text;
+            ViewBag.Organisations = SubplatformMgr.GetTag("Organisations").Text;
+            ViewBag.Themes = SubplatformMgr.GetTag("Themes").Text;
         }
 
 
@@ -449,7 +453,7 @@ namespace UI_MVC.Controllers
         }
 
 
-        
+
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _ShowSubplatform()
         {
@@ -461,7 +465,7 @@ namespace UI_MVC.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult EditSubplatform(int id)
         {
-          Subplatform subplatform = SubplatformMgr.GetSubplatform(id);
+            Subplatform subplatform = SubplatformMgr.GetSubplatform(id);
 
             return PartialView(subplatform);
         }
@@ -474,11 +478,11 @@ namespace UI_MVC.Controllers
 
             subplatform.Name = newsubplatform.Name;
             subplatform.URL = newsubplatform.URL;
-            SubplatformMgr.ChangeSubplatform(subplatform); 
+            SubplatformMgr.ChangeSubplatform(subplatform);
 
             return PartialView(subplatform);
         }
-       
+
         #endregion
     }
 }

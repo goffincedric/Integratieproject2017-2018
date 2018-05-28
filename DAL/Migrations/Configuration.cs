@@ -958,6 +958,34 @@ namespace PB.DAL.Migrations
                     Tags = new List<Tag>(),
                     Subplatform = pbSubplatform
                 },
+                 new Page
+                {
+                    PageName = "Items",
+                    Title = "Items",
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
+                },
+                   new Page
+                {
+                    PageName = "Persons",
+                    Title = "Politici",
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
+                },
+                      new Page
+                {
+                    PageName = "Organisations",
+                    Title = "Partijen",
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
+                },
+                             new Page
+                {
+                    PageName = "Themes",
+                    Title = "Thema's",
+                    Tags = new List<Tag>(),
+                    Subplatform = pbSubplatform
+                },
                 new Page
                 {
                     PageName = "Account",
@@ -1097,6 +1125,26 @@ namespace PB.DAL.Migrations
                         {
                             Name = "Contact",
                             Text = "Contact"
+                        },
+                          new Tag
+                        {
+                            Name = "Items",
+                            Text = "Items"
+                        },
+                            new Tag
+                        {
+                            Name = "Persons",
+                            Text = "Politici"
+                        },
+                                new Tag
+                        {
+                            Name = "Organisations",
+                            Text = "Partijen"
+                        },
+              new Tag
+                        {
+                            Name = "Themes",
+                            Text = "Thema's"
                         },
                         new Tag
                         {

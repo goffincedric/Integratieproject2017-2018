@@ -1,10 +1,12 @@
 ﻿using Domain.JSONConversion;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using PB.BL;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
+using PB.DAL.EF;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
@@ -25,6 +27,7 @@ namespace UI_MVC.Controllers
     {
         private readonly UnitOfWorkManager uow;
         private readonly ItemManager itemMgr;
+        private readonly AccountManager accountMgr;
         private readonly SubplatformManager SubplatformMgr;
 
         public ItemController()
@@ -32,6 +35,7 @@ namespace UI_MVC.Controllers
             uow = new UnitOfWorkManager();
             itemMgr = new ItemManager(uow);
             SubplatformMgr = new SubplatformManager(uow);
+            accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
             ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
             ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
             ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
@@ -40,6 +44,10 @@ namespace UI_MVC.Controllers
             ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
             ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
             ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
+            ViewBag.Items = SubplatformMgr.GetTag("Items").Text;
+            ViewBag.Persons = SubplatformMgr.GetTag("Persons").Text;
+            ViewBag.Organisations = SubplatformMgr.GetTag("Organisations").Text;
+            ViewBag.Themes = SubplatformMgr.GetTag("Themes").Text;
         }
 
 
@@ -559,7 +567,91 @@ namespace UI_MVC.Controllers
 
             return View();
         }
+        [AllowAnonymous]
+        public ActionResult ShowPersons()
+        {
+            ViewBag.Profile = accountMgr.GetProfile(User.Identity.GetUserId()); 
+          
+            IEnumerable<Person> people = itemMgr.GetPersons();
+            return View(people);
+        }
+        [AllowAnonymous]
+        public ActionResult ShowOrganisations()
+        {
+            ViewBag.Profile = accountMgr.GetProfile(User.Identity.GetUserId());
+            IEnumerable<Organisation> organisations = itemMgr.GetOrganisations();
+            return View(organisations);
+        }
+        [AllowAnonymous]
+        public ActionResult ShowThemes()
+        {
+            ViewBag.Profile = accountMgr.GetProfile(User.Identity.GetUserId());
+            IEnumerable<Theme> themes = itemMgr.GetThemes();
+            return View(themes);
+        }
 
-       
+        [Authorize(Roles = "User,Admin,SuperAdmin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSubscription(int id)
+        {
+            var user = accountMgr.GetProfile(User.Identity.GetUserId());
+            Item item = itemMgr.GetItem(id);
+            string redirect = "";
+            if (item is Person person)
+            {
+                redirect = "ShowPersons";
+
+            }else if(item is Organisation organisation)
+            {
+                redirect = "ShowOrganisations";
+            }
+            else if(item is Theme theme)
+            {
+                redirect = "ShowThemes";
+
+            }
+            if (!user.Subscriptions.Contains(item))
+            {
+                accountMgr.AddSubscription(user, item);
+                
+                return RedirectToAction(redirect,"Item");
+            }
+
+            return RedirectToAction(redirect, "Item");
+        }
+
+        [Authorize(Roles = "User,Admin,SuperAdmin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveSubscription(int id)
+        {
+            var user = accountMgr.GetProfile(User.Identity.GetUserId());
+            Item item = itemMgr.GetItem(id);
+            string redirect = "";
+            if (item is Person person)
+            {
+                redirect = "ShowPersons";
+
+            }
+            else if (item is Organisation organisation)
+            {
+                redirect = "ShowOrganisations";
+            }
+            else if (item is Theme theme)
+            {
+                redirect = "ShowThemes";
+
+            }
+            if (user.Subscriptions.Contains(item))
+            {
+                accountMgr.RemoveSubscription(user, item);
+                return RedirectToAction(redirect, "Item");
+            }
+
+            return RedirectToAction(redirect, "Item");
+        }
+
+
     }
 }
