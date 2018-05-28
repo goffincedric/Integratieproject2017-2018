@@ -24,6 +24,7 @@
                   <th>@Html.DisplayNameFor(model => model.Name)</th>
                   <th>@Html.DisplayNameFor(model => model.Organisation)</th>
                   <th>@Html.DisplayNameFor(model => model.Gemeente)</th>
+              
                   <th>Vermeldingen</th>
                   <th># gebruikers gesubscribed</th>
                   <th>Subscribe</th>
@@ -40,10 +41,21 @@
                     <td>@Html.DisplayFor(modelItem => item.Records.Count)</td>
                     <td>@Html.DisplayFor(modelItem => item.SubscribedProfiles.Count) </td>
                     <td>
-                      @using (Html.BeginForm("AddSubscription", "Home", new { Id = item.ItemId }, FormMethod.Post))
+                      @if (!item.SubscribedProfiles.Contains(@ViewBag.Profile))
                       {
-                        @Html.AntiForgeryToken()
-                        <button type="submit" value="Subscribe" class="btn btn-outline-primary btn-lg btn-block">Subcribe</button>
+                        using (Html.BeginForm("AddSubscription", "Item", new { Id = item.ItemId }, FormMethod.Post))
+                        {
+                          @Html.AntiForgeryToken()
+                          <button type="submit" value="Subscribe" class="btn btn-outline-primary btn-lg btn-block">Subcribe</button>
+                        }
+                      }
+                      else
+                      {
+                        using (Html.BeginForm("RemoveSubscription", "Item", new { Id = item.ItemId }, FormMethod.Post))
+                        {
+                          @Html.AntiForgeryToken()
+                          <button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
+                        }
                       }
                     </td>
 
