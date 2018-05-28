@@ -594,7 +594,7 @@ webpackJsonp([0],
         function() {
           r(".search-toggle").on("click",
             function(t) {
-              r(".search-box, .search-input").toggleClass("active"), r(".search-input input").focus(),
+                r(".search-input input").focus(),
                 t.preventDefault()
             })
         }()
