@@ -35,7 +35,7 @@
                   <td>@Html.DisplayFor(modelItem => item.People.Count)</td>
                   <td>@Html.DisplayFor(modelItem => item.SubscribedProfiles.Count) </td>
                   <td>
-                    @if (item.SubscribedProfiles.Contains(@ViewBag.Profile))
+                    @if (!item.SubscribedProfiles.Contains(@ViewBag.Profile))
                     {
                       using (Html.BeginForm("AddSubscription", "Home", new { Id = item.ItemId }, FormMethod.Post))
                       {

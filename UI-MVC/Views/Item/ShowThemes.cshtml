@@ -22,7 +22,7 @@
                   <th>Profielfoto</th>
                   <th>@Html.DisplayNameFor(model => model.Name)</th>
                   <th># vermeldingen</th>
-                  <th># gesubscribed</th>
+               >
                   <th>Subscribe</th>
                 </tr>
               </thead>
@@ -32,8 +32,8 @@
                 <tr>
                   <td><img style="width: 50px; height:50px; border-radius:50%; margin-left:50px;" src="@Url.Content(@item.IconURL)" alt=""></td>
                   <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                  <td>@Html.DisplayFor(modelItem => (item.Persons.Count * item.Organisations.Count))</td>
-                  <td>@Html.DisplayFor(modelItem => item.SubscribedProfiles.Count) </td>
+                  <td>((@item.Persons.Count) * (@item.Organisations.Count))</td>
+  
                   <td>
                     @if (!item.SubscribedProfiles.Contains(@ViewBag.Profile))
                     {
