@@ -405,6 +405,7 @@ namespace UI_MVC.Controllers
         {
             if (!ItemManager.IsCleaning)
             {
+                // Set IsCleaning flag
                 ItemManager.IsCleaning = true;
                 Task.Run(async () =>
                 {
@@ -422,7 +423,7 @@ namespace UI_MVC.Controllers
         {
             if (!ItemManager.IsSyncing)
             {
-                // Set IsSyncing field
+                // Set IsSyncing flag
                 ItemManager.IsSyncing = true;
                 Task.Run(async () =>
                 {
@@ -444,7 +445,7 @@ namespace UI_MVC.Controllers
                 AccountManager.IsSendingWeeklyReviews = true;
                 Task.Run(async () =>
                 {
-                    await accountMgr.SendWeeklyReviewsAsync();
+                    await accountMgr.SendWeeklyReviewsAsync(SubplatformMgr.GetSubplatform(subplatform));
                     AccountManager.IsSendingWeeklyReviews = false;
                 });
             }

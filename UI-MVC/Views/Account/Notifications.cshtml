@@ -28,18 +28,18 @@
     }
     else
     {
-      foreach (var a in Model)
+      foreach (var pa in Model)
       {
         <div class="row">
           <div class="bgc-white form-group bd col-md-12">
-            <a href="@Url.Action("ClickNotification", "Account", new {id = a.AlertId})">
+            <a href="@Url.Action("ClickNotification", "Account", new {id = pa.ProfileAlertId})">
               <div class="row">
                 <div class="col-md-1">
-                  <img class="w-3r bdrs-50p alert-img" src="@Url.Content(@a.Alert.Item.IconURL)" alt="">
+                  <img class="w-3r bdrs-50p alert-img" src="@Url.Content(@pa.Alert.Item.IconURL)" alt="">
                 </div>
                 <div class="col-md-11 alert-text">
-                  <span class="fsz-xl">@a.Alert.Text</span>
-                  <p class="m-0">@a.TimeStamp.</p>
+                  <span class="fsz-xl">@pa.Alert.Text</span>
+                  <p class="m-0">@pa.TimeStamp.</p>
                 </div>
               </div>
             </a>

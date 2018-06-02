@@ -389,18 +389,20 @@ namespace PB.BL
             return profile.WeeklyReviews.OrderByDescending(wr => wr.TimeGenerated).FirstOrDefault();
         }
 
-        // TODO: Async maken
-        public void SendWeeklyReviews()
+        public void SendWeeklyReviews(Subplatform subplatform)
         {
-            // Set IsGeneratingAlerts flag
-            IsSendingWeeklyReviews = true;
-            SendWeeklyReviewsAsync().GetAwaiter().OnCompleted(new Action(() =>
+            if (!IsSendingWeeklyReviews)
             {
+                // Set IsSendingWeeklyReviews flag
+                IsSendingWeeklyReviews = true;
+                SendWeeklyReviewsAsync(subplatform).RunSynchronously();
+
+                // Reset IsSendingWeeklyReviews flag
                 IsSendingWeeklyReviews = false;
-            }));
+            }
         }
 
-        public async Task<Dictionary<Profile, List<ProfileAlert>>> SendWeeklyReviewsAsync()
+        public async Task<Dictionary<Profile, List<ProfileAlert>>> SendWeeklyReviewsAsync(Subplatform subplatform)
         {
             // Get all profiles with at least 1 read profilealert from last week
             List<Profile> allProfiles = GetProfiles()
@@ -417,8 +419,11 @@ namespace PB.BL
             allProfiles.ForEach(p =>
             {
                 Dictionary<DateTime, List<ProfileAlert>> profileAlertsByDate = p.ProfileAlerts
+                    .Where(pa => pa.Alert.Item.SubPlatforms.Contains(subplatform))
                     .GroupBy(pa => pa.TimeStamp.Date).ToDictionary(kv => kv.Key, kv => kv.ToList());
                 List<ProfileAlert> profileAlerts = new List<ProfileAlert>();
+
+                if (profileAlertsByDate.Count == 0) return;
 
                 profileAlertsByDate.Values.ToList().ForEach(v =>
                 {
@@ -455,7 +460,7 @@ namespace PB.BL
                         sbItem.Replace(GmailSender.WeeklyReviewListItemIconSubstring,
                             "https://integratieproject.azurewebsites.net" + pa.Alert.Item.IconURL.Substring(1) ??
                             GmailSender.DefaultItemIcon);
-                        sbItem.Replace(GmailSender.DefaultItemLinkSubstring, "#");
+                        sbItem.Replace(GmailSender.DefaultItemLinkSubstring, "#"); //TODO: LINKEN NAAR ITEMDETAIL PAGE
                         sbItem.Replace(GmailSender.WeeklyReviewListItemNameSubstring, pa.Alert.Item.Name);
                         sbItem.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring,
                             pa.Alert.Item.Name + " " + pa.Alert.Event + " " + pa.Alert.Subject + " - " +
@@ -468,6 +473,7 @@ namespace PB.BL
                         pe.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count == persons.Max(ps =>
                             ps.Records.FindAll(r => r.Date.Date >= DateTime.Today.AddDays(-7)).Count));
 
+                    sbBody.Replace(GmailSender.SubplatformSubstring, subplatform.Name);
                     sbBody.Replace(GmailSender.DefaultItemLinkSubstring, "#");
                     sbBody.Replace(GmailSender.WeeklyReviewListItemNameSubstring, person.Name);
                     sbBody.Replace(GmailSender.WeeklyReviewListItemDescriptionSubstring,
@@ -522,12 +528,15 @@ namespace PB.BL
 
         public void GenerateAllAlerts(IEnumerable<Item> allItems)
         {
-            // Set IsGeneratingAlerts flag
-            IsGeneratingAlerts = true;
-            GenerateAllAlertsAsync(allItems).GetAwaiter().OnCompleted(new Action(() =>
+            if (!IsGeneratingAlerts)
             {
+                // Set IsGeneratingAlerts flag
+                IsGeneratingAlerts = true;
+                GenerateAllAlertsAsync(allItems).RunSynchronously();
+
+                // Reset IsGeneratingAlerts flag
                 IsGeneratingAlerts = false;
-            }));
+            }
         }
 
         // TODO: Async maken

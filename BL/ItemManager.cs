@@ -48,13 +48,15 @@ namespace PB.BL
         #region Database operations
         public void SyncDatabase(Subplatform subplatform)
         {
-            // Set IsSyncing flag
-            IsSyncing = true;
-            SyncDatabaseAsync(subplatform).GetAwaiter().OnCompleted(new Action(() =>
+            if (!IsSyncing)
             {
                 // Set IsSyncing flag
-                IsSyncing = false;
-            }));
+                IsSyncing = true;
+                SyncDatabaseAsync(subplatform).RunSynchronously();
+
+                // Reset IsSyncing flag
+                IsSyncing = false; ;
+            }
         }
 
         public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
@@ -112,7 +114,15 @@ namespace PB.BL
 
         public void CleanupOldRecords(Subplatform subplatform)
         {
-            CleanupOldRecordsAsync(subplatform).GetAwaiter().GetResult();
+            if (!IsCleaning)
+            {
+                // Set IsCleaning flag
+                IsCleaning = true;
+                CleanupOldRecordsAsync(subplatform).RunSynchronously();
+
+                // Reset IsCleaning flag
+                IsCleaning = false; ;
+            }
         }
 
         public async Task<int> CleanupOldRecordsAsync(Subplatform subplatform)

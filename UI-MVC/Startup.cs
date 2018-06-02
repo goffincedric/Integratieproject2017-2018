@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 [assembly: OwinStartup(typeof(UI_MVC.Startup))]
@@ -41,11 +42,13 @@ namespace UI_MVC
                 {
                     JobManager.AddJob(() =>
                     {
-                        accountMgr.GenerateAllAlerts(s.Items);
+                        accountMgr.SendWeeklyReviews(s);
                     },
                     (schedule) => schedule
-                    .ToRunOnceAt(dateToSendWeeklyReview.AddMinutes(new Random().Next(50, 60)))
-                    .AndEvery(int.Parse(weeklyReviewsInterval)).Hours());
+                    //.ToRunOnceAt(dateToSendWeeklyReview.AddMinutes(new Random().Next(50, 60)))
+                    //.AndEvery(int.Parse(weeklyReviewsInterval)).Hours());
+                    .ToRunOnceAt(DateTime.Now.AddMinutes(12))
+                    .AndEvery(30).Minutes());
                 }
                 if (!(seedInterval is null))
                 {
@@ -55,8 +58,10 @@ namespace UI_MVC
                         itemMgr.SyncDatabase(s);
                     },
                     (schedule) => schedule
-                    .ToRunOnceAt(9, 10)
-                    .AndEvery(int.Parse(seedInterval)).Hours());
+                    //.ToRunOnceAt(9, 10)
+                    //.AndEvery(int.Parse(seedInterval)).Hours());
+                    .ToRunOnceAt(DateTime.Now.AddMinutes(2))
+                    .AndEvery(30).Minutes());
                 }
                 if (!(alertGenerationInterval is null))
                 {
@@ -65,8 +70,10 @@ namespace UI_MVC
                         accountMgr.GenerateAllAlerts(s.Items);
                     },
                     (schedule) => schedule
-                    .ToRunOnceAt(9, 30)
-                    .AndEvery(int.Parse(alertGenerationInterval)).Hours());
+                    //.ToRunOnceAt(9, 30)
+                    //.AndEvery(int.Parse(alertGenerationInterval)).Hours());
+                    .ToRunOnceAt(DateTime.Now.AddMinutes(7))
+                    .AndEvery(30).Minutes());
                 }
             });
             #endregion
