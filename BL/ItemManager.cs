@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Domain.JSONConversion;
 using Newtonsoft.Json;
@@ -21,6 +22,9 @@ namespace PB.BL
 {
     public class ItemManager : IItemManager
     {
+        public static SemaphoreSlim CleanupSemaphore = new SemaphoreSlim(1, 1);
+        public static SemaphoreSlim SeedSemaphore = new SemaphoreSlim(1, 1);
+
         public static bool IsSyncing;
         public static bool IsCleaning;
         private IAlertRepo AlertRepo;
@@ -52,10 +56,10 @@ namespace PB.BL
             {
                 // Set IsSyncing flag
                 IsSyncing = true;
-                SyncDatabaseAsync(subplatform).RunSynchronously();
+                SyncDatabaseAsync(subplatform).Wait();
 
                 // Reset IsSyncing flag
-                IsSyncing = false; ;
+                IsSyncing = false;
             }
         }
 
@@ -118,10 +122,10 @@ namespace PB.BL
             {
                 // Set IsCleaning flag
                 IsCleaning = true;
-                CleanupOldRecordsAsync(subplatform).RunSynchronously();
+                CleanupOldRecordsAsync(subplatform).Wait();
 
                 // Reset IsCleaning flag
-                IsCleaning = false; ;
+                IsCleaning = false;
             }
         }
 
@@ -148,7 +152,7 @@ namespace PB.BL
                 .ToList();
 
             // Persist deleted records
-            RecordRepo.DeleteRecords(oldRecords);
+            if (oldRecords.Count > 0) RecordRepo.DeleteRecords(oldRecords);
 
             // Save pending changes
             return await UowManager.SaveAsync();

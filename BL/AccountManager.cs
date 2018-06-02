@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Domain.Accounts;
 using Microsoft.AspNet.Identity;
@@ -24,6 +25,8 @@ namespace PB.BL
     //data to store, it also handles some logic and settings
     public class AccountManager : UserManager<Profile>, IAccountManager
     {
+        public static SemaphoreSlim AlertSemaphore = new SemaphoreSlim(1, 1);
+        public static SemaphoreSlim ReviewSemaphore = new SemaphoreSlim(1, 1);
         public static bool IsGeneratingAlerts;
         public static bool IsSendingWeeklyReviews;
 
@@ -395,7 +398,7 @@ namespace PB.BL
             {
                 // Set IsSendingWeeklyReviews flag
                 IsSendingWeeklyReviews = true;
-                SendWeeklyReviewsAsync(subplatform).RunSynchronously();
+                SendWeeklyReviewsAsync(subplatform).Wait();
 
                 // Reset IsSendingWeeklyReviews flag
                 IsSendingWeeklyReviews = false;
@@ -532,7 +535,7 @@ namespace PB.BL
             {
                 // Set IsGeneratingAlerts flag
                 IsGeneratingAlerts = true;
-                GenerateAllAlertsAsync(allItems).RunSynchronously();
+                GenerateAllAlertsAsync(allItems).Wait();
 
                 // Reset IsGeneratingAlerts flag
                 IsGeneratingAlerts = false;
