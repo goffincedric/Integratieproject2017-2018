@@ -36,8 +36,8 @@
           <div class="bgc-white form-group bd col-md-12">
             <a href="@Url.Action("ClickNotification", "Account", new {id = pa.ProfileAlertId})">
               <div class="row">
-                <div class="col-md-1">
-                  <img style="width: 50px; height:50px; border-radius:50%;" src="@Url.Content(@pa.Alert.Item.IconURL)" alt="">
+                <div class="col-md-1" style="padding:10px 0 0 0; margin:0; min-height:90px">
+                  <img style="width: 70px; height:70px; border-radius:50%;" src="@Url.Content(@pa.Alert.Item.IconURL)" alt="">
                 </div>
                 <div class="col-md-11 alert-text">
                   <span class="fsz-xl">@pa.Alert.Text</span>
