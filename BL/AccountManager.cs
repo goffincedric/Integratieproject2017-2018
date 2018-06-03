@@ -25,8 +25,6 @@ namespace PB.BL
     //data to store, it also handles some logic and settings
     public class AccountManager : UserManager<Profile>, IAccountManager
     {
-        public static SemaphoreSlim AlertSemaphore = new SemaphoreSlim(1, 1);
-        public static SemaphoreSlim ReviewSemaphore = new SemaphoreSlim(1, 1);
         public static bool IsGeneratingAlerts;
         public static bool IsSendingWeeklyReviews;
 
@@ -550,68 +548,71 @@ namespace PB.BL
             //Create alerts list
             List<Alert> alerts = new List<Alert>();
 
-            // Update trending items
-            List<Item> itemsToUpdate = Trendspotter.CheckTrendingItems(allItems.ToList(), 10, ref alerts);
-
-            // Get all profiles with subscriptions
-            List<Profile> Profiles = ProfileRepo.ReadProfiles().Where(p =>
-                p.Subscriptions.Count > 0 &&
-                p.Settings.Find(us => us.SettingName.Equals(Setting.Account.WANTS_SITE_NOTIFICATIONS)).boolValue
-            ).ToList();
-
-            // Alle subscriptions uit profiles halen
-            List<Item> Subscriptions = Profiles.SelectMany(p => p.Subscriptions).Distinct().ToList();
-
-            // Check trends voor people
-            alerts.AddRange(Trendspotter.GenerateAllAlertTypes(Subscriptions));
-
-            //Replace generated alerts with existing alerts
-            AlertRepo.ReadAlerts().ToList().ForEach(a =>
+            if (allItems.Count() > 0)
             {
-                Alert alert = alerts.FirstOrDefault(al => al.Equals(a));
-                if (alert != null) alerts[alerts.IndexOf(alert)] = a;
-            });
+                // Update trending items
+                List<Item> itemsToUpdate = Trendspotter.CheckTrendingItems(allItems.ToList(), 10, ref alerts);
 
-            //Link alerts aan profile
-            List<Alert> alertsToCreate = new List<Alert>();
-            List<Alert> alertsToUpdate = new List<Alert>();
+                // Get all profiles with subscriptions
+                List<Profile> Profiles = ProfileRepo.ReadProfiles().Where(p =>
+                    p.Subscriptions.Count > 0 &&
+                    p.Settings.Find(us => us.SettingName.Equals(Setting.Account.WANTS_SITE_NOTIFICATIONS)).boolValue
+                ).ToList();
 
-            alerts.ForEach(alert =>
-            {
-                bool changed = false;
-                Profiles.ForEach(profile =>
+                // Alle subscriptions uit profiles halen
+                List<Item> Subscriptions = Profiles.SelectMany(p => p.Subscriptions).Distinct().ToList();
+
+                // Check trends voor people
+                alerts.AddRange(Trendspotter.GenerateAllAlertTypes(Subscriptions));
+
+                //Replace generated alerts with existing alerts
+                AlertRepo.ReadAlerts().ToList().ForEach(a =>
                 {
-                    if (profile.Subscriptions.Contains(alert.Item))
-                    {
-                        ProfileAlert profileAlert = new ProfileAlert
-                        {
-                            AlertId = alert.AlertId,
-                            Alert = alert,
-                            UserId = profile.Id,
-                            Profile = profile,
-                            IsRead = false,
-                            TimeStamp = DateTime.Now,
-                            WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlert>()
-                        };
-
-                        if (!alert.ProfileAlerts.Contains(profileAlert) &&
-                            !profile.ProfileAlerts.Contains(profileAlert))
-                        {
-                            changed = true;
-                            alert.ProfileAlerts.Add(profileAlert);
-                            profile.ProfileAlerts.Add(profileAlert);
-                            Console.WriteLine(alert);
-                        }
-                    }
+                    Alert alert = alerts.FirstOrDefault(al => al.Equals(a));
+                    if (alert != null) alerts[alerts.IndexOf(alert)] = a;
                 });
 
-                if (alert.AlertId == 0) alertsToCreate.Add(alert);
-                else if (changed) alertsToUpdate.Add(alert);
-            });
+                //Link alerts aan profile
+                List<Alert> alertsToCreate = new List<Alert>();
+                List<Alert> alertsToUpdate = new List<Alert>();
 
-            //Persist alerts
-            AlertRepo.CreatAlerts(alertsToCreate).ToList();
-            alertsToUpdate.ForEach(AlertRepo.UpdateAlert);
+                alerts.ForEach(alert =>
+                {
+                    bool changed = false;
+                    Profiles.ForEach(profile =>
+                    {
+                        if (profile.Subscriptions.Contains(alert.Item))
+                        {
+                            ProfileAlert profileAlert = new ProfileAlert
+                            {
+                                AlertId = alert.AlertId,
+                                Alert = alert,
+                                UserId = profile.Id,
+                                Profile = profile,
+                                IsRead = false,
+                                TimeStamp = DateTime.Now,
+                                WeeklyReviewsProfileAlerts = new List<WeeklyReviewProfileAlert>()
+                            };
+
+                            if (!alert.ProfileAlerts.Contains(profileAlert) &&
+                                !profile.ProfileAlerts.Contains(profileAlert))
+                            {
+                                changed = true;
+                                alert.ProfileAlerts.Add(profileAlert);
+                                profile.ProfileAlerts.Add(profileAlert);
+                                Console.WriteLine(alert);
+                            }
+                        }
+                    });
+
+                    if (alert.AlertId == 0) alertsToCreate.Add(alert);
+                    else if (changed) alertsToUpdate.Add(alert);
+                });
+
+                //Persist alerts
+                AlertRepo.CreatAlerts(alertsToCreate).ToList();
+                alertsToUpdate.ForEach(AlertRepo.UpdateAlert);
+            }
             await UowManager.SaveAsync();
 
             return alerts;

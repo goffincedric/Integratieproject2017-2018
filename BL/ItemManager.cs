@@ -22,9 +22,6 @@ namespace PB.BL
 {
     public class ItemManager : IItemManager
     {
-        public static SemaphoreSlim CleanupSemaphore = new SemaphoreSlim(1, 1);
-        public static SemaphoreSlim SeedSemaphore = new SemaphoreSlim(1, 1);
-
         public static bool IsSyncing;
         public static bool IsCleaning;
         private IAlertRepo AlertRepo;
@@ -87,30 +84,33 @@ namespace PB.BL
                 ThemesAndKeywords.Add(t.Name, t.Keywords.Select(k => k.Name).ToArray());
             });
 
-            // Call API with request
-            List<JClass> requestedRecords = new List<JClass>();
-            try
+            if (ThemesAndKeywords.Count > 0)
             {
-                requestedRecords.AddRange(restClient.RequestRecords(
-                    since: DateTime.Now.AddDays(-int.Parse(subplatform.Settings
-                        .First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value)),
-                    themes: ThemesAndKeywords));
+                // Call API with request
+                List<JClass> requestedRecords = new List<JClass>();
+                try
+                {
+                    requestedRecords.AddRange(restClient.RequestRecords(
+                        since: DateTime.Now.AddDays(-int.Parse(subplatform.Settings
+                            .First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value)),
+                        themes: ThemesAndKeywords));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.GetType().Name + ": " + e.Message);
+                    if (e.InnerException != null) Console.WriteLine("Inner Exception: " + e.InnerException);
+                    throw e;
+                }
+
+                // Link items to subplatform
+                requestedRecords.ForEach(r => r.Subplatforms.Add(subplatform));
+
+                //Convert JClass to Record and persist to database
+                List<Record> newRecords = JClassToRecord(requestedRecords);
+
+                // Persist items tgo database
+                RecordRepo.CreateRecords(newRecords);
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.GetType().Name + ": " + e.Message);
-                if (e.InnerException != null) Console.WriteLine("Inner Exception: " + e.InnerException);
-                throw e;
-            }
-
-            // Link items to subplatform
-            requestedRecords.ForEach(r => r.Subplatforms.Add(subplatform));
-
-            //Convert JClass to Record and persist to database
-            List<Record> newRecords = JClassToRecord(requestedRecords);
-
-            // Persist items tgo database
-            RecordRepo.CreateRecords(newRecords);
 
             // Save pending changes
             return await UowManager.SaveAsync();

@@ -29,6 +29,7 @@ namespace UI_MVC
             SubplatformManager subplatformMgr = new SubplatformManager(uowMgr);
             ItemManager itemMgr = new ItemManager(uowMgr);
             AccountManager accountMgr = new AccountManager(new IntegratieUserStore(uowMgr.UnitOfWork), uowMgr);
+            SemaphoreSlim JobSemaphore = new SemaphoreSlim(1, 1); // alle semaphores naar 1 semafoor omzette
 
             List<Subplatform> Subplatforms = subplatformMgr.GetSubplatforms().ToList();
             DateTime endDate = DateTime.Today.AddDays(1).AddHours(2);
@@ -43,51 +44,64 @@ namespace UI_MVC
                 {
                     JobManager.AddJob(() =>
                     {
-                        ItemManager.CleanupSemaphore.Wait();
+                        JobSemaphore.Wait();
                         try { itemMgr.CleanupOldRecords(s); }
-                        finally { ItemManager.CleanupSemaphore.Release(); }
+                        finally
+                        {
+                            ItemManager.IsCleaning = false;
+                            JobSemaphore.Release();
+                        }
 
-                        ItemManager.SeedSemaphore.Wait();
+                        JobSemaphore.Wait();
                         try { itemMgr.SyncDatabase(s); }
-                        catch (Exception e) { }
-                        finally { ItemManager.SeedSemaphore.Release(); }
+                        finally
+                        {
+                            ItemManager.IsSyncing = false;
+                            JobSemaphore.Release();
+                        }
                     },
                     (schedule) => schedule
                     //.ToRunOnceAt(9, 10)
                     //.AndEvery(int.Parse(seedInterval)).Hours());
-                    .ToRunOnceAt(DateTime.Now.AddMinutes(1))
-                    .AndEvery(20).Minutes());
+                    .ToRunOnceAt(DateTime.Now.AddMinutes(2))
+                    .AndEvery(10).Minutes());
                 }
                 if (!(alertGenerationInterval is null))
                 {
                     JobManager.AddJob(() =>
                     {
-                        AccountManager.AlertSemaphore.Wait();
-                        try { accountMgr.GenerateAllAlerts(s.Items); }
-                        catch (Exception e) { }
-                        finally { AccountManager.AlertSemaphore.Release(); }
+                        JobSemaphore.Wait();
+                        try { accountMgr.GenerateAllAlerts(itemMgr.GetItems().Where(i => i.SubPlatforms.Contains(s))); }
+                        finally
+                        {
+                            AccountManager.IsGeneratingAlerts = false;
+                            JobSemaphore.Release();
+                        }
                     },
                     (schedule) => schedule
                     //.ToRunOnceAt(9, 30)
                     //.AndEvery(int.Parse(alertGenerationInterval)).Hours());
-                    .ToRunOnceAt(DateTime.Now.AddMinutes(6))
-                    .AndEvery(20).Minutes());
+                    .ToRunOnceAt(DateTime.Now.AddMinutes(5))
+                    .AndEvery(10).Minutes());
                 }
                 DateTime dateToSendWeeklyReview = DateTime.Today.AddDays(7 - (int)DateTime.Today.DayOfWeek);
                 if (!(weeklyReviewsInterval is null))
                 {
                     JobManager.AddJob(() =>
                     {
-                        AccountManager.ReviewSemaphore.Wait();
+                        JobSemaphore.Wait();
                         try { accountMgr.SendWeeklyReviews(s); }
-                        catch (Exception e) { }
-                        finally { AccountManager.ReviewSemaphore.Release(); }
+                        finally
+                        {
+                            AccountManager.IsSendingWeeklyReviews = false;
+                            JobSemaphore.Release();
+                        }
                     },
                     (schedule) => schedule
                     //.ToRunOnceAt(dateToSendWeeklyReview.AddMinutes(new Random().Next(50, 60)))
                     //.AndEvery(int.Parse(weeklyReviewsInterval)).Hours());
-                    .ToRunOnceAt(DateTime.Now.AddMinutes(11))
-                    .AndEvery(20).Minutes());
+                    .ToRunOnceAt(DateTime.Now.AddMinutes(8))
+                    .AndEvery(10).Minutes());
                 }
             });
             #endregion
