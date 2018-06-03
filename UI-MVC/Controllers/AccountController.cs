@@ -252,7 +252,7 @@ namespace UI_MVC.Controllers
         public ActionResult ClickNotification(int id)
         {
             Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
-            ProfileAlert profileAlert = profile.ProfileAlerts.Find(pa => pa.AlertId == id);
+            ProfileAlert profileAlert = profile.ProfileAlerts.Find(pa => pa.ProfileAlertId == id);
             profileAlert.IsRead = true;
 
             UserManager.ChangeProfile(profile);

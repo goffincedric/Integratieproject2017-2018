@@ -36,8 +36,8 @@ namespace PB.BL.Interfaces
         void GenerateAllAlerts(IEnumerable<Item> allItems);
         Task<List<Alert>> GenerateAllAlertsAsync(IEnumerable<Item> allItems);
 
-        void SendWeeklyReviews();
-        Task<Dictionary<Profile, List<ProfileAlert>>> SendWeeklyReviewsAsync();
+        void SendWeeklyReviews(Subplatform subplatform);
+        Task<Dictionary<Profile, List<ProfileAlert>>> SendWeeklyReviewsAsync(Subplatform subplatform);
 
         int GetUserCount();
     }
