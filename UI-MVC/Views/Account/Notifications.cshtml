@@ -1,6 +1,6 @@
 ﻿@{
-  ViewBag.Title = "Notifications";
-  Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Notifications";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <main class="main-content bgc-grey-100">
@@ -8,6 +8,7 @@
     <div class="bgc-white p-10 bd mB-10">
       <h3>Notifications</h3>
     </div>
+
     @if (Model.Count == 0)
     {
       <div class="row">
@@ -15,7 +16,7 @@
           <a href="@Url.Action("Faq", "Home")">
             <div class="row">
               <div class="col-md-1">
-                <img class="w-3r bdrs-50p alert-img" src="~/Content/Images/info-icon.png" alt="">
+                <img style="width: 80px; height:80px; border-radius:50%;" src="~/Content/Images/info-icon.png" alt="">
               </div>
               <div class="col-md-11 alert-text">
                 <span class="fsz-xl">U heeft op dit moment nog geen notifications, dit kan zijn omdat u nog niet gesubscribed bent op een item.</span>
@@ -23,23 +24,24 @@
               </div>
             </div>
           </a>
+      
         </div>
       </div>
     }
     else
     {
-      foreach (var a in Model)
+      foreach (var pa in Model)
       {
         <div class="row">
           <div class="bgc-white form-group bd col-md-12">
-            <a href="@Url.Action("ClickNotification", "Account", new {id = a.AlertId})">
+            <a href="@Url.Action("ClickNotification", "Account", new {id = pa.ProfileAlertId})">
               <div class="row">
                 <div class="col-md-1">
-                  <img  style="width: 80px; height:80px; border-radius:50%;" src="@Url.Content(@a.Alert.Item.IconURL)" alt="">
+                  <img style="width: 50px; height:50px; border-radius:50%;" src="@Url.Content(@pa.Alert.Item.IconURL)" alt="">
                 </div>
                 <div class="col-md-11 alert-text">
-                  <span class="fsz-xl">@a.Alert.Text</span>
-                  <p class="m-0">@a.TimeStamp.</p>
+                  <span class="fsz-xl">@pa.Alert.Text</span>
+                  <p class="m-0">@pa.TimeStamp.</p>
                 </div>
               </div>
             </a>

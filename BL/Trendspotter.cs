@@ -13,9 +13,9 @@ namespace PB.BL
             List<Alert> AllAlerts = new List<Alert>();
 
             // Items opdelen in Subklasses [Person, Organisation, Theme]
-            List<Person> Persons = Subscriptions.Where(i => i is Person).Select(i => (Person) i).ToList();
+            List<Person> Persons = Subscriptions.Where(i => i is Person).Select(i => (Person)i).ToList();
             List<Organisation> Organisations =
-                Subscriptions.Where(i => i is Organisation).Select(i => (Organisation) i)
+                Subscriptions.Where(i => i is Organisation).Select(i => (Organisation)i)
                     .ToList(); // Alerts op organisaties;
             List<Theme> Themes = new List<Theme>(); // Alerts op thema's
 
@@ -34,12 +34,17 @@ namespace PB.BL
         public static List<Item> CheckTrendingItems(List<Item> items, int topAmount, ref List<Alert> alerts)
         {
             // Calc average subscribed profiles per person
-            int averageSubscriptions =
-                (int) Math.Ceiling(items.Where(i => i is Person).Average(i => i.SubscribedProfiles.Count));
+            int averageSubscriptions = 0;
+            if (items.Where(i => i is Person).Count() > 0)
+            {
+                averageSubscriptions = (int)Math.Ceiling(items
+                    .Where(i => i is Person)
+                    .Where(i => i.SubscribedProfiles.Count > 0)
+                    .Average(i => i.SubscribedProfiles.Count));
+            }
 
             // Get previous trending organisation, later needed
-            Organisation oldTrendingOrganisation =
-                (Organisation) items.FirstOrDefault(i => i is Organisation && i.IsTrending);
+            Organisation oldTrendingOrganisation = (Organisation)items.FirstOrDefault(i => i is Organisation && i.IsTrending);
 
             // Reset trending scores and status
             items.ForEach(i =>
@@ -62,7 +67,7 @@ namespace PB.BL
             });
             items
                 .Where(i => i is Person)
-                .Select(i => (Person) i)
+                .Select(i => (Person)i)
                 .OrderByDescending(p => p.TrendingScore)
                 .Take(10)
                 .ToList().ForEach(p =>

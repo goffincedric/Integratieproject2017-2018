@@ -23,23 +23,24 @@
       }
       else
       {
-        foreach (var a in Model)
+        foreach (var pa in Model)
         {
           <li class="notificationsListItem">
-            <a href="@Url.Action("ClickNotification", "Account", new {id = a.AlertId})" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-10 @(a.IsRead ? "" : "bgc-blue-50")">
+            <a href="@Url.Action("ClickNotification", "Account", new {id = pa.ProfileAlertId})" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-10 @(pa.IsRead ? "" : "bgc-blue-50")">
               <div class="peer mR-15">
                 
                 <img style="width: 50px; height:50px; border-radius:50%;" src="@Url.Content(@a.Alert.Item.IconURL)" alt="">
+
               </div>
               <div class="peer peer-greed">
                 <span>
-                  <span class="fw-500">@a.Alert.Item.Name</span>
+                  <span class="fw-500">@pa.Alert.Item.Name</span>
                   <span class="c-grey-600">
-                    @a.Alert.Event <span class="text-dark">@a.Alert.Subject</span>
+                    @pa.Alert.Event <span class="text-dark">@pa.Alert.Subject</span>
                   </span>
                 </span>
                 <p class="m-0">
-                  <small class="fsz-xs"></small>@a.GetTime()</p>
+                  <small class="fsz-xs"></small>@pa.GetTime()</p>
               </div>
             </a>
           </li>
