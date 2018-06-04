@@ -188,6 +188,13 @@ namespace PB.BL
             uowManager.Save();
         }
 
+        public void ChangeSubplatforms(List<Subplatform> subplatforms)
+        {
+            InitNonExistingRepo();
+            SubplatformRepo.UpdateSubplatforms(subplatforms);
+            uowManager.Save();
+        }
+
         public void RemoveSubplatform(int subplatformId)
         {
             InitNonExistingRepo();

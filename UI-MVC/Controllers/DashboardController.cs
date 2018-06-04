@@ -22,8 +22,7 @@ namespace UI_MVC.Controllers
         private readonly ItemManager itemMgr;
         private readonly SubplatformManager SubplatformMgr;
         private readonly UnitOfWorkManager uow;
-
-
+        
         public DashboardController()
         {
             uow = new UnitOfWorkManager();
@@ -31,6 +30,7 @@ namespace UI_MVC.Controllers
             dashboardMgr = new DashboardManager(uow);
             accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
             SubplatformMgr = new SubplatformManager(uow);
+
             ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
             ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
             ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;

@@ -100,6 +100,17 @@ namespace PB.DAL
             ctx.SaveChanges();
         }
 
+        public void UpdateSubplatforms(List<Subplatform> subplatforms)
+        {
+            subplatforms.ForEach(s =>
+            {
+                ctx.Subplatforms.Attach(s);
+                ctx.Entry(s).State = EntityState.Modified;
+            });
+            
+            ctx.SaveChanges();
+        }
+
         #endregion
 
         #region Subplatformsetting
