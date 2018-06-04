@@ -25,14 +25,14 @@ namespace UI_MVC
             ConfigureAuth(app);
 
             #region Background task scheduling
+            SemaphoreSlim JobSemaphore = new SemaphoreSlim(1, 1);
+
             UnitOfWorkManager uowMgr = new UnitOfWorkManager();
             SubplatformManager subplatformMgr = new SubplatformManager(uowMgr);
             ItemManager itemMgr = new ItemManager(uowMgr);
             AccountManager accountMgr = new AccountManager(new IntegratieUserStore(uowMgr.UnitOfWork), uowMgr);
-            SemaphoreSlim JobSemaphore = new SemaphoreSlim(1, 1); // alle semaphores naar 1 semafoor omzette
 
             List<Subplatform> Subplatforms = subplatformMgr.GetSubplatforms().ToList();
-            DateTime endDate = DateTime.Today.AddDays(1).AddHours(2);
 
             Subplatforms.ForEach(s =>
             {
@@ -61,10 +61,8 @@ namespace UI_MVC
                         }
                     },
                     (schedule) => schedule
-                    //.ToRunOnceAt(9, 10)
-                    //.AndEvery(int.Parse(seedInterval)).Hours());
-                    .ToRunOnceAt(DateTime.Now.AddMinutes(2))
-                    .AndEvery(10).Minutes());
+                    .ToRunOnceAt(1, 0)
+                    .AndEvery(int.Parse(seedInterval)).Hours());
                 }
                 if (!(alertGenerationInterval is null))
                 {
@@ -79,10 +77,8 @@ namespace UI_MVC
                         }
                     },
                     (schedule) => schedule
-                    //.ToRunOnceAt(9, 30)
-                    //.AndEvery(int.Parse(alertGenerationInterval)).Hours());
-                    .ToRunOnceAt(DateTime.Now.AddMinutes(5))
-                    .AndEvery(10).Minutes());
+                    .ToRunOnceAt(4, 0)
+                    .AndEvery(int.Parse(alertGenerationInterval)).Hours());
                 }
                 DateTime dateToSendWeeklyReview = DateTime.Today.AddDays(7 - (int)DateTime.Today.DayOfWeek);
                 if (!(weeklyReviewsInterval is null))
@@ -98,10 +94,8 @@ namespace UI_MVC
                         }
                     },
                     (schedule) => schedule
-                    //.ToRunOnceAt(dateToSendWeeklyReview.AddMinutes(new Random().Next(50, 60)))
-                    //.AndEvery(int.Parse(weeklyReviewsInterval)).Hours());
-                    .ToRunOnceAt(DateTime.Now.AddMinutes(8))
-                    .AndEvery(10).Minutes());
+                    .ToRunOnceAt(dateToSendWeeklyReview.AddMinutes(30).AddHours(18))
+                    .AndEvery(int.Parse(weeklyReviewsInterval)).Days());
                 }
             });
             #endregion

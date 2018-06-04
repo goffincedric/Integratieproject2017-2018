@@ -29,7 +29,8 @@
             <a href="@Url.Action("ClickNotification", "Account", new {id = pa.ProfileAlertId})" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-10 @(pa.IsRead ? "" : "bgc-blue-50")">
               <div class="peer mR-15">
                 
-                <img class="w-3r bdrs-50p" src="@Url.Content(@pa.Alert.Item.IconURL)" alt="">
+                <img style="width: 50px; height:50px; border-radius:50%;" src="@Url.Content(@pa.Alert.Item.IconURL)" alt="">
+
               </div>
               <div class="peer peer-greed">
                 <span>
