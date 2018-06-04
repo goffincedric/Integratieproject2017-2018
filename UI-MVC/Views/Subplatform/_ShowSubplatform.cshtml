@@ -26,8 +26,7 @@
               <td>@Html.DisplayFor(modelItem => item.SubplatformId)</td>
               <td>@Html.DisplayFor(modelItem => item.Name)</td>
               <td>@Html.DisplayFor(modelItem => item.URL)</td>
-              <td>@Html.DisplayFor(modelItem => item.Admins)</td>
-
+              <td>@Html.Raw(item.Admins.Select(a => a.ToString()).Aggregate((lijst, a) => lijst + "<br />" + a))</td>
 
               <td>
                 <div class="row">

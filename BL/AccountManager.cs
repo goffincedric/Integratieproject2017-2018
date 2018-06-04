@@ -67,6 +67,11 @@ namespace PB.BL
                 }
         }
 
+        public UnitOfWorkManager GetUoWMgr()
+        {
+            return UowManager;
+        }
+
         public static AccountManager Create(IdentityFactoryOptions<AccountManager> options, IOwinContext context)
         {
             //Console.WriteLine("Create accountmanager wordt gedaan");
@@ -154,7 +159,8 @@ namespace PB.BL
                     UserName = "captain",
                     Email = "example@example.tld",
                     ProfileIcon = @"~/Content/Images/Users/user.png",
-                    CreatedOn = DateTime.Now
+                    CreatedOn = DateTime.Now,
+                    AdminPlatforms = context.Subplatforms.ToList()
                 };
                 user.UserData = new UserData { Profile = user };
                 user.Settings = new List<UserSetting>
@@ -200,6 +206,13 @@ namespace PB.BL
                         boolValue = true
                     }
                 };
+                user.AdminPlatforms.ForEach(s =>
+                {
+                    if (!s.Admins.Contains(user))
+                    {
+                        s.Admins.Add(user);
+                    }
+                });
 
                 var result = userManager.Create(user, "FliesAway");
                 if (result.Succeeded) userManager.AddToRole(user.Id, "SuperAdmin");
@@ -212,7 +225,8 @@ namespace PB.BL
                     UserName = "admin",
                     Email = "admin@example.tld",
                     ProfileIcon = @"~/Content/Images/Users/user.png",
-                    CreatedOn = DateTime.Now
+                    CreatedOn = DateTime.Now,
+                    AdminPlatforms = new List<Subplatform>() { context.Subplatforms.FirstOrDefault(s => s.URL.ToLower().Equals("politieke-barometer"))}
                 };
                 user2.UserData = new UserData { Profile = user2 };
                 user2.Settings = new List<UserSetting>
@@ -258,6 +272,13 @@ namespace PB.BL
                         boolValue = true
                     }
                 };
+                user2.AdminPlatforms.ForEach(s =>
+                {
+                    if (!s.Admins.Contains(user2))
+                    {
+                        s.Admins.Add(user2);
+                    }
+                });
 
                 var result = userManager.Create(user2, "Disney2018");
                 if (result.Succeeded) userManager.AddToRole(user2.Id, "Admin");
@@ -539,8 +560,7 @@ namespace PB.BL
                 IsGeneratingAlerts = false;
             }
         }
-
-        // TODO: Async maken
+        
         public async Task<List<Alert>> GenerateAllAlertsAsync(IEnumerable<Item> allItems)
         {
             InitNonExistingRepo();

@@ -60,6 +60,7 @@ namespace PB.DAL
         public Profile ReadProfile(string userId)
         {
             return ctx.Users
+                .Include(p => p.AdminPlatforms)
                 .Include(p => p.UserData)
                 .Include(p => p.Settings)
                 .Include(p => p.ProfileAlerts)
@@ -73,6 +74,7 @@ namespace PB.DAL
         public IEnumerable<Profile> ReadProfiles()
         {
             return ctx.Users
+                .Include(p => p.AdminPlatforms)
                 .Include(p => p.UserData)
                 .Include(p => p.Settings)
                 .Include(p => p.ProfileAlerts)

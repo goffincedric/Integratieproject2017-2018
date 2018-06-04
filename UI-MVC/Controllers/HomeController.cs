@@ -97,6 +97,18 @@ namespace UI_MVC.Controllers
             return Content("");
         }
 
+        public ActionResult IsSubplatformAdmin(string subplatform)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+                Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
+                if (profile.AdminPlatforms.Contains(Subplatform)) return Content("True");
+            }
+            
+            return Content("False");
+        }
+
         public ActionResult GetName(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);

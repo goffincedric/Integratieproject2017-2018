@@ -36,6 +36,7 @@ namespace UI_MVC.Controllers
             itemMgr = new ItemManager(uow);
             SubplatformMgr = new SubplatformManager(uow);
             accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
+
             ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
             ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
             ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;

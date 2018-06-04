@@ -67,7 +67,6 @@
       </li>
       @if (Request.IsAuthenticated)
       {
-
         <li class="nav-item">
           <a class="sidebar-link" href="@Url.Action("WeeklyReview", "Account")">
             <span class="icon-holder">
@@ -232,21 +231,24 @@
               <li role="separator" class="divider"></li>
               @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
               {
-                <li>
-                  <a href="@Url.Action("UserBeheer", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                    <i class="ti-panel mR-10"></i> <span>Beheer Users</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="@Url.Action("ItemBeheer", "Item")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                    <i class="ti-user mR-10"></i> <span>Beheer Items</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="@Url.Action("PlatformSettings", "Subplatform")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                    <i class="ti-dashboard mR-10"></i> <span>Beheer Platform</span>
-                  </a>
-                </li>
+                  if (@Html.Action("IsSubplatformAdmin", "Home").ToString().Equals("True"))
+                  {
+                    <li>
+                        <a href="@Url.Action("UserBeheer", "Account")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                            <i class="ti-panel mR-10"></i> <span>Beheer Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("ItemBeheer", "Item")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                            <i class="ti-user mR-10"></i> <span>Beheer Items</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("PlatformSettings", "Subplatform")" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                            <i class="ti-dashboard mR-10"></i> <span>Beheer Platform</span>
+                        </a>
+                    </li>
+                  }
               }
               <li role="separator" class="divider"></li>
               <li>

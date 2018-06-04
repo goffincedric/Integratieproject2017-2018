@@ -11,6 +11,7 @@ namespace PB.DAL
         Subplatform ReadSubplatform(int subplatformId);
         Subplatform ReadSubplatform(string subplatformURL);
         void UpdateSubplatform(Subplatform subplatform);
+        void UpdateSubplatforms(List<Subplatform> subplatforms);
         void DeleteSubplatform(int subplatformId);
 
         IEnumerable<SubplatformSetting> ReadSubplatformSettings();
