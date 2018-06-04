@@ -32,30 +32,28 @@ namespace UI_MVC.Controllers
         private readonly UnitOfWorkManager uow = new UnitOfWorkManager();
         private AccountManager _accountMgr;
         private IntegratieSignInManager _signInManager;
-        private readonly SubplatformManager SubplatformMgr;
+        private SubplatformManager _subplatformMgr;
         private ItemManager _itemMgr;
 
 
         public AccountController()
         {
-            SubplatformMgr = new SubplatformManager(uow);
-
-            ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
-            ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
-            ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
-            ViewBag.MyAccount = SubplatformMgr.GetTag("Account").Text;
-            ViewBag.More = SubplatformMgr.GetTag("More").Text;
-            ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
-            ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
-            ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
-            ViewBag.Items = SubplatformMgr.GetTag("Items").Text;
-            ViewBag.Persons = SubplatformMgr.GetTag("Persons").Text;
-            ViewBag.Organisations = SubplatformMgr.GetTag("Organisations").Text;
-            ViewBag.Themes = SubplatformMgr.GetTag("Themes").Text;
+            SubplatformManager smgr = new SubplatformManager(uow);
+            ViewBag.Home = smgr.GetTag("Home").Text;
+            ViewBag.Dashboard = smgr.GetTag("Dashboard").Text;
+            ViewBag.WeeklyReview = smgr.GetTag("Weekly_Review").Text;
+            ViewBag.MyAccount = smgr.GetTag("Account").Text;
+            ViewBag.More = smgr.GetTag("More").Text;
+            ViewBag.FAQ = smgr.GetTag("FAQ").Text;
+            ViewBag.Contact = smgr.GetTag("Contact").Text;
+            ViewBag.Legal = smgr.GetTag("Legal").Text;
+            ViewBag.Items = smgr.GetTag("Items").Text;
+            ViewBag.Persons = smgr.GetTag("Persons").Text;
+            ViewBag.Organisations = smgr.GetTag("Organisations").Text;
+            ViewBag.Themes = smgr.GetTag("Themes").Text;
         }
 
-        public AccountController(AccountManager userManager, IntegratieSignInManager signInManager,
-            ItemManager itemManager)
+        public AccountController(AccountManager userManager, IntegratieSignInManager signInManager, ItemManager itemManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -78,6 +76,12 @@ namespace UI_MVC.Controllers
         {
             get => _itemMgr ?? new ItemManager(HttpContext.GetOwinContext().Get<IntegratieDbContext>());
             private set => _itemMgr = value;
+        }
+
+        public SubplatformManager SubplatformMgr
+        {
+            get => _subplatformMgr ?? new SubplatformManager(HttpContext.GetOwinContext().Get<IntegratieDbContext>());
+            private set => _subplatformMgr = value;
         }
 
         #region Alerts
@@ -117,7 +121,7 @@ namespace UI_MVC.Controllers
 
             var result =
                 await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, true);
-            
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -235,7 +239,6 @@ namespace UI_MVC.Controllers
 
         public ActionResult GetNotificationCount(string subplatform)
         {
-            
             Profile user = UserManager.GetProfile(User.Identity.GetUserId());
             int alertCount = 0;
             if (User.Identity.IsAuthenticated)
@@ -245,7 +248,7 @@ namespace UI_MVC.Controllers
                     alertCount = user.ProfileAlerts.FindAll(pa => !pa.IsRead && pa.Alert.Item.SubPlatforms.Find(s => s.URL.ToLower().Equals(subplatform)) != null).Count;
                 }
             }
-            
+
             return Content(string.Format("{0}", alertCount));
         }
 
@@ -297,8 +300,7 @@ namespace UI_MVC.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-        // TODO: MOET PUT ZIJN I.P.V. POST
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Account(AccountEditModel editedAccount)
@@ -387,11 +389,10 @@ namespace UI_MVC.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-        // TODO: REMOVE USER ROLE FROM AUTHORIZE 
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User,Admin,SuperAdmin")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult DeleteProfileAdmin(string userId)
         {
             if (!ModelState.IsValid || userId.Equals(User.Identity.GetUserId()))
@@ -409,74 +410,142 @@ namespace UI_MVC.Controllers
             IEnumerable<Item> Subscriptions = UserManager.GetProfile(User.Identity.GetUserId()).Subscriptions;
             return View(Subscriptions);
         }
-
         #endregion
 
         #region UserBeheer
-
         public ViewResult UserBeheer()
         {
             return View();
         }
 
-        public ActionResult _UserTable()
+        public ActionResult _UserTable(string subplatform)
         {
-            string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("User")).First().Id;
-            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList()
-                .Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            string userRoleId = UserManager.GetAllRoles().First(r => r.Name.Equals("User")).Id;
+            string adminRoleId = UserManager.GetAllRoles().First(r => r.Name.Equals("Admin")).Id;
+            IEnumerable<Profile> profiles = UserManager.GetProfiles()
+                .Where(p => 
+                    p.Roles.ToList().Any(r => r.RoleId.Equals(userRoleId)) ||
+                    (
+                        !p.AdminPlatforms.Contains(Subplatform) &&
+                        p.Roles.Any(r => r.RoleId.Equals(adminRoleId))
+                    ));
             return PartialView(profiles);
         }
 
 
-        public ActionResult _AdminTable()
+        public ActionResult _AdminTable(string subplatform)
         {
-            string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("Admin")).First().Id;
-            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList()
-                .Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            string roleId = UserManager.GetAllRoles().First(r => r.Name.Equals("Admin")).Id;
+            IEnumerable<Profile> profiles = UserManager.GetProfiles()
+                .Where(p => p.Roles.Any(r =>
+                    r.RoleId.Equals(roleId)) &&
+                    p.AdminPlatforms.Contains(Subplatform)
+                    );
             return PartialView(profiles);
         }
 
-        public ActionResult _SuperAdminTable()
+        public ActionResult _SuperAdminTable(string subplatform)
         {
-            string roleId = UserManager.GetAllRoles().Where(r => r.Name.Equals("SuperAdmin")).First().Id;
-            IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList()
-                .Where(p => p.Roles.ToList().Any(r => r.RoleId.Equals(roleId)));
+            string roleId = UserManager.GetAllRoles().First(r => r.Name.Equals("SuperAdmin")).Id;
+            IEnumerable<Profile> profiles = UserManager.GetProfiles()
+                .Where(p =>
+                    p.Roles.Any(r => r.RoleId.Equals(roleId))
+                    );
             return PartialView(profiles);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult VoteToAdmin(string id)
+        public ActionResult VoteToAdmin(string subplatform, string id)
         {
+            SubplatformMgr = new SubplatformManager(UserManager.GetUoWMgr());
+
+            Profile profile = UserManager.GetProfile(id);
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+
+            profile.AdminPlatforms.Add(Subplatform);
+            Subplatform.Admins.Add(profile);
+            SubplatformMgr.ChangeSubplatform(Subplatform);
+
             UserManager.AddToRole(id, "Admin");
             UserManager.RemoveFromRole(id, "User");
+
             return RedirectToAction("UserBeheer", "Account");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RemoveFromAdmin(string id)
+        public ActionResult RemoveFromAdmin(string subplatform, string id)
         {
-            UserManager.AddToRole(id, "User");
-            UserManager.RemoveFromRole(id, "Admin");
+            SubplatformMgr = new SubplatformManager(UserManager.GetUoWMgr());
+            
+            Profile profile = UserManager.GetProfile(id);
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            if (profile.AdminPlatforms.Contains(Subplatform))
+            {
+                profile.AdminPlatforms.Remove(Subplatform);
+                Subplatform.Admins.Add(profile);
+                if (profile.AdminPlatforms.Count == 0)
+                {
+                    UserManager.AddToRole(id, "User");
+                    UserManager.RemoveFromRole(id, "Admin");
+                }
+                SubplatformMgr.ChangeSubplatform(Subplatform);
+            }
             return RedirectToAction("UserBeheer", "Account");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MakeSuperAdmin(string id)
+        public ActionResult MakeSuperAdmin(string subplatform, string id)
         {
+            SubplatformMgr = new SubplatformManager(UserManager.GetUoWMgr());
+
+            Profile profile = UserManager.GetProfile(id);
+            List<Subplatform> subplatforms = SubplatformMgr.GetSubplatforms().ToList();
+
+            profile.AdminPlatforms.Clear();
+            profile.AdminPlatforms.AddRange(subplatforms);
+            subplatforms.ForEach(s =>
+            {
+                if (!s.Admins.Contains(profile))
+                {
+                    s.Admins.Add(profile);
+                }
+            });
             UserManager.AddToRole(id, "SuperAdmin");
             UserManager.RemoveFromRole(id, "Admin");
+
+            SubplatformMgr.ChangeSubplatforms(subplatforms);
+
             return RedirectToAction("UserBeheer", "Account");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RemoveFromSuperAdmin(string id)
+        public ActionResult RemoveFromSuperAdmin(string subplatform, string id)
         {
+            SubplatformMgr = new SubplatformManager(UserManager.GetUoWMgr());
+
+            List<Subplatform> subplatforms = SubplatformMgr.GetSubplatforms().ToList();
+            Profile profile = UserManager.GetProfile(id);
+            
+
+            profile.AdminPlatforms.Clear();
+            subplatforms.ForEach(s =>
+            {
+                if (s.Admins.Contains(profile))
+                {
+                    s.Admins.Remove(profile);
+                }
+            });
+            SubplatformMgr.ChangeSubplatforms(subplatforms);
+
             UserManager.AddToRole(id, "User");
             UserManager.RemoveFromRole(id, "SuperAdmin");
+
             return RedirectToAction("UserBeheer", "Account");
         }
 
@@ -486,8 +555,7 @@ namespace UI_MVC.Controllers
             UserSettingViewModel oldSettings = new UserSettingViewModel
             {
                 WANTS_EMAIL_NOTIFICATIONS = settings.ElementAt(0).boolValue,
-                WANTS_ANDROID_NOTIFICATIONS =
-                    settings.ElementAt(1).boolValue,
+                WANTS_ANDROID_NOTIFICATIONS = settings.ElementAt(1).boolValue,
                 WANTS_SITE_NOTIFICATIONS = settings.ElementAt(2).boolValue,
                 WANTS_WEEKLY_REVIEW_VIA_MAIL = settings.ElementAt(4).boolValue
             };
@@ -518,13 +586,13 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditUser(string id,  Profile newProfile)
+        public ActionResult EditUser(string id, Profile newProfile)
         {
             Profile profile = UserManager.GetProfile(id);
-           
+
             profile.Email = newProfile.Email;
             profile.UserName = newProfile.UserName;
-            UserManager.ChangeProfile(profile); 
+            UserManager.ChangeProfile(profile);
             return View(profile);
         }
 

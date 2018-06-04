@@ -67,6 +67,11 @@ namespace PB.BL
                 }
         }
 
+        public UnitOfWorkManager GetUoWMgr()
+        {
+            return UowManager;
+        }
+
         public static AccountManager Create(IdentityFactoryOptions<AccountManager> options, IOwinContext context)
         {
             //Console.WriteLine("Create accountmanager wordt gedaan");
@@ -539,8 +544,7 @@ namespace PB.BL
                 IsGeneratingAlerts = false;
             }
         }
-
-        // TODO: Async maken
+        
         public async Task<List<Alert>> GenerateAllAlertsAsync(IEnumerable<Item> allItems)
         {
             InitNonExistingRepo();

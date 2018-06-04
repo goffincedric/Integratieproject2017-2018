@@ -12,10 +12,10 @@ namespace PB.BL.Interfaces
         Subplatform GetSubplatform(int subplatformId);
         Subplatform GetSubplatform(string subplatformURL);
         void ChangeSubplatform(Subplatform subplatform);
+        void ChangeSubplatforms(List<Subplatform> subplatforms);
         void RemoveSubplatform(int subplatformId);
 
-        SubplatformSetting AddSubplatformSetting(Setting.Platform settingName, int subplatformId, string value,
-            bool isEnabled);
+        SubplatformSetting AddSubplatformSetting(Setting.Platform settingName, int subplatformId, string value, bool isEnabled);
 
         void ChangeSubplatformSetting(Subplatform subplatform, SubplatformSetting setting);
         void ChangeSubplatformSettings(Subplatform subplatform, List<SubplatformSetting> settings);

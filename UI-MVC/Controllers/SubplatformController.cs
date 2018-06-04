@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PB.BL;
 using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
@@ -20,7 +22,7 @@ namespace UI_MVC.Controllers
         private readonly ItemManager itemMgr;
         private readonly SubplatformManager SubplatformMgr;
         private readonly UnitOfWorkManager uow;
-
+        
         public SubplatformController()
         {
             uow = new UnitOfWorkManager();
@@ -28,6 +30,7 @@ namespace UI_MVC.Controllers
             dashboardMgr = new DashboardManager(uow);
             accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
             SubplatformMgr = new SubplatformManager(uow);
+
             ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
             ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
             ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
