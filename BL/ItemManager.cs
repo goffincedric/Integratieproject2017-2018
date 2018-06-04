@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Domain.JSONConversion;
 using Newtonsoft.Json;
@@ -48,13 +49,15 @@ namespace PB.BL
         #region Database operations
         public void SyncDatabase(Subplatform subplatform)
         {
-            // Set IsSyncing flag
-            IsSyncing = true;
-            SyncDatabaseAsync(subplatform).GetAwaiter().OnCompleted(new Action(() =>
+            if (!IsSyncing)
             {
                 // Set IsSyncing flag
+                IsSyncing = true;
+                SyncDatabaseAsync(subplatform).Wait();
+
+                // Reset IsSyncing flag
                 IsSyncing = false;
-            }));
+            }
         }
 
         public async Task<int> SyncDatabaseAsync(Subplatform subplatform)
@@ -81,30 +84,33 @@ namespace PB.BL
                 ThemesAndKeywords.Add(t.Name, t.Keywords.Select(k => k.Name).ToArray());
             });
 
-            // Call API with request
-            List<JClass> requestedRecords = new List<JClass>();
-            try
+            if (ThemesAndKeywords.Count > 0)
             {
-                requestedRecords.AddRange(restClient.RequestRecords(
-                    since: DateTime.Now.AddDays(-int.Parse(subplatform.Settings
-                        .First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value)),
-                    themes: ThemesAndKeywords));
+                // Call API with request
+                List<JClass> requestedRecords = new List<JClass>();
+                try
+                {
+                    requestedRecords.AddRange(restClient.RequestRecords(
+                        since: DateTime.Now.AddDays(-int.Parse(subplatform.Settings
+                            .First(s => s.SettingName.Equals(Setting.Platform.DAYS_TO_KEEP_RECORDS)).Value)),
+                        themes: ThemesAndKeywords));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.GetType().Name + ": " + e.Message);
+                    if (e.InnerException != null) Console.WriteLine("Inner Exception: " + e.InnerException);
+                    throw e;
+                }
+
+                // Link items to subplatform
+                requestedRecords.ForEach(r => r.Subplatforms.Add(subplatform));
+
+                //Convert JClass to Record and persist to database
+                List<Record> newRecords = JClassToRecord(requestedRecords);
+
+                // Persist items tgo database
+                RecordRepo.CreateRecords(newRecords);
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.GetType().Name + ": " + e.Message);
-                if (e.InnerException != null) Console.WriteLine("Inner Exception: " + e.InnerException);
-                throw e;
-            }
-
-            // Link items to subplatform
-            requestedRecords.ForEach(r => r.Subplatforms.Add(subplatform));
-
-            //Convert JClass to Record and persist to database
-            List<Record> newRecords = JClassToRecord(requestedRecords);
-
-            // Persist items tgo database
-            RecordRepo.CreateRecords(newRecords);
 
             // Save pending changes
             return await UowManager.SaveAsync();
@@ -112,7 +118,15 @@ namespace PB.BL
 
         public void CleanupOldRecords(Subplatform subplatform)
         {
-            CleanupOldRecordsAsync(subplatform).GetAwaiter().GetResult();
+            if (!IsCleaning)
+            {
+                // Set IsCleaning flag
+                IsCleaning = true;
+                CleanupOldRecordsAsync(subplatform).Wait();
+
+                // Reset IsCleaning flag
+                IsCleaning = false;
+            }
         }
 
         public async Task<int> CleanupOldRecordsAsync(Subplatform subplatform)
@@ -138,7 +152,7 @@ namespace PB.BL
                 .ToList();
 
             // Persist deleted records
-            RecordRepo.DeleteRecords(oldRecords);
+            if (oldRecords.Count > 0) RecordRepo.DeleteRecords(oldRecords);
 
             // Save pending changes
             return await UowManager.SaveAsync();

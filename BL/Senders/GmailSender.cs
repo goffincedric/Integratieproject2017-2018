@@ -10,7 +10,6 @@ namespace PB.BL.Senders
             GmailHost = "smtp.gmail.com";
             GmailPort = 587; // Gmail can use ports 25, 465 & 587; but must be 25 for medium trust environment.
             GmailSSL = true;
-            //GmailUsername = "poba.politiekebarometer@gmail.com";
             GmailUsername = "poba.TeamNameNotFoundException@gmail.com";
             GmailPassword = "politiekebarometer1";
         }
@@ -50,12 +49,12 @@ namespace PB.BL.Senders
 
         #region HTML Body
 
-        public static readonly string DefaultItemIcon =
-            "https://integratieproject.azurewebsites.net/Content/Images/Users/user.png";
+        public static readonly string DefaultItemIcon = "https://integratieproject.azurewebsites.net/Content/Images/Users/user.png";
 
         public static readonly string DefaultUsernameSubstring = "##USER##";
         public static readonly string DefaultItemLinkSubstring = "##ITEMLINK##";
 
+        public static readonly string SubplatformSubstring = "##SUBPLATFORM##";
         public static readonly string WeeklyReviewListSubstring = "##LIST##";
         public static readonly string WeeklyReviewListItemIconSubstring = "##ICONLINK##";
         public static readonly string WeeklyReviewListItemNameSubstring = "##ITEMNAAM##";
@@ -81,7 +80,7 @@ namespace PB.BL.Senders
             <div style='margin: 0; padding: 10px 5%; height: 100%; background-color: #eceeed;'>
                 <div style='font-family: Convergence, " + '"' + "Open Sans" + '"' +
             @", Arial, sans-serif;margin-bottom: 0;width: 100%;min-height: 100px;display: table;border-collapse: collapse;border-spacing: 0;border-top-left-radius: 25px;border-top-right-radius: 25px;background-color:#00bfff;text-align: center;'>
-                    <h1 style='margin: 0;display: table-cell;vertical-align: middle;font-weight: 300;font-size: 5em;font-variant: all-small-caps;color: aliceblue;'> Weekly review</h1>
+                    <h1 style='margin: 0;display: table-cell;vertical-align: middle;font-weight: 300;font-size: 5em;font-variant: all-small-caps;color: aliceblue;'> Weekly review " + SubplatformSubstring + @"</h1>
                 </div>
                 <div style='padding: 30px; background-color: #fff'>
                     <h2 style='margin: 0 0 15px 0;padding: 0;line-height: 1.4;font-weight: 500;font-size: 40px;border-bottom: #3f526d 2px solid;color: #3f526d;'>
@@ -92,7 +91,7 @@ namespace PB.BL.Senders
                     </h3>
                     <p style='margin: 0;padding: 0;margin-bottom: 10px;font-weight: 500;color: #96a6b0;font-size: 1.2em;line-height: 1.6;'>
                         Welkom op jouw eigen volledig gepersonaliseerde weekly review. Een persoonlijke terugkijk naar wat er
-                        afgelopen week gebeurd is op ons platform en geven we je de topmomenten in een overzichtelijke weergave af.
+                        afgelopen week gebeurd is op " + SubplatformSubstring + @" en geven we je de topmomenten in een overzichtelijke weergave af.
                         Hierin tonen we je de dingen waarin jij geïnteresserd bent.</p>
                     <p style='margin: 0;padding: 0;margin-bottom: 10px;font-weight: 500;color: #96a6b0;font-size: 1.2em;line-height: 1.6;'>...</ p>
                     <p style='margin: 0;padding: 0;margin-bottom: 10px;font-weight: 500;color: #96a6b0;font-size: 1.2em;line-height: 1.6;'> Waar zit je nog op te wachten? Er valt heel wat te ontdekken hoor!</p>
