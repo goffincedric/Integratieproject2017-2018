@@ -1273,7 +1273,7 @@ $(function () {
             var counter = 0;
             $.each(itemIds,
                 function (index, value) {
-                    var URL = "http://10.134.216.25:8010/api/item/GetGender/" + value.ItemIds;
+                    var URL = "http://10.134.216.25:8010/api/item/GetGender/" + value.ItemId;
                     makeAjaxCall(URL, "GET").then(process);
 
                     function process(output2) {
