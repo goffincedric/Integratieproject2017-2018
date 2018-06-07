@@ -58,7 +58,7 @@
             <a href="@Url.Action("ClickNotification", "Account", new {id = wr.ProfileAlert.AlertId})">
               <div class="row">
                 <div class="col-md-1">
-                  <img class="m-10 w-3r bdrs-50p alert-img" src="@Url.Content(@wr.ProfileAlert.Alert.Item.IconURL)" alt="">
+                  <img style="width: 70px; height:70px; border-radius:50%; margin-left:50px;" src="@Url.Content(@wr.ProfileAlert.Alert.Item.IconURL)" alt="">
                 </div>
                 <div class="col-md-11 alert-text">
                   <span class="fsz-xl">@wr.ProfileAlert.Alert.Text</span>
