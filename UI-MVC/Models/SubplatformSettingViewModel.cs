@@ -14,5 +14,7 @@ namespace UI_MVC.Models
         public string SocialSource { get; set; }
         public string SocialSourceUrl { get; set; }
         public string Theme { get; set; }
+        public string PrimaryColor { get; set; }
+        public string SecondaryColor { get; set; }
     }
 }
