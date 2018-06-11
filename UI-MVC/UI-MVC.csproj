@@ -305,6 +305,10 @@
     <Content Include="Content\Styling\jVectorMap\jquery-jvectormap-2.0.3.css" />
     <Content Include="Content\Styling\Wizard\material-bootstrap-wizard.css" />
     <Content Include="Scripts\Charts\Chart.min.js" />
+    <Content Include="Scripts\Colorpicker\colorpicker-color.js" />
+    <Content Include="Scripts\Colorpicker\colorpicker-component.js" />
+    <Content Include="Scripts\Colorpicker\colorpicker-defaults.js" />
+    <Content Include="Scripts\Colorpicker\colorpicker-plugin-wrapper.js" />
     <Content Include="Scripts\contact.js" />
     <Content Include="Content\Styling\Style.css" />
     <Content Include="Content\Styling\Contact.css" />
