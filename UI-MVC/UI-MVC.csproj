@@ -268,35 +268,37 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Index\k3.png" />
+    <Content Include="App_Data\Site\K3-logo.png" />
+    <Content Include="App_Data\Site\testing.png" />
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\datatables.min.css" />
-    <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
     <Content Include="Content\Images\bg.jpg" />
     <Content Include="Content\Images\faqbg.jpg" />
-    <Content Include="Content\Images\Index\banner.jpg" />
+    <Content Include="App_Data\Index\banner.jpg" />
     <Content Include="Content\Images\info-icon.png" />
-    <Content Include="Content\Images\Organisations\cdv.png" />
-    <Content Include="Content\Images\Organisations\groen.jpg" />
-    <Content Include="Content\Images\Organisations\nva.jpg" />
-    <Content Include="Content\Images\Organisations\openvld.png" />
-    <Content Include="Content\Images\Organisations\pvda.jpg" />
-    <Content Include="Content\Images\Organisations\spa.jpg" />
-    <Content Include="Content\Images\Organisations\vb.png" />
+    <Content Include="App_Data\Organisations\cdv.png" />
+    <Content Include="App_Data\Organisations\groen.jpg" />
+    <Content Include="App_Data\Organisations\nva.jpg" />
+    <Content Include="App_Data\Organisations\openvld.png" />
+    <Content Include="App_Data\Organisations\pvda.jpg" />
+    <Content Include="App_Data\Organisations\spa.jpg" />
+    <Content Include="App_Data\Organisations\vb.png" />
     <Content Include="Content\Images\plus-icon.png" />
-    <Content Include="Content\Images\Site\logo_new.png" />
+    <Content Include="App_Data\Site\Politieke-barometer-logo.png" />
     <Content Include="Content\Images\default-subplatform.png" />
-    <Content Include="Content\Images\Themes\eu.png" />
-    <Content Include="Content\Images\Themes\migratie.png" />
-    <Content Include="Content\Images\Themes\milieu.png" />
-    <Content Include="Content\Images\Themes\mobiliteit.png" />
-    <Content Include="Content\Images\Themes\onderwijs.png" />
-    <Content Include="Content\Images\Themes\energie.png" />
-    <Content Include="Content\Images\Themes\veiligheid.png" />
-    <Content Include="Content\Images\Themes\zorg.png" />
-    <Content Include="Content\Images\Users\user.png" />
+    <Content Include="App_Data\Themes\eu.png" />
+    <Content Include="App_Data\Themes\migratie.png" />
+    <Content Include="App_Data\Themes\milieu.png" />
+    <Content Include="App_Data\Themes\mobiliteit.png" />
+    <Content Include="App_Data\Themes\onderwijs.png" />
+    <Content Include="App_Data\Themes\energie.png" />
+    <Content Include="App_Data\Themes\veiligheid.png" />
+    <Content Include="App_Data\Themes\zorg.png" />
+    <Content Include="App_Data\Users\user.png" />
     <Content Include="Content\Images\question-mark.png" />
     <Content Include="Content\Styling\Grid\gridstack-extra.css" />
     <Content Include="Content\Styling\Grid\gridstack.css" />
@@ -345,6 +347,7 @@
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-2.0.3.min.js" />
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-be-mill.js" />
     <Content Include="Scripts\load.js" />
+    <Content Include="Scripts\ndbx.js" />
     <Content Include="Scripts\Search.js" />
     <Content Include="Scripts\vendor.js" />
     <Content Include="Scripts\Wizard\bootstrap.min.js" />
@@ -421,10 +424,9 @@
     <Content Include="Views\Item\ShowOrganisations.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Content\Export\" />
-    <Folder Include="Content\Images\Persons\" />
-    <Folder Include="Content\Images\Subplatform\" />
+    <Folder Include="App_Data\Export\" />
+    <Folder Include="App_Data\Persons\" />
+    <Folder Include="App_Data\Subplatform\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

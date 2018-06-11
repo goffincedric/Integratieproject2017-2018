@@ -158,7 +158,7 @@ namespace PB.BL
                 {
                     UserName = "captain",
                     Email = "example@example.tld",
-                    ProfileIcon = @"~/Content/Images/Users/user.png",
+                    ProfileIcon = @"~/App_Data/Users/user.png",
                     CreatedOn = DateTime.Now,
                     AdminPlatforms = context.Subplatforms.ToList()
                 };
@@ -224,7 +224,7 @@ namespace PB.BL
                 {
                     UserName = "admin",
                     Email = "admin@example.tld",
-                    ProfileIcon = @"~/Content/Images/Users/user.png",
+                    ProfileIcon = @"~/App_Data/Users/user.png",
                     CreatedOn = DateTime.Now,
                     AdminPlatforms = new List<Subplatform>() { context.Subplatforms.FirstOrDefault(s => s.URL.ToLower().Equals("politieke-barometer"))}
                 };
