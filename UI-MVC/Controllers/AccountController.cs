@@ -93,7 +93,7 @@ namespace UI_MVC.Controllers
 
             Person person = ItemMgr.GetPerson(weeklyReview.TopPersonId);
             if (person.IconURL is null)
-                ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Images/Users/user.png");
+                ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/App_Data/Users/user.png");
             else
                 ViewBag.Icon = person.IconURL;
 
@@ -316,9 +316,9 @@ namespace UI_MVC.Controllers
 
                     var username = newProfile.UserName;
                     var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
+                    string _path = Path.Combine(Server.MapPath("~/App_Data/Users/"), newName);
                     editedAccount.file.SaveAs(_path);
-                    newProfile.ProfileIcon = @"~/Content/Images/Users/" + newName;
+                    newProfile.ProfileIcon = @"~/App_Data/Users/" + newName;
                 }
             }
             else
@@ -329,8 +329,6 @@ namespace UI_MVC.Controllers
             newProfile.UserData.LastName = editedAccount.LastName;
             newProfile.UserData.FirstName = editedAccount.FirstName;
             newProfile.Email = editedAccount.Email;
-            //newProfile.UserData.Telephone = editedAccount.Telephone;
-            //newProfile.UserData.Gender = editedAccount.Gender;
             newProfile.UserData.Street = editedAccount.Street;
             newProfile.UserData.City = editedAccount.City;
             newProfile.UserData.Province = editedAccount.Province;
@@ -734,7 +732,7 @@ namespace UI_MVC.Controllers
             IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList();
             var serializerSettings = new JsonSerializerSettings();
             string json = JsonConvert.SerializeObject(profiles, Formatting.Indented);
-            string _path = Path.Combine(Server.MapPath("~/Content/Export/"), "Users.json");
+            string _path = Path.Combine(Server.MapPath("~/App_Data/Export/"), "Users.json");
             System.IO.File.WriteAllText(_path, json);
             return Json(new { fileName = "Users.json", errorMessage = "" });
         }
@@ -742,7 +740,7 @@ namespace UI_MVC.Controllers
         [HttpGet]
         public ActionResult ExportUsers(string file)
         {
-            string fullPath = Path.Combine(Server.MapPath("~/Content/Export/"), file);
+            string fullPath = Path.Combine(Server.MapPath("~/App_Data/Export/"), file);
             return File(fullPath, "application/", file);
         }
 
