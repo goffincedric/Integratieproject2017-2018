@@ -31,31 +31,38 @@ namespace UI_MVC.Controllers
             accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
             SubplatformMgr = new SubplatformManager(uow);
 
-            ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
-            ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
-            ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
-            ViewBag.MyAccount = SubplatformMgr.GetTag("Account").Text;
-            ViewBag.More = SubplatformMgr.GetTag("More").Text;
-            ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
-            ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
-            ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
-            ViewBag.Items = SubplatformMgr.GetTag("Items").Text;
-            ViewBag.Persons = SubplatformMgr.GetTag("Persons").Text;
-            ViewBag.Organisations = SubplatformMgr.GetTag("Organisations").Text;
-            ViewBag.Themes = SubplatformMgr.GetTag("Themes").Text;
+            if (System.Web.HttpContext.Current.Request.Url.Segments.Count() > 1)
+            {
+                Subplatform subplatform = SubplatformMgr.GetSubplatform(System.Web.HttpContext.Current.Request.Url.Segments[1].Trim('/'));
+
+                IEnumerable<Tag> menuTags = subplatform.Pages.SingleOrDefault(p => p.PageName.Equals("Menu")).Tags;
+                if (menuTags is null || menuTags.Count() == 0) return;
+                ViewBag.Home = menuTags.SingleOrDefault(t => t.Name.Equals("Home")).Text ?? "Home";
+                ViewBag.Dashboard = menuTags.SingleOrDefault(t => t.Name.Equals("Dashboard")).Text ?? "Dashboard";
+                ViewBag.WeeklyReview = menuTags.SingleOrDefault(t => t.Name.Equals("Weekly_Review")).Text ?? "Weekly Review";
+                ViewBag.MyAccount = menuTags.SingleOrDefault(t => t.Name.Equals("Account")).Text ?? "Account";
+                ViewBag.More = menuTags.SingleOrDefault(t => t.Name.Equals("More")).Text ?? "More";
+                ViewBag.FAQ = menuTags.SingleOrDefault(t => t.Name.Equals("FAQ")).Text ?? "FAQ";
+                ViewBag.Contact = menuTags.SingleOrDefault(t => t.Name.Equals("Contact")).Text ?? "Contact";
+                ViewBag.Legal = menuTags.SingleOrDefault(t => t.Name.Equals("Legal")).Text ?? "Legal";
+                ViewBag.Items = menuTags.SingleOrDefault(t => t.Name.Equals("Items")).Text ?? "Items";
+                ViewBag.Persons = menuTags.SingleOrDefault(t => t.Name.Equals("Persons")).Text ?? "Persons";
+                ViewBag.Organisations = menuTags.SingleOrDefault(t => t.Name.Equals("Organisations")).Text ?? "Organisations";
+                ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes")).Text ?? "Themes";
+            }
         }
-
-
+        
         public ActionResult _ChangeHomePage(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            List<Tag> tags = Subplatform.Pages.SingleOrDefault(p => p.PageName.Equals("Home"))?.Tags;
 
             HomePageViewModel homePageViewModel = new HomePageViewModel
             {
-                BannerTitle = SubplatformMgr.GetTag("BannerTitle").Text,
-                BannerTextSub1 = SubplatformMgr.GetTag("BannerTextSub1").Text,
-                BannerTextSub2 = SubplatformMgr.GetTag("BannerTextSub2").Text,
-                Call_to_action = SubplatformMgr.GetTag("call-to-action-text").Text
+                BannerTitle = tags.SingleOrDefault(t => t.Name.Equals("BannerTitle")).Text,
+                BannerTextSub1 = tags.SingleOrDefault(t => t.Name.Equals("BannerTextSub1")).Text,
+                BannerTextSub2 = tags.SingleOrDefault(t => t.Name.Equals("BannerTextSub2")).Text,
+                Call_to_action = tags.SingleOrDefault(t => t.Name.Equals("call-to-action-text")).Text
             };
 
             return PartialView(homePageViewModel);
@@ -63,23 +70,18 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin,SuperAdmin")]
-        public ActionResult _ChangeHomePage(HomePageViewModel homePageViewModel)
+        public ActionResult _ChangeHomePage(string subplatform, HomePageViewModel homePageViewModel)
         {
-            Tag BannerTitle = SubplatformMgr.GetTag("BannerTitle");
-            Tag BannerTextSub1 = SubplatformMgr.GetTag("BannerTextSub1");
-            Tag BannerTextSub2 = SubplatformMgr.GetTag("BannerTextSub2");
-            Tag Call_to_action = SubplatformMgr.GetTag("call-to-action-text");
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
 
-            BannerTitle.Text = homePageViewModel.BannerTitle;
-            BannerTextSub1.Text = homePageViewModel.BannerTextSub1;
-            BannerTextSub2.Text = homePageViewModel.BannerTextSub2;
-            Call_to_action.Text = homePageViewModel.Call_to_action;
+            if (Subplatform is null) return HttpNotFound();
+            List<Tag> tags = Subplatform.Pages.SingleOrDefault(p => p.PageName.Equals("Home"))?.Tags;
+            tags.SingleOrDefault(t => t.Name.Equals("BannerTitle")).Text = homePageViewModel.BannerTitle;
+            tags.SingleOrDefault(t => t.Name.Equals("BannerTextSub1")).Text = homePageViewModel.BannerTextSub1;
+            tags.SingleOrDefault(t => t.Name.Equals("BannerTextSub2")).Text = homePageViewModel.BannerTextSub2;
+            tags.SingleOrDefault(t => t.Name.Equals("call-to-action-text")).Text = homePageViewModel.Call_to_action;
 
-
-            SubplatformMgr.ChangeTag(BannerTitle);
-            SubplatformMgr.ChangeTag(BannerTextSub1);
-            SubplatformMgr.ChangeTag(BannerTextSub2);
-            SubplatformMgr.ChangeTag(Call_to_action);
+            SubplatformMgr.ChangeTags(tags);
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 

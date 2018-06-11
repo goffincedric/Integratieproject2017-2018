@@ -37,18 +37,25 @@ namespace UI_MVC.Controllers
             SubplatformMgr = new SubplatformManager(uow);
             accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
 
-            ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
-            ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
-            ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
-            ViewBag.MyAccount = SubplatformMgr.GetTag("Account").Text;
-            ViewBag.More = SubplatformMgr.GetTag("More").Text;
-            ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
-            ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
-            ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
-            ViewBag.Items = SubplatformMgr.GetTag("Items").Text;
-            ViewBag.Persons = SubplatformMgr.GetTag("Persons").Text;
-            ViewBag.Organisations = SubplatformMgr.GetTag("Organisations").Text;
-            ViewBag.Themes = SubplatformMgr.GetTag("Themes").Text;
+            if (System.Web.HttpContext.Current.Request.Url.Segments.Count() > 1)
+            {
+                Subplatform subplatform = SubplatformMgr.GetSubplatform(System.Web.HttpContext.Current.Request.Url.Segments[1].Trim('/'));
+
+                IEnumerable<Tag> menuTags = subplatform.Pages.SingleOrDefault(p => p.PageName.Equals("Menu")).Tags;
+                if (menuTags is null || menuTags.Count() == 0) return;
+                ViewBag.Home = menuTags.SingleOrDefault(t => t.Name.Equals("Home")).Text ?? "Home";
+                ViewBag.Dashboard = menuTags.SingleOrDefault(t => t.Name.Equals("Dashboard")).Text ?? "Dashboard";
+                ViewBag.WeeklyReview = menuTags.SingleOrDefault(t => t.Name.Equals("Weekly_Review")).Text ?? "Weekly Review";
+                ViewBag.MyAccount = menuTags.SingleOrDefault(t => t.Name.Equals("Account")).Text ?? "Account";
+                ViewBag.More = menuTags.SingleOrDefault(t => t.Name.Equals("More")).Text ?? "More";
+                ViewBag.FAQ = menuTags.SingleOrDefault(t => t.Name.Equals("FAQ")).Text ?? "FAQ";
+                ViewBag.Contact = menuTags.SingleOrDefault(t => t.Name.Equals("Contact")).Text ?? "Contact";
+                ViewBag.Legal = menuTags.SingleOrDefault(t => t.Name.Equals("Legal")).Text ?? "Legal";
+                ViewBag.Items = menuTags.SingleOrDefault(t => t.Name.Equals("Items")).Text ?? "Items";
+                ViewBag.Persons = menuTags.SingleOrDefault(t => t.Name.Equals("Persons")).Text ?? "Persons";
+                ViewBag.Organisations = menuTags.SingleOrDefault(t => t.Name.Equals("Organisations")).Text ?? "Organisations";
+                ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes")).Text ?? "Themes";
+            }
         }
 
 

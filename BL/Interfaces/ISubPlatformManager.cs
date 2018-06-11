@@ -25,7 +25,6 @@ namespace PB.BL.Interfaces
         IEnumerable<Page> GetPages(string subplatformUrl);
         Page AddPage(int subplatformId, string pageName, string title);
         Page GetPage(int pageId);
-        Page GetPage(string name);
         void ChangePage(Page page);
         void RemovePage(int pageId);
 
@@ -33,8 +32,9 @@ namespace PB.BL.Interfaces
         IEnumerable<Tag> GetTags(int pageId);
         Tag AddTag(int pageId, string name, string text, string text2 = null);
         Tag GetTag(int tagId);
-        Tag GetTag(string name);
+        Tag GetTag(string name, string subplatformUrl);
         void ChangeTag(Tag tag);
+        void ChangeTags(List<Tag> tags);
         void RemoveTag(int tagId);
 
         void AddAdmin(int subplatformId, Profile admin);

@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace PB.BL.Domain.Platform
 {
     [Table("tblPage")]
-    public class Page
+    public class Page : ICloneable
     {
         [Key] public int PageId { get; set; }
 
@@ -19,10 +21,22 @@ namespace PB.BL.Domain.Platform
 
         [Required] public Subplatform Subplatform { get; set; }
 
+        public object Clone()
+        {
+            return new Page()
+            {
+                PageId = PageId,
+                PageName = PageName,
+                Title = Title,
+                Tags = Tags.Select(t => (Tag)t.Clone()).ToList(),
+                SubplatformId = SubplatformId,
+                Subplatform = Subplatform
+            };
+        }
+
         public override bool Equals(object obj)
         {
-            var page = obj as Page;
-            return page != null &&
+            return obj is Page page &&
                    PageName == page.PageName &&
                    EqualityComparer<Subplatform>.Default.Equals(Subplatform, page.Subplatform);
         }
