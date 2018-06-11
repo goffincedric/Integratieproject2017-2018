@@ -111,7 +111,7 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SITE_ICON_URL,
-                            Value = @"~/App_Data/Site/logo_new.png",
+                            Value = @"~/App_Data/Site/Politieke-barometer-logo.png",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
@@ -211,7 +211,7 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SITE_ICON_URL,
-                            Value = @"~/App_Data/Site/logo_new.png",
+                            Value = @"~/App_Data/Site/testing.png",
                             IsEnabled = true,
                             Subplatform = testSubplatform
                         },
