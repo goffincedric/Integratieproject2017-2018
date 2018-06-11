@@ -268,10 +268,12 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Index\k3.png" />
+    <Content Include="App_Data\Site\K3-logo.png" />
+    <Content Include="App_Data\Site\testing.png" />
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\datatables.min.css" />
-    <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
     <Content Include="Content\Images\bg.jpg" />
@@ -286,7 +288,7 @@
     <Content Include="App_Data\Organisations\spa.jpg" />
     <Content Include="App_Data\Organisations\vb.png" />
     <Content Include="Content\Images\plus-icon.png" />
-    <Content Include="App_Data\Site\logo_new.png" />
+    <Content Include="App_Data\Site\Politieke-barometer-logo.png" />
     <Content Include="Content\Images\default-subplatform.png" />
     <Content Include="App_Data\Themes\eu.png" />
     <Content Include="App_Data\Themes\migratie.png" />
@@ -345,6 +347,7 @@
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-2.0.3.min.js" />
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-be-mill.js" />
     <Content Include="Scripts\load.js" />
+    <Content Include="Scripts\ndbx.js" />
     <Content Include="Scripts\Search.js" />
     <Content Include="Scripts\vendor.js" />
     <Content Include="Scripts\Wizard\bootstrap.min.js" />
