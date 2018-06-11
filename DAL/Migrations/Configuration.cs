@@ -309,14 +309,14 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
-                            Value = @"~/App_Data/Users/user.png",
+                            Value = @"~/Content/Images/Users/user.png",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
-                            Value = @"~/App_Data/Users/user.png",
+                            Value = @"~/Content/Images/Users/user.png",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
@@ -344,7 +344,7 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SITE_ICON_URL,
-                            Value = @"~/App_Data/Site/Politieke-barometer-logo.png",
+                            Value = @"~/Content/Images/Site/Politieke-barometer-logo.png",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
@@ -417,14 +417,14 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
-                            Value = @"~/App_Data/Users/user.png",
+                            Value = @"~/Content/Images/Users/user.png",
                             IsEnabled = true,
                             Subplatform = testSubplatform
                         },
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
-                            Value = @"~/App_Data/Users/user.png",
+                            Value = @"~/Content/Images/Users/user.png",
                             IsEnabled = true,
                             Subplatform = testSubplatform
                         },
@@ -452,7 +452,7 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SITE_ICON_URL,
-                            Value = @"~/App_Data/Site/testing.png",
+                            Value = @"~/Content/Images/Site/testing.png",
                             IsEnabled = true,
                             Subplatform = testSubplatform
                         },
@@ -916,7 +916,7 @@ namespace PB.DAL.Migrations
                 new Theme
                 {
                     Name = "Migratie",
-                    IconURL = @"~/App_Data/Themes/migratie.png",
+                    IconURL = @"~/Content/Images/Themes/migratie.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
                     Keywords = new List<Keyword>
@@ -947,7 +947,7 @@ namespace PB.DAL.Migrations
                 new Theme
                 {
                     Name = "Onderwijs",
-                    IconURL = @"~/App_Data/Themes/onderwijs.png",
+                    IconURL = @"~/Content/Images/Themes/onderwijs.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
                     Keywords = new List<Keyword>
@@ -978,7 +978,7 @@ namespace PB.DAL.Migrations
                 new Theme
                 {
                     Name = "Veiligheid",
-                    IconURL = @"~/App_Data/Themes/veiligheid.png",
+                    IconURL = @"~/Content/Images/Themes/veiligheid.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
                     Keywords = new List<Keyword>
@@ -1010,7 +1010,7 @@ namespace PB.DAL.Migrations
                 new Theme
                 {
                     Name = "Zorg",
-                    IconURL = @"~/App_Data/Themes/zorg.png",
+                    IconURL = @"~/Content/Images/Themes/zorg.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
                     Keywords = new List<Keyword>
@@ -1035,7 +1035,7 @@ namespace PB.DAL.Migrations
                 new Theme
                 {
                     Name = "Europa",
-                    IconURL = @"~/App_Data/Themes/eu.png",
+                    IconURL = @"~/Content/Images/Themes/eu.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
                     Keywords = new List<Keyword>
@@ -1072,7 +1072,7 @@ namespace PB.DAL.Migrations
                 new Theme
                 {
                     Name = "Milieu",
-                    IconURL = @"~/App_Data/Themes/milieu.png",
+                    IconURL = @"~/Content/Images/Themes/milieu.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
                     Keywords = new List<Keyword>
@@ -1101,7 +1101,7 @@ namespace PB.DAL.Migrations
                 new Theme
                 {
                     Name = "Mobiliteit",
-                    IconURL = @"~/App_Data/Themes/mobiliteit.png",
+                    IconURL = @"~/Content/Images/Themes/mobiliteit.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
                     Keywords = new List<Keyword>
@@ -1127,7 +1127,7 @@ namespace PB.DAL.Migrations
                 new Theme
                 {
                     Name = "Energie",
-                    IconURL = @"~/App_Data/Themes/energie.png",
+                    IconURL = @"~/Content/Images/Themes/energie.png",
                     Alerts = new List<Alert>(),
                     Elements = new List<Element>(),
                     Keywords = new List<Keyword>
