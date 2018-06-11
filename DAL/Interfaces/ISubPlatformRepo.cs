@@ -34,6 +34,7 @@ namespace PB.DAL
         Tag ReadTag(int tagId);
         Tag ReadTag(string name);
         void UpdateTag(Tag tag);
+        void UpdateTags(List<Tag> tags);
         void DeleteTag(int tagId);
     }
 }

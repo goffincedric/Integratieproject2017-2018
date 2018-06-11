@@ -26,32 +26,38 @@ namespace UI_MVC.Controllers
         private readonly AccountManager accountMgr;
         private readonly SubplatformManager SubplatformMgr;
 
-
         public HomeController()
         {
             itemMgr = new ItemManager(uow);
             accountMgr = new AccountManager(new IntegratieUserStore(uow.UnitOfWork), uow);
             SubplatformMgr = new SubplatformManager(uow);
 
-            ViewBag.Home = SubplatformMgr.GetTag("Home").Text;
-            ViewBag.Dashboard = SubplatformMgr.GetTag("Dashboard").Text;
-            ViewBag.WeeklyReview = SubplatformMgr.GetTag("Weekly_Review").Text;
-            ViewBag.MyAccount = SubplatformMgr.GetTag("Account").Text;
-            ViewBag.More = SubplatformMgr.GetTag("More").Text;
-            ViewBag.FAQ = SubplatformMgr.GetTag("FAQ").Text;
-            ViewBag.Contact = SubplatformMgr.GetTag("Contact").Text;
-            ViewBag.Legal = SubplatformMgr.GetTag("Legal").Text;
-            ViewBag.Items = SubplatformMgr.GetTag("Items").Text;
-            ViewBag.Persons = SubplatformMgr.GetTag("Persons").Text;
-            ViewBag.Organisations = SubplatformMgr.GetTag("Organisations").Text;
-            ViewBag.Themes = SubplatformMgr.GetTag("Themes").Text;
+            if (System.Web.HttpContext.Current.Request.Url.Segments.Count() > 1)
+            {
+                Subplatform subplatform = SubplatformMgr.GetSubplatform(System.Web.HttpContext.Current.Request.Url.Segments[1].Trim('/'));
 
-            ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text;
-            ViewBag.BannerSub1 = SubplatformMgr.GetTag("BannerTextSub1").Text;
-            ViewBag.BannerSub2 = SubplatformMgr.GetTag("BannerTextSub2").Text;
-            ViewBag.CallToAction = SubplatformMgr.GetTag("call-to-action-text").Text;
+                IEnumerable<Tag> menuTags = subplatform.Pages.SingleOrDefault(p => p.PageName.Equals("Menu")).Tags;
+                if (menuTags is null || menuTags.Count() == 0) return;
+                ViewBag.Home = menuTags.SingleOrDefault(t => t.Name.Equals("Home")).Text ?? "Home";
+                ViewBag.Dashboard = menuTags.SingleOrDefault(t => t.Name.Equals("Dashboard")).Text ?? "Dashboard";
+                ViewBag.WeeklyReview = menuTags.SingleOrDefault(t => t.Name.Equals("Weekly_Review")).Text ?? "Weekly Review";
+                ViewBag.MyAccount = menuTags.SingleOrDefault(t => t.Name.Equals("Account")).Text ?? "Account";
+                ViewBag.More = menuTags.SingleOrDefault(t => t.Name.Equals("More")).Text ?? "More";
+                ViewBag.FAQ = menuTags.SingleOrDefault(t => t.Name.Equals("FAQ")).Text ?? "FAQ";
+                ViewBag.Contact = menuTags.SingleOrDefault(t => t.Name.Equals("Contact")).Text ?? "Contact";
+                ViewBag.Legal = menuTags.SingleOrDefault(t => t.Name.Equals("Legal")).Text ?? "Legal";
+                ViewBag.Items = menuTags.SingleOrDefault(t => t.Name.Equals("Items")).Text ?? "Items";
+                ViewBag.Persons = menuTags.SingleOrDefault(t => t.Name.Equals("Persons")).Text ?? "Persons";
+                ViewBag.Organisations = menuTags.SingleOrDefault(t => t.Name.Equals("Organisations")).Text ?? "Organisations";
+                ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes")).Text ?? "Themes";
+                
+                IEnumerable<Tag> homeTags = SubplatformMgr.GetTags(subplatform.Pages.Single(p => p.PageName.Equals("Home")).PageId);
+                ViewBag.HeaderText = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTitle")).Text ?? "Subplatform title";
+                ViewBag.BannerSub1 = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTextSub1")).Text ?? "BannerTextSub1";
+                ViewBag.BannerSub2 = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTextSub2")).Text ?? "BannerTextSub2";
+                ViewBag.CallToAction = homeTags.SingleOrDefault(t => t.Name.Equals("call-to-action-text")).Text ?? "call-to-action-text";
+            }
         }
-
         #region Search
 
         public ActionResult _Search(string subplatform)
@@ -106,35 +112,31 @@ namespace UI_MVC.Controllers
                 Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
                 if (profile.AdminPlatforms.Contains(Subplatform)) return Content("True");
             }
-            
+
             return Content("False");
         }
 
         public ActionResult GetName(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            string name = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME)
-                .Value;
+            if (Subplatform is null) return HttpNotFound();
 
-
+            string name = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME).Value;
             return Content(name);
         }
 
         public ActionResult GetLogo(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            string url = VirtualPathUtility.ToAbsolute(SubplatformMgr
-                .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Value);
+            string url = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Value);
             return Content(url);
         }
 
         public ActionResult LoadDefaults(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            ViewBag.Logo = VirtualPathUtility.ToAbsolute(SubplatformMgr
-                .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Value);
-            ViewBag.SiteName = Content(ViewBag.SiteName = SubplatformMgr
-                .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME).Value);
+            ViewBag.Logo = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Value);
+            ViewBag.SiteName = Content(ViewBag.SiteName = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME).Value);
             return Content("");
         }
 
@@ -200,7 +202,7 @@ namespace UI_MVC.Controllers
         [Route("")]
         public ActionResult Index(string subplatform)
         {
-            ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle").Text;
+            ViewBag.HeaderText = SubplatformMgr.GetTag("BannerTitle", subplatform).Text;
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
             Person person = itemMgr.GetPersons().Where(p => !string.IsNullOrWhiteSpace(p.TwitterName)).OrderByDescending(p => p.TrendingScore).FirstOrDefault();
             ViewBag.TweetName = "https://twitter.com/" + person.TwitterName + "?ref_src=twsrc%5Etfw";
@@ -241,14 +243,14 @@ namespace UI_MVC.Controllers
             Item item = itemMgr.GetItem(id);
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             if (!item.SubPlatforms.Contains(Subplatform)) return HttpNotFound();
-            
+
 
             if (item is Person person)
             {
                 int? count = person.Records.Count();
                 ViewBag.Vermeldingen = count is null ? 0 : count;
                 ViewBag.Partij = person.Organisation is null ? "Geen partij" : person.Organisation.Name;
-                if(!string.IsNullOrWhiteSpace(person.TwitterName))
+                if (!string.IsNullOrWhiteSpace(person.TwitterName))
                 {
                     ViewBag.Icon = "https://twitter.com/" + person.TwitterName + "/profile_image?size=original";
                     ViewBag.Twitter = "https://twitter.com/" + person.TwitterName;
@@ -265,11 +267,11 @@ namespace UI_MVC.Controllers
                 }
                 else
                 {
-                    ViewBag.Site = new System.UriBuilder(person.Site).Uri; 
+                    ViewBag.Site = new System.UriBuilder(person.Site).Uri;
                 }
-                
-                
-               
+
+
+
             }
 
             if (item is Organisation organisation)

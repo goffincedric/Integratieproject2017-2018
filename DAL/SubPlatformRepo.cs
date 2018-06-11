@@ -29,7 +29,6 @@ namespace PB.DAL
         }
 
         #region Subplatform
-
         public Subplatform CreateSubplatform(Subplatform subplatform)
         {
             ctx.Subplatforms.Add(subplatform);
@@ -67,6 +66,7 @@ namespace PB.DAL
         {
             return ctx.Subplatforms
                 .Include(s => s.Items)
+                .Include(s => s.Pages)
                 .Include(s => s.Dashboards)
                 .Include(s => s.Admins)
                 .Include(s => s.Settings)
@@ -77,6 +77,7 @@ namespace PB.DAL
         {
             return ctx.Subplatforms
                 .Include(s => s.Items)
+                .Include(s => s.Pages)
                 .Include(s => s.Dashboards)
                 .Include(s => s.Admins)
                 .Include(s => s.Settings)
@@ -87,6 +88,7 @@ namespace PB.DAL
         {
             return ctx.Subplatforms
                 .Include(s => s.Items)
+                .Include(s => s.Pages)
                 .Include(s => s.Dashboards)
                 .Include(s => s.Admins)
                 .Include(s => s.Settings)
@@ -107,7 +109,7 @@ namespace PB.DAL
                 ctx.Subplatforms.Attach(s);
                 ctx.Entry(s).State = EntityState.Modified;
             });
-            
+
             ctx.SaveChanges();
         }
 
@@ -249,7 +251,6 @@ namespace PB.DAL
         #endregion
 
         #region Tag
-
         public IEnumerable<Tag> ReadTags()
         {
             return ctx.Tags
@@ -291,11 +292,9 @@ namespace PB.DAL
             {
                 foreach (var eve in e.EntityValidationErrors)
                 {
-                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:", eve.Entry.Entity.GetType().Name, eve.Entry.State);
                     foreach (var ve in eve.ValidationErrors)
-                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"", ve.PropertyName, ve.ErrorMessage);
                 }
             }
 
@@ -306,6 +305,16 @@ namespace PB.DAL
         {
             ctx.Tags.Attach(tag);
             ctx.Entry(tag).State = EntityState.Modified;
+            ctx.SaveChanges();
+        }
+
+        public void UpdateTags(List<Tag> tags)
+        {
+            tags.ForEach(t =>
+            {
+                ctx.Tags.Attach(t);
+                ctx.Entry(t).State = EntityState.Modified;
+            });
             ctx.SaveChanges();
         }
 
