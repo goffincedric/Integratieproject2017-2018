@@ -256,6 +256,11 @@ namespace UI_MVC.Controllers
             };
 
             SubplatformMgr.ChangeSubplatformSettings(Subplatform, subplatformSettings);
+            
+            JobManager.GetSchedule(subplatform + "-seed").ToRunEvery(intervals.SEED_INTERVAL_HOURS).Hours();
+            JobManager.GetSchedule(subplatform + "-alert").ToRunEvery(intervals.ALERT_GENERATION_INTERVAL_HOURS).Hours();
+            JobManager.GetSchedule(subplatform + "-weeklyreview").ToRunEvery(intervals.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS).Days();
+
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
