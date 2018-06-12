@@ -269,6 +269,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\Index\k3.png" />
+    <Content Include="Content\Images\Index\testing-banner.PNG" />
     <Content Include="Content\Images\Site\K3-logo.png" />
     <Content Include="Content\Images\Site\testing.png" />
     <Content Include="Content\bootstrap-social.css" />

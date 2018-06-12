@@ -502,24 +502,24 @@ namespace PB.DAL.Migrations
                             new SubplatformSetting
                         {
                             SettingName = Setting.Platform.BANNER,
-                            Value = @"~/Content/Images/Index/banner.jpg",
+                            Value = @"~/Content/Images/Index/testing-banner.PNG",
                             IsEnabled = true,
-                            Subplatform = pbSubplatform
+                            Subplatform = testSubplatform
                         },
                          new SubplatformSetting
                         {
                             SettingName = Setting.Platform.PRIMARY_COLOR,
                             Value = "#fff",
                             IsEnabled = true,
-                            Subplatform = pbSubplatform
+                            Subplatform = testSubplatform
                         },
                          new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SECONDARY_COLOR,
                             Value = "#fff",
                             IsEnabled = true,
-                            Subplatform = pbSubplatform
-                        }s
+                            Subplatform = testSubplatform
+                        }
                     },
                     Admins = new List<Profile>(),
                     Items = new List<Item>(),
