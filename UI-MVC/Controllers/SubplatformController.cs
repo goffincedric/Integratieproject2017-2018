@@ -54,6 +54,9 @@ namespace UI_MVC.Controllers
                 ViewBag.Persons = menuTags.SingleOrDefault(t => t.Name.Equals("Persons"))?.Text ?? "Persons";
                 ViewBag.Organisations = menuTags.SingleOrDefault(t => t.Name.Equals("Organisations"))?.Text ?? "Organisations";
                 ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes"))?.Text ?? "Themes";
+
+                ViewBag.Color1 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.PRIMARY_COLOR))?.Value;
+                ViewBag.Color2 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.SECONDARY_COLOR))?.Value;
             }
         }
 
@@ -371,7 +374,10 @@ namespace UI_MVC.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult DeploySubplatform(SubplatformViewModel subplatformViewModel)
         {
-            if (ModelState.IsValid) SubplatformMgr.AddSubplatform(subplatformViewModel.Name, subplatformViewModel.Url, subplatformViewModel.SourceAPI);
+            if (ModelState.IsValid) {
+                string roleId = accountMgr.GetAllRoles().Single(ro => ro.Name.Equals("SuperAdmin")).Id;
+                SubplatformMgr.AddSubplatform(subplatformViewModel.Name, accountMgr.GetProfiles().Where(p => p.Roles.Any(r => r.RoleId.Equals(roleId))), subplatformViewModel.SourceAPI);
+            }
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
