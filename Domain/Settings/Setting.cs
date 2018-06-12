@@ -27,7 +27,7 @@
             SEND_WEEKLY_REVIEWS_INTERVAL_DAYS,
             PRIMARY_COLOR,
             SECONDARY_COLOR,
-            DEFAULT_BANNER
+            BANNER
         }
     }
 }

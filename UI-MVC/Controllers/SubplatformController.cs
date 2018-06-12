@@ -385,6 +385,39 @@ namespace UI_MVC.Controllers
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
+        public ActionResult UploadBanner(string subplatform, FileViewModel fileViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
+                var iconUrl = "";
+                string _FileName = "";
+                if (fileViewModel.file != null)
+                    if (fileViewModel.file.ContentLength > 0)
+                    {
+                        _FileName = Path.GetFileName(fileViewModel.file.FileName);
+                        var name = "Default_Item_Logo";
+                        var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Index/"), newName);
+                        fileViewModel.file.SaveAs(_path);
+                        iconUrl = @"~/Content/Images/Index/" + newName;
+                        SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.BANNER,
+                            Value = iconUrl,
+                            IsEnabled = true,
+                            Subplatform = subplatformToChange
+                        });
+                    }
+
+                return RedirectToAction("PlatformSettings", "Subplatform");
+            }
+
+            return RedirectToAction("PlatformSettings", "Subplatform");
+        }
+
         #endregion
 
         #region AdminSubplatformTools

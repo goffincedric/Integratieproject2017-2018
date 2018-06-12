@@ -368,7 +368,29 @@ namespace PB.DAL.Migrations
                             Value = "7",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
+                        },
+                         new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.BANNER,
+                            Value = @"~/Content/Images/Index/banner.jpg",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                         new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.PRIMARY_COLOR,
+                            Value = "#fff",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                         new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.SECONDARY_COLOR,
+                            Value = "#fff",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
                         }
+
                     },
                     Admins = new List<Profile>(),
                     Items = new List<Item>(),
@@ -474,6 +496,27 @@ namespace PB.DAL.Migrations
                         {
                             SettingName = Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS,
                             Value = "7",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                            new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.BANNER,
+                            Value = @"~/Content/Images/Index/testing-banner.PNG",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                         new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.PRIMARY_COLOR,
+                            Value = "#fff",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                         new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.SECONDARY_COLOR,
+                            Value = "#fff",
                             IsEnabled = true,
                             Subplatform = testSubplatform
                         }
