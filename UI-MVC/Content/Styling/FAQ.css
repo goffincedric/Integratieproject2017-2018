@@ -18,7 +18,7 @@ li {
   align-self: center;
 }
 
-.show, .collapsing {
+.collapse.show, .collapsing {
   margin-right: 5%;
   margin-bottom: 1%;
 }
