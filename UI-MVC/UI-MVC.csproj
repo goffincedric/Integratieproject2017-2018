@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44342</IISExpressSSLPort>
+    <IISExpressSSLPort>44338</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -350,6 +350,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-2.0.3.min.js" />
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-be-mill.js" />
+    <Content Include="Scripts\Layout\Collapse.js" />
     <Content Include="Scripts\load.js" />
     <Content Include="Scripts\ndbx.js" />
     <Content Include="Scripts\Search.js" />
