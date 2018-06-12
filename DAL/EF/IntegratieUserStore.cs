@@ -15,7 +15,6 @@ namespace PB.DAL.EF
 
         public IntegratieUserStore(IntegratieDbContext context) : base(context)
         {
-            //System.Console.WriteLine("USERSTORE MADE");
             ctx = context;
         }
 

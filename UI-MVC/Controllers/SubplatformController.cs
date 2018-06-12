@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using FluentScheduler;
 using Microsoft.AspNet.Identity;
 using PB.BL;
 using PB.BL.Domain.Items;
@@ -22,7 +23,7 @@ namespace UI_MVC.Controllers
         private readonly ItemManager itemMgr;
         private readonly SubplatformManager SubplatformMgr;
         private readonly UnitOfWorkManager uow;
-        
+
         public SubplatformController()
         {
             uow = new UnitOfWorkManager();
@@ -35,23 +36,23 @@ namespace UI_MVC.Controllers
             {
                 Subplatform subplatform = SubplatformMgr.GetSubplatform(System.Web.HttpContext.Current.Request.Url.Segments[1].Trim('/'));
 
-                IEnumerable<Tag> menuTags = subplatform.Pages.SingleOrDefault(p => p.PageName.Equals("Menu")).Tags;
+                IEnumerable<Tag> menuTags = subplatform.Pages.SingleOrDefault(p => p.PageName.Equals("Menu"))?.Tags;
                 if (menuTags is null || menuTags.Count() == 0) return;
-                ViewBag.Home = menuTags.SingleOrDefault(t => t.Name.Equals("Home")).Text ?? "Home";
-                ViewBag.Dashboard = menuTags.SingleOrDefault(t => t.Name.Equals("Dashboard")).Text ?? "Dashboard";
-                ViewBag.WeeklyReview = menuTags.SingleOrDefault(t => t.Name.Equals("Weekly_Review")).Text ?? "Weekly Review";
-                ViewBag.MyAccount = menuTags.SingleOrDefault(t => t.Name.Equals("Account")).Text ?? "Account";
-                ViewBag.More = menuTags.SingleOrDefault(t => t.Name.Equals("More")).Text ?? "More";
-                ViewBag.FAQ = menuTags.SingleOrDefault(t => t.Name.Equals("FAQ")).Text ?? "FAQ";
-                ViewBag.Contact = menuTags.SingleOrDefault(t => t.Name.Equals("Contact")).Text ?? "Contact";
-                ViewBag.Legal = menuTags.SingleOrDefault(t => t.Name.Equals("Legal")).Text ?? "Legal";
-                ViewBag.Items = menuTags.SingleOrDefault(t => t.Name.Equals("Items")).Text ?? "Items";
-                ViewBag.Persons = menuTags.SingleOrDefault(t => t.Name.Equals("Persons")).Text ?? "Persons";
-                ViewBag.Organisations = menuTags.SingleOrDefault(t => t.Name.Equals("Organisations")).Text ?? "Organisations";
-                ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes")).Text ?? "Themes";
+                ViewBag.Home = menuTags.SingleOrDefault(t => t.Name.Equals("Home"))?.Text ?? "Home";
+                ViewBag.Dashboard = menuTags.SingleOrDefault(t => t.Name.Equals("Dashboard"))?.Text ?? "Dashboard";
+                ViewBag.WeeklyReview = menuTags.SingleOrDefault(t => t.Name.Equals("Weekly_Review"))?.Text ?? "Weekly Review";
+                ViewBag.MyAccount = menuTags.SingleOrDefault(t => t.Name.Equals("Account"))?.Text ?? "Account";
+                ViewBag.More = menuTags.SingleOrDefault(t => t.Name.Equals("More"))?.Text ?? "More";
+                ViewBag.FAQ = menuTags.SingleOrDefault(t => t.Name.Equals("FAQ"))?.Text ?? "FAQ";
+                ViewBag.Contact = menuTags.SingleOrDefault(t => t.Name.Equals("Contact"))?.Text ?? "Contact";
+                ViewBag.Legal = menuTags.SingleOrDefault(t => t.Name.Equals("Legal"))?.Text ?? "Legal";
+                ViewBag.Items = menuTags.SingleOrDefault(t => t.Name.Equals("Items"))?.Text ?? "Items";
+                ViewBag.Persons = menuTags.SingleOrDefault(t => t.Name.Equals("Persons"))?.Text ?? "Persons";
+                ViewBag.Organisations = menuTags.SingleOrDefault(t => t.Name.Equals("Organisations"))?.Text ?? "Organisations";
+                ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes"))?.Text ?? "Themes";
             }
         }
-        
+
         public ActionResult _ChangeHomePage(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -87,7 +88,6 @@ namespace UI_MVC.Controllers
 
 
         #region SubplatformSettings
-
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult PlatformSettings(string subplatform)
         {
@@ -113,20 +113,12 @@ namespace UI_MVC.Controllers
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             SubplatformSettingViewModel huidige = new SubplatformSettingViewModel
             {
-                APIsource = SubplatformMgr
-                    .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOURCE_API_URL)?.Value,
-                recordsBijhouden = int.Parse(SubplatformMgr
-                    .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DAYS_TO_KEEP_RECORDS)?.Value),
-                SocialSource =
-                    SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOCIAL_SOURCE)
-                        ?.Value,
-                SocialSourceUrl =
-                    SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOCIAL_SOURCE_URL)
-                        ?.Value,
-                SiteName = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME)
-                    ?.Value,
-                Theme = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME)
-                    ?.Value
+                APIsource = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOURCE_API_URL)?.Value,
+                recordsBijhouden = int.Parse(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DAYS_TO_KEEP_RECORDS)?.Value),
+                SocialSource = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOCIAL_SOURCE)?.Value,
+                SocialSourceUrl = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOCIAL_SOURCE_URL)?.Value,
+                SiteName = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME)?.Value,
+                Theme = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME)?.Value
             };
             return PartialView(huidige);
         }
@@ -134,8 +126,7 @@ namespace UI_MVC.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin,SuperAdmin")]
-        public ActionResult SubplatformSetting(string subplatform,
-            SubplatformSettingViewModel subplatformSettingViewModel)
+        public ActionResult SubplatformSetting(string subplatform, SubplatformSettingViewModel subplatformSettingViewModel)
         {
             Subplatform subplatformToChange = SubplatformMgr.GetSubplatform(subplatform);
             List<SubplatformSetting> subplatformSettings = new List<SubplatformSetting>
@@ -205,6 +196,7 @@ namespace UI_MVC.Controllers
                 }
             };
             SubplatformMgr.ChangeSubplatformSettings(subplatformToChange, subplatformSettings);
+
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
@@ -214,14 +206,21 @@ namespace UI_MVC.Controllers
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             SeedIntervals huidige = new SeedIntervals
             {
-                SEED_INTERVAL_HOURS = int.Parse(SubplatformMgr
-                    .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SEED_INTERVAL_HOURS).Value),
-                SEND_WEEKLY_REVIEWS_INTERVAL_DAYS = int.Parse(SubplatformMgr
-                    .GetSubplatformSetting(Subplatform.SubplatformId,
-                        Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS).Value),
-                ALERT_GENERATION_INTERVAL_HOURS = int.Parse(SubplatformMgr
-                    .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS)
-                    .Value)
+                SEED_INTERVAL_HOURS = int.Parse(SubplatformMgr.GetSubplatformSetting(
+                    Subplatform.SubplatformId,
+                    Setting.Platform.SEED_INTERVAL_HOURS)
+                    .Value
+                ),
+                SEND_WEEKLY_REVIEWS_INTERVAL_DAYS = int.Parse(SubplatformMgr.GetSubplatformSetting(
+                    Subplatform.SubplatformId,
+                    Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS)
+                    .Value
+                ),
+                ALERT_GENERATION_INTERVAL_HOURS = int.Parse(SubplatformMgr.GetSubplatformSetting(
+                        Subplatform.SubplatformId,
+                        Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS)
+                    .Value
+                )
             };
             return PartialView(huidige);
         }
@@ -274,9 +273,7 @@ namespace UI_MVC.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult DeploySubplatform(SubplatformViewModel subplatformViewModel)
         {
-            if (ModelState.IsValid)
-                SubplatformMgr.AddSubplatform(subplatformViewModel.Name, subplatformViewModel.Url,
-                    subplatformViewModel.SourceAPI);
+            if (ModelState.IsValid) SubplatformMgr.AddSubplatform(subplatformViewModel.Name, subplatformViewModel.Url, subplatformViewModel.SourceAPI);
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
@@ -386,7 +383,6 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region AdminSubplatformTools
-
         [HttpPost]
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult GenerateAlertsManually()
@@ -458,8 +454,6 @@ namespace UI_MVC.Controllers
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
 
-
-
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult _ShowSubplatform()
         {
@@ -488,7 +482,6 @@ namespace UI_MVC.Controllers
 
             return PartialView(subplatform);
         }
-
         #endregion
     }
 }
