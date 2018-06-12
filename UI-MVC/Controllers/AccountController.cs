@@ -101,7 +101,7 @@ namespace UI_MVC.Controllers
 
             Person person = ItemMgr.GetPerson(weeklyReview.TopPersonId);
             if (person.IconURL is null)
-                ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/App_Data/Users/user.png");
+                ViewBag.Icon = VirtualPathUtility.ToAbsolute("~/Content/Images/Users/user.png");
             else
                 ViewBag.Icon = person.IconURL;
 
@@ -324,9 +324,9 @@ namespace UI_MVC.Controllers
 
                     var username = newProfile.UserName;
                     var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                    string _path = Path.Combine(Server.MapPath("~/App_Data/Users/"), newName);
+                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
                     editedAccount.file.SaveAs(_path);
-                    newProfile.ProfileIcon = @"~/App_Data/Users/" + newName;
+                    newProfile.ProfileIcon = @"~/Content/Images/Users/" + newName;
                 }
             }
             else
@@ -740,7 +740,7 @@ namespace UI_MVC.Controllers
             IEnumerable<Profile> profiles = UserManager.GetProfiles().ToList();
             var serializerSettings = new JsonSerializerSettings();
             string json = JsonConvert.SerializeObject(profiles, Formatting.Indented);
-            string _path = Path.Combine(Server.MapPath("~/App_Data/Export/"), "Users.json");
+            string _path = Path.Combine(Server.MapPath("~/Content/Export/"), "Users.json");
             System.IO.File.WriteAllText(_path, json);
             return Json(new { fileName = "Users.json", errorMessage = "" });
         }
@@ -748,7 +748,7 @@ namespace UI_MVC.Controllers
         [HttpGet]
         public ActionResult ExportUsers(string file)
         {
-            string fullPath = Path.Combine(Server.MapPath("~/App_Data/Export/"), file);
+            string fullPath = Path.Combine(Server.MapPath("~/Content/Export/"), file);
             return File(fullPath, "application/", file);
         }
 
