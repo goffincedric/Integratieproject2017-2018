@@ -92,12 +92,12 @@ namespace UI_MVC.Controllers
                 {
                     if (organisationEditModel.file.ContentLength > 0)
                     {
-                        _FileName = Path.GetFileName(organisationEditModel.file.FileName);
-                        var username = organisationEditModel.Name.ToString();
-                        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Organisations/"), newName);
-                        organisationEditModel.file.SaveAs(_path);
-                        iconUrl               = @"~/Content/Images/Organisations/" + newName;
+                        //_FileName = Path.GetFileName(organisationEditModel.file.FileName);
+                        //var username = organisationEditModel.Name.ToString();
+                        //var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        //string _path = Path.Combine(Server.MapPath("~/Content/Images/Organisations/"), newName);
+                        //organisationEditModel.file.SaveAs(_path);
+                        //iconUrl               = @"~/Content/Images/Organisations/" + newName;
                         ImageConverter imgCon = new ImageConverter();
                         var img               = Image.FromStream(organisationEditModel.file.InputStream);
                         image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
@@ -165,23 +165,25 @@ namespace UI_MVC.Controllers
                 {
                     if (organisationEditModel.file.ContentLength > 0)
                     {
-                        _FileName = Path.GetFileName(organisationEditModel.file.FileName);
-                        var username = organisationEditModel.Name.ToString();
-                        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Organisations/"), newName);
-                        organisationEditModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Organisations/" + newName;
-                        organisation.IconURL = iconUrl;
+                        //_FileName = Path.GetFileName(organisationEditModel.file.FileName);
+                        //var username = organisationEditModel.Name.ToString();
+                        //var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        //string _path = Path.Combine(Server.MapPath("~/Content/Images/Organisations/"), newName);
+                        //organisationEditModel.file.SaveAs(_path);
+                        //iconUrl = @"~/Content/Images/Organisations/" + newName;
+                        //organisation.IconURL = iconUrl;
                         ImageConverter imgCon = new ImageConverter();
                         var img = Image.FromStream(organisationEditModel.file.InputStream);
                         image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
+                        organisation.Image = image;
                     }
+
                 }
                 else
                 {
                     iconUrl = organisation.IconURL;
                 }
-                organisation.Image = image; 
+               
                 organisation.IsTrending = organisationEditModel.IsTrending;
                 organisation.FullName = organisationEditModel.FullName;
                 organisation.SocialMediaLink = organisationEditModel.SocialMediaLink;
@@ -293,12 +295,12 @@ namespace UI_MVC.Controllers
                 {
                     if (themeEditModel.file.ContentLength > 0)
                     {
-                        _FileName = Path.GetFileName(themeEditModel.file.FileName);
-                        var username = themeEditModel.Name.ToString();
-                        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Themes/"), newName);
-                        themeEditModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Themes/" + newName;
+                        //_FileName = Path.GetFileName(themeEditModel.file.FileName);
+                        //var username = themeEditModel.Name.ToString();
+                        //var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        //string _path = Path.Combine(Server.MapPath("~/Content/Images/Themes/"), newName);
+                        //themeEditModel.file.SaveAs(_path);
+                        //iconUrl = @"~/Content/Images/Themes/" + newName;
 
                         ImageConverter imgCon = new ImageConverter();
                         var img = Image.FromStream(themeEditModel.file.InputStream);
@@ -356,23 +358,24 @@ namespace UI_MVC.Controllers
                 {
                     if (themeEditModel.file.ContentLength > 0)
                     {
-                        _FileName = Path.GetFileName(themeEditModel.file.FileName);
-                        var username = themeEditModel.Name.ToString();
-                        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Themes/"), newName);
-                        themeEditModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Themes/" + newName;
+                        //_FileName = Path.GetFileName(themeEditModel.file.FileName);
+                        //var username = themeEditModel.Name.ToString();
+                        //var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        //string _path = Path.Combine(Server.MapPath("~/Content/Images/Themes/"), newName);
+                        //themeEditModel.file.SaveAs(_path);
+                        //iconUrl = @"~/Content/Images/Themes/" + newName;
                         theme.IconURL = iconUrl;
                         ImageConverter imgCon = new ImageConverter();
                         var img = Image.FromStream(themeEditModel.file.InputStream);
                         image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
+                        theme.Image = image;
                     }
                 }
                 else
                 {
                     iconUrl = theme.IconURL;
                 }
-                theme.Image = image; 
+                
                 theme.IsTrending = themeEditModel.IsTrending;
                 theme.Name = themeEditModel.Name;
                 theme.Description = themeEditModel.Description;
@@ -422,12 +425,12 @@ namespace UI_MVC.Controllers
                 {
                     if (personEditModel.file.ContentLength > 0)
                     {
-                        _FileName = Path.GetFileName(personEditModel.file.FileName);
-                        var username = personEditModel.Name.ToString();
-                        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
-                        personEditModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Persons/" + newName;
+                        //_FileName = Path.GetFileName(personEditModel.file.FileName);
+                        //var username = personEditModel.Name.ToString();
+                        //var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        //string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
+                        //personEditModel.file.SaveAs(_path);
+                        //iconUrl = @"~/Content/Images/Persons/" + newName;
                         ImageConverter imgCon = new ImageConverter();
                         var img = Image.FromStream(personEditModel.file.InputStream);
                         image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
@@ -492,24 +495,24 @@ namespace UI_MVC.Controllers
                 {
                     if (personEditModel.file.ContentLength > 0)
                     {
-                        _FileName = Path.GetFileName(personEditModel.file.FileName);
-                        var username = personEditModel.Name.ToString();
-                        var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
-                        personEditModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Persons/" + newName;
-                        person.IconURL = iconUrl;
+                        //_FileName = Path.GetFileName(personEditModel.file.FileName);
+                        //var username = personEditModel.Name.ToString();
+                        //var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        //string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
+                        //personEditModel.file.SaveAs(_path);
+                        //iconUrl = @"~/Content/Images/Persons/" + newName;
+                        //person.IconURL = iconUrl;
                         ImageConverter imgCon = new ImageConverter();
                         var img = Image.FromStream(personEditModel.file.InputStream);
                         image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
-
+                        person.Image = image;
                     }
                 }
                 else
                 {
                     iconUrl = person.IconURL;
                 }
-                person.Image = image; 
+               
                 person.Gemeente = personEditModel.Gemeente;
                 person.IsTrending = personEditModel.IsTrending;
                 person.Organisation = organisation;
@@ -533,7 +536,7 @@ namespace UI_MVC.Controllers
                 DateFormatHandling = DateFormatHandling.IsoDateFormat
             };
             string json = JsonConvert.SerializeObject(persons, serializerSettings);
-            string _path = Path.Combine(Server.MapPath("~/Content/Images/Export/"), "Persons.json");
+            string _path = Path.Combine(Server.MapPath("~/Content/Export/"), "Persons.json");
             System.IO.File.WriteAllText(_path, json);
             return Json(new { fileName = "Persons.json", errorMessage = "" });
         }
@@ -542,7 +545,7 @@ namespace UI_MVC.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult ExportPersons(string file)
         {
-            string fullPath = Path.Combine(Server.MapPath("~/Content/Images/Export/"), file);
+            string fullPath = Path.Combine(Server.MapPath("~/Content/Export/"), file);
             return File(fullPath, "application/", file);
         }
 
