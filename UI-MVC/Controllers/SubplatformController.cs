@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace UI_MVC.Controllers
         private readonly ItemManager itemMgr;
         private readonly SubplatformManager SubplatformMgr;
         private readonly UnitOfWorkManager uow;
-        
+
         public SubplatformController()
         {
             uow = new UnitOfWorkManager();
@@ -51,7 +52,7 @@ namespace UI_MVC.Controllers
                 ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes")).Text ?? "Themes";
             }
         }
-        
+
         public ActionResult _ChangeHomePage(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -302,10 +303,13 @@ namespace UI_MVC.Controllers
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
                         fileViewModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Site/" + newName;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(fileViewModel.file.InputStream);
                         SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SITE_ICON_URL,
-                            Value = iconUrl,
+                            Value = null,
+                            Image = (byte[])imgCon.ConvertTo(img, typeof(byte[])),
                             IsEnabled = true,
                             Subplatform = subplatformToChange
                         });
@@ -335,11 +339,15 @@ namespace UI_MVC.Controllers
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
                         fileViewModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Site/" + newName;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(fileViewModel.file.InputStream);
                         SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
-                            Value = iconUrl,
-                            IsEnabled = true,
+                            //Value = iconUrl,
+                            Value=null,
+                            Image = (byte[])imgCon.ConvertTo(img, typeof(byte[])),
+                        IsEnabled = true,
                             Subplatform = subplatformToChange
                         });
                     }
@@ -368,10 +376,13 @@ namespace UI_MVC.Controllers
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
                         fileViewModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Users/" + newName;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(fileViewModel.file.InputStream);
                         SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
-                            Value = iconUrl,
+                            Value = null,
+                            Image = (byte[])imgCon.ConvertTo(img, typeof(byte[])),
                             IsEnabled = true,
                             Subplatform = subplatformToChange
                         });
@@ -401,10 +412,13 @@ namespace UI_MVC.Controllers
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Index/"), newName);
                         fileViewModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Index/" + newName;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(fileViewModel.file.InputStream);
                         SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting
                         {
                             SettingName = Setting.Platform.BANNER,
-                            Value = iconUrl,
+                            Value = null,
+                            Image = (byte[])imgCon.ConvertTo(img, typeof(byte[])),
                             IsEnabled = true,
                             Subplatform = subplatformToChange
                         });

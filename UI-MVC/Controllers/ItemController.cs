@@ -8,6 +8,7 @@ using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.DAL.EF;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -85,6 +86,7 @@ namespace UI_MVC.Controllers
             {
                 Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
                 var iconUrl = "";
+                byte[] image = null;
                 string _FileName = "";
                 if (organisationEditModel.file != null)
                 {
@@ -95,7 +97,10 @@ namespace UI_MVC.Controllers
                         var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Organisations/"), newName);
                         organisationEditModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Organisations/" + newName;
+                        iconUrl               = @"~/Content/Images/Organisations/" + newName;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img               = Image.FromStream(organisationEditModel.file.InputStream);
+                        image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
                     }
                 }
                 else
@@ -108,18 +113,12 @@ namespace UI_MVC.Controllers
                 if (organisationEditModel.ThemeId != null)
                 {
                     theme = itemMgr.GetTheme((int)organisationEditModel.ThemeId);
-                    itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName, organisationEditModel.SocialMediaLink, new List<Theme> { theme }, iconUrl, subplatform: Subplatform);
+                    itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName, organisationEditModel.SocialMediaLink, new List<Theme> { theme }, iconUrl, false, Subplatform, image);
                 }
                 else
                 {
-                    itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName, organisationEditModel.SocialMediaLink, null, iconUrl, subplatform: Subplatform);
+                    itemMgr.AddOrganisation(organisationEditModel.Name, organisationEditModel.FullName, organisationEditModel.SocialMediaLink, null, iconUrl, false, Subplatform, image);
                 }
-
-
-
-
-
-
 
                 return RedirectToAction("ItemBeheer", "Item");
             }
@@ -160,6 +159,7 @@ namespace UI_MVC.Controllers
             {
                 Organisation organisation = itemMgr.GetOrganisation(organisationEditModel.ItemId);
                 var iconUrl = "";
+                byte[] image = null;
                 string _FileName = "";
                 if (organisationEditModel.file != null)
                 {
@@ -172,12 +172,16 @@ namespace UI_MVC.Controllers
                         organisationEditModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Organisations/" + newName;
                         organisation.IconURL = iconUrl;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(organisationEditModel.file.InputStream);
+                        image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
                     }
                 }
                 else
                 {
                     iconUrl = organisation.IconURL;
                 }
+                organisation.Image = image; 
                 organisation.IsTrending = organisationEditModel.IsTrending;
                 organisation.FullName = organisationEditModel.FullName;
                 organisation.SocialMediaLink = organisationEditModel.SocialMediaLink;
@@ -284,6 +288,7 @@ namespace UI_MVC.Controllers
                 Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
                 var iconUrl = "";
                 string _FileName = "";
+                byte[] image = null;
                 if (themeEditModel.file != null)
                 {
                     if (themeEditModel.file.ContentLength > 0)
@@ -294,6 +299,10 @@ namespace UI_MVC.Controllers
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Themes/"), newName);
                         themeEditModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Themes/" + newName;
+
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(themeEditModel.file.InputStream);
+                        image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
                     }
                 }
                 else
@@ -302,12 +311,12 @@ namespace UI_MVC.Controllers
                 }
                 if (themeEditModel.KeywordId is null)
                 {
-                    Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, new List<Keyword>(), themeEditModel.IsTrending, Subplatform);
+                    Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, new List<Keyword>(), themeEditModel.IsTrending,Subplatform, image);
                 }
                 else
                 {
                     Keyword keyword = itemMgr.GetKeyword((int)themeEditModel.KeywordId);
-                    Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, new List<Keyword> { keyword }, themeEditModel.IsTrending, Subplatform);
+                    Theme theme = itemMgr.AddTheme(themeEditModel.Name, themeEditModel.Description, iconUrl, new List<Keyword> { keyword }, themeEditModel.IsTrending, Subplatform, image);
                 }
 
 
@@ -336,6 +345,8 @@ namespace UI_MVC.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult EditTheme(string subplatform, int id, ThemeEditModel themeEditModel)
         {
+            byte[] image = null;
+
             if (ModelState.IsValid)
             {
                 Theme theme = itemMgr.GetTheme(themeEditModel.ItemId);
@@ -352,12 +363,16 @@ namespace UI_MVC.Controllers
                         themeEditModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Themes/" + newName;
                         theme.IconURL = iconUrl;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(themeEditModel.file.InputStream);
+                        image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
                     }
                 }
                 else
                 {
                     iconUrl = theme.IconURL;
                 }
+                theme.Image = image; 
                 theme.IsTrending = themeEditModel.IsTrending;
                 theme.Name = themeEditModel.Name;
                 theme.Description = themeEditModel.Description;
@@ -390,6 +405,7 @@ namespace UI_MVC.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult PersonPartialCreate(string subplatform, PersonEditModel personEditModel)
         {
+            byte[] image = null;
             if (ModelState.IsValid)
             {
                 Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -412,6 +428,9 @@ namespace UI_MVC.Controllers
                         string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
                         personEditModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Persons/" + newName;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(personEditModel.file.InputStream);
+                        image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
                     }
                 }
                 else
@@ -419,7 +438,7 @@ namespace UI_MVC.Controllers
                     iconUrl = Subplatform.Settings.Where(p => p.SettingName.Equals(Setting.Platform.DEFAULT_NEW_ITEM_ICON)).First().Value;
                 }
 
-                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, iconUrl, personEditModel.IsTrending, null, null, null, null, null, null, null, personEditModel.Gemeente, null, null, organisation, Subplatform, null);
+                itemMgr.AddPerson(personEditModel.Name, personEditModel.SocialMediaLink, iconUrl, personEditModel.IsTrending, null, null, null, null, null, null, null, personEditModel.Gemeente, null, null, organisation, Subplatform, null, image);
 
                 return RedirectToAction("ItemBeheer", "Item");
             }
@@ -455,7 +474,7 @@ namespace UI_MVC.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult EditPerson(string subplatform, int id, PersonEditModel personEditModel)
         {
-
+            byte[] image = null;
             if (ModelState.IsValid)
             {
                 Person person = itemMgr.GetPerson(personEditModel.ItemId);
@@ -480,12 +499,17 @@ namespace UI_MVC.Controllers
                         personEditModel.file.SaveAs(_path);
                         iconUrl = @"~/Content/Images/Persons/" + newName;
                         person.IconURL = iconUrl;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(personEditModel.file.InputStream);
+                        image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
+
                     }
                 }
                 else
                 {
                     iconUrl = person.IconURL;
                 }
+                person.Image = image; 
                 person.Gemeente = personEditModel.Gemeente;
                 person.IsTrending = personEditModel.IsTrending;
                 person.Organisation = organisation;

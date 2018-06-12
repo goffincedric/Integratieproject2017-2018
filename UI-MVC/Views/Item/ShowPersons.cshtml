@@ -33,33 +33,43 @@
               <tbody>
                 @foreach (var item in Model)
                 {
-                  <tr>
-                    <td><img style="width: 50px; height:50px; border-radius:50%; margin-left:50px;" src="@Url.Content(@item.IconURL)" alt=""></td>
-                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Organisation.Name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Gemeente)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Records.Count)</td>
-                    <td>@Html.DisplayFor(modelItem => item.SubscribedProfiles.Count) </td>
-                    <td>
-                      @if (!item.SubscribedProfiles.Contains(@ViewBag.Profile))
-                      {
-                        using (Html.BeginForm("AddSubscription", "Item", new { Id = item.ItemId }, FormMethod.Post))
-                        {
-                          @Html.AntiForgeryToken()
-                          <button type="submit" value="Subscribe" class="btn btn-outline-primary btn-lg btn-block">Subcribe</button>
-                        }
-                      }
-                      else
-                      {
-                        using (Html.BeginForm("RemoveSubscription", "Item", new { Id = item.ItemId }, FormMethod.Post))
-                        {
-                          @Html.AntiForgeryToken()
-                          <button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
-                        }
-                      }
-                    </td>
+                <tr>
+                  <td>
+                    @if (item.Image is null)
+                    {
+                      <img style="width: 50px; height:50px; border-radius:50%; margin-left:50px;" src="@Url.Content(@item.IconURL)" alt="">
 
-                  </tr>
+                    }
+                    else
+                    {
+                      <img style="width: 50px; height:50px; border-radius:50%; margin-left:50px;" src="@Url.Content(String.Format("data:image/png;base64,{0}",Convert.ToBase64String(@item.Image)))" alt="">
+                    }
+                  </td>
+                  <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                  <td>@Html.DisplayFor(modelItem => item.Organisation.Name)</td>
+                  <td>@Html.DisplayFor(modelItem => item.Gemeente)</td>
+                  <td>@Html.DisplayFor(modelItem => item.Records.Count)</td>
+                  <td>@Html.DisplayFor(modelItem => item.SubscribedProfiles.Count) </td>
+                  <td>
+                    @if (!item.SubscribedProfiles.Contains(@ViewBag.Profile))
+                    {
+                      using (Html.BeginForm("AddSubscription", "Item", new { Id = item.ItemId }, FormMethod.Post))
+                      {
+                        @Html.AntiForgeryToken()
+                        <button type="submit" value="Subscribe" class="btn btn-outline-primary btn-lg btn-block">Subcribe</button>
+                      }
+                    }
+                    else
+                    {
+                      using (Html.BeginForm("RemoveSubscription", "Item", new { Id = item.ItemId }, FormMethod.Post))
+                      {
+                        @Html.AntiForgeryToken()
+                        <button type="submit" value="Unsubscribe" class="btn btn-danger btn-lg btn-block">Unsubscribe</button>
+                      }
+                    }
+                  </td>
+
+                </tr>
                 }
               </tbody>
             </table>
