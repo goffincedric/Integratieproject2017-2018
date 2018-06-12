@@ -161,7 +161,7 @@ namespace PB.BL
                 {
                     UserName = "captain",
                     Email = "example@example.tld",
-                    ProfileIcon = @"~/App_Data/Users/user.png",
+                    ProfileIcon = @"~/Content/Images/Users/user.png",
                     CreatedOn = DateTime.Now,
                     AdminPlatforms = subplatforms
                 };
@@ -227,7 +227,7 @@ namespace PB.BL
                 {
                     UserName = "admin",
                     Email = "admin@example.tld",
-                    ProfileIcon = @"~/App_Data/Users/user.png",
+                    ProfileIcon = @"~/Content/Images/Users/user.png",
                     CreatedOn = DateTime.Now,
                     AdminPlatforms = new List<Subplatform>()
                     {

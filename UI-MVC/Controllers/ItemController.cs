@@ -93,9 +93,9 @@ namespace UI_MVC.Controllers
                         _FileName = Path.GetFileName(organisationEditModel.file.FileName);
                         var username = organisationEditModel.Name.ToString();
                         var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/App_Data/Organisations/"), newName);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Organisations/"), newName);
                         organisationEditModel.file.SaveAs(_path);
-                        iconUrl = @"~/App_Data/Organisations/" + newName;
+                        iconUrl = @"~/Content/Images/Organisations/" + newName;
                     }
                 }
                 else
@@ -168,9 +168,9 @@ namespace UI_MVC.Controllers
                         _FileName = Path.GetFileName(organisationEditModel.file.FileName);
                         var username = organisationEditModel.Name.ToString();
                         var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/App_Data/Organisations/"), newName);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Organisations/"), newName);
                         organisationEditModel.file.SaveAs(_path);
-                        iconUrl = @"~/App_Data/Organisations/" + newName;
+                        iconUrl = @"~/Content/Images/Organisations/" + newName;
                         organisation.IconURL = iconUrl;
                     }
                 }
@@ -291,9 +291,9 @@ namespace UI_MVC.Controllers
                         _FileName = Path.GetFileName(themeEditModel.file.FileName);
                         var username = themeEditModel.Name.ToString();
                         var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/App_Data/Themes/"), newName);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Themes/"), newName);
                         themeEditModel.file.SaveAs(_path);
-                        iconUrl = @"~/App_Data/Themes/" + newName;
+                        iconUrl = @"~/Content/Images/Themes/" + newName;
                     }
                 }
                 else
@@ -409,9 +409,9 @@ namespace UI_MVC.Controllers
                         _FileName = Path.GetFileName(personEditModel.file.FileName);
                         var username = personEditModel.Name.ToString();
                         var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/App_Data/Persons/"), newName);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
                         personEditModel.file.SaveAs(_path);
-                        iconUrl = @"~/App_Data/Persons/" + newName;
+                        iconUrl = @"~/Content/Images/Persons/" + newName;
                     }
                 }
                 else
@@ -476,9 +476,9 @@ namespace UI_MVC.Controllers
                         _FileName = Path.GetFileName(personEditModel.file.FileName);
                         var username = personEditModel.Name.ToString();
                         var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/App_Data/Persons/"), newName);
+                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Persons/"), newName);
                         personEditModel.file.SaveAs(_path);
-                        iconUrl = @"~/App_Data/Persons/" + newName;
+                        iconUrl = @"~/Content/Images/Persons/" + newName;
                         person.IconURL = iconUrl;
                     }
                 }
@@ -509,7 +509,7 @@ namespace UI_MVC.Controllers
                 DateFormatHandling = DateFormatHandling.IsoDateFormat
             };
             string json = JsonConvert.SerializeObject(persons, serializerSettings);
-            string _path = Path.Combine(Server.MapPath("~/App_Data/Export/"), "Persons.json");
+            string _path = Path.Combine(Server.MapPath("~/Content/Images/Export/"), "Persons.json");
             System.IO.File.WriteAllText(_path, json);
             return Json(new { fileName = "Persons.json", errorMessage = "" });
         }
@@ -518,7 +518,7 @@ namespace UI_MVC.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult ExportPersons(string file)
         {
-            string fullPath = Path.Combine(Server.MapPath("~/App_Data/Export/"), file);
+            string fullPath = Path.Combine(Server.MapPath("~/Content/Images/Export/"), file);
             return File(fullPath, "application/", file);
         }
 
