@@ -20,12 +20,13 @@ namespace UI_MVC
 {
     public partial class Startup
     {
+        public static SemaphoreSlim JobSemaphore = new SemaphoreSlim(1, 1);
+
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
 
             #region Background task scheduling
-            SemaphoreSlim JobSemaphore = new SemaphoreSlim(1, 1);
 
             UnitOfWorkManager uowMgr = new UnitOfWorkManager();
             SubplatformManager subplatformMgr = new SubplatformManager(uowMgr);
@@ -98,7 +99,7 @@ namespace UI_MVC
                     (schedule) => schedule
                     .WithName(s.URL + "-weeklyreview")
                     .ToRunOnceAt(dateToSendWeeklyReview.AddMinutes(30).AddHours(18))
-                    .AndEvery(int.Parse(weeklyReviewsInterval)).Days());
+                    .AndEvery(int.Parse(weeklyReviewsInterval)).Days().At(18, 30));
                 }
             });
             #endregion

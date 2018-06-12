@@ -266,61 +266,39 @@
               <h6 style="margin-bottom: 25px" class="h6">Change FAQ</h6>
 
               <div class="form-group row">
-
-
-                <div class="row w-100">
-
-                  <select id="FAQ" class="form-control">
-                    <option>Kies FAQ item...</option>
-                  </select>
-
-
-                  <label for="vraag" class="col-form-label-sm">
-                    Vraag
-                  </label>
-                  <textarea class="form-control" id="vraag" rows="2">
-
-                    </textarea>
-                  <br />
-                  <label for="antwoord" class="col-form-label-sm">
-                    Antwoord
-                  </label>
-                  <textarea class="form-control" id="antwoord" rows="2">
-
-                    </textarea>
-
-
-                  <button id="btnChange" class="btn btn-primary btn-sm mT-10">Save</button>
-                </div>
-
-
+                  <div class="row w-100">
+                      <select id="FAQ" class="form-control">
+                          <option>Kies FAQ item...</option>
+                      </select>
+                      <label for="vraag" class="col-form-label-sm">
+                          Vraag
+                      </label>
+                      <textarea class="form-control" id="vraag"></textarea>
+                      <br />
+                      <label for="antwoord" class="col-form-label-sm">
+                          Antwoord
+                      </label>
+                      <textarea class="form-control" id="antwoord"></textarea>
+                      <button id="btnChange" class="btn btn-primary btn-sm mT-10">Save</button>
+                      <button id="btnRemove" class="btn btn-primary btn-sm mL-10 mT-10">Remove</button>
+                  </div>
               </div>
 
               <h6 style="margin-bottom: 25px" class="h6">Add FAQ</h6>
               <div class="form-group row">
-
-
-                <div class="row w-100">
-
-                  <label for="newvraag" class="col-form-label-sm">
-                    Vraag
-                  </label>
-                  <textarea class="form-control" id="newvraag" rows="2">
-
-                    </textarea>
-                  <br />
-                  <label for="newantwoord" class="col-form-label-sm">
-                    Vraag
-                  </label>
-                  <textarea class="form-control" id="newantwoord" rows="2">
-
-                    </textarea>
-
-                  <br />
-                  <button id="btnAdd" class="btn btn-primary btn-sm mT-10">Add</button>
-                </div>
-
-
+                  <div class="row w-100">
+                      <label for="newvraag" class="col-form-label-sm">
+                          Vraag
+                      </label>
+                      <textarea class="form-control" id="newvraag"></textarea>
+                      <br />
+                      <label for="newantwoord" class="col-form-label-sm">
+                          Vraag
+                      </label>
+                      <textarea class="form-control" id="newantwoord"></textarea>
+                      <br />
+                      <button id="btnAdd" class="btn btn-primary btn-sm mT-10">Add</button>
+                  </div>
               </div>
             </div>
           </div>
@@ -334,31 +312,38 @@
 
   $("#btnChange").click(function () {
     const faqChange = { FAQitem: $("#FAQ option:selected").text(), Question: $("#vraag").val(), Answer: $("#antwoord").val(), Subplatform: "@ViewBag.Subplatform"};
-    console.log("GERAAKT");
     $.ajax({
       url: "https://localhost:44342/api/subplatform/ChangeTagFAQ",
       type: "PUT",
       data: JSON.stringify(faqChange),
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
       contentType: 'application/json'
+      });
+      location.reload();
+  });
 
-
+    $("#btnRemove").click(function () {
+    const faqRemove = { FAQitem: $("#FAQ option:selected").text(), Question: $("#vraag").val(), Answer: $("#antwoord").val(), Subplatform: "@ViewBag.Subplatform"};
+    $.ajax({
+        url: "https://localhost:44342/api/subplatform/RemoveQuestion",
+      type: "POST",
+      data: JSON.stringify(faqRemove),
+      headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
+      contentType: 'application/json'
     });
+        location.reload();
   });
 
 
 
   $("#btnSave").click(function () {
     const menu = { MenuItem: $("#menu option:selected").text(), MenuText: $("#text").val(), Subplatform: "@ViewBag.Subplatform"};
-    console.log("GERAAKT");
     $.ajax({
-
       url: "https://localhost:44342/api/subplatform/ChangeTagMenu",
       type: "PUT",
       data: JSON.stringify(menu),
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
       contentType: 'application/json'
-
     });
     location.reload();
   });
@@ -366,16 +351,14 @@
 
   $("#btnAdd").click(function () {
     const FAQ = { Question: $("#newvraag").val(), Answer: $("#newantwoord").val(), Subplatform: "@ViewBag.Subplatform"};
-    console.log("GERAAKT");
     $.ajax({
-
       url: "https://localhost:44342/api/subplatform/AddQuestion",
       type: "POST",
       data: JSON.stringify(FAQ),
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
       contentType: 'application/json'
-
-    });
+      });
+      location.reload();
   });
   function tagMenu() {
     var tmp = "";
@@ -385,7 +368,7 @@
       type: 'GET',
       dataType: 'json',
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
-      url: "https://localhost:44342/api/subplatform/GetTagsOfMenu/" + "@ViewBag.SubplatformId"
+      url: "https://localhost:44342/api/subplatform/GetTagsOfMenu/@ViewBag.SubplatformId"
     }).responseJSON;
 
     keys = Object.keys(tmp);
@@ -421,7 +404,7 @@
       type: 'GET',
       dataType: 'json',
       headers: { 'x-api-key': '303d22a4-402b-4d3c-b279-9e81c0480711' },
-      url: "https://localhost:44342/api/subplatform/GetTagsFaq/2"
+        url: "https://localhost:44342/api/subplatform/GetTagsFaq/@ViewBag.SubplatformId"
     }).responseJSON;
 
 
