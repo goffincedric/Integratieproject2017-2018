@@ -7,7 +7,7 @@ namespace UI_MVC.Models
 {
     public class FAQViewModel
     {
-        public String FAQitem { get; set; }
+        public string FAQitem { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
         public string Subplatform { get; set; }
