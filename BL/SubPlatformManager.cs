@@ -154,6 +154,7 @@ namespace PB.BL
                 IsEnabled = true,
                 Subplatform = subplatform
             });
+            // TODO: Alle settings toevoegen (color, banner, ...)
 
             List<Page> pagesToAdd = new List<Page>
             {

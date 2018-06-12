@@ -52,10 +52,12 @@ namespace UI_MVC.Controllers
                 ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes"))?.Text ?? "Themes";
 
                 IEnumerable<Tag> homeTags = SubplatformMgr.GetTags(subplatform.Pages.Single(p => p.PageName.Equals("Home")).PageId);
-                ViewBag.HeaderText = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTitle")).Text ?? "Subplatform title";
-                ViewBag.BannerSub1 = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTextSub1")).Text ?? "BannerTextSub1";
-                ViewBag.BannerSub2 = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTextSub2")).Text ?? "BannerTextSub2";
-                ViewBag.CallToAction = homeTags.SingleOrDefault(t => t.Name.Equals("call-to-action-text")).Text ?? "call-to-action-text";
+                ViewBag.HeaderText = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTitle"))?.Text ?? "Subplatform title";
+                ViewBag.BannerSub1 = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTextSub1"))?.Text ?? "BannerTextSub1";
+                ViewBag.BannerSub2 = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTextSub2"))?.Text ?? "BannerTextSub2";
+                ViewBag.CallToAction = homeTags.SingleOrDefault(t => t.Name.Equals("call-to-action-text"))?.Text ?? "call-to-action-text";
+
+
             }
         }
         #region Search
@@ -188,11 +190,9 @@ namespace UI_MVC.Controllers
 
             return View("Index");
         }
-
         #endregion
 
         #region Index
-
         [Route("~/")]
         public ActionResult Index2()
         {
@@ -221,10 +221,13 @@ namespace UI_MVC.Controllers
 
         public ActionResult FAQ(string subplatform)
         {
-            IEnumerable<Tag> tags = SubplatformMgr.GetPage(2).Tags.ToList();
             ViewBag.Title = SubplatformMgr.GetSubplatform(subplatform).Name;
             ViewBag.Tag = "#collapse";
             ViewBag.Control = "collapse";
+
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            IEnumerable<Tag> tags = Subplatform.Pages.SingleOrDefault(p => p.PageName.Equals("FAQ"))?.Tags;
+            if (tags is null || tags.Count() == 0) return HttpNotFound();
             return View(tags);
         }
 
