@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -256,10 +257,83 @@ namespace UI_MVC.Controllers
             };
 
             SubplatformMgr.ChangeSubplatformSettings(Subplatform, subplatformSettings);
-            
-            JobManager.GetSchedule(subplatform + "-seed").ToRunEvery(intervals.SEED_INTERVAL_HOURS).Hours();
-            JobManager.GetSchedule(subplatform + "-alert").ToRunEvery(intervals.ALERT_GENERATION_INTERVAL_HOURS).Hours();
-            JobManager.GetSchedule(subplatform + "-weeklyreview").ToRunEvery(intervals.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS).Days();
+
+            #region Reset schedules
+            // Cleanup & Seed
+            JobManager.AllSchedules
+                .Where(s => s.Name.Equals(Subplatform.URL + "-seed")).ToList()
+                .ForEach(s =>
+                {
+                    JobManager.RemoveJob(s.Name);
+                });
+            JobManager.AddJob(() =>
+            {
+                Startup.JobSemaphore.Wait();
+                try { itemMgr.CleanupOldRecords(Subplatform); }
+                finally
+                {
+                    ItemManager.IsCleaning = false;
+                    Startup.JobSemaphore.Release();
+                }
+
+                Startup.JobSemaphore.Wait();
+                try { itemMgr.SyncDatabase(Subplatform); }
+                finally
+                {
+                    ItemManager.IsSyncing = false;
+                    Startup.JobSemaphore.Release();
+                }
+            },
+            (schedule) => schedule
+            .WithName(Subplatform.URL + "-seed")
+            .ToRunOnceAt(1, 0)
+            .AndEvery(intervals.SEED_INTERVAL_HOURS).Hours());
+
+            // Alert generation
+            JobManager.AllSchedules
+                .Where(s => s.Name.Equals(Subplatform.URL + "-alert")).ToList()
+                .ForEach(s =>
+                {
+                    JobManager.RemoveJob(s.Name);
+                });
+            JobManager.AddJob(() =>
+            {
+                Startup.JobSemaphore.Wait();
+                try { accountMgr.GenerateAllAlerts(itemMgr.GetItems().Where(i => i.SubPlatforms.Contains(Subplatform))); }
+                finally
+                {
+                    AccountManager.IsGeneratingAlerts = false;
+                    Startup.JobSemaphore.Release();
+                }
+            },
+            (schedule) => schedule
+            .WithName(Subplatform.URL + "-alert")
+            .ToRunOnceAt(4, 0)
+            .AndEvery(intervals.ALERT_GENERATION_INTERVAL_HOURS).Hours());
+
+            // Send weekly reviews
+            JobManager.AllSchedules
+                .Where(s => s.Name.Equals(Subplatform.URL + "-weeklyreview")).ToList()
+                .ForEach(s =>
+                {
+                    JobManager.RemoveJob(s.Name);
+                });
+            DateTime dateToSendWeeklyReview = DateTime.Today.AddDays(7 - (int)DateTime.Today.DayOfWeek);
+            JobManager.AddJob(() =>
+            {
+                Startup.JobSemaphore.Wait();
+                try { accountMgr.SendWeeklyReviews(Subplatform); }
+                finally
+                {
+                    AccountManager.IsSendingWeeklyReviews = false;
+                    Startup.JobSemaphore.Release();
+                }
+            },
+            (schedule) => schedule
+            .WithName(Subplatform.URL + "-weeklyreview")
+            .ToRunOnceAt(dateToSendWeeklyReview.AddMinutes(30).AddHours(18))
+            .AndEvery(intervals.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS).Days().At(18, 30));
+            #endregion
 
             return RedirectToAction("PlatformSettings", "Subplatform");
         }
