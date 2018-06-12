@@ -1,6 +1,6 @@
 [
   {
-    "TrendingScore": 27,
+    "TrendingScore": 0,
     "FirstName": "Imade",
     "LastName": "Annouri",
     "Level": "Vlaams",
@@ -27,13 +27,13 @@
     "IconURL": "https://twitter.com/ImadeAnnouri/profile_image?size=original"
   },
   {
-    "TrendingScore": 4,
+    "TrendingScore": 0,
     "FirstName": "Caroline",
     "LastName": "Bastiaens",
     "Level": "Vlaams",
     "SocialMediaLink": "https:/www.facebook.com/carolinebastiaens",
     "Site": "http://www.carolinebastiaens.be",
-    "TwitterName": "@bastiaenscarol",
+    "TwitterName": "bastiaenscarol",
     "Position": "Parlement",
     "District": "Antwerpen",
     "Gemeente": "Hoboken",
@@ -51,10 +51,10 @@
     "ItemId": 19,
     "Name": "Caroline Bastiaens",
     "IsTrending": false,
-    "IconURL": "https://twitter.com/@bastiaenscarol/profile_image?size=original"
+    "IconURL": "https://twitter.com/bastiaenscarol/profile_image?size=original"
   },
   {
-    "TrendingScore": 13,
+    "TrendingScore": 0,
     "FirstName": "Jan",
     "LastName": "Bertels",
     "Level": "Vlaams",
@@ -81,7 +81,7 @@
     "IconURL": "https://twitter.com/jan_bertels/profile_image?size=original"
   },
   {
-    "TrendingScore": 8,
+    "TrendingScore": 0,
     "FirstName": "Vera",
     "LastName": "Celis",
     "Level": "Vlaams",
@@ -98,7 +98,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2059-06-08T00:00:00",
@@ -108,7 +108,7 @@
     "IconURL": "https://twitter.com/Vera_Celis/profile_image?size=original"
   },
   {
-    "TrendingScore": 19,
+    "TrendingScore": 0,
     "FirstName": "Dirk",
     "LastName": "De Kort",
     "Level": "Vlaams",
@@ -135,7 +135,7 @@
     "IconURL": "https://twitter.com/Dirk_de_Kort/profile_image?size=original"
   },
   {
-    "TrendingScore": 384,
+    "TrendingScore": 0,
     "FirstName": "Annick",
     "LastName": "De Ridder",
     "Level": "Vlaams",
@@ -152,7 +152,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -162,7 +162,7 @@
     "IconURL": "https://twitter.com/Annickderidder/profile_image?size=original"
   },
   {
-    "TrendingScore": 11,
+    "TrendingScore": 0,
     "FirstName": "Caroline",
     "LastName": "Gennez",
     "Level": "Vlaams",
@@ -216,7 +216,7 @@
     "IconURL": "https://twitter.com/KathleenHelsen/profile_image?size=original"
   },
   {
-    "TrendingScore": 103,
+    "TrendingScore": 0,
     "FirstName": "Marc",
     "LastName": "Hendrickx",
     "Level": "Vlaams",
@@ -233,7 +233,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1968-08-08T00:00:00",
@@ -243,7 +243,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 50,
+    "TrendingScore": 0,
     "FirstName": "Jan",
     "LastName": "Hofkens",
     "Level": "Vlaams",
@@ -260,7 +260,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1969-04-08T00:00:00",
@@ -270,7 +270,7 @@
     "IconURL": "https://twitter.com/JanHofkens/profile_image?size=original"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Sofie",
     "LastName": "Joosen",
     "Level": "Vlaams",
@@ -287,7 +287,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1986-07-04T00:00:00",
@@ -324,7 +324,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 5,
+    "TrendingScore": 0,
     "FirstName": "Yasmine",
     "LastName": "Kherbache",
     "Level": "Vlaams",
@@ -368,7 +368,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1968-05-06T00:00:00",
@@ -378,7 +378,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 5,
+    "TrendingScore": 0,
     "FirstName": "Ingrid",
     "LastName": "Pira",
     "Level": "Vlaams",
@@ -432,7 +432,7 @@
     "IconURL": "https://twitter.com/TinneRombouts/profile_image?size=original"
   },
   {
-    "TrendingScore": 14,
+    "TrendingScore": 0,
     "FirstName": "Willem-Frederik",
     "LastName": "Schiltz",
     "Level": "Vlaams",
@@ -459,7 +459,7 @@
     "IconURL": "https://twitter.com/wfschiltz/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Katrien",
     "LastName": "Schryvers",
     "Level": "Vlaams",
@@ -486,7 +486,7 @@
     "IconURL": "https://twitter.com/KatrienSchryver/profile_image?size=original"
   },
   {
-    "TrendingScore": 485,
+    "TrendingScore": 0,
     "FirstName": "Bart",
     "LastName": "Somers",
     "Level": "Vlaams",
@@ -513,7 +513,7 @@
     "IconURL": "https://twitter.com/BartSomers/profile_image?size=original"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Martine",
     "LastName": "Taelman",
     "Level": "Vlaams",
@@ -540,7 +540,7 @@
     "IconURL": "https://twitter.com/martinetaelman/profile_image?size=original"
   },
   {
-    "TrendingScore": 27,
+    "TrendingScore": 0,
     "FirstName": "Güler",
     "LastName": "Turan",
     "Level": "Vlaams",
@@ -567,7 +567,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 83,
+    "TrendingScore": 0,
     "FirstName": "Wouter",
     "LastName": "Van Besien",
     "Level": "Vlaams",
@@ -594,7 +594,7 @@
     "IconURL": "https://twitter.com/WouterVanBesien/profile_image?size=original"
   },
   {
-    "TrendingScore": 66,
+    "TrendingScore": 0,
     "FirstName": "Ludo",
     "LastName": "Van Campenhout",
     "Level": "Vlaams",
@@ -611,7 +611,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -621,7 +621,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 39,
+    "TrendingScore": 0,
     "FirstName": "Koen",
     "LastName": "Van den Heuvel",
     "Level": "Vlaams",
@@ -648,7 +648,7 @@
     "IconURL": "https://twitter.com/KVDHeuvel_VP/profile_image?size=original"
   },
   {
-    "TrendingScore": 895,
+    "TrendingScore": 0,
     "FirstName": "Anke",
     "LastName": "Van dermeersch",
     "Level": "Vlaams",
@@ -671,11 +671,11 @@
     "DateOfBirth": "1972-10-27T00:00:00",
     "ItemId": 42,
     "Name": "Anke Van dermeersch",
-    "IsTrending": true,
+    "IsTrending": false,
     "IconURL": "https://twitter.com/anke_online/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Tine",
     "LastName": "van der Vloet",
     "Level": "Vlaams",
@@ -692,7 +692,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1978-01-31T00:00:00",
@@ -702,7 +702,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 4,
+    "TrendingScore": 0,
     "FirstName": "Kris",
     "LastName": "Van Dijck",
     "Level": "Vlaams",
@@ -719,7 +719,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2063-02-10T00:00:00",
@@ -746,7 +746,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1968-09-30T00:00:00",
@@ -756,7 +756,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 239,
+    "TrendingScore": 0,
     "FirstName": "Tom",
     "LastName": "Van Grieken",
     "Level": "Vlaams",
@@ -800,7 +800,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2065-03-05T00:00:00",
@@ -810,7 +810,7 @@
     "IconURL": "https://twitter.com/VanMiertPaul/profile_image?size=original"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Manuela",
     "LastName": "Van Werde",
     "Level": "Vlaams",
@@ -827,7 +827,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -837,7 +837,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 61,
+    "TrendingScore": 0,
     "FirstName": "Peter",
     "LastName": "Wouters",
     "Level": "Vlaams",
@@ -854,7 +854,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1967-03-22T00:00:00",
@@ -881,7 +881,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2046-02-15T00:00:00",
@@ -918,7 +918,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 9,
+    "TrendingScore": 0,
     "FirstName": "Ann",
     "LastName": "Brusseel",
     "Level": "Vlaams",
@@ -945,7 +945,7 @@
     "IconURL": "https://twitter.com/AnnBrusseel/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Yamila",
     "LastName": "Idrissi",
     "Level": "Vlaams",
@@ -972,7 +972,7 @@
     "IconURL": "https://twitter.com/Yamila_Idrissi/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Joris",
     "LastName": "Poschet",
     "Level": "Vlaams",
@@ -999,7 +999,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 6,
+    "TrendingScore": 0,
     "FirstName": "Elke",
     "LastName": "Van den Brandt",
     "Level": "Vlaams",
@@ -1026,7 +1026,7 @@
     "IconURL": "https://twitter.com/elkevdbrandt/profile_image?size=original"
   },
   {
-    "TrendingScore": 73,
+    "TrendingScore": 0,
     "FirstName": "Karl",
     "LastName": "Vanlouwe",
     "Level": "Vlaams",
@@ -1043,7 +1043,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1970-10-22T00:00:00",
@@ -1053,7 +1053,7 @@
     "IconURL": "https://twitter.com/KarlVanlouwe/profile_image?size=original"
   },
   {
-    "TrendingScore": 20,
+    "TrendingScore": 0,
     "FirstName": "Rob",
     "LastName": "Beenders",
     "Level": "Vlaams",
@@ -1080,7 +1080,7 @@
     "IconURL": "https://twitter.com/Robbeenders/profile_image?size=original"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Lode",
     "LastName": "Ceyssens",
     "Level": "Vlaams",
@@ -1161,7 +1161,7 @@
     "IconURL": "https://twitter.com/sonjaclaes/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Johan",
     "LastName": "Danen",
     "Level": "Vlaams",
@@ -1188,7 +1188,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Jelle",
     "LastName": "Engelbosch",
     "Level": "Vlaams",
@@ -1205,7 +1205,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1980-10-06T00:00:00",
@@ -1215,7 +1215,7 @@
     "IconURL": "https://twitter.com/JelleEngelbosch/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Lies",
     "LastName": "Jans",
     "Level": "Vlaams",
@@ -1232,7 +1232,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1974-01-20T00:00:00",
@@ -1242,7 +1242,7 @@
     "IconURL": "https://twitter.com/lies_jans/profile_image?size=original"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Vera",
     "LastName": "Jans",
     "Level": "Vlaams",
@@ -1269,7 +1269,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 20,
+    "TrendingScore": 0,
     "FirstName": "Chris",
     "LastName": "Janssens",
     "Level": "Vlaams",
@@ -1296,7 +1296,7 @@
     "IconURL": "https://twitter.com/chrisjanssensVB/profile_image?size=original"
   },
   {
-    "TrendingScore": 4,
+    "TrendingScore": 0,
     "FirstName": "Marino",
     "LastName": "Keulen",
     "Level": "Vlaams",
@@ -1323,7 +1323,7 @@
     "IconURL": "https://twitter.com/KeulenMarino/profile_image?size=original"
   },
   {
-    "TrendingScore": 5,
+    "TrendingScore": 0,
     "FirstName": "Jos",
     "LastName": "Lantmeeters",
     "Level": "Vlaams",
@@ -1340,7 +1340,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2064-03-30T00:00:00",
@@ -1350,7 +1350,7 @@
     "IconURL": "https://twitter.com/joslantmeeters/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Ingrid",
     "LastName": "Lieten",
     "Level": "Vlaams",
@@ -1377,7 +1377,7 @@
     "IconURL": "https://twitter.com/ingridlieten/profile_image?size=original"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Lydia",
     "LastName": "Peeters",
     "Level": "Vlaams",
@@ -1404,7 +1404,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 114,
+    "TrendingScore": 0,
     "FirstName": "Jan",
     "LastName": "Peumans",
     "Level": "Vlaams",
@@ -1421,7 +1421,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2051-06-01T00:00:00",
@@ -1431,7 +1431,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Grete",
     "LastName": "Remen",
     "Level": "Vlaams",
@@ -1448,7 +1448,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -1512,7 +1512,7 @@
     "IconURL": "https://twitter.com/barbarabonte/profile_image?size=original"
   },
   {
-    "TrendingScore": 8,
+    "TrendingScore": 0,
     "FirstName": "Robrecht",
     "LastName": "Bothuyne",
     "Level": "Vlaams",
@@ -1539,7 +1539,7 @@
     "IconURL": "https://twitter.com/RobrechtB/profile_image?size=original"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Caroline",
     "LastName": "Croo",
     "Level": "Vlaams",
@@ -1556,7 +1556,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2063-01-28T00:00:00",
@@ -1566,7 +1566,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 13,
+    "TrendingScore": 0,
     "FirstName": "Koen",
     "LastName": "Daniëls",
     "Level": "Vlaams",
@@ -1583,7 +1583,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1978-05-17T00:00:00",
@@ -1593,7 +1593,7 @@
     "IconURL": "https://twitter.com/koendaniels/profile_image?size=original"
   },
   {
-    "TrendingScore": 30,
+    "TrendingScore": 0,
     "FirstName": "Mathias",
     "LastName": "De Clercq",
     "Level": "Vlaams",
@@ -1620,7 +1620,7 @@
     "IconURL": "https://twitter.com/MathiasDeClercq/profile_image?size=original"
   },
   {
-    "TrendingScore": 258,
+    "TrendingScore": 0,
     "FirstName": "Herman",
     "LastName": "De Croo",
     "Level": "Vlaams",
@@ -1647,7 +1647,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 8,
+    "TrendingScore": 0,
     "FirstName": "Jean-Jacques",
     "LastName": "De Gucht",
     "Level": "Vlaams",
@@ -1674,7 +1674,7 @@
     "IconURL": "https://twitter.com/jjdegucht/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Kurt",
     "LastName": "De Loor",
     "Level": "Vlaams",
@@ -1718,7 +1718,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2065-04-14T00:00:00",
@@ -1755,7 +1755,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Jos",
     "LastName": "De Meyer",
     "Level": "Vlaams",
@@ -1782,7 +1782,7 @@
     "IconURL": "https://twitter.com/JosDeMeyer/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Jenne",
     "LastName": "De Potter",
     "Level": "Vlaams",
@@ -1836,13 +1836,13 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 41,
+    "TrendingScore": 0,
     "FirstName": "Matthias",
     "LastName": "Diependaele",
     "Level": "Vlaams",
     "SocialMediaLink": "https://www.facebook.com/Matthias-Diependaele-543319679114946/",
     "Site": "http://www.matthiasdiependaele.be",
-    "TwitterName": "@MDiependaele",
+    "TwitterName": "MDiependaele",
     "Position": "Parlement",
     "District": "Oost-Vlaanderen",
     "Gemeente": "Zottegem",
@@ -1853,14 +1853,14 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1979-07-08T00:00:00",
     "ItemId": 86,
     "Name": "Matthias Diependaele",
     "IsTrending": false,
-    "IconURL": "https://twitter.com/@MDiependaele/profile_image?size=original"
+    "IconURL": "https://twitter.com/MDiependaele/profile_image?size=original"
   },
   {
     "TrendingScore": 0,
@@ -1890,7 +1890,7 @@
     "IconURL": "https://twitter.com/FranssenCindy/profile_image?size=original"
   },
   {
-    "TrendingScore": 9,
+    "TrendingScore": 0,
     "FirstName": "Andries",
     "LastName": "Gryffroy",
     "Level": "Vlaams",
@@ -1907,7 +1907,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2063-12-03T00:00:00",
@@ -1917,7 +1917,7 @@
     "IconURL": "https://twitter.com/gryffroy/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Marius",
     "LastName": "Meremans",
     "Level": "Vlaams",
@@ -1934,7 +1934,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2015-05-20T00:00:00",
@@ -1944,7 +1944,7 @@
     "IconURL": "https://twitter.com/mariusmeremans/profile_image?size=original"
   },
   {
-    "TrendingScore": 15,
+    "TrendingScore": 0,
     "FirstName": "Elisabeth",
     "LastName": "Meuleman",
     "Level": "Vlaams",
@@ -1971,7 +1971,7 @@
     "IconURL": "https://twitter.com/elisameuleman/profile_image?size=original"
   },
   {
-    "TrendingScore": 13,
+    "TrendingScore": 0,
     "FirstName": "Björn",
     "LastName": "Rzoska",
     "Level": "Vlaams",
@@ -1998,7 +1998,7 @@
     "IconURL": "https://twitter.com/BjornRzoska/profile_image?size=original"
   },
   {
-    "TrendingScore": 6,
+    "TrendingScore": 0,
     "FirstName": "Freya",
     "LastName": "Saeys",
     "Level": "Vlaams",
@@ -2025,7 +2025,7 @@
     "IconURL": "https://twitter.com/FreyaSaeys/profile_image?size=original"
   },
   {
-    "TrendingScore": 5,
+    "TrendingScore": 0,
     "FirstName": "Valerie",
     "LastName": "Taeldeman",
     "Level": "Vlaams",
@@ -2052,7 +2052,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 7,
+    "TrendingScore": 0,
     "FirstName": "Freya",
     "LastName": "Van den Bossche",
     "Level": "Vlaams",
@@ -2079,7 +2079,7 @@
     "IconURL": "https://twitter.com/freyabos/profile_image?size=original"
   },
   {
-    "TrendingScore": 20,
+    "TrendingScore": 0,
     "FirstName": "Joris",
     "LastName": "Vandenbroucke",
     "Level": "Vlaams",
@@ -2106,7 +2106,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 9,
+    "TrendingScore": 0,
     "FirstName": "Miranda",
     "LastName": "Van Eetvelde",
     "Level": "Vlaams",
@@ -2123,7 +2123,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2059-09-24T00:00:00",
@@ -2133,7 +2133,7 @@
     "IconURL": "https://twitter.com/mveetvelde/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Bart",
     "LastName": "Van Malderen",
     "Level": "Vlaams",
@@ -2160,7 +2160,7 @@
     "IconURL": "https://twitter.com/bartvanmalderen/profile_image?size=original"
   },
   {
-    "TrendingScore": 8,
+    "TrendingScore": 0,
     "FirstName": "Karim",
     "LastName": "Van Overmeire",
     "Level": "Vlaams",
@@ -2177,7 +2177,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2064-10-14T00:00:00",
@@ -2187,7 +2187,7 @@
     "IconURL": "https://twitter.com/KVanOvermeire/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Sabine",
     "LastName": "Vermeulen",
     "Level": "Vlaams",
@@ -2204,7 +2204,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1971-12-03T00:00:00",
@@ -2214,13 +2214,13 @@
     "IconURL": "https://twitter.com/Sab_Vermeulen/profile_image?size=original"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Karin",
     "LastName": "Brouwers",
     "Level": "Vlaams",
     "SocialMediaLink": "http://www.facebook.com/karin.brouwers.33",
     "Site": "www.karin.brouwers.cdenv.be",
-    "TwitterName": "BrouwersKarin?iid=am-4065281413413037888524344&nid=23+recipient&uid=366055121&utm_content=profile",
+    "TwitterName": "BrouwersKarin",
     "Position": "Parlement",
     "District": "Vlaams-Brabant",
     "Gemeente": "Kessel Lo",
@@ -2238,10 +2238,10 @@
     "ItemId": 100,
     "Name": "Karin Brouwers",
     "IsTrending": false,
-    "IconURL": "https://twitter.com/BrouwersKarin?iid=am-4065281413413037888524344&nid=23+recipient&uid=366055121&utm_content=profile/profile_image?size=original"
+    "IconURL": "https://twitter.com/BrouwersKarin/profile_image?size=original"
   },
   {
-    "TrendingScore": 87,
+    "TrendingScore": 0,
     "FirstName": "Rik",
     "LastName": "Daems",
     "Level": "Vlaams",
@@ -2268,7 +2268,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 16,
+    "TrendingScore": 0,
     "FirstName": "Piet",
     "LastName": "De Bruyn",
     "Level": "Vlaams",
@@ -2285,7 +2285,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1968-02-04T00:00:00",
@@ -2295,7 +2295,7 @@
     "IconURL": "https://twitter.com/PietDeBruyn/profile_image?size=original"
   },
   {
-    "TrendingScore": 10,
+    "TrendingScore": 0,
     "FirstName": "Jo",
     "LastName": "De Ro",
     "Level": "Vlaams",
@@ -2322,7 +2322,7 @@
     "IconURL": "https://twitter.com/jo_dero/profile_image?size=original"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Gwenny",
     "LastName": "De Vroe",
     "Level": "Vlaams",
@@ -2349,7 +2349,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Michel",
     "LastName": "Doomst",
     "Level": "Vlaams",
@@ -2376,7 +2376,7 @@
     "IconURL": "https://twitter.com/micheldoomst/profile_image?size=original"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Lieve",
     "LastName": "Maes",
     "Level": "Vlaams",
@@ -2393,7 +2393,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -2430,7 +2430,7 @@
     "IconURL": "https://twitter.com/anmoerenhout/profile_image?size=original"
   },
   {
-    "TrendingScore": 6,
+    "TrendingScore": 0,
     "FirstName": "Bart",
     "LastName": "Nevens",
     "Level": "Vlaams",
@@ -2447,7 +2447,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2066-04-11T00:00:00",
@@ -2484,7 +2484,7 @@
     "IconURL": "https://twitter.com/katorganisation/profile_image?size=original"
   },
   {
-    "TrendingScore": 72,
+    "TrendingScore": 0,
     "FirstName": "Lorin",
     "LastName": "Parys",
     "Level": "Vlaams",
@@ -2501,7 +2501,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1976-12-04T00:00:00",
@@ -2511,7 +2511,7 @@
     "IconURL": "https://twitter.com/lorinparys/profile_image?size=original"
   },
   {
-    "TrendingScore": 670,
+    "TrendingScore": 0,
     "FirstName": "Peter",
     "LastName": "Persyn",
     "Level": "Vlaams",
@@ -2528,17 +2528,17 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2062-02-12T00:00:00",
     "ItemId": 111,
     "Name": "Peter Persyn",
-    "IsTrending": true,
+    "IsTrending": false,
     "IconURL": "https://twitter.com/peter_persyn/profile_image?size=original"
   },
   {
-    "TrendingScore": 278,
+    "TrendingScore": 0,
     "FirstName": "Gwendolyn",
     "LastName": "Rutten",
     "Level": "Vlaams",
@@ -2565,7 +2565,7 @@
     "IconURL": "https://twitter.com/RuttenGwendolyn/profile_image?size=original"
   },
   {
-    "TrendingScore": 16,
+    "TrendingScore": 0,
     "FirstName": "Hermes",
     "LastName": "Sanctorum",
     "Level": "Vlaams",
@@ -2592,7 +2592,7 @@
     "IconURL": "https://twitter.com/hermessanctorum/profile_image?size=original"
   },
   {
-    "TrendingScore": 11,
+    "TrendingScore": 0,
     "FirstName": "Katia",
     "LastName": "Segers",
     "Level": "Vlaams",
@@ -2619,7 +2619,7 @@
     "IconURL": "https://twitter.com/katiasegers/profile_image?size=original"
   },
   {
-    "TrendingScore": 12,
+    "TrendingScore": 0,
     "FirstName": "Willy",
     "LastName": "Segers",
     "Level": "Vlaams",
@@ -2636,7 +2636,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2058-11-21T00:00:00",
@@ -2646,7 +2646,7 @@
     "IconURL": "https://twitter.com/@willy_segers/profile_image?size=original"
   },
   {
-    "TrendingScore": 10,
+    "TrendingScore": 0,
     "FirstName": "Nadia",
     "LastName": "Sminate",
     "Level": "Vlaams",
@@ -2663,7 +2663,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1981-12-29T00:00:00",
@@ -2673,7 +2673,7 @@
     "IconURL": "https://twitter.com/NadiaSminate/profile_image?size=original"
   },
   {
-    "TrendingScore": 104,
+    "TrendingScore": 0,
     "FirstName": "Bruno",
     "LastName": "Tobback",
     "Level": "Vlaams",
@@ -2700,7 +2700,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Christian",
     "LastName": "Van Eyken",
     "Level": "Vlaams",
@@ -2727,7 +2727,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 36,
+    "TrendingScore": 0,
     "FirstName": "Peter",
     "LastName": "Van Rompuy",
     "Level": "Vlaams",
@@ -2754,7 +2754,7 @@
     "IconURL": "https://twitter.com/Petervanrompuy/profile_image?size=original"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Björn",
     "LastName": "Anseeuw",
     "Level": "Vlaams",
@@ -2771,7 +2771,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1976-09-17T00:00:00",
@@ -2781,7 +2781,7 @@
     "IconURL": "https://twitter.com/bjanseeuw/profile_image?size=original"
   },
   {
-    "TrendingScore": 17,
+    "TrendingScore": 0,
     "FirstName": "Bart",
     "LastName": "Caron",
     "Level": "Vlaams",
@@ -2835,7 +2835,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Cathy",
     "LastName": "Coudyser",
     "Level": "Vlaams",
@@ -2852,7 +2852,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1969-12-14T00:00:00",
@@ -2862,7 +2862,7 @@
     "IconURL": "https://twitter.com/cathycoudyser/profile_image?size=original"
   },
   {
-    "TrendingScore": 332,
+    "TrendingScore": 0,
     "FirstName": "John",
     "LastName": "Crombez",
     "Level": "Geen",
@@ -2943,7 +2943,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Jan",
     "LastName": "Durnez",
     "Level": "Vlaams",
@@ -2970,7 +2970,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 23,
+    "TrendingScore": 0,
     "FirstName": "Martine",
     "LastName": "Fournier",
     "Level": "Vlaams",
@@ -3014,7 +3014,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -3051,7 +3051,7 @@
     "IconURL": "https://twitter.com/mhostekint/profile_image?size=original"
   },
   {
-    "TrendingScore": 9,
+    "TrendingScore": 0,
     "FirstName": "Renaat",
     "LastName": "Landuyt",
     "Level": "Vlaams",
@@ -3078,7 +3078,7 @@
     "IconURL": "https://twitter.com/rlanduyt/profile_image?size=original"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Bert",
     "LastName": "Maertens",
     "Level": "Vlaams",
@@ -3095,7 +3095,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1981-11-16T00:00:00",
@@ -3105,7 +3105,7 @@
     "IconURL": "https://twitter.com/MaertensBert/profile_image?size=original"
   },
   {
-    "TrendingScore": 46,
+    "TrendingScore": 0,
     "FirstName": "Axel",
     "LastName": "Ronse",
     "Level": "Vlaams",
@@ -3122,7 +3122,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1981-07-20T00:00:00",
@@ -3132,7 +3132,7 @@
     "IconURL": "https://twitter.com/axelronse/profile_image?size=original"
   },
   {
-    "TrendingScore": 7,
+    "TrendingScore": 0,
     "FirstName": "Stefaan",
     "LastName": "Sintobin",
     "Level": "Vlaams",
@@ -3159,7 +3159,7 @@
     "IconURL": "https://twitter.com/StefaanSintobin/profile_image?size=original"
   },
   {
-    "TrendingScore": 5,
+    "TrendingScore": 0,
     "FirstName": "Tine",
     "LastName": "Soens",
     "Level": "Vlaams",
@@ -3203,7 +3203,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2059-02-18T00:00:00",
@@ -3240,7 +3240,7 @@
     "IconURL": "https://twitter.com/emmilytalpe/profile_image?size=original"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Wilfried",
     "LastName": "Vandaele",
     "Level": "Vlaams",
@@ -3257,7 +3257,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2059-05-06T00:00:00",
@@ -3294,7 +3294,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Mercedes",
     "LastName": "Van Volcem",
     "Level": "Vlaams",
@@ -3321,7 +3321,7 @@
     "IconURL": "https://twitter.com/mercedesvvolcem/profile_image?size=original"
   },
   {
-    "TrendingScore": 4,
+    "TrendingScore": 0,
     "FirstName": "Johan",
     "LastName": "Verstreken",
     "Level": "Vlaams",
@@ -3348,7 +3348,7 @@
     "IconURL": "https://twitter.com/johanverstreken/profile_image?size=original"
   },
   {
-    "TrendingScore": 113,
+    "TrendingScore": 0,
     "FirstName": "Hendrik",
     "LastName": "Bogaert",
     "Level": "Federaal",
@@ -3375,7 +3375,7 @@
     "IconURL": "https://twitter.com/hendrikbogaert/profile_image?size=original"
   },
   {
-    "TrendingScore": 15,
+    "TrendingScore": 0,
     "FirstName": "Franky",
     "LastName": "Demon",
     "Level": "Federaal",
@@ -3402,7 +3402,7 @@
     "IconURL": "https://twitter.com/frankydemon/profile_image?size=original"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Roel",
     "LastName": "Deseyn",
     "Level": "Federaal",
@@ -3429,7 +3429,7 @@
     "IconURL": "https://twitter.com/roeldeseyn/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Nathalie",
     "LastName": "Muylle",
     "Level": "Federaal",
@@ -3473,7 +3473,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1982-09-20T00:00:00",
@@ -3483,7 +3483,7 @@
     "IconURL": "https://twitter.com/ancapoen/profile_image?size=original"
   },
   {
-    "TrendingScore": 4,
+    "TrendingScore": 0,
     "FirstName": "Koenraad",
     "LastName": "Degroote",
     "Level": "Federaal",
@@ -3500,7 +3500,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -3527,7 +3527,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -3537,7 +3537,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Rita",
     "LastName": "Gantois",
     "Level": "Federaal",
@@ -3554,7 +3554,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2058-06-14T00:00:00",
@@ -3564,7 +3564,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Jan",
     "LastName": "Vercammen",
     "Level": "Federaal",
@@ -3581,7 +3581,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -3591,7 +3591,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Brecht",
     "LastName": "Vermeulen",
     "Level": "Federaal",
@@ -3608,7 +3608,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1969-06-17T00:00:00",
@@ -3618,7 +3618,7 @@
     "IconURL": "https://twitter.com/VermeulenBrecht/profile_image?size=original"
   },
   {
-    "TrendingScore": 6,
+    "TrendingScore": 0,
     "FirstName": "Alain",
     "LastName": "Top",
     "Level": "Federaal",
@@ -3645,7 +3645,7 @@
     "IconURL": "https://twitter.com/alain_top/profile_image?size=original"
   },
   {
-    "TrendingScore": 62,
+    "TrendingScore": 0,
     "FirstName": "Johan",
     "LastName": "Vande Lanotte",
     "Level": "Federaal",
@@ -3726,7 +3726,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 70,
+    "TrendingScore": 0,
     "FirstName": "Vincent",
     "LastName": "Van Quickenborne",
     "Level": "Federaal",
@@ -3753,7 +3753,7 @@
     "IconURL": "https://twitter.com/VincentVQ/profile_image?size=original"
   },
   {
-    "TrendingScore": 61,
+    "TrendingScore": 0,
     "FirstName": "Wouter",
     "LastName": "De Vriendt",
     "Level": "Federaal",
@@ -3780,7 +3780,7 @@
     "IconURL": "https://twitter.com/WouterDeVriendt/profile_image?size=original"
   },
   {
-    "TrendingScore": 167,
+    "TrendingScore": 0,
     "FirstName": "Siegfried",
     "LastName": "Bracke",
     "Level": "Federaal",
@@ -3797,7 +3797,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2053-02-21T00:00:00",
@@ -3807,7 +3807,7 @@
     "IconURL": "https://twitter.com/sthbracke/profile_image?size=original"
   },
   {
-    "TrendingScore": 8,
+    "TrendingScore": 0,
     "FirstName": "Peter",
     "LastName": "Buysrogge",
     "Level": "Federaal",
@@ -3824,7 +3824,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1976-03-15T00:00:00",
@@ -3834,7 +3834,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 13,
+    "TrendingScore": 0,
     "FirstName": "Christoph",
     "LastName": "D'Haese",
     "Level": "Federaal",
@@ -3851,7 +3851,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1967-02-25T00:00:00",
@@ -3861,7 +3861,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 83,
+    "TrendingScore": 0,
     "FirstName": "Peter",
     "LastName": "Dedecker",
     "Level": "Federaal",
@@ -3878,7 +3878,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1983-07-11T00:00:00",
@@ -3888,7 +3888,7 @@
     "IconURL": "https://twitter.com/peterdedecker/profile_image?size=original"
   },
   {
-    "TrendingScore": 7,
+    "TrendingScore": 0,
     "FirstName": "Sarah",
     "LastName": "Smeyers",
     "Level": "Federaal",
@@ -3905,7 +3905,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1980-08-10T00:00:00",
@@ -3915,7 +3915,7 @@
     "IconURL": "https://twitter.com/SarahSmeyers/profile_image?size=original"
   },
   {
-    "TrendingScore": 6,
+    "TrendingScore": 0,
     "FirstName": "Goedele",
     "LastName": "Uyttersprot",
     "Level": "Federaal",
@@ -3932,7 +3932,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1980-10-17T00:00:00",
@@ -3969,7 +3969,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 17,
+    "TrendingScore": 0,
     "FirstName": "Egbert",
     "LastName": "Lachaert",
     "Level": "Federaal",
@@ -4023,7 +4023,7 @@
     "IconURL": "https://twitter.com/IneSomers/profile_image?size=original"
   },
   {
-    "TrendingScore": 20,
+    "TrendingScore": 0,
     "FirstName": "Carina",
     "LastName": "Van Cauter",
     "Level": "Federaal",
@@ -4077,7 +4077,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Leen",
     "LastName": "Dierick",
     "Level": "Federaal",
@@ -4131,7 +4131,7 @@
     "IconURL": "https://twitter.com/StefaanVercamer/profile_image?size=original"
   },
   {
-    "TrendingScore": 7,
+    "TrendingScore": 0,
     "FirstName": "Veli",
     "LastName": "Yüksel",
     "Level": "Federaal",
@@ -4185,7 +4185,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 23,
+    "TrendingScore": 0,
     "FirstName": "Karin",
     "LastName": "Temmerman",
     "Level": "Federaal",
@@ -4212,7 +4212,7 @@
     "IconURL": "https://twitter.com/KarinTemmerman/profile_image?size=original"
   },
   {
-    "TrendingScore": 30,
+    "TrendingScore": 0,
     "FirstName": "Dirk",
     "LastName": "Van der Maelen",
     "Level": "Federaal",
@@ -4239,7 +4239,7 @@
     "IconURL": "https://twitter.com/dirkvdmaelen/profile_image?size=original"
   },
   {
-    "TrendingScore": 337,
+    "TrendingScore": 0,
     "FirstName": "Barbara",
     "LastName": "Pas",
     "Level": "Federaal",
@@ -4266,7 +4266,7 @@
     "IconURL": "https://twitter.com/Barbara_Pas/profile_image?size=original"
   },
   {
-    "TrendingScore": 5,
+    "TrendingScore": 0,
     "FirstName": "Stefaan",
     "LastName": "Van Hecke",
     "Level": "Federaal",
@@ -4293,7 +4293,7 @@
     "IconURL": "https://twitter.com/SVHecke/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Evita",
     "LastName": "Willaert",
     "Level": "Federaal",
@@ -4337,7 +4337,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -4347,7 +4347,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 191,
+    "TrendingScore": 0,
     "FirstName": "Peter",
     "LastName": "De Roover",
     "Level": "Federaal",
@@ -4364,7 +4364,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2062-05-20T00:00:00",
@@ -4374,7 +4374,7 @@
     "IconURL": "https://twitter.com/PeterDeRoover1/profile_image?size=original"
   },
   {
-    "TrendingScore": 2122,
+    "TrendingScore": 0,
     "FirstName": "Bart",
     "LastName": "De Wever",
     "Level": "Federaal",
@@ -4391,17 +4391,17 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1970-12-21T00:00:00",
     "ItemId": 180,
     "Name": "Bart De Wever",
-    "IsTrending": true,
+    "IsTrending": false,
     "IconURL": "https://twitter.com/Bart_DeWever/profile_image?size=original"
   },
   {
-    "TrendingScore": 18,
+    "TrendingScore": 0,
     "FirstName": "Sophie",
     "LastName": "De Wit",
     "Level": "Federaal",
@@ -4418,7 +4418,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1973-08-28T00:00:00",
@@ -4428,7 +4428,7 @@
     "IconURL": "https://twitter.com/DeWitSophie/profile_image?size=original"
   },
   {
-    "TrendingScore": 711,
+    "TrendingScore": 0,
     "FirstName": "Zuhal",
     "LastName": "Demir",
     "Level": "Federaal",
@@ -4445,17 +4445,17 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1980-02-03T00:00:00",
     "ItemId": 182,
     "Name": "Zuhal Demir",
-    "IsTrending": true,
+    "IsTrending": false,
     "IconURL": "https://twitter.com/Zu_Demir/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Johan",
     "LastName": "Klaps",
     "Level": "Federaal",
@@ -4472,7 +4472,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1970-08-19T00:00:00",
@@ -4482,7 +4482,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Koen",
     "LastName": "Metsu",
     "Level": "Federaal",
@@ -4499,7 +4499,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1981-07-23T00:00:00",
@@ -4509,7 +4509,7 @@
     "IconURL": "https://twitter.com/MetsuKoen/profile_image?size=original"
   },
   {
-    "TrendingScore": 36,
+    "TrendingScore": 0,
     "FirstName": "Yoleen",
     "LastName": "Van Camp",
     "Level": "Federaal",
@@ -4526,7 +4526,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1987-08-25T00:00:00",
@@ -4536,7 +4536,7 @@
     "IconURL": "https://twitter.com/YoleenVanCamp/profile_image?size=original"
   },
   {
-    "TrendingScore": 8,
+    "TrendingScore": 0,
     "FirstName": "Rob",
     "LastName": "Van de Velde",
     "Level": "Federaal",
@@ -4553,7 +4553,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -4563,7 +4563,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 21,
+    "TrendingScore": 0,
     "FirstName": "Valerie",
     "LastName": "Van Peel",
     "Level": "Federaal",
@@ -4580,7 +4580,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1979-11-10T00:00:00",
@@ -4590,7 +4590,7 @@
     "IconURL": "https://twitter.com/valerievanpeel/profile_image?size=original"
   },
   {
-    "TrendingScore": 4,
+    "TrendingScore": 0,
     "FirstName": "Bert",
     "LastName": "Wollants",
     "Level": "Federaal",
@@ -4607,7 +4607,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1979-08-30T00:00:00",
@@ -4617,7 +4617,7 @@
     "IconURL": "https://twitter.com/bertwollants/profile_image?size=original"
   },
   {
-    "TrendingScore": 6,
+    "TrendingScore": 0,
     "FirstName": "Nahima",
     "LastName": "Lanjri",
     "Level": "Federaal",
@@ -4725,7 +4725,7 @@
     "IconURL": "https://twitter.com/ServaisV/profile_image?size=original"
   },
   {
-    "TrendingScore": 303,
+    "TrendingScore": 0,
     "FirstName": "Filip",
     "LastName": "Dewinter",
     "Level": "Federaal",
@@ -4779,7 +4779,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Dirk",
     "LastName": "Van Mechelen",
     "Level": "Federaal",
@@ -4806,7 +4806,7 @@
     "IconURL": "https://twitter.com/DirkVanMechele1/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Frank",
     "LastName": "Wilrycx",
     "Level": "Federaal",
@@ -4833,7 +4833,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 15,
+    "TrendingScore": 0,
     "FirstName": "Monica",
     "LastName": "De Coninck",
     "Level": "Federaal",
@@ -4914,7 +4914,7 @@
     "IconURL": "https://twitter.com/GeertsDavid/profile_image?size=original"
   },
   {
-    "TrendingScore": 134,
+    "TrendingScore": 0,
     "FirstName": "Meyrem",
     "LastName": "Almaci",
     "Level": "Federaal",
@@ -4941,7 +4941,7 @@
     "IconURL": "https://twitter.com/MeyremAlmaci/profile_image?size=original"
   },
   {
-    "TrendingScore": 451,
+    "TrendingScore": 0,
     "FirstName": "Kristof",
     "LastName": "Calvo",
     "Level": "Federaal",
@@ -4968,7 +4968,7 @@
     "IconURL": "https://twitter.com/kristofcalvo/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Inez",
     "LastName": "De Coninck",
     "Level": "Federaal",
@@ -4985,7 +4985,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1977-10-08T00:00:00",
@@ -5012,7 +5012,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -5022,7 +5022,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 24,
+    "TrendingScore": 0,
     "FirstName": "Jan",
     "LastName": "Spooren",
     "Level": "Federaal",
@@ -5039,7 +5039,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1969-12-01T00:00:00",
@@ -5049,7 +5049,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 32,
+    "TrendingScore": 0,
     "FirstName": "Kristien",
     "LastName": "Van Vaerenbergh",
     "Level": "Federaal",
@@ -5066,7 +5066,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1978-04-22T00:00:00",
@@ -5076,7 +5076,7 @@
     "IconURL": "https://twitter.com/kris10vanvaer/profile_image?size=original"
   },
   {
-    "TrendingScore": 45,
+    "TrendingScore": 0,
     "FirstName": "Hendrik",
     "LastName": "Vuye",
     "Level": "Federaal",
@@ -5130,7 +5130,7 @@
     "IconURL": "https://twitter.com/SonjaBecq/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Els",
     "LastName": "Van Hoof",
     "Level": "Federaal",
@@ -5157,7 +5157,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 291,
+    "TrendingScore": 0,
     "FirstName": "Eric",
     "LastName": "Van Rompuy",
     "Level": "Federaal",
@@ -5184,7 +5184,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 101,
+    "TrendingScore": 0,
     "FirstName": "Hans",
     "LastName": "Bonte",
     "Level": "Federaal",
@@ -5211,7 +5211,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 3,
+    "TrendingScore": 0,
     "FirstName": "Karin",
     "LastName": "Jiroflée",
     "Level": "Federaal",
@@ -5238,7 +5238,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 4,
+    "TrendingScore": 0,
     "FirstName": "Anne",
     "LastName": "Dedry",
     "Level": "Federaal",
@@ -5346,7 +5346,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Tim",
     "LastName": "Vandenput",
     "Level": "Federaal",
@@ -5373,7 +5373,7 @@
     "IconURL": "https://twitter.com/TimVandenput/profile_image?size=original"
   },
   {
-    "TrendingScore": 7,
+    "TrendingScore": 0,
     "FirstName": "Karolien",
     "LastName": "Grosemans",
     "Level": "Federaal",
@@ -5390,7 +5390,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1970-09-03T00:00:00",
@@ -5400,7 +5400,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 4,
+    "TrendingScore": 0,
     "FirstName": "Werner",
     "LastName": "Janssen",
     "Level": "Federaal",
@@ -5417,7 +5417,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1969-05-06T00:00:00",
@@ -5427,7 +5427,7 @@
     "IconURL": "https://twitter.com/wernerjanssen00/profile_image?size=original"
   },
   {
-    "TrendingScore": 46,
+    "TrendingScore": 0,
     "FirstName": "Peter",
     "LastName": "Luykx",
     "Level": "Federaal",
@@ -5444,7 +5444,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2064-06-05T00:00:00",
@@ -5454,7 +5454,7 @@
     "IconURL": "https://twitter.com/peerlux/profile_image?size=original"
   },
   {
-    "TrendingScore": 20,
+    "TrendingScore": 0,
     "FirstName": "Wouter",
     "LastName": "Raskin",
     "Level": "Federaal",
@@ -5471,7 +5471,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1972-04-01T00:00:00",
@@ -5481,7 +5481,7 @@
     "IconURL": "https://twitter.com/RaskinWouter/profile_image?size=original"
   },
   {
-    "TrendingScore": 1308,
+    "TrendingScore": 0,
     "FirstName": "Veerle",
     "LastName": "Wouters",
     "Level": "Federaal",
@@ -5504,11 +5504,11 @@
     "DateOfBirth": "1974-02-06T00:00:00",
     "ItemId": 221,
     "Name": "Veerle Wouters",
-    "IsTrending": true,
+    "IsTrending": false,
     "IconURL": "https://twitter.com/Veerle_Wouters/profile_image?size=original"
   },
   {
-    "TrendingScore": 272,
+    "TrendingScore": 0,
     "FirstName": "Wouter",
     "LastName": "Beke",
     "Level": "Federaal",
@@ -5562,7 +5562,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 8,
+    "TrendingScore": 0,
     "FirstName": "Raf",
     "LastName": "Terwingen",
     "Level": "Federaal",
@@ -5589,7 +5589,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 9,
+    "TrendingScore": 0,
     "FirstName": "Meryame",
     "LastName": "Kitir",
     "Level": "Federaal",
@@ -5616,7 +5616,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 17,
+    "TrendingScore": 0,
     "FirstName": "Peter",
     "LastName": "Vanvelthoven",
     "Level": "Federaal",
@@ -5643,7 +5643,7 @@
     "IconURL": "https://twitter.com/VvelthovenPeter/profile_image?size=original"
   },
   {
-    "TrendingScore": 39,
+    "TrendingScore": 0,
     "FirstName": "Patrick",
     "LastName": "Dewael",
     "Level": "Federaal",
@@ -5697,7 +5697,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 122,
+    "TrendingScore": 0,
     "FirstName": "Gerolf",
     "LastName": "Annemans",
     "Level": "Europees",
@@ -5724,7 +5724,7 @@
     "IconURL": "https://twitter.com/gannemans/profile_image?size=original"
   },
   {
-    "TrendingScore": 23,
+    "TrendingScore": 0,
     "FirstName": "Ivo",
     "LastName": "Belet",
     "Level": "Europees",
@@ -5751,7 +5751,7 @@
     "IconURL": "https://twitter.com/IvoBelet/profile_image?size=original"
   },
   {
-    "TrendingScore": 72,
+    "TrendingScore": 0,
     "FirstName": "Philippe",
     "LastName": "De Backer",
     "Level": "Federaal",
@@ -5778,7 +5778,7 @@
     "IconURL": "https://twitter.com/debackerphil/profile_image?size=original"
   },
   {
-    "TrendingScore": 21,
+    "TrendingScore": 0,
     "FirstName": "Mark",
     "LastName": "Demesmaeker",
     "Level": "Europees",
@@ -5795,7 +5795,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -5805,7 +5805,7 @@
     "IconURL": "https://twitter.com/markdemesmaeker/profile_image?size=original"
   },
   {
-    "TrendingScore": 14,
+    "TrendingScore": 0,
     "FirstName": "Anneleen",
     "LastName": "Van Bossuyt",
     "Level": "Europees",
@@ -5822,7 +5822,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1980-10-01T00:00:00",
@@ -5832,7 +5832,7 @@
     "IconURL": "https://twitter.com/anneleenciska/profile_image?size=original"
   },
   {
-    "TrendingScore": 107,
+    "TrendingScore": 0,
     "FirstName": "Sander",
     "LastName": "Loones",
     "Level": "Europees",
@@ -5849,7 +5849,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1979-01-26T00:00:00",
@@ -5859,7 +5859,7 @@
     "IconURL": "https://twitter.com/SanderLoones/profile_image?size=original"
   },
   {
-    "TrendingScore": 58,
+    "TrendingScore": 0,
     "FirstName": "Hilde",
     "LastName": "Vautmans",
     "Level": "Europees",
@@ -5886,7 +5886,7 @@
     "IconURL": "https://twitter.com/hildevautmans/profile_image?size=original"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Bart",
     "LastName": "Staes",
     "Level": "Europees",
@@ -5913,7 +5913,7 @@
     "IconURL": "https://twitter.com/BartStaes/profile_image?size=original"
   },
   {
-    "TrendingScore": 303,
+    "TrendingScore": 0,
     "FirstName": "Helga",
     "LastName": "Stevens",
     "Level": "Europees",
@@ -5930,7 +5930,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1968-09-08T00:00:00",
@@ -5940,7 +5940,7 @@
     "IconURL": "https://twitter.com/StevensHelga/profile_image?size=original"
   },
   {
-    "TrendingScore": 13,
+    "TrendingScore": 0,
     "FirstName": "Kathleen",
     "LastName": "Van Brempt",
     "Level": "Europees",
@@ -5994,7 +5994,7 @@
     "IconURL": "https://twitter.com/tomvdkendelaere/profile_image?size=original"
   },
   {
-    "TrendingScore": 4079,
+    "TrendingScore": 0,
     "FirstName": "Guy",
     "LastName": "Verhofstadt",
     "Level": "Europees",
@@ -6017,11 +6017,11 @@
     "DateOfBirth": "2053-11-04T00:00:00",
     "ItemId": 240,
     "Name": "Guy Verhofstadt",
-    "IsTrending": true,
+    "IsTrending": false,
     "IconURL": "https://twitter.com/GuyVerhofstadt/profile_image?size=original"
   },
   {
-    "TrendingScore": 34,
+    "TrendingScore": 0,
     "FirstName": "Liesbet",
     "LastName": "Dhaene",
     "Level": "Brussels",
@@ -6038,7 +6038,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1976-10-23T00:00:00",
@@ -6048,7 +6048,7 @@
     "IconURL": "https://twitter.com/LiesbetDhaene/profile_image?size=original"
   },
   {
-    "TrendingScore": 18,
+    "TrendingScore": 0,
     "FirstName": "Cieltje",
     "LastName": "Van Achter",
     "Level": "Brussels",
@@ -6065,7 +6065,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1979-11-01T00:00:00",
@@ -6075,7 +6075,7 @@
     "IconURL": "https://twitter.com/CieltjeVAchter/profile_image?size=original"
   },
   {
-    "TrendingScore": 25,
+    "TrendingScore": 0,
     "FirstName": "Johan",
     "LastName": "Van den Driessche",
     "Level": "Brussels",
@@ -6092,7 +6092,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2053-06-16T00:00:00",
@@ -6102,7 +6102,7 @@
     "IconURL": "https://twitter.com/jvddriessche/profile_image?size=original"
   },
   {
-    "TrendingScore": 10,
+    "TrendingScore": 0,
     "FirstName": "Fouad",
     "LastName": "Ahidar",
     "Level": "Brussels",
@@ -6129,7 +6129,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Elke",
     "LastName": "Roex",
     "Level": "Brussels",
@@ -6183,7 +6183,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 257,
+    "TrendingScore": 0,
     "FirstName": "Pascal",
     "LastName": "Smet",
     "Level": "Brussels",
@@ -6237,7 +6237,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 30,
+    "TrendingScore": 0,
     "FirstName": "Els",
     "LastName": "Ampe",
     "Level": "Brussels",
@@ -6291,7 +6291,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Stefan",
     "LastName": "Cornelis",
     "Level": "Brussels",
@@ -6372,7 +6372,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 29,
+    "TrendingScore": 0,
     "FirstName": "Guy",
     "LastName": "Vanhengel",
     "Level": "Brussels",
@@ -6399,7 +6399,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Paul",
     "LastName": "Delva",
     "Level": "Brussels",
@@ -6426,7 +6426,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 64,
+    "TrendingScore": 0,
     "FirstName": "Brigitte",
     "LastName": "Grouwels",
     "Level": "Brussels",
@@ -6453,7 +6453,7 @@
     "IconURL": "https://twitter.com/Bgrouwels/profile_image?size=original"
   },
   {
-    "TrendingScore": 59,
+    "TrendingScore": 0,
     "FirstName": "Bianca",
     "LastName": "Debaets",
     "Level": "Brussels",
@@ -6480,7 +6480,7 @@
     "IconURL": "https://twitter.com/BiancaDebaets/profile_image?size=original"
   },
   {
-    "TrendingScore": 38,
+    "TrendingScore": 0,
     "FirstName": "Bruno",
     "LastName": "De Lille",
     "Level": "Brussels",
@@ -6507,7 +6507,7 @@
     "IconURL": "https://twitter.com/brunodelille/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Annemie",
     "LastName": "Maes",
     "Level": "Brussels",
@@ -6561,7 +6561,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 170,
+    "TrendingScore": 0,
     "FirstName": "Geert",
     "LastName": "Bourgeois",
     "Level": "Vlaams",
@@ -6578,7 +6578,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2051-06-07T00:00:00",
@@ -6588,7 +6588,7 @@
     "IconURL": "https://twitter.com/geertbourgeois/profile_image?size=original"
   },
   {
-    "TrendingScore": 92,
+    "TrendingScore": 0,
     "FirstName": "Hilde",
     "LastName": "Crevits",
     "Level": "Vlaams",
@@ -6615,7 +6615,7 @@
     "IconURL": "https://twitter.com/crevits/profile_image?size=original"
   },
   {
-    "TrendingScore": 59,
+    "TrendingScore": 0,
     "FirstName": "Liesbeth",
     "LastName": "Homans",
     "Level": "Vlaams",
@@ -6632,7 +6632,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1973-02-17T00:00:00",
@@ -6642,7 +6642,7 @@
     "IconURL": "https://twitter.com/LiesbethHomans/profile_image?size=original"
   },
   {
-    "TrendingScore": 53,
+    "TrendingScore": 0,
     "FirstName": "Philippe",
     "LastName": "Muyters",
     "Level": "Vlaams",
@@ -6659,7 +6659,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2061-06-12T00:00:00",
@@ -6669,7 +6669,7 @@
     "IconURL": "https://twitter.com/philippemuyters/profile_image?size=original"
   },
   {
-    "TrendingScore": 212,
+    "TrendingScore": 0,
     "FirstName": "Joke",
     "LastName": "Schauvliege",
     "Level": "Vlaams",
@@ -6696,7 +6696,7 @@
     "IconURL": "https://twitter.com/jokeschauvliege/profile_image?size=original"
   },
   {
-    "TrendingScore": 7,
+    "TrendingScore": 0,
     "FirstName": "Annemie",
     "LastName": "Turtelboom",
     "Level": "Federaal",
@@ -6723,7 +6723,7 @@
     "IconURL": "https://twitter.com/aturtelboom/profile_image?size=original"
   },
   {
-    "TrendingScore": 173,
+    "TrendingScore": 0,
     "FirstName": "Jo",
     "LastName": "Vandeurzen",
     "Level": "Vlaams",
@@ -6750,7 +6750,7 @@
     "IconURL": "https://twitter.com/jovandeurzen/profile_image?size=original"
   },
   {
-    "TrendingScore": 326,
+    "TrendingScore": 0,
     "FirstName": "Ben",
     "LastName": "Weyts",
     "Level": "Vlaams",
@@ -6767,7 +6767,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1970-12-11T00:00:00",
@@ -6777,7 +6777,7 @@
     "IconURL": "https://twitter.com/BenWeyts/profile_image?size=original"
   },
   {
-    "TrendingScore": 109,
+    "TrendingScore": 0,
     "FirstName": "Sven",
     "LastName": "Gatz",
     "Level": "Vlaams",
@@ -6804,7 +6804,7 @@
     "IconURL": "https://twitter.com/svengatz/profile_image?size=original"
   },
   {
-    "TrendingScore": 167,
+    "TrendingScore": 0,
     "FirstName": "Alexander",
     "LastName": "De Croo",
     "Level": "Federaal",
@@ -6831,7 +6831,7 @@
     "IconURL": "https://twitter.com/alexanderdecroo/profile_image?size=original"
   },
   {
-    "TrendingScore": 627,
+    "TrendingScore": 0,
     "FirstName": "Kris",
     "LastName": "Peeters",
     "Level": "Federaal",
@@ -6854,11 +6854,11 @@
     "DateOfBirth": "2062-05-18T00:00:00",
     "ItemId": 271,
     "Name": "Kris Peeters",
-    "IsTrending": true,
+    "IsTrending": false,
     "IconURL": "https://twitter.com/peeters_kris1/profile_image?size=original"
   },
   {
-    "TrendingScore": 706,
+    "TrendingScore": 0,
     "FirstName": "Jan",
     "LastName": "Jambon",
     "Level": "Federaal",
@@ -6875,17 +6875,17 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2060-04-26T00:00:00",
     "ItemId": 272,
     "Name": "Jan Jambon",
-    "IsTrending": true,
+    "IsTrending": false,
     "IconURL": "https://twitter.com/JanJambon/profile_image?size=original"
   },
   {
-    "TrendingScore": 219,
+    "TrendingScore": 0,
     "FirstName": "Koen",
     "LastName": "Geens",
     "Level": "Federaal",
@@ -6912,7 +6912,7 @@
     "IconURL": "https://twitter.com/Koen_Geens1/profile_image?size=original"
   },
   {
-    "TrendingScore": 574,
+    "TrendingScore": 0,
     "FirstName": "Maggie",
     "LastName": "De Block",
     "Level": "Federaal",
@@ -6939,7 +6939,7 @@
     "IconURL": "https://twitter.com/Maggie_DeBlock/profile_image?size=original"
   },
   {
-    "TrendingScore": 246,
+    "TrendingScore": 0,
     "FirstName": "Johan",
     "LastName": "Van Overtveldt",
     "Level": "Federaal",
@@ -6956,7 +6956,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "2055-08-24T00:00:00",
@@ -6966,7 +6966,7 @@
     "IconURL": "https://twitter.com/jvanovertveldt/profile_image?size=original"
   },
   {
-    "TrendingScore": 71,
+    "TrendingScore": 0,
     "FirstName": "Steven",
     "LastName": "Vandeput",
     "Level": "Federaal",
@@ -6983,7 +6983,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1967-03-30T00:00:00",
@@ -6993,7 +6993,7 @@
     "IconURL": "https://twitter.com/svandeput/profile_image?size=original"
   },
   {
-    "TrendingScore": 5,
+    "TrendingScore": 0,
     "FirstName": "Pieter",
     "LastName": "De Crem",
     "Level": "Federaal",
@@ -7020,7 +7020,7 @@
     "IconURL": "https://twitter.com/pieterdecrem/profile_image?size=original"
   },
   {
-    "TrendingScore": 128,
+    "TrendingScore": 0,
     "FirstName": "Bart",
     "LastName": "Tommelein",
     "Level": "Vlaams",
@@ -7047,7 +7047,7 @@
     "IconURL": "https://twitter.com/barttommelein/profile_image?size=original"
   },
   {
-    "TrendingScore": 5,
+    "TrendingScore": 0,
     "FirstName": "Elke",
     "LastName": "Sleurs",
     "Level": "Federaal",
@@ -7064,7 +7064,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1968-06-02T00:00:00",
@@ -7074,7 +7074,7 @@
     "IconURL": "https://twitter.com/ElkeSleurs/profile_image?size=original"
   },
   {
-    "TrendingScore": 1831,
+    "TrendingScore": 0,
     "FirstName": "Theo",
     "LastName": "Francken",
     "Level": "Federaal",
@@ -7091,17 +7091,17 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1978-07-02T00:00:00",
     "ItemId": 280,
     "Name": "Theo Francken",
-    "IsTrending": true,
+    "IsTrending": false,
     "IconURL": "https://twitter.com/FranckenTheo/profile_image?size=original"
   },
   {
-    "TrendingScore": 40,
+    "TrendingScore": 0,
     "FirstName": "Bert",
     "LastName": "Anciaux",
     "Level": "Federaal",
@@ -7128,7 +7128,7 @@
     "IconURL": "https://twitter.com/bertanciaux/profile_image?size=original"
   },
   {
-    "TrendingScore": 8,
+    "TrendingScore": 0,
     "FirstName": "Jan",
     "LastName": "Becaus",
     "Level": "Federaal",
@@ -7145,7 +7145,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -7155,7 +7155,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 15,
+    "TrendingScore": 0,
     "FirstName": "Petra",
     "LastName": "De Sutter",
     "Level": "Federaal",
@@ -7182,7 +7182,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Steven",
     "LastName": "Vanackere",
     "Level": "Federaal",
@@ -7209,7 +7209,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 14,
+    "TrendingScore": 0,
     "FirstName": "Pol",
     "LastName": "Van Den Driessche",
     "Level": "Federaal",
@@ -7226,7 +7226,7 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
@@ -7236,7 +7236,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 2,
+    "TrendingScore": 0,
     "FirstName": "Lode",
     "LastName": "Vereeck",
     "Level": "Federaal",
@@ -7263,7 +7263,7 @@
     "IconURL": "https://twitter.com/@vereeck/profile_image?size=original"
   },
   {
-    "TrendingScore": 68,
+    "TrendingScore": 0,
     "FirstName": "Marianne",
     "LastName": "Thyssen",
     "Level": "Europees",
@@ -7290,7 +7290,7 @@
     "IconURL": "https://twitter.com/mariannethyssen/profile_image?size=original"
   },
   {
-    "TrendingScore": 23,
+    "TrendingScore": 0,
     "FirstName": "Steve",
     "LastName": "Vandenberghe",
     "Level": "Vlaams",
@@ -7344,7 +7344,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 632,
+    "TrendingScore": 0,
     "FirstName": "Peter",
     "LastName": "Mertens",
     "Level": "Geen",
@@ -7367,11 +7367,11 @@
     "DateOfBirth": "1967-12-17T00:00:00",
     "ItemId": 290,
     "Name": "Peter Mertens",
-    "IsTrending": true,
+    "IsTrending": false,
     "IconURL": "https://twitter.com/@peter_mertens/profile_image?size=original"
   },
   {
-    "TrendingScore": 1,
+    "TrendingScore": 0,
     "FirstName": "Lieve",
     "LastName": "Wierinck",
     "Level": "Europees",
@@ -7398,7 +7398,7 @@
     "IconURL": "~/Content/Images/Users/user.png"
   },
   {
-    "TrendingScore": 7,
+    "TrendingScore": 0,
     "FirstName": "Paul",
     "LastName": "Cordy",
     "Level": "Vlaams",
@@ -7415,32 +7415,12 @@
       "SocialMediaLink": null,
       "ItemId": 4,
       "Name": "N-VA",
-      "IsTrending": true,
+      "IsTrending": false,
       "IconURL": "~/Content/Images/Organisations/nva.jpg"
     },
     "DateOfBirth": "1900-01-01T00:00:00",
     "ItemId": 292,
     "Name": "Paul Cordy",
-    "IsTrending": false,
-    "IconURL": "~/Content/Images/Users/user.png"
-  },
-  {
-    "TrendingScore": 6,
-    "FirstName": null,
-    "LastName": null,
-    "Level": null,
-    "SocialMediaLink": null,
-    "Site": null,
-    "TwitterName": null,
-    "Position": null,
-    "District": null,
-    "Gemeente": null,
-    "Postalcode": null,
-    "Gender": 0,
-    "Organisation": null,
-    "DateOfBirth": "0001-01-01T00:00:00",
-    "ItemId": 293,
-    "Name": "Katrien Partyka",
     "IsTrending": false,
     "IconURL": "~/Content/Images/Users/user.png"
   }

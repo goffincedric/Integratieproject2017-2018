@@ -1,5 +1,8 @@
-﻿using System;
+
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -119,7 +122,9 @@ namespace UI_MVC.Controllers
                 SocialSource = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOCIAL_SOURCE)?.Value,
                 SocialSourceUrl = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SOCIAL_SOURCE_URL)?.Value,
                 SiteName = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_NAME)?.Value,
-                Theme = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME)?.Value
+                Theme = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_THEME)?.Value,
+                PrimaryColor = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.PRIMARY_COLOR)?.Value,
+                SecondaryColor = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SECONDARY_COLOR)?.Value
             };
             return PartialView(huidige);
         }
@@ -177,21 +182,35 @@ namespace UI_MVC.Controllers
                 new SubplatformSetting
                 {
                     SettingName = Setting.Platform.SEED_INTERVAL_HOURS,
-                    Value = "24",
+                    Value = SubplatformMgr.GetSubplatformSetting(subplatformToChange.SubplatformId, Setting.Platform.SEED_INTERVAL_HOURS)?.Value,
                     IsEnabled = true,
                     Subplatform = subplatformToChange
                 },
                 new SubplatformSetting
                 {
                     SettingName = Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS,
-                    Value = "24",
+                    Value = SubplatformMgr.GetSubplatformSetting(subplatformToChange.SubplatformId, Setting.Platform.ALERT_GENERATION_INTERVAL_HOURS)?.Value,
                     IsEnabled = true,
                     Subplatform = subplatformToChange
                 },
                 new SubplatformSetting
                 {
                     SettingName = Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS,
-                    Value = "7",
+                    Value = SubplatformMgr.GetSubplatformSetting(subplatformToChange.SubplatformId, Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS)?.Value,
+                    IsEnabled = true,
+                    Subplatform = subplatformToChange
+                }, 
+                new SubplatformSetting
+                {
+                     SettingName = Setting.Platform.PRIMARY_COLOR,
+                    Value = subplatformSettingViewModel.PrimaryColor,
+                    IsEnabled = true,
+                    Subplatform = subplatformToChange
+                },
+                new SubplatformSetting
+                {
+                     SettingName = Setting.Platform.SECONDARY_COLOR,
+                    Value = subplatformSettingViewModel.SecondaryColor,
                     IsEnabled = true,
                     Subplatform = subplatformToChange
                 }
@@ -372,16 +391,19 @@ namespace UI_MVC.Controllers
                 if (fileViewModel.file != null)
                     if (fileViewModel.file.ContentLength > 0)
                     {
-                        _FileName = Path.GetFileName(fileViewModel.file.FileName);
-                        var name = "Site_Logo";
-                        var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
-                        fileViewModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Site/" + newName;
+                        //_FileName = Path.GetFileName(fileViewModel.file.FileName);
+                        //var name = "Site_Logo";
+                        //var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        //string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
+                        //fileViewModel.file.SaveAs(_path);
+                        //iconUrl = @"~/Content/Images/Site/" + newName;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(fileViewModel.file.InputStream);
                         SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SITE_ICON_URL,
-                            Value = iconUrl,
+                            Value = null,
+                            Image = (byte[])imgCon.ConvertTo(img, typeof(byte[])),
                             IsEnabled = true,
                             Subplatform = subplatformToChange
                         });
@@ -405,17 +427,21 @@ namespace UI_MVC.Controllers
                 if (fileViewModel.file != null)
                     if (fileViewModel.file.ContentLength > 0)
                     {
-                        _FileName = Path.GetFileName(fileViewModel.file.FileName);
-                        var name = "Default_Item_Logo";
-                        var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
-                        fileViewModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Site/" + newName;
+                        //_FileName = Path.GetFileName(fileViewModel.file.FileName);
+                        //var name = "Default_Item_Logo";
+                        //var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        //string _path = Path.Combine(Server.MapPath("~/Content/Images/Site/"), newName);
+                        //fileViewModel.file.SaveAs(_path);
+                        //iconUrl = @"~/Content/Images/Site/" + newName;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(fileViewModel.file.InputStream);
                         SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
-                            Value = iconUrl,
-                            IsEnabled = true,
+                            //Value = iconUrl,
+                            Value=null,
+                            Image = (byte[])imgCon.ConvertTo(img, typeof(byte[])),
+                        IsEnabled = true,
                             Subplatform = subplatformToChange
                         });
                     }
@@ -438,16 +464,19 @@ namespace UI_MVC.Controllers
                 if (fileViewModel.file != null)
                     if (fileViewModel.file.ContentLength > 0)
                     {
-                        _FileName = Path.GetFileName(fileViewModel.file.FileName);
-                        var name = "Default_Item_Logo";
-                        var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
-                        fileViewModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Users/" + newName;
+                        //_FileName = Path.GetFileName(fileViewModel.file.FileName);
+                        //var name = "Default_Item_Logo";
+                        //var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        //string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
+                        //fileViewModel.file.SaveAs(_path);
+                        //iconUrl = @"~/Content/Images/Users/" + newName;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(fileViewModel.file.InputStream);
                         SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_USER_ICON,
-                            Value = iconUrl,
+                            Value = null,
+                            Image = (byte[])imgCon.ConvertTo(img, typeof(byte[])),
                             IsEnabled = true,
                             Subplatform = subplatformToChange
                         });
@@ -471,16 +500,19 @@ namespace UI_MVC.Controllers
                 if (fileViewModel.file != null)
                     if (fileViewModel.file.ContentLength > 0)
                     {
-                        _FileName = Path.GetFileName(fileViewModel.file.FileName);
-                        var name = "Default_Item_Logo";
-                        var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                        string _path = Path.Combine(Server.MapPath("~/Content/Images/Index/"), newName);
-                        fileViewModel.file.SaveAs(_path);
-                        iconUrl = @"~/Content/Images/Index/" + newName;
+                        //_FileName = Path.GetFileName(fileViewModel.file.FileName);
+                        //var name = "Default_Item_Logo";
+                        //var newName = name + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                        //string _path = Path.Combine(Server.MapPath("~/Content/Images/Index/"), newName);
+                        //fileViewModel.file.SaveAs(_path);
+                        //iconUrl = @"~/Content/Images/Index/" + newName;
+                        ImageConverter imgCon = new ImageConverter();
+                        var img = Image.FromStream(fileViewModel.file.InputStream);
                         SubplatformMgr.ChangeSubplatformSetting(subplatformToChange, new SubplatformSetting
                         {
                             SettingName = Setting.Platform.BANNER,
-                            Value = iconUrl,
+                            Value = null,
+                            Image = (byte[])imgCon.ConvertTo(img, typeof(byte[])),
                             IsEnabled = true,
                             Subplatform = subplatformToChange
                         });

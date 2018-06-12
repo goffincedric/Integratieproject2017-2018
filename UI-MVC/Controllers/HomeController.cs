@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -38,6 +39,7 @@ namespace UI_MVC.Controllers
 
                 IEnumerable<Tag> menuTags = subplatform.Pages.SingleOrDefault(p => p.PageName.Equals("Menu"))?.Tags;
                 if (menuTags is null || menuTags.Count() == 0) return;
+
                 ViewBag.Home = menuTags.SingleOrDefault(t => t.Name.Equals("Home"))?.Text ?? "Home";
                 ViewBag.Dashboard = menuTags.SingleOrDefault(t => t.Name.Equals("Dashboard"))?.Text ?? "Dashboard";
                 ViewBag.WeeklyReview = menuTags.SingleOrDefault(t => t.Name.Equals("Weekly_Review"))?.Text ?? "Weekly Review";
@@ -130,17 +132,42 @@ namespace UI_MVC.Controllers
         public ActionResult GetLogo(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            string url = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Value);
-            return Content(url);
+            byte[] array = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Image;
+            if (array != null)
+            {
+                var base64 = Convert.ToBase64String(array);
+                var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                return Content(imgSrc);
+            }
+            else
+            {
+                string url = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Value);
+                return Content(url);
+            }
+
         }
 
         public ActionResult GetBanner(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            string url = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.BANNER).Value);
-            return Content(url);
-        }
+            
 
+            byte[] array = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Image;
+            if (array != null)
+            {
+                var base64 = Convert.ToBase64String(array);
+                var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                return Content(imgSrc);
+
+            }
+            else
+            {
+                string url = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.BANNER).Value); 
+
+
+            return Content(url);
+            }
+        }
         public ActionResult LoadDefaults(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
@@ -267,7 +294,19 @@ namespace UI_MVC.Controllers
                 }
                 else
                 {
-                    ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
+
+                    if(person.Image is null)
+                    {
+                        ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
+                    }
+                    else
+                    {
+                        byte[] array = person.Image;
+                        var base64 = Convert.ToBase64String(array);
+                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                        ViewBag.Icon = imgSrc; 
+                    }
+                  
                     ViewBag.Twitter = "";
                 }
 
@@ -289,14 +328,37 @@ namespace UI_MVC.Controllers
                 int? count = organisation.People.Count();
                 ViewBag.Leden = count is null ? 0 : count;
                 ViewBag.FullName = organisation.FullName;
-                ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
+              
+
+                if (organisation.Image is null)
+                {
+                    ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
+                }
+                else
+                {
+                    byte[] array = organisation.Image;
+                    var base64 = Convert.ToBase64String(array);
+                    var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                    ViewBag.Icon = imgSrc;
+                }
             }
 
             if (item is Theme theme)
             {
                 int? count = theme.Records.Count();
                 ViewBag.Associaties = count is null ? 0 : count;
-                ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
+            
+                if (theme.Image is null)
+                {
+                    ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
+                }
+                else
+                {
+                    byte[] array = theme.Image;
+                    var base64 = Convert.ToBase64String(array);
+                    var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                    ViewBag.Icon = imgSrc;
+                }
             }
 
             ViewBag.Subscribed = item.SubscribedProfiles.Contains(accountMgr.GetProfile(User.Identity.GetUserId()));

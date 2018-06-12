@@ -154,6 +154,27 @@ namespace PB.BL
                 IsEnabled = true,
                 Subplatform = subplatform
             });
+            subplatform.Settings.Add(new SubplatformSetting
+            {
+                SettingName = Setting.Platform.BANNER,
+                Value = @"~/Content/Images/Index/banner.jpg",
+                IsEnabled = true,
+                Subplatform = subplatform
+            });
+            subplatform.Settings.Add(new SubplatformSetting
+            {
+                SettingName = Setting.Platform.PRIMARY_COLOR,
+                Value = "#fff",
+                IsEnabled = true,
+                Subplatform = subplatform
+            });
+            subplatform.Settings.Add(new SubplatformSetting
+            {
+                SettingName = Setting.Platform.SECONDARY_COLOR,
+                Value = "#fff",
+                IsEnabled = true,
+                Subplatform = subplatform
+            });
             // TODO: Alle settings toevoegen (color, banner, ...)
 
             List<Page> pagesToAdd = new List<Page>

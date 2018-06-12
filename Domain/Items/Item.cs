@@ -19,6 +19,8 @@ namespace PB.BL.Domain.Items
         [DataMember] public bool IsTrending { get; set; }
 
         [DataMember] public string IconURL { get; set; }
+                        
+                     public byte[] Image { get; set; }
 
         public virtual List<Subplatform> SubPlatforms { get; set; }
         public virtual List<Keyword> Keywords { get; set; }

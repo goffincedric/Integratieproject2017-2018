@@ -15,6 +15,7 @@ namespace PB.BL.Domain.Platform
         public bool IsEnabled { get; set; }
         public string Value { get; set; }
         public virtual Subplatform Subplatform { get; set; }
+        public byte[] Image { get; set; }
 
         public override bool Equals(object obj)
         {

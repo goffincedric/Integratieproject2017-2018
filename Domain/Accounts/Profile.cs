@@ -30,6 +30,8 @@ namespace PB.BL.Domain.Accounts
         }
 
         [DataMember] public string ProfileIcon { get; set; }
+                     
+                     public byte[] Image { get; set; }
 
         [DataMember] public DateTime CreatedOn { get; set; }
 
