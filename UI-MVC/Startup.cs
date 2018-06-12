@@ -61,6 +61,7 @@ namespace UI_MVC
                         }
                     },
                     (schedule) => schedule
+                    .WithName(s.URL+"-seed")
                     .ToRunOnceAt(1, 0)
                     .AndEvery(int.Parse(seedInterval)).Hours());
                 }
@@ -77,6 +78,7 @@ namespace UI_MVC
                         }
                     },
                     (schedule) => schedule
+                    .WithName(s.URL + "-alert")
                     .ToRunOnceAt(4, 0)
                     .AndEvery(int.Parse(alertGenerationInterval)).Hours());
                 }
@@ -94,6 +96,7 @@ namespace UI_MVC
                         }
                     },
                     (schedule) => schedule
+                    .WithName(s.URL + "-weeklyreview")
                     .ToRunOnceAt(dateToSendWeeklyReview.AddMinutes(30).AddHours(18))
                     .AndEvery(int.Parse(weeklyReviewsInterval)).Days());
                 }
