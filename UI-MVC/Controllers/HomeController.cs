@@ -134,6 +134,13 @@ namespace UI_MVC.Controllers
             return Content(url);
         }
 
+        public ActionResult GetBanner(string subplatform)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            string url = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.BANNER).Value);
+            return Content(url);
+        }
+
         public ActionResult LoadDefaults(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
