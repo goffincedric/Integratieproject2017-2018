@@ -268,9 +268,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Index\k3.png" />
-    <Content Include="Content\Site\K3-logo.png" />
-    <Content Include="Content\Site\testing.png" />
+    <Content Include="Content\Images\Index\k3.png" />
+    <Content Include="Content\Images\Site\K3-logo.png" />
+    <Content Include="Content\Images\Site\testing.png" />
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\datatables.min.css" />
@@ -278,17 +278,17 @@
     <Content Include="Content\Images\500.png" />
     <Content Include="Content\Images\bg.jpg" />
     <Content Include="Content\Images\faqbg.jpg" />
-    <Content Include="Content\Index\banner.jpg" />
+    <Content Include="Content\Images\Index\banner.jpg" />
     <Content Include="Content\Images\info-icon.png" />
-    <Content Include="Content\Organisations\cdv.png" />
-    <Content Include="Content\Organisations\groen.jpg" />
-    <Content Include="Content\Organisations\nva.jpg" />
-    <Content Include="Content\Organisations\openvld.png" />
-    <Content Include="Content\Organisations\pvda.jpg" />
-    <Content Include="Content\Organisations\spa.jpg" />
-    <Content Include="Content\Organisations\vb.png" />
+    <Content Include="Content\Images\Organisations\cdv.png" />
+    <Content Include="Content\Images\Organisations\groen.jpg" />
+    <Content Include="Content\Images\Organisations\nva.jpg" />
+    <Content Include="Content\Images\Organisations\openvld.png" />
+    <Content Include="Content\Images\Organisations\pvda.jpg" />
+    <Content Include="Content\Images\Organisations\spa.jpg" />
+    <Content Include="Content\Images\Organisations\vb.png" />
     <Content Include="Content\Images\plus-icon.png" />
-    <Content Include="Content\Site\Politieke-barometer-logo.png" />
+    <Content Include="Content\Images\Site\Politieke-barometer-logo.png" />
     <Content Include="Content\Images\default-subplatform.png" />
     <Content Include="Content\Images\Themes\eu.png" />
     <Content Include="Content\Images\Themes\migratie.png" />
@@ -302,13 +302,12 @@
     <Content Include="Content\Images\question-mark.png" />
     <Content Include="Content\Styling\Grid\gridstack-extra.css" />
     <Content Include="Content\Styling\Grid\gridstack.css" />
+    <Content Include="Content\Styling\jquery.minicolors.css" />
+    <Content Include="Content\Styling\jquery.minicolors.png" />
     <Content Include="Content\Styling\jVectorMap\jquery-jvectormap-2.0.3.css" />
     <Content Include="Content\Styling\Wizard\material-bootstrap-wizard.css" />
     <Content Include="Scripts\Charts\Chart.min.js" />
-    <Content Include="Scripts\Colorpicker\colorpicker-color.js" />
-    <Content Include="Scripts\Colorpicker\colorpicker-component.js" />
-    <Content Include="Scripts\Colorpicker\colorpicker-defaults.js" />
-    <Content Include="Scripts\Colorpicker\colorpicker-plugin-wrapper.js" />
+    <Content Include="Scripts\Colorpicker\jquery.minicolors.min.js" />
     <Content Include="Scripts\contact.js" />
     <Content Include="Content\Styling\Style.css" />
     <Content Include="Content\Styling\Contact.css" />
@@ -430,8 +429,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Export\" />
+    <Folder Include="Content\Images\Persons\" />
     <Folder Include="Content\Images\Subplatform\" />
-    <Folder Include="Content\Persons\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
