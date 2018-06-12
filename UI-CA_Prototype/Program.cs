@@ -118,7 +118,7 @@ namespace UI_CA_Prototype
                             ExtensionMethods.SelectItem(SelectedProfile.Subscriptions));
                         break;
                     case 6:
-                        AccountMgr.SendWeeklyReviews();
+                        //AccountMgr.SendWeeklyReviews();
                         break;
                     case 7:
                         if (SelectedSubplatform == null)

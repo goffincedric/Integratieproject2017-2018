@@ -31,7 +31,17 @@
                 @foreach (var item in Model)
                 {
                 <tr>
-                  <td><img style="width: 50px; height:50px; border-radius:50%; margin-left:50px;" src="@Url.Content(@item.IconURL)" alt=""></td>
+                  <td>
+                    @if (item.Image is null)
+                    {
+                      <img style="width: 50px; height:50px; border-radius:50%; margin-left:50px;" src="@Url.Content(@item.IconURL)" alt="">
+
+                    }
+                    else
+                    {
+                      <img style="width: 50px; height:50px; border-radius:50%; margin-left:50px;" src="@Url.Content(String.Format("data:image/png;base64,{0}",Convert.ToBase64String(@item.Image)))" alt="">
+                    }
+                  </td>
                   <td>@Html.DisplayFor(modelItem => item.Name)</td>
 
                   <td>@Html.DisplayFor(modelItem => item.Persons.Count)</td>

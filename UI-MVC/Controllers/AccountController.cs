@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -298,10 +299,22 @@ namespace UI_MVC.Controllers
             if (Request.IsAuthenticated)
             {
                 Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
-                ViewBag.ProfileImage = profile.ProfileIcon is null
+
+                if(profile.Image is null)
+                {
+                    ViewBag.ProfileImage = profile.ProfileIcon is null
                     ? VirtualPathUtility.ToAbsolute(SubplatformMgr
                         .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_NEW_USER_ICON).Value)
                     : VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+                }
+                else
+                {
+                    byte[] array = profile.Image; 
+                    var base64 = Convert.ToBase64String(array);
+                    var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                    ViewBag.ProfileImage = imgSrc; 
+                }
+                
                 AccountEditModel account = new AccountEditModel(profile);
                 return View(account);
             }
@@ -320,20 +333,25 @@ namespace UI_MVC.Controllers
             {
                 if (editedAccount.file.ContentLength > 0)
                 {
-                    _FileName = Path.GetFileName(editedAccount.file.FileName);
+                    //_FileName = Path.GetFileName(editedAccount.file.FileName);
 
-                    var username = newProfile.UserName;
-                    var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
-                    editedAccount.file.SaveAs(_path);
-                    newProfile.ProfileIcon = @"~/Content/Images/Users/" + newName;
+                    //var username = newProfile.UserName;
+                    //var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                    //string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
+                    //editedAccount.file.SaveAs(_path);
+                    //newProfile.ProfileIcon = @"~/Content/Images/Users/" + newName;
+                    ImageConverter imgCon = new ImageConverter();
+                    var img = Image.FromStream(editedAccount.file.InputStream);
+                    newProfile.Image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
+
                 }
             }
             else
             {
                 newProfile.ProfileIcon = newProfile.ProfileIcon;
+                
             }
-
+           
             newProfile.UserData.LastName = editedAccount.LastName;
             newProfile.UserData.FirstName = editedAccount.FirstName;
             newProfile.Email = editedAccount.Email;
