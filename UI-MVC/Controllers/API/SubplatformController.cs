@@ -24,9 +24,7 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetTagsOfMenu(int id)
         {
-            Dictionary<string, string> tags = new Dictionary<string, string>();
-
-            SubplatformMgr.GetPages().Where(p => p.PageName.Equals("Menu")).Where(p => p.SubplatformId == id).FirstOrDefault().Tags.ForEach(t => tags.Add(t.Name, t.Text));
+            Dictionary<string, string> tags = SubplatformMgr.GetSubplatform(id).Pages.SingleOrDefault(p => p.PageName.Equals("Menu")).Tags.ToDictionary(p => p.Name, p => p.Text);
             return Ok(tags);
         }
         [HttpPut]
