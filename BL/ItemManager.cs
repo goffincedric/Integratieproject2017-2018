@@ -201,7 +201,7 @@ namespace PB.BL
         }
 
         public Organisation AddOrganisation(string name, string fullname, string socialMediaLink = null,
-            List<Theme> themes = null, string iconUrl = null, bool isTrending = false, Subplatform subplatform = null)
+            List<Theme> themes = null, string iconUrl = null, bool isTrending = false, Subplatform subplatform = null, byte[] image = null)
         {
             InitNonExistingRepo();
 
@@ -218,7 +218,8 @@ namespace PB.BL
                 Keywords = new List<Keyword>(),
                 SubPlatforms = new List<Subplatform>(),
                 People = new List<Person>(),
-                Themes = themes ?? new List<Theme>()
+                Themes = themes ?? new List<Theme>(),
+                Image = image
             };
             if (subplatform != null)
             {
@@ -237,7 +238,7 @@ namespace PB.BL
             string firstName = null, string lastName = null, string level = null, string site = null,
             string twitterName = null, string position = null, string district = null, string gemeente = null,
             string postalCode = null, Gender? gender = null, Organisation organisation = null,
-            Subplatform subplatform = null, DateTime? dateOfBirth = null)
+            Subplatform subplatform = null, DateTime? dateOfBirth = null, byte[] image = null)
         {
             InitNonExistingRepo();
             Person person = new Person
@@ -264,7 +265,8 @@ namespace PB.BL
                 SubscribedProfiles = new List<Profile>(),
                 Alerts = new List<Alert>(),
                 Keywords = new List<Keyword>(),
-                Records = new List<Record>()
+                Records = new List<Record>(),
+                Image = image
             };
             if (subplatform != null)
             {
@@ -278,7 +280,7 @@ namespace PB.BL
         }
 
         public Theme AddTheme(string name, string description, string iconUrl, List<Keyword> keywords = null,
-            bool isTrending = false, Subplatform subplatform = null)
+            bool isTrending = false, Subplatform subplatform = null, byte[] image = null)
         {
             InitNonExistingRepo();
             Theme theme = new Theme
@@ -291,7 +293,8 @@ namespace PB.BL
                 Elements = new List<Element>(),
                 SubscribedProfiles = new List<Profile>(),
                 Keywords = keywords ?? new List<Keyword>(),
-                SubPlatforms = new List<Subplatform>()
+                SubPlatforms = new List<Subplatform>(), 
+                Image = image
             };
             if (subplatform != null)
             {

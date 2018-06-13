@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PB.BL.Domain.Platform
 {
     [Table("tblTag")]
-    public class Tag
+    public class Tag : ICloneable
     {
         [Key] public int TagId { get; set; }
 
@@ -17,6 +18,19 @@ namespace PB.BL.Domain.Platform
         public int PageId { get; set; }
 
         [Required] public Page Page { get; set; }
+
+        public object Clone()
+        {
+            return new Tag()
+            {
+                TagId = TagId,
+                Name = Name,
+                Text = Text,
+                Text2 = Text2,
+                Page = Page,
+                PageId = PageId
+            };
+        }
 
         public override bool Equals(object obj)
         {

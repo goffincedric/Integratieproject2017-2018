@@ -20,8 +20,10 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
+
     <IISExpressSSLPort>
     </IISExpressSSLPort>
+
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -275,13 +277,19 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\Index\k3.png" />
+    <Content Include="Content\Images\Index\testing-banner.PNG" />
+    <Content Include="Content\Images\Site\K3-logo.png" />
+    <Content Include="Content\Images\Site\testing.png" />
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\datatables.min.css" />
+
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Fonts\roboto.css" />
     <Content Include="Content\Images\1.jpg" />
+
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
     <Content Include="Content\Images\bg.jpg" />
@@ -296,7 +304,7 @@
     <Content Include="Content\Images\Organisations\spa.jpg" />
     <Content Include="Content\Images\Organisations\vb.png" />
     <Content Include="Content\Images\plus-icon.png" />
-    <Content Include="Content\Images\Site\logo_new.png" />
+    <Content Include="Content\Images\Site\Politieke-barometer-logo.png" />
     <Content Include="Content\Images\default-subplatform.png" />
     <Content Include="Content\Images\Themes\eu.png" />
     <Content Include="Content\Images\Themes\migratie.png" />
@@ -310,10 +318,13 @@
     <Content Include="Content\Images\question-mark.png" />
     <Content Include="Content\Styling\Grid\gridstack-extra.css" />
     <Content Include="Content\Styling\Grid\gridstack.css" />
+    <Content Include="Content\Styling\jquery.minicolors.css" />
+    <Content Include="Content\Styling\jquery.minicolors.png" />
     <Content Include="Content\Styling\jVectorMap\jquery-jvectormap-2.0.3.css" />
     <Content Include="Content\Styling\Wizard\material-bootstrap-wizard.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Scripts\Charts\Chart.min.js" />
+    <Content Include="Scripts\Colorpicker\jquery.minicolors.min.js" />
     <Content Include="Scripts\contact.js" />
     <Content Include="Content\Styling\Style.css" />
     <Content Include="Content\Styling\Contact.css" />
@@ -360,6 +371,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-2.0.3.min.js" />
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-be-mill.js" />
+    <Content Include="Scripts\Layout\Collapse.js" />
     <Content Include="Scripts\load.js" />
     <Content Include="Scripts\ndbx.js" />
     <Content Include="Scripts\Search.js" />

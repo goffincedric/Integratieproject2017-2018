@@ -44,9 +44,14 @@ namespace UI_MVC.Controllers.API
 
             return Ok();
         }
+<<<<<<< HEAD
 
        
         [HttpPost]
+=======
+        
+        [HttpPut]
+>>>>>>> master
         public IHttpActionResult ChangeTagFAQ([FromBody]FAQViewModel model)
         {
             Subplatform subplatform = SubplatformMgr.GetSubplatform(model.Subplatform);
@@ -56,16 +61,14 @@ namespace UI_MVC.Controllers.API
             tag.Text = model.Question;
             tag.Text2 = model.Answer;
             SubplatformMgr.ChangeTag(tag);
-
-
+            
             return Ok();
         }
 
         [HttpGet]
         public IHttpActionResult GetTagsFaq(int id)
         {
-            Dictionary<string, Dictionary<string, string>> tags = new Dictionary<string, Dictionary<string, string>>();
-            SubplatformMgr.GetPage(id).Tags.ToList().ForEach(p => tags.Add(p.Name, new Dictionary<string, string>() { { p.Text, p.Text2 } }));
+            Dictionary<string, Dictionary<string, string>> tags = SubplatformMgr.GetSubplatform(id).Pages.SingleOrDefault(p => p.PageName.Equals("FAQ")).Tags.ToDictionary(p => p.Name, p => new Dictionary<string, string>() { { p.Text, p.Text2 } });
 
             return Ok(tags);
         }
@@ -75,12 +78,26 @@ namespace UI_MVC.Controllers.API
         {
             Subplatform subplatform = SubplatformMgr.GetSubplatform(model.Subplatform);
 
-            Page page = SubplatformMgr.GetPages().Where(p => p.PageName.ToLower().Equals("FAQ".ToLower())).Where(p => p.SubplatformId == subplatform.SubplatformId).FirstOrDefault();
+            Page page = subplatform.Pages.Where(p => p.PageName.ToLower().Equals("FAQ".ToLower())).FirstOrDefault();
             int count = page.Tags.Count() + 1;
-          
-            SubplatformMgr.AddTag(page.PageId,"Question" + count, model.Question, model.Answer);
 
+            SubplatformMgr.AddTag(page.PageId, "Question" + count, model.Question, model.Answer);
+            
+            return Ok();
+        }
 
+        [HttpPost]
+        public IHttpActionResult RemoveQuestion([FromBody]FAQViewModel model)
+        {
+            Subplatform subplatform = SubplatformMgr.GetSubplatform(model.Subplatform);
+            if (subplatform is null) return BadRequest();
+
+            Page page = subplatform.Pages.Where(p => p.PageName.ToLower().Equals("FAQ".ToLower())).SingleOrDefault();
+            if (page is null) return NotFound();
+
+            Tag tag = page.Tags.Find(t => t.Name.ToLower().Equals(model.FAQitem.ToLower()));
+            SubplatformMgr.RemoveTag(tag.TagId);
+            
             return Ok();
         }
     }

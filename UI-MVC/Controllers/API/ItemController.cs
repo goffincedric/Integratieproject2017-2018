@@ -489,7 +489,7 @@ namespace UI_MVC.Controllers.API
         {
             Person item = ItemMgr.GetPerson(id);
             if (item == null) return StatusCode(HttpStatusCode.NoContent);
-            return Ok(JsonConvert.SerializeObject(item.Records));
+            return Ok(JsonConvert.SerializeObject(item.Records.Where(r => r.Date > DateTime.Today.AddDays(-14))));
         }
 
         [HttpGet]

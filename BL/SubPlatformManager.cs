@@ -55,19 +55,19 @@ namespace PB.BL
             return SubplatformRepo.ReadSubplatforms();
         }
 
-        public Subplatform AddSubplatform(string name, string url, string sourceApi = null, string siteIconUrl = null)
+        public Subplatform AddSubplatform(string name, IEnumerable<Profile> admins, string url = null, string sourceApi = null, string siteIconUrl = null)
         {
             InitNonExistingRepo();
             Subplatform subplatform = new Subplatform
             {
                 Name = name,
-                URL = url ?? name.ToLower().Replace(" ", "-"),
+                URL = url ?? name.Trim().ToLower().Replace(" ", "-"),
                 DateOnline = DateTime.Now,
                 Style = new Style(),
-                Admins = new List<Profile>(),
+                Admins = new List<Profile>(admins),
                 Items = new List<Item>(),
-                Pages = new List<Page>(),
                 Settings = new List<SubplatformSetting>(),
+                Pages = new List<Page>(),
                 Dashboards = new List<Dashboard>()
             };
             subplatform.Settings.Add(new SubplatformSetting
@@ -77,7 +77,6 @@ namespace PB.BL
                 Value = sourceApi ?? "https://kdg.textgain.com/query",
                 Subplatform = subplatform
             });
-
             subplatform.Settings.Add(new SubplatformSetting
             {
                 SettingName = Setting.Platform.SITE_ICON_URL,
@@ -85,7 +84,6 @@ namespace PB.BL
                 Value = siteIconUrl ?? @"~/Content/Images/default-subplatform.png",
                 Subplatform = subplatform
             });
-
             subplatform.Settings.Add(new SubplatformSetting
             {
                 SettingName = Setting.Platform.DAYS_TO_KEEP_RECORDS,
@@ -156,7 +154,31 @@ namespace PB.BL
                 IsEnabled = true,
                 Subplatform = subplatform
             });
+            subplatform.Settings.Add(new SubplatformSetting
+            {
+                SettingName = Setting.Platform.BANNER,
+                Value = @"~/Content/Images/Index/banner.jpg",
+                IsEnabled = true,
+                Subplatform = subplatform
+            });
+            subplatform.Settings.Add(new SubplatformSetting
+            {
+                SettingName = Setting.Platform.PRIMARY_COLOR,
+                Value = "#fff",
+                IsEnabled = true,
+                Subplatform = subplatform
+            });
+            subplatform.Settings.Add(new SubplatformSetting
+            {
+                SettingName = Setting.Platform.SECONDARY_COLOR,
+                Value = "#fff",
+                IsEnabled = true,
+                Subplatform = subplatform
+            });
+            // TODO: Alle settings toevoegen (color, banner, ...)
 
+            
+            subplatform.Pages.AddRange(pagesToAdd);
 
             subplatform = AddSubplatform(subplatform);
             uowManager.Save();
@@ -311,8 +333,7 @@ namespace PB.BL
         {
             InitNonExistingRepo();
             Subplatform subplatform = SubplatformRepo.ReadSubplatform(subplatformId);
-            if (subplatform == null)
-                throw new Exception("Subplatform with subplatformId (" + subplatformId + ") doesn't exist");
+            if (subplatform == null) throw new Exception("Subplatform with subplatformId (" + subplatformId + ") doesn't exist");
             Page page = new Page
             {
                 Title = title,
@@ -341,12 +362,6 @@ namespace PB.BL
         public Page GetPage(int pageId)
         {
             return SubplatformRepo.ReadPage(pageId);
-        }
-
-
-        public Page GetPage(string name)
-        {
-            return SubplatformRepo.ReadPage(name);
         }
 
         public void ChangePage(Page page)
@@ -404,10 +419,12 @@ namespace PB.BL
             return SubplatformRepo.ReadTag(tagId);
         }
 
-        public Tag GetTag(string name)
+        public Tag GetTag(string name, string subplatformUrl)
         {
             InitNonExistingRepo();
-            return SubplatformRepo.ReadTag(name);
+            return SubplatformRepo
+                .ReadTags()
+                .SingleOrDefault(t => t.Name.Equals(name) && t.Page.Subplatform.URL.Equals(subplatformUrl));
         }
 
         public void ChangeTag(Tag tag)
@@ -417,13 +434,19 @@ namespace PB.BL
             uowManager.Save();
         }
 
+        public void ChangeTags(List<Tag> tags)
+        {
+            InitNonExistingRepo();
+            SubplatformRepo.UpdateTags(tags);
+            uowManager.Save();
+        }
+
         public void RemoveTag(int tagId)
         {
             InitNonExistingRepo();
             SubplatformRepo.DeleteTag(tagId);
             uowManager.Save();
         }
-
         #endregion
     }
 }

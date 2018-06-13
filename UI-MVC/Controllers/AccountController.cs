@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,18 +39,29 @@ namespace UI_MVC.Controllers
         public AccountController()
         {
             SubplatformManager smgr = new SubplatformManager(uow);
-            ViewBag.Home = smgr.GetTag("Home").Text;
-            ViewBag.Dashboard = smgr.GetTag("Dashboard").Text;
-            ViewBag.WeeklyReview = smgr.GetTag("Weekly_Review").Text;
-            ViewBag.MyAccount = smgr.GetTag("Account").Text;
-            ViewBag.More = smgr.GetTag("More").Text;
-            ViewBag.FAQ = smgr.GetTag("FAQ").Text;
-            ViewBag.Contact = smgr.GetTag("Contact").Text;
-            ViewBag.Legal = smgr.GetTag("Legal").Text;
-            ViewBag.Items = smgr.GetTag("Items").Text;
-            ViewBag.Persons = smgr.GetTag("Persons").Text;
-            ViewBag.Organisations = smgr.GetTag("Organisations").Text;
-            ViewBag.Themes = smgr.GetTag("Themes").Text;
+
+            if (System.Web.HttpContext.Current.Request.Url.Segments.Count() > 1)
+            {
+                Subplatform subplatform = smgr.GetSubplatform(System.Web.HttpContext.Current.Request.Url.Segments[1].Trim('/'));
+
+                IEnumerable<Tag> menuTags = subplatform.Pages.SingleOrDefault(p => p.PageName.Equals("Menu"))?.Tags;
+                if (menuTags is null || menuTags.Count() == 0) return;
+                ViewBag.Home = menuTags.SingleOrDefault(t => t.Name.Equals("Home"))?.Text ?? "Home";
+                ViewBag.Dashboard = menuTags.SingleOrDefault(t => t.Name.Equals("Dashboard"))?.Text ?? "Dashboard";
+                ViewBag.WeeklyReview = menuTags.SingleOrDefault(t => t.Name.Equals("Weekly_Review"))?.Text ?? "Weekly Review";
+                ViewBag.MyAccount = menuTags.SingleOrDefault(t => t.Name.Equals("Account"))?.Text ?? "Account";
+                ViewBag.More = menuTags.SingleOrDefault(t => t.Name.Equals("More"))?.Text ?? "More";
+                ViewBag.FAQ = menuTags.SingleOrDefault(t => t.Name.Equals("FAQ"))?.Text ?? "FAQ";
+                ViewBag.Contact = menuTags.SingleOrDefault(t => t.Name.Equals("Contact"))?.Text ?? "Contact";
+                ViewBag.Legal = menuTags.SingleOrDefault(t => t.Name.Equals("Legal"))?.Text ?? "Legal";
+                ViewBag.Items = menuTags.SingleOrDefault(t => t.Name.Equals("Items"))?.Text ?? "Items";
+                ViewBag.Persons = menuTags.SingleOrDefault(t => t.Name.Equals("Persons"))?.Text ?? "Persons";
+                ViewBag.Organisations = menuTags.SingleOrDefault(t => t.Name.Equals("Organisations"))?.Text ?? "Organisations";
+                ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes"))?.Text ?? "Themes";
+
+                ViewBag.Color1 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.PRIMARY_COLOR))?.Value;
+                ViewBag.Color2 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.SECONDARY_COLOR))?.Value;
+            }
         }
 
         public AccountController(AccountManager userManager, IntegratieSignInManager signInManager, ItemManager itemManager)
@@ -289,10 +301,22 @@ namespace UI_MVC.Controllers
             if (Request.IsAuthenticated)
             {
                 Profile profile = UserManager.GetProfile(User.Identity.GetUserId());
-                ViewBag.ProfileImage = profile.ProfileIcon is null
+
+                if(profile.Image is null)
+                {
+                    ViewBag.ProfileImage = profile.ProfileIcon is null
                     ? VirtualPathUtility.ToAbsolute(SubplatformMgr
                         .GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_NEW_USER_ICON).Value)
                     : VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
+                }
+                else
+                {
+                    byte[] array = profile.Image; 
+                    var base64 = Convert.ToBase64String(array);
+                    var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                    ViewBag.ProfileImage = imgSrc; 
+                }
+                
                 AccountEditModel account = new AccountEditModel(profile);
                 return View(account);
             }
@@ -311,25 +335,28 @@ namespace UI_MVC.Controllers
             {
                 if (editedAccount.file.ContentLength > 0)
                 {
-                    _FileName = Path.GetFileName(editedAccount.file.FileName);
+                    //_FileName = Path.GetFileName(editedAccount.file.FileName);
 
-                    var username = newProfile.UserName;
-                    var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
-                    string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
-                    editedAccount.file.SaveAs(_path);
-                    newProfile.ProfileIcon = @"~/Content/Images/Users/" + newName;
+                    //var username = newProfile.UserName;
+                    //var newName = username + "." + _FileName.Substring(_FileName.IndexOf(".") + 1);
+                    //string _path = Path.Combine(Server.MapPath("~/Content/Images/Users/"), newName);
+                    //editedAccount.file.SaveAs(_path);
+                    //newProfile.ProfileIcon = @"~/Content/Images/Users/" + newName;
+                    ImageConverter imgCon = new ImageConverter();
+                    var img = Image.FromStream(editedAccount.file.InputStream);
+                    newProfile.Image = (byte[])imgCon.ConvertTo(img, typeof(byte[]));
+
                 }
             }
             else
             {
                 newProfile.ProfileIcon = newProfile.ProfileIcon;
+                
             }
-
+           
             newProfile.UserData.LastName = editedAccount.LastName;
             newProfile.UserData.FirstName = editedAccount.FirstName;
             newProfile.Email = editedAccount.Email;
-            //newProfile.UserData.Telephone = editedAccount.Telephone;
-            //newProfile.UserData.Gender = editedAccount.Gender;
             newProfile.UserData.Street = editedAccount.Street;
             newProfile.UserData.City = editedAccount.City;
             newProfile.UserData.Province = editedAccount.Province;

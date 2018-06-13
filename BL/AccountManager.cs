@@ -18,6 +18,7 @@ using PB.BL.Senders;
 using PB.DAL;
 using PB.DAL.EF;
 using PB.DAL.Interfaces;
+using System.Data.Entity;
 
 namespace PB.BL
 {
@@ -151,6 +152,8 @@ namespace PB.BL
                 roleManager.Create(role);
             }
 
+            List<Subplatform> subplatforms = context.Subplatforms.Include(s => s.Admins).ToList();
+
             // Create superadmin
             if (userManager.Users.FirstOrDefault(p => p.UserName.Equals("captain")) is null)
             {
@@ -160,7 +163,7 @@ namespace PB.BL
                     Email = "example@example.tld",
                     ProfileIcon = @"~/Content/Images/Users/user.png",
                     CreatedOn = DateTime.Now,
-                    AdminPlatforms = context.Subplatforms.ToList()
+                    AdminPlatforms = subplatforms
                 };
                 user.UserData = new UserData { Profile = user };
                 user.Settings = new List<UserSetting>
@@ -226,7 +229,10 @@ namespace PB.BL
                     Email = "admin@example.tld",
                     ProfileIcon = @"~/Content/Images/Users/user.png",
                     CreatedOn = DateTime.Now,
-                    AdminPlatforms = new List<Subplatform>() { context.Subplatforms.FirstOrDefault(s => s.URL.ToLower().Equals("politieke-barometer"))}
+                    AdminPlatforms = new List<Subplatform>()
+                    {
+                        subplatforms.FirstOrDefault(s => s.URL.ToLower().Equals("politieke-barometer"))
+                    }
                 };
                 user2.UserData = new UserData { Profile = user2 };
                 user2.Settings = new List<UserSetting>
@@ -284,7 +290,6 @@ namespace PB.BL
                 if (result.Succeeded) userManager.AddToRole(user2.Id, "Admin");
             }
         }
-
         #endregion
 
         #region Profile
@@ -560,7 +565,7 @@ namespace PB.BL
                 IsGeneratingAlerts = false;
             }
         }
-        
+
         public async Task<List<Alert>> GenerateAllAlertsAsync(IEnumerable<Item> allItems)
         {
             InitNonExistingRepo();

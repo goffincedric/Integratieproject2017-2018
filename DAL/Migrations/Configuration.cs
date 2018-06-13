@@ -40,12 +40,245 @@ namespace PB.DAL.Migrations
             // Seed basic data
 
             #region Subplatforms
+
+            // Makes default pages
+            #region Pages
+            List<Page> defaultPages = new List<Page>
+            {
+                new Page
+                {
+                    PageName = "Home",
+                    Title = "Home",
+                    Tags = new List<Tag>
+                    {
+                        new Tag
+                        {
+                            Name = "BannerTitle",
+                            Text = "Politieke Barometer"
+                        },
+                        new Tag
+                        {
+                            Name = "BannerTextSub1",
+                            Text = "Volg uw favoriete politiekers, partijen en thema's en bekijk hoe deze door anderen besproken worden op sociale media."
+                        },
+                        new Tag
+                        {
+                            Name = "BannerTextSub2",
+                            Text = "Creeër uw eigen dashboard en bekijk en analyseer live grafieken!"
+                        },
+                        new Tag
+                        {
+                            Name = "call-to-action-text",
+                            Text = "Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data."
+                        }
+                    }
+                },
+                new Page
+                {
+                    PageName = "Dashboard",
+                    Title = "Dashboard",
+                    Tags = new List<Tag>()
+                },
+                new Page
+                {
+                    PageName = "WeeklyReview",
+                    Title = "Weekly Review",
+                    Tags = new List<Tag>()
+                },
+                 new Page
+                {
+                    PageName = "Items",
+                    Title = "Items",
+                    Tags = new List<Tag>()
+                },
+                new Page
+                {
+                    PageName = "Persons",
+                    Title = "Politici",
+                    Tags = new List<Tag>()
+                },
+                new Page
+                {
+                    PageName = "Organisations",
+                    Title = "Partijen",
+                    Tags = new List<Tag>()
+                },
+                new Page
+                {
+                    PageName = "Themes",
+                    Title = "Thema's",
+                    Tags = new List<Tag>()
+                },
+                new Page
+                {
+                    PageName = "Account",
+                    Title = "Account",
+                    Tags = new List<Tag>()
+                },
+                new Page
+                {
+                    PageName = "FAQ",
+                    Title = "FAQ",
+                    Tags = new List<Tag>
+                    {
+                        new Tag
+                        {
+                            Name = "Question1",
+                            Text = "Waarom zou ik me registreren op de Politieke Barometer?",
+                            Text2 = "De politieke barometer kan u bijstaan om politieke trends te monitoren en te analyseren. Hiermee kan u uw visie op politieke events en trends aanscherpen, waardoor u ook bewuster wordt van wat er rondom je gebeurt. Dit zal er voor zorgen dat u met zekerheid naar de stemhokjes kan."
+                        },
+                        new Tag
+                        {
+                            Name="Question2",
+                            Text = "Hoe maak ik een account aan?",
+                            Text2 = "Klik Rechtsboven op het login / register. Wij verwerken uw gegevens en u kan direct aan de slag!"
+                        },
+                        new Tag
+                        {   Name ="Question3",
+                            Text= "Hoe subscribe ik op een item?",
+                            Text2 = "Rechts boven vindt u een zoekbalk waarin in de naam van het gewenste thema, persoon of organisatie kan ingevult worden. Dit zal u leiden tot aan de desbetreffende detailpagina waar een subscribe knop in het menu staat."
+                        },
+                        new Tag
+                        {
+                            Name = "Question4",
+                            Text = "Kan ik mijn wachtwoord of gebruikersnaam nog aanpassen?",
+                            Text2=  "Ja, dit gaat! Als u naar je persoonlijke instellingen gaat dan kan je al deze gegevens up-to-date houden."
+                        },
+                        new Tag
+                        {
+                            Name = "Question5",
+                            Text = "Kan ik mijn account ook verwijderen?",
+                            Text2 = "Ja, dit gaat ook in je persoonlijke instellingen. We vinden het echter wel spijtig om je te zien vertrekken. Het zou ons veel plezier doen moest je het contact formulier invullen en je ervaringen met het platform delen."
+                        },
+                        new Tag
+                        {
+                            Name = "Question6",
+                            Text = "Hoe werkt politieke barometer?",
+                            Text2 =  "Wij werken nauw samen met TextGain, een bedrijf dat Web services aanbied voor voorspellende text analyses. Zij analyseren Twitter-berichten voor ons en wij bieden u met veel plezier deze data aan in een overzichtelijk formaat."
+                        },
+                        new Tag
+                        {
+                            Name = "Question7",
+                            Text = "Ik vind jullie kleurenschema maar niets. Kan ik dit aanpassen?",
+                            Text2 ="Ja, dit gaat. U kan rechtsboven uw thema aanpassen naar een van onze 3 thema's. Indien u geen enkel van onze thema's leuk vindt, kan u altijd een verzoek sturen via onze contact pagina."
+                        }
+                    }
+                },
+                new Page
+                {
+                    PageName = "Contact",
+                    Title = "Contact",
+                    Tags = new List<Tag>()
+                },
+                new Page
+                {
+                    PageName = "ItemDetail",
+                    Title = "Item Detail",
+                    Tags = new List<Tag>()
+                },
+                new Page
+                {
+                    PageName = "Login",
+                    Title = "Login",
+                    Tags = new List<Tag>()
+                },
+                new Page
+                {
+                    PageName = "Register",
+                    Title = "Register",
+                    Tags = new List<Tag>()
+                },
+                new Page
+                {
+                    PageName = "Notification",
+                    Title = "Notifications",
+                    Tags = new List<Tag>()
+                },
+                new Page
+                {
+                    PageName = "UserSettings",
+                    Title = "User Settings",
+                    Tags = new List<Tag>()
+                },
+                new Page
+                {
+                    PageName = "Menu",
+                    Title = "Menu",
+                    Tags = new List<Tag>
+                    {
+                        new Tag
+                        {
+                            Name = "Home",
+                            Text = "Home"
+                        },
+                        new Tag
+                        {
+                            Name = "Dashboard",
+                            Text = "Dashboard"
+                        },
+                        new Tag
+                        {
+                            Name = "Weekly_Review",
+                            Text = "Weekly Review"
+                        },
+                        new Tag
+                        {
+                            Name = "Account",
+                            Text = "My Account"
+                        },
+                        new Tag
+                        {
+                            Name = "More",
+                            Text = "More"
+                        },
+                        new Tag
+                        {
+                            Name = "FAQ",
+                            Text = "FAQ"
+                        },
+                        new Tag
+                        {
+                            Name = "Contact",
+                            Text = "Contact"
+                        },
+                          new Tag
+                        {
+                            Name = "Items",
+                            Text = "Items"
+                        },
+                            new Tag
+                        {
+                            Name = "Persons",
+                            Text = "Politici"
+                        },
+                                new Tag
+                        {
+                            Name = "Organisations",
+                            Text = "Partijen"
+                        },
+                        new Tag
+                        {
+                            Name = "Themes",
+                            Text = "Thema's"
+                        },
+                        new Tag
+                        {
+                            Name = "Legal",
+                            Text = "Terms of use"
+                        }
+                    }
+                }
+            };
+
+            #endregion
+
             //Makes PB subplatform
             Subplatform pbSubplatform = ctx.Subplatforms
                 .Include(s => s.Settings)
                 .Include(s => s.Items)
                 .FirstOrDefaultAsync(s => s.Name.ToLower().Equals("Politieke Barometer".ToLower())).Result;
             if (pbSubplatform == null)
+            {
                 pbSubplatform = new Subplatform
                 {
                     Name = "Politieke Barometer",
@@ -111,7 +344,7 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SITE_ICON_URL,
-                            Value = @"~/Content/Images/Site/logo_new.png",
+                            Value = @"~/Content/Images/Site/Politieke-barometer-logo.png",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         },
@@ -135,17 +368,47 @@ namespace PB.DAL.Migrations
                             Value = "7",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
+                        },
+                         new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.BANNER,
+                            Value = @"~/Content/Images/Index/banner.jpg",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                         new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.PRIMARY_COLOR,
+                            Value = "#fff",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
+                        },
+                         new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.SECONDARY_COLOR,
+                            Value = "#fff",
+                            IsEnabled = true,
+                            Subplatform = pbSubplatform
                         }
+
                     },
                     Admins = new List<Profile>(),
                     Items = new List<Item>(),
-                    Pages = new List<Page>()
+                    Pages = new List<Page>(defaultPages.Select(p => (Page)p.Clone()))
                 };
-
+                pbSubplatform.Pages.ForEach(p =>
+                {
+                    p.Tags.ForEach(t =>
+                    {
+                        t.Page = p;
+                    });
+                    p.Subplatform = pbSubplatform;
+                });
+            }
             //Makes Test subplatform
-            Subplatform testSubplatform =
-                ctx.Subplatforms.FirstOrDefaultAsync(s => s.Name.ToLower().Equals("Test".ToLower())).Result;
+            Subplatform testSubplatform = ctx.Subplatforms.FirstOrDefaultAsync(s => s.Name.ToLower().Equals("Test".ToLower())).Result;
             if (testSubplatform == null)
+            {
                 testSubplatform = new Subplatform
                 {
                     Name = "Test",
@@ -211,7 +474,7 @@ namespace PB.DAL.Migrations
                         new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SITE_ICON_URL,
-                            Value = @"~/Content/Images/Site/logo_new.png",
+                            Value = @"~/Content/Images/Site/testing.png",
                             IsEnabled = true,
                             Subplatform = testSubplatform
                         },
@@ -235,13 +498,42 @@ namespace PB.DAL.Migrations
                             Value = "7",
                             IsEnabled = true,
                             Subplatform = testSubplatform
+                        },
+                            new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.BANNER,
+                            Value = @"~/Content/Images/Index/testing-banner.PNG",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                         new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.PRIMARY_COLOR,
+                            Value = "#fff",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
+                        },
+                         new SubplatformSetting
+                        {
+                            SettingName = Setting.Platform.SECONDARY_COLOR,
+                            Value = "#fff",
+                            IsEnabled = true,
+                            Subplatform = testSubplatform
                         }
                     },
                     Admins = new List<Profile>(),
                     Items = new List<Item>(),
-                    Pages = new List<Page>()
+                    Pages = new List<Page>(defaultPages.Select(p => (Page)p.Clone()))
                 };
-
+                testSubplatform.Pages.ForEach(p =>
+                {
+                    p.Tags.ForEach(t =>
+                    {
+                        t.Page = p;
+                    });
+                    p.Subplatform = testSubplatform;
+                });
+            }
             #endregion
 
             #region Organisation
@@ -460,7 +752,7 @@ namespace PB.DAL.Migrations
                             Themes = new List<Theme>()
                         };
                     }
-                    
+
                     pbSubplatform.Items.Add(personCheck);
                 }
 
@@ -912,263 +1204,11 @@ namespace PB.DAL.Migrations
 
             #endregion
 
-            #region Pages
-            List<Page> pagesToAdd = new List<Page>
-            {
-                new Page
-                {
-                    PageName = "Home",
-                    Title = "Home",
-                    Tags = new List<Tag>
-                    {
-                        new Tag
-                        {
-                            Name = "BannerTitle",
-                            Text = "Politieke Barometer"
-                        },
-                        new Tag
-                        {
-                            Name = "BannerTextSub1",
-                            Text = "Volg uw favoriete politiekers, partijen en thema's en bekijk hoe deze door anderen besproken worden op sociale media."
-                        },
-                        new Tag
-                        {
-                            Name = "BannerTextSub2",
-                            Text = "Creeër uw eigen dashboard en bekijk en analyseer live grafieken!"
-                        },
-                        new Tag
-                        {
-                            Name = "call-to-action-text",
-                            Text = "Krijg toegang tot ons duizelingwekkend aanbod aan geanalyseerde en gevisualiseerde data."
-                        }
-                    },
-                    Subplatform = pbSubplatform
-                },
-                new Page
-                {
-                    PageName = "Dashboard",
-                    Title = "Dashboard",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                new Page
-                {
-                    PageName = "WeeklyReview",
-                    Title = "Weekly Review",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                 new Page
-                {
-                    PageName = "Items",
-                    Title = "Items",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                   new Page
-                {
-                    PageName = "Persons",
-                    Title = "Politici",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                      new Page
-                {
-                    PageName = "Organisations",
-                    Title = "Partijen",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                             new Page
-                {
-                    PageName = "Themes",
-                    Title = "Thema's",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                new Page
-                {
-                    PageName = "Account",
-                    Title = "Account",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                new Page
-                {
-                    PageName = "FAQ",
-                    Title = "FAQ",
-                    Subplatform = pbSubplatform,
-                    Tags = new List<Tag>
-                    {
-                        new Tag
-                        {
-                            Name = "Question1",
-                            Text = "Waarom zou ik me registreren op de Politieke Barometer?",
-                            Text2 = "De politieke barometer kan u bijstaan om politieke trends te monitoren en te analyseren. Hiermee kan u uw visie op politieke events en trends aanscherpen, waardoor u ook bewuster wordt van wat er rondom je gebeurt. Dit zal er voor zorgen dat u met zekerheid naar de stemhokjes kan."
-                        },
-                        new Tag
-                        {
-                            Name="Question2",
-                            Text = "Hoe maak ik een account aan?",
-                            Text2 = "Klik Rechtsboven op het login / register. Wij verwerken uw gegevens en u kan direct aan de slag!"
-                        },
-                        new Tag
-                        {   Name ="Question3",
-                            Text= "Hoe subscribe ik op een item?",
-                            Text2 = "Rechts boven vindt u een zoekbalk waarin in de naam van het gewenste thema, persoon of organisatie kan ingevult worden. Dit zal u leiden tot aan de desbetreffende detailpagina waar een subscribe knop in het menu staat."
-                        },
-                        new Tag
-                        {
-                            Name = "Question4",
-                            Text = "Kan ik mijn wachtwoord of gebruikersnaam nog aanpassen?",
-                            Text2=  "Ja, dit gaat! Als u naar je persoonlijke instellingen gaat dan kan je al deze gegevens up-to-date houden."
-                        },
-                        new Tag
-                        {
-                            Name = "Question5",
-                            Text = "Kan ik mijn account ook verwijderen?",
-                            Text2 = "Ja, dit gaat ook in je persoonlijke instellingen. We vinden het echter wel spijtig om je te zien vertrekken. Het zou ons veel plezier doen moest je het contact formulier invullen en je ervaringen met het platform delen."
-                        },
-                        new Tag
-                        {
-                            Name = "Question6",
-                            Text = "Hoe werkt politieke barometer?",
-                            Text2 =  "Wij werken nauw samen met TextGain, een bedrijf dat Web services aanbied voor voorspellende text analyses. Zij analyseren Twitter-berichten voor ons en wij bieden u met veel plezier deze data aan in een overzichtelijk formaat."
-                        },
-                        new Tag
-                        {
-                            Name = "Question7",
-                            Text = "Ik vind jullie kleurenschema maar niets. Kan ik dit aanpassen?",
-                            Text2 ="Ja, dit gaat. U kan rechtsboven uw thema aanpassen naar een van onze 3 thema's. Indien u geen enkel van onze thema's leuk vindt, kan u altijd een verzoek sturen via onze contact pagina."
-                        }
-                    }
-                },
-                new Page
-                {
-                    PageName = "Contact",
-                    Title = "Contact",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                new Page
-                {
-                    PageName = "ItemDetail",
-                    Title = "Item Detail",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                new Page
-                {
-                    PageName = "Login",
-                    Title = "Login",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                new Page
-                {
-                    PageName = "Register",
-                    Title = "Register",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                new Page
-                {
-                    PageName = "Notification",
-                    Title = "Notifications",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                new Page
-                {
-                    PageName = "UserSettings",
-                    Title = "User Settings",
-                    Tags = new List<Tag>(),
-                    Subplatform = pbSubplatform
-                },
-                new Page
-                {
-                    PageName = "Menu",
-                    Title = "Menu",
-                    Tags = new List<Tag>
-                    {
-                        new Tag
-                        {
-                            Name = "Home",
-                            Text = "Home"
-                        },
-                        new Tag
-                        {
-                            Name = "Dashboard",
-                            Text = "Dashboard"
-                        },
-                        new Tag
-                        {
-                            Name = "Weekly_Review",
-                            Text = "Weekly Review"
-                        },
-                        new Tag
-                        {
-                            Name = "Account",
-                            Text = "My Account"
-                        },
-                        new Tag
-                        {
-                            Name = "More",
-                            Text = "More"
-                        },
-                        new Tag
-                        {
-                            Name = "FAQ",
-                            Text = "FAQ"
-                        },
-                        new Tag
-                        {
-                            Name = "Contact",
-                            Text = "Contact"
-                        },
-                          new Tag
-                        {
-                            Name = "Items",
-                            Text = "Items"
-                        },
-                            new Tag
-                        {
-                            Name = "Persons",
-                            Text = "Politici"
-                        },
-                                new Tag
-                        {
-                            Name = "Organisations",
-                            Text = "Partijen"
-                        },
-              new Tag
-                        {
-                            Name = "Themes",
-                            Text = "Thema's"
-                        },
-                        new Tag
-                        {
-                            Name = "Legal",
-                            Text = "Terms of use"
-                        }
-                    },
-                    Subplatform = pbSubplatform
-                }
-            };
-            ctx.Pages.ForEachAsync(p =>
-            {
-                Page page = pagesToAdd.FirstOrDefault(pta => pta.Equals(p));
-                if (page != null) pagesToAdd.Remove(p);
-            }).Wait();
-            if (pagesToAdd.Count != 0) ctx.Pages.AddRange(pagesToAdd);
-
-            #endregion
-
             // Save all pending changes
             ctx.SaveChanges();
         }
 
-        public string ToPascalCase(string value)
+        public static string ToPascalCase(string value)
         {
             if (string.IsNullOrWhiteSpace(value)) return value;
             value = value.Substring(0, 1).ToUpper() + value.Substring(1).ToLower();
