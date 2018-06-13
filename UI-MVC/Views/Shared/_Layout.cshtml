@@ -13,7 +13,6 @@
     @Scripts.Render("~/bundles/jquery")
 
     <link rel="icon" href="@Html.Action("GetLogo", "Home")" />
-
     <link href="~/Content/Styling/jVectorMap/jquery-jvectormap-2.0.3.css" rel="stylesheet" />
     <script src="~/Scripts/jVectorMap/jquery-jvectormap-2.0.3.min.js"></script>
     <script src="~/Scripts/jVectorMap/jquery-jvectormap-be-mill.js"></script>
@@ -299,27 +298,38 @@
 </div>
 </div>
 <footer class="bdT ta-c p-15 fsz-sm c-grey-600">
-  <ul style="list-style-type: none;">
-    <li style="width: 100%; margin-bottom: 10px;">
-      <ul style="padding-left: 0;">
-        <li style="display: inline; padding: 0 2% 0 2%">
-          <a href="@Url.Action("Index", "Home")">@ViewBag.Home</a>
+    <ul style="list-style-type: none;">
+        <li style="width: 100%; margin-bottom: 10px;">
+            <ul style="padding-left: 0;">
+                <li style="display: inline; padding: 0 2% 0 2%">
+                    <a href="@Url.Action("Index", "Home")">@ViewBag.Home</a>
+                </li>
+                <li style="display: inline; padding: 0 2%">
+                    <a href="@Url.Action("FAQ", "Home")">@ViewBag.FAQ</a>
+                </li>
+                <li style="display: inline; padding: 0 2%">
+                    <a href="@Url.Action("Contact", "Home")">@ViewBag.Contact</a>
+                </li>
+                <li style="display: inline; padding: 0 2%">
+                    <a href="@Url.Action("Legal", "Home")">@ViewBag.Legal</a>
+                </li>
+            </ul>
         </li>
-        <li style="display: inline; padding: 0 2%">
-          <a href="@Url.Action("FAQ", "Home")">@ViewBag.FAQ</a>
+        <li>
+            <span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span>
         </li>
-        <li style="display: inline; padding: 0 2%">
-          <a href="@Url.Action("Contact", "Home")">@ViewBag.Contact</a>
-        </li>
-        <li style="display: inline; padding: 0 2%">
-          <a href="@Url.Action("Legal", "Home")">@ViewBag.Legal</a>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <span>Copyright © @DateTime.Now.Year Designed by TeamNotFoundException. All rights reserved.</span>
-    </li>
-  </ul>
+    </ul>
+    @{
+        string theme = Html.Action("GetThemeColors", "Home").ToString();
+        if (theme.Equals("future"))
+        {
+            <style>
+                body {
+                    background: linear-gradient(to bottom right, @ViewBag.Color1 10%, @ViewBag.Color2 100%);
+                }
+            </style>
+        }
+    }
 </footer>
 </body>
 </html>

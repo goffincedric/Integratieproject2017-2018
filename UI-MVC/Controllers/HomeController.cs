@@ -53,13 +53,14 @@ namespace UI_MVC.Controllers
                 ViewBag.Organisations = menuTags.SingleOrDefault(t => t.Name.Equals("Organisations"))?.Text ?? "Organisations";
                 ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes"))?.Text ?? "Themes";
 
+                ViewBag.Color1 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.PRIMARY_COLOR))?.Value;
+                ViewBag.Color2 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.SECONDARY_COLOR))?.Value;
+
                 IEnumerable<Tag> homeTags = SubplatformMgr.GetTags(subplatform.Pages.Single(p => p.PageName.Equals("Home")).PageId);
                 ViewBag.HeaderText = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTitle"))?.Text ?? "Subplatform title";
                 ViewBag.BannerSub1 = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTextSub1"))?.Text ?? "BannerTextSub1";
                 ViewBag.BannerSub2 = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTextSub2"))?.Text ?? "BannerTextSub2";
                 ViewBag.CallToAction = homeTags.SingleOrDefault(t => t.Name.Equals("call-to-action-text"))?.Text ?? "call-to-action-text";
-
-
             }
         }
         #region Search
@@ -180,6 +181,7 @@ namespace UI_MVC.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
                 string theme = "";
                 Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
                 if (profile != null)
@@ -201,14 +203,21 @@ namespace UI_MVC.Controllers
                 }
                 else
                 {
-                    theme = SubplatformMgr.GetSubplatform(subplatform).Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_THEME))?.Value;
+                    theme = Subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.DEFAULT_THEME))?.Value;
                     if (theme == null) theme = "Light";
                 }
 
                 return Content(@"/Content/Theme/" + theme + @".css");
             }
 
+
             return Content("/Content/Theme/LightMode.css");
+        }
+
+        public ActionResult GetThemeColors(string subplatform)
+        {
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+            return Content(accountMgr.GetUserSetting(User.Identity.GetUserId(), Setting.Account.THEME).Value.ToLower());
         }
 
         public ActionResult ChangeThemeSetting(string Theme)
