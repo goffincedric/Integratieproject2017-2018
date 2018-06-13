@@ -217,12 +217,13 @@ namespace UI_MVC.Controllers
 
         public ActionResult GetThemeColors(string subplatform)
         {
+            Subplatform CurrentSubplatform = SubplatformMgr.GetSubplatform(subplatform);
             if (User.Identity.IsAuthenticated)
             {
-                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+             
                 return Content(accountMgr.GetUserSetting(User.Identity.GetUserId(), Setting.Account.THEME).Value.ToLower());
             }
-            return Content("future");
+            return Content(SubplatformMgr.GetSubplatformSetting(CurrentSubplatform.SubplatformId,Setting.Platform.DEFAULT_THEME).Value.ToLower());
         }
 
         public ActionResult ChangeThemeSetting(string Theme)
