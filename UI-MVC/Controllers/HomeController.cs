@@ -81,8 +81,10 @@ namespace UI_MVC.Controllers
                 Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
                 if (profile != null)
                 {
-                    var image = VirtualPathUtility.ToAbsolute(profile.ProfileIcon);
-                    return Content(image);
+                    byte[] array = profile.Image; ;
+                     var base64 = Convert.ToBase64String(array);
+                var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                    return Content(imgSrc);
                 }
             }
 
@@ -215,8 +217,12 @@ namespace UI_MVC.Controllers
 
         public ActionResult GetThemeColors(string subplatform)
         {
-            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            return Content(accountMgr.GetUserSetting(User.Identity.GetUserId(), Setting.Account.THEME).Value.ToLower());
+            if (User.Identity.IsAuthenticated)
+            {
+                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+                return Content(accountMgr.GetUserSetting(User.Identity.GetUserId(), Setting.Account.THEME).Value.ToLower());
+            }
+            return Content("future");
         }
 
         public ActionResult ChangeThemeSetting(string Theme)
