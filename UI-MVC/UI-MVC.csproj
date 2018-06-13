@@ -20,10 +20,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-
     <IISExpressSSLPort>
     </IISExpressSSLPort>
-
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -284,12 +282,9 @@
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\datatables.min.css" />
-
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Fonts\roboto.css" />
-    <Content Include="Content\Images\1.jpg" />
-
     <Content Include="Content\Images\404.png" />
     <Content Include="Content\Images\500.png" />
     <Content Include="Content\Images\bg.jpg" />
@@ -373,7 +368,6 @@
     <Content Include="Scripts\jVectorMap\jquery-jvectormap-be-mill.js" />
     <Content Include="Scripts\Layout\Collapse.js" />
     <Content Include="Scripts\load.js" />
-    <Content Include="Scripts\ndbx.js" />
     <Content Include="Scripts\Search.js" />
     <Content Include="Scripts\vendor.js" />
     <Content Include="Scripts\Wizard\bootstrap.min.js" />

@@ -386,7 +386,7 @@ namespace PB.DAL.Migrations
                          new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SECONDARY_COLOR,
-                            Value = "#fff",
+                            Value = "#2196f3",
                             IsEnabled = true,
                             Subplatform = pbSubplatform
                         }
@@ -516,7 +516,7 @@ namespace PB.DAL.Migrations
                          new SubplatformSetting
                         {
                             SettingName = Setting.Platform.SECONDARY_COLOR,
-                            Value = "#fff",
+                            Value = "#2196f3",
                             IsEnabled = true,
                             Subplatform = testSubplatform
                         }

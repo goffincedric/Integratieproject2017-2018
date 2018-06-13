@@ -171,14 +171,14 @@ namespace PB.BL
             subplatform.Settings.Add(new SubplatformSetting
             {
                 SettingName = Setting.Platform.SECONDARY_COLOR,
-                Value = "#fff",
+                Value = "#2196f3",
                 IsEnabled = true,
                 Subplatform = subplatform
             });
             // TODO: Alle settings toevoegen (color, banner, ...)
 
             
-            subplatform.Pages.AddRange(pagesToAdd);
+            //subplatform.Pages.AddRange(pagesToAdd);
 
             subplatform = AddSubplatform(subplatform);
             uowManager.Save();

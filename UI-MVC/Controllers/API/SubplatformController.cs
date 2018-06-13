@@ -44,14 +44,10 @@ namespace UI_MVC.Controllers.API
 
             return Ok();
         }
-<<<<<<< HEAD
 
-       
+
+      
         [HttpPost]
-=======
-        
-        [HttpPut]
->>>>>>> master
         public IHttpActionResult ChangeTagFAQ([FromBody]FAQViewModel model)
         {
             Subplatform subplatform = SubplatformMgr.GetSubplatform(model.Subplatform);
