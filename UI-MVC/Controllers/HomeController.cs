@@ -81,17 +81,29 @@ namespace UI_MVC.Controllers
         #endregion
 
         #region Load
-        public ActionResult ChangeProfilePic()
+        public ActionResult ChangeProfilePic(string subplatform)
         {
+           
             if (User.Identity.IsAuthenticated)
             {
                 Profile profile = accountMgr.GetProfile(User.Identity.GetUserId());
+                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
                 if (profile != null)
                 {
-                    byte[] array = profile.Image; ;
-                    var base64 = Convert.ToBase64String(array);
-                    var imgSrc = String.Format("data:image/png;base64,{0}", base64);
-                    return Content(imgSrc);
+                    byte[] array = profile.Image; 
+                    if(array != null)
+                    {
+                        var base64 = Convert.ToBase64String(array);
+                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                        return Content(imgSrc);
+
+                    }
+                    else
+                    {
+                        string url = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.DEFAULT_NEW_USER_ICON).Value);
+                        return Content(url);
+                    }
+                    
                 }
             }
 
