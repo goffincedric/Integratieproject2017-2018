@@ -178,7 +178,8 @@ namespace PB.BL
             // TODO: Alle settings toevoegen (color, banner, ...)
 
             
-            //subplatform.Pages.AddRange(pagesToAdd);
+            subplatform.Pages.AddRange(Page.GetDefaultPages(subplatform));
+
 
             subplatform = AddSubplatform(subplatform);
             uowManager.Save();

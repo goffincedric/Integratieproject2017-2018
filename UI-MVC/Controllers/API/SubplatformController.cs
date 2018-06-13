@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -26,9 +26,7 @@ namespace UI_MVC.Controllers.API
         [HttpGet]
         public IHttpActionResult GetTagsOfMenu(int id)
         {
-            Dictionary<string, string> tags = new Dictionary<string, string>();
-
-            SubplatformMgr.GetPages().Where(p => p.PageName.Equals("Menu")).Where(p => p.SubplatformId == id).FirstOrDefault().Tags.ForEach(t => tags.Add(t.Name, t.Text));
+            Dictionary<string, string> tags = SubplatformMgr.GetSubplatform(id).Pages.SingleOrDefault(p => p.PageName.Equals("Menu")).Tags.ToDictionary(p => p.Name, p => p.Text);
             return Ok(tags);
         }
         [HttpPost]
@@ -36,7 +34,7 @@ namespace UI_MVC.Controllers.API
         {
             Subplatform subplatform = SubplatformMgr.GetSubplatform(model.Subplatform);
 
-            Page page = SubplatformMgr.GetPages().Where(p => p.PageName.Equals("Menu")).Where( p=> p.SubplatformId == subplatform.SubplatformId).FirstOrDefault();
+            Page page = SubplatformMgr.GetPages().Where(p => p.PageName.Equals("Menu")).Where(p => p.SubplatformId == subplatform.SubplatformId).FirstOrDefault();
             Tag tag = page.Tags.Find(t => t.Name.ToLower().Equals(model.MenuItem.ToLower()));
             tag.Text = model.MenuText;
             SubplatformMgr.ChangeTag(tag);
@@ -57,7 +55,7 @@ namespace UI_MVC.Controllers.API
             tag.Text = model.Question;
             tag.Text2 = model.Answer;
             SubplatformMgr.ChangeTag(tag);
-            
+
             return Ok();
         }
 
@@ -78,7 +76,7 @@ namespace UI_MVC.Controllers.API
             int count = page.Tags.Count() + 1;
 
             SubplatformMgr.AddTag(page.PageId, "Question" + count, model.Question, model.Answer);
-            
+
             return Ok();
         }
 
@@ -93,7 +91,7 @@ namespace UI_MVC.Controllers.API
 
             Tag tag = page.Tags.Find(t => t.Name.ToLower().Equals(model.FAQitem.ToLower()));
             SubplatformMgr.RemoveTag(tag.TagId);
-            
+
             return Ok();
         }
     }

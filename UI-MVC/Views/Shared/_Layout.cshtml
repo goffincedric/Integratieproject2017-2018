@@ -260,7 +260,7 @@
                   {
                     @Html.AntiForgeryToken()
                     {
-                      <a href="javascript:document.getElementById('logoutForm').submit()" style="outline: none; all: unset" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                      <a href="javascript:document.getElementById('logoutForm').submit()" style="padding: 0 15px;outline: none;" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                         <i class="ti-power-off mR-10"></i><span> Logout</span>
                       </a>
                     }
@@ -327,11 +327,31 @@
         string theme = Html.Action("GetThemeColors", "Home").ToString();
         if (theme.Equals("future"))
         {
-            <style>
+    <style>
                 body {
-                    background: linear-gradient(to bottom right, @ViewBag.Color1 10%, @ViewBag.Color2 100%);
+                    background: linear-gradient(to bottom right, @ViewBag.Color1HEX 10%, @ViewBag.Color2HEX 100%);
                 }
-            </style>
+
+                .sidebar, .bgc-white {
+                    background-color: transparent !important;
+                    background: linear-gradient(to top left, @ViewBag.Color1RGBA, @ViewBag.Color2RGBA);
+                }
+
+                .dropdown-menu {
+                    color: @ViewBag.Color1HEX !important;
+                    background-color: transparent !important;
+                    background: linear-gradient(to top left, @ViewBag.Color1RGBA, @ViewBag.Color2RGBA);
+                }
+
+
+                .c-grey-800, .cH-grey-800:hover{
+                    color: white !important;
+                }
+
+                .c-grey-700, .cH-grey-700:hover {
+
+                }
+    </style>
         }
     }
 </footer>

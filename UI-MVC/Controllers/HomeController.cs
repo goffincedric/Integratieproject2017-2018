@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -52,8 +53,14 @@ namespace UI_MVC.Controllers
                 ViewBag.Organisations = menuTags.SingleOrDefault(t => t.Name.Equals("Organisations"))?.Text ?? "Organisations";
                 ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes"))?.Text ?? "Themes";
 
-                ViewBag.Color1 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.PRIMARY_COLOR))?.Value;
-                ViewBag.Color2 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.SECONDARY_COLOR))?.Value;
+                string color1 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.PRIMARY_COLOR))?.Value;
+                string color2 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.SECONDARY_COLOR))?.Value;
+                Color colorObj1 = ColorTranslator.FromHtml(color1);
+                Color colorObj2 = ColorTranslator.FromHtml(color2);
+                ViewBag.Color1HEX = color1;
+                ViewBag.Color2HEX = color2;
+                ViewBag.Color1RGBA = "rgba(" + Math.Round(colorObj1.R * 0.425) + "," + Math.Round(colorObj1.G * 0.425) + "," + Math.Round(colorObj1.B * 0.425) + "," + "0.125)";
+                ViewBag.Color2RGBA = "rgba(" + Math.Round(colorObj2.R * 0.525) + "," + Math.Round(colorObj2.G * 0.525) + "," + Math.Round(colorObj2.B * 0.525) + "," + "0.25)";
 
                 IEnumerable<Tag> homeTags = SubplatformMgr.GetTags(subplatform.Pages.Single(p => p.PageName.Equals("Home")).PageId);
                 ViewBag.HeaderText = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTitle"))?.Text ?? "Subplatform title";
@@ -82,8 +89,8 @@ namespace UI_MVC.Controllers
                 if (profile != null)
                 {
                     byte[] array = profile.Image; ;
-                     var base64 = Convert.ToBase64String(array);
-                var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                    var base64 = Convert.ToBase64String(array);
+                    var imgSrc = String.Format("data:image/png;base64,{0}", base64);
                     return Content(imgSrc);
                 }
             }
@@ -152,7 +159,7 @@ namespace UI_MVC.Controllers
         public ActionResult GetBanner(string subplatform)
         {
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            
+
 
             byte[] array = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.BANNER).Image;
             if (array != null)
@@ -164,10 +171,10 @@ namespace UI_MVC.Controllers
             }
             else
             {
-                string url = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.BANNER).Value); 
+                string url = VirtualPathUtility.ToAbsolute(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.BANNER).Value);
 
 
-            return Content(url);
+                return Content(url);
             }
         }
         public ActionResult LoadDefaults(string subplatform)
@@ -217,13 +224,14 @@ namespace UI_MVC.Controllers
 
         public ActionResult GetThemeColors(string subplatform)
         {
-            Subplatform CurrentSubplatform = SubplatformMgr.GetSubplatform(subplatform);
+
+            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             if (User.Identity.IsAuthenticated)
             {
-             
+      
                 return Content(accountMgr.GetUserSetting(User.Identity.GetUserId(), Setting.Account.THEME).Value.ToLower());
             }
-            return Content(SubplatformMgr.GetSubplatformSetting(CurrentSubplatform.SubplatformId,Setting.Platform.DEFAULT_THEME).Value.ToLower());
+            return Content(SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId,Setting.Platform.DEFAULT_THEME).Value.ToLower());
         }
 
         public ActionResult ChangeThemeSetting(string Theme)
@@ -310,7 +318,7 @@ namespace UI_MVC.Controllers
                 else
                 {
 
-                    if(person.Image is null)
+                    if (person.Image is null)
                     {
                         ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);
                     }
@@ -319,9 +327,9 @@ namespace UI_MVC.Controllers
                         byte[] array = person.Image;
                         var base64 = Convert.ToBase64String(array);
                         var imgSrc = String.Format("data:image/png;base64,{0}", base64);
-                        ViewBag.Icon = imgSrc; 
+                        ViewBag.Icon = imgSrc;
                     }
-                  
+
                     ViewBag.Twitter = "";
                 }
 
@@ -343,7 +351,7 @@ namespace UI_MVC.Controllers
                 int? count = organisation.People.Count();
                 ViewBag.Leden = count is null ? 0 : count;
                 ViewBag.FullName = organisation.FullName;
-              
+
 
                 if (organisation.Image is null)
                 {
@@ -362,7 +370,7 @@ namespace UI_MVC.Controllers
             {
                 int? count = theme.Records.Count();
                 ViewBag.Associaties = count is null ? 0 : count;
-            
+
                 if (theme.Image is null)
                 {
                     ViewBag.Icon = VirtualPathUtility.ToAbsolute(item.IconURL);

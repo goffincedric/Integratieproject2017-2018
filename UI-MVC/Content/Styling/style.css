@@ -197,7 +197,6 @@ input[type="checkbox"]:checked + .slider:before { transform: translateX(26px); }
 #addGraph { margin: 25px; }
 
 #logoutForm {
-  padding: 0 15px;
   cursor: pointer;
 }
 
