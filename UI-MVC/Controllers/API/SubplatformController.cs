@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -34,7 +34,7 @@ namespace UI_MVC.Controllers.API
         {
             Subplatform subplatform = SubplatformMgr.GetSubplatform(model.Subplatform);
 
-            Page page = SubplatformMgr.GetPages().Where(p => p.PageName.Equals("Menu")).Where( p=> p.SubplatformId == subplatform.SubplatformId).FirstOrDefault();
+            Page page = SubplatformMgr.GetPages().Where(p => p.PageName.Equals("Menu")).Where(p => p.SubplatformId == subplatform.SubplatformId).FirstOrDefault();
             Tag tag = page.Tags.Find(t => t.Name.ToLower().Equals(model.MenuItem.ToLower()));
             tag.Text = model.MenuText;
             SubplatformMgr.ChangeTag(tag);
@@ -42,7 +42,7 @@ namespace UI_MVC.Controllers.API
 
             return Ok();
         }
-        
+
         [HttpPut]
         public IHttpActionResult ChangeTagFAQ([FromBody]FAQViewModel model)
         {
@@ -53,7 +53,7 @@ namespace UI_MVC.Controllers.API
             tag.Text = model.Question;
             tag.Text2 = model.Answer;
             SubplatformMgr.ChangeTag(tag);
-            
+
             return Ok();
         }
 
@@ -74,7 +74,7 @@ namespace UI_MVC.Controllers.API
             int count = page.Tags.Count() + 1;
 
             SubplatformMgr.AddTag(page.PageId, "Question" + count, model.Question, model.Answer);
-            
+
             return Ok();
         }
 
@@ -89,7 +89,7 @@ namespace UI_MVC.Controllers.API
 
             Tag tag = page.Tags.Find(t => t.Name.ToLower().Equals(model.FAQitem.ToLower()));
             SubplatformMgr.RemoveTag(tag.TagId);
-            
+
             return Ok();
         }
     }
