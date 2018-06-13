@@ -154,7 +154,7 @@ namespace UI_MVC.Controllers
             Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
             
 
-            byte[] array = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.SITE_ICON_URL).Image;
+            byte[] array = SubplatformMgr.GetSubplatformSetting(Subplatform.SubplatformId, Setting.Platform.BANNER).Image;
             if (array != null)
             {
                 var base64 = Convert.ToBase64String(array);
