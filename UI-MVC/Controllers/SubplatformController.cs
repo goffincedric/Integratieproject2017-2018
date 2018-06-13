@@ -2,15 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using FluentScheduler;
-using Microsoft.AspNet.Identity;
 using PB.BL;
-using PB.BL.Domain.Items;
 using PB.BL.Domain.Platform;
 using PB.BL.Domain.Settings;
 using PB.DAL.EF;
@@ -55,8 +51,14 @@ namespace UI_MVC.Controllers
                 ViewBag.Organisations = menuTags.SingleOrDefault(t => t.Name.Equals("Organisations"))?.Text ?? "Organisations";
                 ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes"))?.Text ?? "Themes";
 
-                ViewBag.Color1 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.PRIMARY_COLOR))?.Value;
-                ViewBag.Color2 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.SECONDARY_COLOR))?.Value;
+                string color1 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.PRIMARY_COLOR))?.Value;
+                string color2 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.SECONDARY_COLOR))?.Value;
+                Color colorObj1 = ColorTranslator.FromHtml(color1);
+                Color colorObj2 = ColorTranslator.FromHtml(color2);
+                ViewBag.Color1HEX = color1;
+                ViewBag.Color2HEX = color2;
+                ViewBag.Color1RGBA = "rgba(" + Math.Round(colorObj1.R*0.425) + "," + Math.Round(colorObj1.G* 0.425) + "," + Math.Round(colorObj1.B* 0.425) + "," + "0.125)";
+                ViewBag.Color2RGBA = "rgba(" + Math.Round(colorObj2.R*0.525) + "," + Math.Round(colorObj2.G* 0.525) + "," + Math.Round(colorObj2.B* 0.525) + "," + "0.25)";
             }
         }
 
@@ -202,7 +204,7 @@ namespace UI_MVC.Controllers
                     Value = SubplatformMgr.GetSubplatformSetting(subplatformToChange.SubplatformId, Setting.Platform.SEND_WEEKLY_REVIEWS_INTERVAL_DAYS)?.Value,
                     IsEnabled = true,
                     Subplatform = subplatformToChange
-                }, 
+                },
                 new SubplatformSetting
                 {
                      SettingName = Setting.Platform.PRIMARY_COLOR,
@@ -374,7 +376,8 @@ namespace UI_MVC.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult DeploySubplatform(SubplatformViewModel subplatformViewModel)
         {
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 string roleId = accountMgr.GetAllRoles().Single(ro => ro.Name.Equals("SuperAdmin")).Id;
                 SubplatformMgr.AddSubplatform(subplatformViewModel.Name, accountMgr.GetProfiles().Where(p => p.Roles.Any(r => r.RoleId.Equals(roleId))), subplatformViewModel.SourceAPI);
             }
@@ -445,9 +448,9 @@ namespace UI_MVC.Controllers
                         {
                             SettingName = Setting.Platform.DEFAULT_NEW_ITEM_ICON,
                             //Value = iconUrl,
-                            Value=null,
+                            Value = null,
                             Image = (byte[])imgCon.ConvertTo(img, typeof(byte[])),
-                        IsEnabled = true,
+                            IsEnabled = true,
                             Subplatform = subplatformToChange
                         });
                     }

@@ -60,8 +60,14 @@ namespace UI_MVC.Controllers
                 ViewBag.Organisations = menuTags.SingleOrDefault(t => t.Name.Equals("Organisations"))?.Text ?? "Organisations";
                 ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes"))?.Text ?? "Themes";
 
-                ViewBag.Color1 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.PRIMARY_COLOR))?.Value;
-                ViewBag.Color2 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.SECONDARY_COLOR))?.Value;
+                string color1 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.PRIMARY_COLOR))?.Value;
+                string color2 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.SECONDARY_COLOR))?.Value;
+                Color colorObj1 = ColorTranslator.FromHtml(color1);
+                Color colorObj2 = ColorTranslator.FromHtml(color2);
+                ViewBag.Color1HEX = color1;
+                ViewBag.Color2HEX = color2;
+                ViewBag.Color1RGBA = "rgba(" + Math.Round(colorObj1.R * 0.425) + "," + Math.Round(colorObj1.G * 0.425) + "," + Math.Round(colorObj1.B * 0.425) + "," + "0.125)";
+                ViewBag.Color2RGBA = "rgba(" + Math.Round(colorObj2.R * 0.525) + "," + Math.Round(colorObj2.G * 0.525) + "," + Math.Round(colorObj2.B * 0.525) + "," + "0.25)";
             }
         }
 

@@ -21,7 +21,7 @@ namespace PB.BL.Domain.Platform
 
         [Required] public Subplatform Subplatform { get; set; }
 
-        public List<Page> GetDefaultPages(Subplatform subplatform)
+        public static List<Page> GetDefaultPages(Subplatform subplatform)
         {
             return new List<Page>
             {
@@ -34,7 +34,7 @@ namespace PB.BL.Domain.Platform
                         new Tag
                         {
                             Name = "BannerTitle",
-                            Text = Subplatform.Name
+                            Text = subplatform.Name
                         },
                         new Tag
                         {

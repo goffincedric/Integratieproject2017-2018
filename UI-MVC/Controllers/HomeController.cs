@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -53,8 +54,14 @@ namespace UI_MVC.Controllers
                 ViewBag.Organisations = menuTags.SingleOrDefault(t => t.Name.Equals("Organisations"))?.Text ?? "Organisations";
                 ViewBag.Themes = menuTags.SingleOrDefault(t => t.Name.Equals("Themes"))?.Text ?? "Themes";
 
-                ViewBag.Color1 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.PRIMARY_COLOR))?.Value;
-                ViewBag.Color2 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.SECONDARY_COLOR))?.Value;
+                string color1 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.PRIMARY_COLOR))?.Value;
+                string color2 = subplatform.Settings.Find(ss => ss.SettingName.Equals(Setting.Platform.SECONDARY_COLOR))?.Value;
+                Color colorObj1 = ColorTranslator.FromHtml(color1);
+                Color colorObj2 = ColorTranslator.FromHtml(color2);
+                ViewBag.Color1HEX = color1;
+                ViewBag.Color2HEX = color2;
+                ViewBag.Color1RGBA = "rgba(" + Math.Round(colorObj1.R * 0.425) + "," + Math.Round(colorObj1.G * 0.425) + "," + Math.Round(colorObj1.B * 0.425) + "," + "0.125)";
+                ViewBag.Color2RGBA = "rgba(" + Math.Round(colorObj2.R * 0.525) + "," + Math.Round(colorObj2.G * 0.525) + "," + Math.Round(colorObj2.B * 0.525) + "," + "0.25)";
 
                 IEnumerable<Tag> homeTags = SubplatformMgr.GetTags(subplatform.Pages.Single(p => p.PageName.Equals("Home")).PageId);
                 ViewBag.HeaderText = homeTags.SingleOrDefault(t => t.Name.Equals("BannerTitle"))?.Text ?? "Subplatform title";
@@ -216,8 +223,12 @@ namespace UI_MVC.Controllers
 
         public ActionResult GetThemeColors(string subplatform)
         {
-            Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
-            return Content(accountMgr.GetUserSetting(User.Identity.GetUserId(), Setting.Account.THEME).Value.ToLower());
+            if (User.Identity.IsAuthenticated)
+            {
+                Subplatform Subplatform = SubplatformMgr.GetSubplatform(subplatform);
+                return Content(accountMgr.GetUserSetting(User.Identity.GetUserId(), Setting.Account.THEME).Value.ToLower());
+            }
+            return Content("");
         }
 
         public ActionResult ChangeThemeSetting(string Theme)
