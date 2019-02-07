@@ -2,8 +2,6 @@
  Team name: TeamNameNotFoundException  
  Team nr.: Team 10  
 Groepsleden: 
-* Céline Verwilligen
-* Lotte Marien
 * Cédric Goffin
 * Lins Van Nijlen
 * Stef Havermans
